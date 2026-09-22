@@ -264,7 +264,7 @@ def se_ladder(y, cols, target="PIN"):
     return out
 
 
-def tail_diagnostics(y, cols, target="PIN", top=10):
+def tail_diagnostics(y, cols, target="PIN", top=10, labels=None):
     """Is the coefficient carried by a handful of sessions? A rotation null cannot see this, because
     rotating decouples the regressor from the residual it co-moves with."""
     names, X = design(cols)
@@ -284,7 +284,31 @@ def tail_diagnostics(y, cols, target="PIN", top=10):
             f"share_of_sum_sq_in_top{top}": float((x[idx] ** 2).sum() / (x ** 2).sum()),
             f"mean_abs_y_in_top{top}_bp": float(np.abs(yy[idx]).mean()), "mean_abs_y_bp": float(np.abs(yy).mean()),
             "coef_full": base, f"coef_excluding_top{top}": trimmed,
-            "share_of_coef_from_top10": float(1.0 - trimmed / base) if base else None}
+            "share_of_coef_from_top10": float(1.0 - trimmed / base) if base else None,
+            # NAME the sessions doing the work and print their bars (D322), because "ten sessions" hides
+            # that three of them are one crisis: a slope weights each row by its own extremeness TIMES its
+            # outcome, so a session extreme in both counts many times over.
+            "top_contributors": _contributors(yy, Xc, x, top, None if labels is None else np.asarray(labels)[ok])}
+
+
+def _contributors(yy, Xc, x, top, labels=None):
+    """Per-session share of the slope's numerator, for the rows with the largest regressor."""
+    cols = np.delete(Xc, _pin_col(Xc, x), axis=1)
+    xr = x - cols @ np.linalg.lstsq(cols, x, rcond=None)[0]
+    yr = yy - cols @ np.linalg.lstsq(cols, yy, rcond=None)[0]
+    num = xr * yr
+    idx = np.argsort(-np.abs(x))[:top]
+    return {"top10_share_of_numerator": float(num[idx].sum() / num.sum()),
+            "rows": [{"session": (str(labels[i]) if labels is not None else int(i)),
+                      "regressor": float(x[i]), "outcome_bp": float(yy[i]),
+                      "share_of_numerator": float(num[i] / num.sum())} for i in idx]}
+
+
+def _pin_col(Xc, x):
+    for j in range(Xc.shape[1]):
+        if np.allclose(Xc[:, j], x, rtol=0, atol=1e-12):
+            return j
+    raise AssertionError("the target column is not in the design matrix")
 
 
 def week_block_se(y, cols, target, weeks, rng, boot=BOOT):
@@ -720,7 +744,7 @@ def run():
         # the economic quantity the bar was MEANT to express, in the units the account pays
         out["expected_move_bp_at_mean_abs_pin"] = float(abs(obs) * float(np.nanmean(np.abs(base))))
         out["se_ladder"] = se_ladder(y, c)
-        out["tail_carried"] = tail_diagnostics(y, c)
+        out["tail_carried"] = tail_diagnostics(y, c, labels=P.index.to_numpy())
         return out
 
     blockB = {"primary": cell("PIN", tag, f"PIN, band {tag}", with_flip=True)}
@@ -827,6 +851,9 @@ def run():
                      "net_sortino": float(np.nanmean(net) / np.nanstd(net[net < 0]) * np.sqrt(252))
                                     if (net < 0).any() and np.nanstd(net[net < 0]) else None,
                      "gross_sharpe": float(np.nanmean(gross) / np.nanstd(gross) * np.sqrt(252)) if np.nanstd(gross) else None,
+                     # R17: the pair, on BOTH lines. An earlier pass gave gross Sharpe without its Sortino.
+                     "gross_sortino": float(np.nanmean(gross) / np.nanstd(gross[gross < 0]) * np.sqrt(252))
+                                      if (gross < 0).any() and np.nanstd(gross[gross < 0]) else None,
                      "hit_rate": float(np.nanmean(tr > 0)), "median_usd": float(np.nanmedian(tr)),
                      "skew": float(pd.Series(tr).skew()), "kurtosis": float(pd.Series(tr).kurtosis()),
                      "trimmed_mean_usd": float(srt[k:srt.size - k].mean()),

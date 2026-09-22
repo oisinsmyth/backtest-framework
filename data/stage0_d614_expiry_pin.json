@@ -200,7 +200,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": -5.07831625123184,
     "coef_excluding_top10": -1.1894476070716729,
-    "share_of_coef_from_top10": 0.7657791385514539
+    "share_of_coef_from_top10": 0.7657791385514539,
+    "top_contributors": {
+     "top10_share_of_numerator": 0.7870645257944382,
+     "rows": [
+      {
+       "session": "2016-11-09",
+       "regressor": -19.22221343332993,
+       "outcome_bp": -20.814068568895653,
+       "share_of_numerator": -0.012389554337275125
+      },
+      {
+       "session": "2020-03-13",
+       "regressor": -17.729943248797657,
+       "outcome_bp": 457.8497553771379,
+       "share_of_numerator": 0.35586004739237737
+      },
+      {
+       "session": "2018-02-07",
+       "regressor": -17.5895354152538,
+       "outcome_bp": -98.43147538181206,
+       "share_of_numerator": -0.06831087859734326
+      },
+      {
+       "session": "2020-02-28",
+       "regressor": -17.55482017275579,
+       "outcome_bp": 265.83898045799145,
+       "share_of_numerator": 0.3790113383596616
+      },
+      {
+       "session": "2020-03-02",
+       "regressor": -15.363380656029936,
+       "outcome_bp": 188.6925496413305,
+       "share_of_numerator": 0.07347155983182517
+      },
+      {
+       "session": "2018-12-26",
+       "regressor": -14.363749512483858,
+       "outcome_bp": 139.7340294408646,
+       "share_of_numerator": 0.010907600141109686
+      },
+      {
+       "session": "2018-02-05",
+       "regressor": 13.672017339772992,
+       "outcome_bp": -181.68696067786883,
+       "share_of_numerator": 0.054748178811894165
+      },
+      {
+       "session": "2018-02-12",
+       "regressor": -12.470409769399271,
+       "outcome_bp": -45.11285846501125,
+       "share_of_numerator": -0.012913203660499093
+      },
+      {
+       "session": "2018-03-26",
+       "regressor": -12.267645443834086,
+       "outcome_bp": 23.52388758278875,
+       "share_of_numerator": 0.005321757074653851
+      },
+      {
+       "session": "2018-01-17",
+       "regressor": -12.204299478452775,
+       "outcome_bp": -1.7826900840503312,
+       "share_of_numerator": 0.001357680778033824
+      }
+     ]
+    }
    }
   },
   "placebo_PING": {
@@ -290,7 +355,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": 0.12673113330034536,
     "coef_excluding_top10": 0.14539320285162427,
-    "share_of_coef_from_top10": -0.14725718191954384
+    "share_of_coef_from_top10": -0.14725718191954384,
+    "top_contributors": {
+     "top10_share_of_numerator": 0.10339099546857197,
+     "rows": [
+      {
+       "session": "2018-01-31",
+       "regressor": -183.43107408569512,
+       "outcome_bp": 16.823840688441067,
+       "share_of_numerator": -0.006901910220924726
+      },
+      {
+       "session": "2018-01-19",
+       "regressor": -181.55257314612453,
+       "outcome_bp": 3.556187804192196,
+       "share_of_numerator": 0.027531318123234234
+      },
+      {
+       "session": "2017-12-29",
+       "regressor": -159.8768888530599,
+       "outcome_bp": -27.97204621061254,
+       "share_of_numerator": 0.06565851712543726
+      },
+      {
+       "session": "2017-11-30",
+       "regressor": -159.40193902766816,
+       "outcome_bp": 1.8892877441417326,
+       "share_of_numerator": -0.01916447183103617
+      },
+      {
+       "session": "2017-10-31",
+       "regressor": -156.20741176532934,
+       "outcome_bp": -9.715341286860198,
+       "share_of_numerator": 0.021760267494201773
+      },
+      {
+       "session": "2017-10-20",
+       "regressor": -145.53351481735098,
+       "outcome_bp": 6.804374503115151,
+       "share_of_numerator": 0.01262840223298974
+      },
+      {
+       "session": "2017-11-17",
+       "regressor": -140.93015066565204,
+       "outcome_bp": -4.84801483291788,
+       "share_of_numerator": 0.01832203675559908
+      },
+      {
+       "session": "2018-01-12",
+       "regressor": -140.6958009676008,
+       "outcome_bp": 8.97585555280837,
+       "share_of_numerator": -0.027346063004347505
+      },
+      {
+       "session": "2018-01-26",
+       "regressor": -139.12426352723125,
+       "outcome_bp": 19.16209975763799,
+       "share_of_numerator": -0.017886929621587225
+      },
+      {
+       "session": "2017-07-31",
+       "regressor": -137.60061302498295,
+       "outcome_bp": -13.162559486566115,
+       "share_of_numerator": 0.02878982841500552
+      }
+     ]
+    }
    }
   },
   "family_by_band": {
@@ -381,7 +511,72 @@
      "mean_abs_y_bp": 19.88501010747097,
      "coef_full": -5.07831625123184,
      "coef_excluding_top10": -1.1894476070716729,
-     "share_of_coef_from_top10": 0.7657791385514539
+     "share_of_coef_from_top10": 0.7657791385514539,
+     "top_contributors": {
+      "top10_share_of_numerator": 0.7870645257944382,
+      "rows": [
+       {
+        "session": "2016-11-09",
+        "regressor": -19.22221343332993,
+        "outcome_bp": -20.814068568895653,
+        "share_of_numerator": -0.012389554337275125
+       },
+       {
+        "session": "2020-03-13",
+        "regressor": -17.729943248797657,
+        "outcome_bp": 457.8497553771379,
+        "share_of_numerator": 0.35586004739237737
+       },
+       {
+        "session": "2018-02-07",
+        "regressor": -17.5895354152538,
+        "outcome_bp": -98.43147538181206,
+        "share_of_numerator": -0.06831087859734326
+       },
+       {
+        "session": "2020-02-28",
+        "regressor": -17.55482017275579,
+        "outcome_bp": 265.83898045799145,
+        "share_of_numerator": 0.3790113383596616
+       },
+       {
+        "session": "2020-03-02",
+        "regressor": -15.363380656029936,
+        "outcome_bp": 188.6925496413305,
+        "share_of_numerator": 0.07347155983182517
+       },
+       {
+        "session": "2018-12-26",
+        "regressor": -14.363749512483858,
+        "outcome_bp": 139.7340294408646,
+        "share_of_numerator": 0.010907600141109686
+       },
+       {
+        "session": "2018-02-05",
+        "regressor": 13.672017339772992,
+        "outcome_bp": -181.68696067786883,
+        "share_of_numerator": 0.054748178811894165
+       },
+       {
+        "session": "2018-02-12",
+        "regressor": -12.470409769399271,
+        "outcome_bp": -45.11285846501125,
+        "share_of_numerator": -0.012913203660499093
+       },
+       {
+        "session": "2018-03-26",
+        "regressor": -12.267645443834086,
+        "outcome_bp": 23.52388758278875,
+        "share_of_numerator": 0.005321757074653851
+       },
+       {
+        "session": "2018-01-17",
+        "regressor": -12.204299478452775,
+        "outcome_bp": -1.7826900840503312,
+        "share_of_numerator": 0.001357680778033824
+       }
+      ]
+     }
     }
    },
    "4sig": {
@@ -471,7 +666,72 @@
      "mean_abs_y_bp": 19.88501010747097,
      "coef_full": -2.966728801384434,
      "coef_excluding_top10": -3.1019237430671587,
-     "share_of_coef_from_top10": -0.045570374218106835
+     "share_of_coef_from_top10": -0.045570374218106835,
+     "top_contributors": {
+      "top10_share_of_numerator": -0.0038377736855558274,
+      "rows": [
+       {
+        "session": "2016-12-07",
+        "regressor": -2.957725414072804,
+        "outcome_bp": 6.6994196342250865,
+        "share_of_numerator": -0.003082620449369588
+       },
+       {
+        "session": "2017-07-14",
+        "regressor": -2.5671589202871656,
+        "outcome_bp": -10.170871503310897,
+        "share_of_numerator": -0.015490647616183576
+       },
+       {
+        "session": "2018-12-26",
+        "regressor": -2.4303600227214726,
+        "outcome_bp": 139.7340294408646,
+        "share_of_numerator": 0.04793635443186356
+       },
+       {
+        "session": "2017-04-19",
+        "regressor": 2.4001653644340317,
+        "outcome_bp": 4.2844902112140755,
+        "share_of_numerator": -0.0346682002757869
+       },
+       {
+        "session": "2018-11-28",
+        "regressor": -2.3864581397692737,
+        "outcome_bp": 38.33170706048941,
+        "share_of_numerator": 0.04334634343151555
+       },
+       {
+        "session": "2017-04-17",
+        "regressor": -2.3464382957762275,
+        "outcome_bp": 8.530604057518637,
+        "share_of_numerator": 0.013253360059160467
+       },
+       {
+        "session": "2018-12-04",
+        "regressor": 2.3089044693865484,
+        "outcome_bp": -8.319083531962288,
+        "share_of_numerator": 0.0012888065291717088
+       },
+       {
+        "session": "2017-04-05",
+        "regressor": 2.206726908285677,
+        "outcome_bp": -24.456389455972616,
+        "share_of_numerator": -0.027494227052338494
+       },
+       {
+        "session": "2017-07-19",
+        "regressor": -2.1970916116047947,
+        "outcome_bp": 0.0,
+        "share_of_numerator": 0.0005635110473998091
+       },
+       {
+        "session": "2020-09-25",
+        "regressor": -2.1868893865238612,
+        "outcome_bp": -18.234315947276098,
+        "share_of_numerator": -0.029490453790988354
+       }
+      ]
+     }
     }
    },
    "2sig": {
@@ -561,7 +821,72 @@
      "mean_abs_y_bp": 19.88501010747097,
      "coef_full": -2.0283161020305025,
      "coef_excluding_top10": -1.8615460486198887,
-     "share_of_coef_from_top10": 0.08222093846401157
+     "share_of_coef_from_top10": 0.08222093846401157,
+     "top_contributors": {
+      "top10_share_of_numerator": 0.14372892852446706,
+      "rows": [
+       {
+        "session": "2017-07-19",
+        "regressor": -1.3155080835201698,
+        "outcome_bp": 0.0,
+        "share_of_numerator": 0.01925474699289454
+       },
+       {
+        "session": "2018-11-28",
+        "regressor": -1.276025297577593,
+        "outcome_bp": 38.33170706048941,
+        "share_of_numerator": 0.14356796310287742
+       },
+       {
+        "session": "2019-07-24",
+        "regressor": -1.2335814453986833,
+        "outcome_bp": 6.621420536572602,
+        "share_of_numerator": 0.01792534097692662
+       },
+       {
+        "session": "2022-05-03",
+        "regressor": -1.1925875031882514,
+        "outcome_bp": -5.993048243621042,
+        "share_of_numerator": -0.033070048025250674
+       },
+       {
+        "session": "2017-10-23",
+        "regressor": 1.1919197626396814,
+        "outcome_bp": -4.874482182795559,
+        "share_of_numerator": -0.03287629004356765
+       },
+       {
+        "session": "2023-11-20",
+        "regressor": -1.1565030055256194,
+        "outcome_bp": -16.972820193259192,
+        "share_of_numerator": -0.0822673149048723
+       },
+       {
+        "session": "2017-02-22",
+        "regressor": -1.1503778802891038,
+        "outcome_bp": -4.2354934983036925,
+        "share_of_numerator": -0.011368962688617344
+       },
+       {
+        "session": "2017-10-04",
+        "regressor": -1.0490528285341294,
+        "outcome_bp": -0.986047429680349,
+        "share_of_numerator": 0.001971114380120238
+       },
+       {
+        "session": "2020-09-23",
+        "regressor": 1.0483155597390792,
+        "outcome_bp": -29.398133504503434,
+        "share_of_numerator": 0.10033472802890293
+       },
+       {
+        "session": "2021-07-02",
+        "regressor": -1.0106361460720321,
+        "outcome_bp": 1.7270660069996298,
+        "share_of_numerator": 0.020257650705053212
+       }
+      ]
+     }
     }
    }
   },
@@ -657,7 +982,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": -0.3712807455232639,
     "coef_excluding_top10": -0.43944057085839355,
-    "share_of_coef_from_top10": -0.18358028569208118
+    "share_of_coef_from_top10": -0.18358028569208118,
+    "top_contributors": {
+     "top10_share_of_numerator": 0.03088978021782399,
+     "rows": [
+      {
+       "session": "2018-02-07",
+       "regressor": -65.51881856834105,
+       "outcome_bp": -98.43147538181206,
+       "share_of_numerator": -0.3844735456332531
+      },
+      {
+       "session": "2018-02-09",
+       "regressor": -37.84539100407913,
+       "outcome_bp": 97.86128180877895,
+       "share_of_numerator": 0.3120679345677343
+      },
+      {
+       "session": "2018-02-16",
+       "regressor": -33.132568554655904,
+       "outcome_bp": -27.409793314222934,
+       "share_of_numerator": -0.045043285606171275
+      },
+      {
+       "session": "2020-03-04",
+       "regressor": -32.866136109372356,
+       "outcome_bp": 55.3174136776734,
+       "share_of_numerator": 0.12768290939760435
+      },
+      {
+       "session": "2017-11-06",
+       "regressor": -30.025200828170636,
+       "outcome_bp": -6.759693174202647,
+       "share_of_numerator": -0.011185879633485617
+      },
+      {
+       "session": "2020-03-02",
+       "regressor": -28.56082814189507,
+       "outcome_bp": 188.6925496413305,
+       "share_of_numerator": 0.25656852730371266
+      },
+      {
+       "session": "2020-03-23",
+       "regressor": 27.85245424778668,
+       "outcome_bp": 99.74014453798281,
+       "share_of_numerator": -0.28203089308272106
+      },
+      {
+       "session": "2022-05-26",
+       "regressor": -25.128279405970225,
+       "outcome_bp": 4.316058888716154,
+       "share_of_numerator": 0.02247499173887719
+      },
+      {
+       "session": "2018-02-12",
+       "regressor": -24.68724351903104,
+       "outcome_bp": -45.11285846501125,
+       "share_of_numerator": -0.04967500996114002
+      },
+      {
+       "session": "2022-06-24",
+       "regressor": -24.354227846384788,
+       "outcome_bp": 49.88179429078658,
+       "share_of_numerator": 0.0845040311266666
+      }
+     ]
+    }
    }
   },
   "PIN1530_descriptive": {
@@ -747,7 +1137,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": -5.417776250893609,
     "coef_excluding_top10": -0.43597638479686707,
-    "share_of_coef_from_top10": 0.9195285363206063
+    "share_of_coef_from_top10": 0.9195285363206063,
+    "top_contributors": {
+     "top10_share_of_numerator": 0.8574902811747656,
+     "rows": [
+      {
+       "session": "2016-11-09",
+       "regressor": -15.607039176730783,
+       "outcome_bp": -20.814068568895653,
+       "share_of_numerator": -0.017408876581130602
+      },
+      {
+       "session": "2018-02-07",
+       "regressor": -13.127690590533387,
+       "outcome_bp": -98.43147538181206,
+       "share_of_numerator": -0.07471173852777638
+      },
+      {
+       "session": "2020-03-02",
+       "regressor": -12.875446032425144,
+       "outcome_bp": 188.6925496413305,
+       "share_of_numerator": 0.09197342291569582
+      },
+      {
+       "session": "2020-03-13",
+       "regressor": -12.785245072605072,
+       "outcome_bp": 457.8497553771379,
+       "share_of_numerator": 0.352896425435215
+      },
+      {
+       "session": "2020-02-28",
+       "regressor": -12.241591706553196,
+       "outcome_bp": 265.83898045799145,
+       "share_of_numerator": 0.4232743091312583
+      },
+      {
+       "session": "2018-03-26",
+       "regressor": -10.881786277610926,
+       "outcome_bp": 23.52388758278875,
+       "share_of_numerator": 0.0070397937140831155
+      },
+      {
+       "session": "2022-05-04",
+       "regressor": -10.301376079671549,
+       "outcome_bp": 47.82186754158659,
+       "share_of_numerator": 0.0065437004256154955
+      },
+      {
+       "session": "2022-01-24",
+       "regressor": -10.204193908064527,
+       "outcome_bp": 157.31239951256455,
+       "share_of_numerator": 0.02808265884324038
+      },
+      {
+       "session": "2022-06-24",
+       "regressor": -9.702709855784688,
+       "outcome_bp": 49.88179429078658,
+       "share_of_numerator": 0.028041433639451913
+      },
+      {
+       "session": "2020-03-04",
+       "regressor": -9.479963459027262,
+       "outcome_bp": 55.3174136776734,
+       "share_of_numerator": 0.011759152179112654
+      }
+     ]
+    }
    }
   },
   "by_abs_pin_tercile": {
@@ -870,7 +1325,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": 0.023847179896594906,
     "coef_excluding_top10": 0.020320477734479647,
-    "share_of_coef_from_top10": 0.14788759834108645
+    "share_of_coef_from_top10": 0.14788759834108645,
+    "top_contributors": {
+     "top10_share_of_numerator": 0.29025392474462014,
+     "rows": [
+      {
+       "session": "2018-01-05",
+       "regressor": -121.82797874311377,
+       "outcome_bp": 10.94990528242113,
+       "share_of_numerator": -0.1651086033228184
+      },
+      {
+       "session": "2023-06-16",
+       "regressor": -120.96933763457257,
+       "outcome_bp": -3.3658701091922003,
+       "share_of_numerator": 0.0176060024040082
+      },
+      {
+       "session": "2023-12-15",
+       "regressor": -116.68020744802865,
+       "outcome_bp": -1.5732753002004332,
+       "share_of_numerator": 0.0034282636258796454
+      },
+      {
+       "session": "2017-10-31",
+       "regressor": -112.34979959153108,
+       "outcome_bp": -9.715341286860198,
+       "share_of_numerator": 0.003067065843910415
+      },
+      {
+       "session": "2018-01-19",
+       "regressor": -107.98432921522159,
+       "outcome_bp": 3.556187804192196,
+       "share_of_numerator": 0.016950161074249022
+      },
+      {
+       "session": "2017-11-30",
+       "regressor": -106.3463105487535,
+       "outcome_bp": 1.8892877441417326,
+       "share_of_numerator": -0.020448825721800793
+      },
+      {
+       "session": "2023-06-22",
+       "regressor": -103.78317596287262,
+       "outcome_bp": 21.498084767654873,
+       "share_of_numerator": -0.348535630311794
+      },
+      {
+       "session": "2023-06-26",
+       "regressor": -102.61125492362333,
+       "outcome_bp": -26.844120412235238,
+       "share_of_numerator": 0.401588526026105
+      },
+      {
+       "session": "2017-10-20",
+       "regressor": -98.65452292242858,
+       "outcome_bp": 6.804374503115151,
+       "share_of_numerator": -0.018888877393454975
+      },
+      {
+       "session": "2023-03-17",
+       "regressor": -98.37936147757726,
+       "outcome_bp": -15.818282902259742,
+       "share_of_numerator": 0.4005958425203361
+      }
+     ]
+    }
    }
   },
   "horizon_matched_volume_later": {
@@ -960,7 +1480,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": -0.19767880924615044,
     "coef_excluding_top10": -0.018100753369216238,
-    "share_of_coef_from_top10": 0.9084335167828884
+    "share_of_coef_from_top10": 0.9084335167828884,
+    "top_contributors": {
+     "top10_share_of_numerator": 0.7196156692144957,
+     "rows": [
+      {
+       "session": "2017-05-19",
+       "regressor": -64.45646446823493,
+       "outcome_bp": 2.101061043553075,
+       "share_of_numerator": 0.08435408021169587
+      },
+      {
+       "session": "2017-04-21",
+       "regressor": -64.05823444372568,
+       "outcome_bp": -5.32850228412044,
+       "share_of_numerator": 0.019432482368627695
+      },
+      {
+       "session": "2017-08-11",
+       "regressor": -63.34644252695019,
+       "outcome_bp": 4.099620842496046,
+       "share_of_numerator": 0.0695747016142967
+      },
+      {
+       "session": "2022-02-14",
+       "regressor": -60.018085812356524,
+       "outcome_bp": 13.092359917663027,
+       "share_of_numerator": -0.004038311690553787
+      },
+      {
+       "session": "2022-02-28",
+       "regressor": -58.766903775692356,
+       "outcome_bp": 71.77545096985853,
+       "share_of_numerator": 0.07201248627763437
+      },
+      {
+       "session": "2017-10-20",
+       "regressor": -55.87553660738124,
+       "outcome_bp": 6.804374503115151,
+       "share_of_numerator": 0.030195806906427477
+      },
+      {
+       "session": "2016-11-04",
+       "regressor": -55.85532737855086,
+       "outcome_bp": -22.80776452362581,
+       "share_of_numerator": 0.0174068012803492
+      },
+      {
+       "session": "2022-01-28",
+       "regressor": -52.87703219395621,
+       "outcome_bp": 105.66479042163913,
+       "share_of_numerator": 0.08307790488755111
+      },
+      {
+       "session": "2022-01-26",
+       "regressor": -52.65547566242211,
+       "outcome_bp": 12.104096696682644,
+       "share_of_numerator": 0.25996511031923775
+      },
+      {
+       "session": "2017-03-24",
+       "regressor": -51.52801764545285,
+       "outcome_bp": 22.444299487590214,
+       "share_of_numerator": 0.08763460703922929
+      }
+     ]
+    }
    }
   },
   "both_levers_oi_later": {
@@ -1050,7 +1635,72 @@
     "mean_abs_y_bp": 19.88501010747097,
     "coef_full": 0.07799373786716046,
     "coef_excluding_top10": 0.09589885045465518,
-    "share_of_coef_from_top10": -0.22957115631502178
+    "share_of_coef_from_top10": -0.22957115631502178,
+    "top_contributors": {
+     "top10_share_of_numerator": -0.08486520715588593,
+     "rows": [
+      {
+       "session": "2023-06-21",
+       "regressor": -137.8722093490834,
+       "outcome_bp": -18.126208656159797,
+       "share_of_numerator": 0.06982036455306705
+      },
+      {
+       "session": "2018-01-03",
+       "regressor": -121.71255961748008,
+       "outcome_bp": 3.6873156759974206,
+       "share_of_numerator": -0.0190178586788018
+      },
+      {
+       "session": "2017-10-27",
+       "regressor": -119.01624487497507,
+       "outcome_bp": 0.9695089444790329,
+       "share_of_numerator": -0.030133409033137427
+      },
+      {
+       "session": "2018-01-26",
+       "regressor": -116.80896011592183,
+       "outcome_bp": 19.16209975763799,
+       "share_of_numerator": -0.0245507307577831
+      },
+      {
+       "session": "2018-01-02",
+       "regressor": -115.88397595344946,
+       "outcome_bp": 11.134825313022505,
+       "share_of_numerator": -0.03958821100335374
+      },
+      {
+       "session": "2018-01-17",
+       "regressor": -109.7842589236295,
+       "outcome_bp": -1.7826900840503312,
+       "share_of_numerator": -0.013977466049217943
+      },
+      {
+       "session": "2017-12-29",
+       "regressor": -106.90061033681508,
+       "outcome_bp": -27.97204621061254,
+       "share_of_numerator": 0.021698914965683876
+      },
+      {
+       "session": "2018-01-22",
+       "regressor": -104.07847377343613,
+       "outcome_bp": 26.490081715768625,
+       "share_of_numerator": -0.05317676198697424
+      },
+      {
+       "session": "2017-11-29",
+       "regressor": -101.73535753146128,
+       "outcome_bp": 3.8098867019559397,
+       "share_of_numerator": -0.006629413359321419
+      },
+      {
+       "session": "2017-10-18",
+       "regressor": -100.0295140083376,
+       "outcome_bp": -7.810974816190822,
+       "share_of_numerator": 0.01068936419395281
+      }
+     ]
+    }
    }
   }
  },
@@ -1063,6 +1713,7 @@
    "net_sharpe": -1.874444941404514,
    "net_sortino": -2.185365662341136,
    "gross_sharpe": -0.6924986635976241,
+   "gross_sortino": -0.7836229237740255,
    "hit_rate": 0.43286219081272087,
    "median_usd": -4.25,
    "skew": -1.313984829816638,
@@ -1086,6 +1737,7 @@
    "net_sharpe": -0.4894476142092654,
    "net_sortino": -0.7205145238466854,
    "gross_sharpe": 0.6924986635976241,
+   "gross_sortino": 0.999579599660942,
    "hit_rate": 0.44346289752650175,
    "median_usd": -4.25,
    "skew": 1.313984829816638,
@@ -1192,7 +1844,7 @@
   "economic_bar_15bp": false
  },
  "verdict": "REAL BUT NOT TRADEABLE -- the line closes",
- "timing_s": 46.1,
+ "timing_s": 45.9,
  "construction": {
   "primary": "the LEVEL coefficient on PIN, read by name; the interaction is a diagnostic",
   "bands": [

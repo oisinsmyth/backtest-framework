@@ -86,11 +86,36 @@ The gap from 0.59 to 2.41 is **heteroskedasticity, not autocorrelation**: White 
 it, and the autocorrelation of `PIN·residual` is +0.023. The finding sits *on* the bar and changes
 sides with the estimator, and the estimator that clears it is the one the record happened to name.
 
-**Ten sessions carry it.** The ten largest-`|PIN|` sessions hold **16.4 %** of Σ`PIN`², their mean
-absolute close move is **142.3 bp** against 19.9 bp overall, and `corr(PIN², residual²)` is +0.381
-with `R2`'s kurtosis at 38.8. **Dropping those ten moves the coefficient from −5.078 to −1.189 —
-76.6 % of it comes from ten of 1,132 sessions.** The repository's own rule applies: predict a book
-from the trimmed statistic, not the full one (D431).
+**Ten sessions carry it, and really three do.** A slope is `Σx̃ỹ / Σx̃²`, so each session's weight is
+its own extremeness in the regressor and its contribution is that weight *times* its outcome. The ten
+largest-`|PIN|` sessions are heavy twice over: their distance is 6.1× typical, giving them **33.6 %**
+of the denominator, and their mean absolute close move is **142.3 bp** against 18.8 bp for everyone
+else, 7.6× typical. Their share of the numerator is **78.7 %**, and dropping them moves the
+coefficient from −5.078 to **−1.189**. `corr(PIN², residual²)` is +0.381 with `R2`'s kurtosis at 38.8.
+
+**They are crisis afternoons, and they are named** (D322 asks for the bar, not the count):
+
+| session | `PIN` | `R2` | share of the numerator | what the day was |
+|---|---|---|---|---|
+| **2020-02-28** | −17.55 | **+265.8 bp** | **+0.379** | the first COVID crash week |
+| **2020-03-13** | −17.73 | **+457.8 bp** | **+0.356** | the Friday of the circuit-breaker week |
+| 2020-03-02 | −15.36 | +188.7 bp | +0.073 | the Monday rebound |
+| 2018-02-07 | −17.59 | −98.4 bp | −0.068 | volmageddon week |
+| 2016-11-09 | −19.22 | −20.8 bp | −0.012 | the US election night |
+
+**Three sessions are 81 % of the numerator and all three are the February-March 2020 crash.** Every
+one of the ten is a crisis day — the election, volmageddon, the Christmas 2018 bottom, the COVID
+crash. On each the ladder sat far below the price and the close rallied violently, and the product of
+those two is the entire coefficient. This is not a marginal statistical effect; it is a crisis-day
+artefact. The repository's rule applies with force: predict a book from the trimmed statistic, not
+the full one (D431).
+
+**And the trades do not cluster at zero**, which is the other way a slope like this can be misread.
+Only 1.6 % of sessions capture exactly nothing and 12.4 % fall inside one round trip; the quartiles
+are −$22 and +$20 and the 5th-to-95th range is about ±$80. The median is zero because the signed
+distribution is near-symmetric, not because of a pile at the origin. The typical session captures
+nothing directional with roughly $20 of noise either way, against a $4.25 cost, and whatever edge
+exists lives in the same tail as the coefficient.
 
 **The shape is wrong for a pull.** By tercile of `|PIN|`:
 
@@ -170,10 +195,17 @@ One MES, in at 15:30 in the cell's direction, flat at 16:00, cost computed by th
 **$4.25 a round trip** ($3 commission plus one crossed tick at $1.25 with MES at $5 a point);
 breakeven **1.208 bp a side**. Both directions, because both signs were to be scored.
 
-| | gross/session | net/session | net Sharpe · Sortino | gross Sharpe | hit | payoff | median | skew · kurtosis | trimmed 1 % both tails | ex-top 1 % | ex-bottom 1 % | maxDD |
+| | gross/session | net/session | **gross Sharpe · Sortino** | **net Sharpe · Sortino** | hit | payoff | median | skew · kurtosis | trimmed 1 % both tails | ex-top 1 % | ex-bottom 1 % | maxDD |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| attraction | −$2.49 | **−$6.74** | −1.87 · −2.19 | −0.69 | 0.433 | 0.888 | −$4.25 | −1.31 · 18.2 | −$6.15 | −$8.93 | −$3.96 | −$7,729 |
-| repulsion, the sign found | +$2.49 | **−$1.76** | −0.49 · −0.72 | **+0.69** | 0.443 | 1.135 | −$4.25 | +1.31 · 18.2 | −$2.35 | −$4.54 | +$0.43 | −$2,698 |
+| attraction | −$2.49 | **−$6.74** | −0.69 · −0.78 | −1.87 · −2.19 | 0.433 | 0.888 | −$4.25 | −1.31 · 18.2 | −$6.15 | −$8.93 | −$3.96 | −$7,729 |
+| repulsion, the sign found | +$2.49 | **−$1.76** | **+0.69 · +1.00** | −0.49 · −0.72 | 0.443 | 1.135 | −$4.25 | +1.31 · 18.2 | −$2.35 | −$4.54 | +$0.43 | −$2,698 |
+
+**Both ratios on both lines** (R17): an earlier pass of this runner reported gross Sharpe without its
+Sortino, which is exactly the substitution the rule forbids, and the omission is recorded rather than
+silently repaired. The repulsion book's **gross Sortino of +1.00 exceeds its gross Sharpe of +0.69**,
+because the skew is +1.31 and the downside deviation is therefore the smaller denominator — gross,
+the construction looks respectable. **Cost is what destroys it**, taking the pair to −0.49 and −0.72,
+and the gross itself is the crisis-day tail of §3 rather than a repeatable edge.
 
 Exposure is every session in the panel, 30 minutes each, so exposure does not separate the two
 directions. Drawdown is in **negative dollars from the running peak** of the cumulative net series,
