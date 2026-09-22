@@ -44,13 +44,16 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-22T07:37:09.292524000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "downloaded_utc": "2026-09-22T14:42:12Z",
+   "files": 14,
+   "bytes": 14192639453
   },
   {
    "label": "options-ON",
@@ -197,13 +200,16 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-22T07:37:38.535819000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "downloaded_utc": "2026-09-22T14:59:46Z",
+   "files": 14,
+   "bytes": 2795116382
   },
   {
    "label": "tas",

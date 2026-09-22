@@ -52,7 +52,7 @@ hourly-Wikipedia row on the principal's approval; the amendment text is drafted 
 deposit not edited; reproduced here: UCO Spearman(Δholders, Δshares) 0.557 on 362 creation days
 against the record's 0.556 on 360, the validation JSON byte-identical on `--check`). **The free
 Databento pull was submitted** (`scripts/fetch_energy_options.py`, six jobs, USD 0.00; the paid TAS
-`trades` line deferred by the principal) and is downloading under `data/raw/databento/`. Integration
+`trades` line deferred by the principal) and is ON DISK under `data/raw/databento/` (six jobs, 84 yearly files, 20.4 GB compressed: LO statistics 14.2 GB, ON 3.1 GB, LN 0.2 GB, options definition 2.8 GB, TAS definition and statistics 0.04 GB; the LO zip was corrupted once by two concurrent pollers writing it and was discarded and refetched under the PID lock the script now takes -- `9658f95`). Integration
 of 4b: four more data-available paragraphs, three CHANGELOG bullets, four catalogue rows (manifest
 **130** panels, **15** blob-less, named on the running page), the tracker's settlement table and
 bullets, register and counts. **Full suite on the staged tree after 4b: 4,151 passed, 1 skipped, 6 deselected (4:32); skip count unchanged.** **Committed `804b807`, merged with origin (the expiry-pinning branch's D613-D618) as `3092d50` and pushed, 2026-09-22; the merged tree ran 4,151 passed, 3 skipped (the two extra skips are origin's ES 0DTE panels, built on the other clone), 6 deselected.** Decisions the principal gave: Wikipedia hourly dropped (item 2 —
