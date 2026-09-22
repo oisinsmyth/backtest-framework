@@ -23,6 +23,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"
@@ -88,7 +89,7 @@ def submit(accepted: float | None) -> int:
     if JOBS.exists():
         raise SystemExit(f"{JOBS.name} exists; do NOT resubmit. Use --download.")
     c = db.Historical(api_key())
-    rec = {"quote_file": QUOTE.name, "submitted_utc": now(), "start": START, "end": END, "paid_schemas_submitted": [], "jobs": []}
+    rec: dict[str, Any] = {"quote_file": QUOTE.name, "submitted_utc": now(), "start": START, "end": END, "paid_schemas_submitted": [], "jobs": []}
     for label, schema, syms, usd in plan:
         job = c.batch.submit_job(
             dataset=DATASET, symbols=syms, schema=schema, start=START, end=END, encoding="dbn",
