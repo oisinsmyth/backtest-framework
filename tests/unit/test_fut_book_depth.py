@@ -1,16 +1,14 @@
 """Unit tests for the order-book depth fixture and its replay (D604).
 
 The panel `data/fixtures/fut_book_depth_1m.csv.gz` is a bulk artefact: gitignored by suffix, and
-registered in `data/data_manifest.json` by the integrator. Two skip rules therefore apply and
-they are NOT the same rule:
+registered in `data/data_manifest.json` by the integrator. **That window has closed** -- the
+manifest row exists -- so the transitional second skip rule this file carried is gone (D609).
 
-  * once the manifest lists it, `requires_panel` (tests/conftest.py:56) skips when the file is
-    absent and RAISES when a missing file is not a manifest panel -- a wrong path must never be
-    reported as absent data;
-  * until the manifest lists it, `requires_panel` would raise on a clean checkout of this branch,
-    because the panel is not yet a panel it knows about. `_panel(...)` below therefore skips on
-    "absent AND not in the manifest" itself and defers to `requires_panel` the moment the entry
-    exists. That window closes when the integrator adds the manifest row.
+One rule applies: `requires_panel` (tests/conftest.py) skips when the file is absent and the
+manifest lists it, and RAISES when a missing file is not a manifest panel, because a wrong path
+must never be reported as absent data. `_panel(...)` below asserts the listing first, so the
+message names the manifest rather than the file if the row ever disappears. The decision itself
+lives once, at `backtest_framework.data.panels.panel_status`.
 
 The replay tests need no panel at all: they push hand-built message sequences through the same
 `replay_messages` the builder runs, so the arithmetic is gated on every machine.
@@ -27,6 +25,7 @@ from pathlib import Path
 import pytest
 
 from backtest_framework.costs.futures_impact import FuturesImpactError, depth_bar
+from backtest_framework.data.panels import panel_status
 
 REPO = Path(__file__).resolve().parents[2]
 PANEL = REPO / "data" / "fixtures" / "fut_book_depth_1m.csv.gz"
@@ -55,19 +54,13 @@ def _builder():
 B = _builder()
 
 
-def _manifest_names() -> set[str]:
-    if not MANIFEST.exists():
-        return set()
-    return {Path(f["path"]).name for f in json.loads(MANIFEST.read_text(encoding="utf-8"))["files"]}
-
-
 def _panel(requires_panel):
-    """Skip when the panel is absent. See the module docstring for why there are two rules."""
-    if not PANEL.exists() and PANEL.name not in _manifest_names():
-        pytest.skip(
-            f"{PANEL.name} absent and not yet in data/data_manifest.json -- D604 built it and the "
-            "integrator adds the manifest row; after that `requires_panel` governs."
-        )
+    """Skip when the panel is absent. See the module docstring: there is one rule again."""
+    assert panel_status(PANEL) != "absent_unlisted", (
+        f"{PANEL.name} is not in data/data_manifest.json. The transitional double-skip this "
+        "file carried until D609 is gone, so an unlisted absence is now a loud failure -- "
+        "which is the right answer once the manifest row exists."
+    )
     requires_panel(PANEL)
     import pandas as pd
 

@@ -20,37 +20,39 @@ one).
 git blob id it had when it was last tracked, so a skipped test names data that is recoverable:
 
     git cat-file blob <git_blob> > <path>
+
+D609 MOVED THE DECISION, NOT THE POLICY
+---------------------------------------
+The present / absent-but-listed / absent-and-unlisted distinction was written here and it is now
+`backtest_framework.data.panels.panel_status`, with `absent_reason` and `unlisted_message`
+carrying the two sentences verbatim. It moved because two OTHER places had retyped it by hand —
+`scripts/futures_impact_table.py` and `tests/unit/test_fut_book_depth.py` — and three copies of
+one rule drift. **The behaviour of these fixtures is unchanged**: same branches, same messages,
+same skip count.
 """
 
 from __future__ import annotations
 
-import json
 from contextlib import contextmanager
-from functools import lru_cache
 from pathlib import Path
 from typing import Callable, Iterator
 
 import pytest
 
+from backtest_framework.data.panels import (
+    absent_reason,
+    panel_names,
+    panel_status,
+    unlisted_message,
+)
+
 REPO = Path(__file__).resolve().parent.parent
 MANIFEST = REPO / "data" / "data_manifest.json"
 
 
-@lru_cache(maxsize=1)
 def _panel_names() -> frozenset[str]:
-    """The basenames D536 untracked, read from the manifest.
-
-    This set is what makes `loading_a_panel` safe: a missing file whose name is in here is a
-    panel the repository deliberately stopped carrying, and skipping is right. A missing file
-    whose name is NOT in here is a bug — a typo'd path, a renamed artifact, a fixture nobody
-    built — and it re-raises. Without that distinction the guard would convert every
-    FileNotFoundError into a green run, which is how a suite stops testing anything.
-    """
-    if not MANIFEST.exists():  # pragma: no cover - the manifest is committed
-        return frozenset()
-    return frozenset(
-        Path(f["path"]).name for f in json.loads(MANIFEST.read_text())["files"]
-    )
+    """The basenames D536 untracked. `panels.panel_names` is the one implementation."""
+    return panel_names()
 
 
 @pytest.fixture(scope="session")
@@ -59,33 +61,27 @@ def requires_panel() -> Callable[[Path], None]:
 
     Call it at the top of the fixture that loads the panel, not at module level — a module-level
     skip would take the file's synthetic tests down with it, and those are the majority.
+
+    The manifest check is what makes the skip honest. Without it this helper would answer EVERY
+    missing file with "the bulk panels left the index in D536", which for a typo'd path, a
+    renamed artifact or a fixture nobody built is a false explanation attached to a green run.
+    A panel the manifest lists is a skip; a file it does not list is a bug, and a bug must not
+    be reported as absent data.
     """
 
     def _requires(path: Path) -> None:
-        if path.exists():
+        status = panel_status(path)
+        if status == "present":
             return
-        # The manifest check is what makes the skip honest, and it is the same distinction
-        # `loading_a_panel` draws below. Without it this helper answers EVERY missing file with
-        # "the bulk panels left the index in D536 -- see data_manifest.json for its sha256 and
-        # git blob id", which for a typo'd path, a renamed artifact or a fixture nobody built is
-        # a false explanation attached to a green run. A panel the manifest lists is a skip; a
-        # file it does not list is a bug, and a bug must not be reported as absent data.
-        if Path(path).name not in _panel_names():
-            raise FileNotFoundError(
-                f"{path} does not exist and `data/data_manifest.json` does not list it, so it is "
-                "not a bulk panel D536 untracked -- it is a wrong path, a renamed artifact or a "
-                "fixture nobody built. Skipping here would report a bug as absent data."
-            )
-        pytest.skip(_reason(Path(path).name))
+        if status == "absent_unlisted":
+            raise FileNotFoundError(unlisted_message(path))
+        pytest.skip(absent_reason(Path(path).name))
 
     return _requires
 
 
 def _reason(name: str) -> str:
-    return (
-        f"{name} absent — the bulk panels left the index in D536. "
-        "See data/data_manifest.json for its sha256 and git blob id."
-    )
+    return absent_reason(name)
 
 
 @pytest.fixture(scope="session")

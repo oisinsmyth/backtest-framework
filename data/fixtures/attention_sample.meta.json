@@ -1,0 +1,82 @@
+{
+ "articles": [
+  "Natural_gas",
+  "Henry_Hub",
+  "Natural_gas_prices",
+  "Price_of_oil",
+  "West_Texas_Intermediate",
+  "Petroleum",
+  "United_States_Oil_Fund",
+  "ProShares"
+ ],
+ "built_utc": "2026-09-22T01:01:17Z",
+ "bytes_stored": 24498,
+ "bytes_streamed": {
+  "gdelt_export": 409724,
+  "gdelt_gkg": 1526153437,
+  "masterfilelist": 127845616,
+  "wiki_dumps": 2773377092
+ },
+ "columns": [
+  "kind",
+  "key",
+  "observed_at_utc",
+  "available_at_utc",
+  "value",
+  "tone"
+ ],
+ "deposit": "SETTLEMENT_FLOW_LEDGER_PREREG.md sections 3.3c and P3.7, its lines 105-116 and 249-267",
+ "gdelt_available_at_note": "available_at_utc for a gdelt_15m row is the slot stamp plus one full slot (15 min) \u2014 a DECLARED conservative stand-in for an unmeasured file-posting lag, not the deposit's item-level publication rule, which attention.available() implements.",
+ "holdout": "attention counts, no return, no signal; in-sample week. No price bar is read by this fixture's build and no row dated 2024-01-01 or later is touched.",
+ "hours": 48,
+ "low_precision_keys": [
+  "tk_boil",
+  "tk_kold",
+  "tk_uco",
+  "tk_sco",
+  "tk_ung",
+  "tk_uso"
+ ],
+ "projected_seconds": 2263.2,
+ "queries": [
+  "natural_gas",
+  "crude_oil",
+  "henry_hub",
+  "wti",
+  "theme_env_naturalgas",
+  "theme_env_oil",
+  "theme_econ_oilprice",
+  "theme_econ_natgasprice",
+  "tk_boil",
+  "tk_kold",
+  "tk_uco",
+  "tk_sco",
+  "tk_ung",
+  "tk_uso"
+ ],
+ "queries_sha256": "c153ed567adebb9cf1bffa7f7813a58d46cf74040fdbb5a677b9b77b897d7963",
+ "record": "docs/decisions/D612-the-attention-layer-and-its-point-in-time-guards.md",
+ "rows": 3072,
+ "rows_by_kind": {
+  "gdelt_15m": 2688,
+  "wiki_hourly": 384
+ },
+ "sha256": "30455a2b7c98cc93f4f6b9f6f0ef25db847932c7d3cbf65083161170143afa46",
+ "slots": 192,
+ "sources": [
+  "https://dumps.wikimedia.org/other/pageviews/{y}/{y}-{m}/pageviews-{ymd}-{hh}0000.gz",
+  "https://data.gdeltproject.org/gdeltv2/{SLOT}.gkg.csv.zip",
+  "https://data.gdeltproject.org/gdeltv2/{SLOT}.export.CSV.zip",
+  "https://data.gdeltproject.org/gdeltv2/masterfilelist.txt"
+ ],
+ "span_utc": [
+  "2019-11-04T00:00:00Z",
+  "2019-11-05T23:45:00Z"
+ ],
+ "spec": "D612",
+ "wall_seconds": 1902.2,
+ "workers": {
+  "gdelt": 4,
+  "wiki": 1
+ }
+}

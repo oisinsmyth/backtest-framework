@@ -39,7 +39,12 @@
       "group": "ES",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 12.5,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $385,900",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ES.last_price",
+      "tick_usd_full_contract": 12.5
     },
     "NQ": {
       "present": true,
@@ -54,7 +59,12 @@
       "group": "NQ",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 5.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $595,000",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.NQ.last_price",
+      "tick_usd_full_contract": 5.0
     },
     "RTY": {
       "present": true,
@@ -69,7 +79,12 @@
       "group": "RY",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 5.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $147,250",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.RTY.last_price",
+      "tick_usd_full_contract": 5.0
     },
     "YM": {
       "present": true,
@@ -84,7 +99,12 @@
       "group": "YM",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 5.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $264,460",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.YM.last_price",
+      "tick_usd_full_contract": 5.0
     },
     "MES": {
       "present": true,
@@ -99,7 +119,12 @@
       "group": "MS",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 1.25,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "inherits ES's scaling (a micro quotes its parent's price)",
+      "scaling_source": "parent ES",
+      "tick_usd_full_contract": 1.25
     },
     "MNQ": {
       "present": true,
@@ -114,7 +139,12 @@
       "group": "NQ",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 0.5,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "inherits NQ's scaling (a micro quotes its parent's price)",
+      "scaling_source": "parent NQ",
+      "tick_usd_full_contract": 0.5
     },
     "M2K": {
       "present": true,
@@ -129,7 +159,12 @@
       "group": "RY",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 0.5,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "inherits RTY's scaling (a micro quotes its parent's price)",
+      "scaling_source": "parent RTY",
+      "tick_usd_full_contract": 0.5
     },
     "MYM": {
       "present": true,
@@ -144,7 +179,12 @@
       "group": "YM",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 0.5,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "inherits YM's scaling (a micro quotes its parent's price)",
+      "scaling_source": "parent YM",
+      "tick_usd_full_contract": 0.5
     },
     "CL": {
       "present": true,
@@ -159,7 +199,12 @@
       "group": "CL",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 10.000000000000002,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $65,910",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.CL.last_price",
+      "tick_usd_full_contract": 10.000000000000002
     },
     "NG": {
       "present": true,
@@ -174,7 +219,12 @@
       "group": "NG",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 10.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $43,280",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.NG.last_price",
+      "tick_usd_full_contract": 10.0
     },
     "GC": {
       "present": true,
@@ -189,7 +239,12 @@
       "group": "GC",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 10.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $464,150",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.GC.last_price",
+      "tick_usd_full_contract": 10.0
     },
     "SI": {
       "present": true,
@@ -204,7 +259,12 @@
       "group": "SI",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 25.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $354,900",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.SI.last_price",
+      "tick_usd_full_contract": 25.0
     },
     "HG": {
       "present": true,
@@ -219,7 +279,12 @@
       "group": "HG",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 12.5,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $171,288",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.HG.last_price",
+      "tick_usd_full_contract": 12.5
     },
     "ZN": {
       "present": true,
@@ -234,7 +299,12 @@
       "group": "ZN",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 1562.5,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $107,031 (undivided $10,703,125)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZN.last_price",
+      "tick_usd_full_contract": 15.625
     },
     "ZB": {
       "present": true,
@@ -249,7 +319,12 @@
       "group": "ZB",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 3125.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $108,000 (undivided $10,800,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZB.last_price",
+      "tick_usd_full_contract": 31.25
     },
     "ZF": {
       "present": true,
@@ -264,7 +339,12 @@
       "group": "ZF",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 781.25,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $105,250 (undivided $10,525,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZF.last_price",
+      "tick_usd_full_contract": 7.8125
     },
     "SR3": {
       "present": true,
@@ -279,7 +359,13 @@
       "group": "SS",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 6.25,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $239,150",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.SR3.last_price",
+      "tick_usd_full_contract": 6.25,
+      "tick_usd_superseded": true
     },
     "ZT": {
       "present": true,
@@ -294,7 +380,12 @@
       "group": "ZT",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 781.25,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $204,914 (undivided $20,491,406)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZT.last_price",
+      "tick_usd_full_contract": 7.8125
     },
     "UB": {
       "present": true,
@@ -309,7 +400,12 @@
       "group": "ZU",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 3125.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $109,312 (undivided $10,931,250)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.UB.last_price",
+      "tick_usd_full_contract": 31.25
     },
     "TN": {
       "present": true,
@@ -324,7 +420,12 @@
       "group": "Z1",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": true
+      "percent_of_par": true,
+      "tick_usd_raw_formula": 1562.5,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $108,672 (undivided $10,867,188)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.TN.last_price",
+      "tick_usd_full_contract": 15.625
     },
     "RB": {
       "present": true,
@@ -339,7 +440,12 @@
       "group": "CL",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 4.2,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $99,662",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.RB.last_price",
+      "tick_usd_full_contract": 4.2
     },
     "HO": {
       "present": true,
@@ -354,7 +460,12 @@
       "group": "CL",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 4.2,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $138,587",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.HO.last_price",
+      "tick_usd_full_contract": 4.2
     },
     "BZ": {
       "present": true,
@@ -369,7 +480,12 @@
       "group": "OP",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 10.000000000000002,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $73,340",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.BZ.last_price",
+      "tick_usd_full_contract": 10.000000000000002
     },
     "PL": {
       "present": true,
@@ -384,7 +500,12 @@
       "group": "PL",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 5.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $95,915",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.PL.last_price",
+      "tick_usd_full_contract": 5.0
     },
     "PA": {
       "present": true,
@@ -399,7 +520,12 @@
       "group": "PD",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 50.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $136,750",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.PA.last_price",
+      "tick_usd_full_contract": 50.0
     },
     "6E": {
       "present": true,
@@ -414,7 +540,12 @@
       "group": "6E",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 6.250000000000001,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $148,063",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6E.last_price",
+      "tick_usd_full_contract": 6.250000000000001
     },
     "6J": {
       "present": true,
@@ -429,7 +560,12 @@
       "group": "6J",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 6.250000000000001,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $84,256",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6J.last_price",
+      "tick_usd_full_contract": 6.250000000000001
     },
     "6B": {
       "present": true,
@@ -444,7 +580,12 @@
       "group": "6B",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 6.250000000000001,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $84,613",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6B.last_price",
+      "tick_usd_full_contract": 6.250000000000001
     },
     "6A": {
       "present": true,
@@ -459,7 +600,12 @@
       "group": "6A",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 5.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $71,630",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6A.last_price",
+      "tick_usd_full_contract": 5.0
     },
     "6C": {
       "present": true,
@@ -474,7 +620,12 @@
       "group": "6C",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 5.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $72,755",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6C.last_price",
+      "tick_usd_full_contract": 5.0
     },
     "6S": {
       "present": true,
@@ -489,7 +640,12 @@
       "group": "6S",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 6.250000000000001,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $155,956",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6S.last_price",
+      "tick_usd_full_contract": 6.250000000000001
     },
     "ZC": {
       "present": true,
@@ -504,7 +660,13 @@
       "group": "ZC",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 1250.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $25,300 (undivided $2,530,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZC.last_price",
+      "tick_usd_full_contract": 12.5,
+      "tick_usd_superseded": true
     },
     "ZS": {
       "present": true,
@@ -519,7 +681,13 @@
       "group": "ZS",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 1250.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $61,438 (undivided $6,143,750)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZS.last_price",
+      "tick_usd_full_contract": 12.5,
+      "tick_usd_superseded": true
     },
     "ZW": {
       "present": true,
@@ -534,7 +702,13 @@
       "group": "ZW",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 1250.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $37,650 (undivided $3,765,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZW.last_price",
+      "tick_usd_full_contract": 12.5,
+      "tick_usd_superseded": true
     },
     "ZL": {
       "present": true,
@@ -549,7 +723,13 @@
       "group": "ZS",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 600.0000000000001,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $41,070 (undivided $4,107,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZL.last_price",
+      "tick_usd_full_contract": 6.000000000000001,
+      "tick_usd_superseded": true
     },
     "ZM": {
       "present": true,
@@ -564,7 +744,12 @@
       "group": "ZS",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 10.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $34,460",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZM.last_price",
+      "tick_usd_full_contract": 10.0
     },
     "LE": {
       "present": true,
@@ -579,7 +764,13 @@
       "group": "LE",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 1000.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $85,010 (undivided $8,501,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.LE.last_price",
+      "tick_usd_full_contract": 10.0,
+      "tick_usd_superseded": true
     },
     "HE": {
       "present": true,
@@ -594,7 +785,13 @@
       "group": "HE",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 1000.0,
+      "scaling_divisor": 100.0,
+      "scaling_reason": "percent/cents quote, notional $29,770 (undivided $2,977,000)",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.HE.last_price",
+      "tick_usd_full_contract": 10.0,
+      "tick_usd_superseded": true
     },
     "NKD": {
       "present": true,
@@ -609,7 +806,12 @@
       "group": "NK",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 25.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $322,500",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.NKD.last_price",
+      "tick_usd_full_contract": 25.0
     },
     "BTC": {
       "present": true,
@@ -624,7 +826,12 @@
       "group": "BF",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 25.0,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "native units, notional $397,600",
+      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.BTC.last_price",
+      "tick_usd_full_contract": 25.0
     },
     "MBT": {
       "present": true,
@@ -639,7 +846,23 @@
       "group": "BF",
       "currency": "USD",
       "class": "F",
-      "percent_of_par": false
+      "percent_of_par": false,
+      "tick_usd_raw_formula": 0.5,
+      "scaling_divisor": 1.0,
+      "scaling_reason": "inherits BTC's scaling (a micro quotes its parent's price)",
+      "scaling_source": "parent BTC",
+      "tick_usd_full_contract": 0.5
     }
-  }
+  },
+  "scaling_rule": "tick_usd_full_contract = tick_price_units * unit_of_measure_qty / scaling_divisor, where the divisor is decided by the NOTIONAL test in scripts/build_fut_breadth_hourly.py:decide_scaling (/100 where the notional says the quote is percent or cents; ambiguity raises). `tick_usd` is the ORIGINAL field and is left unchanged because D591 and D604 quote it; it applies /100 on unit_of_measure == 'USD' alone, which is wrong for the roots listed in scaling_corrections. Read tick_usd_full_contract.",
+  "scaling_corrections": [
+    "HE",
+    "LE",
+    "SR3",
+    "ZC",
+    "ZL",
+    "ZS",
+    "ZW"
+  ],
+  "scaling_decided_by": "D609"
 }

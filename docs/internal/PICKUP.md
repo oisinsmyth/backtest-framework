@@ -2,7 +2,101 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
-## SHARED INFRASTRUCTURE, ROUND 3 — D608–D607 BUILT AND VERIFIED, STAGED, NOT COMMITTED, 2026-09-21
+## ROUND 4 — THE LAST SHARED ITEM AND THE SETTLEMENT LEDGER'S OWN INFRASTRUCTURE, D609–D612 AND D619–D621 COMMITTED `804b807` + MERGE `3092d50`, 2026-09-22
+
+The principal's instruction (2026-09-21): *"finish off the shared infrastructure points then move on to
+the Settlement ledger infrastructure. Pick 5 points and give them to 5 opus agents."* Three decisions
+taken before launch (2026-09-22): the five below; the Databento energy-options pull is **quote only**;
+the attention sample is one week (it became two days — see D612). Five parallel Opus agents on disjoint
+files, each verified here by running its tests and selftest and reproducing its hand cases
+independently. **Do not rebuild any of the following.**
+
+| record | component | files | reproduced here |
+|---|---|---|---|
+| **D609** | the panel loader chokepoint (`load_panel`, `reserved_from` **no default**, D594's three layers, manifest sha re-derived; `panel_catalogue.py` declares the date column for all 128 manifest panels, 19 wrong-cut columns, 19 dateless panels refused; honest-skip rule moved out of `conftest.py`) **and the seven-root 100× fix** (`tick_usd_full_contract` in the definition snapshot; `from_specs` reads it; `futures_costs.json` and `futures_impact_params.json` rebuilt) | `data/panels.py`, `data/panel_catalogue.py`, `scripts/panel_catalogue_check.py`, `instruments/future.py`, `scripts/probe_definition_specs.py --rescale`, 3 data files, 6 test files | ZC/ZS/ZW $12.50, ZL $6.00, LE/HE $10.00, SR3 $6.25; ES/ZN unchanged; `from_table("ZC").tick_usd == 12.5`; TypeError without `reserved_from`; breadth panel 140,814 rows to 2023-12-29, zero reserved; depth panel **zero rows** at the seal; d555 dollar book byte-identical |
+| **D610** | the flow ledger's algebra: P1/P2 + routing, §5.1, §5.2 Kalman update, §7.1 entry rule, §8A.5 large lot, P8a/P8b rolls, §8A.2 netting fit, COT and swap clocks; **no data read** | `ledger/{__init__,flows,update,rolls,netting}.py`, `scripts/ledger_selftest.py`, 6 test files | test 6: k 1.0, Q_hat 110.0, var_post 200.0, Q_rem 55.0 exact, σ_rem 5√2; K = 0 at R = ∞; test 1 +1e8/+3e8/0; L = −2 roll buys 25 old, sells 23.4375 new; same-day large-lot trade raises |
+| **D611** | the fund model: iNAV + Gate 0b, NBBO-mid premium + valid minute + features + stress, creations + `lag_c` + hedged fraction + split, P9 + restrike; **every "to source" fact is `None` and raises** | `ledger/{funds,premium,creations,non_us}.py`, `scripts/fund_model_selftest.py`, 5 test files | iNAV at r = 0 = NAV·(1 + accruals) exact; ±2% at L = ±2; ΔH +12m/+24m exact; KOLD creation −66.67 vs BOIL +66.67; −6.5% no restrike, −6.7% restrike with level 79.9 |
+| **D612** | the attention layer: `QUERIES.md` hashed first, Wikimedia dump + GDELT GKG parsers, four point-in-time guards, a **two-day** sample; **erratum on deposit line 112**; no backfill; `attention` recorder job ready | `data/attention.py`, `scripts/fetch_attention.py`, `data/attention/*`, `attention_sample.csv.gz` + meta, `jobs.json`, 3 test files | hash matches `QUERIES.sha256`; 13:00 hour available at 14:15 exactly (14:10 and 14:14:59 not); sample 3,072 rows, `available_at > observed_at` on every row; recorder https gate passes |
+| **D619** | `fund_nav_daily` (BOIL/KOLD/UCO/SCO NAV, shares, AUM 2008→2026), one day of holdings, `fund_facts/{SOURCES.md,fund_facts.json}` (30 sourced / 10 unknown / 8 P9 not sourced), the CME census (TAS **present** as `CLT.FUT`/`NGT.FUT`; options OI **not on disk**; quote 178.91 GB / $3.17, **nothing submitted**) | `scripts/{fetch_fund_nav,fetch_fund_holdings,fetch_fund_facts,build_fund_panel,probe_energy_options_parents,quote_energy_options_pull}.py`, 4 data JSONs, fixture + meta, 2 test files | 16,402 rows, four funds, spans as stated, 82 BOIL seed rows excluded and dated; `submitted: false` and `submit_job` absent from the code; TAS conclusion `present` |
+
+**Integration DONE (2026-09-22, staged, NOT committed):** the crosswalk map moved from 43 to **79 of 146
+claimed** (ledger 65/71 — 54–58 declined in D588 and 61 remain) and the page re-rendered, `--scan` at
+zero, `--check` collecting 801 node ids; four data-available §4 paragraphs; a CHANGELOG block of six
+bullets; the recorder schedule's `fund_snapshot` split into four jobs from D619's draft (19 jobs, 10
+ready) and the TAS note extended; the manifest rebuilt at **128 panels, 13 blob-less**, named on the
+running page with the anchor test moved to 128/13; the catalogue given rows for the two new panels
+(`attention_sample`: `observed_at_utc`, wrong cut `available_at_utc`; `fund_nav_daily`: `date`, wrong cut
+`fetched_at`) and its pinned counts moved 126→128 in the unit test, the golden and the hand file;
+register and README counts (845 records, 571 numbers, D1→D619); the living documents' quoted counts
+(golden 331→383, property 181→215, unit 2,882→3,199, total 3,553→3,956, non-bare raises 829→1,120 across
+74 of 113, bare unchanged at 4 so "(833)"→"(1,124)", modules 63→74 across 12 packages); the encoding
+ratchet (two `Path.open("rb")` calls in the catalogue checker rewritten as builtin `open(path, "rb")` —
+the ratchet does not recognise the method form as binary); two citation anchors in `panels.py` reworded;
+ledger 33's claim line re-pinned after a comment was added above it; the tracker's shared rows 1, 2 and
+17 updated, its per-document settlement bullets rewritten, two wrong lines corrected (TAS symbology;
+"statistics schema held"), and a settlement-ledger status table added. **Full suite on the staged tree:
+3,955 passed, 1 skipped, 6 deselected (4:54); skip count unchanged** against round 3's 3,552 passed / 1 skipped / 6 deselected. **Only the commit is owed,
+on the principal's word**; the message is drafted in this session's scratchpad.
+
+**Round 4b (2026-09-22, same day, on the principal's answers to the five findings):** the fund-panel
+record was renumbered to **D619** when the concurrent expiry-pinning branch pushed the six numbers
+below it to origin (its first number, and the next two, were taken there); two
+more agents ran in parallel and are verified here: **D620** (all 231 10-Q/10-K filings recorded and
+parsed into `fund_holdings_quarterly` — 415 fund-quarters, signed contracts, held months, `f_fut`;
+and `fund_panel_projected` for UNG/USO, which answers *"can we project backwards / between
+filings?"* by measurement on the four funds with daily truth: **backwards yes, between no** — median
+36–44% share error, 18–33% AUM, creation flow uncorrelated; reproduced here: UCO `f_fut` 0.183 and
+SCO 1.000 at 2026-06-30, every projected row `est_flag = 1`, method `step` only) and **D621** (retail
+attention from creations + Robinhood holders + GDELT hourly via the API, replacing the deposit's
+hourly-Wikipedia row on the principal's approval; the amendment text is drafted in D621 §7d, the
+deposit not edited; reproduced here: UCO Spearman(Δholders, Δshares) 0.557 on 362 creation days
+against the record's 0.556 on 360, the validation JSON byte-identical on `--check`). **The free
+Databento pull was submitted** (`scripts/fetch_energy_options.py`, six jobs, USD 0.00; the paid TAS
+`trades` line deferred by the principal) and is downloading under `data/raw/databento/`. Integration
+of 4b: four more data-available paragraphs, three CHANGELOG bullets, four catalogue rows (manifest
+**130** panels, **15** blob-less, named on the running page), the tracker's settlement table and
+bullets, register and counts. **Full suite on the staged tree after 4b: 4,151 passed, 1 skipped, 6 deselected (4:32); skip count unchanged.** **Committed `804b807`, merged with origin (the expiry-pinning branch's D613-D618) as `3092d50` and pushed, 2026-09-22; the merged tree ran 4,151 passed, 3 skipped (the two extra skips are origin's ES 0DTE panels, built on the other clone), 6 deselected.** Decisions the principal gave: Wikipedia hourly dropped (item 2 —
+plan approved), paid TAS deferred (3), filings parser built (4), the host / seal date / automation /
+calendar flags on hold (5).
+
+**Shared list, re-checked against the split TEXT rather than the status table (2026-09-22, at the
+principal's request):** every sub-piece the seventeen items name has code, with three that are not a
+builder's — the recorder host (Q17), the seal-date reconciliation, the 14:30 UK automation (O-Q3) — and
+**one gap inside a "built" row: item 8's calendar carries no `eia` and no `index_rebalance` flag** though
+the split names both. EIA dates are already in `data/calendar/events.csv` (573 WPSR, 574 NGSR), so that
+flag is a join; index-rebalance dates exist nowhere in the repo and need a source. Recorded in the
+tracker, not built (the principal has not asked for it).
+
+**Findings the agents surfaced that a later study must carry:** the ledger document's units do not
+reconcile — line 160's `var_Q1` is notional² while line 156's `Q1` is contracts, and §5.1 sums both into
+what §5.2 divides (D610 returns the document's form by default and raises on a half-converted call);
+the P1/P2 routing identity is exact only at `f_fut ∈ {0, 1}` and one ulp wide inside; line 156 is exact
+in binary64 only in the document's own operand order; **the deposit's line 112 is wrong** — per-article
+hourly Wikipedia pageviews exist only in the dumps (~2.5 TB for 2016–2023; GDELT GKG ~1.64 TB), and the
+daily REST alternative re-derives `att_accel` and voids test 22 as written (the principal's call);
+GDELT's DOC API allows one request per 5 s with a long cooldown and its resolution autoscales, so the
+raw files are the backfill route and the API only the forward one; `dumps.wikimedia.org` throttles two
+sustained connections below one; three of the four ProShares ticker articles are disambiguation pages;
+the ProShares NAV series is fully back-adjusted for reverse splits (BOIL's earliest rows imply 0.5
+shares) and shares are published in thousands to two decimals, so the AUM identity gates at half a
+rounding unit, not a basis point; **UCO held 75% of its exposure in swaps** across four counterparties
+on 2026-09-18 while SCO was 100% futures, and both hold DEC26/JUN27/DEC27, not the front; **`lag_c = 0`
+on all six funds**, ProShares strikes NAV at 2:30 p.m. ET at the close of the settlement window, TAS is
+mentioned in none of the three 10-Ks, USO's roll changed from ten days to five on 2026-01-01, and the
+four ProShares roll schedules are unknown (Q19) — **Gate 0 does not clear**; UNG/USO have no free NAV
+route (USCF's page is JS-gated) and no fund has a free holdings history (commodity pools file no N-PORT;
+the 10-Q/10-K Schedule of Investments is quarterly); **TAS is present** on GLBX.MDP3 as `CLT.FUT` and
+`NGT.FUT` (their own roots — the archive scan missed them because both pulls used `{root}.FUT`), and
+**CL/NG options OI needs a pull**: 178 GB at $0.00 plus TAS trades at $3.17, free only until
+~2026-10-11; `hkm_factors.csv.gz` is two panels stacked (monthly and quarterly); 26 scripts reference
+`RESERVED_FROM`, not nine; the definition snapshot's cents/percent trap shipped in commit `7d03311`
+(2026-09-13) and D591's cost table carried it in seven roots nobody had yet charged; `Future.__post_init__`
+cannot catch a scale error because `usd_per_point` is derived from `tick_usd`, now pinned as a test;
+`scripts/d508_micro_crossing_tbbo.py:98` still reads the old `tick_usd` as a fallback (none of the seven
+roots; a frozen runner, named not edited); the vault-window-vs-seal reconciliation is still the
+principal's decision and now gates the fund NAV panel and the attention sample as well.
+
+## SHARED INFRASTRUCTURE, ROUND 3 — D604–D608 BUILT AND VERIFIED, COMMITTED `f03ab6f` + MERGE `9bf41e8`, 2026-09-21
 
 The tracker for the whole programme is now `docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md` (the
 principal's research-vs-infrastructure split verbatim, with a status table on top). Round 3 took the

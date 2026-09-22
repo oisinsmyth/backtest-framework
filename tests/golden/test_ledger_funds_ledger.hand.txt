@@ -1,0 +1,487 @@
+Golden-master hand ledger for the deposit's fund model -- iNAV, premium, creations, P9 (D611).
+Companion to test_ledger_funds_ledger.py -- every number below has a matching assertion there.
+
+Per CONTRIBUTING.md the arithmetic here was worked BEFORE the assertions were written, by a
+calculator that never imports `backtest_framework`. It is also worked before any of it could be
+read off a fixture, because THERE IS NO FIXTURE: the deposit's fund panel (NAV, shares
+outstanding, holdings by contract month for BOIL/KOLD/UCO/SCO/UNG/USO), its ETF NBBO quotes, its
+FX series and every P9 product's AUM are all listed as missing in
+docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md. So every input below is one of two kinds:
+
+  (a) DOCUMENT numbers -- the leverages of Section 3.1, the 5 bp and 95% of Gate 0b, c_AP =
+      0.10%, the 20% restrike threshold, the 6.67% underlying move, the +$12m / +$24m of
+      required unit test 26. These are the pre-registration's own figures and are cited by line.
+  (b) ILLUSTRATIVE numbers -- a NAV of 100.00, a collateral yield of 5.00%, an expense ratio of
+      1.00%, a held NG price of $3.00, a share count, an AUM. NOTHING HERE IS SOURCED. They are
+      round numbers chosen to make the arithmetic checkable by eye, and in particular
+      **y_cash = 0.05 and er = 0.01 are not any fund's actual figures**: Section 3.2 lists the
+      expense ratio among the facts to source, `ledger/funds.py`'s six constants carry `er=None`,
+      and `inav` RAISES on None precisely so that an illustrative number cannot leak into a
+      result by being left lying around in a default.
+
+One arithmetic choice is worth stating once, because three sections depend on it: every formula
+below is evaluated LEFT TO RIGHT in the order the document writes it. `A x B x (B-1) x r` is
+`((A x B) x (B-1)) x r`, not `A x (B(B-1)) x r`. The two agree to the last bit on §6's integers
+and need not in general, and the tests assert `==`.
+
+
+0. THE FORMULAS, AS THE LEDGER WRITES THEM
+================================================================================
+SETTLEMENT_FLOW_LEDGER_PREREG.md (v1.9, untracked, docs/internal/User-Doc-Deposit/).
+The document's Greek tau is spelled `tau`, its U+2212 minus `-`, its multiplication sign `x`.
+
+  line 184  iNAV_f(tau) = NAV_f[t-1] x (1 + L_f x r_held,f(tau))
+                          + NAV_f[t-1] x (y_cash / 360 - ER_f / 365)
+
+  line 191  Gate 0b: per fund, |iNAV at settlement - official NAV[t]| <= 5 bp on >= 95% of days.
+
+  line 196  prem_f(tau) = (mid_f(tau) - iNAV_f(tau)) / iNAV_f(tau)
+  line 199  Uses the NBBO midpoint, never the last trade.
+  line 200  A minute is valid only if the ETF quote updated within the last 60 s AND the held
+            futures contract traded within that minute.
+  line 201  Premium is computed only before W_start (decision D10).
+
+  line 208  prem_frac = (count above +c_AP - count below -c_AP) / valid minutes
+  line 209  vol_x = ETF volume / trailing 20-day mean for the same interval
+  line 210  sv_etf = aggressor-signed ETF volume x iNAV (USD)
+  line 211  stress = |prem_twa| z-scored against its trailing 60-day distribution
+  line 213  c_AP: primary 0.10%; sensitivity 0.05% and 0.20%
+
+  line 217  dCreate_f[t] = (shares_out[t] - shares_out[t-1]) x NAV_f[t]          (USD)
+  line 226  lag_c = 0: the creation is transacted today and the model forecasts it.
+            lag_c = 1: today's purchase comes from yesterday's orders, taken as known (Q3_known).
+
+  line 231  Create_flow = L_f x dCreate_f / (multiplier x P_held)
+  line 232  h           = 1 / (1 + exp(-(h0 - h1 x stress)))       (h1 >= 0)
+  line 233  Q3_window   = (1 - h) x Create_flow
+  line 234  Q3_intraday = h x Create_flow
+  line 271  (P3.7) replace `stress` with `stress + g1 x att_accel`   (g1 >= 0)
+  line 472  (Section 8) Constraints: p, n, n9 in [0, 1]; R > 0; h1 >= 0; g1 >= 0.
+
+  line 284  dH_f = AUM_f,USD[t-1] x L_eff,f x (L_eff,f - 1) x r_idx,f[t, tau]
+  line 285  Q9   = sum_f dH_f x (1 - n9) / (multiplier x P_held)
+  line 288  AUM_f,USD uses the FX rate at the PRIOR day's settlement, point-in-time.
+  line 289  r_idx,f uses the product's own index contract month: front month for BetaPro,
+            2nd-front month for WisdomTree NG.
+  line 292  if the product's intraday value falls by the threshold (20%), the swap resets
+            exposure intraday. For a +/-3x product this corresponds to an adverse underlying
+            move of about 6.67% from the prior reset.
+  line 294  logged as restrike_events.csv with timestamp, product and estimated dH.
+
+THE MULTIPLIERS ARE NOT IN THE DEPOSIT. They are this repository's committed contract specs,
+data/futures_contract_specs.json:
+
+    CL   usd_per_point 1000.0    contract_unit "1,000 barrels"
+    NG   usd_per_point 10000.0   contract_unit "10,000 MMBtu"
+
+and they enter as the `multiplier` of lines 231 and 285, which converts USD into contracts.
+
+
+1. iNAV -- REQUIRED UNIT TEST 14
+================================================================================
+Illustrative inputs, stated as such in the preamble:
+
+    NAV_f[t-1]   100.00        (per share)
+    y_cash       0.05          (5.00% annual, ACT/360)
+    ER_f         0.01          (1.00% annual, ACT/365)
+
+The accrual term, which is the same in every case below:
+
+    y_cash / 360 = 0.05 / 360   = 0.0001388888888888889
+    ER_f   / 365 = 0.01 / 365   = 2.7397260273972603e-05
+    accrual      = 0.0001388888888888889 - 2.7397260273972603e-05
+                 = 0.00011149162861491629
+
+THE TWO DAY COUNTS ARE DIFFERENT AND THAT IS THE DOCUMENT'S OWN ARITHMETIC (line 184). Written
+both on 365 the accrual would be
+
+    0.05 / 365 - 0.01 / 365 = 0.00013698630136986303 - 2.7397260273972603e-05
+                            = 0.00010958904109589043
+
+which is 1.7% smaller than the document's 0.00011149162861491629 -- invisible on a day and a
+one-way drift over a sample, spending part of Gate 0b's 5 bp budget on a day count.
+
+(a) ZERO MOVE, r_held = 0. Required unit test 14's first clause: "iNAV with zero futures move
+    equals NAV[t-1] x (1 + accruals)".
+
+        iNAV = 100.0 x (1 + L x 0.0) + 100.0 x 0.00011149162861491629
+             = 100.0 + 0.011149162861491629
+             = 100.01114916286149
+
+    and NAV[t-1] x (1 + accrual) = 100.0 x 1.0001114916286149
+                                 = 100.01114916286149
+
+    THE SAME DOUBLE, asserted with `==`. That is a property of these three numbers and not of
+    the algebra: `a + a*x` and `a*(1+x)` are different roundings in general, and the pair was
+    chosen so that the test can be an equality rather than a tolerance. The value of L does not
+    matter here (L x 0.0 is 0.0 for every finite L), and the test runs it at L = +2 and L = -2.
+
+(b) L = +2, r_held = +0.01. "with L = 2 and r = +1% it rises about 2%":
+
+        levered part = 100.0 x (1 + 2 x 0.01) = 100.0 x 1.02 = 102.0     (exact)
+        iNAV         = 102.0 + 0.011149162861491629
+                     = 102.01114916286149
+        total return = 102.01114916286149 / 100.0 - 1
+                     = 0.02011149162861492        (+2.011%)
+
+    "About 2%" is +2.011%, and the 0.011% is the accrual, not slippage in the leverage: the
+    test asserts the levered part is exactly 102.0 and names the accrual as the remainder.
+
+(c) L = -2, r_held = +0.01. "with L = -2 it falls about 2%":
+
+        levered part = 100.0 x (1 - 0.02) = 98.0                          (exact)
+        iNAV         = 98.0 + 0.011149162861491629 = 98.01114916286149
+        total return = -0.019888508371385116       (-1.989%)
+
+    The inverse fund falls by slightly LESS than 2% and the difference is the same accrual
+    working the other way relative to the move. A test asserting |return| = 2% on both sides to
+    four decimals would fail on this line and be right to.
+
+(d) L = +1 (UNG, USO), r_held = +0.01:
+
+        iNAV = 101.0 + 0.011149162861491629 = 101.01114916286149
+
+    and the rebalance factor L(L-1) = 1 x 0 = 0 exactly -- required unit test 2's arithmetic,
+    which is why these two funds are "creations only" (line 64).
+
+
+2. GATE 0b -- REQUIRED UNIT TEST 20
+================================================================================
+The error per day, in basis points of the OFFICIAL NAV:
+
+    bp = (iNAV_at_settlement - official_NAV) / official_NAV x 1e4
+
+Twenty days. Official NAV is 1000.00 every day (illustrative, and round so the bp arithmetic is
+readable). iNAV at settlement:
+
+    days 1..19   1000.20      ->  bp = 0.2000000000000455 / 1000.0 x 1e4 = 2.0000000000004547
+    day 20       1000.80      ->  bp = 0.7999999999999545 / 1000.0 x 1e4 = 7.999999999999545
+
+    (The trailing digits are the decimal-to-binary conversion of 1000.2 and 1000.8, not an
+    error in the division: 1000.2 - 1000.0 is not 0.2 in doubles. Nothing here sits near the
+    5 bp line, so the comparison is decided by the leading digit either way.)
+
+    within 5 bp: 19 of 20        share = 19 / 20 = 0.95
+    the bar    : >= 0.95         0.95 >= 0.95    -> PASSES
+
+THE PASS IS EXACTLY ON THE BOUNDARY AND THAT IS THE POINT. 19/20 = 0.95 is representable
+exactly, so `share_within >= 0.95` is decided by the document's own inclusive ">=" and not by a
+rounding. A gate written with `>` would fail this case, and 19 good days in 20 is precisely what
+line 191 permits.
+
+    Second case: days 19 AND 20 at 1000.80  ->  18 of 20 = 0.90  ->  FAILS.
+    Third case, the limit itself: 1000.50 -> bp = 5.0 EXACTLY, and 5.0 <= 5.0 is within.
+    Fourth: 999.40 -> bp = -6.000000000000227, beyond the limit on the LOW side. The sign is
+    kept in the output and only |bp| is compared.
+
+    worst |bp| in case 1 = 7.999999999999545.
+
+Three refusals, each with its own message: unequal lengths (19 iNAVs against 20 NAVs), an empty
+sample (which would "pass" 0 of 0 vacuously), and an official NAV <= 0 (which would turn a
+broken panel row into a plausible error in bp).
+
+
+3. THE PREMIUM AND THE FOUR FEATURES -- REQUIRED UNIT TESTS 15, 16, 17
+================================================================================
+One fund, one day, iNAV constant at 25.00 (illustrative; it moves with the futures in reality
+and the code takes it per minute). W_start = 14:28:00. c_AP = 0.001 (the primary 0.10%, line
+213).
+
+Six minutes, 14:20 to 14:25:
+
+  ts     bid     ask     last    age_s  fut   mid                  prem
+  14:20  25.02   25.04   25.10    10    Y     25.03                +0.0012000000000000454
+  14:21  24.98   25.00   24.99    10    Y     24.990000000000002   -0.00039999999999992044
+  14:22  25.00   25.02   25.01    90    Y     -- STALE, line 200 first clause  -> None
+  14:23  25.00   25.02   25.01    10    N     -- NO FUTURES TRADE, second clause -> None
+  14:24  24.94   24.96   24.95    10    Y     24.950000000000003   -0.0019999999999998864
+  14:25  24.90   24.92   24.91    10    Y     24.91                -0.0035999999999999943
+
+    mid  = (bid + ask) / 2                 (line 199: the NBBO midpoint, never `last`)
+    prem = (mid - 25.0) / 25.0             (line 196)
+
+REQUIRED UNIT TEST 15. `last` is 25.10 on the 14:20 minute -- 28 bp above the mid -- and the
+premium is +0.0012000000000000454 either way. The test recomputes with `last` set to the bid,
+to the ask and to 25.10 and asserts the three premiums are the SAME double. A crossed quote
+(bid 25.04, ask 25.02) raises at construction rather than returning a midpoint.
+
+REQUIRED UNIT TEST 16. The 14:22 and 14:23 minutes return None, NOT 0.0, and are excluded from
+every feature: the denominator below is 4, not 6.
+
+REQUIRED UNIT TEST 17. A minute at 14:28:00 -- W_start exactly -- raises. So does 14:29. The
+boundary is "before W_start", so 14:27:59 is admissible and 14:28:00 is not.
+
+THE FOUR FEATURES over the four valid minutes, summed in the order listed:
+
+    prem_twa: 0.0012000000000000454
+            + (-0.00039999999999992044)
+            + (-0.0019999999999998864)
+            + (-0.0035999999999999943)
+            = -0.004799999999999756
+      / 4   = -0.001199999999999939
+
+    prem_frac: above +0.001: the 14:20 minute                      -> 1
+               below -0.001: the 14:24 and 14:25 minutes           -> 2
+               (the 14:21 minute is inside the band and counts for neither)
+               (1 - 2) / 4 = -0.25
+
+    volumes (shares) and aggressor-signed volumes on the four valid minutes:
+        14:20   1000   +800
+        14:21    500   -200
+        14:24    300   -300
+        14:25    200   -200
+      total volume on valid minutes = 2000.0
+      trailing 20-day mean for the same interval = 4000.0   (illustrative)
+      vol_x = 2000.0 / 4000.0 = 0.5
+
+    sv_etf = (+800 x 25.0) + (-200 x 25.0) + (-300 x 25.0) + (-200 x 25.0)
+           = 20000.0 - 5000.0 - 7500.0 - 5000.0
+           = 2500.0            (USD)
+
+    n_valid = 4
+
+A DAY WITH NO VALID MINUTE RAISES. prem_twa over zero minutes has no denominator, and returning
+0.0 would report "no premium today" as "a premium of exactly zero today", which is the same
+confusion required unit test 16 is about one level up.
+
+
+4. STRESS (line 211)
+================================================================================
+The trailing 60 days of prem_twa, all prior to the day being scored:
+
+    30 days at 0.001 and 30 days at 0.003      (illustrative)
+
+    |values| mean = (30 x 0.001 + 30 x 0.003) / 60 = 0.12 / 60 = 0.002
+    deviations    = +/- 0.001 on every day
+    variance      = 60 x (0.001)^2 / (60 - 1) = 6e-05 / 59 = 1.0169491525423728e-06
+    sd (ddof = 1) = 0.0010084389681792214
+
+    stress(prem_twa = +0.004) = (0.004 - 0.002) / 0.0010084389681792214
+                              = 1.9832633040858023
+
+    stress(prem_twa = -0.004) is the SAME number: line 211 z-scores |prem_twa|.
+    stress(prem_twa = +0.002) = 0.0 exactly.
+
+TWO REFUSALS THAT ARE NOT ARITHMETIC. A trailing entry dated on or after the scored day raises
+-- the window is prior days only, and today's own premium in its own reference distribution
+pulls the z toward zero on exactly the days the feature exists to flag (R9's shape, in a
+feature rather than in an anatomy). And a constant trailing window raises, because sd = 0 has no
+z-score and a clipped one would report a finite stress from no dispersion at all.
+
+
+5. CREATIONS -- REQUIRED UNIT TESTS 4, 18, 19
+================================================================================
+5.1 dCreate (line 217), illustrative share counts:
+
+    shares_out[t]   6,000,000
+    shares_out[t-1] 5,600,000
+    NAV_f[t]        25.00
+
+    dCreate = (6000000.0 - 5600000.0) x 25.0 = 400000.0 x 25.0 = 10000000.0   ($10,000,000)
+
+5.2 REQUIRED UNIT TEST 4, the execution day (line 226):
+
+    lag_c = 1  ->  Q3_known: the realised t-1 number, 10000000.0, and the forecast is NOT
+                   consulted. Passing a forecast of 99.0 alongside changes nothing.
+    lag_c = 0  ->  the forecast, and only the forecast.
+    lag_c = 2 (or -1, or 0.5) -> RAISES. Section 3.2 defines lag_c in {0, 1}; a third value is
+                   an unsourced execution timing, not a default.
+    lag_c = 1 with no realised number -> RAISES rather than falling back to the forecast, which
+                   would silently turn it into lag_c = 0.
+
+5.3 Create_flow (line 231). NG: multiplier 10000.0. Held price P_held = 3.000 (illustrative).
+    One contract is 10000.0 x 3.0 = $30,000 of gas.
+
+    BOIL  L = +2, dCreate = +$10,000,000:   2 x 1e7 / 30000.0   = +666.6666666666666 contracts
+    KOLD  L = -2, dCreate = +$10,000,000:  -2 x 1e7 / 30000.0   = -666.6666666666666
+    KOLD  L = -2, dCreate = -$10,000,000:                        = +666.6666666666666
+    BOIL  L = +2, dCreate = -$10,000,000:                        = -666.6666666666666
+
+REQUIRED UNIT TEST 19 IS THE SECOND ROW AND THE SIGN IS THE WHOLE OF IT. New money into KOLD is
+a CREATION -- shares outstanding rise, dCreate is positive -- and the fund SELLS 666.67 NG
+contracts, because a -2x fund invests new cash in short exposure. The sign comes from L, never
+from dCreate, and all four rows are asserted so that the two easy ones cannot carry the test.
+
+    P_held <= 0 RAISES. CL printed a negative settlement on 2020-04-20 (this repository's own
+    data/futures_contract_specs.json says so in CL's note); the contract conversion is
+    undefined there, and a negative price would silently invert the flow.
+
+5.4 The hedged fraction (line 232) -- REQUIRED UNIT TEST 18. h0 = 1.0, h1 = 0.5 (illustrative;
+    both are Stage C2 fitted parameters and nothing has fitted them):
+
+      stress   x = h0 - h1 x stress      h = 1 / (1 + exp(-x))
+      -2.0     +2.0                      0.8807970779778823
+       0.0     +1.0                      0.7310585786300049
+      +2.0      0.0                      0.5                    (exactly, at x = 0)
+      +4.0     -1.0                      0.2689414213699951
+
+    Strictly decreasing in stress, every value strictly inside (0, 1): "h1 >= 0: more stress ->
+    less hedged". Note 1 - 0.7310585786300049 = 0.2689414213699951 exactly on these doubles.
+
+    h1 = 0.0 is the FLAT case and is permitted (line 472 is h1 >= 0, not h1 > 0): h is
+    0.7310585786300049 at every stress.
+
+    h1 = -0.1 RAISES. A negative h1 is the opposite mechanism -- more stress, more hedged --
+    wearing a fitted coefficient.
+
+    P3.7 (line 271), the attention term: h0 = 1.0, h1 = 0.5, stress = 0.0, g1 = 2.0,
+    att_accel = 1.0 gives 0.0 + 2.0 x 1.0 = 2.0 in place of stress, hence x = 0.0 and h = 0.5 --
+    the same cell as stress = +2.0 above, which is what "replace stress with stress + g1 x
+    att_accel" means. g1 = -0.1 RAISES (line 472).
+
+    SATURATION. The logistic is in the OPEN interval mathematically and a double reaches 1.0 at
+    about x = 37 (1/(1+exp(-36)) is 0.9999999999999998 and 1/(1+exp(-37)) is 1.0). h0 = 40.0
+    therefore RAISES rather than returning 1.0: at h = 1.0 the entire creation flow is declared
+    already hedged intraday, which is a statement about floating point and not about a market.
+
+5.5 The split (lines 233-234), at Create_flow = +666.6666666666666 and h = 0.7310585786300049:
+
+    Q3_window   = (1 - h) x flow = 0.2689414213699951 x 666.6666666666666 = 179.29428091333006
+    Q3_intraday =      h  x flow = 0.7310585786300049 x 666.6666666666666 = 487.3723857533366
+    sum         = 666.6666666666666        -- the same double as the flow, on THESE numbers
+
+    CONSERVATION IS NOT EXACT IN GENERAL and the test says so rather than hiding it. The legs
+    are computed as the document writes them, `(1-h) x flow` and `h x flow`, not one as the
+    residual of the other; two roundings need not sum back. The canonical counterexample in
+    doubles is 0.7 + 0.3 = 0.9999999999999999. It holds exactly here, and the property test
+    asserts conservation to within four ulp of the flow rather than asserting an equality that
+    is a coincidence of this pair.
+
+    At flow = -666.6666666666666 the two legs are -179.29428091333006 and -487.3723857533366:
+    the split never changes a sign, it only divides one.
+
+
+6. P9 -- REQUIRED UNIT TESTS 26, 27, 28, 30
+================================================================================
+6.1 dH (line 284) -- REQUIRED UNIT TEST 26, which the document states in full:
+
+    "a +3x product with AUM $50m and r = +4% gives dH = +$12m; a -3x product gives +$24m (same
+     sign as the move)"
+
+    +3x:  50000000.0 x 3.0 = 150000000.0
+          150000000.0 x (3.0 - 1) = 150000000.0 x 2.0 = 300000000.0
+          300000000.0 x 0.04 = 12000000.0                 EXACTLY +$12,000,000
+
+    -3x:  50000000.0 x -3.0 = -150000000.0
+          -150000000.0 x (-3.0 - 1) = -150000000.0 x -4.0 = 600000000.0
+          600000000.0 x 0.04 = 24000000.0                 EXACTLY +$24,000,000
+
+    BOTH ARE EXACT DOUBLES and the test asserts `== 12e6` and `== 24e6`, not `approx`. 0.04 is
+    NOT exactly representable, but 3e8 and 6e8 are powers-of-two multiples large enough that
+    the product rounds back to the integer; that is a property of these numbers and the hand
+    file states it rather than the test implying it holds generally. It does not: at
+    L_eff = 1.4 (§6.4) the same expression gives 1119999.9999999998, not 1120000.0.
+
+    Both are POSITIVE -- "same sign as the move" -- which is line 297's factor: L(L-1) is 6 at
+    +3x and 12 at -3x, so the inverse product's forced trade is twice the size and in the same
+    direction as the long one's.
+
+6.2 Q9 (line 285). Summing the two products above, dH_total = 36000000.0, into NG contracts at
+    multiplier 10000.0 and P_held 3.000:
+
+    n9 = 0.00 ->  36000000.0 x 1.00 / 30000.0 = 1200.0 contracts
+    n9 = 0.25 ->  36000000.0 x 0.75 / 30000.0 =  900.0
+    n9 = 0.50 ->  36000000.0 x 0.50 / 30000.0 =  600.0
+    n9 = 1.00 ->                                   0.0    (fully netted internally)
+
+    n9 outside [0, 1] RAISES (Section 8 line 472). Above 1 the netting inverts the flow's sign;
+    below 0 it invents flow no product owes.
+
+6.3 FX -- REQUIRED UNIT TEST 27 (line 288). BetaPro HNU, AUM C$175,000,000 (the table's
+    "roughly C$175-245m", indicative), scored on 2026-09-18:
+
+    rates (USD per CAD, illustrative):   2026-09-16  0.7300
+                                         2026-09-17  0.7400      <- the prior settlement
+                                         2026-09-18  0.7500      <- today's, MUST NOT be used
+
+    AUM_USD = 175000000.0 x 0.74 = 129500000.0      ($129,500,000)
+
+    Using today's 0.75 would give $131,250,000 -- a $1.75m difference on one product from one
+    day of FX, which on a big-move day is correlated with the very move being modelled.
+
+    A map containing ONLY 2026-09-18 and later RAISES. There is no fallback to the nearest
+    available rate: that fallback IS the look-ahead.
+
+6.4 Effective leverage -- REQUIRED UNIT TEST 30 (line 282, decision D19):
+
+    published notional C$140,000,000 against NAV C$100,000,000 -> L_eff = 1.4, flagged False
+    published notional missing (None), stated_L = 2             -> L_eff = 2.0, flagged TRUE
+
+    The flag is the content of the test. BetaPro's leverage is "up to 2x at manager discretion"
+    (line 78), so a day actually running at 1.4x is modelled at 2.0x whenever the notional is
+    missing, and the day must be marked. NAV <= 0 raises.
+
+    And for the record, at L_eff = 1.4 the dH arithmetic is NOT exact:
+        1.4 - 1 = 0.3999999999999999
+        50000000.0 x 1.4 x 0.3999999999999999 x 0.04 = 1119999.9999999998
+    which is why §6.1's exactness is stated as a property of those numbers.
+
+6.5 The index month -- REQUIRED UNIT TEST 28 (line 289). Curve, front first:
+
+    ["NGV6", "NGX6", "NGZ6"]
+
+    HNU  (BetaPro, front)               -> "NGV6"
+    3NGL (WisdomTree NG, 2nd-front)     -> "NGX6"
+    3OIL (WisdomTree WTI)               -> RAISES: line 289 gives a rule for BetaPro and for
+                                           WisdomTree NG and for nothing else, and Section 3.1b
+                                           line 82 marks 3OIL's index "verify".
+    3NGL against a one-contract curve   -> RAISES.
+
+
+7. THE RESTRIKE -- REQUIRED UNIT TEST 29
+================================================================================
+Line 292, for a +3x WisdomTree product. The threshold is on the PRODUCT's intraday value (20%);
+the "about 6.67%" is the UNDERLYING move that reaches it, 0.20 / 3 = 0.06666666666666667.
+
+Last reset level = 100.00 (the product's value at its prior reset; illustrative).
+
+    value(r_underlying) = 100.0 x (1 + 3 x r_underlying)
+
+    r = -0.067:  100.0 x (1 - 0.201) = 79.89999999999999
+                 drawdown = (79.89999999999999 - 100.0) / 100.0 = -0.2010000000000001
+                 -0.2010000000000001 <= -0.20   ->  RESTRIKE, new reset level 79.89999999999999
+
+    r = -0.065:  100.0 x (1 - 0.195) = 80.5
+                 drawdown = -0.195
+                 -0.195 > -0.20                 ->  NO EVENT
+
+    THE BOUNDARY, inclusive: a product value of exactly 80.0 gives a drawdown of exactly -0.2
+    and DOES fire ("falls by the threshold" is read as at or beyond it).
+
+    THE SHORT PRODUCT: for -3x the adverse move is a RISE. r = +0.067 gives
+    100.0 x (1 - 0.201) = 79.89999999999999, the same arithmetic and the same event -- what
+    falls is the product, not the underlying, in both cases.
+
+AFTER THE RESTRIKE (line 292: "the settlement-window flow is recomputed from the restrike
+level"). AUM at the restrike $20,000,000 (illustrative), L = 3:
+
+    a further -1% in the underlying from the restrike:
+        20000000.0 x 3.0 x 2.0 x -0.01 = -1200000.0          (-$1.2m, a sell)
+    a +2% recovery from the restrike:
+        20000000.0 x 3.0 x 2.0 x  0.02 = +2400000.0          (+$2.4m, a buy)
+
+    Both are the line 284 formula with the AUM and the return measured FROM the restrike. Using
+    the settlement-to-tau return instead would count the move that caused the restrike twice --
+    once in the intraday forced trade and again in the window.
+
+THE LOG (line 294). `restrike_events.csv`, three columns, written ONLY to a path the caller
+names:
+
+    timestamp,product,estimated_dH
+    2026-09-18T13:47:00,3NGL,-1200000.0
+
+    An event with no timestamp or no product cannot be added -- the row is defined by line 294
+    and a row missing two of its three fields is not that row. An `estimated_dH` of None is
+    written as the EMPTY string, never as 0.0: nobody computed it, which is not the same as
+    computing zero. Writing over an existing file raises.
+
+
+8. WHAT NONE OF THIS IS
+================================================================================
+No fund has an expense ratio here, no product has an AUM, no day has an FX rate, no minute has a
+real quote, and no parameter (h0, h1, g1, n9, a0..a3, b1..b4) has been fitted to anything. The
+deposit's Gate 0b has not been run, because running it needs a point-in-time fund panel that
+docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md records as missing. What is checked above is
+that the arithmetic those data will be poured into is the arithmetic the document specifies, at
+the numbers the document itself states, with every place a fact is absent RAISING rather than
+defaulting.

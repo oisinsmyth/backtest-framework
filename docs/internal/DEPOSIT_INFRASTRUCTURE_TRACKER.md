@@ -14,8 +14,8 @@ written: ✓ existed in the repo or on disk on 2026-09-21, ◐ partial or vault-
 
 | # | item | built | record(s) | round |
 |---|---|---|---|---|
-| 1 | Forward data recorder | built, verified, untracked; **host (Q17) not built**; 7 of 16 jobs `ready`, 9 `needs_source`/`needs_key` | D608 | 3 |
-| 2 | Vault guard | helpers built; **loader chokepoint not built; seal date not reconciled (principal's decision)** | D594 (`SealedWindow`, `filter_before`, `open_once`, `refuse_without_word`) | 2 |
+| 1 | Forward data recorder | built; **host (Q17) not built — the principal's**; 10 of 19 jobs `ready` after round 4 (`attention` D612; `proshares_nav`, `proshares_holdings` D619), 7 `needs_source`, 2 `needs_key` | D608, D612, D619 | 3, 4 |
+| 2 | Vault guard | built: helpers (D594) and the **loader chokepoint** `data/panels.py` + `panel_catalogue.py` (D609) — `reserved_from` has no default, the date column is declared for every manifest panel, 19 dateless panels refused; **no runner migrated yet** (26 `RESERVED_FROM` scripts, 7 `--principals-word` runners are the set); **seal date not reconciled (principal's decision)** | D594, D609 | 2, 4 |
 | 3 | Programme registry and trial counter | built | D592 | 2 |
 | 4 | Fill model | built | D587 | 1 |
 | 5 | CostStack values per micro | built (2× variant is a coefficient on the same table) | D591 | 2 |
@@ -31,10 +31,31 @@ written: ✓ existed in the repo or on disk on 2026-09-21, ◐ partial or vault-
 | 15 | Track 3 logging | built, verified, untracked (log schema, shortfall, latency, 50-trade review, trial counter); **automation for the 14:30 UK open NOT built — deposit O-Q3 open**; no trade exists | D605 | 3 |
 | 16 | Episode / shared-period checks, haircut | built | D592 (`episodes.py`) | 2 |
 | 16 | Error-budget tooling | built, verified, untracked: `fit.py` (OLS bit-identical to D365, log loss, 11-feature budget, retention check) and `error_budget.py` (leave-one-term-out, `StageOrder`); no `ERROR_BUDGET.md` committed, no study has run | D606 | 3 |
-| 17 | Unit-test crosswalk (146 numbered tests: ledger 71, index 28, opening 25, shock 13, LETF 9 — the counts below were permuted when the split was written) | built, verified, untracked: `data/deposit_test_map.json` + `docs/results/DEPOSIT_TEST_MAP.md`; 43 of 146 claimed (29.5%) after round 3 (28 before), LETF 0 of 9 | D607 | 3 |
+| 17 | Unit-test crosswalk (146 numbered tests: ledger 71, index 28, opening 25, shock 13, LETF 9 — the counts below were permuted when the split was written) | built, verified, untracked: `data/deposit_test_map.json` + `docs/results/DEPOSIT_TEST_MAP.md`; **79 of 146 claimed (54.1%) after round 4** (43 after round 3, 28 before; ledger 65/71 — the six left are 54–58 declined in D588 and 61), LETF 0 of 9 | D607, D610–D619 | 3, 4 |
 
-Commits: round 1 `89feba9` (D585–D589), round 2 `c192908` (D590–D594). Round 3 uncommitted at
-the time of writing. Per-document infrastructure and every research item below: **nothing built,
+Commits: round 1 `89feba9` (D585–D589), round 2 `c192908` (D590–D594), round 3 `f03ab6f` +
+merge `9bf41e8` (D604–D608). Round 4 (D609–D612, D619–D621, 2026-09-22) committed `804b807` + merge `3092d50`.
+**The shared list is complete** except for three items that are not a builder's: the recorder's
+host (Q17), the seal-date reconciliation, and the 14:30 UK execution automation (O-Q3). One gap
+inside a "built" row, found on the 2026-09-22 re-check of the split text against the code: **item
+8's calendar carries no `eia` and no `index_rebalance` flag** though the split names both — the
+EIA dates are already in `data/calendar/events.csv` (573 WPSR, 574 NGSR), so that flag is a join;
+index-rebalance dates exist nowhere in the repo and need a source first. Recorded, not built.
+
+### Settlement ledger — per-document infrastructure, round 4
+
+| item | status | record | claims |
+|---|---|---|---|
+| Flow algebra: P1/P2 + routing, §5.1, §5.2 update, §7.1 entry rule, §8A.5 large lot, P8a/P8b rolls, §8A.2 netting fit, COT and swap clocks | built, hand-checked, no data read | D610 | ledger 1, 2, 3, 5, 6, 8, 9, 12, 37–44, 47 |
+| Fund model: iNAV + Gate 0b, NBBO-mid premium + valid minute + features + stress, creations + `lag_c` + hedged fraction + split, P9 (`L_eff`, ΔH, Q9, prior-day FX, index month) + restrike | built, hand-checked; every "to source" fact is `None` and raises | D611 | ledger 4, 14–20, 26–30 |
+| Attention: `QUERIES.md` hashed, Wikimedia dump + GDELT GKG parsers, four point-in-time guards, two-day sample fixture; **erratum: deposit line 112's hourly Wikipedia has no REST route** (dumps only, ~2.5 TB for 2016–2023); no backfill | built (two days, not the week planned — the dump host throttles) | D612 | ledger 21–25 |
+| Fund panel: `fund_nav_daily` (BOIL/KOLD/UCO/SCO NAV, shares, AUM 2008→2026); one day of holdings; fund facts 30 sourced / 10 unknown; TAS **present** (`CLT.FUT`/`NGT.FUT`); options OI **not on disk**, quoted 178 GB / $0 + TAS trades $3.17, nothing submitted | ◐ — UNG/USO NAV and all holdings history have no free route; P9 unsourced; **Gate 0 does not clear** | D619 | ledger 50 |
+| Quarterly holdings from EDGAR: all 231 10-Q/10-K filings, 415 fund-quarters of futures and swap lines with signed contracts, months and counterparties 2006→2026; `f_fut` null before ~2016 (USCF published no notional); unparsed periods written with a reason | built; **`filed_date` is the cut column, `period_end` the wrong cut** | D620 | — |
+| Between-filing projection for UNG/USO (`fund_panel_projected`, `est_flag = 1`): **backwards yes, between no** — measured on the four ProShares funds with daily truth, median error 36–44% on shares, 18–33% on AUM, creation flow uncorrelated with truth | built as an estimate with its error in the meta; never differenced for flow | D620 | — |
+| Retail attention amended: creations (daily Δshares) primary, Robinhood holders (`robintrack_energy_funds`, 2018-05→2020-08) validation — Spearman of Δholders vs Δshares positive at lag 0 on all four ProShares funds and lower at lag +1 on all four; GDELT hourly through the API built, live sample deferred on a 429 | built; **the deposit amendment is drafted in D621 §7d for the principal** (approved in principle 2026-09-22) | D621 | none new |
+| Still ✗ | ETF NBBO quotes/trades and IIV; swap dissemination records; CME settlement prices job; restrike-check job; Stage estimation of `p, n, R, h0, h1, g1, n9` (research, not infrastructure) | — | — |
+
+Crosswalk after round 4: **79 of 146 claimed** (ledger 65/71; the six unclaimed ledger items are 54–58 declined in D588 and 61). Per-document infrastructure for the other four documents and every research item below: **nothing built,
 nothing run.** The vault window (2025-03-01 → 2026-09-18) versus this repo's 2024-01-01 futures
 holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
 
@@ -83,19 +104,39 @@ holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
 
 **Settlement ledger**
 - Point-in-time fund panel for BOIL, KOLD, UCO, SCO, UNG, USO: NAV, shares, holdings by contract
-  month, futures versus swap split, `published_at`. ✗
+  month, futures versus swap split, `published_at`. ◐ (D620 adds the quarterly holdings, split and held
+  months for all six back to 2006 from the filings, and an estimated daily UNG/USO panel with a measured
+  36–44% share error; D619: NAV, shares and AUM for the four
+  ProShares funds 2008→2026 in `fund_nav_daily`; holdings for one day, forward-only through the
+  recorder; no UNG/USO — USCF's page is JS-gated; no `published_at` anywhere; no holdings history
+  — ProShares publishes today's only, the 10-Q/10-K Schedule of Investments is the quarterly route)
 - Fund facts in `SOURCES.md`: creation cut-offs and lag, TAS usage, roll schedules, NAV strike
-  basis. ✗
-- P9 products (BetaPro, WisdomTree): NAV, units, effective leverage, FX, restrike terms. ✗
+  basis. ◐ (D619: 30 of 40 facts sourced from three 10-Ks, 10 `unknown`; `lag_c = 0` on all six;
+  ProShares NAV struck 2:30 p.m. ET at the close of the settlement window; TAS mentioned 0 times;
+  USO's roll changed from ten days to five on 2026-01-01; ProShares roll schedules unknown — Q19)
+- P9 products (BetaPro, WisdomTree): NAV, units, effective leverage, FX, restrike terms. ✗ (Q14
+  open; eight rows `not_sourced` in `fund_facts.json`; the algebra is built in D611)
 - NG and CL 1-minute bars for all held months ✓; trades with aggressor side ◐ (vault only); TAS
-  instrument symbology to check in the definition file ◐.
+  instruments checked: ABSENT under any symbol in the definition archive on disk, because both
+  pulls used `{root}.FUT` parents and CLT/NGT are their own roots. The D619 symbology probe
+  concludes PRESENT on GLBX.MDP3: `CLT.FUT` and `NGT.FUT` resolve (74 and 88 instrument ids over
+  2016-01 and 2026-09), quoted at 0.70 GB / USD 3.17 for definition + statistics + trades,
+  2016-2026; `CL.TAS` and `NG.TAS` are not symbols. Nothing pulled. ◐
 - ETF NBBO 1-minute quotes and trades, official IIV for validation. ✗ (no equities feed)
 - Attention data: GDELT, Wikipedia pageviews, optional social archive, frozen and hashed
-  `QUERIES.md`. ✗
+  `QUERIES.md`. ◐ (D621: the hourly-Wikipedia row is amended on the principal's approval — creations
+  primary, Robinhood holders as validation, GDELT hourly via the API, Wikipedia daily secondary;
+  the deposit text itself is not edited; D612: `QUERIES.md` hashed, both parsers, four guards, a two-day sample; **no
+  backfill** — hourly Wikipedia is dumps-only at ~2.5 TB for 2016–2023, GDELT GKG ~1.64 TB; the
+  deposit's line 112 is an erratum; the forward `attention` recorder job is `ready`)
 - CFTC disaggregated COT ✓ (raw on disk), swap dissemination records ✗, NG and CL options open
-  interest ◐ (statistics schema held, not built), MBO ◐.
-- Derived pipelines: iNAV computation, roll reconstruction with holdings validation, restrike
-  detector, the Kalman update step, staged parameter estimation.
+  interest ✗ (NOT HELD: both Databento pulls used `.FUT` parents, and the 2026 definition file
+  decodes to security_type {FUT: 9,138,835, OOF: 1} — the "statistics schema held, not built"
+  line was wrong. Needs a pull; quoted in D619 at 178.21 GB / USD 0.00 across fifteen resolved
+  option parents, subscription window to ~2026-10-11), MBO ◐.
+- Derived pipelines: iNAV computation ✓ (D611), roll reconstruction with holdings validation ✓
+  (D610, on synthetic holdings), restrike detector ✓ (D611), the Kalman update step ✓ (D610),
+  staged parameter estimation ✗ (research: `p, n, R, h0, h1, g1, n9` are fitted by the study).
 
 **Index reweight**
 - BCOM target weights, tracking AUM and announcement dates per year 2016 to 2027; GSCI

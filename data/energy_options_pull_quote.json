@@ -1,0 +1,103 @@
+{
+ "dataset": "GLBX.MDP3",
+ "record": "D619",
+ "stype_in": "parent",
+ "start": "2016-01-01",
+ "end": "2026-09-10",
+ "quoted_utc": "2026-09-21T23:33:39Z",
+ "submitted": false,
+ "decision": "No batch job submitted: the principal's decision of 2026-09-22 was quote only.",
+ "subscription_note": "The CME Standard subscription's free re-fetch window runs to about 2026-10-11; a USD 0.00 quote today is not a USD 0.00 quote after it.",
+ "symbol_source": "data/energy_options_parents_probe.json#resolved_parents (D619 probe); never written by hand (D581: ES.OPT was the quarterlies alone)",
+ "options": {
+  "symbols": [
+   "LN1.OPT",
+   "LN2.OPT",
+   "LN3.OPT",
+   "LO.OPT",
+   "LO1.OPT",
+   "LO2.OPT",
+   "LO3.OPT",
+   "LO4.OPT",
+   "LO5.OPT",
+   "ON.OPT",
+   "ON1.OPT",
+   "ON2.OPT",
+   "ON3.OPT",
+   "ON4.OPT",
+   "ON5.OPT"
+  ],
+  "schemas": {
+   "definition": {
+    "billable_bytes": 60446858680,
+    "billable_gb": 60.45,
+    "usd": 0.0
+   },
+   "statistics": {
+    "billable_bytes": 117762729440,
+    "billable_gb": 117.76,
+    "usd": 0.0
+   }
+  },
+  "last_12_months": {
+   "definition": {
+    "billable_bytes": 6233602960,
+    "billable_gb": 6.23,
+    "usd": 0.0
+   },
+   "statistics": {
+    "billable_bytes": 20263260320,
+    "billable_gb": 20.26,
+    "usd": 0.0
+   }
+  },
+  "total_usd": 0.0,
+  "total_gb": 178.21
+ },
+ "tas": {
+  "symbols": [
+   "CLT.FUT",
+   "NGT.FUT"
+  ],
+  "schemas": {
+   "definition": {
+    "billable_bytes": 303143880,
+    "billable_gb": 0.3,
+    "usd": 0.0
+   },
+   "statistics": {
+    "billable_bytes": 256495040,
+    "billable_gb": 0.26,
+    "usd": 0.0
+   },
+   "trades": {
+    "billable_bytes": 139103136,
+    "billable_gb": 0.14,
+    "usd": 3.171444833279
+   }
+  },
+  "last_12_months": {
+   "definition": {
+    "billable_bytes": 42017560,
+    "billable_gb": 0.04,
+    "usd": 0.0
+   },
+   "statistics": {
+    "billable_bytes": 40240880,
+    "billable_gb": 0.04,
+    "usd": 0.0
+   },
+   "trades": {
+    "billable_bytes": 17901552,
+    "billable_gb": 0.02,
+    "usd": 0.010867238045
+   }
+  },
+  "question": "deposit Q3; the symbology probe concluded CLT.FUT and NGT.FUT resolve",
+  "total_usd": 3.171444833279,
+  "total_gb": 0.7
+ },
+ "total_usd": 3.171444833279,
+ "total_gb": 178.91,
+ "timing_s": 60.5
+}

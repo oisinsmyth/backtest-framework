@@ -37,21 +37,24 @@ No timestamp, no machine name, no wall time. The artefact is a pure function of 
 so `--selftest` can rebuild it and compare the committed bytes byte for byte -- which is the only
 check that catches an artefact edited by hand after the fact.
 
-THE MULTIPLIER DISAGREEMENT, RECORDED AND NOT RESOLVED
-------------------------------------------------------
-A session move in points becomes a sigma in dollars through `usd_per_point`, and the repository
-has two answers for seven of the 36 roots. `instruments/future.py:Future.from_specs` falls back to
-`data/fut_specs_from_definition.json`, whose `tick_usd` is the RAW formula
-`mpi * display_factor * uom_qty` with no allowance for a cents or percent-of-par quote; the
-breadth fixture's builder divides those by 100. They disagree by exactly 100x on ZC, ZS, ZW, ZL,
-LE and HE (the definition file high) and on SR3 (the definition file low, and its own entry flags
-`percent_of_par: true`). Every one of the seven has `known_tick_usd: null` -- nothing ever
-verified them.
+THE MULTIPLIER DISAGREEMENT, RECORDED HERE IN D604 AND RESOLVED IN D609
+-----------------------------------------------------------------------
+A session move in points becomes a sigma in dollars through `usd_per_point`, and this repository
+had two answers for seven of the 36 roots. `instruments/future.py:Future.from_specs` fell back to
+`data/fut_specs_from_definition.json`'s `tick_usd`, the RAW formula
+`mpi * display_factor * uom_qty` with a `/100` applied on `unit_of_measure == "USD"` alone; the
+breadth fixture's builder decides the divide by the NOTIONAL test instead. They disagreed by
+exactly 100x on ZC, ZS, ZW, ZL, LE and HE (the definition file high) and on SR3 (the definition
+file low, because the percent-of-par divide fired on a `uom_qty` that is already dollars per
+point). Every one of the seven had `known_tick_usd: null` -- nothing had ever verified them.
 
-This builder uses the BREADTH value, because it is the one that reproduces the committed notionals
-and agrees with `known_tick_usd` on all 20 roots where one exists. It records all seven
-disagreements in the artefact under `multiplier_disagreements` and resolves nothing: a wrong
-multiplier is D591's shape of error, and the fix belongs in the spec file, not here.
+**This builder always used the BREADTH value**, which is why every measured number in the
+artefact was right while `multiplier_disagreements` was seven rows long, and why regenerating it
+under D609 moved that list to `[]` and moved nothing else. D609 put `tick_usd_full_contract` in
+the spec file, decided by the same `decide_scaling` the breadth builder runs, and `from_specs`
+reads it. The empty list is now a GATE, not a note: `tests/unit/test_futures_impact.py` asserts
+both that it is empty and what the seven corrected `usd_per_point` values are, so it cannot pass
+by the table losing the roots that used to populate it.
 """
 from __future__ import annotations
 
@@ -84,6 +87,23 @@ class ImpactTableError(RuntimeError):
 
 
 # ------------------------------------------------------------------ shared inputs
+
+
+def _panels():
+    """`backtest_framework.data.panels` (D609), with `src/` put on the path first.
+
+    Unlike `_future_module` below this is a REAL package import, because `panels.py` uses
+    relative imports (`..validation.frozen`) that `spec_from_file_location` cannot resolve. The
+    system python this script runs under has no `backtest_framework` installed, so `src/` goes
+    on `sys.path`; the chain it pulls in needs numpy and pandas only, both of which this script
+    already requires.
+    """
+    src = str(REPO / "src")
+    if src not in sys.path:
+        sys.path.insert(0, src)
+    from backtest_framework.data import panels
+
+    return panels
 
 
 def _future_module():
@@ -287,11 +307,19 @@ def day1m_line(upp: dict[str, float]) -> dict[str, dict]:
     """
     import pyarrow.parquet as pq
 
-    if not DAY1M.exists():
-        raise ImpactTableError(
-            f"[SRC] {DAY1M} is absent. It is one of D536's untracked bulk panels; "
-            "`data/data_manifest.json` carries its sha256 and git blob id."
+    status = _panels().panel_status(DAY1M)
+    if status != "present":
+        # D609: this sentence used to be hand-copied from `tests/conftest.py` and said the same
+        # thing whether or not the manifest listed the file -- which, for a renamed artefact or a
+        # typo'd constant, is a false explanation attached to a real failure. `panel_status` is
+        # the one implementation of that distinction, so the wrong-path case now says so.
+        panels = _panels()
+        reason = (
+            panels.absent_reason(DAY1M.name)
+            if status == "absent_listed"
+            else panels.unlisted_message(DAY1M)
         )
+        raise ImpactTableError(f"[SRC] {reason}")
     import pandas as pd
 
     cols = ["root", "day", "bar", "open", "close", "volume", "same_front", "present"]
@@ -429,12 +457,20 @@ def table() -> dict:
         "multiplier_source": "data/fixtures/fut_breadth_hourly.meta.json: "
                              "tick_usd_full_contract / tick_price_units",
         "multiplier_disagreements": clashes,
-        "why_multiplier_disagreements": "instruments/future.py:Future.from_specs falls back to "
-                                        "data/fut_specs_from_definition.json, whose tick_usd is "
-                                        "the raw mpi*display_factor*uom_qty with no allowance for "
-                                        "a cents or percent-of-par quote. All seven have "
-                                        "known_tick_usd: null. RECORDED, NOT RESOLVED -- the fix "
-                                        "belongs in the spec file.",
+        "why_multiplier_disagreements": "EMPTY SINCE D609, AND IT WAS SEVEN ROOTS LONG. "
+                                        "instruments/future.py:Future.from_specs fell back to "
+                                        "data/fut_specs_from_definition.json's tick_usd, the raw "
+                                        "mpi*display_factor*uom_qty with a /100 applied on "
+                                        "unit_of_measure == 'USD' alone -- 100x HIGH on ZC, ZS, "
+                                        "ZW, ZL, LE, HE and 100x LOW on SR3, every one of them "
+                                        "with known_tick_usd: null. D604 recorded the seven here "
+                                        "and resolved none; D609 added tick_usd_full_contract to "
+                                        "the spec file, decided by the same NOTIONAL test the "
+                                        "breadth builder uses, and from_specs reads that. This "
+                                        "list being empty is the fix, and the seven corrected "
+                                        "usd_per_point values are pinned in "
+                                        "tests/unit/test_futures_impact.py so it cannot empty "
+                                        "itself by the table losing its roots.",
         "adv_ratio_d511_over_day1m": dict(sorted(ratio.items())),
         "roots": roots,
     }
@@ -514,8 +550,10 @@ def show() -> None:
     print("\nADV ratio d511 / day1m_2016_2023 (the vault window over the in-sample one):")
     for root, r in t["adv_ratio_d511_over_day1m"].items():
         print(f"  {root:5} {r:6.2f}")
-    print("\nmultiplier disagreements (recorded, not resolved):")
-    for c in t["multiplier_disagreements"]:
+    clashes = t["multiplier_disagreements"]
+    print(f"\nmultiplier disagreements: {len(clashes)}"
+          + ("  (D604 recorded seven; D609 corrected the spec file)" if not clashes else ""))
+    for c in clashes:
         print(f"  {c['root']:5} breadth {c['breadth_meta_usd_per_point']:>10,.2f}  "
               f"Future.from_specs {c['future_from_specs_usd_per_point']:>12,.2f}  "
               f"ratio {c['ratio']:.0f}x")

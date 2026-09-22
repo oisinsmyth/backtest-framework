@@ -203,7 +203,14 @@ def test_the_default_is_d508_exec_exactly_where_d508_measured_the_contract():
 
 
 def test_tick_usd_agrees_with_the_instrument_the_specs_file_builds():
-    """The table's geometry and `Future.from_specs` must not fork (R16's shape)."""
+    """The table's geometry and `Future.from_specs` must not fork (R16's shape).
+
+    **This is the test that made D609 a two-sided change.** Until D609 both sides read the
+    definition snapshot's `tick_usd`, so they agreed on 1250.0 for ZC and this passed while
+    both were 100x wrong; and correcting either side alone would have turned it red. Both were
+    moved onto `tick_usd_full_contract` in the same record, which is why it is still green and
+    why green now means something it did not mean before.
+    """
     table = load_cost_table()
     for root, entry in table["roots"].items():
         for size in ("micro", "full"):
@@ -214,6 +221,60 @@ def test_tick_usd_agrees_with_the_instrument_the_specs_file_builds():
             assert spec.tick_usd == e["tick_usd"], f"{root}.{size}"
             assert spec.tick_points == e["tick_points"], f"{root}.{size}"
             assert spec.usd_per_point == pytest.approx(e["usd_per_point"], rel=1e-12)
+
+
+def test_the_seven_corrected_roots_carry_the_dollar_value_and_not_the_raw_formula():
+    """The agreement above would also hold at 1250.0, so the values are pinned outright."""
+    table = load_cost_table()
+    for symbol, dollars, raw in [("ZC", 12.5, 1250.0), ("ZS", 12.5, 1250.0),
+                                 ("ZW", 12.5, 1250.0), ("LE", 10.0, 1000.0),
+                                 ("HE", 10.0, 1000.0), ("ZL", 6.000000000000001,
+                                                        600.0000000000001),
+                                 ("SR3", 6.25, 6.25)]:
+        e = table["roots"][symbol]["full"]
+        assert e["tick_usd"] == dollars, symbol
+        assert e["tick_usd_raw_formula"] == raw, symbol
+        assert Future.from_specs(symbol).tick_usd == dollars, symbol
+    assert table["roots"]["ZC"]["full"]["specs_provenance"]["key"].endswith(
+        "(tick_price_units, tick_usd_full_contract)"
+    )
+
+
+def test_the_runtime_path_charges_the_corrected_tick():
+    """`futures_bricks.py:253` builds a `Future` out of this table, so `FuturesRoundTrip` is
+    what a study would actually be charged. It was 1250.0 for ZC until D609."""
+    from backtest_framework.costs.futures_bricks import FuturesRoundTrip
+
+    assert FuturesRoundTrip.from_table("ZC").instrument.tick_usd == 12.5
+    assert FuturesRoundTrip.from_table("ZC").instrument.usd_per_point == 50.0
+    assert FuturesRoundTrip.from_table("SR3").instrument.tick_usd == 6.25
+    assert FuturesRoundTrip.from_table("SR3").instrument.usd_per_point == 2500.0
+
+
+def test_d555s_committed_dollar_book_already_held_the_corrected_multipliers():
+    """The claim that no published number moved, made checkable.
+
+    `run_d555` read the BREADTH meta for `usd_per_point`, not the definition file, so its
+    dollar book was right while the spec file was wrong. Its bytes are asserted unchanged by
+    D609 — if the correction had moved a published result, this is where it would show.
+    """
+    import json
+    from pathlib import Path
+
+    from backtest_framework.validation.frozen import sha256_file
+
+    path = Path(__file__).resolve().parents[2] / "data" / "d555_tsmom_replication.json"
+    upp = json.loads(path.read_text(encoding="utf-8"))["dollar_book"]["usd_per_point"]
+    for root, want in [("ZC", 50.0), ("ZS", 50.0), ("ZW", 50.0), ("ZL", 600.0000000000001),
+                       ("LE", 400.0), ("HE", 400.0), ("SR3", 2500.0)]:
+        assert upp[root] == want, root
+        assert Future.from_specs(root).usd_per_point == want, root
+    # LF-pinned before hashing (D550/D551): this is a tracked TEXT artefact and `.gitattributes`
+    # pins `eol=lf` in the index while the author's worktree carries CRLF, so the raw digest is
+    # a fact about the checkout rather than about the file.
+    assert sha256_file(path, text_normalise=True) == (
+        "7811e322bc6e6cb15d3903e2b3c38721a76b265f448710eb014b47e81906fc61"
+    )
 
 
 def test_every_traded_symbol_is_indexed_exactly_once():

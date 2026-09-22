@@ -11,7 +11,7 @@ Start here:
 
 ```bash
 uv sync
-uv run pytest -q tests/golden     # 331 ledger-anchored tests, under a second
+uv run pytest -q tests/golden     # 421 ledger-anchored tests, under a second
 ```
 
 That runs on a bare clone — the golden masters use synthetic bars and need no market data. The
@@ -84,20 +84,26 @@ a **checkout** no longer carries; they remain in the history, so a `git clone` i
 which 969 MB is `.git`. Two of the smallest came back into the index in
 [D538](decisions/D538-two-small-panels-return-to-the-index.md) for 6.9 MB and, because their
 blobs were already in history, no extra bytes at all — which is what took the skips from 136 to 49
-(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 128
-panels and the git blob id of **115** of them. The thirteen without one —
+(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 134
+panels and the git blob id of **115** of them. The nineteen without one —
 `data/d377_ensemble.npz`, `data/d382_scores.npz`, `data/fixtures/fut_day1m.parquet`, the two
 settlement panels D556 built on 2026-09-19, `data/fixtures/fut_settle_strip.csv.gz` and
 `data/fixtures/fut_curve_front_next.csv.gz`, the one-minute bitcoin panel D580 built on
 2026-09-20, `data/fixtures/fut_btc_1m.csv.gz`, and the ES option end-of-day panel D581 built on
 2026-09-21, `data/fixtures/fut_es_options_eod.csv.gz`, the CME session calendar D589 built the
 same day, `data/fixtures/cme_session_calendar.csv.gz`, the order-book depth panel D604 built the
-same day, `data/fixtures/fut_book_depth_1m.csv.gz`, the two panels the basis-momentum closure
+same day, `data/fixtures/fut_book_depth_1m.csv.gz`, and the two panels the basis-momentum closure
 programme built the same day, `data/fixtures/fut_cleared_volume_cm_daily.csv.gz` and
-`data/fixtures/hkm_factors.csv.gz`, the ES option volume panel in ET clock buckets D613 built
-on 2026-09-21, `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz`, and the ES option signed flow
-census D617 built on 2026-09-22, `data/fixtures/fut_es_0dte_signed_flow.csv.gz` — were never tracked
-in the first place, so
+`data/fixtures/hkm_factors.csv.gz`, and the two panels round 4 built on 2026-09-22, the
+attention sample `data/fixtures/attention_sample.csv.gz` (D612) and the leveraged-ETF NAV panel
+`data/fixtures/fund_nav_daily.csv.gz` (D619), and the four panels round 4b built the same day, the
+quarterly fund holdings `data/fixtures/fund_holdings_quarterly.csv.gz` and the projected UNG/USO panel
+`data/fixtures/fund_panel_projected.csv.gz` (D620), the Robinhood holder counts
+`data/fixtures/robintrack_energy_funds.csv.gz` and the GDELT hourly sample
+`data/fixtures/gdelt_hourly_sample.csv.gz` (D621), and the ES option volume panel in ET clock buckets
+D613 built on 2026-09-21, `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz`, and the ES option signed
+flow census D617 built on 2026-09-22, `data/fixtures/fut_es_0dte_signed_flow.csv.gz` — were never
+tracked in the first place, so
 the checksum is all the manifest can offer for them.
 
 **The blob ids no longer resolve, and cannot be made to.** They record what each panel's blob was

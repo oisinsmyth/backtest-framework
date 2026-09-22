@@ -717,6 +717,133 @@ link to them by relative path. [`docs/results/DEPOSIT_TEST_MAP.md`](results/DEPO
 rendered from this file and is never the source of truth; `scripts/deposit_test_map.py --scan`
 verifies it against the tree and never rewrites it.
 
+**The definition snapshot's scaling, corrected ([D609](decisions/D609-the-panel-loader-chokepoint-and-the-seven-root-multiplier-fix.md), 2026-09-22).**
+[`fut_specs_from_definition.json`](../data/fut_specs_from_definition.json) now carries
+`tick_usd_raw_formula`, `scaling_divisor`, `scaling_reason` and **`tick_usd_full_contract`**
+per root, the divisor decided by the same NOTIONAL test
+[`build_fut_breadth_hourly.py`](../scripts/build_fut_breadth_hourly.py) has used since D519.
+**Read `tick_usd_full_contract`, never `tick_usd`:** the original field divides by 100 on
+`unit_of_measure == "USD"` alone and is 100x high on ZC, ZS, ZW, ZL, LE, HE (cents per bushel
+or per pound) and 100x low on SR3, all seven of them with `known_tick_usd: null`. It is kept
+unchanged because D591 and D604 quote it. `Future.from_specs` raises on an entry without the
+corrected field. `data/futures_costs.json` and `data/futures_impact_params.json` were rebuilt:
+seven roots' tick and multiplier moved in the first, `multiplier_disagreements` went from seven
+rows to `[]` in the second, and no measured number and no published study result moved
+(`d555_tsmom_replication.json`'s dollar book already held the corrected multipliers).
+
+**Reading a panel through the door (D609).**
+`backtest_framework.data.panels.load_panel(name, reserved_from=...)` is the one loader that
+knows which column a cut applies to — `panel_catalogue.py` declares it for every manifest
+panel, along with the 17 columns that must NEVER receive the cut (`prev_day`, `bucket_start`,
+`ts_utc`, `expiry_date`, the `published_*` family) and the 19 panels with no date column at
+all, which it refuses. `reserved_from` has no default. `scripts/panel_catalogue_check.py
+--audit` re-reads every header and reports disagreements; `--selftest` proves the guards fire.
+No runner reads through it yet; the 26 `RESERVED_FROM` scripts and the seven
+`--principals-word` runners are the migration set.
+
+**`data/fixtures/attention_sample.csv.gz` — the attention layer's bounded sample ([D612](decisions/D612-the-attention-layer-and-its-point-in-time-guards.md), 2026-09-22).**
+2019-11-04 … 2019-11-05 UTC, in-sample: 48 hourly Wikimedia pageview rows for each of the eight
+`data/attention/QUERIES.md` articles (`en` + `en.m` summed) and 192 fifteen-minute GDELT GKG
+rows for each of its fourteen queries, with `observed_at_utc`, `available_at_utc`, a count and
+a tone (`NaN` on pageview rows and on any slot with no matched document — an absent tone is
+never 0.0). 3,072 rows, 24,498 bytes, sha256
+`30455a2b7c98cc93f4f6b9f6f0ef25db847932c7d3cbf65083161170143afa46`.
+**What bites a study that reads it unchecked:** it is *two days*, so nothing in it
+supports the deposit's 60-day matched z-score — the first real `z_wiki` needs ~1,464 hourly
+dumps and ~83 GB, about thirteen hours of downloading at the 1.79 MB/s `dumps.wikimedia.org`
+sustains here; the six `tk_*` keys are three-letter tickers matched on document titles and
+are marked `precision: low` in `QUERIES.md` and in the meta, because `boil`, `sco`, `uco` and
+`ung` are ordinary words; `available_at_utc` on a `gdelt_15m` row is the slot stamp plus one
+declared slot, a conservative stand-in for an unmeasured file-posting lag rather than a measured
+one; and **the four `theme_*` keys carry the news series while the four phrase keys are nearly
+empty** — `theme_env_oil` totals 11,974 documents against `natural_gas`'s 115, and `henry_hub`
+as a phrase matched **zero** documents in two days. Per-article **hourly** Wikipedia data exists
+only in the `dumps.wikimedia.org` hourly files — the REST route is daily-or-monthly and answers
+HTTP 400 to an hourly request, which is D612's erratum on the deposit's line 112.
+
+**`fund_nav_daily` — the leveraged-commodity-ETF NAV panel ([D619](decisions/D619-the-fund-panel-the-fund-facts-and-the-cme-side-census.md), 2026-09-22).** Daily `date, fund, nav,
+shares_out, aum, source, fetched_at` for **BOIL, KOLD, UCO and SCO**, 16,402 rows,
+2008-11-24 → 2026-09-18 (BOIL from 2012-02-01, KOLD from 2011-10-04), from ProShares' own
+historical-NAV CSVs recorded through the D608 recorder. `shares_out` is in **shares**; the
+source publishes thousands to two decimals, so **every value is a multiple of 10 and 10 is the
+rounding unit** — the AUM identity is gated to half that unit, not to a basis point, and the
+naive 1 bp test passes on only 29.9% of BOIL's rows for that reason alone. **The series is
+fully back-adjusted for reverse splits**: BOIL's earliest rows read `NAV 8,000,000` against
+`0.50005` implied shares, no discontinuity exists to find, and nothing was rescaled — the 82
+rows whose published share count rounds to zero (BOIL, 2011-10-04..2012-01-31) are excluded and
+named. **Three columns the deposit asks for are ABSENT, not null:**
+`futures_notional_by_contract_month`, `swap_notional`, `published_at` — this source has none of
+them. **UNG and USO are not here** (USCF, not ProShares; their holdings page is JS-gated) and
+**no holdings history exists for any fund** — ProShares publishes today's only. The span runs
+through the deposit's sealed vault window and past the 2024-01-01 seal; the meta carries D604's
+holdout sentence and nothing here may score anything. Facts about the funds themselves —
+creation cut-offs, `lag_c`, roll schedules, fees — are in `data/fund_facts/SOURCES.md`.
+
+**`fund_holdings_quarterly` — every fund-quarter's Schedule of Investments, 2006–2026 ([D620](decisions/D620-quarterly-fund-holdings-and-the-between-filing-projection.md), 2026-09-22).**
+`period_end, fund, kind ∈ {futures, swap, cash, other, unparsed}, contract_month, month_basis,
+contracts, notional_usd, month_weight, description, counterparty, shares_out, net_assets,
+nav_per_share, f_fut, n_fut_lines, n_swap_lines, n_months_held, futures_notional_total,
+swap_notional_total, source_accession, filed_date, form, issuer, sign_basis, reason` — 2,139
+rows over **415 fund-quarters** for BOIL, KOLD, UCO, SCO, UNG and USO, parsed out of all **231**
+10-Qs and 10-Ks the three registrants have filed (573 MB of recorded HTML under
+`data/raw/recorder/sec_fund_filings/`). **`filed_date` is the known-at date and is the cut
+column**; `period_end` is the as-of and is a *wrong cut*, because every fund's 2023-12-31
+holdings were published in 2024. **`contracts` and `notional_usd` are SIGNED** (long positive,
+short negative) and `notional_usd` is **null across the USCF era before ~2016, which published
+no notional column at all** — `f_fut` is null there too rather than computed off the unrealized
+gain, which is why `f_fut` exists on 1,545 of 2,139 rows. **A period that could not be parsed is
+a row with `kind="unparsed"` and a reason, never a gap**: 326 of them, 297 being a filing's
+comparative column supplying an anchor without a schedule. **All publications of a period are
+kept**, because 26 share counts are restated by later filings and every restatement ratio is
+exactly a reverse-split ratio. `contract_month` carries `month_basis` saying whether the filing
+named the delivery month, the CME code, or only an "expires" label. The span runs through the
+deposit's sealed vault window and past the 2024-01-01 seal; the meta carries D604's holdout
+sentence and nothing here may score anything.
+
+**`fund_panel_projected` — estimated daily shares and AUM for UNG and USO (D620).**
+`date, fund, shares_out_est, aum_est, nav_proxy, method, clock, anchor_period_end,
+anchor_filed_date, est_flag` — 9,598 rows, 2007-08-09 → 2026-09-04, **`est_flag = 1` on every
+row**. The two USCF funds have quarterly filings and no daily truth, so their shares and AUM are
+carried forward from the last filing **published** on or before each date (method `step`, clock
+`filed`). **This is not a truth series and must not be differenced for creation flow.** Its
+uncertainty is measured rather than asserted: the same method run on the four ProShares funds,
+which do have a daily truth series, is wrong by a **median 36–44% on shares and 18–33% on AUM**
+(p95 0.70–2.84), and its day-to-day Δshares is **uncorrelated with the truth** (−0.05 to −0.001)
+because it moves on 46–56 days where the real count moves on 840–2,037. Half the level error is
+the 40–90 day filing lag and the rest is what a quarterly observation cannot know; perfect
+hindsight interpolation only reduces the median AUM error to 0.10–0.21. Nothing is written back
+into `fund_nav_daily`. The meta carries D604's holdout sentence.
+
+**`data/fixtures/robintrack_energy_funds.csv.gz` — the six energy funds' Robinhood holder counts ([D621](decisions/D621-retail-attention-from-creations-and-robinhood-holders.md), 2026-09-22).**
+`ticker, ts_utc, holders`, 115,290 rows, 433,420 bytes, sha256
+`36864d6feadebd36e8e4a1e7f188cb7b9349213cd7a219590dfc7b94c2b90d5d`. BOIL, KOLD, UCO, SCO, UNG
+and USO extracted from the 8,597-ticker `data/raw/robintrack/popularity_export/` archive, at
+the archive's own ~1 h poll cadence. **What bites a study that reads it unchecked:** the
+timestamps are **UTC** (measured, not assumed — every fund's hour-of-day histogram is flat
+across all 24 hours), so a daily cut at 00:00 UTC lands at 19:00 or 20:00 New York and the last
+poll of a UTC day is *after* the US close; **`holders` is a count of ACCOUNTS**, never shares
+and never dollars, so it says how many people hold and nothing about how much; the **two site
+outages** (152.5 h ending 2019-01-30 and 238.0 h ending 2020-01-16) are present in every one of
+the six files and are **not filled** — `retail_attention.robinhood_holders` returns `None`
+inside them and a study that reads a zero there manufactures the largest flow in its sample;
+and **BOIL's series ends 2020-04-21**, four months before the other five, so a common end date
+is an assumption the fixture does not support. The archive covers 2018-05-02 → 2020-08-13 and
+says nothing about the 2021–2026 retail regime.
+
+**`data/fixtures/gdelt_hourly_sample.csv.gz` — GDELT news counts at the hourly scale (D621).**
+`source, qid, hour_utc, available_at_utc, n_articles, tone`, 672 rows (48 hours × 14 queries),
+7,185 bytes, sha256 `bbfd7cf41d49999fdc8cded3145664686c4436cf83f8db02e5da96a7878094aa`.
+**What bites a study that reads it unchecked:** the `source` column is `files_15m_summed` on
+every row — these are D612's 15-minute GKG counts summed to the hour, **not** the DOC API's own
+series, which is deferred because the API answered HTTP 429 and then dropped the connection on
+2026-09-22 (the block is logged in the meta's `api_state`); the two corpora **are not expected
+to be equal** and must never be summed, which is why the column exists; **this series is hourly
+and the deposit's `headline_burst` needs 15-minute blocks** (its line 265), so it cannot carry
+that feature and `retail_attention.news_n_hourly` will only admit an hourly bucket when a
+caller passes `accept_hourly=True`; and **three of the fourteen keys matched nothing in two
+days** (`henry_hub`, `tk_kold`, `tk_uco`) while `theme_env_oil` alone totals 11,974 documents —
+the four theme keys carry the series and the phrase keys are nearly empty.
+
 ---
 
 ## 5. What is still missing

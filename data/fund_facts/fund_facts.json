@@ -1,0 +1,526 @@
+{
+ "schema": "fund-facts/1",
+ "record": "D619",
+ "built_utc": "2026-09-22T00:00:00Z",
+ "spec": "docs/internal/User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.2 (lines 86-92, the four facts), section P8a (lines 326-329, the roll schedules) and section 3.1b (lines 72-84, the P9 products)",
+ "rules": [
+  "status 'sourced' means the quoted sentence is in the filing named by `accession`, read out of the RAW recorded bytes under data/raw/recorder/sec_fund_filings/ and not out of a summary.",
+  "status 'unknown' means the filing does NOT state it. `value` is then null, always. Deposit P8a line 328: 'Do not assume.' An inference is not a fact and is never recorded as one.",
+  "lag_c is 0, 1 or null (deposit 3.2 line 90). It lives only on creation_cutoff_and_lag.",
+  "Every quote is at most 15 words, this repository's limit for quoted source text.",
+  "validate_fund_facts in scripts/fetch_fund_facts.py enforces all of the above and RAISES."
+ ],
+ "issuers": {
+  "proshares_trust_ii": {
+   "name": "ProShares Trust II",
+   "cik": "0001415311",
+   "funds": ["BOIL", "KOLD", "UCO", "SCO"],
+   "note": "The CIK is confirmed, not assumed: the submissions index for 0001415311 lists tickers AGQ, BOIL, EUO, GLL, KOLD, SCO, SVXY, UCO, UGL, ULE, UVXY, VIXM, VIXY, YCL, YCS, ZSL. The other entity whose name matches, ProShares Trust III (CIK 0002019448), has filed only DRS, S-1 and RW and files for none of these four.",
+   "forms_filed": "424B3, EFFECT, 8-K, CORRESP, UPLOAD, 10-Q, POS AM, S-1/A, S-1, FWP -- and ZERO N-PORT. A commodity pool is not a '40-Act fund; the free historical holdings route is the Schedule of Investments in the quarterly 10-Q and annual 10-K, at a 40-90 day lag."
+  },
+  "uso": {
+   "name": "United States Oil Fund, LP",
+   "cik": "0001327068",
+   "funds": ["USO"],
+   "forms_filed": "8-K, 10-Q, 424B3, S-3/A, UPLOAD, 10-K, EFFECT, 3, CORRESP, S-3 -- and ZERO N-PORT."
+  },
+  "ung": {
+   "name": "United States Natural Gas Fund, LP",
+   "cik": "0001376227",
+   "funds": ["UNG"],
+   "forms_filed": "the same USCF commodity-pool set as USO -- and ZERO N-PORT."
+  }
+ },
+ "filings": {
+  "proshares_trust_ii_10k": {
+   "form": "10-K",
+   "filed": "2026-02-26",
+   "report_date": "2025-12-31",
+   "accession": "0001193125-26-077441",
+   "document": "d785470d10k.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+   "fetched_at": "2026-09-21T23:24:07Z",
+   "bytes": 8416857,
+   "sha256_prefix": "3aa1823faa8f"
+  },
+  "uso_10k": {
+   "form": "10-K",
+   "filed": "2026-02-27",
+   "report_date": "2025-12-31",
+   "accession": "0001104659-26-021501",
+   "document": "uso-20251231x10k.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+   "fetched_at": "2026-09-21T23:24:08Z",
+   "bytes": 2090934,
+   "sha256_prefix": "0d821f0327f9"
+  },
+  "ung_10k": {
+   "form": "10-K",
+   "filed": "2026-02-27",
+   "report_date": "2025-12-31",
+   "accession": "0001104659-26-021507",
+   "document": "ung-20251231x10k.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+   "fetched_at": "2026-09-21T23:24:09Z",
+   "bytes": 2147261,
+   "sha256_prefix": "48ad4e40eb18"
+  }
+ },
+ "funds": {
+  "BOIL": {
+   "issuer": "proshares_trust_ii",
+   "leverage": 2,
+   "underlying": "natural gas",
+   "benchmark": "Bloomberg Natural Gas Subindex",
+   "facts": {
+    "futures_swap_split": {
+     "value": "Both are used. Measured point-in-time from the issuer's own holdings table on 2026-09-18: futures 1.000 of derivative exposure, swap 0.000 (one line, NATURAL GAS FUTR NOV26, 25,857 contracts, 786,828,510 USD notional). The split over TIME is not published by this issuer; only the current day is.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements, Schedules of Investments footnotes",
+     "quote": "For swap agreements, a positive amount represents \"long\" exposure to the benchmark index",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "The point-in-time figure is from data/raw/recorder/proshares_holdings/BOIL__20260921T231715Z.html, parsed by scripts/fetch_fund_holdings.py. The 10-K carries a year-end Schedule of Investments per fund, which is the free HISTORICAL route at a 40-90 day lag."
+    },
+    "creation_cutoff_and_lag": {
+     "value": "Create/redeem cut-off 2:00 p.m. ET; NAV calculation time 2:30 p.m. ET. An order received before the cut-off carries that same day as its purchase order date, so lag_c = 0.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Creation and Redemption of Shares; and Notes to Financial Statements, 'Final Net Asset Value for Fiscal Period'",
+     "quote": "the day on which SEI receives a valid purchase order is the purchase order date",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "lag_c": 0,
+     "note": "The table row is 'Ultra Bloomberg Natural Gas | 2:00 p.m. | 2:30 p.m.'; the benchmark-keyed table gives the same two times for the Bloomberg Natural Gas Subindex. 2:30 p.m. ET is the CLOSE of the NYMEX energy settlement window, 14:28:00-14:30:00 ET (D586)."
+    },
+    "rebalance_execution": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "searched whole document",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "The 10-K states the VALUATION basis (see nav_strike_basis) and says nothing about how the daily rebalance is EXECUTED. Measured on the recorded bytes: the token 'TAS' and the phrase 'Trade at Settlement' appear ZERO times in all 1,151,333 characters. Deposit Q2 ('Do the funds use TAS for rebalancing?') is therefore NOT answered by this filing, and nothing is inferred from the silence."
+    },
+    "roll_schedule": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Description of the Bloomberg Commodity Index and its Sub-Indexes",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "The filing describes WHAT the index is (see index_construction) and gives neither roll DATES nor per-day FRACTIONS, which is what deposit 3.2 line 92 asks for. Those live in Bloomberg's own Commodity Index methodology, which is not on disk. Deposit Q19 stays open for BOIL, KOLD, UCO and SCO."
+    },
+    "expense_ratio": {
+     "value": 0.0095,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Fees and Expenses, Management Fee",
+     "quote": "an amount equal to 0.95% per annum of its average daily NAV",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "Each Geared Fund, so BOIL, KOLD, UCO and SCO alike. The financial highlights restate it: 'The expense ratio would be 0.95% ... if brokerage commissions and futures account fees were excluded', so 0.95% is the management fee and the all-in ratio is higher."
+    },
+    "nav_strike_basis": {
+     "value": "US exchange-traded futures are marked at the settlement price for the Commodity Index Funds, and the fund's NAV is struck at 2:30 p.m. ET -- the close of the NYMEX energy settlement window.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements -- valuation",
+     "quote": "based upon the settlement price (for the VIX Funds and the Commodity Index Funds)",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "Deposit Q10 ('Exact NAV strike basis per fund') for the four ProShares funds."
+    },
+    "index_construction": {
+     "value": "Bloomberg Natural Gas Subindex: a rolling position in NYMEX natural gas futures. Holdings on 2026-09-18 were a single month, NOV26.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Bloomberg Natural Gas Subindex",
+     "quote": "a rolling position in natural gas futures contracts traded on the NYMEX",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    }
+   }
+  },
+  "KOLD": {
+   "issuer": "proshares_trust_ii",
+   "leverage": -2,
+   "underlying": "natural gas",
+   "benchmark": "Bloomberg Natural Gas Subindex",
+   "facts": {
+    "futures_swap_split": {
+     "value": "Both are used. Measured point-in-time on 2026-09-18: futures 1.000 of derivative exposure, swap 0.000 (NATURAL GAS FUTR NOV26, -7,042 contracts, -214,288,060 USD notional). The split over TIME is not published by this issuer.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements, Schedules of Investments footnotes",
+     "quote": "For swap agreements, a positive amount represents \"long\" exposure to the benchmark index",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "Point-in-time figure from data/raw/recorder/proshares_holdings/KOLD__20260921T231717Z.html."
+    },
+    "creation_cutoff_and_lag": {
+     "value": "Create/redeem cut-off 2:00 p.m. ET; NAV calculation time 2:30 p.m. ET; same-day purchase order date, so lag_c = 0.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Creation and Redemption of Shares; Notes, 'Final Net Asset Value for Fiscal Period'",
+     "quote": "the day on which SEI receives a valid purchase order is the purchase order date",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "lag_c": 0,
+     "note": "Table row 'UltraShort Bloomberg Natural Gas | 2:00 p.m. | 2:30 p.m.'."
+    },
+    "rebalance_execution": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "searched whole document",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "'TAS' and 'Trade at Settlement' appear ZERO times in the filing; the execution method for the daily rebalance is not stated. Deposit Q2 open."
+    },
+    "roll_schedule": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Description of the Bloomberg Commodity Index and its Sub-Indexes",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "No roll dates and no per-day fractions in the filing; they are Bloomberg's methodology. Deposit Q19 open."
+    },
+    "expense_ratio": {
+     "value": 0.0095,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Fees and Expenses, Management Fee",
+     "quote": "an amount equal to 0.95% per annum of its average daily NAV",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    },
+    "nav_strike_basis": {
+     "value": "Settlement-price marks for the Commodity Index Funds; NAV struck at 2:30 p.m. ET.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements -- valuation",
+     "quote": "based upon the settlement price (for the VIX Funds and the Commodity Index Funds)",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    },
+    "index_construction": {
+     "value": "Bloomberg Natural Gas Subindex, at -2x daily. Holdings on 2026-09-18 were a single month, NOV26.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Bloomberg Natural Gas Subindex",
+     "quote": "a rolling position in natural gas futures contracts traded on the NYMEX",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    }
+   }
+  },
+  "UCO": {
+   "issuer": "proshares_trust_ii",
+   "leverage": 2,
+   "underlying": "crude oil",
+   "benchmark": "Bloomberg Commodity Balanced WTI Crude Oil Index",
+   "facts": {
+    "futures_swap_split": {
+     "value": "Both, and here the swap leg dominates. Measured point-in-time on 2026-09-18: futures 0.249, swap 0.751 of derivative exposure. Four swap lines (counterparties abbreviated SG, GS, UBS and CIT on the issuer's page, 657,673,266 USD combined) against three futures months (DEC26, JUN27, DEC27, 218,081,730 USD combined). The split over TIME is not published.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements, Schedules of Investments footnotes",
+     "quote": "For swap agreements, a positive amount represents \"long\" exposure to the benchmark index",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "This is the one live fund of the four whose futures/swap split is not degenerate, and it is the single most load-bearing 3.2 fact found here: three quarters of UCO's exposure on 2026-09-18 was NOT in listed futures, so three quarters of its rebalance flow does not reach the CME order book directly. Point-in-time figure from data/raw/recorder/proshares_holdings/UCO__20260921T231719Z.html."
+    },
+    "creation_cutoff_and_lag": {
+     "value": "Create/redeem cut-off 2:00 p.m. ET; NAV calculation time 2:30 p.m. ET; same-day purchase order date, so lag_c = 0.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Creation and Redemption of Shares; Notes, 'Final Net Asset Value for Fiscal Period'",
+     "quote": "the day on which SEI receives a valid purchase order is the purchase order date",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "lag_c": 0,
+     "note": "Table row 'Ultra Bloomberg Crude Oil | 2:00 p.m. | 2:30 p.m.'."
+    },
+    "rebalance_execution": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "searched whole document",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "'TAS' and 'Trade at Settlement' appear ZERO times. Deposit Q2 open, and for UCO it is compounded: three quarters of the exposure is swap, so the execution question is the counterparty's, not the fund's."
+    },
+    "roll_schedule": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Bloomberg Commodity Balanced WTI Crude Oil Index",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "The filing gives the index's THREE SCHEDULES (see index_construction) and gives no roll dates and no per-day fractions. Deposit Q19 open."
+    },
+    "expense_ratio": {
+     "value": 0.0095,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Fees and Expenses, Management Fee",
+     "quote": "an amount equal to 0.95% per annum of its average daily NAV",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    },
+    "nav_strike_basis": {
+     "value": "Settlement-price marks for the Commodity Index Funds; NAV struck at 2:30 p.m. ET.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements -- valuation",
+     "quote": "based upon the settlement price (for the VIX Funds and the Commodity Index Funds)",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    },
+    "index_construction": {
+     "value": "Three equally weighted WTI contract schedules: one third monthly, two months beyond the nearby; one third a June annual roll; one third a December annual roll. Weights reset semi-annually in March and September on the close of the first business day. The 2026-09-18 holdings are exactly that shape -- DEC26, JUN27, DEC27 -- so the FUND'S FLOW IS NOT FRONT-MONTH FLOW.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Bloomberg Commodity Balanced WTI Crude Oil Index",
+     "quote": "a monthly roll schedule two months beyond the nearby contract",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "Deposit 3.1 line 69: 'Contract months matter ... which may not be the front month.' This is the measurement behind that sentence for UCO and SCO."
+    }
+   }
+  },
+  "SCO": {
+   "issuer": "proshares_trust_ii",
+   "leverage": -2,
+   "underlying": "crude oil",
+   "benchmark": "Bloomberg Commodity Balanced WTI Crude Oil Index",
+   "facts": {
+    "futures_swap_split": {
+     "value": "Both are available; on 2026-09-18 SCO held futures only -- futures 1.000, swap 0.000 of derivative exposure, across three months (DEC26 -7,822, JUN27 -8,883, DEC27 -9,286 contracts). Its +2x partner UCO was 0.249 futures the same day, so the split is a per-fund choice, not a family policy. The split over TIME is not published.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements, Schedules of Investments footnotes",
+     "quote": "For swap agreements, a positive amount represents \"long\" exposure to the benchmark index",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "note": "Point-in-time figure from data/raw/recorder/proshares_holdings/SCO__20260921T231721Z.html."
+    },
+    "creation_cutoff_and_lag": {
+     "value": "Create/redeem cut-off 2:00 p.m. ET; NAV calculation time 2:30 p.m. ET; same-day purchase order date, so lag_c = 0.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Creation and Redemption of Shares; Notes, 'Final Net Asset Value for Fiscal Period'",
+     "quote": "the day on which SEI receives a valid purchase order is the purchase order date",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced",
+     "lag_c": 0,
+     "note": "Table row 'UltraShort Bloomberg Crude Oil | 2:00 p.m. | 2:30 p.m.'."
+    },
+    "rebalance_execution": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "searched whole document",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "'TAS' and 'Trade at Settlement' appear ZERO times. Deposit Q2 open."
+    },
+    "roll_schedule": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Bloomberg Commodity Balanced WTI Crude Oil Index",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "unknown",
+     "note": "Three schedules named, no dates and no per-day fractions. Deposit Q19 open."
+    },
+    "expense_ratio": {
+     "value": 0.0095,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Fees and Expenses, Management Fee",
+     "quote": "an amount equal to 0.95% per annum of its average daily NAV",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    },
+    "nav_strike_basis": {
+     "value": "Settlement-price marks for the Commodity Index Funds; NAV struck at 2:30 p.m. ET.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Notes to Financial Statements -- valuation",
+     "quote": "based upon the settlement price (for the VIX Funds and the Commodity Index Funds)",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    },
+    "index_construction": {
+     "value": "The same three WTI schedules as UCO, at -2x daily. Holdings on 2026-09-18: DEC26, JUN27, DEC27.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1415311/000119312526077441/d785470d10k.htm",
+     "accession": "0001193125-26-077441",
+     "section": "Item 1. Business -- Bloomberg Commodity Balanced WTI Crude Oil Index",
+     "quote": "a monthly roll schedule two months beyond the nearby contract",
+     "fetched_at": "2026-09-21T23:24:07Z",
+     "status": "sourced"
+    }
+   }
+  },
+  "UNG": {
+   "issuer": "ung",
+   "leverage": 1,
+   "underlying": "natural gas",
+   "benchmark": "the near-month NYMEX Henry Hub natural gas futures contract",
+   "facts": {
+    "futures_swap_split": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+     "accession": "0001104659-26-021507",
+     "section": "Item 1. Business -- Natural Gas Interests",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:09Z",
+     "status": "unknown",
+     "note": "The 10-K names both futures and 'Other Natural-Gas-Related Investments' (cleared swaps, forwards, OTC) but gives no point-in-time split, and the issuer's holdings page -- https://www.uscfinvestments.com/holdings/ung -- returns HTTP 200 with the table loaded by JavaScript from assets/javascript/api_key.php, so it is not parseable by a GET. accounts.profunds.com 404s for UNG: it is a USCF fund, not a ProShares one. NO NAV OR HOLDINGS SERIES FOR UNG OR USO IS ON DISK."
+    },
+    "creation_cutoff_and_lag": {
+     "value": "Purchase orders must be placed by 12:00 p.m. ET (or the earlier NYSE Arca close); the day the Marketing Agent receives a valid order is the purchase order date, and the related futures are transacted at that day's closing settlement price. lag_c = 0.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+     "accession": "0001104659-26-021507",
+     "section": "Item 1. Business -- Creation Procedures",
+     "quote": "Purchase orders must be placed by 12:00 p.m. New York time",
+     "fetched_at": "2026-09-21T23:24:09Z",
+     "status": "sourced",
+     "lag_c": 0,
+     "note": "Two hours earlier than the ProShares funds' 2:00 p.m. cut-off, and two and a half hours before the 14:28-14:30 ET settlement window. The basket NAV itself is determined at 4:00 p.m. ET on the order day."
+    },
+    "rebalance_execution": {
+     "value": "Settlement price, stated as an aim rather than a guarantee: USCF seeks to execute benchmark purchases and sales at or as close as possible to the day's settlement, and the filing warns it may not achieve it. TAS is not mentioned anywhere in the filing.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+     "accession": "0001104659-26-021507",
+     "section": "Item 7. MD&A -- tracking the Benchmark Futures Contract",
+     "quote": "at, or as close as possible to, the end of the day settlement price",
+     "fetched_at": "2026-09-21T23:24:09Z",
+     "status": "sourced",
+     "note": "Measured: the token 'TAS' and the phrase 'Trade at Settlement' appear ZERO times in all 516,020 characters of the filing. That is evidence on deposit Q2 and it is not a proof of absence -- a fund can use a TAS instrument without naming it in a 10-K."
+    },
+    "roll_schedule": {
+     "value": "Four-day roll beginning two weeks before the near month's expiration, with the benchmark weights moving 75/25, 50/50, 25/75 on days 1-3 and 100% to the next month on day 4. Anticipated dates are posted on uscfinvestments.com and are subject to change.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+     "accession": "0001104659-26-021507",
+     "section": "Item 1. Business -- the Benchmark Futures Contract",
+     "quote": "during a four-day period beginning two weeks from expiration of the contract",
+     "fetched_at": "2026-09-21T23:24:09Z",
+     "status": "sourced",
+     "note": "This re-cites deposit P8a line 327 to its filing, and confirms the 25%-per-day figure: the 10-K spells out days 1-3 as 75/25, 50/50 and 25/75 and day 4 as the next month. The only part the deposit states that the filing does not is the issuer's CSV of anticipated roll dates, which is a website artefact, not a filing one."
+    },
+    "expense_ratio": {
+     "value": 0.006,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+     "accession": "0001104659-26-021507",
+     "section": "Item 1. Business -- Compensation to USCF",
+     "quote": "First $1,000,000,000 0.60% of NAV After the first $1,000,000,000 0.50% of NAV",
+     "fetched_at": "2026-09-21T23:24:09Z",
+     "status": "sourced",
+     "note": "Tiered, so 0.60% is the rate at UNG's current size and 0.50% applies above one billion dollars of net assets. THE FILING CONTRADICTS ITSELF ON THE BREAKPOINT: the Item 1 table says $1,000,000,000 and the MD&A sentence says 'average net assets of $1,000,000 or less'. The table is taken as the term and the disagreement is recorded rather than resolved. Plus roughly 0.10% of brokerage at $3.50 per buy or sell."
+    },
+    "nav_strike_basis": {
+     "value": "Natural gas futures are marked at the 2:30 p.m. ET NYMEX settlement; the creation-basket NAV is determined at 4:00 p.m. ET on the order day.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1376227/000110465926021507/ung-20251231x10k.htm",
+     "accession": "0001104659-26-021507",
+     "section": "Item 1. Business -- indicative fund value; Creation and Redemption of Shares",
+     "quote": "at, or as close as possible to, the end of the day settlement price",
+     "fetched_at": "2026-09-21T23:24:09Z",
+     "status": "sourced",
+     "note": "Deposit Q10. The two clocks differ by ninety minutes and a study that treats them as one will misdate the flow."
+    }
+   }
+  },
+  "USO": {
+   "issuer": "uso",
+   "leverage": 1,
+   "underlying": "crude oil",
+   "benchmark": "the near-month NYMEX WTI light sweet crude oil futures contract",
+   "facts": {
+    "futures_swap_split": {
+     "value": null,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+     "accession": "0001104659-26-021501",
+     "section": "Item 1. Business -- Oil Interests",
+     "quote": "",
+     "fetched_at": "2026-09-21T23:24:08Z",
+     "status": "unknown",
+     "note": "Same shape as UNG: the filing names futures and 'Other Oil-Related Investments' without a point-in-time split, https://www.uscfinvestments.com/uso returns HTTP 200 with no NAV or CSV link, and https://www.uscfinvestments.com/holdings/uso loads its table from assets/javascript/api_key.php. NOT PARSEABLE BY A GET, so no URL is recorded as ready."
+    },
+    "creation_cutoff_and_lag": {
+     "value": "Purchase orders must be placed by 12:00 p.m. ET (or the earlier NYSE Arca close); the day the Marketing Agent receives a valid order is the purchase order date. lag_c = 0.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+     "accession": "0001104659-26-021501",
+     "section": "Item 1. Business -- Creation Procedures",
+     "quote": "Purchase orders must be placed by 12:00 p.m. New York time",
+     "fetched_at": "2026-09-21T23:24:08Z",
+     "status": "sourced",
+     "lag_c": 0,
+     "note": "The basket NAV is determined at 4:00 p.m. ET on the order day; the futures leg is priced at that day's 2:30 p.m. settlement."
+    },
+    "rebalance_execution": {
+     "value": "Settlement price. Creation- and redemption-related futures are transacted at the closing settlement price on the purchase or redemption order date, through a block trade, EFP, exchange for swap or other OTC energy transaction. TAS is not mentioned anywhere in the filing.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+     "accession": "0001104659-26-021501",
+     "section": "Item 1. Business -- Creation Procedures / Redemption Procedures",
+     "quote": "at the closing settlement price for such contracts on the purchase order date",
+     "fetched_at": "2026-09-21T23:24:08Z",
+     "status": "sourced",
+     "note": "Measured: 'TAS' and 'Trade at Settlement' appear ZERO times in all 542,935 characters. Note what the sentence actually says -- the AP, not the fund, may be required to arrange the futures leg, so some of the creation flow reaches the exchange as an EFP or a block and never as a screen order."
+    },
+    "roll_schedule": {
+     "value": "Five trading days at the start of each month, CHANGED FROM TEN on 2026-01-01. Anticipated commencement dates are posted on uscfinvestments.com and are subject to change without notice; the change did not alter the benchmark or the investment objective.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+     "accession": "0001104659-26-021501",
+     "section": "Item 1. Business -- the Benchmark Oil Futures Contract",
+     "quote": "USO will roll its positions during the first 5 trading days",
+     "fetched_at": "2026-09-21T23:24:08Z",
+     "status": "sourced",
+     "note": "Deposit P8a line 328 listed USO under 'to source from each prospectus ... Do not assume', and this sources it. THE REGIME CHANGE IS THE POINT: any study that fits USO roll flow across 2026-01-01 is fitting two different schedules, and the per-day fraction differs by a factor of two on either side of that date. The filing gives the number of days and not the daily fractions."
+    },
+    "expense_ratio": {
+     "value": 0.0045,
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+     "accession": "0001104659-26-021501",
+     "section": "Item 1. Business -- Compensation to USCF",
+     "quote": "a management fee based on 0.45% per annum on its average daily total net assets",
+     "fetched_at": "2026-09-21T23:24:08Z",
+     "status": "sourced",
+     "note": "Plus roughly 0.10% of average total net assets in brokerage, at $3.50 per buy or sell."
+    },
+    "nav_strike_basis": {
+     "value": "Oil futures are marked at the 2:30 p.m. ET NYMEX and ICE settlement; the creation-basket NAV is determined at 4:00 p.m. ET on the order day.",
+     "source_url": "https://www.sec.gov/Archives/edgar/data/1327068/000110465926021501/uso-20251231x10k.htm",
+     "accession": "0001104659-26-021501",
+     "section": "Item 1. Business -- indicative fund value",
+     "quote": "the settlement price of Oil Futures Contracts at 2:30 p.m. Eastern Time",
+     "fetched_at": "2026-09-21T23:24:08Z",
+     "status": "sourced",
+     "note": "Deposit Q10. The filing also states that ICE Futures sets its settlement as of 2:30 p.m. ET, so a USO that holds both venues strikes on two settlements at the same clock."
+    }
+   }
+  }
+ },
+ "p9": [
+  {"product": "BetaPro Natural Gas 2x Daily Bull ETF (HNU)", "listing": "TSX (CAD)", "issuer_site": "https://www.globalx.ca/", "status": "not_sourced", "question": "Q14", "note": "Deposit 3.1b line 76 calls every P9 figure indicative and says to re-source point-in-time. Nothing was fetched for any P9 product in D619: the US half consumed the round. Leverage is 'up to 2x' at manager discretion, so an assumed 2x is a modelling error, not a rounding one."},
+  {"product": "BetaPro Natural Gas Inverse Leveraged Daily Bear ETF (HND)", "listing": "TSX (CAD)", "issuer_site": "https://www.globalx.ca/", "status": "not_sourced", "question": "Q14"},
+  {"product": "BetaPro Crude Oil 2x Daily Bull ETF (HOU)", "listing": "TSX (CAD)", "issuer_site": "https://www.globalx.ca/", "status": "not_sourced", "question": "Q14"},
+  {"product": "BetaPro Crude Oil Inverse Leveraged Daily Bear ETF (HOD)", "listing": "TSX (CAD)", "issuer_site": "https://www.globalx.ca/", "status": "not_sourced", "question": "Q14"},
+  {"product": "WisdomTree Natural Gas 3x Daily Leveraged (3NGL / NGXL)", "listing": "LSE, Xetra, Borsa Italiana", "issuer_site": "https://www.wisdomtree.eu/", "status": "not_sourced", "question": "Q14", "note": "Deposit 3.1b line 81: intraday restrike at a 20% threshold, and Q16 asks for the exact wording. Neither is sourced here."},
+  {"product": "WisdomTree Natural Gas 3x Daily Short (3NGS)", "listing": "LSE, Xetra, Borsa Italiana", "issuer_site": "https://www.wisdomtree.eu/", "status": "not_sourced", "question": "Q14", "note": "Existence itself is to verify (deposit 3.1b line 82)."},
+  {"product": "WisdomTree WTI Crude Oil 3x Daily Leveraged (3OIL)", "listing": "LSE, Xetra, Borsa Italiana", "issuer_site": "https://www.wisdomtree.eu/", "status": "not_sourced", "question": "Q14"},
+  {"product": "WisdomTree WTI Crude Oil 3x Daily Short (3OIS)", "listing": "LSE, Xetra, Borsa Italiana", "issuer_site": "https://www.wisdomtree.eu/", "status": "not_sourced", "question": "Q14"}
+ ]
+}

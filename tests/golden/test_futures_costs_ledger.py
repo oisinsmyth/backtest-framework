@@ -321,16 +321,56 @@ def test_full_size_commission_has_two_declared_values_and_both_survive():
     assert es_full["runner_lines"]["d469"]["commission_rt_usd"]["value"] == 4.00
 
 
-def test_the_cent_quoted_roots_are_flagged_and_not_silently_corrected():
-    """ZC/ZS/ZW 1250, HE/LE 1000, ZL 600 are CENTS. Flagged, written unchanged (hand §6 iii)."""
-    flags = {f["symbol"]: f for f in load_cost_table()["spec_flags"]}
-    for symbol, cents in [("ZC", 1250.0), ("ZS", 1250.0), ("ZW", 1250.0), ("HE", 1000.0), ("LE", 1000.0)]:
-        assert flags[symbol]["tick_usd"] == cents
-        assert "CENTS" in flags[symbol]["unit"]
-        assert load_cost_table()["roots"][symbol]["full"]["tick_usd"] == cents
-    assert flags["ZL"]["tick_usd"] == 600.0000000000001
+def test_the_cent_quoted_roots_are_corrected_and_the_divisor_is_recorded():
+    """SUPERSEDED BY D609. Hand file §6(iii) recorded ZC/ZS/ZW at 1250, HE/LE at 1000, ZL at
+    600 and SR3 at 0.0625, "written unchanged" with a flag, because the builder was reading the
+    definition snapshot's raw `tick_usd`. Those were CENTS (and, for SR3, hundredths of a
+    dollar). The table now reads `tick_usd_full_contract`, decided by the notional test, and
+    the flag records the divisor and the raw formula instead of explaining a wrong number.
+
+    The RAW figures are pinned too, on `tick_usd_raw_formula`: the old ledger line is still
+    reproducible from this table, which is what makes the correction checkable rather than a
+    deletion.
+    """
+    table = load_cost_table()
+    flags = {f["symbol"]: f for f in table["spec_flags"]}
+    for symbol, dollars, raw in [("ZC", 12.5, 1250.0), ("ZS", 12.5, 1250.0),
+                                 ("ZW", 12.5, 1250.0), ("HE", 10.0, 1000.0),
+                                 ("LE", 10.0, 1000.0)]:
+        assert flags[symbol]["tick_usd"] == dollars
+        assert flags[symbol]["tick_usd_raw_formula"] == raw
+        assert flags[symbol]["scaling_divisor"] == 100.0
+        assert "CORRECTED (D609)" in flags[symbol]["unit"]
+        assert table["roots"][symbol]["full"]["tick_usd"] == dollars
+    assert flags["ZL"]["tick_usd"] == 6.000000000000001
+    assert flags["ZL"]["tick_usd_raw_formula"] == 600.0000000000001
     assert "percent_of_par_note" in flags["SR3"]
-    assert flags["SR3"]["tick_usd"] == 0.0625
+    assert flags["SR3"]["tick_usd"] == 6.25
+    assert flags["SR3"]["scaling_divisor"] == 1.0
+    assert flags["SR3"]["tick_usd_raw_formula"] == 6.25
+
+
+def test_hg_is_the_root_that_proves_the_divide_is_not_a_unit_of_measure_rule():
+    """`HG` and `ZL` are both quoted per POUND and differ by a factor of 100: HG in dollars,
+    ZL in cents. A `unit_of_measure`-based rule gets one of them wrong whichever way it goes,
+    which is why the divisor comes from the notional and not from the units."""
+    import json
+    from pathlib import Path
+
+    repo = Path(__file__).resolve().parents[2]
+    specs = json.loads(
+        (repo / "data" / "fut_specs_from_definition.json").read_text(encoding="utf-8")
+    )["specs"]
+    hg, zl = specs["HG"], specs["ZL"]
+    assert hg["uom"] == zl["uom"] == "LBS"
+    assert hg["scaling_divisor"] == 1.0 and zl["scaling_divisor"] == 100.0
+    assert hg["tick_usd_full_contract"] == 12.5
+    assert zl["tick_usd_full_contract"] == 6.000000000000001
+    # HG is read through the CME file by the cost table (it has a verified value there), so the
+    # claim is asserted on the spec file where both roots are decided by the same rule; the
+    # table's own ZL entry is the one that carries the divisor.
+    assert load_cost_table()["roots"]["ZL"]["full"]["scaling_divisor"] == 100.0
+    assert load_cost_table()["roots"]["HG"]["full"]["tick_usd"] == 12.5
 
 
 def test_every_commission_in_the_table_is_declared_and_says_so():

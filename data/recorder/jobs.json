@@ -1,6 +1,6 @@
 {
  "schema": "recorder-jobs/1",
- "record": "D608",
+ "record": "D608; D612 (attention ready); D619 (fund_snapshot split)",
  "built_utc": "2026-09-21T00:00:00Z",
  "spec": "docs/internal/User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md section 13A.3, 'Track 2: forward data recorder'",
  "rules": [
@@ -104,17 +104,56 @@
    "note": "The deposit's 'CFTC COT (v1.6)' row, and the one of its ten this repository can already fetch keylessly. Base resource composed exactly as scripts/fetch_cftc_cot.py:358 composes it, from API = 'https://publicreporting.cftc.gov/resource' (:137) and DATASETS['disaggregated'] = '72hh-3qpy' (:146). Per-root filtering ($where on cftc_contract_market_code) is the parser's job and no query parameters are invented here. FUTURES ONLY: the futures-and-options variants (jun7-fc8e, kh3c-gbw2, yw9f-hn96) exist and are deliberately not used, because an options-inclusive position is not a futures position."
   },
   {
-   "name": "fund_snapshot",
+   "name": "proshares_nav",
+   "cadence": "daily",
+   "window_et": ["17:00", "23:00"],
+   "source_url": "https://accounts.profunds.com/etfdata/ByFund/BOIL-historical_nav.csv",
+   "parser": "scripts.build_fund_panel.read_nav_csv",
+   "status": "ready",
+   "window_basis": "declared here (D619): an evening band, after the deposit's 'after each fund's publication'. ProShares publishes no NAV posting clock that this repository has sourced, so the band is operational and is not to be read as a release time.",
+   "frequency": "Daily, after each fund's publication",
+   "content": "NAV, shares outstanding and AUM for BOIL, KOLD, UCO and SCO (the whole history, re-fetched each run)",
+   "ext": "csv",
+   "note": "Deposit job 1, the US NAV half. URL template verified in D619 by fetching all four; the UCO form is the 'Historical NAV' link printed on the UCO fund page. THE KEY IS THE TICKER and this row carries BOIL's URL only because a Job holds ONE source_url -- scripts/fetch_fund_nav.py substitutes the other three from PROSHARES_FUNDS. UNG and USO 404 on this host: they are USCF funds (see uscf_fund_snapshot). The file is the FULL history every time, so a missed day is recoverable and a gap line here means the host stopped, not that data was lost."
+  },
+  {
+   "name": "proshares_holdings",
+   "cadence": "daily",
+   "window_et": ["17:00", "23:00"],
+   "source_url": "https://www.proshares.com/our-etfs/leveraged-and-inverse/boil",
+   "parser": "scripts.fetch_fund_holdings.parse_holdings",
+   "status": "ready",
+   "window_basis": "declared here (D619): an evening band. The page states a holdings AS-OF date and no publication clock, so the band is operational.",
+   "frequency": "Daily, after each fund's publication",
+   "content": "Holdings by contract month with futures and swap notional, for BOIL, KOLD, UCO and SCO",
+   "ext": "html",
+   "note": "Deposit job 1, the holdings half, and THE REASON THE RECORDER EXISTS: ProShares publishes ONE day of holdings and no archive (six URL patterns 404), so this series can only be started, never back-filled -- which is deposit 3.1 line 70, 'Never back-fill today's composition across history'. Key is the ticker; the slug is the lowercase ticker. MUST BE FETCHED WITH Accept: text/html -- the recorder's default Accept returns 7.8 KB of CMS JSON with no holdings (D619), which is why scripts/fetch_fund_holdings.py builds its own request. The parse RAISES on a missing as-of date or a missing futures row."
+  },
+  {
+   "name": "uscf_fund_snapshot",
    "cadence": "daily",
    "window_et": ["17:00", "23:00"],
    "source_url": null,
    "parser": null,
    "status": "needs_source",
-   "window_basis": "declared here (D608): an evening band, after the deposit's 'after each fund's publication'. No issuer publication clock is sourced in this repository, so the band is operational and nothing more.",
+   "window_basis": "declared here (D619): the same evening band as the ProShares jobs, for when a source exists.",
    "frequency": "Daily, after each fund's publication",
-   "content": "Holdings (contract months, futures vs swap notional), NAV, shares/units outstanding, stated and effective leverage, for all US and P9 products",
+   "content": "NAV, units outstanding and holdings for UNG and USO",
    "ext": "json",
-   "note": "Deposit job 1. This repository holds no issuer holdings URL for BOIL, KOLD, UCO, SCO, UNG, USO or the P9 products, and none is invented. Deposit Q14 is the open question for the P9 half."
+   "note": "Deposit job 1, the USCF half. https://www.uscfinvestments.com/holdings/{uso,ung} returns HTTP 200 and THE TABLE IS NOT IN THE RESPONSE: it is loaded by JavaScript from assets/javascript/api_key.php. https://www.uscfinvestments.com/uso carries no NAV or CSV link, and accounts.profunds.com 404s for both tickers. No URL is invented. The free historical route is the Schedule of Investments in the 10-Q/10-K (CIK 0001327068 for USO, 0001376227 for UNG), 40-90 days late; D619 records the filings themselves under the job sec_fund_filings."
+  },
+  {
+   "name": "p9_snapshot",
+   "cadence": "daily",
+   "window_et": ["17:00", "23:00"],
+   "source_url": null,
+   "parser": null,
+   "status": "needs_source",
+   "window_basis": "declared here (D619): an evening band in ET for products listed in Toronto, London, Frankfurt and Milan -- whose own publication clocks are part of Q14 and are not sourced.",
+   "frequency": "Daily, after each fund's publication",
+   "content": "NAV, units or notes outstanding and effective leverage for BetaPro HNU/HND/HOU/HOD and WisdomTree 3NGL/NGXL, 3NGS, 3OIL/3OIS",
+   "ext": "json",
+   "note": "Deposit job 1, the P9 half, and deposit Q14 is the open question: 'For each P9 product: daily NAV, units or notes outstanding, and actual exposure/leverage history. Where published, and how far back?' D619 fetched NOTHING for any P9 product and lists all eight as not_sourced in data/fund_facts/fund_facts.json with the issuer sites to look at (Global X Canada for BetaPro, WisdomTree Europe). BetaPro leverage is 'up to 2x' at manager discretion (deposit 3.1b line 77), so a stated 2x is an assumption and not a rounding; Q16 asks for the WisdomTree restrike wording."
   },
   {
    "name": "cme_settlement_prices",
@@ -140,7 +179,7 @@
    "frequency": "Daily (plus trade-level if not buying history)",
    "content": "TAS volume, aggressor split, premium ticks",
    "ext": "csv",
-   "note": "Deposit job 3. Databento, paid; deposit Q3 ('Databento TAS symbology and history coverage for NG and CL') is open. The key lives outside the repository at ~/.config/databento/key (scripts/run_futures_acquisition.py:42) and is never printed, logged or placed in a URL."
+   "note": "Deposit job 3. Databento, paid; deposit Q3 ('Databento TAS symbology and history coverage for NG and CL') is open. The key lives outside the repository at ~/.config/databento/key (scripts/run_futures_acquisition.py:42) and is never printed, logged or placed in a URL. D619 settles the symbology half of Q3: CLT.FUT and NGT.FUT resolve on GLBX.MDP3 back to at least 2016-01-04, quoted at USD 3.17 for the trades schema over 2016-2026. Nothing pulled."
   },
   {
    "name": "etf_quotes",
@@ -159,14 +198,14 @@
    "name": "attention",
    "cadence": "intraday",
    "window_et": ["00:00", "23:59"],
-   "source_url": null,
+   "source_url": "https://data.gdeltproject.org/gdeltv2/lastupdate.txt",
    "parser": null,
-   "status": "needs_source",
+   "status": "ready",
    "window_basis": "declared here (D608): the whole day, because the deposit's cadence for this job is every 15 minutes (GDELT) and hourly (Wikipedia), which is not a window.",
    "frequency": "GDELT every 15 min; Wikipedia hourly; social if Q12 resolves",
    "content": "Per 3.3c queries",
-   "ext": "json",
-   "note": "Deposit job 5. No GDELT or Wikipedia endpoint is recorded anywhere in this repository, so none is written here. The social part is gated on deposit Q12 (a lawfully obtained timestamped archive) and stays disabled until it resolves."
+   "ext": "txt",
+   "note": "Deposit job 5, flipped to ready by D612. THE TWO SOURCE URLS ARE NOW HELD IN THIS REPOSITORY and neither is invented: (1) the GDELT v2 index https://data.gdeltproject.org/gdeltv2/lastupdate.txt, copied from scripts/fetch_attention.py's GDELT_LAST, which is what this job fetches - 320 bytes naming the three newest 15-minute files with their byte counts and md5s, the exact object a forward recorder needs every 15 minutes; (2) the Wikimedia hourly pageview dumps https://dumps.wikimedia.org/other/pageviews/{YYYY}/{YYYY-MM}/pageviews-{YYYYMMDD}-{HH}0000.gz, copied from scripts/fetch_attention.py's WIKI_DUMP, fetched by `fetch_attention.py --wiki-hourly-dump` rather than by this job because a Job carries ONE source_url and the two cadences differ (15 min against hourly). D612 records the erratum that the deposit's line 112 ('Wikimedia hourly pageviews') has no REST route: per-article hourly exists only in those dumps. The social part is gated on deposit Q12 (a lawfully obtained timestamped archive) and stays disabled until it resolves; QUERIES.md lists both social ids as disabled (Q12). Intraday: not covered by gap detection, and check_gaps_scope names it."
   },
   {
    "name": "restrike_check",

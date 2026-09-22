@@ -1,0 +1,778 @@
+{
+  "builder": "scripts/retail_attention_report.py --run",
+  "conventions": {
+    "both_statistics": "Spearman AND Pearson at every lag, always together and never one alone. The holder series has a meme-era right tail and a Pearson over a spike is a statistic about the spike.",
+    "creation_day": "|creation| strictly above the 90% quantile of |creation| over the fund's own overlap rows, by linear interpolation between order statistics.",
+    "daily_holder_cut": "the LAST Robintrack poll of the UTC day. The archive polls around the clock at a ~1 h cadence (the hour-of-day histogram is flat on all six funds), so the last poll of a UTC day is three to four hours after the US close.",
+    "independence": "FOUR FUNDS ARE NOT FOUR EXPERIMENTS. BOIL and KOLD are the long and short leveraged natural-gas funds of one issuer on one underlying; UCO and SCO are the same pair on crude. There are TWO underlyings and one issuer, so the effective number of independent cells here is about two, and the per-fund rows below must not be read as four confirmations.",
+    "interval": "A creation is shares_out[d] - shares_out[prev(d)] where prev(d) is the previous day PRESENT IN THE SOURCE, and the holder change is differenced over the SAME interval. A step longer than 5 calendar days is skipped and named.",
+    "lag": "lag = +k pairs the creation at index i with the holder change at index i+k, in SERIES STEPS (trading days), so a positive lag asks whether holders move AFTER creations.",
+    "missing_holder_poll": "DROPPED AND COUNTED, never zero-filled. The two site outages are 152.5 h ending 2019-01-30 and 238.0 h ending 2020-01-16."
+  },
+  "gdelt_hourly": {
+    "api_state": {
+      "attempts": [
+        {
+          "body": "Please limit requests to one every 5 seconds or contact kalev.leetaru5@gmail.com for larger queries. All high-traffic users should switch to our ngrams dataset ... For trend analysis, please see our daily newsletter briefings ...",
+          "outcome": "HTTP 429",
+          "when_utc": "2026-09-22"
+        },
+        {
+          "body": "urllib.error.URLError: <urlopen error [WinError 10060] A connection attempt failed because the connected party did not properly respond after a period of time>. No status line, so no bytes; nothing was written into data/raw/.",
+          "outcome": "NO RESPONSE - TCP connect timed out",
+          "when_utc": "2026-09-22, about twelve minutes later"
+        }
+      ],
+      "reading": "The host escalates: a refusal BODY first, then a dropped connection. D612 never got a 200 from it all day either. The raw 15-minute files remain the historical route (D612) and this API is the forward route only; --api is built, its parser is proved on a payload of the documented response shape, and it has not been run.",
+      "state": "DEFERRED - the live hourly series has NOT been fetched",
+      "tool": "urllib.request.urlopen, GET, User-Agent 'BacktestFramework research script research@backtest-framework.org'",
+      "url": "https://api.gdeltproject.org/api/v2/doc/doc?query=%22natural+gas%22&mode=timelinevolraw&startdatetime=20191104000000&enddatetime=20191106000000&format=json"
+    },
+    "comparison_deferred": "The pre-registered comparison -- the DOC API's hourly count against D612's file-derived 15-minute counts summed to the hour -- is NOT RUN, because the API answered HTTP 429 and then dropped the connection on 2026-09-22 (see api_state). When it answers, the comparison is between two DIFFERENT CORPORA: timelinevolraw counts documents in GDELT's DOC index matching a DOC-query grammar, while the 15-minute route counts GKG rows matching QUERIES.md section 2b's title/url/theme rules. THEY ARE NOT EXPECTED TO BE EQUAL. What is worth measuring is the rank correlation of the two hourly series and the ratio of their totals, and this sentence is written BEFORE either is seen so that whatever comes back cannot be read as confirming a prediction nobody made.",
+    "fixture": {
+      "path": "data/fixtures/gdelt_hourly_sample.csv.gz",
+      "rows": 672,
+      "rows_by_source": {
+        "doc_api_hourly": 0,
+        "files_15m_summed": 672
+      },
+      "sha256": "bbfd7cf41d49999fdc8cded3145664686c4436cf83f8db02e5da96a7878094aa"
+    },
+    "hourly_counts_by_key": {
+      "files_15m_summed:crude_oil": {
+        "max": 9.0,
+        "n_hours": 48,
+        "n_zero_hours": 17,
+        "total": 76.0
+      },
+      "files_15m_summed:henry_hub": {
+        "max": 0.0,
+        "n_hours": 48,
+        "n_zero_hours": 48,
+        "total": 0.0
+      },
+      "files_15m_summed:natural_gas": {
+        "max": 10.0,
+        "n_hours": 48,
+        "n_zero_hours": 8,
+        "total": 115.0
+      },
+      "files_15m_summed:theme_econ_natgasprice": {
+        "max": 25.0,
+        "n_hours": 48,
+        "n_zero_hours": 1,
+        "total": 247.0
+      },
+      "files_15m_summed:theme_econ_oilprice": {
+        "max": 118.0,
+        "n_hours": 48,
+        "n_zero_hours": 0,
+        "total": 3457.0
+      },
+      "files_15m_summed:theme_env_naturalgas": {
+        "max": 107.0,
+        "n_hours": 48,
+        "n_zero_hours": 0,
+        "total": 3111.0
+      },
+      "files_15m_summed:theme_env_oil": {
+        "max": 376.0,
+        "n_hours": 48,
+        "n_zero_hours": 0,
+        "total": 11974.0
+      },
+      "files_15m_summed:tk_boil": {
+        "max": 11.0,
+        "n_hours": 48,
+        "n_zero_hours": 11,
+        "total": 113.0
+      },
+      "files_15m_summed:tk_kold": {
+        "max": 0.0,
+        "n_hours": 48,
+        "n_zero_hours": 48,
+        "total": 0.0
+      },
+      "files_15m_summed:tk_sco": {
+        "max": 5.0,
+        "n_hours": 48,
+        "n_zero_hours": 26,
+        "total": 41.0
+      },
+      "files_15m_summed:tk_uco": {
+        "max": 0.0,
+        "n_hours": 48,
+        "n_zero_hours": 48,
+        "total": 0.0
+      },
+      "files_15m_summed:tk_ung": {
+        "max": 1.0,
+        "n_hours": 48,
+        "n_zero_hours": 46,
+        "total": 2.0
+      },
+      "files_15m_summed:tk_uso": {
+        "max": 2.0,
+        "n_hours": 48,
+        "n_zero_hours": 44,
+        "total": 5.0
+      },
+      "files_15m_summed:wti": {
+        "max": 2.0,
+        "n_hours": 48,
+        "n_zero_hours": 37,
+        "total": 14.0
+      }
+    }
+  },
+  "holders_only": {
+    "UNG": {
+      "calendar": "the intersection of the four ProShares funds' trading days inside the overlap window -- UNG and USO are NYSE Arca listings like the other four, and differencing over calendar days would make every weekend an exact zero",
+      "d_holders": {
+        "max": 358.0,
+        "mean": 3.9197860962566846,
+        "median": 1.0,
+        "min": -184.0,
+        "n": 561,
+        "n_positive": 281,
+        "n_zero": 26,
+        "sd": 25.410044076194822,
+        "share_positive": 0.5008912655971479
+      },
+      "holder_span_utc": [
+        "2018-05-02T04:55:58Z",
+        "2020-08-13T22:58:07Z"
+      ],
+      "n_days": 564,
+      "n_steps": 561,
+      "n_steps_dropped_long_gap": 2,
+      "n_top_decile_days": 54,
+      "n_top_decile_positive": 40,
+      "n_trading_days_in_calendar": 576,
+      "p90_abs_d_holders": 30.0,
+      "why_no_truth": "USCF publishes no free NAV or share-count history (D619: the fund's page is JS-gated and no free holdings history exists), so there is no creation series to correlate against. The holder series alone is reported."
+    },
+    "USO": {
+      "calendar": "the intersection of the four ProShares funds' trading days inside the overlap window -- UNG and USO are NYSE Arca listings like the other four, and differencing over calendar days would make every weekend an exact zero",
+      "d_holders": {
+        "max": 51365.0,
+        "mean": 248.32085561497325,
+        "median": -1.0,
+        "min": -76190.0,
+        "n": 561,
+        "n_positive": 268,
+        "n_zero": 9,
+        "sd": 4472.255972789745,
+        "share_positive": 0.47771836007130125
+      },
+      "holder_span_utc": [
+        "2018-05-02T04:54:23Z",
+        "2020-08-13T22:40:57Z"
+      ],
+      "n_days": 564,
+      "n_steps": 561,
+      "n_steps_dropped_long_gap": 2,
+      "n_top_decile_days": 56,
+      "n_top_decile_positive": 45,
+      "n_trading_days_in_calendar": 576,
+      "p90_abs_d_holders": 1012.0,
+      "why_no_truth": "USCF publishes no free NAV or share-count history (D619: the fund's page is JS-gated and no free holdings history exists), so there is no creation series to correlate against. The holder series alone is reported."
+    }
+  },
+  "holdout": "No return, no signal, no trade. fund_nav_daily is read through load_panel with reserved_from='2024-01-01'; the Robintrack archive ends 2020-08-13 and cannot reach the cut. Every measurement above is on rows dated 2020-08-13 or earlier.",
+  "index_proved_against_daily_holders": {
+    "BOIL": 27,
+    "KOLD": 27,
+    "SCO": 27,
+    "UCO": 27,
+    "UNG": 27,
+    "USO": 27
+  },
+  "inputs": {
+    "fund_nav_daily": {
+      "path": "data/fixtures/fund_nav_daily.csv.gz",
+      "read_through": "backtest_framework.data.panels.load_panel (D609)",
+      "reserved_from": "2024-01-01",
+      "sha256": "54c2ee9f0bf2a0470d0036bc5f0727fa62ed4bbecf5bd0b3cc538e46532a3ce2",
+      "window_record": {
+        "cut_applied": "2024-01-01",
+        "date_col": "date",
+        "date_format": "iso_day",
+        "distinct_sessions_read": 3800,
+        "first_session_read": "2008-11-24",
+        "last_session_read": "2023-12-29",
+        "opened_on_the_word": false,
+        "panel": "fund_nav_daily",
+        "path": "data/fixtures/fund_nav_daily.csv.gz",
+        "reserved_from": "2024-01-01",
+        "reserved_rows_read": 0,
+        "rows_read": 13678,
+        "sessions_read": 13678,
+        "sha256": "54c2ee9f0bf2a0470d0036bc5f0727fa62ed4bbecf5bd0b3cc538e46532a3ce2",
+        "status": "present"
+      }
+    },
+    "robintrack_energy_funds": {
+      "path": "data/fixtures/robintrack_energy_funds.csv.gz",
+      "rows": 115290,
+      "sha256": "36864d6feadebd36e8e4a1e7f188cb7b9349213cd7a219590dfc7b94c2b90d5d"
+    }
+  },
+  "overlap_window": [
+    "2018-05-02",
+    "2020-08-13"
+  ],
+  "per_fund": {
+    "BOIL": {
+      "correlations": {
+        "lag_+1": {
+          "n": 479,
+          "pearson": 0.09022435908443302,
+          "spearman": 0.07830433694026845
+        },
+        "lag_-1": {
+          "n": 479,
+          "pearson": 0.10255139530051222,
+          "spearman": 0.1360344887643143
+        },
+        "lag_0": {
+          "n": 480,
+          "pearson": 0.09753033897155937,
+          "spearman": 0.147759316301051
+        }
+      },
+      "correlations_nonzero_creation": {
+        "lag_+1": {
+          "n": 108,
+          "pearson": 0.0412294076010486,
+          "spearman": 0.08745584953942441
+        },
+        "lag_-1": {
+          "n": 108,
+          "pearson": 0.17446340183918985,
+          "spearman": 0.23757367455911163
+        },
+        "lag_0": {
+          "n": 109,
+          "pearson": 0.11820507029904682,
+          "spearman": 0.2810423200133932
+        },
+        "why": "A share count that did not move is not a creation, and on these funds most days it did not: the zero mass runs from 36% of steps (UCO) to 77% (BOIL). A rank correlation over that mass is mostly a correlation between one tied block and the holder series. This cell keeps only the steps where a creation actually happened, and its n is the honest sample size."
+      },
+      "creation_days": {
+        "biggest": [
+          {
+            "d_holders": 7.0,
+            "d_shares": 350.0,
+            "day": "2019-11-25"
+          },
+          {
+            "d_holders": 11.0,
+            "d_shares": 330.0,
+            "day": "2020-01-21"
+          },
+          {
+            "d_holders": 8.0,
+            "d_shares": 320.0,
+            "day": "2019-11-29"
+          },
+          {
+            "d_holders": 11.0,
+            "d_shares": 300.0,
+            "day": "2019-10-21"
+          },
+          {
+            "d_holders": 24.0,
+            "d_shares": 230.0,
+            "day": "2019-12-09"
+          }
+        ],
+        "n_creation_days": 43,
+        "n_dholders_positive": 22,
+        "n_rows": 480,
+        "p90_abs_creation": 50.0,
+        "rule": "|creation| STRICTLY above the 90% quantile of |creation| over this fund's own overlap rows, linear interpolation between order statistics",
+        "share_dholders_positive": 0.5116279069767442
+      },
+      "d_holders": {
+        "max": 52.0,
+        "mean": 0.5958333333333333,
+        "median": 0.0,
+        "min": -42.0,
+        "n": 480,
+        "n_positive": 207,
+        "n_zero": 67,
+        "sd": 5.861233111202391,
+        "share_positive": 0.43125
+      },
+      "d_shares": {
+        "max": 350.0,
+        "mean": 4.625,
+        "median": 0.0,
+        "min": -200.0,
+        "n": 480,
+        "n_positive": 65,
+        "n_zero": 371,
+        "sd": 47.28390025560546,
+        "share_positive": 0.13541666666666666
+      },
+      "holder_span_utc": [
+        "2018-05-02T04:54:15Z",
+        "2020-04-21T03:50:05Z"
+      ],
+      "n_creation_steps_in_overlap": 576,
+      "n_dropped_for_missing_holder_poll": 96,
+      "n_paired": 480,
+      "n_share_days_in_overlap": 576,
+      "n_steps_skipped_long_gap": 0,
+      "split_like_steps": {
+        "in_overlap": [
+          {
+            "d_shares": 150.0,
+            "day": "2018-11-15",
+            "prev_day": "2018-11-14",
+            "relative": 0.7142857142857143,
+            "shares_prev": 210.0
+          }
+        ],
+        "n_in_overlap": 1,
+        "n_whole_series": 7,
+        "note": "The series is back-adjusted for reverse splits, so a split leaves no discontinuity here. Most whole-series flags sit in each fund's earliest, smallest-share era, where the back-adjusted count is a handful of shares and a single creation doubles it. They are reported, not dropped.",
+        "rule": "|d_shares| / shares_out[prev] > 0.5"
+      }
+    },
+    "KOLD": {
+      "correlations": {
+        "lag_+1": {
+          "n": 559,
+          "pearson": 0.09847479178481351,
+          "spearman": 0.018940952975095897
+        },
+        "lag_-1": {
+          "n": 559,
+          "pearson": 0.08161008112736987,
+          "spearman": 0.1010889550320167
+        },
+        "lag_0": {
+          "n": 560,
+          "pearson": 0.5612800552458247,
+          "spearman": 0.06480893304244602
+        }
+      },
+      "correlations_nonzero_creation": {
+        "lag_+1": {
+          "n": 101,
+          "pearson": 0.14568546205709182,
+          "spearman": -0.03463810918028083
+        },
+        "lag_-1": {
+          "n": 101,
+          "pearson": 0.09025132432937896,
+          "spearman": 0.20737717864782892
+        },
+        "lag_0": {
+          "n": 102,
+          "pearson": 0.6136170085549494,
+          "spearman": 0.09218562886988556
+        },
+        "why": "A share count that did not move is not a creation, and on these funds most days it did not: the zero mass runs from 36% of steps (UCO) to 77% (BOIL). A rank correlation over that mass is mostly a correlation between one tied block and the holder series. This cell keeps only the steps where a creation actually happened, and its n is the honest sample size."
+      },
+      "creation_days": {
+        "biggest": [
+          {
+            "d_holders": 157.0,
+            "d_shares": 105000.0,
+            "day": "2020-08-03"
+          },
+          {
+            "d_holders": 4.0,
+            "d_shares": 40000.0,
+            "day": "2018-11-13"
+          },
+          {
+            "d_holders": -2.0,
+            "d_shares": 40000.0,
+            "day": "2018-11-29"
+          },
+          {
+            "d_holders": 0.0,
+            "d_shares": 30000.0,
+            "day": "2018-11-09"
+          },
+          {
+            "d_holders": 14.0,
+            "d_shares": 30000.0,
+            "day": "2018-11-15"
+          }
+        ],
+        "n_creation_days": 46,
+        "n_dholders_positive": 29,
+        "n_rows": 560,
+        "p90_abs_creation": 5000.0,
+        "rule": "|creation| STRICTLY above the 90% quantile of |creation| over this fund's own overlap rows, linear interpolation between order statistics",
+        "share_dholders_positive": 0.6304347826086957
+      },
+      "d_holders": {
+        "max": 157.0,
+        "mean": 0.6321428571428571,
+        "median": 0.0,
+        "min": -32.0,
+        "n": 560,
+        "n_positive": 219,
+        "n_zero": 122,
+        "sd": 8.547062329813462,
+        "share_positive": 0.39107142857142857
+      },
+      "d_shares": {
+        "max": 105000.0,
+        "mean": 330.35714285714283,
+        "median": 0.0,
+        "min": -25000.0,
+        "n": 560,
+        "n_positive": 55,
+        "n_zero": 458,
+        "sd": 6782.314675595934,
+        "share_positive": 0.09821428571428571
+      },
+      "holder_span_utc": [
+        "2018-05-02T04:53:35Z",
+        "2020-08-13T22:55:00Z"
+      ],
+      "n_creation_steps_in_overlap": 576,
+      "n_dropped_for_missing_holder_poll": 16,
+      "n_paired": 560,
+      "n_share_days_in_overlap": 576,
+      "n_steps_skipped_long_gap": 0,
+      "split_like_steps": {
+        "in_overlap": [
+          {
+            "d_shares": 5000.0,
+            "day": "2018-05-16",
+            "prev_day": "2018-05-15",
+            "relative": 0.6684491978609626,
+            "shares_prev": 7480.0
+          },
+          {
+            "d_shares": 10000.0,
+            "day": "2018-09-27",
+            "prev_day": "2018-09-26",
+            "relative": 0.8012820512820513,
+            "shares_prev": 12480.0
+          },
+          {
+            "d_shares": 30000.0,
+            "day": "2018-11-09",
+            "prev_day": "2018-11-08",
+            "relative": 0.7062146892655368,
+            "shares_prev": 42480.0
+          },
+          {
+            "d_shares": 40000.0,
+            "day": "2018-11-13",
+            "prev_day": "2018-11-12",
+            "relative": 0.5518763796909493,
+            "shares_prev": 72480.0
+          },
+          {
+            "d_shares": 15000.0,
+            "day": "2019-05-29",
+            "prev_day": "2019-05-28",
+            "relative": 0.6672597864768683,
+            "shares_prev": 22480.0
+          },
+          {
+            "d_shares": 10000.0,
+            "day": "2019-09-25",
+            "prev_day": "2019-09-24",
+            "relative": 0.5720823798627003,
+            "shares_prev": 17480.0
+          },
+          {
+            "d_shares": 15000.0,
+            "day": "2019-11-08",
+            "prev_day": "2019-11-07",
+            "relative": 1.2019230769230769,
+            "shares_prev": 12480.0
+          },
+          {
+            "d_shares": -15000.0,
+            "day": "2020-02-11",
+            "prev_day": "2020-02-10",
+            "relative": -0.5458515283842795,
+            "shares_prev": 27480.0
+          },
+          {
+            "d_shares": 10000.0,
+            "day": "2020-02-21",
+            "prev_day": "2020-02-20",
+            "relative": 0.5720823798627003,
+            "shares_prev": 17480.0
+          },
+          {
+            "d_shares": 10000.0,
+            "day": "2020-03-30",
+            "prev_day": "2020-03-27",
+            "relative": 0.5720823798627003,
+            "shares_prev": 17480.0
+          },
+          {
+            "d_shares": 105000.0,
+            "day": "2020-08-03",
+            "prev_day": "2020-07-31",
+            "relative": 1.077144029544522,
+            "shares_prev": 97480.0
+          }
+        ],
+        "n_in_overlap": 11,
+        "n_whole_series": 48,
+        "note": "The series is back-adjusted for reverse splits, so a split leaves no discontinuity here. Most whole-series flags sit in each fund's earliest, smallest-share era, where the back-adjusted count is a handful of shares and a single creation doubles it. They are reported, not dropped.",
+        "rule": "|d_shares| / shares_out[prev] > 0.5"
+      }
+    },
+    "SCO": {
+      "correlations": {
+        "lag_+1": {
+          "n": 559,
+          "pearson": 0.09331174777354571,
+          "spearman": 0.141906284943645
+        },
+        "lag_-1": {
+          "n": 559,
+          "pearson": 0.018150043144242466,
+          "spearman": 0.26605706447337085
+        },
+        "lag_0": {
+          "n": 560,
+          "pearson": 0.3367119735279169,
+          "spearman": 0.2571449074762184
+        }
+      },
+      "correlations_nonzero_creation": {
+        "lag_+1": {
+          "n": 293,
+          "pearson": 0.09123760254278192,
+          "spearman": 0.14055128126173305
+        },
+        "lag_-1": {
+          "n": 293,
+          "pearson": 0.011170736337016231,
+          "spearman": 0.18920688086861423
+        },
+        "lag_0": {
+          "n": 294,
+          "pearson": 0.3503021789213228,
+          "spearman": 0.3379450987989971
+        },
+        "why": "A share count that did not move is not a creation, and on these funds most days it did not: the zero mass runs from 36% of steps (UCO) to 77% (BOIL). A rank correlation over that mass is mostly a correlation between one tied block and the holder series. This cell keeps only the steps where a creation actually happened, and its n is the honest sample size."
+      },
+      "creation_days": {
+        "biggest": [
+          {
+            "d_holders": 120.0,
+            "d_shares": 34380.0,
+            "day": "2019-09-16"
+          },
+          {
+            "d_holders": -387.0,
+            "d_shares": -26250.0,
+            "day": "2020-04-22"
+          },
+          {
+            "d_holders": 310.0,
+            "d_shares": 23750.0,
+            "day": "2020-04-03"
+          },
+          {
+            "d_holders": 29.0,
+            "d_shares": 21870.0,
+            "day": "2019-09-04"
+          },
+          {
+            "d_holders": 25.0,
+            "d_shares": -21250.0,
+            "day": "2020-04-14"
+          }
+        ],
+        "n_creation_days": 53,
+        "n_dholders_positive": 26,
+        "n_rows": 560,
+        "p90_abs_creation": 6250.0,
+        "rule": "|creation| STRICTLY above the 90% quantile of |creation| over this fund's own overlap rows, linear interpolation between order statistics",
+        "share_dholders_positive": 0.49056603773584906
+      },
+      "d_holders": {
+        "max": 970.0,
+        "mean": 5.876785714285714,
+        "median": 0.0,
+        "min": -387.0,
+        "n": 560,
+        "n_positive": 258,
+        "n_zero": 30,
+        "sd": 72.08775831176565,
+        "share_positive": 0.4607142857142857
+      },
+      "d_shares": {
+        "max": 34380.0,
+        "mean": -16.75,
+        "median": 0.0,
+        "min": -26250.0,
+        "n": 560,
+        "n_positive": 141,
+        "n_zero": 266,
+        "sd": 4548.42371504592,
+        "share_positive": 0.2517857142857143
+      },
+      "holder_span_utc": [
+        "2018-05-02T04:53:42Z",
+        "2020-08-13T22:55:06Z"
+      ],
+      "n_creation_steps_in_overlap": 576,
+      "n_dropped_for_missing_holder_poll": 16,
+      "n_paired": 560,
+      "n_share_days_in_overlap": 576,
+      "n_steps_skipped_long_gap": 0,
+      "split_like_steps": {
+        "in_overlap": [
+          {
+            "d_shares": 34380.0,
+            "day": "2019-09-16",
+            "prev_day": "2019-09-13",
+            "relative": 0.5199637023593466,
+            "shares_prev": 66120.0
+          },
+          {
+            "d_shares": 18750.0,
+            "day": "2020-04-02",
+            "prev_day": "2020-04-01",
+            "relative": 0.7352941176470589,
+            "shares_prev": 25500.0
+          },
+          {
+            "d_shares": 23750.0,
+            "day": "2020-04-03",
+            "prev_day": "2020-04-02",
+            "relative": 0.536723163841808,
+            "shares_prev": 44250.0
+          }
+        ],
+        "n_in_overlap": 3,
+        "n_whole_series": 11,
+        "note": "The series is back-adjusted for reverse splits, so a split leaves no discontinuity here. Most whole-series flags sit in each fund's earliest, smallest-share era, where the back-adjusted count is a handful of shares and a single creation doubles it. They are reported, not dropped.",
+        "rule": "|d_shares| / shares_out[prev] > 0.5"
+      }
+    },
+    "UCO": {
+      "correlations": {
+        "lag_+1": {
+          "n": 559,
+          "pearson": -0.10800389563869284,
+          "spearman": 0.3173160813794234
+        },
+        "lag_-1": {
+          "n": 559,
+          "pearson": 0.6753639381139221,
+          "spearman": 0.4753191161148705
+        },
+        "lag_0": {
+          "n": 560,
+          "pearson": -0.07179830091844248,
+          "spearman": 0.5151064332045903
+        }
+      },
+      "correlations_nonzero_creation": {
+        "lag_+1": {
+          "n": 359,
+          "pearson": -0.10734366210193405,
+          "spearman": 0.3506296532504339
+        },
+        "lag_-1": {
+          "n": 359,
+          "pearson": 0.6781165211421587,
+          "spearman": 0.49397978124670877
+        },
+        "lag_0": {
+          "n": 360,
+          "pearson": -0.07691851886588862,
+          "spearman": 0.5557129268582783
+        },
+        "why": "A share count that did not move is not a creation, and on these funds most days it did not: the zero mass runs from 36% of steps (UCO) to 77% (BOIL). A rank correlation over that mass is mostly a correlation between one tied block and the holder series. This cell keeps only the steps where a creation actually happened, and its n is the honest sample size."
+      },
+      "creation_days": {
+        "biggest": [
+          {
+            "d_holders": -28373.0,
+            "d_shares": 66200000.0,
+            "day": "2020-04-21"
+          },
+          {
+            "d_holders": 26075.0,
+            "d_shares": 38744000.0,
+            "day": "2020-04-20"
+          },
+          {
+            "d_holders": 6678.0,
+            "d_shares": 26200000.0,
+            "day": "2020-04-27"
+          },
+          {
+            "d_holders": 2901.0,
+            "d_shares": -23800000.0,
+            "day": "2020-04-22"
+          },
+          {
+            "d_holders": 5060.0,
+            "d_shares": 16600000.0,
+            "day": "2020-04-28"
+          }
+        ],
+        "n_creation_days": 56,
+        "n_dholders_positive": 31,
+        "n_rows": 560,
+        "p90_abs_creation": 3528000.000000002,
+        "rule": "|creation| STRICTLY above the 90% quantile of |creation| over this fund's own overlap rows, linear interpolation between order statistics",
+        "share_dholders_positive": 0.5535714285714286
+      },
+      "d_holders": {
+        "max": 26075.0,
+        "mean": 243.2875,
+        "median": 0.0,
+        "min": -28373.0,
+        "n": 560,
+        "n_positive": 257,
+        "n_zero": 33,
+        "sd": 2026.2214552930739,
+        "share_positive": 0.4589285714285714
+      },
+      "d_shares": {
+        "max": 66200000.0,
+        "mean": 284330.875,
+        "median": 0.0,
+        "min": -23800000.0,
+        "n": 560,
+        "n_positive": 176,
+        "n_zero": 200,
+        "sd": 4173068.8582804855,
+        "share_positive": 0.3142857142857143
+      },
+      "holder_span_utc": [
+        "2018-05-02T04:53:19Z",
+        "2020-08-13T22:40:59Z"
+      ],
+      "n_creation_steps_in_overlap": 576,
+      "n_dropped_for_missing_holder_poll": 16,
+      "n_paired": 560,
+      "n_share_days_in_overlap": 576,
+      "n_steps_skipped_long_gap": 0,
+      "split_like_steps": {
+        "in_overlap": [],
+        "n_in_overlap": 0,
+        "n_whole_series": 6,
+        "note": "The series is back-adjusted for reverse splits, so a split leaves no discontinuity here. Most whole-series flags sit in each fund's earliest, smallest-share era, where the back-adjusted count is a handful of shares and a single creation doubles it. They are reported, not dropped.",
+        "rule": "|d_shares| / shares_out[prev] > 0.5"
+      }
+    }
+  },
+  "record": "D621",
+  "spec": "D621; SETTLEMENT_FLOW_LEDGER_PREREG.md section 3.3c line 112 and P3.7, as amended",
+  "what_this_is": "A DATA-QUALITY MEASUREMENT AND NOT A SIGNAL TEST. No return is computed, no price bar is read, no null is run, nothing is scored, and no verdict about tradeability follows from anything here. The question is whether the daily change in Robinhood holders moves with the daily change in shares outstanding."
+}

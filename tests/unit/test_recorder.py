@@ -427,10 +427,16 @@ def test_the_window_conversion_follows_dst() -> None:
 def test_the_committed_schedule_loads_and_holds_the_deposits_ten() -> None:
     jobs = load_jobs(JOBS_JSON)
     names = {j.name for j in jobs}
-    deposit_ten = {"fund_snapshot", "cme_settlement_prices", "tas_summary", "etf_quotes",
+    # Deposit job 1 (`fund_snapshot`) was split into four by D619 on 2026-09-22 -- two ProShares
+    # jobs that are ready, and the USCF and P9 halves that are not -- so the deposit's ten are
+    # thirteen names here. The split is the honest statement: one `ready` flag on the whole job
+    # would have overstated the deposit's content cell.
+    deposit_ten = {"proshares_nav", "proshares_holdings", "uscf_fund_snapshot", "p9_snapshot",
+                   "cme_settlement_prices", "tas_summary", "etf_quotes",
                    "attention", "restrike_check", "cftc_cot_weekly", "swap_dissemination",
                    "options_oi", "mbo_around_windows"}
     assert deposit_ten <= names
+    assert "fund_snapshot" not in names, "the unsplit job came back; D619 split it"
     assert len(jobs) == len(names)
 
 

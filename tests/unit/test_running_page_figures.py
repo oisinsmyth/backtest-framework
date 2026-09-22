@@ -58,7 +58,7 @@ def _longest_tracked_path() -> int:
 
 # (label, the literal as the prose spells it, what recomputes it)
 ANCHORS: list[tuple[str, str, Callable[[], int]]] = [
-    ("panels in the manifest", "128", _panels),
+    ("panels in the manifest", "134", _panels),
     ("panels carrying a git blob id", "115", _panels_with_a_blob),
     ("longest tracked path", "85", _longest_tracked_path),
 ]
@@ -106,8 +106,10 @@ def test_the_seven_panels_without_a_blob_are_the_ones_named():
     another gained one, and the page's seven filenames would then be wrong while its number was
     right. Five until 2026-09-20; D580's bitcoin panel made it six, D581's ES option panel seven,
     D589's session calendar eight (2026-09-21), D604's order-book depth panel and the closure
-    programme's two macro panels eleven the same day, D613's ES option volume panel in ET
-    clock buckets twelve, and D617's ES option signed flow census thirteen (2026-09-22).
+    programme's two macro panels eleven (the same day), round 4's attention sample and
+    leveraged-ETF NAV panel thirteen (2026-09-22), round 4b's quarterly holdings, projected UNG/USO
+    panel, Robinhood holders and GDELT hourly sample seventeen (the same day), and the concurrent
+    branch's D613 ES option volume panel and D617 signed flow census nineteen (merged the same day).
     """
     prose = PAGE.read_text(encoding="utf-8")
     without = sorted(f["path"] for f in _manifest() if not f.get("git_blob"))
@@ -116,7 +118,7 @@ def test_the_seven_panels_without_a_blob_are_the_ones_named():
         f"these panels have no git blob id and docs/RUNNING.md does not name them: {missing}. "
         f"The page tells a reader which artifacts are unrecoverable; that list is the point."
     )
-    assert len(without) == 13, (
-        f"{len(without)} panels now have no blob id, and the page's prose says thirteen. The count "
+    assert len(without) == 19, (
+        f"{len(without)} panels now have no blob id, and the page's prose says nineteen. The count "
         f"and the names have to move together."
     )
