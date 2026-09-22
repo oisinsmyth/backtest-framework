@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 343 of these records carry neither field —
+**No Status or Category column, deliberately.** 350 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -686,6 +686,11 @@ would look like data. The tokens are what is shown.
 | D610 | The flow ledger becomes code, and the routing identity it registers is exact only at its two endpoints | [record](D610-the-flow-ledger-rebalance-routing-the-update-step-and-rolls.md) |
 | D611 | The fund model is pure algebra with no fund in it, and every absent fact RAISES rather than defaulting | [record](D611-the-fund-model-inav-premium-creations-and-the-restrike.md) |
 | D612 | The attention layer: a hashed query file, two parsers, four point-in-time guards, and an erratum on the deposit's hourl… | [record](D612-the-attention-layer-and-its-point-in-time-guards.md) |
+| D613 | the ES-family option volume panel in ET clock buckets, so an option-ladder conditioner can be fixed at a cutoff of the… | [record](D613-FIXTURE-the-ES-option-volume-panel-in-ET-clock-buckets.md) |
+| D614 | D614 STAGE 0 RESULT — the verdict the pre-registration's own bars return is REAL BUT NOT TRADEABLE, and the line closes… | [PRE-REG](D614-PRE-REG-expiry-pinning-on-ES-from-the-noon-0DTE-volume-ladder.md) · [RESULT](D614-STAGE-0-RESULT-not-pinning-ten-sessions-carry-the-whole-pull.md) |
+| D616 | the open interest's reference session on the ES option panel | [record](D616-FIXTURE-the-open-interest-reference-session.md) |
+| D617 | the ES option signed flow census, from the tbbo year | [record](D617-FIXTURE-the-ES-option-signed-flow-census-from-the-tbbo-year.md) |
+| D618 | D618 STAGE 0 RESULT — five cells survive the construction screens, none survives its own null, and the thing that looke… | [PRE-REG](D618-PRE-REG-the-sharpened-0DTE-ladder-range-or-independence.md) · [RESULT](D618-STAGE-0-RESULT-the-band-around-the-price-was-the-signal.md) |
 | D619 | The fund panel, the fund-facts SOURCES, and the CME-side census: TAS exists, options OI does not, and UCO is three quar… | [record](D619-the-fund-panel-the-fund-facts-and-the-cme-side-census.md) |
 | D620 | The quarterly fund holdings from EDGAR, and the between-filing projection: the filings give 415 fund-quarters back to 2… | [record](D620-quarterly-fund-holdings-and-the-between-filing-projection.md) |
 | D621 | Retail attention measured from creations and Robinhood holders, with GDELT hourly news through the API: the amendment t… | [record](D621-retail-attention-from-creations-and-robinhood-holders.md) |

@@ -84,8 +84,8 @@ a **checkout** no longer carries; they remain in the history, so a `git clone` i
 which 969 MB is `.git`. Two of the smallest came back into the index in
 [D538](decisions/D538-two-small-panels-return-to-the-index.md) for 6.9 MB and, because their
 blobs were already in history, no extra bytes at all — which is what took the skips from 136 to 49
-(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 132
-panels and the git blob id of **115** of them. The seventeen without one —
+(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 134
+panels and the git blob id of **115** of them. The nineteen without one —
 `data/d377_ensemble.npz`, `data/d382_scores.npz`, `data/fixtures/fut_day1m.parquet`, the two
 settlement panels D556 built on 2026-09-19, `data/fixtures/fut_settle_strip.csv.gz` and
 `data/fixtures/fut_curve_front_next.csv.gz`, the one-minute bitcoin panel D580 built on
@@ -100,7 +100,10 @@ attention sample `data/fixtures/attention_sample.csv.gz` (D612) and the leverage
 quarterly fund holdings `data/fixtures/fund_holdings_quarterly.csv.gz` and the projected UNG/USO panel
 `data/fixtures/fund_panel_projected.csv.gz` (D620), the Robinhood holder counts
 `data/fixtures/robintrack_energy_funds.csv.gz` and the GDELT hourly sample
-`data/fixtures/gdelt_hourly_sample.csv.gz` (D621) — were never tracked in the first place, so
+`data/fixtures/gdelt_hourly_sample.csv.gz` (D621), and the ES option volume panel in ET clock buckets
+D613 built on 2026-09-21, `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz`, and the ES option signed
+flow census D617 built on 2026-09-22, `data/fixtures/fut_es_0dte_signed_flow.csv.gz` — were never
+tracked in the first place, so
 the checksum is all the manifest can offer for them.
 
 **The blob ids no longer resolve, and cannot be made to.** They record what each panel's blob was

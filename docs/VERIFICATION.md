@@ -1,6 +1,6 @@
 # What this suite guarantees, and what it does not
 
-**4,152 tests are collected here, and one of them skips on the machine this was written on, for
+**4,154 tests are collected here, and one of them skips on the machine this was written on, for
 want of a data panel. This page is about what follows from that, which is less than it sounds and
 more specific.**
 
@@ -90,7 +90,7 @@ Two carry more weight than the rest:
   the golden masters instead. The README's "penny-exact against an independently written engine"
   is true *of that scope*.
 
-### `tests/unit/` — 3,338 tests. *Each part does its own job.*
+### `tests/unit/` — 3,340 tests. *Each part does its own job.*
 
 The bulk, and the least interesting per test: one behaviour, chosen inputs. This is also where
 most of the **structural guard** assertions are proved to fire — `src/` carries **1,165 `raise`

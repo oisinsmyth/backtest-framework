@@ -114,7 +114,7 @@ principal's decision and this loader does not make it.
 
 SS6. THE CATALOGUE'S OWN COUNTS
 --------------------------------
-Counted over the 132 rows of `panel_catalogue.SPECS`, which were authored one per manifest
+Counted over the 134 rows of `panel_catalogue.SPECS`, which were authored one per manifest
 path from a read of every one of those files' own headers. 126 rows at D609; the integrator
 added two on 2026-09-22 when round 4's two panels entered the manifest:
   attention_sample   data/fixtures/attention_sample.csv.gz   observed_at_utc  iso_ts
@@ -130,32 +130,35 @@ and four more the same day when round 4b's panels entered the manifest (128 -> 1
                      wrong cut: available_at_utc                                       (D621)
   robintrack_energy_funds  data/fixtures/robintrack_energy_funds.csv.gz  ts_utc      iso_ts
                      no wrong cut: one instant per row                                 (D621)
+and two more at the merge with origin the same day (132 -> 134), built on the other clone:
+  fut_es_0dte_signed_flow     data/fixtures/fut_es_0dte_signed_flow.csv.gz     session  iso_day  (D617)
+  fut_es_0dte_volume_cutoffs  data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz  session  iso_day  (D613, origin)
 
-  manifest panels                                    132
-  catalogue rows                                     132     one per manifest path, no extras
+  manifest panels                                    134
+  catalogue rows                                     134     one per manifest path, no extras
 
-  date format   iso_day        79
+  date format   iso_day        81
                 iso_ts         32
                 date32          1     D2_US_factors_SAS.parquet, arrow date32[day]
                 year_prefix     1     hkm_factors.csv.gz, monthly and quarterly stacked
                 none           19
                                 ---
-                              132
+                              134
 
-  reader        csv           109
+  reader        csv           111
                 npz            16
                 parquet         7
                                 ---
-                              132
+                              134
 
-  with a date column                                 113     = 132 - 19
+  with a date column                                 115     = 134 - 19
   with NO date column                                 19     16 .npz + d506_cells
                                                              + d508_quintiles
                                                              + D2_sas_vs_py_summ_stats.parquet
 
-  date column   day 59, timestamp 29, session 5, filing 3, ref 3, date 4, avail_date 2,
+  date column   day 59, timestamp 29, session 7, filing 3, ref 3, date 4, avail_date 2,
                 report_date 1, date_entry 1, filed 1, period 1, observed_at_utc 1,
-                filed_date 1, hour_utc 1, ts_utc 1                                  = 113
+                filed_date 1, hour_utc 1, ts_utc 1                                  = 115
 
   panels carrying at least one wrong cut              25
   distinct wrong-cut column names                     22

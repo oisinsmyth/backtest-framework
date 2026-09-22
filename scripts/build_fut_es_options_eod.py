@@ -7,7 +7,7 @@ signal, no return.
     python scripts/build_fut_es_options_eod.py --stats [--workers 6]   # statistics files -> OI and settlement publications (cached per file)
     python scripts/build_fut_es_options_eod.py --bars  [--workers 6]   # ohlcv-1m files -> 0DTE volume to 15:30 ET per (session, option) (cached per file)
     python scripts/build_fut_es_options_eod.py --build                 # caches -> data/fixtures/fut_es_options_eod.csv.gz + meta
-    python scripts/build_fut_es_options_eod.py --gates                 # G1-G6 -> meta (either interpreter)
+    python scripts/build_fut_es_options_eod.py --gates                 # G1-G7 -> meta (either interpreter)
     python scripts/build_fut_es_options_eod.py --selftest
 
 Conventions. `stat_type` 9 = open interest in `quantity`; 3 = settlement in `price` (1e-9 units); UNDEF filtered on both, and
@@ -198,13 +198,21 @@ def assemble(defs, stats, bars, cal, usable_session):
     stats = pd.merge_asof(stats.sort_values("ts_event"), d, left_on="ts_event", right_on="w0", by=["iid", "year"], direction="backward"); stats = stats[stats["raw_symbol"].notna()]
     stats["usable"] = usable_session(stats["ts_event"].to_numpy(), cal); stats = stats[pd.notna(stats["usable"])]
     keep = ["usable", "raw_symbol", "family", "right", "strike", "expiry_date", "expiry_hhmm", "expiration_ns", "underlying"]
-    oi = stats[stats["stat_type"] == ST_OI].sort_values("ts_event").groupby(["usable", "raw_symbol"], as_index=False).last()[keep + ["quantity", "ts_event"]].rename(columns={"quantity": "oi", "ts_event": "oi_ts_event"})
+    oi = stats[stats["stat_type"] == ST_OI].sort_values("ts_event").groupby(["usable", "raw_symbol"], as_index=False).last()[keep + ["quantity", "ts_event", "ts_ref"]].rename(columns={"quantity": "oi", "ts_event": "oi_ts_event", "ts_ref": "oi_ts_ref"})
     se = stats[stats["stat_type"] == ST_SETTLE].sort_values("ts_event").groupby(["usable", "raw_symbol"], as_index=False).last()[["usable", "raw_symbol", "price"]]; se["settle"] = se["price"] * PX; se = se.drop(columns="price")
     t = oi.merge(se, on=["usable", "raw_symbol"], how="left").rename(columns={"usable": "session"})
     t = t[t["expiry_date"] >= t["session"]]                                                                       # an option expired before the session carries no gamma
     t = t.merge(bars.rename(columns={"volume": "vol_to_1530"}), on=["raw_symbol", "session"], how="left")
     t["vol_to_1530"] = np.where(t["expiry_date"] == t["session"], t["vol_to_1530"].fillna(0), np.nan)             # kept only for the same-day expiry
     t["oi_pub_et"] = pd.to_datetime(t["oi_ts_event"], utc=True).dt.tz_convert("US/Eastern").dt.strftime("%Y-%m-%dT%H:%M")
+    # D616: the REFERENCE session of the open interest kept -- the business date the number describes. `ts_ref` on a
+    # statistics message is midnight UTC on that date (19:00 ET in winter, 20:00 in summer, never UNDEF on these rows),
+    # so its UTC date is the session. `oi_pub_et` cannot do this job: a publication is usable on exactly one session, so
+    # adjacent sessions' publication times are never equal, and CME's preliminary-then-final revision is invisible in it
+    # (16.3 % of (option, usable session) cells carried more than one distinct reference date in 2023). A difference of
+    # open interest is only a one-session position change if the two reference sessions are adjacent, and this column is
+    # what makes that checkable. The publication KEPT is unchanged -- still the last by ts_event -- so `oi` does not move.
+    t["oi_ref_session"] = t["oi_ts_ref"].to_numpy("int64").astype("datetime64[ns]").astype("datetime64[D]").astype(str)   # exact: ts_ref is midnight UTC, and this is ~50x strftime
     return t.sort_values(["session", "expiry_date", "strike", "right"]).reset_index(drop=True)
 
 
@@ -217,11 +225,12 @@ def cmd_build():
     for y in years:
         st = load_cached("stats", y); ty = assemble(defs[defs["year"] == y], st, bars, cal, OIB.usable_session); parts.append(ty); print(f"  {y}: {len(st):,} publications -> {len(ty):,} fixture rows", flush=True); del st
     t = pd.concat(parts, ignore_index=True).sort_values(["session", "expiry_date", "strike", "right"]).reset_index(drop=True)
-    cols = ["session", "raw_symbol", "family", "right", "strike", "expiry_date", "expiry_hhmm", "underlying", "oi", "settle", "oi_pub_et", "vol_to_1530"]
+    cols = ["session", "raw_symbol", "family", "right", "strike", "expiry_date", "expiry_hhmm", "underlying", "oi", "settle", "oi_pub_et", "vol_to_1530", "oi_ref_session"]
     t[cols].to_csv(OUT, index=False, compression="gzip", float_format="%.6g", encoding="utf-8")
     META.write_text(json.dumps(dict(spec="D581", built_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), rows=int(len(t)), sessions=int(t["session"].nunique()), first=str(t["session"].min()), last=str(t["session"].max()),
                                     families=t["family"].value_counts().to_dict(), usable_rule="a publication is usable on the first ES session whose 10:00 ET entry is strictly after its ts_event (D497/D521)",
                                     stat_types=dict(open_interest=ST_OI, settlement=ST_SETTLE), sentinels="UNDEF on both; settlement == 0.0 dropped (D526)", vol_to_1530="minute-bar volume before 15:30 ET on the option's expiry session only, from the archive on disk",
+                                    oi_ref_session="D616: the ES session the open interest DESCRIBES, from the kept publication's ts_ref (midnight UTC on the business date). The publication kept is unchanged (last by ts_event), so `oi` is untouched. A difference of `oi` across two sessions is a one-session position change only where the two reference sessions are adjacent -- G7 measures how often that holds and what the residue is.",
                                     gates=None), indent=1), encoding="utf-8")
     print(f"  wrote {OUT.relative_to(REPO)}: {len(t):,} rows, {t['session'].nunique():,} sessions {t['session'].min()} .. {t['session'].max()}, families {t['family'].value_counts().to_dict()} in {(time.time()-t0)/60:.1f} min")
 
@@ -247,8 +256,46 @@ def black76_iv(price, F, K, tau, right):
     return 0.5 * (lo + hi)
 
 
+def gate7_reference_session(t, cal, log=print):
+    """G7 (D616) -- the open interest's reference session is recoverable, sits BEFORE the session it is used on, and one
+    session back; and, per option on adjacent sessions, the two reference sessions are adjacent, which is the only
+    condition under which a difference of open interest is a one-session position change.
+
+    Reported, not enforced, because the residue is real and era-dependent: a publication whose reference date is not an
+    ES session (a holiday stamp), a two-session gap after a skipped evening, and CME's preliminary-then-final revision,
+    which puts two publications for the SAME reference date on adjacent sessions and so makes a delta of exactly zero
+    that is not a zero position change. A study differencing this column must drop the pairs whose span is not one and
+    say how many it dropped -- the fixture's job is to make that countable."""
+    posn = {d: i for i, d in enumerate(list(cal))}
+    ref = t["oi_ref_session"].astype(str); sess = t["session"].astype(str)
+    ri = ref.map(posn).to_numpy(dtype="float64"); si = sess.map(posn).to_numpy(dtype="float64")
+    gap = si - ri; fin = np.isfinite(gap)
+    hist = {str(int(g)): int(n) for g, n in zip(*np.unique(gap[fin], return_counts=True))}
+    at_or_after = float((ref.to_numpy() >= sess.to_numpy()).mean())
+    # per option, consecutive fixture sessions that are adjacent ES sessions: is the reference span also one session?
+    u = t[["raw_symbol", "session", "oi_ref_session"]].sort_values(["raw_symbol", "session"], kind="stable").reset_index(drop=True)
+    sym = u["raw_symbol"].to_numpy(); same = sym[1:] == sym[:-1]
+    us = u["session"].astype(str).map(posn).to_numpy(dtype="float64"); ur = u["oi_ref_session"].astype(str).map(posn).to_numpy(dtype="float64")
+    ds = us[1:] - us[:-1]; dr = ur[1:] - ur[:-1]; pairs = same & (ds == 1)
+    span1 = float(np.mean(dr[pairs] == 1)) if pairs.any() else None
+    span0 = float(np.mean(dr[pairs] == 0)) if pairs.any() else None       # the revision: a spurious zero delta
+    spannan = float(np.mean(~np.isfinite(dr[pairs]))) if pairs.any() else None
+    by_year = {}
+    yr = sess.str.slice(0, 4).to_numpy()
+    for y in sorted(set(yr)):
+        m = yr == y
+        by_year[y] = dict(rows=int(m.sum()), share_gap_one=float(np.mean(gap[m & fin] == 1)) if (m & fin).any() else None,
+                          share_unrecoverable=float(np.mean(~fin[m])))
+    out = dict(rows=int(len(t)), share_reference_is_an_es_session=float(fin.mean()), gap_sessions_histogram=hist,
+               share_gap_exactly_one=float(np.mean(gap[fin] == 1)), share_reference_at_or_after_session=at_or_after,
+               adjacent_pairs=int(pairs.sum()), share_pair_reference_span_one=span1, share_pair_reference_span_zero_a_revision=span0,
+               share_pair_reference_unrecoverable=spannan, by_year=by_year)
+    out["passes"] = bool(out["share_reference_is_an_es_session"] >= 0.95 and at_or_after <= 0.01 and out["share_gap_exactly_one"] >= 0.95)
+    return out
+
+
 def cmd_gates(log=print):
-    meta = json.loads(META.read_text(encoding="utf-8")); t = pd.read_csv(OUT, dtype={"session": str, "raw_symbol": str, "family": str, "right": str, "expiry_date": str, "expiry_hhmm": str, "underlying": str, "oi_pub_et": str}, encoding="utf-8"); out = {}; ok = True
+    meta = json.loads(META.read_text(encoding="utf-8")); t = pd.read_csv(OUT, dtype={"session": str, "raw_symbol": str, "family": str, "right": str, "expiry_date": str, "expiry_hhmm": str, "underlying": str, "oi_pub_et": str, "oi_ref_session": str}, encoding="utf-8"); out = {}; ok = True
     # G1 OI >= 0, settlement > 0 where present
     out["G1"] = dict(negative_oi=int((t["oi"] < 0).sum()), zero_or_negative_settle=int((t["settle"] <= 0).sum()), settle_missing=int(t["settle"].isna().sum()), passes=bool((t["oi"] >= 0).all() and (t["settle"].dropna() > 0).all())); ok &= out["G1"]["passes"]
     # G2 the OI used on a session was published strictly before that session's 10:00 ET
@@ -289,6 +336,7 @@ def cmd_gates(log=print):
             n_ahead = max(calx.index(r.expiry_date) - i, 0) if r.expiry_date in calx else 0; tau = (n_ahead * 6.5 + 6.5) / (252 * 6.5)
             tried += 1; inv.append(np.isfinite(black76_iv(r.settle, r.F, r.strike, tau, r.right)))
     out["G6"] = dict(near_money_rows_tried=tried, share_inverting=float(np.mean(inv)) if inv else None, passes=bool(inv and np.mean(inv) >= 0.99)); ok &= out["G6"]["passes"]
+    out["G7"] = gate7_reference_session(t, cal, log); ok &= out["G7"]["passes"]
     meta["gates"] = out; meta["all_gates_pass"] = bool(ok); META.write_text(json.dumps(meta, indent=1), encoding="utf-8")
     log(f"G1 negative OI {out['G1']['negative_oi']}, non-positive settle {out['G1']['zero_or_negative_settle']}, settle missing {out['G1']['settle_missing']} {'PASS' if out['G1']['passes'] else 'FAIL'}")
     log(f"G2 OI published before the session's entry on {out['G2']['published_before_entry']:.4f} of rows {'PASS' if out['G2']['passes'] else 'FAIL'}")
@@ -296,6 +344,9 @@ def cmd_gates(log=print):
     log(f"G4 median strikes with OI {out['G4']['median_strikes_with_oi']:.0f}; sessions under 20: {out['G4']['n_under_20']} {'PASS' if out['G4']['passes'] else 'FAIL'}")
     log(f"G5 second-path OI sums agree on {sum(c['agree'] for c in checks)}/10 sessions {'PASS' if out['G5']['passes'] else 'FAIL'}")
     log(f"G6 near-the-money settlement IV inverts on {out['G6']['share_inverting']} of {tried} {'PASS' if out['G6']['passes'] else 'FAIL'}")
+    g7 = out["G7"]; log(f"G7 reference session recoverable on {g7['share_reference_is_an_es_session']:.4f} of rows, one session back on {g7['share_gap_exactly_one']:.4f}, "
+                        f"at or after the session on {g7['share_reference_at_or_after_session']:.4f}; on {g7['adjacent_pairs']:,} adjacent pairs the reference span is one on "
+                        f"{g7['share_pair_reference_span_one']:.4f} and zero (a revision) on {g7['share_pair_reference_span_zero_a_revision']:.4f} {'PASS' if g7['passes'] else 'FAIL'}")
     log(f"ALL GATES {'PASS' if ok else 'FAIL'}; wrote {META.relative_to(REPO)}"); return ok
 
 
@@ -309,10 +360,19 @@ def cmd_selftest():
     defs = pd.DataFrame([dict(iid=1, raw_symbol="E1CH3 C4000", family="E1C", right="C", strike=4000.0, expiry_date="2023-03-01", expiry_hhmm="16:00", expiration_ns=ns("2023-03-01T16:00"), underlying="ESH3", ts_recv=ns("2023-03-01T23:00"), ts_recv_first=ns("2023-02-28T23:00"), year=2023),
                          dict(iid=2, raw_symbol="EW1H3 P3900", family="EW1", right="P", strike=3900.0, expiry_date="2023-03-03", expiry_hhmm="16:00", expiration_ns=ns("2023-03-03T16:00"), underlying="ESH3", ts_recv=ns("2023-03-03T23:00"), ts_recv_first=ns("2023-02-28T23:00"), year=2023),
                          # id 1 reissued within the year to a later instrument: its window starts at that instrument's first definition
-                         dict(iid=1, raw_symbol="E1CH3 C4100", family="E1C", right="C", strike=4100.0, expiry_date="2023-03-03", expiry_hhmm="16:00", expiration_ns=ns("2023-03-03T16:00"), underlying="ESH3", ts_recv=ns("2023-03-03T23:00"), ts_recv_first=ns("2023-03-02T00:30"), year=2023)])
-    stats = pd.DataFrame([dict(iid=1, stat_type=ST_OI, ts_event=ns("2023-02-28T21:00"), ts_ref=0, quantity=100, price=0, year=2023), dict(iid=2, stat_type=ST_OI, ts_event=ns("2023-02-28T21:00"), ts_ref=0, quantity=50, price=0, year=2023),
-                          dict(iid=2, stat_type=ST_SETTLE, ts_event=ns("2023-02-28T17:00"), ts_ref=0, quantity=0, price=int(12.5 / PX), year=2023), dict(iid=2, stat_type=ST_OI, ts_event=ns("2023-03-01T21:00"), ts_ref=0, quantity=70, price=0, year=2023),
-                          dict(iid=1, stat_type=ST_OI, ts_event=ns("2023-03-02T21:00"), ts_ref=0, quantity=33, price=0, year=2023)])   # after the reissue: belongs to E1CH3 C4100, usable 2023-03-03
+                         dict(iid=1, raw_symbol="E1CH3 C4100", family="E1C", right="C", strike=4100.0, expiry_date="2023-03-03", expiry_hhmm="16:00", expiration_ns=ns("2023-03-03T16:00"), underlying="ESH3", ts_recv=ns("2023-03-03T23:00"), ts_recv_first=ns("2023-03-02T00:30"), year=2023),
+                         # D616: a third option, used only for the preliminary-then-final revision case below
+                         dict(iid=3, raw_symbol="EW1H3 P3800", family="EW1", right="P", strike=3800.0, expiry_date="2023-03-03", expiry_hhmm="16:00", expiration_ns=ns("2023-03-03T16:00"), underlying="ESH3", ts_recv=ns("2023-03-03T23:00"), ts_recv_first=ns("2023-02-28T23:00"), year=2023)])
+    def refns(d):                                                        # a statistics message's ts_ref: midnight UTC on the business date
+        return int(pd.Timestamp(d, tz="UTC").value)
+    stats = pd.DataFrame([dict(iid=1, stat_type=ST_OI, ts_event=ns("2023-02-28T21:00"), ts_ref=refns("2023-02-28"), quantity=100, price=0, year=2023),
+                          dict(iid=2, stat_type=ST_OI, ts_event=ns("2023-02-28T21:00"), ts_ref=refns("2023-02-28"), quantity=50, price=0, year=2023),
+                          dict(iid=2, stat_type=ST_SETTLE, ts_event=ns("2023-02-28T17:00"), ts_ref=refns("2023-02-28"), quantity=0, price=int(12.5 / PX), year=2023),
+                          dict(iid=2, stat_type=ST_OI, ts_event=ns("2023-03-01T21:00"), ts_ref=refns("2023-03-01"), quantity=70, price=0, year=2023),
+                          dict(iid=1, stat_type=ST_OI, ts_event=ns("2023-03-02T21:00"), ts_ref=refns("2023-03-02"), quantity=33, price=0, year=2023),   # after the reissue: belongs to E1CH3 C4100, usable 2023-03-03
+                          # the revision trap: two publications usable on 2023-03-02, the LATER one restating the OLDER business date
+                          dict(iid=3, stat_type=ST_OI, ts_event=ns("2023-03-01T21:00"), ts_ref=refns("2023-03-01"), quantity=10, price=0, year=2023),
+                          dict(iid=3, stat_type=ST_OI, ts_event=ns("2023-03-01T22:00"), ts_ref=refns("2023-02-28"), quantity=11, price=0, year=2023)])
     bars = pd.DataFrame([dict(raw_symbol="E1CH3 C4000", session="2023-03-01", volume=555), dict(raw_symbol="EW1H3 P3900", session="2023-03-01", volume=9)])
     OIB = _load("d497", "build_fut_open_interest.py"); t = assemble(defs, stats, bars, cal, OIB.usable_session)
     r1 = t[(t["session"] == "2023-03-01") & (t["raw_symbol"] == "E1CH3 C4000")].iloc[0]; assert r1["oi"] == 100 and r1["vol_to_1530"] == 555, r1.to_dict()
@@ -322,7 +382,28 @@ def cmd_selftest():
     r4 = t[(t["session"] == "2023-03-03") & (t["iid"] == 1)] if "iid" in t else t[(t["session"] == "2023-03-03") & (t["raw_symbol"] == "E1CH3 C4100")]
     assert len(r4) == 1 and r4.iloc[0]["raw_symbol"] == "E1CH3 C4100" and r4.iloc[0]["oi"] == 33, f"the reissued id must carry its second instrument after the reissue: {r4.to_dict('records')}"
     iv = black76_iv(12.5, 4000.0, 3900.0, 2 / 252, "P"); assert np.isfinite(iv) and 0.05 < iv < 1.0, iv
-    print(f"selftest: symbology, usable-session keying (21:00 ET T-1 -> T), expiry drop, 0DTE volume attachment, IV inversion (iv {iv:.3f}) -- all pass")
+    # ---- D616: the reference session, and G7 ----
+    assert r1["oi_ref_session"] == "2023-02-28", f"the publication usable on 2023-03-01 describes 2023-02-28, not {r1['oi_ref_session']}"
+    assert r3["oi_ref_session"] == "2023-03-01", f"the freshest publication carries ITS OWN reference date: {r3['oi_ref_session']}"
+    rev = t[(t["session"] == "2023-03-02") & (t["raw_symbol"] == "EW1H3 P3800")].iloc[0]
+    assert rev["oi"] == 11 and rev["oi_ref_session"] == "2023-02-28", f"last by ts_event wins and brings its reference date with it: {rev.to_dict()}"
+    # the revision is INVISIBLE in oi_pub_et and VISIBLE in oi_ref_session -- the whole point of the column
+    prev = t[(t["session"] == "2023-03-01") & (t["raw_symbol"] == "EW1H3 P3900")].iloc[0]
+    assert rev["oi_pub_et"] != prev["oi_pub_et"], "publication times never repeat, so they cannot reveal a restated business date"
+    assert rev["oi_ref_session"] == prev["oi_ref_session"], "...while the reference dates DO repeat, which is what makes the trap countable"
+    good = pd.DataFrame([dict(raw_symbol="A", session="2023-03-02", oi_ref_session="2023-03-01"), dict(raw_symbol="A", session="2023-03-03", oi_ref_session="2023-03-02"),
+                         dict(raw_symbol="B", session="2023-03-02", oi_ref_session="2023-03-01"), dict(raw_symbol="B", session="2023-03-03", oi_ref_session="2023-03-02")])
+    g = gate7_reference_session(good, cal, log=lambda *a: None)
+    assert g["passes"] and g["share_gap_exactly_one"] == 1.0 and g["adjacent_pairs"] == 2 and g["share_pair_reference_span_one"] == 1.0, g
+    # RAISES on the break: a reference session at or after the session it is used on is look-ahead, and G7 must refuse it
+    bad = good.copy(); bad.loc[0, "oi_ref_session"] = "2023-03-02"; b = gate7_reference_session(bad, cal, log=lambda *a: None)
+    assert not b["passes"] and b["share_reference_at_or_after_session"] > 0.01, b
+    # ...and on the revision break: both sessions restating one business date leaves the pair span at zero
+    bad2 = good.copy(); bad2.loc[1, "oi_ref_session"] = "2023-03-01"; b2 = gate7_reference_session(bad2, cal, log=lambda *a: None)
+    assert b2["share_pair_reference_span_zero_a_revision"] == 0.5, b2
+    print(f"selftest: symbology, usable-session keying (21:00 ET T-1 -> T), expiry drop, 0DTE volume attachment, IV inversion (iv {iv:.3f}), "
+          f"the reference session on the kept publication, the revision trap visible in oi_ref_session and invisible in oi_pub_et, "
+          f"and G7 passing clean data and RAISING on both breaks (look-ahead reference, restated business date) -- all pass")
 
 
 if __name__ == "__main__":

@@ -160,6 +160,67 @@ version (likely at the Phase C "first real number" milestone, see
   and the 14:30 execution automation, which are the principal's or the deposit's; two tracker
   lines were wrong and are corrected (TAS symbology, options OI); the item-8 calendar carries no
   `eia` or `index_rebalance` flag though the split names both — recorded, not built.
+### Fixed (2026-09-22, a construction screen that rejected a perfect oracle)
+- `scripts/stage0_d618_sharpened_ladder.py` + the D618 result record: screen **S1b was invalid** and the
+  verdict it produced ("not one of 72 cells passes") was wrong. It required `sd(LADDER) >= 3 x sd` of the
+  same cell with flat weights over its positive-weight strikes; for any smooth weight that set is the whole
+  220-strike ladder, whose centroid sits ~23σ from the price, so the ratio penalised the concentration a
+  real signal has. A conditioner built from the **actual 16:00 close** scored 0.05 and was rejected, as were
+  all 72 cells. A within-session permutation comparator inverts the same way (oracle 0.04, grid 1.00).
+  Replaced by `|corr(LADDER, PING)| <= 0.50`, whose threshold is read off synthetic controls only (grid
+  1.0000 by construction; oracle, diluted and weak oracles 0.0605, 0.0359, 0.0196). **Five cells now pass,
+  including the pre-registered primary, and none clears its nulls** — the disposition is unchanged, the
+  route to it is not. The record carries the post-hoc screen change, its known-answer justification, and a
+  table of which earlier claims are withdrawn.
+
+### Added (2026-09-22, the sharpened 0DTE ladder measured, and the axis closed)
+- `scripts/stage0_d618_sharpened_ladder.py` + `data/stage0_d618_sharpened_ladder.json` (D618): the six
+  sharpenings of D614's ladder, scored as a family of **72 cells** behind **four pre-outcome construction
+  screens**. **None passes, so no return was scored for any cell in the specified family.** The runner's
+  first pass centred each band on P1530 — the pre-registered *break* — and four cells passed with one
+  clearing both its nulls; re-anchoring the band on the prior settlement moves them from sd 0.62–1.04σ to
+  5.57–5.59σ, corr(DAY0) from −0.19/−0.21 to −0.54, and their flat-weight ratio from 3.05–3.54× to 1.00×.
+  The artefact cells are scored under a no-verdict-weight label so the size of the illusion is on the
+  record. Fifteen audits, every one proven to raise on a break that hits the scalar it reads, including a
+  within-session permutation of the weights (D581's total-based audit is permutation-invariant and cannot
+  catch a strike-mapping bug) and `WEIGHTS BITE` restated against the price, which **fired on the
+  gamma-weighted cell as the record predicted**. Nine corrections made inside the run are listed in the
+  record; four changed a published number and one changed the verdict.
+
+### Added (2026-09-22, the aggressor side on ES options)
+- `data/fixtures/fut_es_0dte_signed_flow.csv.gz` + meta, `scripts/build_fut_es_0dte_signed_flow.py`
+  (D617): the **aggressor side** on ES-family option trades, read here for the first time — buy-initiated,
+  sell-initiated and unsigned contracts plus trade counts per (option, session) in D613's five ET clock
+  buckets. 1,044,886 rows over 124,580 options and 314 ET calendar dates 2025-09-10 → 2026-09-10,
+  9.5 MB; gitignored, manifest-hashed, gzip mtime pinned. Decoded 1,440,501,590 trades from the 13
+  `tbbo` files (37.3 GB) in 6.5 min on two workers at 97 % of linear; 22,706,840 ES option trades,
+  162,752,858 contracts, unsigned share 0.000166, D485 at-quote agreement 0.999983 on 22,496,746
+  trades. Seven gates and thirteen proven breaks, including a scalar second path on three named cells
+  and a header guard that refuses any column which is not a contract or a trade count. **A census: no
+  return, no price outcome, no conditioner** — the reserved window is read on the principal's
+  instruction in D510/D511's shape and stays unspent for every return-bearing construction.
+
+### Changed (2026-09-22, the open interest's reference session)
+- `scripts/build_fut_es_options_eod.py` + `data/fixtures/fut_es_options_eod.csv.gz` (D616): added
+  `oi_ref_session`, the business date each open-interest print describes, from the `ts_ref` already in
+  the cached statistics pickles — a `--build` from cache, no pull and no re-decode. The publication kept
+  is unchanged, so `oi` does not move and D581's and D614's results still reproduce. New gate G7
+  measures what `oi_pub_et` structurally cannot: adjacent sessions' publication times are never equal
+  (0.0000), so CME's preliminary-then-final revision was invisible, and a difference of open interest is
+  a one-session position change only where the two reference sessions are adjacent. That holds on
+  97.7–99.8 % of rows, and the residue grows with the era — cells carrying two reference dates run
+  0.1875 in 2016 and 0.3945 in 2025, spurious zero deltas 0.24 % and 2.53 %.
+
+### Added (2026-09-21, the ES option volume panel in ET clock buckets)
+- `scripts/build_fut_es_0dte_volume_cutoffs.py` (D613): decodes the ohlcv-1m archive already on disk
+  into per-(option, session) volume in five ET clock buckets, so a ladder conditioner can be fixed at
+  a cutoff earlier than the window it predicts. System interpreter only (`databento`). Six gates,
+  each proven to raise; the write pins the gzip mtime so two builds hash identically.
+- `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz` + meta (D613): 5,313,336 rows over 2,485 sessions
+  2016-01-04 → 2023-12-29, 416,627 options, 30 MB; gitignored, manifest-hashed. The 15:30 sum
+  reproduces D581's committed `vol_to_1530` exactly on all 140,361 rows it covers, and every
+  uncovered row is proven to be a genuine zero. The eight source files reaching 2024 were never
+  opened.
 
 ### Added (2026-09-21, macro fixtures for the basis-momentum closure programme)
 - `data/fixtures/hkm_factors.csv.gz` + meta (D601): the He–Kelly–Manela intermediary capital ratio

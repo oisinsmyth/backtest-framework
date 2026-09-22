@@ -62,7 +62,7 @@ def test_every_manifest_panel_has_a_spec_and_every_spec_is_a_manifest_panel():
     manifest, catalogue = _manifest_paths(), {s.path for s in SPECS}
     assert manifest - catalogue == set(), "manifest panels with no catalogue row"
     assert catalogue - manifest == set(), "catalogue rows that are not manifest panels"
-    assert len(SPECS) == len(manifest) == 132
+    assert len(SPECS) == len(manifest) == 134
 
 
 def test_no_wrong_cut_is_ever_a_date_column_anywhere_in_the_catalogue():

@@ -270,6 +270,8 @@ _ROWS: tuple[PanelSpec, ...] = (
     PanelSpec("fut_day1m_mid", "data/fixtures/fut_day1m_mid.parquet", "day", "iso_day", "parquet", ()),
     PanelSpec("fut_day5m", "data/fixtures/fut_day5m.parquet", "day", "iso_day", "parquet", ()),
     PanelSpec("fut_day5m_mid", "data/fixtures/fut_day5m_mid.parquet", "day", "iso_day", "parquet", ()),
+    PanelSpec("fut_es_0dte_signed_flow", "data/fixtures/fut_es_0dte_signed_flow.csv.gz", "session", "iso_day", "csv", ()),
+    PanelSpec("fut_es_0dte_volume_cutoffs", "data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz", "session", "iso_day", "csv", ()),
     PanelSpec("fut_es_options_eod", "data/fixtures/fut_es_options_eod.csv.gz", "session", "iso_day", "csv", ("expiry_date", "oi_pub_et")),
     PanelSpec("fut_index_rolls", "data/fixtures/fut_index_rolls.csv.gz", "day", "iso_day", "csv", ()),
     PanelSpec("fut_index_sessions", "data/fixtures/fut_index_sessions.csv.gz", "day", "iso_day", "csv", ()),
