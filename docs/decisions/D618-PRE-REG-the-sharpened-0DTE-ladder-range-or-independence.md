@@ -78,6 +78,35 @@ The order is by mechanism — position before turnover, unrestricted before a ba
 away — and **not** by any in-sample t. If no cell in the whole family passes, **nothing is scored against
 returns** and the verdict is that the object is degenerate.
 
+### 2a. The controls — AMENDED 2026-09-22, before the runner existed
+
+**This section was missing from the first commit of this record.** The control set is a pre-registered
+choice and belongs here, not in the runner; it was in the working plan and did not make it into the
+document. The amendment is made **before the runner exists and before any outcome is read**, and it adopts
+D614's controls verbatim rather than choosing new ones, so it is a transcription fix and not a free hand.
+It is recorded as an amendment anyway, because a pre-registration that quietly grows a section is worth
+nothing.
+
+Controls, for every scored cell, all measured **before the scored window opens** so that none overlaps the
+outcome:
+
+| control | 15:30 → 16:00 primary | 15:50 → 16:00 beside |
+|---|---|---|
+| `ON` overnight, prior 16:00 → 09:30 | yes | yes |
+| `DAY0` 09:30 → 12:00 | yes | yes |
+| `MIDE` 12:00 → 14:30 | yes | yes |
+| `F5` 14:30 → 15:30 | yes | yes |
+| `LEG1` 15:30 → 15:50 | **no — it is inside the outcome** | yes |
+
+Plus, in every cell, the **grid-only placebo** `PING` on the same strike set — the centroid of the listed
+strikes carrying no weight at all — which must fail its own bar. D614's cleared the *rank* bar at 0.987
+with no option content in it, which is why it is a control here and is also scored against the robust t
+rather than a rank alone. All coefficients are extracted **by name**, never by position.
+
+Each control enters in the same units as the conditioner: divided by that session's `sigma` for the scored
+window, so the design is commensurable. `audit_not_singular` refuses any cell in which two columns are one
+variable.
+
 ## 3. The screens, with their thresholds declared here
 
 Applied to every cell in the family **before any outcome is read**. This is the part of the study that a
