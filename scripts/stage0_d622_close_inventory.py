@@ -52,7 +52,7 @@ OTHER_ROOTS = ("ZN", "ZB", "GC", "CL", "6E")
 HOURS = [f"h{h:02d}" for h in list(range(18, 24)) + list(range(0, 17))]
 NULL_DRAWS, SEED, ROT_MIN = 2000, 622, 10
 REQUIRED_OUTPUTS = ("spec", "windows", "sets", "audits", "arm", "P4", "P5", "P6", "P7", "P8", "P9",
-                    "reproductions", "verdict", "timing_s")
+                    "reproductions", "verdicts", "verdict", "timing_s")
 
 
 def log(*a):
@@ -206,6 +206,51 @@ def tstat(v):
     return float(np.mean(v) / (np.std(v, ddof=1) / np.sqrt(v.size)))
 
 
+MARGIN_SE = 2.0
+
+
+def resolve(margin, se):
+    """D373's rule applied to a PREDICTION: a margin within two standard errors is UNRESOLVED.
+
+    The first pass of this runner judged P4, P6 and P8 on point estimates and reported two of them as
+    failures. Every one of their margins was inside 2 SE, so the honest label is `unresolved`: the data
+    cannot adjudicate the prediction either way. A test that cannot resolve is not a test that failed, and
+    calling it one manufactures a refutation out of a small sample.
+    """
+    if not np.isfinite(margin) or not np.isfinite(se) or se <= 0:
+        return dict(margin=None, se=None, t=None, verdict="unresolved", note="no usable standard error")
+    t = float(margin / se)
+    v = "pass" if t >= MARGIN_SE else ("fail" if t <= -MARGIN_SE else "unresolved")
+    return dict(margin=float(margin), se=float(se), t=t, verdict=v)
+
+
+def tails(v, labels=None, top=5):
+    """Mean beside MEDIAN and both-tail trims, with the sessions that carry it named (CLAUDE.md, D322).
+
+    A mean below its median is the tell that the tail is doing the work, and P8's overnight mean turned out
+    to be five COVID sessions.
+    """
+    v = np.asarray(v, float)
+    ok = np.isfinite(v)
+    v = v[ok]
+    lab = np.asarray(labels)[ok] if labels is not None else None
+    n = v.size
+    if n < 10:
+        return dict(n=n, note="too few observations for a tail read")
+    k = max(1, int(round(0.01 * n)))
+    srt = np.sort(v)
+    order = np.argsort(v)
+    out = dict(n=n, mean=float(np.mean(v)), median=float(np.median(v)),
+               ex_top=float(srt[:-k].mean()), ex_bottom=float(srt[k:].mean()),
+               symmetric_trim=float(srt[k:-k].mean()), share_positive=float((v > 0).mean()),
+               mean_below_median=bool(np.mean(v) < np.median(v)),
+               sign_flips_on_median=bool((np.mean(v) > 0) != (np.median(v) > 0)))
+    if lab is not None:
+        out["most_negative"] = [[str(lab[i]), float(v[i])] for i in order[:top]]
+        out["most_positive"] = [[str(lab[i]), float(v[i])] for i in order[-top:][::-1]]
+    return out
+
+
 # ------------------------------------------------------------------ the hourly cross-section
 def load_hourly():
     d = pd.read_csv(HOURLY, usecols=["root", "day", "same_front"] + [f"{h}_c" for h in HOURS]
@@ -295,6 +340,20 @@ def selftest():
     assert abs(t["NEXT_bp"].iloc[0] - 1e4 * np.log(101.0 / 100.0)) < 1e-9
     log("  P8 horizons: forward-shifted, and the final session is NaN rather than wrapped")
 
+    # D373's margin rule, and the breaks that prove it labels rather than rubber-stamps
+    assert resolve(10.0, 1.0)["verdict"] == "pass", resolve(10.0, 1.0)
+    assert resolve(-10.0, 1.0)["verdict"] == "fail", resolve(-10.0, 1.0)
+    assert resolve(1.0, 1.0)["verdict"] == "unresolved", "a margin inside 2 SE must be UNRESOLVED"
+    assert resolve(1.9, 1.0)["verdict"] == "unresolved", "1.9 SE is still inside the rule"
+    assert resolve(5.0, 0.0)["verdict"] == "unresolved", "no usable SE must not become a pass"
+    log("  margin rule: pass at 10 SE, fail at -10 SE, UNRESOLVED at 1.0 and 1.9 SE and on a zero SE")
+    # the tail read must expose a mean/median sign disagreement, which is what P8's overnight leg had
+    v = np.array([1.0] * 90 + [-500.0] * 10)
+    td = tails(v, [f"s{i}" for i in range(100)])
+    assert td["mean"] < 0 < td["median"] and td["sign_flips_on_median"], td
+    assert td["most_negative"][0][1] == -500.0
+    log(f"  tail read: mean {td['mean']:+.2f} against median {td['median']:+.2f} and the flip is flagged")
+
     expect_raise(lambda: guard_outputs({k: 1 for k in REQUIRED_OUTPUTS[:-1]}), "a missing declared output")
     log(f"{SPEC} selftest: all audits pass and all raise on their breaks")
 
@@ -324,6 +383,7 @@ def run():
         f"{res['audits']['leg_additivity']['max_abs_deviation']:.1e} bp")
 
     m = arm_mask(s)
+    idx = np.array(s.index)
     y = s["y_bp"].to_numpy(float)
     arm_y = y[m]
     res["arm"] = dict(threshold=H1_THRESHOLD, n=int(m.sum()), share=float(m.mean()),
@@ -338,10 +398,16 @@ def run():
     # ---------------- P4 the deadline binds
     legs = {f"leg{i}": -s[f"leg{i}_bp"].to_numpy(float)[m] for i in (1, 2, 3)}
     res["P4"] = {k: dict(mean_bp=float(np.nanmean(v)), t=tstat(v)) for k, v in legs.items()}
-    res["P4"]["passes"] = bool(np.nanmean(legs["leg3"]) > np.nanmean(legs["leg1"]))
+    paired = legs["leg3"] - legs["leg1"]                      # paired: the same sessions
+    res["P4"]["leg3_minus_leg1"] = resolve(float(np.nanmean(paired)),
+                                           float(np.nanstd(paired, ddof=1) / np.sqrt(paired.size)))
+    res["P4"]["point_comparison_holds"] = bool(np.nanmean(legs["leg3"]) > np.nanmean(legs["leg1"]))
+    res["P4"]["verdict"] = res["P4"]["leg3_minus_leg1"]["verdict"]
+    res["P4"]["passes"] = res["P4"]["verdict"] == "pass"
     log(f"  P4 legs (arm, bp): 15:00-15:20 {np.nanmean(legs['leg1']):+.2f}  "
-        f"15:20-15:40 {np.nanmean(legs['leg2']):+.2f}  15:40-16:00 {np.nanmean(legs['leg3']):+.2f}  "
-        f"{'PASS' if res['P4']['passes'] else 'FAIL'}")
+        f"15:20-15:40 {np.nanmean(legs['leg2']):+.2f}  15:40-16:00 {np.nanmean(legs['leg3']):+.2f}   "
+        f"leg3-leg1 paired {res['P4']['leg3_minus_leg1']['margin']:+.2f} bp "
+        f"(t {res['P4']['leg3_minus_leg1']['t']:+.2f}) -> {res['P4']['verdict'].upper()}")
 
     # ---------------- P5 the cross-section
     d = load_hourly()
@@ -366,51 +432,79 @@ def run():
     # ---------------- P6 the level
     broke = s["broke_prev_low"].to_numpy(bool) & m
     held = (~s["broke_prev_low"].to_numpy(bool)) & m
-    res["P6"] = dict(broke_prev_low=dict(n=int(broke.sum()), mean_bp=float(-np.mean(y[broke])),
-                                         t=tstat(-y[broke])) if broke.sum() > 10 else None,
-                     held=dict(n=int(held.sum()), mean_bp=float(-np.mean(y[held])), t=tstat(-y[held]))
-                     if held.sum() > 10 else None)
-    res["P6"]["passes"] = bool(res["P6"]["broke_prev_low"] and res["P6"]["held"]
-                               and res["P6"]["broke_prev_low"]["mean_bp"] > res["P6"]["held"]["mean_bp"])
-    if res["P6"]["broke_prev_low"]:
+    a6, b6 = -y[broke], -y[held]
+    res["P6"] = dict(
+        broke_prev_low=dict(n=int(broke.sum()), mean_bp=float(np.mean(a6)), t=tstat(a6),
+                            tails=tails(a6, idx[broke])) if broke.sum() > 10 else None,
+        held=dict(n=int(held.sum()), mean_bp=float(np.mean(b6)), t=tstat(b6),
+                  tails=tails(b6, idx[held])) if held.sum() > 10 else None)
+    if res["P6"]["broke_prev_low"] and res["P6"]["held"]:
+        se6 = float(np.sqrt(np.var(a6, ddof=1) / a6.size + np.var(b6, ddof=1) / b6.size))
+        res["P6"]["broke_minus_held"] = resolve(float(np.mean(a6) - np.mean(b6)), se6)
+        res["P6"]["median_difference"] = float(np.median(a6) - np.median(b6))
+        res["P6"]["trim_difference"] = float(res["P6"]["broke_prev_low"]["tails"]["symmetric_trim"]
+                                            - res["P6"]["held"]["tails"]["symmetric_trim"])
+        res["P6"]["central_measures_agree_in_sign"] = bool(
+            np.sign(res["P6"]["broke_minus_held"]["margin"]) == np.sign(res["P6"]["median_difference"])
+            == np.sign(res["P6"]["trim_difference"]))
+        res["P6"]["verdict"] = res["P6"]["broke_minus_held"]["verdict"]
+        res["P6"]["passes"] = res["P6"]["verdict"] == "pass"
         log(f"  P6 broke the prior low: n {res['P6']['broke_prev_low']['n']} "
-            f"{res['P6']['broke_prev_low']['mean_bp']:+.2f} bp   held: n {res['P6']['held']['n']} "
-            f"{res['P6']['held']['mean_bp']:+.2f} bp  {'PASS' if res['P6']['passes'] else 'FAIL'}")
+            f"{res['P6']['broke_prev_low']['mean_bp']:+.2f} bp (median "
+            f"{res['P6']['broke_prev_low']['tails']['median']:+.2f})   held: n {res['P6']['held']['n']} "
+            f"{res['P6']['held']['mean_bp']:+.2f} (median {res['P6']['held']['tails']['median']:+.2f})")
+        log(f"     broke-minus-held {res['P6']['broke_minus_held']['margin']:+.2f} bp, SE {se6:.2f}, "
+            f"t {res['P6']['broke_minus_held']['t']:+.2f}; median difference "
+            f"{res['P6']['median_difference']:+.2f}, trim difference {res['P6']['trim_difference']:+.2f}; "
+            f"central measures agree {res['P6']['central_measures_agree_in_sign']} "
+            f"-> {res['P6']['verdict'].upper()}")
 
     # ---------------- P7 the volume premise
     vs = s["vol_close_share"].to_numpy(float)
     if np.isfinite(vs).sum() > 100:
-        res["P7"] = dict(arm_share=float(np.nanmean(vs[m])), other_share=float(np.nanmean(vs[~m])),
-                         even_share=1.0 / 6.5,
-                         ratio_arm=float(np.nanmean(vs[m]) / (1.0 / 6.5)),
-                         ratio_other=float(np.nanmean(vs[~m]) / (1.0 / 6.5)))
-        res["P7"]["passes"] = bool(res["P7"]["arm_share"] > res["P7"]["other_share"])
+        a7 = vs[m][np.isfinite(vs[m])]
+        b7 = vs[~m][np.isfinite(vs[~m])]
+        se7 = float(np.sqrt(np.var(a7, ddof=1) / a7.size + np.var(b7, ddof=1) / b7.size))
+        res["P7"] = dict(arm_share=float(a7.mean()), other_share=float(b7.mean()), even_share=1.0 / 6.5,
+                         arm_median=float(np.median(a7)), other_median=float(np.median(b7)),
+                         ratio_arm=float(a7.mean() / (1.0 / 6.5)),
+                         ratio_other=float(b7.mean() / (1.0 / 6.5)))
+        res["P7"].update(resolve(float(a7.mean() - b7.mean()), se7))
+        res["P7"]["passes"] = res["P7"]["verdict"] == "pass"
         log(f"  P7 closing-hour volume share: arm {res['P7']['arm_share']:.4f} "
             f"({res['P7']['ratio_arm']:.2f}x even) vs other {res['P7']['other_share']:.4f} "
-            f"({res['P7']['ratio_other']:.2f}x)  {'PASS' if res['P7']['passes'] else 'FAIL'}")
+            f"({res['P7']['ratio_other']:.2f}x); difference {res['P7']['margin']:+.4f} at t "
+            f"{res['P7']['t']:+.2f}; medians {res['P7']['arm_median']:.4f} vs "
+            f"{res['P7']['other_median']:.4f} -> {res['P7']['verdict'].upper()}")
     else:
-        res["P7"] = dict(passes=None, note="the minute panel carries no volume column")
+        res["P7"] = dict(passes=None, verdict="unresolved", note="the minute panel carries no volume column")
         log("  P7 SKIPPED: no volume column in the minute panel")
 
     # ---------------- P8 the reversal
     res["P8"] = {}
-    for tag, col in (("overnight_to_0930", "ON_next_bp"), ("next_session", "NEXT_bp"),
-                     ("five_sessions", "FIVE_bp")):
-        v = s[col].to_numpy(float)[m]
-        res["P8"][tag] = dict(n=int(np.isfinite(v).sum()), mean_bp=float(np.nanmean(v)), t=tstat(v))
     deep = m & (s["H1"].to_numpy(float) <= -2.0)
-    res["P8"]["deepest_decline_next_session"] = dict(
-        n=int(deep.sum()), mean_bp=float(np.nanmean(s["NEXT_bp"].to_numpy(float)[deep]))) if deep.sum() > 10 else None
-    grows = bool(res["P8"]["deepest_decline_next_session"]
-                 and res["P8"]["deepest_decline_next_session"]["mean_bp"] > res["P8"]["next_session"]["mean_bp"])
-    res["P8"]["reversal_grows_with_decline"] = grows
-    res["P8"]["passes"] = bool(res["P8"]["overnight_to_0930"]["mean_bp"] > 0
-                               and res["P8"]["next_session"]["mean_bp"] > 0 and grows)
-    log(f"  P8 after the arm: overnight {res['P8']['overnight_to_0930']['mean_bp']:+.2f} bp "
-        f"(t {res['P8']['overnight_to_0930']['t']:+.2f})   next session "
-        f"{res['P8']['next_session']['mean_bp']:+.2f} (t {res['P8']['next_session']['t']:+.2f})   "
-        f"five sessions {res['P8']['five_sessions']['mean_bp']:+.2f} "
-        f"(t {res['P8']['five_sessions']['t']:+.2f})  {'PASS' if res['P8']['passes'] else 'FAIL'}")
+    for tag, col, msk in (("overnight_to_0930", "ON_next_bp", m), ("next_session", "NEXT_bp", m),
+                          ("five_sessions", "FIVE_bp", m),
+                          ("deepest_decline_next_session", "NEXT_bp", deep)):
+        v = s[col].to_numpy(float)[msk]
+        fin = v[np.isfinite(v)]
+        se = float(np.std(fin, ddof=1) / np.sqrt(fin.size)) if fin.size > 5 else np.nan
+        # the prediction is REVERSAL, so a positive mean is the pass direction
+        res["P8"][tag] = dict(resolve(float(np.mean(fin)), se), tails=tails(v, idx[msk]))
+    verdicts = {k: v["verdict"] for k, v in res["P8"].items()}
+    res["P8"]["verdict"] = ("pass" if all(v == "pass" for v in verdicts.values())
+                            else "fail" if all(v == "fail" for v in verdicts.values())
+                            else "unresolved")
+    res["P8"]["per_horizon_verdicts"] = verdicts
+    res["P8"]["passes"] = res["P8"]["verdict"] == "pass"
+    for tag in ("overnight_to_0930", "next_session", "five_sessions", "deepest_decline_next_session"):
+        h8 = res["P8"][tag]
+        t_ = h8["tails"]
+        log(f"  P8 {tag:<30} mean {h8['margin']:+8.2f} bp  t {h8['t']:+6.2f}  MEDIAN {t_['median']:+8.2f}  "
+            f"trim {t_['symmetric_trim']:+8.2f}  reverts on {t_['share_positive']:.3f}  "
+            f"-> {h8['verdict'].upper()}"
+            + ("   <- mean and median DISAGREE in sign" if t_["sign_flips_on_median"] else ""))
+    log(f"  P8 overall -> {res['P8']['verdict'].upper()}")
 
     # ---------------- P9 the deadline placebo across all 22 hour pairs on ES
     pairs = []
@@ -455,20 +549,30 @@ def run():
 
     res["sets"] = dict(index_roots=list(INDEX_ROOTS), other_roots=list(OTHER_ROOTS),
                        hour_pairs=len(pairs), sessions=int(len(s)))
-    passed = [k for k in ("P4", "P5", "P6", "P7", "P8", "P9") if res[k].get("passes")]
-    failed = [k for k in ("P4", "P5", "P6", "P7", "P8", "P9") if res[k].get("passes") is False]
+    keys = ("P4", "P5", "P6", "P7", "P8", "P9")
+    vd = {k: (res[k].get("verdict") or ("pass" if res[k].get("passes") else "fail")) for k in keys}
+    res["verdicts"] = vd
+    passed = [k for k, v in vd.items() if v == "pass"]
+    failed = [k for k, v in vd.items() if v == "fail"]
+    unres = [k for k, v in vd.items() if v == "unresolved"]
     if len(passed) == 6:
         verdict = ("THE MECHANISM IS OPERATING -- all six predictions hold; the deferred signed-flow premise "
                    "check on the reserved window is the next stage, on the principal's word")
     elif "P5" in failed or "P9" in failed:
         verdict = (f"THE MECHANISM IS REFUTED -- {'P5' if 'P5' in failed else 'P9'} fails, so the direction "
-                   f"is not produced by the 16:00 deadline; the line closes and no holdout is read "
-                   f"(passed {passed}, failed {failed})")
+                   f"is not produced by the 16:00 deadline; the line closes and no holdout is read")
     elif "P7" in failed:
         verdict = "THE PREMISE IS FALSE -- the forced trade does not arrive (P7); the mechanism is not operating"
+    elif not failed and unres:
+        verdict = (f"THE SPECIFICITY IS ESTABLISHED AND THE MECHANISM IS UNTESTED -- passed {passed}, "
+                   f"UNRESOLVED {unres}, failed none. Every unresolved margin is inside two standard errors, "
+                   f"so this sample cannot separate an inventory discharge from a repricing. The mechanism is "
+                   f"neither supported nor refuted, and the deferred signed-flow premise check is therefore "
+                   f"NOT moot -- it is the only route that does not depend on this sample size.")
     else:
-        verdict = (f"PARTLY SUPPORTED, NO AGGREGATE VERDICT -- passed {passed}, failed {failed}; a mechanism "
-                   f"test that is partly supported is a description and not a finding")
+        verdict = (f"PARTLY SUPPORTED, NO AGGREGATE VERDICT -- passed {passed}, unresolved {unres}, "
+                   f"failed {failed}; a mechanism test that is partly supported is a description and not a "
+                   f"finding")
     res["verdict"] = verdict
     res["timing_s"] = round(time.time() - t0, 1)
     guard_outputs(res)
