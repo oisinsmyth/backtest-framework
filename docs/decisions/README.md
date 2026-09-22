@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 346 of these records carry neither field —
+**No Status or Category column, deliberately.** 348 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -684,6 +684,8 @@ would look like data. The tokens are what is shown.
 | D608 | The forward data recorder: raw bytes under a fetched_at name, a gap log nothing fills, and a host the record does not c… | [record](D608-the-forward-data-recorder.md) |
 | D613 | the ES-family option volume panel in ET clock buckets, so an option-ladder conditioner can be fixed at a cutoff of the… | [record](D613-FIXTURE-the-ES-option-volume-panel-in-ET-clock-buckets.md) |
 | D614 | D614 STAGE 0 RESULT — the verdict the pre-registration's own bars return is REAL BUT NOT TRADEABLE, and the line closes… | [PRE-REG](D614-PRE-REG-expiry-pinning-on-ES-from-the-noon-0DTE-volume-ladder.md) · [RESULT](D614-STAGE-0-RESULT-not-pinning-ten-sessions-carry-the-whole-pull.md) |
+| D616 | the open interest's reference session on the ES option panel | [record](D616-FIXTURE-the-open-interest-reference-session.md) |
+| D617 | the ES option signed flow census, from the tbbo year | [record](D617-FIXTURE-the-ES-option-signed-flow-census-from-the-tbbo-year.md) |
 
 <!-- REGISTER:END -->
 

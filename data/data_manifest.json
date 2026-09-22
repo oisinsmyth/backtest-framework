@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T23:47:37Z",
+  "built_at": "2026-09-22T02:09:47Z",
   "note": "Every bulk panel under data/, listed by suffix and regardless of whether git tracks it. Most were dropped from the index on 2026-09-15 (D536) and are recoverable from history: `git cat-file blob <git_blob> > <path>` -- history is not rewritten. A few small ones are tracked again by an explicit .gitignore negation (D538, 2026-09-16) and are simply present in a clone. --verify re-hashes what is on disk either way.",
   "suffixes": [
     ".csv.gz",
@@ -7,8 +7,8 @@
     ".npz",
     ".zip"
   ],
-  "total_bytes": 1822887177,
-  "count": 127,
+  "total_bytes": 1833384789,
+  "count": 128,
   "files": [
     {
       "path": "data/d291_null_surface.npz",
@@ -703,6 +703,15 @@
       "sidecars": []
     },
     {
+      "path": "data/fixtures/fut_es_0dte_signed_flow.csv.gz",
+      "bytes": 9524245,
+      "sha256": "848d4826d240dd2633721e430d07ba87a851f29c793f780f817aa81da10b30ad",
+      "git_blob": null,
+      "sidecars": [
+        "data/fixtures/fut_es_0dte_signed_flow.meta.json"
+      ]
+    },
+    {
       "path": "data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz",
       "bytes": 29960343,
       "sha256": "34001e2620de974dfcb2136ba7200e5f3e6dfbccbf8d0ed04b21dd13efb11974",
@@ -713,8 +722,8 @@
     },
     {
       "path": "data/fixtures/fut_es_options_eod.csv.gz",
-      "bytes": 198534313,
-      "sha256": "f84ce2e692ade0d6d7f89abc295f810e204275c9bf9ea76547e9214535fa6f58",
+      "bytes": 199507680,
+      "sha256": "1e516365d2712a04dae6cbac66f94255140d90cda0c74e84d7e57c315dd5bea4",
       "git_blob": null,
       "sidecars": [
         "data/fixtures/fut_es_options_eod.meta.json"

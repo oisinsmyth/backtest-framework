@@ -1,6 +1,6 @@
 {
  "spec": "D581",
- "built_utc": "2026-09-21T07:10:10Z",
+ "built_utc": "2026-09-22T01:49:58Z",
  "rows": 19225749,
  "sessions": 2658,
  "first": "2016-01-04",
@@ -39,6 +39,7 @@
  },
  "sentinels": "UNDEF on both; settlement == 0.0 dropped (D526)",
  "vol_to_1530": "minute-bar volume before 15:30 ET on the option's expiry session only, from the archive on disk",
+ "oi_ref_session": "D616: the ES session the open interest DESCRIBES, from the kept publication's ts_ref (midnight UTC on the business date). The publication kept is unchanged (last by ts_event), so `oi` is untouched. A difference of `oi` across two sessions is a one-session position change only where the two reference sessions are adjacent -- G7 measures how often that holds and what the residue is.",
  "gates": {
   "G1": {
    "negative_oi": 0,
@@ -144,6 +145,79 @@
   "G6": {
    "near_money_rows_tried": 6818,
    "share_inverting": 1.0,
+   "passes": true
+  },
+  "G7": {
+   "rows": 19225749,
+   "share_reference_is_an_es_session": 0.9850394905290816,
+   "gap_sessions_histogram": {
+    "0": 12095,
+    "1": 18898384,
+    "2": 27643
+   },
+   "share_gap_exactly_one": 0.9979016926810378,
+   "share_reference_at_or_after_session": 0.0006291042289171672,
+   "adjacent_pairs": 18466010,
+   "share_pair_reference_span_one": 0.96750391665552,
+   "share_pair_reference_span_zero_a_revision": 0.002126230842504688,
+   "share_pair_reference_unrecoverable": 0.028922815486399064,
+   "by_year": {
+    "2016": {
+     "rows": 962704,
+     "share_gap_one": 0.9998341078445079,
+     "share_unrecoverable": 0.004414648739384068
+    },
+    "2017": {
+     "rows": 1186788,
+     "share_gap_one": 0.9999667253665329,
+     "share_unrecoverable": 0.012406596628884013
+    },
+    "2018": {
+     "rows": 1398005,
+     "share_gap_one": 0.9955529097383226,
+     "share_unrecoverable": 0.031534937285632024
+    },
+    "2019": {
+     "rows": 1280263,
+     "share_gap_one": 0.9952036722648817,
+     "share_unrecoverable": 0.010350998193339962
+    },
+    "2020": {
+     "rows": 1507252,
+     "share_gap_one": 0.9952978099127398,
+     "share_unrecoverable": 0.025874903466706296
+    },
+    "2021": {
+     "rows": 1722273,
+     "share_gap_one": 0.9999894673214872,
+     "share_unrecoverable": 0.007725836728555809
+    },
+    "2022": {
+     "rows": 2175571,
+     "share_gap_one": 0.999990770322711,
+     "share_unrecoverable": 0.003975048389595191
+    },
+    "2023": {
+     "rows": 2361463,
+     "share_gap_one": 0.9999759998319988,
+     "share_unrecoverable": 0.011918882489372054
+    },
+    "2024": {
+     "rows": 2492313,
+     "share_gap_one": 0.99996904661539,
+     "share_unrecoverable": 0.014848857266322488
+    },
+    "2025": {
+     "rows": 2328126,
+     "share_gap_one": 0.9955681554381547,
+     "share_unrecoverable": 0.023056312244268566
+    },
+    "2026": {
+     "rows": 1810991,
+     "share_gap_one": 0.9942184772700963,
+     "share_unrecoverable": 0.01740980490792058
+    }
+   },
    "passes": true
   }
  },

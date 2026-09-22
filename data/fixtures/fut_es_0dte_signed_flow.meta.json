@@ -1,0 +1,422 @@
+{
+ "spec": "D617",
+ "built_utc": "2026-09-22T01:26:30Z",
+ "sha256": "848d4826d240dd2633721e430d07ba87a851f29c793f780f817aa81da10b30ad",
+ "rows": 1044886,
+ "options": 124580,
+ "sessions": 314,
+ "first": "2025-09-10",
+ "last": "2026-09-10",
+ "families": {
+  "EW3": 151943,
+  "EW": 137996,
+  "ES": 99132,
+  "EW2": 65173,
+  "EW4": 52251,
+  "EW1": 51903,
+  "E3D": 38152,
+  "E3C": 30688,
+  "E2A": 30597,
+  "E4C": 29320,
+  "E3B": 28872,
+  "E1A": 28809,
+  "E2C": 28768,
+  "E1D": 28630,
+  "E4B": 28605,
+  "E4A": 28559,
+  "E2B": 28353,
+  "E1C": 28086,
+  "E2D": 28070,
+  "E1B": 26972,
+  "E3A": 25695,
+  "E4D": 22561,
+  "E5A": 9306,
+  "E5D": 7480,
+  "E5C": 6876,
+  "E5B": 2089
+ },
+ "window": {
+  "pull_utc_from": "20250911",
+  "pull_utc_to": "20260910",
+  "session_et_from": "20250910",
+  "session_et_to": "20260910",
+  "et_allowance": "the session column is the ET calendar date, so the opening Globex evening of the window's first trading session carries the ET date one day before the pull's first UTC date; one evening, asserted in G1",
+  "files": [
+   "glbx-mdp3-20250911-20250930.tbbo.dbn.zst",
+   "glbx-mdp3-20251001-20251031.tbbo.dbn.zst",
+   "glbx-mdp3-20251101-20251130.tbbo.dbn.zst",
+   "glbx-mdp3-20251201-20251231.tbbo.dbn.zst",
+   "glbx-mdp3-20260101-20260131.tbbo.dbn.zst",
+   "glbx-mdp3-20260201-20260228.tbbo.dbn.zst",
+   "glbx-mdp3-20260301-20260331.tbbo.dbn.zst",
+   "glbx-mdp3-20260401-20260430.tbbo.dbn.zst",
+   "glbx-mdp3-20260501-20260531.tbbo.dbn.zst",
+   "glbx-mdp3-20260601-20260630.tbbo.dbn.zst",
+   "glbx-mdp3-20260701-20260731.tbbo.dbn.zst",
+   "glbx-mdp3-20260801-20260831.tbbo.dbn.zst",
+   "glbx-mdp3-20260901-20260910.tbbo.dbn.zst"
+  ]
+ },
+ "side_convention": "DBN trade `side` is the AGGRESSOR: B = a buyer initiated (lifted the offer), A = a seller initiated (hit the bid), N = no side on the tape. D485's convention.",
+ "not_a_signal": "a census: contracts and trade counts only. No return, no price outcome, no conditioner. G7 asserts the header is exactly the declared set.",
+ "slice_declaration": "this window is read as a NON-RETURN census on the principal's instruction of 2026-09-22 (the aggressor improvement as a fixture only), in D510/D511's shape: still UNSPENT for any return-bearing construction.",
+ "buckets": {
+  "0000_1200": "[00:00, 12:00) ET",
+  "1200_1530": "[12:00, 15:30) ET",
+  "1530_1600": "[15:30, 16:00) ET",
+  "1600_1800": "[16:00, 18:00) ET",
+  "1800_2400": "[18:00, 24:00) ET"
+ },
+ "session_convention": "the ET CALENDAR DATE of the trade (D581's and D613's), so the three option panels join on (raw_symbol, session); Globex 18:00-24:00 hours belonging to the next trading session are filed under the prior date and kept in their own bucket",
+ "aggressor_census": {
+  "at_quote": 22496746,
+  "agree": 22496357,
+  "quotes_usable": 22497076,
+  "option_trades": 22706840,
+  "by_family": {
+   "E1A": {
+    "trades": 785078,
+    "unsigned": 86,
+    "contracts": 5974595,
+    "unsigned_contracts": 1311
+   },
+   "E1B": {
+    "trades": 824762,
+    "unsigned": 29,
+    "contracts": 5756544,
+    "unsigned_contracts": 236
+   },
+   "E1C": {
+    "trades": 873588,
+    "unsigned": 20,
+    "contracts": 6215879,
+    "unsigned_contracts": 62
+   },
+   "E1D": {
+    "trades": 852732,
+    "unsigned": 31,
+    "contracts": 5835860,
+    "unsigned_contracts": 345
+   },
+   "E2A": {
+    "trades": 842722,
+    "unsigned": 122,
+    "contracts": 6362532,
+    "unsigned_contracts": 438
+   },
+   "E2B": {
+    "trades": 854656,
+    "unsigned": 34,
+    "contracts": 5751075,
+    "unsigned_contracts": 322
+   },
+   "E2C": {
+    "trades": 846681,
+    "unsigned": 31,
+    "contracts": 6122606,
+    "unsigned_contracts": 124
+   },
+   "E2D": {
+    "trades": 862781,
+    "unsigned": 27,
+    "contracts": 6136860,
+    "unsigned_contracts": 3150
+   },
+   "E3A": {
+    "trades": 714552,
+    "unsigned": 82,
+    "contracts": 5158270,
+    "unsigned_contracts": 2059
+   },
+   "E3B": {
+    "trades": 848228,
+    "unsigned": 60,
+    "contracts": 6058318,
+    "unsigned_contracts": 265
+   },
+   "E3C": {
+    "trades": 921767,
+    "unsigned": 25,
+    "contracts": 6623664,
+    "unsigned_contracts": 1587
+   },
+   "E3D": {
+    "trades": 936866,
+    "unsigned": 28,
+    "contracts": 6692797,
+    "unsigned_contracts": 402
+   },
+   "E4A": {
+    "trades": 759223,
+    "unsigned": 122,
+    "contracts": 5950700,
+    "unsigned_contracts": 1097
+   },
+   "E4B": {
+    "trades": 773928,
+    "unsigned": 34,
+    "contracts": 5949912,
+    "unsigned_contracts": 261
+   },
+   "E4C": {
+    "trades": 777219,
+    "unsigned": 24,
+    "contracts": 5407987,
+    "unsigned_contracts": 229
+   },
+   "E4D": {
+    "trades": 700580,
+    "unsigned": 50,
+    "contracts": 4730351,
+    "unsigned_contracts": 445
+   },
+   "E5A": {
+    "trades": 251790,
+    "unsigned": 24,
+    "contracts": 2020809,
+    "unsigned_contracts": 145
+   },
+   "ES": {
+    "trades": 1102795,
+    "unsigned": 82,
+    "contracts": 8385448,
+    "unsigned_contracts": 486
+   },
+   "EW": {
+    "trades": 1792174,
+    "unsigned": 162,
+    "contracts": 12734694,
+    "unsigned_contracts": 2677
+   },
+   "EW1": {
+    "trades": 1229528,
+    "unsigned": 75,
+    "contracts": 8414982,
+    "unsigned_contracts": 437
+   },
+   "EW2": {
+    "trades": 1550267,
+    "unsigned": 113,
+    "contracts": 10789465,
+    "unsigned_contracts": 9214
+   },
+   "EW3": {
+    "trades": 1988713,
+    "unsigned": 104,
+    "contracts": 15018642,
+    "unsigned_contracts": 988
+   },
+   "EW4": {
+    "trades": 1163595,
+    "unsigned": 57,
+    "contracts": 7712428,
+    "unsigned_contracts": 466
+   },
+   "E5C": {
+    "trades": 191862,
+    "unsigned": 3,
+    "contracts": 1163171,
+    "unsigned_contracts": 3
+   },
+   "E5D": {
+    "trades": 220138,
+    "unsigned": 16,
+    "contracts": 1442553,
+    "unsigned_contracts": 242
+   },
+   "E5B": {
+    "trades": 40615,
+    "unsigned": 3,
+    "contracts": 342716,
+    "unsigned_contracts": 9
+   }
+  }
+ },
+ "gates": {
+  "G1": {
+   "rows": 1044886,
+   "duplicate_keys": 0,
+   "first": "2025-09-10",
+   "last": "2026-09-10",
+   "non_option_symbols": 0,
+   "declared_et_window": [
+    "20250910",
+    "20260910"
+   ],
+   "pull_window": [
+    "20250911",
+    "20260910"
+   ],
+   "rows_on_the_opening_evening": 291,
+   "passes": true
+  },
+  "G2": {
+   "total_contracts": 162752858,
+   "buckets_checked": 5,
+   "passes": true
+  },
+  "G3": {
+   "ceiling": 0.1,
+   "overall": 0.0001658957042708276,
+   "by_family": {
+    "E1A": 0.0002194290993782842,
+    "E1B": 4.0996820314410866e-05,
+    "E1C": 9.974454135931539e-06,
+    "E1D": 5.911725092788381e-05,
+    "E2A": 6.884051820878858e-05,
+    "E2B": 5.598953239177023e-05,
+    "E2C": 2.0252813916165763e-05,
+    "E2D": 0.0005132918137288451,
+    "E3A": 0.00039916483627262626,
+    "E3B": 4.374151373367988e-05,
+    "E3C": 0.00023959548672758762,
+    "E3D": 6.006457389937271e-05,
+    "E4A": 0.00018434805989211354,
+    "E4B": 4.386619499582515e-05,
+    "E4C": 4.234477634654077e-05,
+    "E4D": 9.407335734705522e-05,
+    "E5A": 7.175344131978827e-05,
+    "E5B": 2.6260810700405e-05,
+    "E5C": 2.5791564610878366e-06,
+    "E5D": 0.00016775813436317418,
+    "ES": 5.7957547408319744e-05,
+    "EW": 0.00021021313900436084,
+    "EW1": 5.193118654323919e-05,
+    "EW2": 0.00085398117515558,
+    "EW3": 6.578490918153585e-05,
+    "EW4": 6.042195791001225e-05
+   },
+   "by_bucket": {
+    "0000_1200": 5.8953831741210915e-05,
+    "1200_1530": 2.013531443837867e-06,
+    "1530_1600": 0.0005957091181523909,
+    "1600_1800": 4.5349657016784425e-05,
+    "1800_2400": 0.0020146455167106402
+   },
+   "worst": 0.0020146455167106402,
+   "passes": true
+  },
+  "G4": {
+   "header": [
+    "raw_symbol",
+    "session",
+    "buy_0000_1200",
+    "buy_1200_1530",
+    "buy_1530_1600",
+    "buy_1600_1800",
+    "buy_1800_2400",
+    "sell_0000_1200",
+    "sell_1200_1530",
+    "sell_1530_1600",
+    "sell_1600_1800",
+    "sell_1800_2400",
+    "unsigned_0000_1200",
+    "unsigned_1200_1530",
+    "unsigned_1530_1600",
+    "unsigned_1600_1800",
+    "unsigned_1800_2400",
+    "trades_0000_1200",
+    "trades_1200_1530",
+    "trades_1530_1600",
+    "trades_1600_1800",
+    "trades_1800_2400"
+   ],
+   "declared": [
+    "raw_symbol",
+    "session",
+    "buy_0000_1200",
+    "buy_1200_1530",
+    "buy_1530_1600",
+    "buy_1600_1800",
+    "buy_1800_2400",
+    "sell_0000_1200",
+    "sell_1200_1530",
+    "sell_1530_1600",
+    "sell_1600_1800",
+    "sell_1800_2400",
+    "unsigned_0000_1200",
+    "unsigned_1200_1530",
+    "unsigned_1530_1600",
+    "unsigned_1600_1800",
+    "unsigned_1800_2400",
+    "trades_0000_1200",
+    "trades_1200_1530",
+    "trades_1530_1600",
+    "trades_1600_1800",
+    "trades_1800_2400"
+   ],
+   "passes": true
+  },
+  "G5": {
+   "cells": [
+    {
+     "raw_symbol": "E1AN6 P7325",
+     "session": "2026-06-29",
+     "fixture": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "scalar": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "agree": true
+    },
+    {
+     "raw_symbol": "E1DQ6 P7610",
+     "session": "2026-08-05",
+     "fixture": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "scalar": [
+      1,
+      0,
+      0,
+      1
+     ],
+     "agree": true
+    },
+    {
+     "raw_symbol": "EW2K6 P4850",
+     "session": "2026-04-24",
+     "fixture": [
+      0,
+      10,
+      0,
+      1
+     ],
+     "scalar": [
+      0,
+      10,
+      0,
+      1
+     ],
+     "agree": true
+    }
+   ],
+   "passes": true
+  },
+  "G6": {
+   "floor": 0.95,
+   "at_quote_trades": 22496746,
+   "agreeing": 22496357,
+   "share": 0.999982708610392,
+   "quotes_usable": 0.9907620787392698,
+   "caveat": "the check confirms the flag's DIRECTION against the book, not that the aggressor is the customer",
+   "passes": true
+  },
+  "G7": {
+   "sha256": "848d4826d240dd2633721e430d07ba87a851f29c793f780f817aa81da10b30ad",
+   "recorded": "848d4826d240dd2633721e430d07ba87a851f29c793f780f817aa81da10b30ad",
+   "passes": true
+  }
+ },
+ "all_gates_pass": true
+}

@@ -10,6 +10,30 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-22, the aggressor side on ES options)
+- `data/fixtures/fut_es_0dte_signed_flow.csv.gz` + meta, `scripts/build_fut_es_0dte_signed_flow.py`
+  (D617): the **aggressor side** on ES-family option trades, read here for the first time — buy-initiated,
+  sell-initiated and unsigned contracts plus trade counts per (option, session) in D613's five ET clock
+  buckets. 1,044,886 rows over 124,580 options and 314 ET calendar dates 2025-09-10 → 2026-09-10,
+  9.5 MB; gitignored, manifest-hashed, gzip mtime pinned. Decoded 1,440,501,590 trades from the 13
+  `tbbo` files (37.3 GB) in 6.5 min on two workers at 97 % of linear; 22,706,840 ES option trades,
+  162,752,858 contracts, unsigned share 0.000166, D485 at-quote agreement 0.999983 on 22,496,746
+  trades. Seven gates and thirteen proven breaks, including a scalar second path on three named cells
+  and a header guard that refuses any column which is not a contract or a trade count. **A census: no
+  return, no price outcome, no conditioner** — the reserved window is read on the principal's
+  instruction in D510/D511's shape and stays unspent for every return-bearing construction.
+
+### Changed (2026-09-22, the open interest's reference session)
+- `scripts/build_fut_es_options_eod.py` + `data/fixtures/fut_es_options_eod.csv.gz` (D616): added
+  `oi_ref_session`, the business date each open-interest print describes, from the `ts_ref` already in
+  the cached statistics pickles — a `--build` from cache, no pull and no re-decode. The publication kept
+  is unchanged, so `oi` does not move and D581's and D614's results still reproduce. New gate G7
+  measures what `oi_pub_et` structurally cannot: adjacent sessions' publication times are never equal
+  (0.0000), so CME's preliminary-then-final revision was invisible, and a difference of open interest is
+  a one-session position change only where the two reference sessions are adjacent. That holds on
+  97.7–99.8 % of rows, and the residue grows with the era — cells carrying two reference dates run
+  0.1875 in 2016 and 0.3945 in 2025, spurious zero deltas 0.24 % and 2.53 %.
+
 ### Added (2026-09-21, the ES option volume panel in ET clock buckets)
 - `scripts/build_fut_es_0dte_volume_cutoffs.py` (D613): decodes the ohlcv-1m archive already on disk
   into per-(option, session) volume in five ET clock buckets, so a ladder conditioner can be fixed at
