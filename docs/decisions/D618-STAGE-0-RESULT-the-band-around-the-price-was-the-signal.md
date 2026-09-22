@@ -159,12 +159,36 @@ trade at one MES:
 | `vol_noon \| all \| w30` (closest to D614's own object) | +2.84 | no |
 | `gamma_doi \| 3step \| w30 \| now` (best fully specified cell) | +2.37 | no |
 
-**Exactly one of 126 clears the round trip, and it is the most contaminated construction in the sweep.**
-`vol_1530|3step|w30|ENDOGENOUS_BAND` carries both of the defects this programme exists to remove: its band
-is centred on **P1530**, the pre-registered break (§2), and its weight is `vol_to_1530`, volume accumulated
-**right up to the scored window**, which is the endogeneity D613's panel was built to avoid. It also earns
-on the **repulsion** side, so it is D614's sign, not the mechanism's. It is a measurement of the two
-artefacts stacked, not a candidate, and it clears cost by 9 %.
+**Exactly one of 126 clears the round trip — and it is last-hour momentum wearing a ladder costume.**
+`vol_1530|3step|w30|ENDOGENOUS_BAND` earns **+$4.65 a trade at t 2.90**, gross Sharpe **+1.317**, Sortino
++1.753, hit 0.525, and — importantly — it is **not** tail-carried: the symmetrically 1 %-trimmed mean is
+$4.58 against a raw $4.65. That is a real gross P&L, and it deserved more than the "contaminated" label the
+first draft of this section gave it. What it is was then measured directly:
+
+| sign-only book, gross | $/trade | t | annualised Sharpe |
+|---|---:|---:|---:|
+| the cell | **+4.65** | 2.90 | +1.317 |
+| **`F5` alone — the 14:30 → 15:30 move** | **+3.20** | 2.00 | +0.910 |
+| `ON` alone | +2.20 | 1.37 | +0.622 |
+| the whole pre-window move, 09:30 → 15:30 | +0.68 | 0.42 | +0.193 |
+
+The cell's sign agrees with the plain last-hour momentum sign on **65.2 %** of sessions, their signed P&Ls
+correlate **+0.458**, and the raw conditioner correlates **−0.173** with `F5` and **−0.286** with the whole
+pre-window move. The mechanism is transparent: `vol_to_1530` accumulates **where the price has been**, so
+the near-money volume centroid lags spot — it sits below a price that rallied — and the earning arm,
+*repulsion*, is therefore **long after a rally**. That is D463's intraday continuation, which the ledger
+already holds, and it is exactly the reading D614 gave its own negative coefficient.
+
+**Split on the overlap, the ladder adds nothing that survives.** On the 796 sessions where the cell agrees
+with momentum it earns **+$5.97**; on the 425 where it disagrees it earns **+$2.17**, which at that
+sub-sample's dispersion is about **t 0.8** — not distinguishable from zero. And the regression reaches the
+same verdict by the route that controls for `F5` and the other legs properly: coefficient −2.028,
+**NW t −0.80**, ranks **0.645** and **0.590**, inside both nulls, with every one of the six estimators
+agreeing between −0.82 and −0.95.
+
+**So the honest statement is narrower and stronger than "one cell clears cost": no construction here grasps
+an INCREMENTAL knowable return.** The only gross that clears is a re-expression of a return already known
+and already in the ledger — and that return does not clear cost on its own either ($3.20 against $4.25).
 
 **The ceiling, which is the number worth keeping.** A *perfect* sign-predictor on the same clock earns
 **$30.65** gross per trade on 15:30 → 16:00 (median $17.50) and **$21.41** on 15:50 → 16:00. So breaking
