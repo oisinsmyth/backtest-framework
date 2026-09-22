@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 349 of these records carry neither field —
+**No Status or Category column, deliberately.** 350 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -686,7 +686,7 @@ would look like data. The tokens are what is shown.
 | D614 | D614 STAGE 0 RESULT — the verdict the pre-registration's own bars return is REAL BUT NOT TRADEABLE, and the line closes… | [PRE-REG](D614-PRE-REG-expiry-pinning-on-ES-from-the-noon-0DTE-volume-ladder.md) · [RESULT](D614-STAGE-0-RESULT-not-pinning-ten-sessions-carry-the-whole-pull.md) |
 | D616 | the open interest's reference session on the ES option panel | [record](D616-FIXTURE-the-open-interest-reference-session.md) |
 | D617 | the ES option signed flow census, from the tbbo year | [record](D617-FIXTURE-the-ES-option-signed-flow-census-from-the-tbbo-year.md) |
-| D618 | REGISTRATION — the sharpened 0DTE ladder: range or independence, and the claim that it cannot have both | [PRE-REG](D618-PRE-REG-the-sharpened-0DTE-ladder-range-or-independence.md) |
+| D618 | D618 STAGE 0 RESULT — nothing survives the construction screens, and the one thing that looked like it survived was the… | [PRE-REG](D618-PRE-REG-the-sharpened-0DTE-ladder-range-or-independence.md) · [RESULT](D618-STAGE-0-RESULT-the-band-around-the-price-was-the-signal.md) |
 
 <!-- REGISTER:END -->
 

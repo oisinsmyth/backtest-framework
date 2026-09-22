@@ -10,6 +10,20 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-22, the sharpened 0DTE ladder measured, and the axis closed)
+- `scripts/stage0_d618_sharpened_ladder.py` + `data/stage0_d618_sharpened_ladder.json` (D618): the six
+  sharpenings of D614's ladder, scored as a family of **72 cells** behind **four pre-outcome construction
+  screens**. **None passes, so no return was scored for any cell in the specified family.** The runner's
+  first pass centred each band on P1530 — the pre-registered *break* — and four cells passed with one
+  clearing both its nulls; re-anchoring the band on the prior settlement moves them from sd 0.62–1.04σ to
+  5.57–5.59σ, corr(DAY0) from −0.19/−0.21 to −0.54, and their flat-weight ratio from 3.05–3.54× to 1.00×.
+  The artefact cells are scored under a no-verdict-weight label so the size of the illusion is on the
+  record. Fifteen audits, every one proven to raise on a break that hits the scalar it reads, including a
+  within-session permutation of the weights (D581's total-based audit is permutation-invariant and cannot
+  catch a strike-mapping bug) and `WEIGHTS BITE` restated against the price, which **fired on the
+  gamma-weighted cell as the record predicted**. Nine corrections made inside the run are listed in the
+  record; four changed a published number and one changed the verdict.
+
 ### Added (2026-09-22, the aggressor side on ES options)
 - `data/fixtures/fut_es_0dte_signed_flow.csv.gz` + meta, `scripts/build_fut_es_0dte_signed_flow.py`
   (D617): the **aggressor side** on ES-family option trades, read here for the first time — buy-initiated,
