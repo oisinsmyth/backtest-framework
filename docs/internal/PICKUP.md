@@ -2,7 +2,7 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
-## ROUND 4 — THE LAST SHARED ITEM AND THE SETTLEMENT LEDGER'S OWN INFRASTRUCTURE, D609–D619 BUILT AND VERIFIED, STAGED, NOT COMMITTED, 2026-09-22
+## ROUND 4 — THE LAST SHARED ITEM AND THE SETTLEMENT LEDGER'S OWN INFRASTRUCTURE, D609–D612 AND D619–D621 COMMITTED `804b807` + MERGE `3092d50`, 2026-09-22
 
 The principal's instruction (2026-09-21): *"finish off the shared infrastructure points then move on to
 the Settlement ledger infrastructure. Pick 5 points and give them to 5 opus agents."* Three decisions
@@ -55,8 +55,7 @@ Databento pull was submitted** (`scripts/fetch_energy_options.py`, six jobs, USD
 `trades` line deferred by the principal) and is downloading under `data/raw/databento/`. Integration
 of 4b: four more data-available paragraphs, three CHANGELOG bullets, four catalogue rows (manifest
 **130** panels, **15** blob-less, named on the running page), the tracker's settlement table and
-bullets, register and counts. **Full suite on the staged tree after 4b: 4,151 passed, 1 skipped, 6 deselected (4:32); skip count unchanged.** **Still owed on the principal's word: the commit, the merge with
-origin (the expiry-pinning branch's six records), the push.** Decisions the principal gave: Wikipedia hourly dropped (item 2 —
+bullets, register and counts. **Full suite on the staged tree after 4b: 4,151 passed, 1 skipped, 6 deselected (4:32); skip count unchanged.** **Committed `804b807`, merged with origin (the expiry-pinning branch's D613-D618) as `3092d50` and pushed, 2026-09-22; the merged tree ran 4,151 passed, 3 skipped (the two extra skips are origin's ES 0DTE panels, built on the other clone), 6 deselected.** Decisions the principal gave: Wikipedia hourly dropped (item 2 —
 plan approved), paid TAS deferred (3), filings parser built (4), the host / seal date / automation /
 calendar flags on hold (5).
 

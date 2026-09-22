@@ -34,7 +34,7 @@ written: ✓ existed in the repo or on disk on 2026-09-21, ◐ partial or vault-
 | 17 | Unit-test crosswalk (146 numbered tests: ledger 71, index 28, opening 25, shock 13, LETF 9 — the counts below were permuted when the split was written) | built, verified, untracked: `data/deposit_test_map.json` + `docs/results/DEPOSIT_TEST_MAP.md`; **79 of 146 claimed (54.1%) after round 4** (43 after round 3, 28 before; ledger 65/71 — the six left are 54–58 declined in D588 and 61), LETF 0 of 9 | D607, D610–D619 | 3, 4 |
 
 Commits: round 1 `89feba9` (D585–D589), round 2 `c192908` (D590–D594), round 3 `f03ab6f` +
-merge `9bf41e8` (D604–D608). Round 4 (D609–D619, 2026-09-22) uncommitted at the time of writing.
+merge `9bf41e8` (D604–D608). Round 4 (D609–D612, D619–D621, 2026-09-22) committed `804b807` + merge `3092d50`.
 **The shared list is complete** except for three items that are not a builder's: the recorder's
 host (Q17), the seal-date reconciliation, and the 14:30 UK execution automation (O-Q3). One gap
 inside a "built" row, found on the 2026-09-22 re-check of the split text against the code: **item
