@@ -204,6 +204,59 @@ independent members — and every candidate this programme has produced has turn
 different clothes: ρ **+0.876** between the two conditioners on one instrument (§5), ρ **0.96–0.99** across
 three instruments on one conditioner (here).
 
+## 5b. The principal's volume-burst family, and the cascade-versus-repricing discriminator
+
+Two further rounds of disclosed looks on the spent window, both prompted by the principal and both worth
+recording because one of them produced the only orthogonal conditioner this programme has found.
+
+**The midday volume burst is genuinely independent of the price move, which nothing else here is.** Defined
+before looking as midday volume (11:00–14:00 ET) over its trailing 20-session median, with a declared
+threshold of 1.25: **corr with H1 is +0.0015** and with |H1| only +0.230. Every previous candidate correlated
++0.876 (two conditioners, one instrument) to 0.96–0.99 (one conditioner, three instruments). Conditioning the
+short arm on it roughly doubles the edge — **+12.02 bp (n 73) against +3.36 (n 109)**, with medians (+11.66
+against +4.27) and trims (+13.86 against +6.78) agreeing, so it is not tail-driven — but the interaction is
+**+8.66 bp at t +0.77, UNRESOLVED**, and the quintile shape is not monotone (Q2 +10.06 against Q4 +4.92,
+Q5 +13.77).
+
+**On the long side, "the opposite" loses.** Continuation after a ≥1σ rise reads +5.27 bp (t 1.34); fading the
+rise is its mirror at −5.27. And the burst does not help longs (+4.52, **median −0.59**), so whatever the
+burst detects acts only on the short side.
+
+**The structural point, which matters more than any of those cells.** A volume conditioner has **no
+direction**, so it can only ever be a filter or an interaction term — it can never generate its own trades.
+Filters trade sample for per-trade edge: the burst cell's net rises to **+$17.12** from $9.49 while its rate
+falls to **9 trades a year**, needing about 206 trades or **23 years** for t = 2.0. **An orthogonal but
+directionless conditioner therefore cannot relieve a sample-size constraint — only an orthogonal DIRECTIONAL
+signal can, and this programme has not produced one.**
+
+**The cascade-versus-repricing discriminator.** A stop cascade fires into a thinning book — a large move on
+light volume, high impact per contract. Informed size is the opposite. Split at the arm's own medians:
+
+| | n | mean | t | median | trim |
+|---|---:|---:|---:|---:|---:|
+| high impact per contract (cascade signature) | 91 | +3.81 | +0.41 | +11.38 | +7.94 |
+| low impact per contract | 91 | +9.86 | +1.63 | +2.80 | +10.16 |
+| **high trigger-hour volume (size signature)** | 91 | **+12.78** | **+1.71** | +8.39 | +14.27 |
+| low trigger-hour volume | 91 | +0.89 | +0.11 | +4.44 | +5.20 |
+
+Both halves point away from the cascade: the effect is stronger on **heavy** volume at **low** impact per
+contract, and on the volume half mean, median and trim all agree. Neither reaches 2 SE (−0.54 and +1.07).
+**And the impact measure is partly circular** — impact per contract correlates **+0.693 with |H1|**, the
+quantity that defines the arm — so the conclusion rests on the volume half, itself +0.444 correlated.
+
+**One fact is cascade-consistent, and it is a premise observation rather than a return claim.** Volume
+**builds** through the trigger hour on arm sessions: median acceleration (last 20 minutes over first 20)
+**1.202**, against **0.982** on ordinary sessions. Conditioning returns on that acceleration gives t +0.39,
+but the acceleration itself is a real difference in the data.
+
+**Contamination ranking of the four conditioners**, which is the reusable part: midday burst +0.001 with H1
+and +0.230 with |H1|; acceleration −0.138 and +0.156; trigger-hour burst −0.111 and +0.444; impact per
+contract −0.023 and **+0.693**. The two cleanest are the principal's burst and the acceleration.
+
+**Four rounds of subgroup analysis have now been run on this window and not one cell has reached 2 SE.** Each
+round lowers the evidential value of the next. The signed-flow census that follows is the only remaining step
+that adds *information* rather than looks, and it is pre-registered separately.
+
 ## 6. What is spent
 
 The in-sample window was read for six predictions, the reproductions, the tail analysis and the viability
