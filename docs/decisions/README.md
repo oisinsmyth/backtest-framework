@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 351 of these records carry neither field —
+**No Status or Category column, deliberately.** 352 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -694,7 +694,7 @@ would look like data. The tokens are what is shown.
 | D619 | The fund panel, the fund-facts SOURCES, and the CME-side census: TAS exists, options OI does not, and UCO is three quar… | [record](D619-the-fund-panel-the-fund-facts-and-the-cme-side-census.md) |
 | D620 | The quarterly fund holdings from EDGAR, and the between-filing projection: the filings give 415 fund-quarters back to 2… | [record](D620-quarterly-fund-holdings-and-the-between-filing-projection.md) |
 | D621 | Retail attention measured from creations and Robinhood holders, with GDELT hourly news through the API: the amendment t… | [record](D621-retail-attention-from-creations-and-robinhood-holders.md) |
-| D622 | REGISTRATION — the last-hour decline and who must be flat by the close: a mechanism test, not a momentum test | [PRE-REG](D622-PRE-REG-the-last-hour-decline-and-who-must-be-flat.md) |
+| D622 | D622 STAGE 0 RESULT — the hour pair is specific to the index roots and is the family maximum of the clock, and it does… | [PRE-REG](D622-PRE-REG-the-last-hour-decline-and-who-must-be-flat.md) · [RESULT](D622-STAGE-0-RESULT-the-hour-is-specific-and-it-does-not-revert.md) |
 
 <!-- REGISTER:END -->
 
