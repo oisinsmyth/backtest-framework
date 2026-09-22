@@ -23,6 +23,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"
@@ -88,7 +89,7 @@ def submit(accepted: float | None) -> int:
     if JOBS.exists():
         raise SystemExit(f"{JOBS.name} exists; do NOT resubmit. Use --download.")
     c = db.Historical(api_key())
-    rec = {"quote_file": QUOTE.name, "submitted_utc": now(), "start": START, "end": END, "paid_schemas_submitted": [], "jobs": []}
+    rec: dict[str, Any] = {"quote_file": QUOTE.name, "submitted_utc": now(), "start": START, "end": END, "paid_schemas_submitted": [], "jobs": []}
     for label, schema, syms, usd in plan:
         job = c.batch.submit_job(
             dataset=DATASET, symbols=syms, schema=schema, start=START, end=END, encoding="dbn",
@@ -104,9 +105,34 @@ def submit(accepted: float | None) -> int:
     return 0
 
 
+LOCK = RAW / ".fetch_energy_options.download.lock"
+
+
+def _pid_alive(pid: int) -> bool:
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
+    return True
+
+
+def _take_lock() -> None:
+    """One downloader at a time. Two pollers writing the same batch zip corrupted a 13 GB
+    download on 2026-09-22 (BadZipFile at unpack, hours lost); the lock names the PID that holds
+    it and refuses while that PID is alive. A dead PID's lock is stale and is taken over."""
+    RAW.mkdir(parents=True, exist_ok=True)
+    if LOCK.exists():
+        holder = LOCK.read_text(encoding="utf-8").strip()
+        if holder.isdigit() and _pid_alive(int(holder)):
+            raise SystemExit(f"REFUSING: another --download is running (pid {holder}, {LOCK}). "
+                             "Two writers on one batch zip corrupt it. Stop that process first.")
+    LOCK.write_text(str(os.getpid()), encoding="utf-8")
+
+
 def download(wait: bool) -> int:
     import databento as db
 
+    _take_lock()
     c = db.Historical(api_key())
     rec = json.loads(JOBS.read_text(encoding="utf-8"))
     while True:
@@ -133,6 +159,7 @@ def download(wait: bool) -> int:
             print(f"  {j['label']} {j['schema']} job {jid}: downloaded {len(paths)} files, {j['bytes'] / 1e9:.2f} GB in {(time.time() - t0) / 60:.1f} min -> {out}", flush=True)
         JOBS.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8")
         if not pending or not wait:
+            LOCK.unlink(missing_ok=True)
             return 3 if pending else 0
         time.sleep(60)
 
