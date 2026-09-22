@@ -118,6 +118,65 @@ costs about 0.6 of t, and the largest t in the family does not reach even a sing
 
 **No cell clears the economic bar.** The best expected move is $2.43 against $4.25.
 
+## 3a. Are the nulls valid? A power test and a size test, added 2026-09-22
+
+The screens were trusted and turned out to be broken (§0), so the nulls were put through the same
+discipline rather than assumed sound. Both were run on conditioners of known status, with the study's own
+controls and outcome.
+
+**Power — a genuine signal must clear them.** A conditioner whose weights are placed on the strike nearest
+the **actual 16:00 close**, and three progressively diluted versions of it:
+
+| conditioner | observed \|c\| | shift-null p95 | flip-null p95 | result |
+|---|---:|---:|---:|---|
+| perfect oracle | 25.18 | 1.43 | 7.70 | **clears both** |
+| diluted to 30 % + noise | 19.50 | 2.35 | 6.43 | **clears both** |
+| weak, 15 % + noise | 6.53 | 1.88 | 2.73 | **clears both** |
+| very weak, **8 %** + noise | 2.89 | 1.59 | 1.88 | **clears both** |
+
+Both nulls retain power down to a conditioner carrying **8 %** of the move, so they are not too harsh and
+the study's rejections are not artefacts of an over-strict null.
+
+**Size — pure noise must clear them about 5 % of the time.** Forty standard-normal conditioners:
+**1 of 40 (2.5 %)** above p95 in the shift null and **1 of 40 (2.5 %)** in the flip null. At forty trials
+that is consistent with the nominal 5 % (a single hit's interval is wide), and it errs on the conservative
+side rather than the anti-conservative one — the direction that costs power, not credibility. The shift
+null's own construction is what earns that: it is **enumerated**, not sampled, so its p95 carries no
+sampling error, and D373's two-standard-error margin rule does not apply to it.
+
+## 3b. Is there ANY cell that clears GROSS, ignoring every other bar?
+
+Asked because the economics, not the statistics, are what make this axis uninteresting: gross within
+±$0.36 on the five scored cells leaves nothing for cost to destroy. Swept over **126 cells** — the 72
+specified plus every endogenous-band variant — taking the better of the two directions, gross dollars per
+trade at one MES:
+
+| cell | gross $/trade | clears $4.25 |
+|---|---:|---|
+| **`vol_1530 \| 3step \| w30 \| ENDOGENOUS_BAND`** | **+4.65** | **yes** |
+| `vol_1530 \| 3step \| w10 \| ENDOGENOUS_BAND` | +3.98 | no |
+| `gamma_doi \| 2step \| w10 \| now \| ENDOGENOUS_BAND` | +3.05 | no |
+| `vol_noon \| all \| w30` (closest to D614's own object) | +2.84 | no |
+| `gamma_doi \| 3step \| w30 \| now` (best fully specified cell) | +2.37 | no |
+
+**Exactly one of 126 clears the round trip, and it is the most contaminated construction in the sweep.**
+`vol_1530|3step|w30|ENDOGENOUS_BAND` carries both of the defects this programme exists to remove: its band
+is centred on **P1530**, the pre-registered break (§2), and its weight is `vol_to_1530`, volume accumulated
+**right up to the scored window**, which is the endogeneity D613's panel was built to avoid. It also earns
+on the **repulsion** side, so it is D614's sign, not the mechanism's. It is a measurement of the two
+artefacts stacked, not a candidate, and it clears cost by 9 %.
+
+**The ceiling, which is the number worth keeping.** A *perfect* sign-predictor on the same clock earns
+**$30.65** gross per trade on 15:30 → 16:00 (median $17.50) and **$21.41** on 15:50 → 16:00. So breaking
+even at one MES requires capturing **13.9 %** of the available absolute move on the half-hour and
+**19.9 %** on the ten minutes. The best *clean* construction here captures **9.3 %** and the best
+contaminated one **15.2 %**.
+
+That reframes the failure honestly: **the window is not too small to pay — the constructions are a factor
+of about 1.5 short, not a factor of ten.** A conditioner on this clock capturing one move in seven would
+break even at minimum size. None of the six sharpenings gets there, and the only thing that does is
+circular.
+
 ## 4. The predictions, against what happened
 
 | # | prediction | outcome |
