@@ -1,0 +1,3893 @@
+{
+ "spec": "D623",
+ "audits": {
+  "window": {
+   "first": "2025-09-11",
+   "last": "2026-06-30",
+   "sessions": 207,
+   "rows": 226224,
+   "reserve_from": "2026-07-01"
+  },
+  "imbalance_sign": {
+   "sell_heavy": 0.4,
+   "buy_heavy": -0.4,
+   "empty_is_nan": true
+  },
+  "close_bucket_coverage": {
+   "pairs": 828,
+   "full": 796,
+   "dropped": 32,
+   "share_full": 0.961352657004831,
+   "need": 12
+  },
+  "sigma_is_lagged": {
+   "max_abs_deviation": 1.4210854715202004e-14,
+   "n_with_sigma": 169
+  },
+  "arm_not_endogenous": {
+   "arm_sessions": 26,
+   "unchanged_when_close_window_destroyed": true
+  },
+  "declared_outputs": {
+   "measured": [
+    "excess_small_growth_log",
+    "imb_close",
+    "imb_close_minus_mid",
+    "imb_last2_first2",
+    "imb_slope",
+    "lot1_share_close",
+    "small_share_close",
+    "small_share_close_minus_mid",
+    "small_share_mid",
+    "small_share_trig",
+    "small_share_trig_minus_mid",
+    "small_vol_ratio_log",
+    "vol_ratio_log"
+   ],
+   "permitted": [
+    "excess_small_growth_log",
+    "imb_close",
+    "imb_close_minus_mid",
+    "imb_last2_first2",
+    "imb_mid",
+    "imb_slope",
+    "imb_trig",
+    "lot1_share_close",
+    "n_close",
+    "small_share_close",
+    "small_share_close_minus_mid",
+    "small_share_mid",
+    "small_share_trig",
+    "small_share_trig_minus_mid",
+    "small_vol_ratio_log",
+    "uns_share_close",
+    "vol_close_share_flow",
+    "vol_ratio_log"
+   ],
+   "classifiers": [
+    "H1",
+    "H1_bp",
+    "P1400",
+    "P1500",
+    "burst",
+    "mid_vol",
+    "sigma_bp"
+   ]
+  }
+ },
+ "multiplicity": {
+  "comparisons": 103,
+  "roots": 4,
+  "note": "Every comparison in this file is disclosed (R13/R14). Five questions across four roots with a between-session and a within-session lens is a large look count, and the census is therefore read on the SHAPE of the answers -- do they agree across roots and lenses -- rather than on any single margin clearing 2 SE."
+ },
+ "window": {
+  "first": "2025-09-11",
+  "last": "2026-06-30",
+  "sessions": 207,
+  "rows": 226224,
+  "reserve_from": "2026-07-01"
+ },
+ "coverage": {
+  "pairs": 828,
+  "full": 796,
+  "dropped": 32,
+  "share_full": 0.961352657004831,
+  "need": 12
+ },
+ "arm": {
+  "sessions_with_sigma": 169,
+  "threshold": -1.0,
+  "sigma_window": 60,
+  "sigma_min_periods": 30,
+  "n_arm": 26,
+  "arm_sessions": [
+   "2025-10-29",
+   "2025-10-30",
+   "2025-11-17",
+   "2025-12-01",
+   "2025-12-18",
+   "2025-12-31",
+   "2026-01-15",
+   "2026-02-13",
+   "2026-02-18",
+   "2026-03-10",
+   "2026-03-18",
+   "2026-03-20",
+   "2026-03-30",
+   "2026-04-01",
+   "2026-04-07",
+   "2026-04-08",
+   "2026-05-01",
+   "2026-05-11",
+   "2026-05-18",
+   "2026-05-19",
+   "2026-05-21",
+   "2026-06-05",
+   "2026-06-10",
+   "2026-06-17",
+   "2026-06-23",
+   "2026-06-26"
+  ],
+  "n_arm_quantile": 24,
+  "arm_quantile": 0.12,
+  "overlap_threshold_and_quantile": 22,
+  "n_burst": 52,
+  "n_arm_and_burst": 6,
+  "min_required": 12,
+  "sessions_in_comparisons": 169,
+  "sessions_dropped_unclassified": 30
+ },
+ "Q1": {
+  "ES_arm_level": {
+   "label": "ES: arm sessions, closing imbalance vs zero",
+   "quantity": "imb_close",
+   "margin": 0.0009224339906052001,
+   "se": 0.004384339398432096,
+   "t": 0.21039292508583532,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.0009224339906052001,
+    "median": -0.0011529829116624674,
+    "ex_top": -0.0006694668701052898,
+    "ex_bottom": 0.0024818481352387083,
+    "symmetric_trim": 0.0008885936613583437,
+    "share_positive": 0.5,
+    "mean_below_median": false,
+    "sign_flips_on_median": true,
+    "most_negative": [
+     [
+      "2026-05-18",
+      -0.038062919625232484
+     ],
+     [
+      "2026-03-20",
+      -0.03293783575087804
+     ],
+     [
+      "2026-04-07",
+      -0.028937774850190813
+     ],
+     [
+      "2026-01-15",
+      -0.02035211658313761
+     ],
+     [
+      "2026-02-18",
+      -0.01801487624625586
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-30",
+      0.04071995550836746
+     ],
+     [
+      "2025-12-31",
+      0.04056380302205482
+     ],
+     [
+      "2026-06-26",
+      0.03255128669355342
+     ],
+     [
+      "2026-04-01",
+      0.02977047704770477
+     ],
+     [
+      "2026-06-17",
+      0.028763492986878678
+     ]
+    ]
+   }
+  },
+  "ES_arm_minus_nonarm": {
+   "label": "ES: arm minus non-arm",
+   "quantity": "imb_close",
+   "margin": -0.0007840690856865274,
+   "se": 0.005055934278713271,
+   "t": -0.15507897105934534,
+   "verdict": "unresolved",
+   "note": "between-session lens",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_equivalence_bound": {
+   "n": 26,
+   "mean": 0.0009224339906052001,
+   "se": 0.004384339398432096,
+   "upper_2se": 0.009691112787469392,
+   "sd_nonarm": 0.030110224911372375,
+   "material_threshold": 0.015055112455686187,
+   "material_sd_frac": 0.5,
+   "excludes_material": true,
+   "reading": "the data EXCLUDE a one-sided imbalance of +0.01506 or more"
+  },
+  "ES_nonarm_level": {
+   "label": "ES: non-arm sessions, for the level",
+   "quantity": "imb_close",
+   "margin": 0.0017065030762917275,
+   "se": 0.002517943500165161,
+   "t": 0.677736842061703,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 143,
+    "mean": 0.0017065030762917275,
+    "median": 0.0016100663687423947,
+    "ex_top": 0.0011898331493821717,
+    "ex_bottom": 0.002518011304739728,
+    "symmetric_trim": 0.0020034324296141315,
+    "share_positive": 0.5454545454545454,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2025-10-27",
+      -0.11352766536332447
+     ],
+     [
+      "2026-04-28",
+      -0.0717974094018338
+     ],
+     [
+      "2025-12-08",
+      -0.06223388190426559
+     ],
+     [
+      "2026-04-27",
+      -0.0544005502911562
+     ],
+     [
+      "2026-05-26",
+      -0.052508387298119685
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-11-05",
+      0.0750736326974489
+     ],
+     [
+      "2026-03-02",
+      0.06802442842837196
+     ],
+     [
+      "2026-01-09",
+      0.06788641576620169
+     ],
+     [
+      "2025-10-23",
+      0.06452658331485493
+     ],
+     [
+      "2025-10-24",
+      0.05919439904917546
+     ]
+    ]
+   }
+  },
+  "ES_arm_close_minus_own_midday": {
+   "label": "ES: arm, closing minus its OWN midday",
+   "quantity": "imb_close_minus_mid",
+   "margin": -0.0014880415435330164,
+   "se": 0.005560483090663547,
+   "t": -0.2676101193494403,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.0014880415435330164,
+    "median": -0.0001125567369609521,
+    "ex_top": -0.003853767291036094,
+    "ex_bottom": 0.0007665713687911663,
+    "symmetric_trim": -0.0016037840801776976,
+    "share_positive": 0.5,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-18",
+      -0.05785336435163757
+     ],
+     [
+      "2026-02-18",
+      -0.04312833681770639
+     ],
+     [
+      "2026-05-11",
+      -0.04224788736828204
+     ],
+     [
+      "2026-01-15",
+      -0.041709796433373844
+     ],
+     [
+      "2026-04-08",
+      -0.026632447991876813
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-12-31",
+      0.0576551021440439
+     ],
+     [
+      "2026-06-26",
+      0.04179147762147513
+     ],
+     [
+      "2026-04-01",
+      0.03141217620633395
+     ],
+     [
+      "2025-10-30",
+      0.028818589704024313
+     ],
+     [
+      "2026-03-18",
+      0.026847176068466184
+     ]
+    ]
+   },
+   "note": "within-session lens (the stronger one), 26 pairs"
+  },
+  "MES_arm_level": {
+   "label": "MES: arm sessions, closing imbalance vs zero",
+   "quantity": "imb_close",
+   "margin": -0.0030332679439032456,
+   "se": 0.004779806252622778,
+   "t": -0.634600605879962,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.0030332679439032456,
+    "median": -0.004038969401713772,
+    "ex_top": -0.00474089453103043,
+    "ex_bottom": -0.0009718348823168371,
+    "symmetric_trim": -0.0026647195330082203,
+    "share_positive": 0.34615384615384615,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.05456909448356348
+     ],
+     [
+      "2026-05-18",
+      -0.04719344640407214
+     ],
+     [
+      "2026-04-07",
+      -0.0346865535257662
+     ],
+     [
+      "2026-02-18",
+      -0.02945152755946259
+     ],
+     [
+      "2025-12-18",
+      -0.021158389366286768
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-04-01",
+      0.03965739673427636
+     ],
+     [
+      "2026-02-13",
+      0.03773745014607654
+     ],
+     [
+      "2025-12-31",
+      0.03407931338151218
+     ],
+     [
+      "2026-05-21",
+      0.0256427807486631
+     ],
+     [
+      "2026-03-10",
+      0.023043908327325766
+     ]
+    ]
+   }
+  },
+  "MES_arm_minus_nonarm": {
+   "label": "MES: arm minus non-arm",
+   "quantity": "imb_close",
+   "margin": 2.7193210921012435e-06,
+   "se": 0.005340753859163967,
+   "t": 0.0005091642797646028,
+   "verdict": "unresolved",
+   "note": "between-session lens",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_equivalence_bound": {
+   "n": 26,
+   "mean": -0.0030332679439032456,
+   "se": 0.004779806252622778,
+   "upper_2se": 0.00652634456134231,
+   "sd_nonarm": 0.028492558114944846,
+   "material_threshold": 0.014246279057472423,
+   "material_sd_frac": 0.5,
+   "excludes_material": true,
+   "reading": "the data EXCLUDE a one-sided imbalance of +0.01425 or more"
+  },
+  "MES_nonarm_level": {
+   "label": "MES: non-arm sessions, for the level",
+   "quantity": "imb_close",
+   "margin": -0.003035987264995347,
+   "se": 0.0023826674068285324,
+   "t": -1.2741968334709461,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 143,
+    "mean": -0.003035987264995347,
+    "median": 0.0008095583719501982,
+    "ex_top": -0.0035800895230141813,
+    "ex_bottom": -0.0025301157910045773,
+    "symmetric_trim": -0.0030744891893356658,
+    "share_positive": 0.5104895104895105,
+    "mean_below_median": true,
+    "sign_flips_on_median": true,
+    "most_negative": [
+     [
+      "2025-12-08",
+      -0.07486973657168418
+     ],
+     [
+      "2026-04-16",
+      -0.0733145631498437
+     ],
+     [
+      "2026-04-28",
+      -0.06322331169727938
+     ],
+     [
+      "2026-04-14",
+      -0.06049029736591304
+     ],
+     [
+      "2026-01-14",
+      -0.05979282689887446
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-02-12",
+      0.07422653337367902
+     ],
+     [
+      "2026-02-09",
+      0.05382822168286342
+     ],
+     [
+      "2026-02-10",
+      0.052034656511399734
+     ],
+     [
+      "2026-01-07",
+      0.049317624021751355
+     ],
+     [
+      "2026-05-22",
+      0.047013952957513386
+     ]
+    ]
+   }
+  },
+  "MES_arm_close_minus_own_midday": {
+   "label": "MES: arm, closing minus its OWN midday",
+   "quantity": "imb_close_minus_mid",
+   "margin": -0.0014556622601797433,
+   "se": 0.005931082791985346,
+   "t": -0.2454294285264025,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.0014556622601797433,
+    "median": -0.007413546098059137,
+    "ex_top": -0.004445154767391252,
+    "ex_bottom": 0.0009791356814963254,
+    "symmetric_trim": -0.0020334690992791604,
+    "share_positive": 0.38461538461538464,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-18",
+      -0.06232561080208143
+     ],
+     [
+      "2026-02-18",
+      -0.04715854750880809
+     ],
+     [
+      "2026-04-08",
+      -0.027508617333527406
+     ],
+     [
+      "2026-03-30",
+      -0.026058888865441863
+     ],
+     [
+      "2025-11-17",
+      -0.023670758857123785
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-12-31",
+      0.07328165042010798
+     ],
+     [
+      "2026-04-01",
+      0.03880284454231218
+     ],
+     [
+      "2026-05-21",
+      0.03691731947859764
+     ],
+     [
+      "2026-06-17",
+      0.035439920802604344
+     ],
+     [
+      "2026-02-13",
+      0.034102837884720474
+     ]
+    ]
+   },
+   "note": "within-session lens (the stronger one), 26 pairs"
+  },
+  "NQ_arm_level": {
+   "label": "NQ: arm sessions, closing imbalance vs zero",
+   "quantity": "imb_close",
+   "margin": 0.007428932113006739,
+   "se": 0.004309548584179293,
+   "t": 1.7238306908243146,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.007428932113006739,
+    "median": 0.010766321799554949,
+    "ex_top": 0.005968649464238845,
+    "ex_bottom": 0.00983278525810635,
+    "symmetric_trim": 0.00841181804668561,
+    "share_positive": 0.6923076923076923,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.05266739651448354
+     ],
+     [
+      "2025-10-29",
+      -0.024708078626596873
+     ],
+     [
+      "2026-01-15",
+      -0.0244978580406844
+     ],
+     [
+      "2026-03-30",
+      -0.013510467230729926
+     ],
+     [
+      "2026-06-23",
+      -0.009930396828471442
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-10",
+      0.043935998332204095
+     ],
+     [
+      "2026-03-20",
+      0.035124696660704315
+     ],
+     [
+      "2026-04-01",
+      0.03404344193817878
+     ],
+     [
+      "2026-06-26",
+      0.033939990162321694
+     ],
+     [
+      "2025-10-30",
+      0.02817788602863982
+     ]
+    ]
+   }
+  },
+  "NQ_arm_minus_nonarm": {
+   "label": "NQ: arm minus non-arm",
+   "quantity": "imb_close",
+   "margin": 0.0013621576295130989,
+   "se": 0.004691436517983217,
+   "t": 0.2903497946293583,
+   "verdict": "unresolved",
+   "note": "between-session lens",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_equivalence_bound": {
+   "n": 26,
+   "mean": 0.007428932113006739,
+   "se": 0.004309548584179293,
+   "upper_2se": 0.016048029281365325,
+   "sd_nonarm": 0.02217078183577789,
+   "material_threshold": 0.011085390917888944,
+   "material_sd_frac": 0.5,
+   "excludes_material": false,
+   "reading": "the data cannot exclude a material one-sided imbalance"
+  },
+  "NQ_nonarm_level": {
+   "label": "NQ: non-arm sessions, for the level",
+   "quantity": "imb_close",
+   "margin": 0.00606677448349364,
+   "se": 0.0018540139165779599,
+   "t": 3.272237834487979,
+   "verdict": "pass",
+   "tails": {
+    "n": 143,
+    "mean": 0.00606677448349364,
+    "median": 0.006531881804043546,
+    "ex_top": 0.005626627107382396,
+    "ex_bottom": 0.006582638702163781,
+    "symmetric_trim": 0.006143028324935933,
+    "share_positive": 0.6153846153846154,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-29",
+      -0.06718594456766622
+     ],
+     [
+      "2026-04-14",
+      -0.0485228235863906
+     ],
+     [
+      "2026-04-15",
+      -0.03767716233815981
+     ],
+     [
+      "2026-01-06",
+      -0.03577212536915309
+     ],
+     [
+      "2026-01-21",
+      -0.03553833316187145
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-01-12",
+      0.06856770189129018
+     ],
+     [
+      "2026-05-14",
+      0.06048988687654624
+     ],
+     [
+      "2026-03-23",
+      0.05832759109886101
+     ],
+     [
+      "2026-03-02",
+      0.05299268514069091
+     ],
+     [
+      "2025-12-30",
+      0.041582391433670436
+     ]
+    ]
+   }
+  },
+  "NQ_arm_close_minus_own_midday": {
+   "label": "NQ: arm, closing minus its OWN midday",
+   "quantity": "imb_close_minus_mid",
+   "margin": 0.006633151810771424,
+   "se": 0.004767343500075671,
+   "t": 1.3913727447300865,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.006633151810771424,
+    "median": 0.013228099466960476,
+    "ex_top": 0.0050175414430598695,
+    "ex_bottom": 0.009092209519290346,
+    "symmetric_trim": 0.007511742790779097,
+    "share_positive": 0.6923076923076923,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2025-10-29",
+      -0.05484329090220158
+     ],
+     [
+      "2026-04-08",
+      -0.054677689213100455
+     ],
+     [
+      "2026-03-30",
+      -0.022023182807060164
+     ],
+     [
+      "2026-06-05",
+      -0.016796780074730976
+     ],
+     [
+      "2026-01-15",
+      -0.0068037059701353715
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-10",
+      0.0470234110035603
+     ],
+     [
+      "2026-06-17",
+      0.03632135568767031
+     ],
+     [
+      "2025-10-30",
+      0.036073605503163735
+     ],
+     [
+      "2026-06-26",
+      0.03032122620104098
+     ],
+     [
+      "2026-04-01",
+      0.026439318813640138
+     ]
+    ]
+   },
+   "note": "within-session lens (the stronger one), 26 pairs"
+  },
+  "MNQ_arm_level": {
+   "label": "MNQ: arm sessions, closing imbalance vs zero",
+   "quantity": "imb_close",
+   "margin": -0.001080699954443497,
+   "se": 0.0030091631258800577,
+   "t": -0.359136380859192,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.001080699954443497,
+    "median": -0.004369010144020394,
+    "ex_top": -0.002340144910104109,
+    "ex_bottom": 0.0002100537497999698,
+    "symmetric_trim": -0.0010480866746696898,
+    "share_positive": 0.4230769230769231,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.03334954256053015
+     ],
+     [
+      "2026-04-07",
+      -0.029799038953747584
+     ],
+     [
+      "2026-05-18",
+      -0.026774906249735466
+     ],
+     [
+      "2025-11-17",
+      -0.011977458017994607
+     ],
+     [
+      "2025-12-01",
+      -0.010124893021366715
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-30",
+      0.0304054239370718
+     ],
+     [
+      "2025-12-31",
+      0.023131892828526946
+     ],
+     [
+      "2026-06-05",
+      0.01747610827356694
+     ],
+     [
+      "2026-06-10",
+      0.015839731709469597
+     ],
+     [
+      "2026-03-18",
+      0.014483463452688361
+     ]
+    ]
+   }
+  },
+  "MNQ_arm_minus_nonarm": {
+   "label": "MNQ: arm minus non-arm",
+   "quantity": "imb_close",
+   "margin": -0.0012918306121945066,
+   "se": 0.003353370472053943,
+   "t": -0.38523349059111234,
+   "verdict": "unresolved",
+   "note": "between-session lens",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_equivalence_bound": {
+   "n": 26,
+   "mean": -0.001080699954443497,
+   "se": 0.0030091631258800577,
+   "upper_2se": 0.004937626297316618,
+   "sd_nonarm": 0.017696734305239693,
+   "material_threshold": 0.008848367152619847,
+   "material_sd_frac": 0.5,
+   "excludes_material": true,
+   "reading": "the data EXCLUDE a one-sided imbalance of +0.00885 or more"
+  },
+  "MNQ_nonarm_level": {
+   "label": "MNQ: non-arm sessions, for the level",
+   "quantity": "imb_close",
+   "margin": 0.00021113065775100958,
+   "se": 0.0014798752665975078,
+   "t": 0.14266787378400878,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 143,
+    "mean": 0.00021113065775100958,
+    "median": 0.00014026994171004644,
+    "ex_top": -0.00013532584702484766,
+    "ex_bottom": 0.0004940871013253361,
+    "symmetric_trim": 0.00014718024150549576,
+    "share_positive": 0.5034965034965035,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-08",
+      -0.03996868432980345
+     ],
+     [
+      "2026-04-14",
+      -0.035591952168809504
+     ],
+     [
+      "2026-04-30",
+      -0.03466767978607594
+     ],
+     [
+      "2026-04-13",
+      -0.033952634853628
+     ],
+     [
+      "2026-05-06",
+      -0.03173742661978594
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-11-05",
+      0.04940795433592278
+     ],
+     [
+      "2026-02-10",
+      0.046947472511948765
+     ],
+     [
+      "2026-01-12",
+      0.03852868819934926
+     ],
+     [
+      "2026-05-05",
+      0.03494803888702648
+     ],
+     [
+      "2025-12-30",
+      0.03425863975859197
+     ]
+    ]
+   }
+  },
+  "MNQ_arm_close_minus_own_midday": {
+   "label": "MNQ: arm, closing minus its OWN midday",
+   "quantity": "imb_close_minus_mid",
+   "margin": -0.0006185177272235594,
+   "se": 0.0032033693153371095,
+   "t": -0.19308349001853042,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.0006185177272235594,
+    "median": -0.0008988043669472619,
+    "ex_top": -0.0021270141781322845,
+    "ex_bottom": 0.0006076675739333484,
+    "symmetric_trim": -0.0009125918415483682,
+    "share_positive": 0.5,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.03127315025614627
+     ],
+     [
+      "2025-11-17",
+      -0.026887344134045213
+     ],
+     [
+      "2026-05-18",
+      -0.026241541397149532
+     ],
+     [
+      "2025-10-29",
+      -0.02137616752582381
+     ],
+     [
+      "2026-02-18",
+      -0.016120955093405394
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-12-31",
+      0.03709389354549455
+     ],
+     [
+      "2025-10-30",
+      0.02849847140177954
+     ],
+     [
+      "2026-03-10",
+      0.015632256988306024
+     ],
+     [
+      "2026-06-10",
+      0.013473544295731596
+     ],
+     [
+      "2026-06-17",
+      0.0109112124534946
+     ]
+    ]
+   },
+   "note": "within-session lens (the stronger one), 26 pairs"
+  },
+  "ES_quantile_arm_level": {
+   "label": "ES: QUANTILE arm, closing imbalance vs zero",
+   "quantity": "imb_close",
+   "margin": -0.0012427544091100666,
+   "se": 0.004603844153351753,
+   "t": -0.2699384183552998,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 22,
+    "mean": -0.0012427544091100666,
+    "median": -0.003398468032156765,
+    "ex_top": -0.0032409786908947093,
+    "ex_bottom": 0.0005105867916576681,
+    "symmetric_trim": -0.0014998816441778215,
+    "share_positive": 0.45454545454545453,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-18",
+      -0.038062919625232484
+     ],
+     [
+      "2026-03-20",
+      -0.03293783575087804
+     ],
+     [
+      "2026-04-07",
+      -0.028937774850190813
+     ],
+     [
+      "2026-01-15",
+      -0.02035211658313761
+     ],
+     [
+      "2026-02-18",
+      -0.01801487624625586
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-30",
+      0.04071995550836746
+     ],
+     [
+      "2026-06-26",
+      0.03255128669355342
+     ],
+     [
+      "2026-04-01",
+      0.02977047704770477
+     ],
+     [
+      "2026-06-17",
+      0.028763492986878678
+     ],
+     [
+      "2026-02-13",
+      0.012444151499096829
+     ]
+    ]
+   },
+   "note": "the arm without the sigma convention"
+  },
+  "ES_rotation_null": {
+   "observed": 0.0009224339906052001,
+   "p05": -0.006715373272599199,
+   "p50": 0.0014380096480196194,
+   "p95": 0.01060625105926855,
+   "n": 150,
+   "p95_se": 0.0004351101361041438,
+   "pct_rank": 0.4666666666666667,
+   "above_p95": false,
+   "within_2se_of_p95": false
+  }
+ },
+ "Q2": {
+  "ES_arm_slope": {
+   "label": "ES: arm, slope of imbalance on bucket index",
+   "quantity": "imb_slope",
+   "margin": -0.0004982730932949384,
+   "se": 0.0010156521605720905,
+   "t": -0.49059423357527654,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.0004982730932949384,
+    "median": -0.0007763649121368969,
+    "ex_top": -0.0009891894871157385,
+    "ex_bottom": -7.707803915355194e-05,
+    "symmetric_trim": -0.0005708994887943273,
+    "share_positive": 0.38461538461538464,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-11",
+      -0.011028149446829604
+     ],
+     [
+      "2026-01-15",
+      -0.007223117999239112
+     ],
+     [
+      "2026-02-18",
+      -0.006986660323022708
+     ],
+     [
+      "2025-10-29",
+      -0.006612531075751956
+     ],
+     [
+      "2026-03-10",
+      -0.005290550476513101
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-05-01",
+      0.011774636752225058
+     ],
+     [
+      "2026-06-26",
+      0.00745314454283932
+     ],
+     [
+      "2025-10-30",
+      0.005855421136462669
+     ],
+     [
+      "2026-03-18",
+      0.005430471858667703
+     ],
+     [
+      "2025-12-01",
+      0.004331727948004876
+     ]
+    ]
+   }
+  },
+  "ES_arm_last2_first2": {
+   "label": "ES: arm, last two minus first two buckets",
+   "quantity": "imb_last2_first2",
+   "margin": 0.009159822138715218,
+   "se": 0.010526453898035353,
+   "t": 0.8701716862527463,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.009159822138715218,
+    "median": 0.00865908858011319,
+    "ex_top": 0.005067688003148638,
+    "ex_bottom": 0.012868061102494388,
+    "symmetric_trim": 0.00875993133477,
+    "share_positive": 0.6153846153846154,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-01-15",
+      -0.08354615195576404
+     ],
+     [
+      "2026-05-11",
+      -0.07611633431318768
+     ],
+     [
+      "2025-10-29",
+      -0.06292988183971261
+     ],
+     [
+      "2026-03-30",
+      -0.05855760646805818
+     ],
+     [
+      "2026-06-05",
+      -0.043480125274655584
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-03-18",
+      0.11146317552787965
+     ],
+     [
+      "2026-05-01",
+      0.1026284264529273
+     ],
+     [
+      "2025-10-30",
+      0.07887052377418528
+     ],
+     [
+      "2026-06-26",
+      0.07257803594613467
+     ],
+     [
+      "2026-05-21",
+      0.06918255615728218
+     ]
+    ]
+   }
+  },
+  "ES_slope_arm_minus_nonarm": {
+   "label": "ES: slope, arm minus non-arm",
+   "quantity": "imb_slope",
+   "margin": -0.0010409203380094304,
+   "se": 0.0011315116125981582,
+   "t": -0.9199378304384225,
+   "verdict": "unresolved",
+   "note": "between-session lens"
+  },
+  "MES_arm_slope": {
+   "label": "MES: arm, slope of imbalance on bucket index",
+   "quantity": "imb_slope",
+   "margin": 0.00015064164096130768,
+   "se": 0.00150096344514462,
+   "t": 0.10036329761967863,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.00015064164096130768,
+    "median": -0.0012398822438382806,
+    "ex_top": -0.0006907627450515258,
+    "ex_bottom": 0.0006638405840992505,
+    "symmetric_trim": -0.00019123902870003674,
+    "share_positive": 0.46153846153846156,
+    "mean_below_median": false,
+    "sign_flips_on_median": true,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.012679331937487262
+     ],
+     [
+      "2026-06-17",
+      -0.008835869692202337
+     ],
+     [
+      "2026-01-15",
+      -0.008618489965621843
+     ],
+     [
+      "2026-03-20",
+      -0.006752470554206555
+     ],
+     [
+      "2026-02-18",
+      -0.006278792246851494
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-05-01",
+      0.021185751291282143
+     ],
+     [
+      "2026-04-01",
+      0.01738755640031512
+     ],
+     [
+      "2026-05-19",
+      0.006903609937393485
+     ],
+     [
+      "2026-04-08",
+      0.005774512766193077
+     ],
+     [
+      "2025-12-18",
+      0.005238341020948838
+     ]
+    ]
+   }
+  },
+  "MES_arm_last2_first2": {
+   "label": "MES: arm, last two minus first two buckets",
+   "quantity": "imb_last2_first2",
+   "margin": 0.02073749395255807,
+   "se": 0.017269017097718574,
+   "t": 1.2008496971896403,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.02073749395255807,
+    "median": 0.0024577249851093098,
+    "ex_top": 0.011858886005769098,
+    "ex_bottom": 0.028030093195350034,
+    "symmetric_trim": 0.019085401552561183,
+    "share_positive": 0.5384615384615384,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.16157748711724101
+     ],
+     [
+      "2026-01-15",
+      -0.08996325088216098
+     ],
+     [
+      "2025-12-31",
+      -0.07609142425686619
+     ],
+     [
+      "2025-10-30",
+      -0.06587523005549877
+     ],
+     [
+      "2026-03-20",
+      -0.05548950226907372
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-04-01",
+      0.24270269262228236
+     ],
+     [
+      "2026-05-01",
+      0.1774630378057073
+     ],
+     [
+      "2026-05-19",
+      0.11304693671773927
+     ],
+     [
+      "2026-04-08",
+      0.10762723871833749
+     ],
+     [
+      "2026-06-26",
+      0.09404943015624832
+     ]
+    ]
+   }
+  },
+  "MES_slope_arm_minus_nonarm": {
+   "label": "MES: slope, arm minus non-arm",
+   "quantity": "imb_slope",
+   "margin": 0.00034888282525579655,
+   "se": 0.0016295273592871256,
+   "t": 0.21410062449545086,
+   "verdict": "unresolved",
+   "note": "between-session lens"
+  },
+  "NQ_arm_slope": {
+   "label": "NQ: arm, slope of imbalance on bucket index",
+   "quantity": "imb_slope",
+   "margin": 0.00019673444639119994,
+   "se": 0.00099218074403694,
+   "t": 0.19828488667370803,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.00019673444639119994,
+    "median": -0.0012397568256371006,
+    "ex_top": -0.00020489075402766577,
+    "ex_bottom": 0.0006463045214051809,
+    "symmetric_trim": 0.00024667702409444486,
+    "share_positive": 0.4230769230769231,
+    "mean_below_median": false,
+    "sign_flips_on_median": true,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.011042517428958327
+     ],
+     [
+      "2025-12-31",
+      -0.005163113371057567
+     ],
+     [
+      "2025-10-30",
+      -0.0051293841086261
+     ],
+     [
+      "2026-01-15",
+      -0.004530551602076074
+     ],
+     [
+      "2025-10-29",
+      -0.0042946192553765215
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-05-01",
+      0.010237364456862845
+     ],
+     [
+      "2025-12-18",
+      0.007460088905744265
+     ],
+     [
+      "2026-06-10",
+      0.006963608847100744
+     ],
+     [
+      "2026-06-26",
+      0.0068404374280321536
+     ],
+     [
+      "2026-04-01",
+      0.006762921907609986
+     ]
+    ]
+   }
+  },
+  "NQ_arm_last2_first2": {
+   "label": "NQ: arm, last two minus first two buckets",
+   "quantity": "imb_last2_first2",
+   "margin": 0.013175500279961411,
+   "se": 0.012095758354852854,
+   "t": 1.089266162024092,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.013175500279961411,
+    "median": 0.0014654447659232057,
+    "ex_top": 0.008698289471308624,
+    "ex_bottom": 0.018527243293326896,
+    "symmetric_trim": 0.014086471326537136,
+    "share_positive": 0.5384615384615384,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.12061807505417566
+     ],
+     [
+      "2025-12-31",
+      -0.10600944084249928
+     ],
+     [
+      "2025-10-29",
+      -0.07772541322744067
+     ],
+     [
+      "2026-01-15",
+      -0.03868190099841864
+     ],
+     [
+      "2026-02-13",
+      -0.028634230884028677
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-10",
+      0.12510577049628113
+     ],
+     [
+      "2026-06-26",
+      0.10207567834128786
+     ],
+     [
+      "2026-05-01",
+      0.09933512525447256
+     ],
+     [
+      "2026-04-01",
+      0.08001542859202981
+     ],
+     [
+      "2026-04-08",
+      0.07344934411300125
+     ]
+    ]
+   }
+  },
+  "NQ_slope_arm_minus_nonarm": {
+   "label": "NQ: slope, arm minus non-arm",
+   "quantity": "imb_slope",
+   "margin": -0.001285196102967234,
+   "se": 0.001060649284362667,
+   "t": -1.2117069439588553,
+   "verdict": "unresolved",
+   "note": "between-session lens"
+  },
+  "MNQ_arm_slope": {
+   "label": "MNQ: arm, slope of imbalance on bucket index",
+   "quantity": "imb_slope",
+   "margin": 0.0003467647370187825,
+   "se": 0.0009163084742063781,
+   "t": 0.3784366802010842,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.0003467647370187825,
+    "median": -0.00013950529654403022,
+    "ex_top": -0.00022283876036033757,
+    "ex_bottom": 0.0006755920666043863,
+    "symmetric_trim": 9.595622890053652e-05,
+    "share_positive": 0.46153846153846156,
+    "mean_below_median": false,
+    "sign_flips_on_median": true,
+    "most_negative": [
+     [
+      "2025-10-30",
+      -0.007873918502621315
+     ],
+     [
+      "2026-03-30",
+      -0.007785475877296057
+     ],
+     [
+      "2026-01-15",
+      -0.005590529208068011
+     ],
+     [
+      "2026-02-13",
+      -0.0036142407216431505
+     ],
+     [
+      "2025-10-29",
+      -0.003384584185841141
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-05-01",
+      0.014586852171496783
+     ],
+     [
+      "2025-12-18",
+      0.0067871425901368495
+     ],
+     [
+      "2026-04-01",
+      0.0062934606610317925
+     ],
+     [
+      "2026-03-18",
+      0.00579075837987528
+     ],
+     [
+      "2026-06-23",
+      0.003074371567260214
+     ]
+    ]
+   }
+  },
+  "MNQ_arm_last2_first2": {
+   "label": "MNQ: arm, last two minus first two buckets",
+   "quantity": "imb_last2_first2",
+   "margin": 0.021005517960579756,
+   "se": 0.01083561868362933,
+   "t": 1.9385619385365889,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.021005517960579756,
+    "median": 0.022404988580610068,
+    "ex_top": 0.014846080113614426,
+    "ex_bottom": 0.024662565820780698,
+    "symmetric_trim": 0.01839886172436685,
+    "share_positive": 0.6153846153846154,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.07042067854444374
+     ],
+     [
+      "2025-10-30",
+      -0.0511481381377809
+     ],
+     [
+      "2026-01-15",
+      -0.050274503275455115
+     ],
+     [
+      "2025-10-29",
+      -0.028613488535963884
+     ],
+     [
+      "2026-03-10",
+      -0.02591456496817507
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-05-01",
+      0.17499146413471312
+     ],
+     [
+      "2026-04-01",
+      0.09311294816608046
+     ],
+     [
+      "2026-03-18",
+      0.08993496072231302
+     ],
+     [
+      "2026-05-11",
+      0.08110232031136422
+     ],
+     [
+      "2026-05-19",
+      0.07201374161071952
+     ]
+    ]
+   }
+  },
+  "MNQ_slope_arm_minus_nonarm": {
+   "label": "MNQ: slope, arm minus non-arm",
+   "quantity": "imb_slope",
+   "margin": -1.7759157993816168e-05,
+   "se": 0.000989624205370491,
+   "t": -0.017945355315119416,
+   "verdict": "unresolved",
+   "note": "between-session lens"
+  }
+ },
+ "Q3": {
+  "specification_change": "The pre-registration asks for the small-lot share OF SELL-INITIATED volume. `fut_micro_flow_5m.csv.gz` carries lot1 and lot_le2 as volume in <=1-lot and <=2-lot trades WITHOUT a side split (build_fut_micro_flow.py:105 sums size where size<=2 over all trades), so that quantity does not exist in the fixture and cannot be recovered from it. The census measures the small-lot share of TOTAL volume instead and says so: on a window where Q1 establishes net selling, a rise is suggestive of small-lot selling but does not identify it.",
+  "ES_mid_arm_minus_nonarm": {
+   "label": "ES: MIDDAY <=2-lot share, arm minus non-arm (THE CONTROL)",
+   "quantity": "small_share_mid",
+   "margin": 0.0035939745004019974,
+   "se": 0.010580198510365006,
+   "t": 0.33968875885278726,
+   "verdict": "unresolved",
+   "note": "if this matches the closing margin, the closing margin is not about the close",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_close_arm_minus_nonarm": {
+   "label": "ES: close <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_close",
+   "margin": 0.024214723681420053,
+   "se": 0.010140987744442945,
+   "t": 2.3878072128318295,
+   "verdict": "pass",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_close_minus_own_midday": {
+   "label": "ES: close <=2-lot share minus its OWN midday",
+   "quantity": "small_share_close_minus_mid",
+   "margin": -0.05867473858538081,
+   "se": 0.00788313417271575,
+   "t": -7.4430724252365845,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.05867473858538081,
+    "median": -0.06213388072189621,
+    "ex_top": -0.06369199335037702,
+    "ex_bottom": -0.05632794912376106,
+    "symmetric_trim": -0.061456473276397965,
+    "share_positive": 0.07692307692307693,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-02-13",
+      -0.11734447512587459
+     ],
+     [
+      "2026-06-26",
+      -0.11196041987920141
+     ],
+     [
+      "2026-06-10",
+      -0.10646929332412214
+     ],
+     [
+      "2026-03-30",
+      -0.09156262675916063
+     ],
+     [
+      "2026-05-19",
+      -0.08257567776732475
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.06675663053952474
+     ],
+     [
+      "2026-03-10",
+      0.02285047452102562
+     ],
+     [
+      "2026-04-07",
+      -0.004759078250194504
+     ],
+     [
+      "2026-06-17",
+      -0.017869265149135727
+     ],
+     [
+      "2026-04-08",
+      -0.03419230005980986
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "ES_trig_arm_minus_nonarm": {
+   "label": "ES: trig <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_trig",
+   "margin": 0.014313232679630417,
+   "se": 0.011588410142543372,
+   "t": 1.23513342240828,
+   "verdict": "unresolved",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_trig_minus_own_midday": {
+   "label": "ES: trig <=2-lot share minus its OWN midday",
+   "quantity": "small_share_trig_minus_mid",
+   "margin": 0.0022436285454275414,
+   "se": 0.007931247398760511,
+   "t": 0.2828847005551956,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.0022436285454275414,
+    "median": -0.009388940696824388,
+    "ex_top": -0.003012220814690122,
+    "ex_bottom": 0.004414958900276004,
+    "symmetric_trim": -0.0009694120850612097,
+    "share_positive": 0.34615384615384615,
+    "mean_below_median": false,
+    "sign_flips_on_median": true,
+    "most_negative": [
+     [
+      "2026-06-26",
+      -0.052039630325784014
+     ],
+     [
+      "2026-06-23",
+      -0.04643126036687556
+     ],
+     [
+      "2026-05-18",
+      -0.033379536017719535
+     ],
+     [
+      "2026-02-13",
+      -0.028207605288682325
+     ],
+     [
+      "2025-12-31",
+      -0.02431432199190997
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.13363986254836913
+     ],
+     [
+      "2026-03-10",
+      0.07801727547654896
+     ],
+     [
+      "2026-06-17",
+      0.059443017049720936
+     ],
+     [
+      "2026-03-18",
+      0.04615736689869715
+     ],
+     [
+      "2026-02-18",
+      0.036643332505192805
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "ES_did_close_vs_mid_arm_minus_nonarm": {
+   "label": "ES: DiD -- (close minus midday), arm minus non-arm",
+   "quantity": "small_share_close_minus_mid",
+   "margin": 0.02062074918101809,
+   "se": 0.008173845749504036,
+   "t": 2.5227719990029533,
+   "verdict": "pass",
+   "note": "Q3's primary once the midday control exists",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_small_vol_ratio_log_arm_minus_nonarm": {
+   "label": "ES: small-lot contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.37703616903982945,
+   "se": 0.07588101601809324,
+   "t": 4.968781242332444,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_small_vol_ratio_log_arm_level": {
+   "label": "ES: small-lot contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.4752201931270711,
+   "se": 0.0719441722161048,
+   "t": 6.6054021957416085,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.4752201931270711,
+    "median": 0.43716262741305867,
+    "ex_top": 0.4336170527035413,
+    "ex_bottom": 0.5002457624706059,
+    "symmetric_trim": 0.4579518899187429,
+    "share_positive": 0.9230769230769231,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.1504190404612984
+     ],
+     [
+      "2025-12-18",
+      -0.05001086733960296
+     ],
+     [
+      "2026-06-10",
+      0.07297756939615307
+     ],
+     [
+      "2026-05-19",
+      0.14711081148127528
+     ],
+     [
+      "2026-05-01",
+      0.18700579877436654
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.5152987037153176
+     ],
+     [
+      "2025-10-29",
+      1.274789466241066
+     ],
+     [
+      "2025-12-31",
+      1.134567283427654
+     ],
+     [
+      "2026-04-07",
+      0.6642613877671959
+     ],
+     [
+      "2026-01-15",
+      0.6324249613783921
+     ]
+    ]
+   }
+  },
+  "ES_vol_ratio_log_arm_minus_nonarm": {
+   "label": "ES: ALL contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "vol_ratio_log",
+   "margin": 0.2812711475305143,
+   "se": 0.06675084467326167,
+   "t": 4.21374664106959,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_vol_ratio_log_arm_level": {
+   "label": "ES: ALL contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "vol_ratio_log",
+   "margin": 0.7036119758704665,
+   "se": 0.06183515776077199,
+   "t": 11.37883368216836,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.7036119758704665,
+    "median": 0.6998656505049693,
+    "ex_top": 0.6692626492479335,
+    "ex_bottom": 0.7263712511205344,
+    "symmetric_trim": 0.6915390056908152,
+    "share_positive": 1.0,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      0.1346300946187715
+     ],
+     [
+      "2025-12-18",
+      0.18368889719361414
+     ],
+     [
+      "2026-03-10",
+      0.36391012538873785
+     ],
+     [
+      "2026-06-10",
+      0.36620818022220847
+     ],
+     [
+      "2026-05-19",
+      0.47698190671071383
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.5623451414337948
+     ],
+     [
+      "2025-12-31",
+      1.4806961792534417
+     ],
+     [
+      "2025-10-29",
+      1.039470320033213
+     ],
+     [
+      "2026-01-15",
+      0.879697888432344
+     ],
+     [
+      "2026-03-20",
+      0.8388340108213971
+     ]
+    ]
+   }
+  },
+  "ES_excess_small_growth_log_arm_minus_nonarm": {
+   "label": "ES: EXCESS small-lot growth over the book (log), arm minus non-arm",
+   "quantity": "excess_small_growth_log",
+   "margin": 0.09576502150931498,
+   "se": 0.029896505414608567,
+   "t": 3.2032179072849285,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_excess_small_growth_log_arm_level": {
+   "label": "ES: EXCESS small-lot growth over the book (log), arm level",
+   "quantity": "excess_small_growth_log",
+   "margin": -0.22839178274339555,
+   "se": 0.028527475384216468,
+   "t": -8.006028562547073,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.22839178274339555,
+    "median": -0.27764360323198345,
+    "ex_top": -0.24694021990144552,
+    "ex_bottom": -0.22228025280313568,
+    "symmetric_trim": -0.24134689442859356,
+    "share_positive": 0.07692307692307693,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.38118003124989236
+     ],
+     [
+      "2026-02-13",
+      -0.35579396039259026
+     ],
+     [
+      "2025-12-31",
+      -0.34612889582578776
+     ],
+     [
+      "2026-06-26",
+      -0.34161887489432174
+     ],
+     [
+      "2026-05-01",
+      -0.3399137081579455
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.235319146207853
+     ],
+     [
+      "2026-03-10",
+      0.08014367645486609
+     ],
+     [
+      "2026-04-07",
+      -0.018356768828786008
+     ],
+     [
+      "2026-06-17",
+      -0.04704643771847716
+     ],
+     [
+      "2026-04-08",
+      -0.14660863809781327
+     ]
+    ]
+   }
+  },
+  "ES_lot1_close_arm_minus_nonarm": {
+   "label": "ES: close 1-lot share, arm minus non-arm",
+   "quantity": "lot1_share_close",
+   "margin": 0.012908223759544868,
+   "se": 0.005622154836573779,
+   "t": 2.2959566455859695,
+   "verdict": "pass",
+   "note": "the tighter lot proxy; same midday caveat",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "ES_coverage": {
+   "uns_share_close_mean": 0.0,
+   "uns_share_close_max": 0.0,
+   "agree_close_mean": 0.999999862195057,
+   "note": "aggressor-side coverage of the closing hour on the census window (D485's T1, restated)"
+  },
+  "MES_mid_arm_minus_nonarm": {
+   "label": "MES: MIDDAY <=2-lot share, arm minus non-arm (THE CONTROL)",
+   "quantity": "small_share_mid",
+   "margin": 0.010447665623622593,
+   "se": 0.00914744240721195,
+   "t": 1.142140628880651,
+   "verdict": "unresolved",
+   "note": "if this matches the closing margin, the closing margin is not about the close",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_close_arm_minus_nonarm": {
+   "label": "MES: close <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_close",
+   "margin": 0.038413066697659065,
+   "se": 0.01327683703983666,
+   "t": 2.8932392995712815,
+   "verdict": "pass",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_close_minus_own_midday": {
+   "label": "MES: close <=2-lot share minus its OWN midday",
+   "quantity": "small_share_close_minus_mid",
+   "margin": -0.007717155509646549,
+   "se": 0.010561341953442684,
+   "t": -0.7306983850788947,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.007717155509646549,
+    "median": -0.02017492529327511,
+    "ex_top": -0.01585282980339396,
+    "ex_bottom": -0.005420317383345888,
+    "symmetric_trim": -0.013799276517403583,
+    "share_positive": 0.3076923076923077,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-03-30",
+      -0.06513810866716302
+     ],
+     [
+      "2026-02-18",
+      -0.0559135249317175
+     ],
+     [
+      "2025-12-01",
+      -0.05589117032327717
+     ],
+     [
+      "2026-04-01",
+      -0.053232414282002316
+     ],
+     [
+      "2025-12-31",
+      -0.044945324310014495
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.19567470183403876
+     ],
+     [
+      "2026-06-17",
+      0.0964113514989034
+     ],
+     [
+      "2026-06-26",
+      0.028400679841245224
+     ],
+     [
+      "2026-05-21",
+      0.02483896308498873
+     ],
+     [
+      "2026-05-18",
+      0.014349313413954845
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "MES_trig_arm_minus_nonarm": {
+   "label": "MES: trig <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_trig",
+   "margin": 0.028641708771463048,
+   "se": 0.01290196064229931,
+   "t": 2.2199500963877297,
+   "verdict": "pass",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_trig_minus_own_midday": {
+   "label": "MES: trig <=2-lot share minus its OWN midday",
+   "quantity": "small_share_trig_minus_mid",
+   "margin": 0.011816295647128935,
+   "se": 0.00958021158252916,
+   "t": 1.2334065427821639,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.011816295647128935,
+    "median": 0.0002979076871267722,
+    "ex_top": 0.003770102411136985,
+    "ex_bottom": 0.013723613710508587,
+    "symmetric_trim": 0.0054216340089911245,
+    "share_positive": 0.5,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-05",
+      -0.03586665593736235
+     ],
+     [
+      "2026-03-20",
+      -0.026904316207455037
+     ],
+     [
+      "2025-12-31",
+      -0.02080636917358089
+     ],
+     [
+      "2025-11-17",
+      -0.01850885252501852
+     ],
+     [
+      "2026-02-13",
+      -0.0181189241707867
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.21297112654692765
+     ],
+     [
+      "2026-06-17",
+      0.08758817726965651
+     ],
+     [
+      "2026-06-26",
+      0.0470872836974644
+     ],
+     [
+      "2026-05-21",
+      0.04605381378405271
+     ],
+     [
+      "2026-03-10",
+      0.035773988172012494
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "MES_did_close_vs_mid_arm_minus_nonarm": {
+   "label": "MES: DiD -- (close minus midday), arm minus non-arm",
+   "quantity": "small_share_close_minus_mid",
+   "margin": 0.027965401074036528,
+   "se": 0.010820468894777733,
+   "t": 2.584490685753316,
+   "verdict": "pass",
+   "note": "Q3's primary once the midday control exists",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_small_vol_ratio_log_arm_minus_nonarm": {
+   "label": "MES: small-lot contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.5001035924929385,
+   "se": 0.09070814646867556,
+   "t": 5.513326111956662,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_small_vol_ratio_log_arm_level": {
+   "label": "MES: small-lot contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.2798181170316384,
+   "se": 0.08722862913519336,
+   "t": 3.2078701660891134,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.2798181170316384,
+    "median": 0.21671119862519642,
+    "ex_top": 0.22880445759276077,
+    "ex_bottom": 0.30348157710696383,
+    "symmetric_trim": 0.25132832602793825,
+    "share_positive": 0.7692307692307693,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.3117683848514971
+     ],
+     [
+      "2026-06-10",
+      -0.23483431165053564
+     ],
+     [
+      "2026-05-01",
+      -0.21315945278463844
+     ],
+     [
+      "2025-12-18",
+      -0.17323205408437975
+     ],
+     [
+      "2026-06-26",
+      -0.02486904611074692
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      1.5551596030035788
+     ],
+     [
+      "2026-06-17",
+      1.5493168521449137
+     ],
+     [
+      "2025-12-31",
+      0.7569466237932178
+     ],
+     [
+      "2026-06-05",
+      0.5032650988555059
+     ],
+     [
+      "2026-04-07",
+      0.41031873182146955
+     ]
+    ]
+   }
+  },
+  "MES_vol_ratio_log_arm_minus_nonarm": {
+   "label": "MES: ALL contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "vol_ratio_log",
+   "margin": 0.38697923610178425,
+   "se": 0.077950874978629,
+   "t": 4.964398875674948,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_vol_ratio_log_arm_level": {
+   "label": "MES: ALL contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "vol_ratio_log",
+   "margin": 0.3246382633365583,
+   "se": 0.07383614766942675,
+   "t": 4.396738908833687,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.3246382633365583,
+    "median": 0.34135927159449964,
+    "ex_top": 0.28800827724029426,
+    "ex_bottom": 0.3537971581227681,
+    "symmetric_trim": 0.31685587655525177,
+    "share_positive": 0.8076923076923077,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.4043341063186857
+     ],
+     [
+      "2026-06-10",
+      -0.25421496316911046
+     ],
+     [
+      "2025-12-18",
+      -0.17470873302087878
+     ],
+     [
+      "2026-05-01",
+      -0.12690338073269516
+     ],
+     [
+      "2026-06-26",
+      -0.11142218524620286
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.2403879157431588
+     ],
+     [
+      "2025-12-31",
+      0.9770513610194685
+     ],
+     [
+      "2025-10-29",
+      0.955954928791676
+     ],
+     [
+      "2026-06-05",
+      0.6312994466144258
+     ],
+     [
+      "2026-01-15",
+      0.6099958563887544
+     ]
+    ]
+   }
+  },
+  "MES_excess_small_growth_log_arm_minus_nonarm": {
+   "label": "MES: EXCESS small-lot growth over the book (log), arm minus non-arm",
+   "quantity": "excess_small_growth_log",
+   "margin": 0.11312435639115424,
+   "se": 0.03744590246609388,
+   "t": 3.021007612076779,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_excess_small_growth_log_arm_level": {
+   "label": "MES: EXCESS small-lot growth over the book (log), arm level",
+   "quantity": "excess_small_growth_log",
+   "margin": -0.044820146304919914,
+   "se": 0.03607470433707727,
+   "t": -1.242425880642746,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.044820146304919914,
+    "median": -0.07640787829623538,
+    "ex_top": -0.07058113912559281,
+    "ex_bottom": -0.03482482003229949,
+    "symmetric_trim": -0.061242715625807916,
+    "share_positive": 0.3076923076923077,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2025-12-01",
+      -0.29470330312043014
+     ],
+     [
+      "2026-02-18",
+      -0.22103142215053995
+     ],
+     [
+      "2025-12-31",
+      -0.2201047372262508
+     ],
+     [
+      "2026-03-30",
+      -0.20186556937355224
+     ],
+     [
+      "2026-01-15",
+      -0.2002172267387885
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.5992046742119028
+     ],
+     [
+      "2026-06-17",
+      0.3089289364017549
+     ],
+     [
+      "2026-05-21",
+      0.09256572146718861
+     ],
+     [
+      "2026-06-26",
+      0.08655313913545594
+     ],
+     [
+      "2026-05-18",
+      0.050581842286470724
+     ]
+    ]
+   }
+  },
+  "MES_lot1_close_arm_minus_nonarm": {
+   "label": "MES: close 1-lot share, arm minus non-arm",
+   "quantity": "lot1_share_close",
+   "margin": 0.022462034616032356,
+   "se": 0.00772190966531608,
+   "t": 2.908870420606367,
+   "verdict": "pass",
+   "note": "the tighter lot proxy; same midday caveat",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MES_coverage": {
+   "uns_share_close_mean": 0.0,
+   "uns_share_close_max": 0.0,
+   "agree_close_mean": 0.9999952443330188,
+   "note": "aggressor-side coverage of the closing hour on the census window (D485's T1, restated)"
+  },
+  "NQ_mid_arm_minus_nonarm": {
+   "label": "NQ: MIDDAY <=2-lot share, arm minus non-arm (THE CONTROL)",
+   "quantity": "small_share_mid",
+   "margin": 0.024873964443186347,
+   "se": 0.01205223912879036,
+   "t": 2.0638459109036,
+   "verdict": "pass",
+   "note": "if this matches the closing margin, the closing margin is not about the close",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_close_arm_minus_nonarm": {
+   "label": "NQ: close <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_close",
+   "margin": 0.04237900607328604,
+   "se": 0.01296401496721541,
+   "t": 3.2689723191818243,
+   "verdict": "pass",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_close_minus_own_midday": {
+   "label": "NQ: close <=2-lot share minus its OWN midday",
+   "quantity": "small_share_close_minus_mid",
+   "margin": -0.022353096163974333,
+   "se": 0.007423940173506608,
+   "t": -3.0109477772658453,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.022353096163974333,
+    "median": -0.02588323171364032,
+    "ex_top": -0.027720820965869884,
+    "ex_bottom": -0.020468973245486063,
+    "symmetric_trim": -0.025981848125856914,
+    "share_positive": 0.23076923076923078,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.06945616912618113
+     ],
+     [
+      "2026-05-01",
+      -0.062271482760339336
+     ],
+     [
+      "2026-02-13",
+      -0.0618486829756596
+     ],
+     [
+      "2026-05-18",
+      -0.05826988741896488
+     ],
+     [
+      "2026-04-01",
+      -0.05469068339887617
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.11184002388341441
+     ],
+     [
+      "2026-06-17",
+      0.028591492084413694
+     ],
+     [
+      "2026-06-05",
+      0.019231699829644677
+     ],
+     [
+      "2026-04-07",
+      0.004917480585789891
+     ],
+     [
+      "2026-06-26",
+      0.003218510996018331
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "NQ_trig_arm_minus_nonarm": {
+   "label": "NQ: trig <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_trig",
+   "margin": 0.043745946540162395,
+   "se": 0.012459241009965582,
+   "t": 3.511124514340159,
+   "verdict": "pass",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_trig_minus_own_midday": {
+   "label": "NQ: trig <=2-lot share minus its OWN midday",
+   "quantity": "small_share_trig_minus_mid",
+   "margin": 0.007616765643255137,
+   "se": 0.007377574856903549,
+   "t": 1.0324213296362241,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": 0.007616765643255137,
+    "median": 0.0021861864775267192,
+    "ex_top": 0.0021097824560467647,
+    "ex_bottom": 0.00990678792053879,
+    "symmetric_trim": 0.004265764695416886,
+    "share_positive": 0.5,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-23",
+      -0.04963379128883616
+     ],
+     [
+      "2026-06-05",
+      -0.031961306522827804
+     ],
+     [
+      "2026-04-07",
+      -0.02700658530803801
+     ],
+     [
+      "2025-12-01",
+      -0.022990177335952877
+     ],
+     [
+      "2026-05-01",
+      -0.022039821542723326
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.14529134532346444
+     ],
+     [
+      "2026-03-18",
+      0.05989734607454045
+     ],
+     [
+      "2026-03-10",
+      0.04908761958195673
+     ],
+     [
+      "2026-02-18",
+      0.03316052984830775
+     ],
+     [
+      "2026-04-08",
+      0.03213593979420171
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "NQ_did_close_vs_mid_arm_minus_nonarm": {
+   "label": "NQ: DiD -- (close minus midday), arm minus non-arm",
+   "quantity": "small_share_close_minus_mid",
+   "margin": 0.017505041630099565,
+   "se": 0.007754867973091328,
+   "t": 2.2572971829875677,
+   "verdict": "pass",
+   "note": "Q3's primary once the midday control exists",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_small_vol_ratio_log_arm_minus_nonarm": {
+   "label": "NQ: small-lot contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.34854187375102663,
+   "se": 0.06291578565964923,
+   "t": 5.539815963461177,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_small_vol_ratio_log_arm_level": {
+   "label": "NQ: small-lot contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.3882550780676267,
+   "se": 0.05906237061158491,
+   "t": 6.573645352316278,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.3882550780676267,
+    "median": 0.35241294416014685,
+    "ex_top": 0.3540423664386107,
+    "ex_bottom": 0.4068083031586891,
+    "symmetric_trim": 0.371943112923925,
+    "share_positive": 0.9230769230769231,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.07557554920893422
+     ],
+     [
+      "2025-12-18",
+      -0.0615975623186828
+     ],
+     [
+      "2026-05-19",
+      0.019313470954592585
+     ],
+     [
+      "2026-06-10",
+      0.07139204287706905
+     ],
+     [
+      "2026-05-01",
+      0.07309687016873281
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.2435728687930276
+     ],
+     [
+      "2025-10-29",
+      0.903625929197811
+     ],
+     [
+      "2025-12-31",
+      0.8984840284965756
+     ],
+     [
+      "2026-01-15",
+      0.6136010964050808
+     ],
+     [
+      "2026-03-18",
+      0.5922146286441986
+     ]
+    ]
+   }
+  },
+  "NQ_vol_ratio_log_arm_minus_nonarm": {
+   "label": "NQ: ALL contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "vol_ratio_log",
+   "margin": 0.32154633695035295,
+   "se": 0.05871345395079217,
+   "t": 5.476535875743937,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_vol_ratio_log_arm_level": {
+   "label": "NQ: ALL contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "vol_ratio_log",
+   "margin": 0.42027056884024766,
+   "se": 0.05474429272214413,
+   "t": 7.676975040546058,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.42027056884024766,
+    "median": 0.3905153712740297,
+    "ex_top": 0.38875260447895466,
+    "ex_bottom": 0.43804852533022937,
+    "symmetric_trim": 0.405958060640965,
+    "share_positive": 0.9615384615384616,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.024178343409294187
+     ],
+     [
+      "2025-12-18",
+      0.004023911290933026
+     ],
+     [
+      "2026-05-19",
+      0.04527206833846509
+     ],
+     [
+      "2026-06-10",
+      0.10032830889943606
+     ],
+     [
+      "2026-05-01",
+      0.1669621885035206
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.2082196778725733
+     ],
+     [
+      "2025-12-31",
+      0.9070071132308526
+     ],
+     [
+      "2025-10-29",
+      0.7394671500073213
+     ],
+     [
+      "2026-03-18",
+      0.6613810923019687
+     ],
+     [
+      "2026-01-15",
+      0.6424162551504364
+     ]
+    ]
+   }
+  },
+  "NQ_excess_small_growth_log_arm_minus_nonarm": {
+   "label": "NQ: EXCESS small-lot growth over the book (log), arm minus non-arm",
+   "quantity": "excess_small_growth_log",
+   "margin": 0.026995536800673632,
+   "se": 0.011199753683832282,
+   "t": 2.410368795846269,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_excess_small_growth_log_arm_level": {
+   "label": "NQ: EXCESS small-lot growth over the book (log), arm level",
+   "quantity": "excess_small_growth_log",
+   "margin": -0.032015490772620975,
+   "se": 0.010692213932303095,
+   "t": -2.9942807893037418,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.032015490772620975,
+    "median": -0.038171078594752966,
+    "ex_top": -0.0398624615711454,
+    "ex_bottom": -0.029172428691887055,
+    "symmetric_trim": -0.03722789568698608,
+    "share_positive": 0.23076923076923078,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.1030920427909689
+     ],
+     [
+      "2026-05-01",
+      -0.09386531833478778
+     ],
+     [
+      "2026-02-13",
+      -0.08652885505311991
+     ],
+     [
+      "2026-04-01",
+      -0.08169042182093639
+     ],
+     [
+      "2026-05-18",
+      -0.07739598400995262
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.1641587791904897
+     ],
+     [
+      "2026-06-17",
+      0.0353531909204543
+     ],
+     [
+      "2026-06-05",
+      0.026162320722807886
+     ],
+     [
+      "2026-04-07",
+      0.006880317546884451
+     ],
+     [
+      "2026-06-26",
+      0.003939573831257537
+     ]
+    ]
+   }
+  },
+  "NQ_lot1_close_arm_minus_nonarm": {
+   "label": "NQ: close 1-lot share, arm minus non-arm",
+   "quantity": "lot1_share_close",
+   "margin": 0.036600750810971694,
+   "se": 0.011793401170591494,
+   "t": 3.1034940880533104,
+   "verdict": "pass",
+   "note": "the tighter lot proxy; same midday caveat",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "NQ_coverage": {
+   "uns_share_close_mean": 0.0,
+   "uns_share_close_max": 0.0,
+   "agree_close_mean": 0.9999934063129406,
+   "note": "aggressor-side coverage of the closing hour on the census window (D485's T1, restated)"
+  },
+  "MNQ_mid_arm_minus_nonarm": {
+   "label": "MNQ: MIDDAY <=2-lot share, arm minus non-arm (THE CONTROL)",
+   "quantity": "small_share_mid",
+   "margin": 0.010699475490151267,
+   "se": 0.009504722388637664,
+   "t": 1.1257009992150702,
+   "verdict": "unresolved",
+   "note": "if this matches the closing margin, the closing margin is not about the close",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_close_arm_minus_nonarm": {
+   "label": "MNQ: close <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_close",
+   "margin": 0.02250503383691077,
+   "se": 0.010681458922427726,
+   "t": 2.10692509331822,
+   "verdict": "pass",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_close_minus_own_midday": {
+   "label": "MNQ: close <=2-lot share minus its OWN midday",
+   "quantity": "small_share_close_minus_mid",
+   "margin": -0.008635018343865172,
+   "se": 0.006609573623466002,
+   "t": -1.3064410559265462,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.008635018343865172,
+    "median": -0.016213386037804645,
+    "ex_top": -0.012607411211167074,
+    "ex_bottom": -0.00676987335319738,
+    "symmetric_trim": -0.010830068215359036,
+    "share_positive": 0.38461538461538464,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-10",
+      -0.05526364311055998
+     ],
+     [
+      "2026-06-26",
+      -0.04117439848767113
+     ],
+     [
+      "2025-12-31",
+      -0.0411699969693764
+     ],
+     [
+      "2026-03-30",
+      -0.038982039164631
+     ],
+     [
+      "2026-04-01",
+      -0.03715450946326798
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.09067480333868239
+     ],
+     [
+      "2026-06-17",
+      0.07309957635969633
+     ],
+     [
+      "2026-03-10",
+      0.01988009514486433
+     ],
+     [
+      "2026-06-05",
+      0.01702307751542731
+     ],
+     [
+      "2025-12-18",
+      0.014756975290012853
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "MNQ_trig_arm_minus_nonarm": {
+   "label": "MNQ: trig <=2-lot share, arm minus non-arm",
+   "quantity": "small_share_trig",
+   "margin": 0.020229230838952783,
+   "se": 0.010238488564916331,
+   "t": 1.975802454697384,
+   "verdict": "unresolved",
+   "note": "between-session lens; read against the MIDDAY control above",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_trig_minus_own_midday": {
+   "label": "MNQ: trig <=2-lot share minus its OWN midday",
+   "quantity": "small_share_trig_minus_mid",
+   "margin": -0.0008347951283738365,
+   "se": 0.007336390681359355,
+   "t": -0.1137882597358021,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.0008347951283738365,
+    "median": -0.014190051206556309,
+    "ex_top": -0.0063474671818871545,
+    "ex_bottom": 0.0008663817619525948,
+    "symmetric_trim": -0.004805102590026843,
+    "share_positive": 0.3076923076923077,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-26",
+      -0.04336421738653462
+     ],
+     [
+      "2026-05-01",
+      -0.03824055287045902
+     ],
+     [
+      "2026-06-10",
+      -0.03194609565194062
+     ],
+     [
+      "2026-03-20",
+      -0.02518445687245252
+     ],
+     [
+      "2026-05-19",
+      -0.024010651834141084
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.1369820062094591
+     ],
+     [
+      "2026-06-17",
+      0.04977426631182025
+     ],
+     [
+      "2026-03-18",
+      0.041389656678313735
+     ],
+     [
+      "2026-03-10",
+      0.03988816487104818
+     ],
+     [
+      "2025-12-18",
+      0.02952451383366761
+     ]
+    ]
+   },
+   "note": "within-session lens, 26 pairs"
+  },
+  "MNQ_did_close_vs_mid_arm_minus_nonarm": {
+   "label": "MNQ: DiD -- (close minus midday), arm minus non-arm",
+   "quantity": "small_share_close_minus_mid",
+   "margin": 0.011805558346759752,
+   "se": 0.006945629668025566,
+   "t": 1.6997103086430057,
+   "verdict": "unresolved",
+   "note": "Q3's primary once the midday control exists",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_small_vol_ratio_log_arm_minus_nonarm": {
+   "label": "MNQ: small-lot contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.4165476320498521,
+   "se": 0.07313034253459434,
+   "t": 5.695961725501341,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_small_vol_ratio_log_arm_level": {
+   "label": "MNQ: small-lot contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "small_vol_ratio_log",
+   "margin": 0.169650160088147,
+   "se": 0.06964203498578288,
+   "t": 2.4360310568578356,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.169650160088147,
+    "median": 0.1105336011511058,
+    "ex_top": 0.12979968157296543,
+    "ex_bottom": 0.18850687744641348,
+    "symmetric_trim": 0.14778165888302705,
+    "share_positive": 0.7692307692307693,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.3017677738685144
+     ],
+     [
+      "2026-06-10",
+      -0.251777993175616
+     ],
+     [
+      "2026-05-01",
+      -0.21480425248788046
+     ],
+     [
+      "2025-12-18",
+      -0.17610586698324124
+     ],
+     [
+      "2026-05-19",
+      -0.14409664039365186
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.1659121229676879
+     ],
+     [
+      "2025-10-29",
+      1.1039810765932097
+     ],
+     [
+      "2025-12-31",
+      0.6793007320383804
+     ],
+     [
+      "2026-01-15",
+      0.38298644696835943
+     ],
+     [
+      "2026-04-07",
+      0.3288940753545338
+     ]
+    ]
+   }
+  },
+  "MNQ_vol_ratio_log_arm_minus_nonarm": {
+   "label": "MNQ: ALL contracts PER BUCKET, close/midday (log), arm minus non-arm",
+   "quantity": "vol_ratio_log",
+   "margin": 0.391623443545974,
+   "se": 0.06691797638225556,
+   "t": 5.852290590930355,
+   "verdict": "pass",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_vol_ratio_log_arm_level": {
+   "label": "MNQ: ALL contracts PER BUCKET, close/midday (log), arm level",
+   "quantity": "vol_ratio_log",
+   "margin": 0.1880957874343441,
+   "se": 0.06321727412423889,
+   "t": 2.975385921649919,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.1880957874343441,
+    "median": 0.15895475127370895,
+    "ex_top": 0.15395639559784693,
+    "ex_bottom": 0.20815809508855343,
+    "symmetric_trim": 0.17343215807779425,
+    "share_positive": 0.7692307692307693,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-05-21",
+      -0.31346190392088896
+     ],
+     [
+      "2025-12-18",
+      -0.20628580151408654
+     ],
+     [
+      "2026-06-10",
+      -0.15458277628073167
+     ],
+     [
+      "2026-05-01",
+      -0.1461992109928538
+     ],
+     [
+      "2026-05-19",
+      -0.1168215550962602
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-06-17",
+      1.0415805833467735
+     ],
+     [
+      "2025-10-29",
+      0.9199170041819243
+     ],
+     [
+      "2025-12-31",
+      0.775779371947059
+     ],
+     [
+      "2026-01-15",
+      0.43021978568264574
+     ],
+     [
+      "2026-04-07",
+      0.374169479768437
+     ]
+    ]
+   }
+  },
+  "MNQ_excess_small_growth_log_arm_minus_nonarm": {
+   "label": "MNQ: EXCESS small-lot growth over the book (log), arm minus non-arm",
+   "quantity": "excess_small_growth_log",
+   "margin": 0.02492418850387813,
+   "se": 0.013586751879068234,
+   "t": 1.834447903790483,
+   "verdict": "unresolved",
+   "note": "separates a bigger numerator from a smaller denominator",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_excess_small_growth_log_arm_level": {
+   "label": "MNQ: EXCESS small-lot growth over the book (log), arm level",
+   "quantity": "excess_small_growth_log",
+   "margin": -0.018445627346197053,
+   "se": 0.012861343796738048,
+   "t": -1.4341912974035664,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.018445627346197053,
+    "median": -0.03353403944681785,
+    "ex_top": -0.026546015336496347,
+    "ex_bottom": -0.015295643764249562,
+    "symmetric_trim": -0.02360229860489685,
+    "share_positive": 0.38461538461538464,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-10",
+      -0.09719521689488433
+     ],
+     [
+      "2025-12-31",
+      -0.09647863990867867
+     ],
+     [
+      "2026-03-30",
+      -0.07979831259912701
+     ],
+     [
+      "2026-04-01",
+      -0.07779915429841269
+     ],
+     [
+      "2026-05-01",
+      -0.06860504149502666
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.1840640724112853
+     ],
+     [
+      "2026-06-17",
+      0.12433153962091437
+     ],
+     [
+      "2026-03-10",
+      0.03819063773781414
+     ],
+     [
+      "2026-06-05",
+      0.03491313331250048
+     ],
+     [
+      "2025-12-18",
+      0.030179934530845304
+     ]
+    ]
+   }
+  },
+  "MNQ_lot1_close_arm_minus_nonarm": {
+   "label": "MNQ: close 1-lot share, arm minus non-arm",
+   "quantity": "lot1_share_close",
+   "margin": 0.012556447968035622,
+   "se": 0.006613797437392189,
+   "t": 1.8985232140684691,
+   "verdict": "unresolved",
+   "note": "the tighter lot proxy; same midday caveat",
+   "n_groups": [
+    26,
+    143
+   ]
+  },
+  "MNQ_coverage": {
+   "uns_share_close_mean": 0.0,
+   "uns_share_close_max": 0.0,
+   "agree_close_mean": 0.9999904712904261,
+   "note": "aggressor-side coverage of the closing hour on the census window (D485's T1, restated)"
+  }
+ },
+ "Q4": {
+  "lot_legs_are_void": "A LOT IS A DIFFERENT NOTIONAL IN EACH CONTRACT, so the <=2-lot share is not comparable between a micro and its mini, and Q4's lot legs cannot test what they were written to test. The two pairs come out with OPPOSITE signs -- MES-ES positive, MNQ-NQ large and negative -- which is the statistic measuring contract size rather than trader type. That is D485's own finding (the micro crowd's trades are no smaller) reappearing as an artefact. The legs are reported for the record and carry no weight; only Q4's IMBALANCE leg is interpretable.",
+  "MES_minus_ES_arm_imb_close": {
+   "label": "MES minus ES on arm sessions: imb_close",
+   "quantity": "imb_close",
+   "margin": -0.003955701934508447,
+   "se": 0.003574897858906993,
+   "t": -1.1065216659694672,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 26,
+    "mean": -0.003955701934508447,
+    "median": -0.005785691621815306,
+    "ex_top": -0.005248023577820549,
+    "ex_bottom": -0.0022656901074844292,
+    "symmetric_trim": -0.0035414413264752025,
+    "share_positive": 0.34615384615384615,
+    "mean_below_median": false,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-04-08",
+      -0.04620599761010889
+     ],
+     [
+      "2026-06-26",
+      -0.0368216034838489
+     ],
+     [
+      "2026-05-01",
+      -0.028898945416983936
+     ],
+     [
+      "2025-10-30",
+      -0.022906833695951926
+     ],
+     [
+      "2026-06-17",
+      -0.01567332535458273
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-05-21",
+      0.028352339148294138
+     ],
+     [
+      "2026-01-15",
+      0.02639853988177701
+     ],
+     [
+      "2026-02-13",
+      0.02529329864697971
+     ],
+     [
+      "2026-03-20",
+      0.0171800042984996
+     ],
+     [
+      "2026-05-11",
+      0.013461305912245439
+     ]
+    ]
+   },
+   "note": "within-session pairing, 26 sessions"
+  },
+  "MES_minus_ES_arm_small_share_close": {
+   "label": "MES minus ES on arm sessions: small_share_close  [VOID: lot notional]",
+   "quantity": "small_share_close",
+   "margin": 0.026493282134351034,
+   "se": 0.00883266281647892,
+   "t": 2.9994671691670436,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.026493282134351034,
+    "median": 0.030054892702189154,
+    "ex_top": 0.022923581139019072,
+    "ex_bottom": 0.030190777049517205,
+    "symmetric_trim": 0.026626400800844996,
+    "share_positive": 0.6923076923076923,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2025-11-17",
+      -0.0659440907448032
+     ],
+     [
+      "2025-12-01",
+      -0.02854832246313921
+     ],
+     [
+      "2026-03-10",
+      -0.028049493929548308
+     ],
+     [
+      "2026-01-15",
+      -0.02789179643801412
+     ],
+     [
+      "2026-06-05",
+      -0.023300799930077942
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.11573580701765024
+     ],
+     [
+      "2026-04-08",
+      0.0949010462975988
+     ],
+     [
+      "2026-03-30",
+      0.09387808609840506
+     ],
+     [
+      "2026-04-01",
+      0.09314863155552253
+     ],
+     [
+      "2026-06-26",
+      0.06759934141386498
+     ]
+    ]
+   },
+   "note": "within-session pairing, 26 sessions; VOID, see lot_legs_are_void"
+  },
+  "MES_minus_ES_arm_lot1_share_close": {
+   "label": "MES minus ES on arm sessions: lot1_share_close  [VOID: lot notional]",
+   "quantity": "lot1_share_close",
+   "margin": 0.015669641151407447,
+   "se": 0.004890413561564692,
+   "t": 3.204154608632717,
+   "verdict": "pass",
+   "tails": {
+    "n": 26,
+    "mean": 0.015669641151407447,
+    "median": 0.020700034116937258,
+    "ex_top": 0.013983898224219195,
+    "ex_bottom": 0.01785413583503159,
+    "symmetric_trim": 0.016189174231028166,
+    "share_positive": 0.7307692307692307,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2025-11-17",
+      -0.03894272593919612
+     ],
+     [
+      "2026-01-15",
+      -0.02332078364388425
+     ],
+     [
+      "2025-12-01",
+      -0.014709685110420825
+     ],
+     [
+      "2026-06-05",
+      -0.012587263712710406
+     ],
+     [
+      "2026-02-13",
+      -0.010839686047597441
+     ]
+    ],
+    "most_positive": [
+     [
+      "2025-10-29",
+      0.05781321433111375
+     ],
+     [
+      "2026-04-08",
+      0.04945678655096242
+     ],
+     [
+      "2026-03-30",
+      0.04868851709261843
+     ],
+     [
+      "2026-04-01",
+      0.04800616241269462
+     ],
+     [
+      "2026-06-26",
+      0.04686307428166009
+     ]
+    ]
+   },
+   "note": "within-session pairing, 26 sessions; VOID, see lot_legs_are_void"
+  },
+  "MES_minus_ES_nonarm_imb_close": {
+   "label": "MES minus ES on NON-arm sessions: imb_close",
+   "quantity": "imb_close",
+   "margin": -0.004742490341287074,
+   "se": 0.0022574444720820227,
+   "t": -2.100822589409304,
+   "verdict": "fail",
+   "note": "the baseline gap, 143 sessions -- Q4 needs the ARM gap to exceed it",
+   "n_groups": [
+    143,
+    0
+   ]
+  },
+  "MES_minus_ES_gap_arm_minus_nonarm": {
+   "label": "MES-ES gap: arm minus non-arm",
+   "quantity": "imb_close",
+   "margin": 0.0007867884067786273,
+   "se": 0.004227996008294176,
+   "t": 0.18609014891101197,
+   "verdict": "unresolved",
+   "note": "the difference in differences, which is what Q4 actually claims"
+  },
+  "MNQ_minus_NQ_arm_imb_close": {
+   "label": "MNQ minus NQ on arm sessions: imb_close",
+   "quantity": "imb_close",
+   "margin": -0.008509632067450236,
+   "se": 0.003747547466824505,
+   "t": -2.2707202891444354,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.008509632067450236,
+    "median": -0.007617996514416494,
+    "ex_top": -0.010215030382813097,
+    "ex_bottom": -0.007331960376988184,
+    "symmetric_trim": -0.009059347301721915,
+    "share_positive": 0.4230769230769231,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-26",
+      -0.03795142432900152
+     ],
+     [
+      "2026-02-18",
+      -0.03282282035218922
+     ],
+     [
+      "2026-04-01",
+      -0.03129230709505599
+     ],
+     [
+      "2026-04-07",
+      -0.03089366596541584
+     ],
+     [
+      "2026-03-20",
+      -0.028924083975263706
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-01-15",
+      0.03412532581662137
+     ],
+     [
+      "2026-04-08",
+      0.019317853953953384
+     ],
+     [
+      "2025-10-29",
+      0.018135713948642742
+     ],
+     [
+      "2026-03-18",
+      0.010695098228596926
+     ],
+     [
+      "2026-03-30",
+      0.006784257064228658
+     ]
+    ]
+   },
+   "note": "within-session pairing, 26 sessions"
+  },
+  "MNQ_minus_NQ_arm_small_share_close": {
+   "label": "MNQ minus NQ on arm sessions: small_share_close  [VOID: lot notional]",
+   "quantity": "small_share_close",
+   "margin": -0.20578845231877568,
+   "se": 0.0058477960596941365,
+   "t": -35.19077105598297,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.20578845231877568,
+    "median": -0.20081430670584946,
+    "ex_top": -0.20767155782387545,
+    "ex_bottom": -0.20308255577914994,
+    "symmetric_trim": -0.2049313783244778,
+    "share_positive": 0.0,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-10",
+      -0.27343586580941903
+     ],
+     [
+      "2026-04-07",
+      -0.2679770520559477
+     ],
+     [
+      "2026-06-05",
+      -0.24860444240568225
+     ],
+     [
+      "2026-05-19",
+      -0.24337560715931472
+     ],
+     [
+      "2026-03-10",
+      -0.23695248473423813
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-01-15",
+      -0.15871081469128184
+     ],
+     [
+      "2025-12-18",
+      -0.16150216234129522
+     ],
+     [
+      "2026-05-18",
+      -0.16614380094326842
+     ],
+     [
+      "2025-12-01",
+      -0.1709284882773049
+     ],
+     [
+      "2026-05-21",
+      -0.18143666410355042
+     ]
+    ]
+   },
+   "note": "within-session pairing, 26 sessions; VOID, see lot_legs_are_void"
+  },
+  "MNQ_minus_NQ_arm_lot1_share_close": {
+   "label": "MNQ minus NQ on arm sessions: lot1_share_close  [VOID: lot notional]",
+   "quantity": "lot1_share_close",
+   "margin": -0.17775177194668307,
+   "se": 0.0071899828728464584,
+   "t": -24.722141219275606,
+   "verdict": "fail",
+   "tails": {
+    "n": 26,
+    "mean": -0.17775177194668307,
+    "median": -0.1639049779980974,
+    "ex_top": -0.17993651963063478,
+    "ex_bottom": -0.17486098568917227,
+    "symmetric_trim": -0.17701631509922566,
+    "share_positive": 0.0,
+    "mean_below_median": true,
+    "sign_flips_on_median": false,
+    "most_negative": [
+     [
+      "2026-06-10",
+      -0.25002142838445285
+     ],
+     [
+      "2026-03-10",
+      -0.23403864805168756
+     ],
+     [
+      "2026-06-26",
+      -0.23278487763296862
+     ],
+     [
+      "2026-06-05",
+      -0.22878305063709753
+     ],
+     [
+      "2026-05-19",
+      -0.2245201123754051
+     ]
+    ],
+    "most_positive": [
+     [
+      "2026-01-15",
+      -0.12313307984789074
+     ],
+     [
+      "2025-12-18",
+      -0.13347241155034373
+     ],
+     [
+      "2025-12-01",
+      -0.14273447467046424
+     ],
+     [
+      "2026-05-18",
+      -0.14601661313941394
+     ],
+     [
+      "2026-02-18",
+      -0.14805585022956663
+     ]
+    ]
+   },
+   "note": "within-session pairing, 26 sessions; VOID, see lot_legs_are_void"
+  },
+  "MNQ_minus_NQ_nonarm_imb_close": {
+   "label": "MNQ minus NQ on NON-arm sessions: imb_close",
+   "quantity": "imb_close",
+   "margin": -0.0058556438257426294,
+   "se": 0.0016714715445272361,
+   "t": -3.503286576977807,
+   "verdict": "fail",
+   "note": "the baseline gap, 143 sessions -- Q4 needs the ARM gap to exceed it",
+   "n_groups": [
+    143,
+    0
+   ]
+  },
+  "MNQ_minus_NQ_gap_arm_minus_nonarm": {
+   "label": "MNQ-NQ gap: arm minus non-arm",
+   "quantity": "imb_close",
+   "margin": -0.0026539882417076065,
+   "se": 0.004103404579159485,
+   "t": -0.6467771311624437,
+   "verdict": "unresolved",
+   "note": "the difference in differences, which is what Q4 actually claims"
+  }
+ },
+ "Q5": {
+  "not_tested": "Q5 IS NOT TESTED. Only 6 sessions are both arm and burst, against this census's own declared floor of 12 (pre-registration section 3). The comparisons below are printed for the record and must not be read as evidence either way: a question asked on fewer observations than the design declared usable has not been asked.",
+  "ES_arm_burst_level": {
+   "label": "ES: arm AND burst, closing imbalance",
+   "quantity": "imb_close",
+   "margin": -0.010255144481822197,
+   "se": 0.007069894529070694,
+   "t": -1.4505371246563972,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 6,
+    "note": "too few observations for a tail read"
+   }
+  },
+  "ES_arm_burst_minus_noburst": {
+   "label": "ES: arm, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": -0.014530852014155618,
+   "se": 0.008738037743519651,
+   "t": -1.6629422349350762,
+   "verdict": "unresolved",
+   "note": "n 6 against 20"
+  },
+  "ES_all_burst_minus_noburst": {
+   "label": "ES: ALL sessions, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": 0.000177338582398033,
+   "se": 0.004520899591068461,
+   "t": 0.039226392629552104,
+   "verdict": "unresolved",
+   "note": "the burst's unconditional effect on flow"
+  },
+  "MES_arm_burst_level": {
+   "label": "MES: arm AND burst, closing imbalance",
+   "quantity": "imb_close",
+   "margin": -0.0060862586828982455,
+   "se": 0.011348737644659561,
+   "t": -0.5362938921900525,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 6,
+    "note": "too few observations for a tail read"
+   }
+  },
+  "MES_arm_burst_minus_noburst": {
+   "label": "MES: arm, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": -0.0039688879606934995,
+   "se": 0.012550466583235755,
+   "t": -0.31623429570299233,
+   "verdict": "unresolved",
+   "note": "n 6 against 20"
+  },
+  "MES_all_burst_minus_noburst": {
+   "label": "MES: ALL sessions, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": 0.0027455263721249314,
+   "se": 0.004981983915777414,
+   "t": 0.5510909747079152,
+   "verdict": "unresolved",
+   "note": "the burst's unconditional effect on flow"
+  },
+  "NQ_arm_burst_level": {
+   "label": "NQ: arm AND burst, closing imbalance",
+   "quantity": "imb_close",
+   "margin": 0.004505126146053514,
+   "se": 0.004640825025240973,
+   "t": 0.9707597510249995,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 6,
+    "note": "too few observations for a tail read"
+   }
+  },
+  "NQ_arm_burst_minus_noburst": {
+   "label": "NQ: arm, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": -0.0038009477570391916,
+   "se": 0.007171452243633945,
+   "t": -0.5300108859280588,
+   "verdict": "unresolved",
+   "note": "n 6 against 20"
+  },
+  "NQ_all_burst_minus_noburst": {
+   "label": "NQ: ALL sessions, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": 0.0037108240157144477,
+   "se": 0.003534592079081581,
+   "t": 1.049859200917651,
+   "verdict": "unresolved",
+   "note": "the burst's unconditional effect on flow"
+  },
+  "MNQ_arm_burst_level": {
+   "label": "MNQ: arm AND burst, closing imbalance",
+   "quantity": "imb_close",
+   "margin": -0.0033366155022674007,
+   "se": 0.00617513660698266,
+   "t": -0.5403306379480667,
+   "verdict": "unresolved",
+   "tails": {
+    "n": 6,
+    "note": "too few observations for a tail read"
+   }
+  },
+  "MNQ_arm_burst_minus_noburst": {
+   "label": "MNQ: arm, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": -0.0029326902121710754,
+   "se": 0.007106780416641429,
+   "t": -0.41266087317174016,
+   "verdict": "unresolved",
+   "note": "n 6 against 20"
+  },
+  "MNQ_all_burst_minus_noburst": {
+   "label": "MNQ: ALL sessions, burst minus no-burst",
+   "quantity": "imb_close",
+   "margin": 0.0008470950841457409,
+   "se": 0.002699406984649101,
+   "t": 0.3138078433385456,
+   "verdict": "unresolved",
+   "note": "the burst's unconditional effect on flow"
+  }
+ },
+ "verdicts": {
+  "Q1": "unresolved",
+  "Q1_vs_nonarm": "unresolved",
+  "Q1_equivalence": "3 of 4 roots EXCLUDE a material one-sided closing imbalance",
+  "Q2": "unresolved",
+  "Q3": "pass",
+  "Q3_level_leg_only": "pass",
+  "Q3_own_midday_leg": "fail",
+  "Q4": "unresolved",
+  "Q5": "not tested"
+ },
+ "verdict": "Q1 UNRESOLVED; Q1_vs_nonarm UNRESOLVED; Q1_equivalence 3 OF 4 ROOTS EXCLUDE A MATERIAL ONE-SIDED CLOSING IMBALANCE; Q2 UNRESOLVED; Q3 PASS; Q3_level_leg_only PASS; Q3_own_midday_leg FAIL; Q4 UNRESOLVED; Q5 NOT TESTED",
+ "timing_s": 4.3
+}

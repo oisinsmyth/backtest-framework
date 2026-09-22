@@ -160,6 +160,27 @@ version (likely at the Phase C "first real number" milestone, see
   and the 14:30 execution automation, which are the principal's or the deposit's; two tracker
   lines were wrong and are corrected (TAS symbology, options OI); the item-8 calendar carries no
   `eia` or `index_rebalance` flag though the split names both — recorded, not built.
+### Added (2026-09-22, the signed closing-flow census: the crowd is there and it is not selling)
+- `scripts/census_d623_signed_close_flow.py` + `data/census_d623_signed_close_flow.json` (D623): the five
+  pre-registered questions about **who sells into the close** on the 26 ES arm sessions of 2025-09-11 →
+  2026-06-30, read off `fut_micro_flow_5m.csv.gz` (226,224 buckets, 207 sessions). **No return is scored** —
+  prices only classify sessions, and `audit_measured_quantities_are_flow` enumerates the permitted quantity
+  names so a price-derived one raises. **D485's reserve from 2026-07-01 is unread, asserted from both sides.**
+  Nine audits, each proven to raise on a break that hits the scalar it reads: the imbalance sign in money, the
+  ET clock against a second path from `bucket_start`, the window from both ends, the declared-output guard,
+  the twelve-bucket coverage rule, a sigma re-derived without `rolling()`, the arm recomputed on a panel whose
+  15:00+ prices are destroyed, and a rotation null that refuses a constant series or too few offsets.
+  `resolve()` and `tails()` are reused from the D622 runner, so every margin carries D373's 2-SE verdict and
+  both-tail trims. **Result: the closing flow is BALANCED** (ES +0.00092 at t +0.21, 50.0 % of arm sessions
+  net-sell, rank 0.467 in its own enumerated rotation null) with a material one-sided imbalance **excluded on
+  three of four roots**; nothing accelerates into the deadline; and the small-lot signature is real but is a
+  **difference-in-differences of about ten per cent less institutional than normal**, positive on all four
+  roots by two measures. Where the micro differs from its mini it differs toward **buying** (MNQ minus NQ
+  −0.0085, t −2.27). Six specification changes made after the first pass are recorded in the result's §0 — the
+  midday control, the DiD, the per-bucket volume ratios, an equivalence bound for a symmetry claim, Q4's lot
+  legs voided on lot notional, and the control restricted to **classified** sessions (the sigma warm-up was
+  being counted as non-arm, which changed a verdict). 103 comparisons disclosed; wall 4.3 s.
+
 ### Fixed (2026-09-22, a construction screen that rejected a perfect oracle)
 - `scripts/stage0_d618_sharpened_ladder.py` + the D618 result record: screen **S1b was invalid** and the
   verdict it produced ("not one of 72 cells passes") was wrong. It required `sd(LADDER) >= 3 x sd` of the

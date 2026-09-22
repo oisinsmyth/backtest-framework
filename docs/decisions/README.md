@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 353 of these records carry neither field —
+**No Status or Category column, deliberately.** 354 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -695,7 +695,7 @@ would look like data. The tokens are what is shown.
 | D620 | The quarterly fund holdings from EDGAR, and the between-filing projection: the filings give 415 fund-quarters back to 2… | [record](D620-quarterly-fund-holdings-and-the-between-filing-projection.md) |
 | D621 | Retail attention measured from creations and Robinhood holders, with GDELT hourly news through the API: the amendment t… | [record](D621-retail-attention-from-creations-and-robinhood-holders.md) |
 | D622 | D622 STAGE 0 RESULT — the hour pair's specificity is established; the mechanism is UNTESTED rather than refuted, becaus… | [PRE-REG](D622-PRE-REG-the-last-hour-decline-and-who-must-be-flat.md) · [RESULT](D622-STAGE-0-RESULT-the-hour-is-specific-and-it-does-not-revert.md) |
-| D623 | REGISTRATION — the signed-flow census: who actually sells into the close, and is it a cascade? | [PRE-REG](D623-PRE-REG-the-signed-flow-census-who-sells-into-the-close.md) |
+| D623 | the closing hour after a decline is heavier, and smaller-lotted, and BALANCED | [PRE-REG](D623-PRE-REG-the-signed-flow-census-who-sells-into-the-close.md) · [RESULT](D623-RESULT-the-close-is-heavier-and-smaller-lotted-but-BALANCED.md) |
 
 <!-- REGISTER:END -->
 
