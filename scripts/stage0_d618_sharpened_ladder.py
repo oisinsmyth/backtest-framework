@@ -57,7 +57,23 @@ HOURS, YEAR_HOURS, MULT, MONEYNESS_MAX = 6.5, 252 * 6.5, 50.0, 0.30      # D581'
 
 # ---- the screens, thresholds from the record ----
 S1A_FLOOR = 0.20        # measurement floor, sd of LADDER in sigma units of the scored window
-S1B_FACTOR = 3.0        # ...and at least this multiple of the same cell's FLAT-weight dispersion
+# S1b, CORRECTED 2026-09-22 after the principal asked whether the screens were too harsh.
+#
+# The first version required sd(LADDER) >= 3 x sd of the same cell with FLAT weights over its positive-weight
+# strikes. That comparator is wrong, and a known-answer case proved it: a conditioner built from the ACTUAL
+# 16:00 close -- perfect information -- scored 0.05 and was REJECTED, as were all 72 real cells. The reason is
+# that for any smooth weight the positive-weight set is the whole 220-strike ladder, whose centroid sits ~23
+# sigma from the price, so the ratio asks "is this as dispersed as the entire ladder" and therefore PENALISES
+# the concentration a real signal has. A within-session permutation comparator fails the same way (oracle
+# 0.04, grid 1.00): a reshuffle scatters weight over the ladder, so every informative object is NARROWER than
+# its own permutations and the inequality runs the wrong way.
+#
+# The question S1b was for -- is this distinguishable from the unweighted centroid of the same eligible
+# strikes -- is answered directly and scale-freely by corr(LADDER, PING). The grid control IS PING, so it
+# scores exactly 1.0 by construction; the oracle, a diluted oracle and a weak oracle score 0.061, 0.036 and
+# 0.020. The ceiling is the midpoint of that calibrated gap and is set from the CONTROLS, never from the real
+# cells. PING also stays a regression control, so partial overlap is handled again at scoring.
+S1B_PING_CEIL = 0.50
 S2_CEIL = 0.40          # |corr(LADDER, DAY0)|, D614 section 4's form
 S3_CEIL = 0.25          # R^2 of LADDER on the grid offset (P1530 mod step)/step
 S4_FLOOR = 5            # median strike count inside the band
@@ -514,11 +530,17 @@ def screen(cell, s, window):
         r2 = np.nan
     med_n = float(np.nanmedian(j["n_strikes"].to_numpy(float)))
     med_pts = float(np.nanmedian(j["abs_points"].to_numpy(float)))
+    ping = j["PING"].to_numpy(float)
+    pb = fin & np.isfinite(ping)
+    corr_ping = float(np.corrcoef(x[pb], ping[pb])[0, 1]) if pb.sum() > 10 else np.nan
     res = dict(n_sessions=int(fin.sum()), sd=sd, sd_flat=sd_flat,
+               # kept as a DIAGNOSTIC and no longer a gate: it rejected a perfect oracle at 0.05, because
+               # for a smooth weight the positive-weight set is the whole ladder (see S1B_PING_CEIL)
                sd_over_flat=float(sd / sd_flat) if np.isfinite(sd_flat) and sd_flat > 0 else np.nan,
+               corr_ping=corr_ping,
                corr_day0=corr, grid_r2=r2, median_strikes=med_n, median_abs_points=med_pts)
     res["S1a"] = bool(np.isfinite(sd) and sd >= S1A_FLOOR)
-    res["S1b"] = bool(np.isfinite(res["sd_over_flat"]) and res["sd_over_flat"] >= S1B_FACTOR)
+    res["S1b"] = bool(np.isfinite(corr_ping) and abs(corr_ping) <= S1B_PING_CEIL)
     res["S2"] = bool(np.isfinite(corr) and abs(corr) <= S2_CEIL)
     res["S3"] = bool(np.isfinite(r2) and r2 <= S3_CEIL)
     res["S4"] = bool(np.isfinite(med_n) and med_n >= S4_FLOOR)
@@ -828,19 +850,20 @@ def run():
     res["screens"] = screens
     res["sets"] = dict(cells=len(screens), weights=list(WEIGHTS), bands=[b[1] for b in BANDS],
                        windows=list(WINDOWS), anchors=list(ANCHORS),
-                       thresholds=dict(S1a=S1A_FLOOR, S1b=S1B_FACTOR, S2=S2_CEIL, S3=S3_CEIL, S4=S4_FLOOR))
+                       thresholds=dict(S1a=S1A_FLOOR, S1b_corr_with_ping=S1B_PING_CEIL, S2=S2_CEIL,
+                                       S3=S3_CEIL, S4=S4_FLOOR))
     passed = [x for x in screens if x["passes"]]
     both = [x for x in screens if x["range_and_independence"]]
     log(f"  screens: {len(screens)} cells, {len(passed)} pass all four, "
         f"{len(both)} have BOTH range (sd >= 1.0) and independence (|corr| <= 0.40)")
     for x in sorted(screens, key=lambda q: -(q["sd"] if np.isfinite(q["sd"]) else -1))[:12]:
         failed = ",".join(k for k in ("S1a", "S1b", "S2", "S3", "S4") if not x[k])
-        log(f"    {x['label']:<34} sd {x['sd']:7.3f}  /flat {x['sd_over_flat']:6.2f}  "
+        log(f"    {x['label']:<34} sd {x['sd']:7.3f}  corr(PING) {x['corr_ping']:+.3f}  "
             f"corr(DAY0) {x['corr_day0']:+.3f}  gridR2 {x['grid_r2']:.3f}  strikes {x['median_strikes']:5.0f}  "
             f"{'PASS' if x['passes'] else 'fails ' + failed}")
-    for x in sorted(screens, key=lambda q: -(q["sd_over_flat"] if np.isfinite(q["sd_over_flat"]) else -1))[:4]:
-        log(f"    widest vs its own flat placebo: {x['label']:<30} sd/flat {x['sd_over_flat']:6.2f}  "
-            f"sd {x['sd']:7.3f}  {'PASS' if x['passes'] else 'fail'}")
+    for x in [q for q in screens if q["passes"]]:
+        log(f"    PASSES ALL FIVE: {x['label']:<30} sd {x['sd']:7.3f}  corr(PING) {x['corr_ping']:+.4f}  "
+            f"corr(DAY0) {x['corr_day0']:+.3f}")
 
     # the WEIGHTS BITE audit, restated against the price, on the gamma-weighted primary
     prim = next((x for x in screens if x["label"].startswith("gamma_doi|all|w30")), None)
@@ -967,7 +990,7 @@ def run():
     # that FAILS the placebo floor a reason to go forward.
     both_and_pass = [x["label"] for x in both if x["passes"]]
     both_but_fail = [dict(label=x["label"], sd=x["sd"], corr_day0=x["corr_day0"],
-                          sd_over_flat=x["sd_over_flat"],
+                          sd_over_flat=x["sd_over_flat"], corr_ping=x["corr_ping"],
                           failed=[k for k in ("S1a", "S1b", "S2", "S3", "S4") if not x[k]]) for x in both
                      if not x["passes"]]
     clears_nulls = [r["label"] for r in res["scored"] if "coef" in r
@@ -1052,9 +1075,14 @@ def selftest():
     tiny = wide.copy()
     tiny["LADDER"] = wide["LADDER"] * 0.01
     assert not screen(tiny, s, "w30")["S1a"], "a 0.02 sigma cell must fail the measurement floor"
-    flatish = wide.copy()
-    flatish["FLAT"] = flatish["LADDER"] * 0.9
-    assert not screen(flatish, s, "w30")["S1b"], "a cell no wider than its flat-weight placebo must fail S1b"
+    # S1b, corrected: a cell that IS the grid centroid must fail; one distinguishable from it must pass.
+    isgrid = wide.copy()
+    isgrid["PING"] = isgrid["LADDER"]
+    assert not screen(isgrid, s, "w30")["S1b"], "a cell identical to the grid centroid must fail S1b"
+    assert screen(wide, s, "w30")["S1b"], "a cell uncorrelated with the grid centroid must pass S1b"
+    half = wide.copy()
+    half["PING"] = 0.95 * wide["LADDER"] + 0.05 * rng.normal(0, wide["LADDER"].std(), len(idx))
+    assert not screen(half, s, "w30")["S1b"], "a cell 95 % explained by the grid centroid must fail S1b"
     conf = wide.copy()
     conf["LADDER"] = s["DAY0"].to_numpy() / 30.0
     assert not screen(conf, s, "w30")["S2"], "a conditioner that IS the day's move must fail S2"

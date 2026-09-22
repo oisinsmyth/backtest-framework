@@ -10,6 +10,19 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Fixed (2026-09-22, a construction screen that rejected a perfect oracle)
+- `scripts/stage0_d618_sharpened_ladder.py` + the D618 result record: screen **S1b was invalid** and the
+  verdict it produced ("not one of 72 cells passes") was wrong. It required `sd(LADDER) >= 3 x sd` of the
+  same cell with flat weights over its positive-weight strikes; for any smooth weight that set is the whole
+  220-strike ladder, whose centroid sits ~23σ from the price, so the ratio penalised the concentration a
+  real signal has. A conditioner built from the **actual 16:00 close** scored 0.05 and was rejected, as were
+  all 72 cells. A within-session permutation comparator inverts the same way (oracle 0.04, grid 1.00).
+  Replaced by `|corr(LADDER, PING)| <= 0.50`, whose threshold is read off synthetic controls only (grid
+  1.0000 by construction; oracle, diluted and weak oracles 0.0605, 0.0359, 0.0196). **Five cells now pass,
+  including the pre-registered primary, and none clears its nulls** — the disposition is unchanged, the
+  route to it is not. The record carries the post-hoc screen change, its known-answer justification, and a
+  table of which earlier claims are withdrawn.
+
 ### Added (2026-09-22, the sharpened 0DTE ladder measured, and the axis closed)
 - `scripts/stage0_d618_sharpened_ladder.py` + `data/stage0_d618_sharpened_ladder.json` (D618): the six
   sharpenings of D614's ladder, scored as a family of **72 cells** behind **four pre-outcome construction

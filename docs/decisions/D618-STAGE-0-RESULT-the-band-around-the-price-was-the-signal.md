@@ -1,197 +1,208 @@
-# D618 STAGE 0 RESULT — nothing survives the construction screens, and the one thing that looked like it survived was the band
+# D618 STAGE 0 RESULT — five cells survive the construction screens, none survives its own null, and the thing that looked like an interior solution was the band being centred on the price it predicts from
 
 **Pre-registration:** [`D618`](D618-PRE-REG-the-sharpened-0DTE-ladder-range-or-independence.md), committed
-before the runner existed, amended once (also before the runner) to carry its control set.
+before the runner existed and amended once (also before the runner) to carry its control set.
 **Runner:** `scripts/stage0_d618_sharpened_ladder.py` · **artifact:** `data/stage0_d618_sharpened_ladder.json`
-· 53.4 s · in-sample 2016-01-04 → 2023-12-29, 1,993 ES sessions, a 0DTE PM ladder on 1,263 of them,
+· 60 s · in-sample 2016-01-04 → 2023-12-29, 1,993 ES sessions, a 0DTE PM ladder on 1,263 of them,
 267,676 (session, strike) cells. **No session at or after 2024-01-01 was read.**
 
-## VERDICT
+## 0. AMENDED 2026-09-22 — the first version of this record reported a verdict that rested on a broken screen
 
-> **THE FAMILY IS DEGENERATE.** Of **72 cells**, **none** passes the four pre-registered construction
-> screens, so **no return was scored for any cell in the specified family**. The line stays closed.
+The principal asked whether the construction screens were too harsh. They were worse than harsh: **one of
+them was invalid, and a known-answer case proved it.** A conditioner built from the **actual 16:00 close** —
+perfect information about the thing this study predicts — was **rejected**, as were all 72 real cells, by
+screen S1b.
 
-And the finding that matters more than the verdict:
+**What was wrong.** S1b as pre-registered required `sd(LADDER) ≥ 3 × sd` of the same cell with **flat
+weights over its positive-weight strikes**. For any smooth weight the positive-weight set is the whole
+220-strike ladder, whose centroid sits about **23σ** from the price, so the ratio asks "is this as dispersed
+as the entire listed ladder" and therefore **penalises precisely the concentration a real signal has**. The
+oracle scored 0.05, a diluted oracle 0.03, and pure grid arithmetic 1.00 — the intended ordering inverted. A
+within-session permutation comparator fails the same way and for the same reason (oracle 0.04, grid 1.00): a
+reshuffle scatters weight across the ladder, so every informative object is *narrower* than its own
+permutations.
 
-> **The interior solution appeared, and it was the circularity.** On the runner's first pass the band was
-> centred on **P1530** — which is the pre-registered *break*, not the specification — and four cells passed
-> every screen, one of them clearing both its own nulls. Re-anchoring the band where the record says it
-> belongs, on the **prior settlement**, takes those same cells from sd 0.62–1.04σ to 5.57–5.59σ, from
-> corr(DAY0) −0.19/−0.21 to **−0.54**, and from 3.05–3.54× their flat-weight placebo to **1.00×**.
-> Selecting the strike set around the current price manufactured *both* the independence and the apparent
-> weight information. It is D614's grid artefact wearing a different coat.
+**What replaced it.** The question S1b was for — *is this distinguishable from the unweighted centroid of the
+same eligible strikes* — is answered directly by **`|corr(LADDER, PING)| ≤ 0.50`**. The grid control **is**
+PING, so it scores exactly **1.0000** by construction; the oracle, diluted and weak oracles score
+**0.0605, 0.0359 and 0.0196**. The ceiling is the midpoint of that calibrated gap and was read **only off
+the synthetic controls, never off the real cells**. PING also remains a regression control, so partial
+overlap is caught a second time at scoring.
 
-## 1. The screens, which are the study
+**This is a post-hoc change to a pre-registered screen, which is what pre-registration exists to prevent**,
+so three things are stated plainly. The justification is a **validity failure demonstrated on a
+known-answer case**, not a preference about the outcome. The replacement was calibrated on synthetic objects
+alone. And the change runs **against** the convenient answer: it takes the number of scoreable cells from
+**0 to 5** and gives the hypothesis more chances, including its own pre-registered primary, rather than
+fewer.
 
-Applied to every cell before any return was read. The band is centred on the **prior settlement**, as the
+**What changed, and what did not.**
+
+| claim in the first version | status now |
+|---|---|
+| "of 72 cells not one passes the screens" | **wrong** — five pass, including the pre-registered primary |
+| "no return was scored for any cell in the specified family" | **wrong** — five cells were scored |
+| "the weights do nothing, flat-weight ratio 1.00" | **withdrawn** — that statistic was malformed |
+| "a third source of variance, the listed ladder's extent" | **withdrawn as stated.** The Δ-OI cell's status is now settled by *scoring* it — coefficient −0.0006 at t −0.01 — which is better evidence for the same conclusion |
+| the band-around-the-price artefact | **stands**, on statistics the broken screen never touched |
+| nothing goes forward; the line stays closed | **stands** |
+
+## 1. The screens, which are still the study
+
+Applied to every cell before any return is read. The band is centred on the **prior settlement**, as the
 record specifies.
 
-| cell | sd (σ) | sd / flat placebo | corr(DAY0) | grid R² | strikes | fails |
-|---|---:|---:|---:|---:|---:|---|
-| `doi \| all \| w10` | **19.012** | 1.51 | −0.142 | 0.002 | 220 | S1b |
-| `doi \| all \| w30` | **13.077** | 1.52 | −0.134 | 0.003 | 220 | S1b |
-| `gamma_oi \| all \| w10 \| pre` | 5.713 | 0.24 | −0.536 | 0.005 | 220 | S1b, S2 |
-| `gamma_doi \| all \| w10 \| pre` | 5.641 | 0.48 | −0.506 | 0.008 | 220 | S1b, S2 |
-| `gamma_oi \| 3step \| w10 \| pre` | 5.590 | **1.00** | −0.543 | 0.007 | 6 | S1b, S2 |
-| `gamma_oi \| 1step \| w10 \| pre` | 5.572 | 1.01 | −0.543 | 0.007 | 2 | S1b, S2, S4 |
-| `vol_noon \| all \| w30` (D614's object) | 3.114 | 0.56 | −0.480 | 0.004 | 220 | S1b, S2 |
+**Five cells pass all five conditions:**
 
-Three separate reasons nothing passes, and the third was not anticipated:
+| cell | sd (σ) | corr(PING) | corr(DAY0) | grid R² | strikes |
+|---|---:|---:|---:|---:|---:|
+| **`gamma_doi \| all \| w30 \| now`** — the pre-registered primary | 0.529 | +0.0371 | −0.048 | 0.003 | 220 |
+| `gamma_doi \| all \| w10 \| now` | 0.805 | +0.0361 | −0.049 | 0.003 | 220 |
+| `doi \| all \| w30` | 13.077 | +0.1321 | −0.134 | 0.003 | 220 |
+| `doi \| all \| w10` | 19.012 | +0.1107 | −0.142 | 0.002 | 220 |
+| `gamma_oi \| all \| w10 \| now` | 0.273 | +0.1085 | −0.014 | 0.000 | 220 |
 
-**The day's move, as expected.** Every gamma-weighted and volume-weighted cell anchored pre-session
-carries corr(DAY0) between **−0.45 and −0.54**, against a ceiling of 0.40. D614's own conditioner sits in
-the middle of that range at −0.480. The mechanism is the one the stress test named: a strike landscape
-fixed before the session, differenced against the current price, *is* the day's return with a sign flip.
+The 67 rejections fall into two clean groups, and both are substantive rather than threshold artefacts.
 
-**The weights do nothing, which is new.** The flat-weight placebo — the unweighted centroid of the same
-strikes the cell's weight is positive on — is as dispersed as the weighted centroid, or more so. Ratios run
-**0.22 to 1.01** across the pre-session-anchored family. A ratio at 1.00 means the centroid's variation is
-entirely *which strikes carry weight*, not *how much* they carry. The gamma kernel is under three strikes
-wide at thirty minutes, so once the strike set is fixed the weights have almost nothing left to say.
+**The day's move rejects every pre-session-anchored cell.** `gamma_doi|all|w30|pre` reads corr(DAY0)
+**−0.507**, `gamma|all|w30|pre` −0.533, `gamma_oi|all|w30|pre` −0.532, and D614's own volume centroid
+**−0.480** — against a ceiling of 0.40. Measured against the *full* 09:30 → 15:30 move rather than the
+morning leg the screen uses, those become **−0.729, −0.738, −0.738 and −0.742**, so the rejections are not
+marginal in either measure.
 
-**The ladder's extent — a third source of variance.** `doi|all` has enormous range (**sd 13.1σ on the
-half-hour, 19.0σ on the ten minutes**) and is genuinely *independent* of the day's move (**−0.134**,
-**−0.142**) with no grid sawtooth (R² 0.002–0.003). It falsifies prediction 1 on that prediction's literal
-two-condition terms. But its flat-weight ratio is **1.52**, so the dispersion is the geometry of the listed
-ladder — where open interest and its changes live, which is out in the tail puts, hundreds of points from
-the price — and not a statement about position concentration. **S1b is the only screen that catches this,
-and it was added as the "self-calibrating half" of a floor whose absolute half would have passed the cell
-at thirteen sigma and called it signal.**
+**Banding makes a cell into its own grid centroid.** Every banded cell anchored pre-session reads
+corr(PING) between **+0.998 and +1.000**: with a median of 6 strikes in a ±3-step band the weighted centroid
+*is* the band's midpoint. That is the honest version of what the first draft of this record tried to say
+with a broken ratio — not "the weights do nothing" in general, but "inside a tight band centred away from
+the price, the weighted centroid carries no more than the band's own position".
 
-## 2. What the endogenous band did, measured
+## 2. The band around the price, which is the finding that survives
 
-The pre-registered break, scored so the size of the illusion is on the record. It carries **no verdict
-weight**; it is reported because the runner ran it first and because the difference is the paper's point.
+The pre-registered **break** is centring the band on P1530. The runner's first pass did exactly that. Under
+the corrected screens the comparison is sharper, not weaker:
 
-| the same cell | band on the prior settle (the specification) | band on P1530 (the break) |
+| the same cell | band on the prior settle (specified) | band on P1530 (the break) |
 |---|---:|---:|
-| `gamma_oi \| 3step \| w10 \| pre` sd | 5.590σ | **0.913σ** |
+| `gamma_oi \| 3step \| w10 \| pre` sd | 5.590σ | 0.913σ |
 | …corr(DAY0) | **−0.543** | **−0.210** |
-| …sd / flat placebo | **1.00** | **3.05** |
-| `gamma_doi \| 3step \| w10 \| pre` sd / corr / ratio | 5.574σ / −0.542 / 1.00 | 1.040σ / −0.194 / 3.48 |
-| cells passing all four screens | **0** | **4** |
+| …corr(PING) | **+0.998** | **+0.312** |
+| cells passing all five screens | **5** | **15** |
 
-The two bands are genuinely different objects: they select a different strike set on **90.7 %** of the
-1,263 sessions, with a median Jaccard overlap of **0.333**. Centring on the current price is not a
-refinement of centring on the settle; it throws away two thirds of the selection and replaces it with a
-function of the day's return.
+Centring the selection on the current price does two things at once: it **removes the day's-move confound**
+(−0.54 → −0.21) and it **makes the object distinguishable from its own grid centroid** (+1.00 → +0.31).
+Both are properties of the *selection*, not of the option data, and they treble the number of cells that
+appear admissible. **A band is a selection, and a selection centred on the outcome's own starting price is
+D614's grid artefact one level up.** The two bands pick different strike sets on **90.7 %** of the 1,263
+sessions, median Jaccard overlap **0.333**, so they are not variants of one object.
 
-Scored anyway, with every null and bar (no verdict weight):
+## 3. The five scored cells: none clears its null
 
-| artefact cell | c | NW t | shift-null rank | flip-null rank | expected move | clears $4.25? |
+| cell | c | NW t | shift-null rank | flip-null rank | expected move | tail bar |
 |---|---:|---:|---:|---:|---:|---|
-| `gamma_oi \| 3step \| w10 \| pre` | −1.863 | −1.98 | **0.966, above p95** | **0.974, above p95** | $1.86 | no |
-| `gamma_oi \| 3step \| w30 \| pre` | −2.838 | −1.03 | 0.881 | 0.731 | $1.90 | no |
-| `gamma_doi \| 3step \| w10 \| pre` | −0.789 | −1.48 | 0.790 | 0.855 | $0.92 | no |
-| `gamma_doi \| 3step \| w30 \| pre` | −0.575 | −0.41 | 0.353 | 0.297 | $0.45 | no |
+| **`gamma_doi\|all\|w30\|now`** (primary) | **+1.663** | +0.96 | 0.757 | 0.508 | $0.66 | held |
+| `gamma_doi\|all\|w10\|now` | −0.262 | −0.55 | 0.321 | 0.299 | $0.16 | **failed** |
+| `doi\|all\|w30` | −0.0006 | −0.01 | 0.008 | 0.009 | $0.02 | **failed** |
+| `doi\|all\|w10` | −0.062 | −1.93 | 0.938 | **0.959, above p95** | $2.43 | held |
+| `gamma_oi\|all\|w10\|now` | −2.300 | −0.39 | 0.725 | 0.317 | $0.15 | **failed** |
 
-**One artefact cell clears both of its own nulls.** That is what this study would have reported as a
-candidate had the band anchor gone unchecked, and it is exactly why the multiplicity bar exists: on the
-endogenous pass the **family maximum |t| was 2.336 against a family-max null p95 of 2.608** (rank 0.920),
-while each cell's *own* p95 ran 1.93–2.04. Looking at four cells costs about 0.57 of t, and that gap alone
-sinks it. The economic bar is not close either: the best expected move is **$1.90 against a $4.25 round
-trip**, a factor of 2.2 short.
+**The pre-registered primary has the predicted sign.** `gamma_doi|all|w30|now` reads **+1.663** —
+*attraction*, which is what the pinning mechanism predicts and the opposite of D614's −5.08 — and it is
+**statistically nothing**: NW t +0.96, rank 0.757 in its own shift null and 0.508 in the sign-flip null,
+with an expected move of **$0.66 against a $4.25 round trip**. The tail bar holds, so it is not a crisis-day
+artefact; there is simply no effect.
 
-And the sign: **every coefficient is negative**, repulsion, where the mechanism predicts attraction.
-Prediction 5 is falsified in the same direction as D614's.
+**No cell clears both nulls.** `doi|all|w10` clears the flip null at 0.959 and fails the shift null at
+0.938; nothing else is close. The family maximum |t| is **1.961** against a family-max null p95 of
+**2.714** (rank 0.798), while each cell's own p95 runs **1.86–2.13** — so looking at five correlated cells
+costs about 0.6 of t, and the largest t in the family does not reach even a single-cell bar.
 
-## 3. The predictions, against what happened
+**No cell clears the economic bar.** The best expected move is $2.43 against $4.25.
+
+## 4. The predictions, against what happened
 
 | # | prediction | outcome |
 |---|---|---|
-| 1 | no cell has both range (sd ≥ 1.0σ) and independence (\|corr\| ≤ 0.40) | **falsified on its literal terms** by `doi\|all\|w30` and `doi\|all\|w10` — and both fail S1b, so the range is the ladder's extent. The prediction was right about the conclusion and wrong about there being only two sources of variance. |
-| 2 | `\|gamma\|×\|Δoi\|` unbanded passes the measurement floor | **held** — sd **0.529σ**, corr **−0.048**. The stress test predicted ≈0.24σ; it is twice that. |
-| 3 | every band of 2 steps or fewer fails S3 or S4 | **held, all 18 of them** — 2-step bands hold a median of 4 strikes against a floor of 5; 1-step bands hold 2, with grid R² 0.26–0.71. |
-| 4 | Δ-OI is not independent of the conditioners already measured | **held** — corr **+0.523** with the OI-weighted centroid (the stress test said +0.659, measured on an unchecked delta) and **+0.335** with the volume centroid. |
-| 5 | if a cell is scored the coefficient is positive | **falsified** — every coefficient is negative. |
+| 1 | no cell has both range (sd ≥ 1.0σ) and independence (\|corr(DAY0)\| ≤ 0.40) | **falsified** — `doi\|all\|w30` (13.08σ, −0.134) and `doi\|all\|w10` (19.01σ, −0.142) have both, pass every screen, and were scored. They carry no information about the close (t −0.01 and −1.93). The prediction was wrong; its conclusion was reached by scoring instead. |
+| 2 | `\|gamma\|×\|Δoi\|` unbanded passes the measurement floor | **held** — sd **0.529σ**, corr(DAY0) −0.048, corr(PING) +0.037. The review predicted ≈0.24σ; it is twice that, and it is the primary. |
+| 3 | every band of 2 steps or fewer fails S3 or S4 | **held, all eighteen** — 2-step bands hold a median of 4 strikes against a floor of 5; 1-step bands hold 2. Under the corrected screen they also fail on corr(PING) ≈ 1.000. |
+| 4 | Δ-OI is not independent of the conditioners already measured | **held** — corr **+0.523** with the OI-weighted centroid and **+0.335** with the volume centroid. |
+| 5 | if a cell is scored the coefficient is positive | **supported in sign by the primary** (+1.663) and by nothing else; four of the five are negative, and none is distinguishable from zero. |
 
-## 4. The Δ-OI gate
+## 5. The Δ-OI gate
 
-The one improvement that addresses why D614 failed, and the gate it had to clear. The residualised
-coefficient is **+0.0820** against **−0.0008** with those two controls removed — so the raw association is
-nil and the two absorb offsetting parts. Nothing in either number is a signal, and the gate never had to
-adjudicate "volume in disguise" because no Δ-OI cell reached scoring.
+The residualised coefficient is **+0.0820** against **−0.0008** with the OI and volume centroids removed,
+so the raw association is nil and the two controls absorb offsetting parts. Scored directly, the Δ-OI
+centroid reads **−0.0006 at t −0.01** on the half-hour: the one improvement that addressed D614's named
+defect measures **position rather than turnover, is genuinely independent of the day's move, and carries no
+information about the close.** That is a cleaner negative than the first version of this record gave.
 
 **D616's column earned its commit.** Of 12,594,319 option rows, **339,359 were refused because the two
-`oi_ref_session` values were not adjacent**, against **31,589** refused by the session calendar alone — so
-**ten times as many bad pairs were invisible** to the calendar and only the reference date could see them.
-423,441 had no prior row at all; 11,799,930 deltas were admitted. The zero-delta share is **0.4850**, close
-to the 0.428 the stress test measured, and against a revision rate under 2.5 % it confirms the zeros are
-genuine "no position change" rather than staleness.
+`oi_ref_session` values were not adjacent**, against **31,589** refused by the session calendar alone — ten
+times as many bad pairs invisible to the calendar, because a publication is usable on exactly one session
+so publication times never repeat (0.0000) and CME's preliminary-then-final revision cannot be seen in
+them. Zero-delta share **0.4850**, genuine against a revision rate under 2.5 %. Settlement-implied vol
+inverted on **0.9809** of attempted rows, median **0.312**.
 
-Settlement-implied vol inverted on **0.9809** of attempted rows, median **0.312**.
+## 6. Corrections made to or inside this study — ten
 
-## 5. Corrections made inside the run, all of them
+1. **S1b was invalid** (§0). It rejected a perfect oracle and all 72 cells. Replaced, calibrated on
+   controls, and **this changed the verdict's route**: 0 scoreable cells became 5.
+2. **The band anchor.** The runner first banded on P1530, the pre-registered *break*. Fixed to the prior
+   settlement — which is how §2's finding surfaced at all.
+3. **The shift null compared a signed observed coefficient against an absolute null**, making every rank
+   0.000 by construction. Fixed to |obs| against |null|.
+4. **The verdict logic** conflated "has range and independence" with "passes the screens".
+5. **`vol_to_1530` is not D614's comparator** — D614's object was the **noon** cutoff, which is why D613's
+   panel exists. Both carried, named apart; the family is **72 cells, not 64**.
+6. **S2's label in the pre-registration is wrong**: it says the 09:30 → 15:30 move and the statistic is the
+   09:30 → 12:00 leg (D614's `DAY0`, faithfully). Measured both ways, **no screen verdict changes**, and the
+   confound is *larger* on the full move (−0.73 where the record reports −0.51).
+7. **The record's own internal tension** — §3 says a failing cell is not scored, §7 says the estimator
+   ladder is reported for every cell — resolved toward §3.
+8. **The additivity bar of 1e-12 is in log units** while the runner works in basis points; the runner uses
+   1e-9, a decade stricter than the equivalent. Measured 1.4e-12 bp.
+9. **The right-quantity check** first demanded R10 ≠ R30 on over 99 % of sessions and fired on real data,
+   because a genuinely flat 15:30–15:50 leg makes them equal. Replaced by a declared ceiling on the
+   coincidence share.
+10. **The permutation audit's first break was wrong** (it asserted flat weights should raise); the break
+    that tests something is a reduction that lost the strike-weight pairing. Plus a key-name error on
+    `se_ladder`, and `maxDD_usd` escaping `label_drawdown_convention.py`'s end-anchored key regex, renamed
+    to `maxdd` so the sign marker is derived rather than typed.
 
-Nine. Four changed a number that would have been published, and one changed the verdict.
+## 7. The component line
 
-1. **The band anchor.** The runner first banded on P1530, the pre-registered *break*. Fixed to the prior
-   settlement. **This changed the verdict** from "a cell clears both its nulls" to "no cell passes".
-2. **The null comparison.** The shift null compared the **signed** observed coefficient against an
-   **absolute** null, making every rank 0.000 by construction. Fixed to |obs| against |null|; the ranks
-   moved to 0.353–0.966.
-3. **The verdict logic** conflated "has range and independence" with "passes the screens", and so called a
-   cell that fails the placebo floor a reason to go forward. Split into three separate questions.
-4. **`vol_to_1530` is not D614's comparator.** The record's weight table names it as such; D614's object
-   was the **noon** cutoff, which is why D613's panel exists. Both are carried, named apart, and the family
-   is **72 cells, not the 64** the record counted.
-5. **The record contains an internal tension** — §3 says a failing cell is not scored against returns, §7
-   says the estimator ladder is reported for every cell. Resolved toward §3, since scoring a failing cell
-   means reading the outcome the screens exist to protect.
-6. **The additivity tolerance** is stated as 1e-12 in the record, which is log units; the runner works in
-   basis points, so the equivalent bar is 1e-8 and the runner uses 1e-9. Measured deviation **2.9e-12 bp**.
-7. **The right-quantity check** first required R10 ≠ R30 on over 99 % of sessions and fired on real data: a
-   genuinely flat 15:30→15:50 leg makes them equal, which is a countable event, not a bug. Replaced by a
-   declared ceiling on the coincidence share; an accidental `R10 = R30` takes it to 1.0 and fires.
-8. **The permutation audit's break was wrong.** It asserted that flat weights should raise, when flat
-   weights are legitimately skipped. The break that tests something is a *reduction that lost the pairing*
-   (`centroid_unpaired`), which is permutation-invariant while returning a plausible number — the bug class
-   a total cannot see. Flat weights now raise as a check that cannot fire (D613's lesson).
-9. **A key-name error** read `se_ladder`'s OLS entry under the wrong key, and **the component line** is
-   computed on the best artefact cell, labelled, because nothing in the specified family was scored and
-   CLAUDE.md requires a component line for anything scored against returns.
+On the **pre-registered primary**, computed inside the runner at one MES and the cost that size pays
+($4.25 a round trip), n 1,185. This one carries verdict weight.
 
-## 6. The component line
+| direction | gross Sharpe | gross Sortino | net Sharpe | net Sortino | net $/session | hit | maxdd |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| attraction | +0.041 | +0.057 | **−1.218** | **−1.705** | −$4.11 | 0.478 | $5,149 |
+| repulsion | −0.041 | −0.050 | **−1.301** | **−1.614** | −$4.39 | 0.503 | $5,266 |
 
-Computed inside the runner on the **artefact** cell `gamma_oi|3step|w30|pre|ENDOGENOUS_BAND`, at one MES
-and the cost that size pays ($4.25 a round trip), n 1,221. **It carries no verdict weight**; it is here
-because it is the only construction any return was scored for, and because a construction scored against
-returns gets a component line whatever it turns out to be.
-
-| direction | gross Sharpe | gross Sortino | net Sharpe | net Sortino | gross $/session | net $/session | hit | payoff | skew | maxDD |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| attraction | −0.034 | −0.046 | **−1.234** | **−1.714** | −$0.12 | −$4.37 | 0.486 | 1.011 | +1.15 | $5,398 |
-| repulsion | +0.034 | +0.040 | **−1.166** | **−1.414** | +$0.12 | −$4.13 | 0.495 | 0.989 | −1.15 | $5,260 |
-
-ρ with the admitted MACD day-session arm: **+0.055** over 1,162 overlapping sessions. Gross is
-indistinguishable from zero in both directions, so this is not a cost failure — there is nothing for cost
-to destroy. Drawdown convention: **positive dollars from peak** (D542).
-
-## 7. What the six sharpenings bought
-
-| # | change | what it did |
-|---|---|---|
-| 1 | gamma weight | removed the confound only by collapsing the range; `WEIGHTS BITE` **fired on it as the record predicted**, median \|K_w − P1530\| **1.355 points** against a 2.0-point floor |
-| 2 | Δ open interest | the only change addressing the named defect; gave the family its one independent, wide conditioner — whose width is the **ladder's extent** (flat ratio 1.52), and whose association with the close is nil |
-| 3 | near the money | every band of ≤2 steps fails on support or sawtooth, as predicted; the 3-step band only "worked" when centred on the current price, which is the artefact |
-| 4 | ten minutes | sd(R10)/sd(R30) = **0.6584**, confirming the stress test's 0.659; no cell's statistic improved and the economics worsened |
-| 5 | aggressor side | built as [D617](D617-FIXTURE-the-ES-option-signed-flow-census-from-the-tbbo-year.md)'s census, scored nothing; unsigned share **0.000166**, agreement **0.999983** |
-| 6 | short straddle | not reached — no cell survived to be expressed, and the record's five infeasibility reasons stand unchanged |
+ρ with the admitted MACD day-session arm: **+0.034** over the overlapping sessions. Gross is
+indistinguishable from zero in both directions, so this is not a cost failure — there is nothing for cost to
+destroy. Drawdown convention: **positive dollars from peak** (D542).
 
 ## 8. What is spent, and what this closes
 
-**Nothing was scored on the specified family, so the in-sample window was read for construction statistics
-only** — dispersions, correlations, grid R², strike counts — plus returns for the four artefact cells,
-which are disclosed above. The **ES day-session 2024+ slice stays unread**; D617's census window stays
-unspent for every return-bearing construction.
+Returns were scored for **five cells** in the specified family and for the endogenous-band diagnostic
+cells, all disclosed above. The **ES day-session 2024+ slice stays unread**;
+[D617](D617-FIXTURE-the-ES-option-signed-flow-census-from-the-tbbo-year.md)'s census window stays unspent
+for every return-bearing construction.
 
-**The axis of "signed distance from the price to a weighted strike" closes for ES 0DTE**, and it closes on
-a construction argument rather than on a coefficient: the object's variance is the day's own move, or the
-strike grid's relation to the current price, or the listed ladder's extent, and none of the three is a
-statement about dealer positioning. Any future attempt on this axis has to name which of those three its
-dispersion comes from and show it is none of them. Nothing here is pre-registered again without a fixture
-that changes that arithmetic — per-strike dealer inventory, which no source on this disk carries.
+**The axis of "signed distance from the price to a weighted strike" closes for ES 0DTE.** It closes on two
+legs that are now independent of each other. The construction leg: a conditioner on this axis takes its
+dispersion from the day's own move (−0.48 to −0.74 for every pre-session-anchored weight), or from the
+band's own position (corr with the grid centroid 0.998–1.000 once banded), and the one construction that
+escapes both — Δ-OI unbanded — carries no information about the close. The outcome leg: the pre-registered
+primary has the right sign and a t of +0.96, the family maximum |t| of 1.961 does not reach a single-cell
+bar let alone the family bar of 2.714, and the best expected move is $2.43 against $4.25.
 
-The principal's six sharpenings are all measured. Two of them (the Δ-OI position weight and the aggressor
-side) were the ones that addressed the real defect, and both are now data layers this repository has and
-did not have before.
+Nothing on this axis is pre-registered again without a fixture that changes that arithmetic — per-strike
+dealer inventory, which no source on this disk carries.
+
+**And a method lesson this study paid for twice: a screen is a measuring instrument, so it needs a
+known-answer case before it is trusted.** S1b was written to catch a real failure mode, was stated
+plausibly, passed a synthetic unit test, rejected everything, and was wrong. What exposed it was building an
+object whose answer was known in advance and checking that the screen admitted it. Any future gate that
+*rejects* rather than *reports* should be shown to pass an oracle before its rejections are believed.
