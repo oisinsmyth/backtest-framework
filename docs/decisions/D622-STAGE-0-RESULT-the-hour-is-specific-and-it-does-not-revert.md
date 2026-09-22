@@ -136,16 +136,32 @@ test, so it is not hostage to 182 observations.
 Asked directly, and answered with the arithmetic rather than a judgement. Two candidates emerged from this
 programme; both are scored at one MES against the $4.25 round trip the account pays.
 
-| | trades (per year) | net/trade | t | Sharpe (own trade rate) | maxDD vs $2,000 allowance | 8-year total |
-|---|---:|---:|---:|---:|---:|---:|
-| **A** this record's arm | 182 (23) | **+$9.49** | +1.06 | +0.375 | 0.76× | $1,728 |
-| **B** the D618 §3d MACD cell | 342 (43) | +$3.70 | +1.32 | +0.468 | 0.42× | $1,265 |
-| **A + B combined** | 475 (59) | +$2.67 | **+0.74** | **+0.261** | 0.80× | $1,269 |
+**AMENDED 2026-09-22 (second amendment): this table first carried a Sharpe with NO SORTINO beside it, which
+breaches R17, and its figures were computed in a scratchpad script rather than in the runner — the exact error
+shape CLAUDE.md names after D466.** Row A is now computed by `component_line()` inside
+`scripts/stage0_d622_close_inventory.py`, is a declared output (`component` in `REQUIRED_OUTPUTS`), and
+annualises by the book's **own 22.8 trades a year** rather than `sqrt(252)`. The runner reproduces every
+scratchpad figure — net $+9.49, t +1.06, maxDD $1,512, $1,728 total — so nothing in the disposition moves; the
+Sharpe reads 0.376 rather than 0.375 on the runner's variance convention.
+
+| | trades (per year) | net/trade | median net | t | gross Sharpe / Sortino | **net Sharpe / Sortino** | maxDD vs $2,000 | 8-year total |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| **A** this record's arm | 182 (22.8) | **+$9.49** | +$7.63 | +1.06 | +0.544 / +0.568 | **+0.376 / +0.403** | $1,512 (0.76×) | $1,728 |
+| **B** the D618 §3d MACD cell | 342 (43) | +$3.70 | — | +1.32 | — | +0.468 / **not computed** | 0.42× | $1,265 |
+| **A + B combined** | 475 (59) | +$2.67 | — | **+0.74** | — | **+0.261** / **not computed** | 0.80× | $1,269 |
+
+**The two rows marked "not computed" are a stated debt, not an omission to be read past.** B's and the union's
+P&L series were built outside any runner, so no Sortino exists for them and this record will not invent one.
+B's own record ([D618](D618-STAGE-0-RESULT-the-band-around-the-price-was-the-signal.md) §3d) reports **337**
+trades where this table says 342, which is a second reason to treat its row as indicative. Closing that debt
+means giving the MACD cell a `component_line()` in **its** runner; until then only row A meets the ledger's
+standard for a component number, and **row A does not clear the bar** — so the debt changes no disposition.
 
 Three independent reasons, none of which is "the edge is negative":
 
-1. **Neither clears the standard.** `COMPONENTS_PROP.md` wants net Sharpe 0.4–0.6; A is 0.375 and B is 0.468,
-   and neither t exceeds 1.4.
+1. **Neither clears the standard.** `COMPONENTS_PROP.md` wants net Sharpe 0.4–0.6; A is **0.376 with a
+   Sortino of 0.403** — the downside deviation is *smaller* than the total, so the distribution is mildly
+   favourable and the shortfall is in the mean, not in the tail — and B is 0.468. Neither t exceeds 1.4.
 2. **They do not combine — they are one construction twice.** On the 49 sessions where both fire their P&L
    correlates **+0.876**, and those sessions carry the money (A earns $50.38 and B $28.49 on them, against
    $9.49 and $3.70 overall). Combining *dilutes*: Sharpe falls from 0.375 to **0.261** and the drawdown

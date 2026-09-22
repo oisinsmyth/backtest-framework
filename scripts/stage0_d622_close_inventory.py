@@ -51,8 +51,8 @@ INDEX_ROOTS = ("ES", "NQ", "YM")
 OTHER_ROOTS = ("ZN", "ZB", "GC", "CL", "6E")
 HOURS = [f"h{h:02d}" for h in list(range(18, 24)) + list(range(0, 17))]
 NULL_DRAWS, SEED, ROT_MIN = 2000, 622, 10
-REQUIRED_OUTPUTS = ("spec", "windows", "sets", "audits", "arm", "P4", "P5", "P6", "P7", "P8", "P9",
-                    "reproductions", "verdicts", "verdict", "timing_s")
+REQUIRED_OUTPUTS = ("spec", "windows", "sets", "audits", "arm", "component", "P4", "P5", "P6", "P7", "P8",
+                    "P9", "reproductions", "verdicts", "verdict", "timing_s")
 
 
 def log(*a):
@@ -358,6 +358,48 @@ def selftest():
     log(f"{SPEC} selftest: all audits pass and all raise on their breaks")
 
 
+def component_line(gross_usd, cost_usd, years, label):
+    """CLAUDE.md's component line, computed IN THE RUNNER at one MES against the cost that size pays.
+
+    Section 5's first version omitted the Sortino and computed its Sharpe in a scratchpad script. Both are
+    corrected here rather than in the prose, because that is the error shape CLAUDE.md names after D466 --
+    "a component number computed outside the runner, under a cost line other than the one the account pays".
+    Two rules bind:
+
+    * **R17** -- the Sortino is reported BESIDE the Sharpe, never instead of it and never alone.
+    * **Annualise by the construction's OWN trade rate, never sqrt(252).** This arm trades ~23 times a
+      year, so 252 would overstate its Sharpe by sqrt(252/23) = 3.3x. D618's `_ratio` uses 252 correctly
+      because its cells trade every session: the convention is a property of the book, not of the repo.
+    """
+    g = np.asarray(gross_usd, float)
+    g = g[np.isfinite(g)]
+    net = g - cost_usd
+    tpy = g.size / years if years > 0 else np.nan
+
+    def ratio(v):
+        sd = float(np.std(v))
+        dn = v[v < 0]
+        sdn = float(np.std(dn)) if dn.size else np.nan
+        k = np.sqrt(tpy) if np.isfinite(tpy) and tpy > 0 else np.nan
+        return (float(np.mean(v) / sd * k) if sd > 0 else np.nan,
+                float(np.mean(v) / sdn * k) if np.isfinite(sdn) and sdn > 0 else np.nan)
+
+    gs, gso = ratio(g)
+    ns, nso = ratio(net)
+    eq = np.cumsum(net)
+    maxdd = float(np.max(np.maximum.accumulate(eq) - eq)) if eq.size else np.nan
+    per = float(np.mean(net) / np.std(net, ddof=1)) if net.size > 1 and np.std(net, ddof=1) > 0 else np.nan
+    need = int(np.ceil((2.0 / per) ** 2)) if np.isfinite(per) and per > 0 else None
+    return dict(label=label, trades=int(g.size), years=float(years), trades_per_year=float(tpy),
+                gross_usd_per_trade=float(np.mean(g)), net_usd_per_trade=float(np.mean(net)),
+                median_net_usd=float(np.median(net)), hit_rate=float((g > 0).mean()),
+                gross_sharpe=gs, gross_sortino=gso, net_sharpe=ns, net_sortino=nso,
+                t_net=tstat(net), maxdd=maxdd, total_net_usd=float(np.sum(net)),
+                cost_usd=float(cost_usd), size="one MES", trades_for_t2=need,
+                years_for_t2=(float(need / tpy) if need and np.isfinite(tpy) and tpy > 0 else None),
+                note="annualised by this book's OWN trade rate, not sqrt(252); Sortino beside Sharpe (R17)")
+
+
 def guard_outputs(res):
     missing = [k for k in REQUIRED_OUTPUTS if k not in res]
     if missing:
@@ -394,6 +436,21 @@ def run():
     log(f"  arm: SHORT on H1 <= -{H1_THRESHOLD}; {m.sum()} sessions ({m.mean():.3f}); "
         f"mean {res['arm']['mean_bp']:+.2f} bp, t {res['arm']['t']:+.2f}, hit {res['arm']['hit']:.3f}, "
         f"gross ${res['arm']['gross_usd']:+.2f} against ${cost:.2f}")
+
+    # the component line, in the runner and not in a scratchpad (CLAUDE.md, after D466)
+    gross_trade = -arm_y / 1e4 * s["P1500"].to_numpy(float)[m] * pt_usd
+    years = (pd.Timestamp(idx[-1]) - pd.Timestamp(idx[0])).days / 365.25
+    res["component"] = component_line(gross_trade, cost, years, "D622 arm: short 15:00-16:00 after a "
+                                                               "1-sigma 14:00-15:00 decline, one MES")
+    c_ = res["component"]
+    log(f"  COMPONENT: {c_['trades']} trades over {c_['years']:.2f} years "
+        f"({c_['trades_per_year']:.1f}/yr)  gross ${c_['gross_usd_per_trade']:+.2f}  "
+        f"net ${c_['net_usd_per_trade']:+.2f}  median net ${c_['median_net_usd']:+.2f}  "
+        f"hit {c_['hit_rate']:.3f}")
+    log(f"             gross Sharpe {c_['gross_sharpe']:+.3f} / Sortino {c_['gross_sortino']:+.3f}   "
+        f"NET Sharpe {c_['net_sharpe']:+.3f} / Sortino {c_['net_sortino']:+.3f}   t {c_['t_net']:+.2f}")
+    log(f"             maxdd ${c_['maxdd']:,.0f}  total net ${c_['total_net_usd']:,.0f}  "
+        f"trades for t=2.0: {c_['trades_for_t2']} ({c_['years_for_t2']:.0f} years)")
 
     # ---------------- P4 the deadline binds
     legs = {f"leg{i}": -s[f"leg{i}_bp"].to_numpy(float)[m] for i in (1, 2, 3)}

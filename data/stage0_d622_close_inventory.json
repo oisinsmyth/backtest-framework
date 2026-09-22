@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "spec": "D622",
  "audits": {
   "leg_additivity": {
@@ -49,6 +54,28 @@
    "above_p95": true,
    "below_p05": false
   }
+ },
+ "component": {
+  "label": "D622 arm: short 15:00-16:00 after a 1-sigma 14:00-15:00 decline, one MES",
+  "trades": 182,
+  "years": 7.983572895277208,
+  "trades_per_year": 22.796810699588477,
+  "gross_usd_per_trade": 13.743463154966653,
+  "net_usd_per_trade": 9.493463154966651,
+  "median_net_usd": 7.628465998523217,
+  "hit_rate": 0.5879120879120879,
+  "gross_sharpe": 0.543718195697052,
+  "gross_sortino": 0.5684826550032568,
+  "net_sharpe": 0.37557991019676407,
+  "net_sortino": 0.40260221249391387,
+  "t_net": 1.058289761968815,
+  "maxdd": 1512.393448386651,
+  "total_net_usd": 1727.8102942039304,
+  "cost_usd": 4.25,
+  "size": "one MES",
+  "trades_for_t2": 651,
+  "years_for_t2": 28.556626125414628,
+  "note": "annualised by this book's OWN trade rate, not sqrt(252); Sortino beside Sharpe (R17)"
  },
  "P4": {
   "leg1": {
