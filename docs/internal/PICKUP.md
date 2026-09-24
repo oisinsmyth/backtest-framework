@@ -2,6 +2,71 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## SETTLEMENT LEDGER, ITEM 1: DAILY HOLDINGS HISTORY AND GATE 0b, CLOSED 2026-09-24
+
+This is AITODO item 1 (deposit Q23): what each fund held, by contract month and futures versus swap,
+for every day. The principal can't pay for data (2026-09-24), which closed the vendor route (ETF
+Global's daily constituents). ProShares' `robots.txt` forbids scraping past today's holdings table.
+
+The principal's standard was "no partial test, no handwaving". It was relaxed the same day:
+*"directionally correct should be ok"*, with estimates carrying "smaller size and larger error bars".
+The amendments that make this binding are in
+[`SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md`](SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md) (A1–A5, all signed off):
+- crude oil is co-primary;
+- the kill rule is per instrument;
+- the CL-alone guard;
+- multiple-imputation error bars;
+- var(f) in var_Q1.
+
+Every script below writes its output and reproduces it byte for byte with `--check`. Each spec was
+written into the script's docstring before the first run, and post-hoc changes are listed in its
+`deviations`. Every fixture read goes through `load_panel(reserved_from="2024-01-01")`, and
+`fund_holdings_quarterly` is cut on `filed_date`.
+
+| script → output | what it settles |
+|---|---|
+| `prove_swap_free_quarters.py` → `ledger_swap_free_quarters.json` | Futures-only proven from the audited statements of operations: zero swap P&L, and no swap line at either quarter-end.<br>**Proven:** KOLD 2017–2025; BOIL except 2023; SCO from 2020-Q4; UNG 2016–2022; USO 2016–2021.<br>USO 2022-Q1 held swaps only within the quarter (f = 0.962).<br>Controls fire, and the nine-month sums check. |
+| `check_ng_index_months.py` → `ledger_ng_held_months_check.json` | NG held months follow BCOM's designated months: 80 of 80. |
+| `gate_0b_ng_nav.py` → `ledger_gate_0b_ng.json` | Gate 0b **PASS**, BOIL 99.1% and KOLD 98.7% (pre-registered).<br>The funds trade at BCOM §2.8's closes of **BD5–9**. |
+| `check_ng_contract_counts.py` → `ledger_ng_contract_counts_check.json` | contracts = L × AUM / (settle × 10,000), on 47 of 47 quarter-ends. **Use published AUM, never NAV × shares, for BOIL.** |
+| `fill_settle_holes_2020.py` → `ledger_settle_holes_2020.csv` | The 2020-02-27 and 2020-06-30 holes, filled from EIA. |
+| `estimate_fut_share.py` → `ledger_fut_share_{daily.csv.gz,summary.json}` | f_fut: linear between quarter-ends, band h = 0.151.<br>Flagged DISFAVOURED by the P&L check: UCO 2019-Q2, 2020-Q2, 2020-Q3, 2023-Q1, 2023-Q2; SCO 2019-Q2, 2019-Q3. |
+| `check_cl_index_months.py` → `ledger_cl_held_months_check.json` | CL held months: WTI subindex to 2020-09-16 (26 of 26), then Balanced WTI (51 of 51). |
+| `gate_0b_cl_nav.py` → `ledger_gate_0b_cl.json` | Pre-registered **FAIL**, UCO 88.8% and SCO 88.4%.<br>Bloomberg's BCBCLI methodology documents the BD2–3 roll. Under it, excluding 2020-04-01 → 09-16: 99.74% and 99.48%. |
+| `check_uscf_months_and_rolls.py` → `ledger_uscf_months_rolls_check.json` | UNG/USO held months: 27 of 27 and 13 of 13.<br>Roll days from market closes: not identifiable.<br>USCF's official roll calendar: 48 of 48 per fund, **2020–2023 proven**. |
+| `fetch_uscf_monthly_statements.py`, `build_uscf_monthly_panel.py` → `fund_facts/uscf_monthly_statements.csv` | 168 exact month-ends, 2017–2023, from the Rule 4.22 statements.<br>Gates G1–G3 and G5; see data-available. |
+| `estimate_uscf_aum.py` → `ledger_uscf_aum_{daily.csv.gz,summary.json}` | UNG/USO daily AUM, band −12% to +18%.<br>The band is measured on the four ProShares funds, whose truth is known. |
+| `estimate_uso_ladder.py` → `ledger_uso_weights_{daily.csv.gz,summary.json}`, with `fund_facts/uso_allocation_notices.csv` | USO's weights by contract month, from its 2020–2023 8-Ks.<br>Leave-one-out: contract set 12 of 12; mean error 1.1 pp, band 2.7 pp. |
+| `check_ung_monthly_rolls.py` → `ledger_ung_monthly_rolls_check.json` | UNG's **2017–2019 roll days PROVEN** from month-end NAV.<br>Known-answer window 2020–2022 first: 4.3 bp against 25.1 bp.<br>Test window: 3.9 bp against 9.3 bp, sign test 24–11, p = 0.02.<br>Post hoc, on exact NAV ÷ shares: 2.2 bp, p = 0.001. |
+
+**For the ledger build (AITODO 11):**
+- The business-day calendar drops holiday republications.
+- CL's "Business Day" is any NYMEX day.
+- The strip's **CLK0 2020-04-17 is wrong** (−37.63 where the true value is 18.27). A separate task
+  audits which studies read it.
+
+**The principal's files, 2026-09-24:**
+- `etf_splits.csv`, ProShares' 363 splits 2010–2026, is tracked as
+  `data/fund_facts/proshares_splits.csv`, with the same content (git stores it with LF line
+  endings).
+- `psdlyhld.csv` is all ProShares funds' holdings for 2026-09-23, one day only. It is cached at
+  `data/raw/proshares_daily_holdings/2026-09-23.csv`.
+- `historical_nav.zip` is ProShares' all-funds NAV, shares and AUM: 173 funds, 540,428 rows.
+  - It is cached at `data/raw/proshares_historical_nav/`.
+  - It is identical to `fund_nav_daily` on every common date.
+  - It holds all eight ProShares index LETFs in the LETF close-flow document's universe (TQQQ,
+    SQQQ, UPRO, SPXU, SSO, SDS, QLD, QID). That is that document's Gate 0 AUM input.
+
+**The vendor route, for the record:**
+- ETF Global's daily constituents (from 2017-04-03, via Nasdaq Data Link, AWS Data Exchange or
+  Massive) was the only daily-holdings source found.
+- It was closed on cost.
+
+**Still open:**
+- 1f, Gate 0b from 2024 on, after the seal decision (AITODO 2);
+- the execution time of day (AITODO 9);
+- USO's 2017 → April 2020 roll days, which rest on the documented rule (not checked against NAV).
+
 ## ROUND 4 — THE LAST SHARED ITEM AND THE SETTLEMENT LEDGER'S OWN INFRASTRUCTURE, D609–D612 AND D619–D621 COMMITTED `804b807` + MERGE `3092d50`, 2026-09-22
 
 The principal's instruction (2026-09-21): *"finish off the shared infrastructure points then move on to

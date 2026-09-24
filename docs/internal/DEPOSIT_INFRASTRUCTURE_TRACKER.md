@@ -53,6 +53,7 @@ index-rebalance dates exist nowhere in the repo and need a source first. Recorde
 | Quarterly holdings from EDGAR: all 231 10-Q/10-K filings, 415 fund-quarters of futures and swap lines with signed contracts, months and counterparties 2006→2026; `f_fut` null before ~2016 (USCF published no notional); unparsed periods written with a reason | built; **`filed_date` is the cut column, `period_end` the wrong cut** | D620 | — |
 | Between-filing projection for UNG/USO (`fund_panel_projected`, `est_flag = 1`): **backwards yes, between no** — measured on the four ProShares funds with daily truth, median error 36–44% on shares, 18–33% on AUM, creation flow uncorrelated with truth | built as an estimate with its error in the meta; never differenced for flow | D620 | — |
 | Retail attention amended: creations (daily Δshares) primary, Robinhood holders (`robintrack_energy_funds`, 2018-05→2020-08) validation — Spearman of Δholders vs Δshares positive at lag 0 on all four ProShares funds and lower at lag +1 on all four; GDELT hourly through the API built, live sample deferred on a 429 | built; **the deposit amendment is drafted in D621 §7d for the principal** (approved in principle 2026-09-22) | D621 | none new |
+| Holdings history and Gate 0b (AITODO item 1, 2026-09-24).<br>**Proven:** swap-free quarters (BOIL, KOLD, SCO from 2020-Q4, UNG to 2022, USO to 2021); held months for all six; NG contract counts.<br>**Gate 0b:** NG PASS; CL pre-registered FAIL, passing under the documented BD2–3 roll.<br>**Roll days:** UNG/USO proven 2017–2023 (official calendar, and UNG's monthly NAV).<br>**Estimated with bands:** f_fut (UCO, SCO to 2020-Q3, BOIL 2023); UNG/USO daily AUM; USO's ladder weights.<br>**Filled:** the 2020 settlement holes, from EIA.<br>**Exact:** UNG/USO month-end NAV and shares.<br>The deposit amendments A1–A5 are in `SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md` | built. Every output reproduces byte for byte (`--check`). Gate 0b from 2024 on waits on the seal decision | — | — |
 | Still ✗ | ETF NBBO quotes/trades and IIV; swap dissemination records; CME settlement prices job; restrike-check job; Stage estimation of `p, n, R, h0, h1, g1, n9` (research, not infrastructure) | — | — |
 
 Crosswalk after round 4: **79 of 146 claimed** (ledger 65/71; the six unclaimed ledger items are 54–58 declined in D588 and 61). Per-document infrastructure for the other four documents and every research item below: **nothing built,
@@ -104,7 +105,14 @@ holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
 
 **Settlement ledger**
 - Point-in-time fund panel for BOIL, KOLD, UCO, SCO, UNG, USO: NAV, shares, holdings by contract
-  month, futures versus swap split, `published_at`. ◐ (D620 adds the quarterly holdings, split and held
+  month, futures versus swap split, `published_at`. ◐ (Update 2026-09-24, AITODO item 1:
+  - the daily split is proven or estimated with bands for all six funds;
+  - the held months are proven;
+  - UNG/USO month-end NAV and shares are exact from the monthly statements, and their daily AUM
+    is estimated;
+  - see the round-4 table.
+
+  Earlier: D620 adds the quarterly holdings, split and held
   months for all six back to 2006 from the filings, and an estimated daily UNG/USO panel with a measured
   36–44% share error; D619: NAV, shares and AUM for the four
   ProShares funds 2008→2026 in `fund_nav_daily`; holdings for one day, forward-only through the
@@ -130,7 +138,9 @@ holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
   backfill** — hourly Wikipedia is dumps-only at ~2.5 TB for 2016–2023, GDELT GKG ~1.64 TB; the
   deposit's line 112 is an erratum; the forward `attention` recorder job is `ready`)
 - CFTC disaggregated COT ✓ (raw on disk), swap dissemination records ✗, NG and CL options open
-  interest ✗ (NOT HELD: both Databento pulls used `.FUT` parents, and the 2026 definition file
+  interest: raw on disk since the free pull of 2026-09-22 (`a25ccef`: LO, ON and LN statistics and
+  definitions, plus TAS, 20.4 GB under `data/raw/databento/`), not yet built into a panel. The note
+  below is from before that pull. (Was NOT HELD: both Databento pulls used `.FUT` parents, and the 2026 definition file
   decodes to security_type {FUT: 9,138,835, OOF: 1} — the "statistics schema held, not built"
   line was wrong. Needs a pull; quoted in D619 at 178.21 GB / USD 0.00 across fifteen resolved
   option parents, subscription window to ~2026-10-11), MBO ◐.

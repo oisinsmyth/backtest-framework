@@ -85,7 +85,24 @@ within a few sessions. *(ii)* Exact-zero settlements (18,349) are the second mis
 dropped (D526); **negative settlements are kept only for CL in April 2020** — nine other negatives,
 each a single print on a far-deferred month with the magnitude of a daily change, are dropped and
 listed in the meta. *(iii)* Two settlements carried a weekend `ref` and are dropped. *(iv)* The
-derive step is a 4–5 minute Python loop; the extract is the fast part.
+derive step is a 4–5 minute Python loop; the extract is the fast part. *(v)* **Some exchange
+holidays carry a full set of settlements that are copies of the previous day's**: on NG, every
+contract on 2010-12-24, 2011-04-22, 2012-04-06, 2013-03-29, 2014-04-18, 2015-04-03, 2015-07-03,
+2021-04-02 and 2023-04-07 (the Good Fridays and two holiday eves). Those are republications, not
+trading days. A study that counts business days (an index roll, BD-n of a month) must drop them.
+Gate 0b's first run found them as an error cluster on BD6–10 of April 2021 and April 2023
+(`scripts/gate_0b_ng_nav.py`). *(vi)* **NG and CL have no settlement at all on 2020-02-27 and
+2020-06-30.** The on-disk archive and Databento's own (a $0 refetch, marked "degraded") both
+lack them. The four nearest contracts for each day are recovered from the EIA's daily futures
+series already on disk (`data/raw/eia/NG.zip` and `PET.zip`) into
+[`ledger_settle_holes_2020.csv`](../data/ledger_settle_holes_2020.csv), by
+`scripts/fill_settle_holes_2020.py`. The EIA's contract k equals the strip's k-th nearest on
+6,632 of 6,632 NG cells and 6,635 of 6,636 CL cells, 2017-05 → 2023. The strip is not edited.
+*(vii)* **That one CL miss is a strip error:** CLK0 on 2020-04-17 reads −37.63, Monday
+2020-04-20's negative print, where the Friday settlement was 18.27. *(viii)* D526's one-digit
+year rule dates a CL code ten years out as a month behind the session (CLK9 on 2019-06-10 reads
+as May 2019). A near-contract ranking must drop any code whose last trading day has already
+passed.
 
 And the two **breadth** fixtures, which cover **36 roots** rather than a hand-picked few:
 **`fut_breadth_hourly.csv.gz`** (the hourly day session, 170,643 root-sessions, 2010-06-07 →;
@@ -813,6 +830,35 @@ because it moves on 46–56 days where the real count moves on 840–2,037. Half
 the 40–90 day filing lag and the rest is what a quarterly observation cannot know; perfect
 hindsight interpolation only reduces the median AUM error to 0.10–0.21. Nothing is written back
 into `fund_nav_daily`. The meta carries D604's holdout sentence.
+
+**`data/fund_facts/uscf_monthly_statements.csv` — UNG's and USO's EXACT month-ends, 2017-01 →
+2023-12 (settlement ledger, AITODO 1e, 2026-09-24).**
+- **Columns:** `fund, month_end, nav_begin_usd, nav_usd, nav_per_share, shares, shares_added,
+  shares_withdrawn, split_restated, source`. There are 168 rows, 84 per fund, with no month
+  missing.
+- **Source:** each fund's CFTC Rule 4.22 monthly statement, from USCF's public library. The raw
+  PDFs are under `data/raw/uscf/monthly_statements/`.
+- **Built and gated by** `scripts/build_uscf_monthly_panel.py`:
+  - NAV equals NAV per share × shares on every row;
+  - the share identity holds month to month, except the reverse splits UNG 2017-12 and 2023-12
+    and USO 2020-04, each exact after the split;
+  - 56 quarter-ends equal the audited 10-Q/10-K figures;
+  - each opening NAV equals the prior close on 165 of 166 pairs (USO 2023-03 is off by $2,073).
+- **What bites:**
+  - `nav_per_share` is printed to the cent, about ±8 bp at $6. Use `nav_usd / shares` when
+    precision matters.
+  - A statement filed after a split is restated on the new basis (`split_restated`).
+  - UNG 2018-06 is derived from July's opening figures, because the library's file for it is
+    UNL's.
+- **Derived estimates, gitignored and rebuilt by their scripts:**
+  - `ledger_uscf_aum_daily.csv.gz`: daily AUM, band −12% to +18%;
+  - `ledger_uso_weights_daily.csv.gz`: USO's weights by contract month, band ±2.7 pp;
+  - `ledger_fut_share_daily.csv.gz`: f_fut for all six funds, band ±0.151.
+- **Neighbours:**
+  - `uso_allocation_notices.csv` dates USO's 2020–2023 allocation 8-Ks;
+  - `proshares_splits.csv` is ProShares' own split history.
+- **The ledger's checks and Gate 0b outputs** are the `data/ledger_*.json` files, listed in
+  `docs/internal/SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md`.
 
 **`data/fixtures/robintrack_energy_funds.csv.gz` — the six energy funds' Robinhood holder counts ([D621](decisions/D621-retail-attention-from-creations-and-robinhood-holders.md), 2026-09-22).**
 `ticker, ts_utc, holders`, 115,290 rows, 433,420 bytes, sha256

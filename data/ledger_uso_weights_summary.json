@@ -1,0 +1,88 @@
+{
+ "band_half_width": 0.02664,
+ "days_by_method": {
+  "benchmark": 732,
+  "documented_apr2020": 9,
+  "ladder": 734,
+  "transition_2020": 107,
+  "transition_2023": 83
+ },
+ "ladder_weights_by_offset": {
+  "2": 0.199173,
+  "3": 0.193263,
+  "4": 0.151494,
+  "5": 0.154801,
+  "6": 0.123512,
+  "7": 0.052494,
+  "A": 0.125263
+ },
+ "loo_validation": {
+  "max_abs_err": 0.03378,
+  "mean_abs_err": 0.01082,
+  "p90_abs_err": 0.02664,
+  "per_quarter": [
+   {
+    "max_abs_err": 0.0207,
+    "quarter_end": "2020-09-30",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0262,
+    "quarter_end": "2020-12-31",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0164,
+    "quarter_end": "2021-03-31",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0185,
+    "quarter_end": "2021-06-30",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0305,
+    "quarter_end": "2021-09-30",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0207,
+    "quarter_end": "2021-12-31",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0239,
+    "quarter_end": "2022-03-31",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0235,
+    "quarter_end": "2022-06-30",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0311,
+    "quarter_end": "2022-09-30",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0338,
+    "quarter_end": "2022-12-31",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0278,
+    "quarter_end": "2023-03-31",
+    "same_contract_set": true
+   },
+   {
+    "max_abs_err": 0.0312,
+    "quarter_end": "2023-06-30",
+    "same_contract_set": true
+   }
+  ],
+  "quarter_ends": 12,
+  "same_contract_set": 12
+ }
+}

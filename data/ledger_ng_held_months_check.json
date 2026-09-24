@@ -1,0 +1,829 @@
+{
+ "control": {
+  "must_be_below_all": true,
+  "of": 80,
+  "shifted_table_matches": 38
+ },
+ "designated_ng": {
+  "1": 3,
+  "10": 11,
+  "11": 13,
+  "12": 13,
+  "2": 3,
+  "3": 5,
+  "4": 5,
+  "5": 7,
+  "6": 7,
+  "7": 9,
+  "8": 9,
+  "9": 11
+ },
+ "evidence_days": 80,
+ "matched": 80,
+ "mismatched": [],
+ "rows": [
+  {
+   "day": "2017-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2017-05"
+   ],
+   "match": true,
+   "predicted": "2017-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2017-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2017-09"
+   ],
+   "match": true,
+   "predicted": "2017-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2017-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2017-11"
+   ],
+   "match": true,
+   "predicted": "2017-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2017-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2018-03"
+   ],
+   "match": true,
+   "predicted": "2018-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2018-05"
+   ],
+   "match": true,
+   "predicted": "2018-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2018-09"
+   ],
+   "match": true,
+   "predicted": "2018-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2018-11"
+   ],
+   "match": true,
+   "predicted": "2018-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2019-03"
+   ],
+   "match": true,
+   "predicted": "2019-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2019-05"
+   ],
+   "match": true,
+   "predicted": "2019-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2019-09"
+   ],
+   "match": true,
+   "predicted": "2019-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2019-11"
+   ],
+   "match": true,
+   "predicted": "2019-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2020-03"
+   ],
+   "match": true,
+   "predicted": "2020-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2020-05"
+   ],
+   "match": true,
+   "predicted": "2020-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2020-09"
+   ],
+   "match": true,
+   "predicted": "2020-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2020-11"
+   ],
+   "match": true,
+   "predicted": "2020-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2021-03"
+   ],
+   "match": true,
+   "predicted": "2021-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2021-05"
+   ],
+   "match": true,
+   "predicted": "2021-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2021-09"
+   ],
+   "match": true,
+   "predicted": "2021-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2021-11"
+   ],
+   "match": true,
+   "predicted": "2021-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2022-03"
+   ],
+   "match": true,
+   "predicted": "2022-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2022-05"
+   ],
+   "match": true,
+   "predicted": "2022-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2022-09"
+   ],
+   "match": true,
+   "predicted": "2022-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2022-11"
+   ],
+   "match": true,
+   "predicted": "2022-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2023-03"
+   ],
+   "match": true,
+   "predicted": "2023-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2023-05"
+   ],
+   "match": true,
+   "predicted": "2023-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2023-09"
+   ],
+   "match": true,
+   "predicted": "2023-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2023-11"
+   ],
+   "match": true,
+   "predicted": "2023-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2024-03"
+   ],
+   "match": true,
+   "predicted": "2024-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2024-05"
+   ],
+   "match": true,
+   "predicted": "2024-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2024-09"
+   ],
+   "match": true,
+   "predicted": "2024-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2024-11"
+   ],
+   "match": true,
+   "predicted": "2024-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2025-03"
+   ],
+   "match": true,
+   "predicted": "2025-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2025-05"
+   ],
+   "match": true,
+   "predicted": "2025-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2025-09"
+   ],
+   "match": true,
+   "predicted": "2025-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-09-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2025-11"
+   ],
+   "match": true,
+   "predicted": "2025-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-12-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2026-03"
+   ],
+   "match": true,
+   "predicted": "2026-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2026-03-31",
+   "fund": "BOIL",
+   "held_months": [
+    "2026-05"
+   ],
+   "match": true,
+   "predicted": "2026-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2026-06-30",
+   "fund": "BOIL",
+   "held_months": [
+    "2026-09"
+   ],
+   "match": true,
+   "predicted": "2026-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2026-09-18",
+   "fund": "BOIL",
+   "held_months": [
+    "2026-11"
+   ],
+   "match": true,
+   "predicted": "2026-11",
+   "source": "D619 recorded page BOIL__20260921T231715Z.html"
+  },
+  {
+   "day": "2026-09-23",
+   "fund": "BOIL",
+   "held_months": [
+    "2026-11"
+   ],
+   "match": true,
+   "predicted": "2026-11",
+   "source": "ProShares all-funds holdings file (principal, 2026-09-24)"
+  },
+  {
+   "day": "2017-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2017-05"
+   ],
+   "match": true,
+   "predicted": "2017-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2017-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2017-09"
+   ],
+   "match": true,
+   "predicted": "2017-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2017-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2017-11"
+   ],
+   "match": true,
+   "predicted": "2017-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2017-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2018-03"
+   ],
+   "match": true,
+   "predicted": "2018-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2018-05"
+   ],
+   "match": true,
+   "predicted": "2018-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2018-09"
+   ],
+   "match": true,
+   "predicted": "2018-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2018-11"
+   ],
+   "match": true,
+   "predicted": "2018-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2018-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2019-03"
+   ],
+   "match": true,
+   "predicted": "2019-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2019-05"
+   ],
+   "match": true,
+   "predicted": "2019-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2019-09"
+   ],
+   "match": true,
+   "predicted": "2019-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2019-11"
+   ],
+   "match": true,
+   "predicted": "2019-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2019-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2020-03"
+   ],
+   "match": true,
+   "predicted": "2020-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2020-05"
+   ],
+   "match": true,
+   "predicted": "2020-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2020-09"
+   ],
+   "match": true,
+   "predicted": "2020-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2020-11"
+   ],
+   "match": true,
+   "predicted": "2020-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2020-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2021-03"
+   ],
+   "match": true,
+   "predicted": "2021-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2021-05"
+   ],
+   "match": true,
+   "predicted": "2021-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2021-09"
+   ],
+   "match": true,
+   "predicted": "2021-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2021-11"
+   ],
+   "match": true,
+   "predicted": "2021-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2021-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2022-03"
+   ],
+   "match": true,
+   "predicted": "2022-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2022-05"
+   ],
+   "match": true,
+   "predicted": "2022-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2022-09"
+   ],
+   "match": true,
+   "predicted": "2022-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2022-11"
+   ],
+   "match": true,
+   "predicted": "2022-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2022-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2023-03"
+   ],
+   "match": true,
+   "predicted": "2023-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2023-05"
+   ],
+   "match": true,
+   "predicted": "2023-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2023-09"
+   ],
+   "match": true,
+   "predicted": "2023-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2023-11"
+   ],
+   "match": true,
+   "predicted": "2023-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2023-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2024-03"
+   ],
+   "match": true,
+   "predicted": "2024-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2024-05"
+   ],
+   "match": true,
+   "predicted": "2024-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2024-09"
+   ],
+   "match": true,
+   "predicted": "2024-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2024-11"
+   ],
+   "match": true,
+   "predicted": "2024-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2024-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2025-03"
+   ],
+   "match": true,
+   "predicted": "2025-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2025-05"
+   ],
+   "match": true,
+   "predicted": "2025-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2025-09"
+   ],
+   "match": true,
+   "predicted": "2025-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-09-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2025-11"
+   ],
+   "match": true,
+   "predicted": "2025-11",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2025-12-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2026-03"
+   ],
+   "match": true,
+   "predicted": "2026-03",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2026-03-31",
+   "fund": "KOLD",
+   "held_months": [
+    "2026-05"
+   ],
+   "match": true,
+   "predicted": "2026-05",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2026-06-30",
+   "fund": "KOLD",
+   "held_months": [
+    "2026-09"
+   ],
+   "match": true,
+   "predicted": "2026-09",
+   "source": "D620 quarter-end (SEC schedule of investments)"
+  },
+  {
+   "day": "2026-09-18",
+   "fund": "KOLD",
+   "held_months": [
+    "2026-11"
+   ],
+   "match": true,
+   "predicted": "2026-11",
+   "source": "D619 recorded page KOLD__20260921T231717Z.html"
+  },
+  {
+   "day": "2026-09-23",
+   "fund": "KOLD",
+   "held_months": [
+    "2026-11"
+   ],
+   "match": true,
+   "predicted": "2026-11",
+   "source": "ProShares all-funds holdings file (principal, 2026-09-24)"
+  }
+ ],
+ "rule": "after Business Day 10 of month m the index holds month m+1's designated contract; 13 = January next year",
+ "rule_source": "https://assets.bbhub.io/professional/sites/10/BCOM-Methodology.pdf, Table 9 and Section 2.8",
+ "spec": "settlement-ledger AITODO item 1: BOIL/KOLD held months vs the Bloomberg Natural Gas Subindex calendar"
+}

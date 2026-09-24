@@ -1,0 +1,2937 @@
+{
+ "controls": {
+  "a_table13_worst_miss": 0.0010000000000047748
+ },
+ "deviations": [
+  "split class: the first run pooled BOIL's and KOLD's split dates into one set; it is now per fund (diagnostic only)",
+  "rounding floor: the first run read decimals off the float's repr, which drops trailing zeros and reads scaled integers as exact; it now finds each row's published decimals (2-8) on the grid scaled by the later split factor, and raises on a row that sits on none (diagnostic only)",
+  "added the 'investigation' block per fund (post hoc, see investigation_rule); the verdict is unchanged"
+ ],
+ "funds": {
+  "BOIL": {
+   "L": 2,
+   "best_is_s0": true,
+   "best_schedule_on_roll_window": "S0 (BCOM; trades BD5-9 closes)",
+   "by_business_day": {
+    "1": {
+     "days": 79,
+     "max_abs_bp": 416.2272,
+     "mean_abs_bp": 5.8469,
+     "median_abs_bp": 0.3443,
+     "missing": 0,
+     "p95_abs_bp": 2.1624,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "10": {
+     "days": 79,
+     "max_abs_bp": 18.7364,
+     "mean_abs_bp": 1.1353,
+     "median_abs_bp": 0.7475,
+     "missing": 0,
+     "p95_abs_bp": 2.6265,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "11": {
+     "days": 79,
+     "max_abs_bp": 6.0668,
+     "mean_abs_bp": 0.5604,
+     "median_abs_bp": 0.288,
+     "missing": 0,
+     "p95_abs_bp": 1.6974,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "12": {
+     "days": 79,
+     "max_abs_bp": 3.5897,
+     "mean_abs_bp": 0.489,
+     "median_abs_bp": 0.2448,
+     "missing": 0,
+     "p95_abs_bp": 1.7713,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "13": {
+     "days": 79,
+     "max_abs_bp": 3.6596,
+     "mean_abs_bp": 0.4649,
+     "median_abs_bp": 0.2923,
+     "missing": 0,
+     "p95_abs_bp": 1.3223,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "14": {
+     "days": 79,
+     "max_abs_bp": 6.9805,
+     "mean_abs_bp": 0.5283,
+     "median_abs_bp": 0.2649,
+     "missing": 0,
+     "p95_abs_bp": 1.7254,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "15": {
+     "days": 79,
+     "max_abs_bp": 4.7074,
+     "mean_abs_bp": 0.4659,
+     "median_abs_bp": 0.2901,
+     "missing": 0,
+     "p95_abs_bp": 1.1819,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "16": {
+     "days": 80,
+     "max_abs_bp": 4.7508,
+     "mean_abs_bp": 0.5209,
+     "median_abs_bp": 0.2966,
+     "missing": 0,
+     "p95_abs_bp": 1.2037,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 80
+    },
+    "17": {
+     "days": 80,
+     "max_abs_bp": 2.803,
+     "mean_abs_bp": 0.5837,
+     "median_abs_bp": 0.3006,
+     "missing": 0,
+     "p95_abs_bp": 2.2136,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 80
+    },
+    "18": {
+     "days": 80,
+     "max_abs_bp": 885.715,
+     "mean_abs_bp": 11.5588,
+     "median_abs_bp": 0.2378,
+     "missing": 0,
+     "p95_abs_bp": 2.1328,
+     "pass": true,
+     "share": 0.9875,
+     "within_5bp": 79
+    },
+    "19": {
+     "days": 79,
+     "max_abs_bp": 3.656,
+     "mean_abs_bp": 0.5112,
+     "median_abs_bp": 0.2067,
+     "missing": 0,
+     "p95_abs_bp": 2.2929,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "2": {
+     "days": 78,
+     "max_abs_bp": 4.0976,
+     "mean_abs_bp": 0.4987,
+     "median_abs_bp": 0.3152,
+     "missing": 0,
+     "p95_abs_bp": 1.4633,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 78
+    },
+    "20": {
+     "days": 72,
+     "max_abs_bp": 2.6932,
+     "mean_abs_bp": 0.4853,
+     "median_abs_bp": 0.2704,
+     "missing": 0,
+     "p95_abs_bp": 1.7998,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 72
+    },
+    "21": {
+     "days": 54,
+     "max_abs_bp": 4.0324,
+     "mean_abs_bp": 0.4633,
+     "median_abs_bp": 0.2506,
+     "missing": 0,
+     "p95_abs_bp": 1.2072,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 54
+    },
+    "22": {
+     "days": 26,
+     "max_abs_bp": 3.1251,
+     "mean_abs_bp": 0.4559,
+     "median_abs_bp": 0.1781,
+     "missing": 0,
+     "p95_abs_bp": 1.7672,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 26
+    },
+    "23": {
+     "days": 9,
+     "max_abs_bp": 0.3076,
+     "mean_abs_bp": 0.1425,
+     "median_abs_bp": 0.151,
+     "missing": 0,
+     "p95_abs_bp": 0.2726,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 9
+    },
+    "3": {
+     "days": 77,
+     "max_abs_bp": 4.479,
+     "mean_abs_bp": 0.7869,
+     "median_abs_bp": 0.5564,
+     "missing": 0,
+     "p95_abs_bp": 2.503,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 77
+    },
+    "4": {
+     "days": 78,
+     "max_abs_bp": 3.5723,
+     "mean_abs_bp": 0.5473,
+     "median_abs_bp": 0.3223,
+     "missing": 0,
+     "p95_abs_bp": 2.0037,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 78
+    },
+    "5": {
+     "days": 78,
+     "max_abs_bp": 4.8185,
+     "mean_abs_bp": 0.6268,
+     "median_abs_bp": 0.3856,
+     "missing": 0,
+     "p95_abs_bp": 1.5767,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 78
+    },
+    "6": {
+     "days": 78,
+     "max_abs_bp": 23.8008,
+     "mean_abs_bp": 1.2106,
+     "median_abs_bp": 0.6629,
+     "missing": 0,
+     "p95_abs_bp": 2.6311,
+     "pass": true,
+     "share": 0.987179,
+     "within_5bp": 77
+    },
+    "7": {
+     "days": 79,
+     "max_abs_bp": 74.5494,
+     "mean_abs_bp": 1.9117,
+     "median_abs_bp": 0.6442,
+     "missing": 0,
+     "p95_abs_bp": 2.7706,
+     "pass": true,
+     "share": 0.962025,
+     "within_5bp": 76
+    },
+    "8": {
+     "days": 79,
+     "max_abs_bp": 47.1621,
+     "mean_abs_bp": 1.4407,
+     "median_abs_bp": 0.5791,
+     "missing": 0,
+     "p95_abs_bp": 2.8984,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "9": {
+     "days": 79,
+     "max_abs_bp": 72.1301,
+     "mean_abs_bp": 1.9629,
+     "median_abs_bp": 0.7459,
+     "missing": 0,
+     "p95_abs_bp": 2.7858,
+     "pass": true,
+     "share": 0.974684,
+     "within_5bp": 77
+    }
+   },
+   "by_year": {
+    "2017": {
+     "days": 155,
+     "max_abs_bp": 2.372,
+     "mean_abs_bp": 0.3485,
+     "median_abs_bp": 0.1936,
+     "missing": 0,
+     "p95_abs_bp": 1.4403,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 155
+    },
+    "2018": {
+     "days": 251,
+     "max_abs_bp": 6.0668,
+     "mean_abs_bp": 0.4675,
+     "median_abs_bp": 0.2296,
+     "missing": 0,
+     "p95_abs_bp": 1.8131,
+     "pass": true,
+     "share": 0.996016,
+     "within_5bp": 250
+    },
+    "2019": {
+     "days": 252,
+     "max_abs_bp": 3.115,
+     "mean_abs_bp": 0.5139,
+     "median_abs_bp": 0.3176,
+     "missing": 0,
+     "p95_abs_bp": 1.4528,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 252
+    },
+    "2020": {
+     "days": 253,
+     "max_abs_bp": 930.9339,
+     "mean_abs_bp": 10.9372,
+     "median_abs_bp": 0.4149,
+     "missing": 0,
+     "p95_abs_bp": 1.923,
+     "pass": true,
+     "share": 0.980237,
+     "within_5bp": 248
+    },
+    "2021": {
+     "days": 252,
+     "max_abs_bp": 23.8008,
+     "mean_abs_bp": 0.5769,
+     "median_abs_bp": 0.243,
+     "missing": 0,
+     "p95_abs_bp": 1.2864,
+     "pass": true,
+     "share": 0.988095,
+     "within_5bp": 249
+    },
+    "2022": {
+     "days": 251,
+     "max_abs_bp": 2.4408,
+     "mean_abs_bp": 0.5266,
+     "median_abs_bp": 0.3765,
+     "missing": 0,
+     "p95_abs_bp": 1.5523,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 251
+    },
+    "2023": {
+     "days": 250,
+     "max_abs_bp": 142.7813,
+     "mean_abs_bp": 2.7762,
+     "median_abs_bp": 1.0132,
+     "missing": 0,
+     "p95_abs_bp": 4.4359,
+     "pass": true,
+     "share": 0.976,
+     "within_5bp": 244
+    }
+   },
+   "calendar_check": {
+    "nav_days_without_ng_settlement": [
+     "2020-02-27",
+     "2020-06-30"
+    ],
+    "ng_settlement_days_without_nav": [
+     "2018-12-05",
+     "2021-04-02",
+     "2023-04-07"
+    ]
+   },
+   "classes": {
+    "calendar": {
+     "days": 5,
+     "max_abs_bp": 930.9339,
+     "mean_abs_bp": 291.5664,
+     "median_abs_bp": 142.7813,
+     "missing": 0,
+     "p95_abs_bp": 821.362,
+     "pass": false,
+     "share": 0.4,
+     "within_5bp": 2
+    },
+    "january_cim": {
+     "days": 24,
+     "max_abs_bp": 1.2647,
+     "mean_abs_bp": 0.3216,
+     "median_abs_bp": 0.2263,
+     "missing": 0,
+     "p95_abs_bp": 0.9986,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 24
+    },
+    "not_roll_window": {
+     "days": 954,
+     "max_abs_bp": 930.9339,
+     "mean_abs_bp": 3.2678,
+     "median_abs_bp": 0.2885,
+     "missing": 0,
+     "p95_abs_bp": 2.1331,
+     "pass": true,
+     "share": 0.994759,
+     "within_5bp": 949
+    },
+    "roll_window": {
+     "days": 710,
+     "max_abs_bp": 142.7813,
+     "mean_abs_bp": 1.2986,
+     "median_abs_bp": 0.4697,
+     "missing": 0,
+     "p95_abs_bp": 2.502,
+     "pass": true,
+     "share": 0.985915,
+     "within_5bp": 700
+    },
+    "s0_roll": {
+     "days": 395,
+     "max_abs_bp": 142.7813,
+     "mean_abs_bp": 1.8906,
+     "median_abs_bp": 0.7007,
+     "missing": 0,
+     "p95_abs_bp": 3.0189,
+     "pass": true,
+     "share": 0.977215,
+     "within_5bp": 386
+    },
+    "split": {
+     "days": 3,
+     "max_abs_bp": 1.7068,
+     "mean_abs_bp": 0.7291,
+     "median_abs_bp": 0.3483,
+     "missing": 0,
+     "p95_abs_bp": 1.571,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 3
+    },
+    "swap_free": {
+     "days": 1414,
+     "max_abs_bp": 930.9339,
+     "mean_abs_bp": 2.366,
+     "median_abs_bp": 0.29,
+     "missing": 0,
+     "p95_abs_bp": 1.6161,
+     "pass": true,
+     "share": 0.993635,
+     "within_5bp": 1405
+    },
+    "swap_held": {
+     "days": 250,
+     "max_abs_bp": 142.7813,
+     "mean_abs_bp": 2.7762,
+     "median_abs_bp": 1.0132,
+     "missing": 0,
+     "p95_abs_bp": 4.4359,
+     "pass": true,
+     "share": 0.976,
+     "within_5bp": 244
+    }
+   },
+   "controls": {
+    "b_sign_flipped": {
+     "days": 1664,
+     "max_abs_bp": 10714.5577,
+     "mean_abs_bp": 993.455,
+     "median_abs_bp": 688.2057,
+     "missing": 0,
+     "p95_abs_bp": 2862.2351,
+     "pass": false,
+     "share": 0.005409,
+     "within_5bp": 9
+    },
+    "c_index_lagged_one_day": {
+     "days": 1664,
+     "max_abs_bp": 10915.1912,
+     "mean_abs_bp": 713.0155,
+     "median_abs_bp": 501.02,
+     "missing": 0,
+     "p95_abs_bp": 2101.7815,
+     "pass": false,
+     "share": 0.003005,
+     "within_5bp": 5
+    }
+   },
+   "failing_days": [
+    {
+     "bd": [
+      11
+     ],
+     "date": "2018-11-15",
+     "err_bp": -6.067,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": 930.934,
+     "tags": [
+      "calendar"
+     ]
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": -885.715,
+     "tags": []
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-03-19",
+     "err_bp": 6.981,
+     "tags": []
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": -383.075,
+     "tags": [
+      "calendar"
+     ]
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": 416.227,
+     "tags": []
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2021-04-08",
+     "err_bp": 23.801,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2021-04-09",
+     "err_bp": -5.405,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      9
+     ],
+     "date": "2021-04-13",
+     "err_bp": -16.748,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      5,
+      6
+     ],
+     "date": "2023-04-10",
+     "err_bp": -142.781,
+     "tags": [
+      "roll_window",
+      "calendar",
+      "swap_held"
+     ]
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2023-04-11",
+     "err_bp": -74.549,
+     "tags": [
+      "roll_window",
+      "swap_held"
+     ]
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2023-04-12",
+     "err_bp": 47.162,
+     "tags": [
+      "roll_window",
+      "swap_held"
+     ]
+    },
+    {
+     "bd": [
+      9
+     ],
+     "date": "2023-04-13",
+     "err_bp": 72.13,
+     "tags": [
+      "roll_window",
+      "swap_held"
+     ]
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2023-04-14",
+     "err_bp": -18.736,
+     "tags": [
+      "roll_window",
+      "swap_held"
+     ]
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2023-12-11",
+     "err_bp": 5.418,
+     "tags": [
+      "roll_window",
+      "swap_held"
+     ]
+    }
+   ],
+   "investigation": {
+    "best_is_s0": true,
+    "best_schedule_on_roll_window": "S0 (BCOM; trades BD5-9 closes)",
+    "classes": {
+     "calendar": {
+      "days": 3,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 438.2497,
+      "median_abs_bp": 383.0746,
+      "missing": 0,
+      "p95_abs_bp": 876.148,
+      "pass": false,
+      "share": 0.333333,
+      "within_5bp": 1
+     },
+     "january_cim": {
+      "days": 24,
+      "max_abs_bp": 1.2647,
+      "mean_abs_bp": 0.3216,
+      "median_abs_bp": 0.2263,
+      "missing": 0,
+      "p95_abs_bp": 0.9986,
+      "pass": true,
+      "share": 1.0,
+      "within_5bp": 24
+     },
+     "not_roll_window": {
+      "days": 953,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 3.2709,
+      "median_abs_bp": 0.2879,
+      "missing": 0,
+      "p95_abs_bp": 2.1334,
+      "pass": true,
+      "share": 0.994753,
+      "within_5bp": 948
+     },
+     "roll_window": {
+      "days": 711,
+      "max_abs_bp": 6.0668,
+      "mean_abs_bp": 0.7434,
+      "median_abs_bp": 0.4728,
+      "missing": 0,
+      "p95_abs_bp": 2.1944,
+      "pass": true,
+      "share": 0.997187,
+      "within_5bp": 709
+     },
+     "s0_roll": {
+      "days": 395,
+      "max_abs_bp": 5.4179,
+      "mean_abs_bp": 0.8916,
+      "median_abs_bp": 0.7007,
+      "missing": 0,
+      "p95_abs_bp": 2.4497,
+      "pass": true,
+      "share": 0.997468,
+      "within_5bp": 394
+     },
+     "split": {
+      "days": 3,
+      "max_abs_bp": 1.7068,
+      "mean_abs_bp": 0.7291,
+      "median_abs_bp": 0.3483,
+      "missing": 0,
+      "p95_abs_bp": 1.571,
+      "pass": true,
+      "share": 1.0,
+      "within_5bp": 3
+     },
+     "swap_free": {
+      "days": 1414,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 2.3317,
+      "median_abs_bp": 0.29,
+      "missing": 0,
+      "p95_abs_bp": 1.5476,
+      "pass": true,
+      "share": 0.995757,
+      "within_5bp": 1408
+     },
+     "swap_held": {
+      "days": 250,
+      "max_abs_bp": 5.4179,
+      "mean_abs_bp": 1.3951,
+      "median_abs_bp": 1.0132,
+      "missing": 0,
+      "p95_abs_bp": 3.8918,
+      "pass": true,
+      "share": 0.996,
+      "within_5bp": 249
+     }
+    },
+    "failing_days": [
+     {
+      "bd": [
+       11
+      ],
+      "date": "2018-11-15",
+      "err_bp": -6.067,
+      "tags": [
+       "roll_window"
+      ]
+     },
+     {
+      "bd": [],
+      "date": "2020-02-27",
+      "err_bp": 930.934,
+      "tags": [
+       "calendar"
+      ]
+     },
+     {
+      "bd": [
+       18
+      ],
+      "date": "2020-02-28",
+      "err_bp": -885.715,
+      "tags": []
+     },
+     {
+      "bd": [
+       14
+      ],
+      "date": "2020-03-19",
+      "err_bp": 6.981,
+      "tags": []
+     },
+     {
+      "bd": [],
+      "date": "2020-06-30",
+      "err_bp": -383.075,
+      "tags": [
+       "calendar"
+      ]
+     },
+     {
+      "bd": [
+       1
+      ],
+      "date": "2020-07-01",
+      "err_bp": 416.227,
+      "tags": []
+     },
+     {
+      "bd": [
+       7
+      ],
+      "date": "2023-12-11",
+      "err_bp": 5.418,
+      "tags": [
+       "roll_window",
+       "swap_held"
+      ]
+     }
+    ],
+    "roll_days_proven": true,
+    "schedules": {
+     "S0 (BCOM; trades BD5-9 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 2.191,
+       "median_abs_bp": 0.3427,
+       "missing": 0,
+       "p95_abs_bp": 2.1602,
+       "pass": true,
+       "share": 0.995793,
+       "within_5bp": 1657
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 6.0668,
+       "mean_abs_bp": 0.7434,
+       "median_abs_bp": 0.4728,
+       "missing": 0,
+       "p95_abs_bp": 2.1944,
+       "pass": true,
+       "share": 0.997187,
+       "within_5bp": 709
+      }
+     },
+     "S0+1 (trades BD6-10 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 4.8914,
+       "median_abs_bp": 0.3437,
+       "missing": 0,
+       "p95_abs_bp": 16.4441,
+       "pass": false,
+       "share": 0.906851,
+       "within_5bp": 1509
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 224.7587,
+       "mean_abs_bp": 7.0634,
+       "median_abs_bp": 0.4947,
+       "missing": 0,
+       "p95_abs_bp": 37.1545,
+       "pass": false,
+       "share": 0.78903,
+       "within_5bp": 561
+      }
+     },
+     "S0+2 (trades BD7-11 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 7.9563,
+       "median_abs_bp": 0.3573,
+       "missing": 0,
+       "p95_abs_bp": 34.8035,
+       "pass": false,
+       "share": 0.879808,
+       "within_5bp": 1464
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 464.9766,
+       "mean_abs_bp": 14.2364,
+       "median_abs_bp": 0.5896,
+       "missing": 0,
+       "p95_abs_bp": 78.0281,
+       "pass": false,
+       "share": 0.725738,
+       "within_5bp": 516
+      }
+     },
+     "S0-1 (trades BD4-8 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 5.0018,
+       "median_abs_bp": 0.3526,
+       "missing": 0,
+       "p95_abs_bp": 17.5745,
+       "pass": false,
+       "share": 0.903245,
+       "within_5bp": 1503
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 142.9705,
+       "mean_abs_bp": 7.3217,
+       "median_abs_bp": 0.5623,
+       "missing": 0,
+       "p95_abs_bp": 44.312,
+       "pass": false,
+       "share": 0.780591,
+       "within_5bp": 555
+      }
+     },
+     "S0-2 (trades BD3-7 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 8.0261,
+       "median_abs_bp": 0.3694,
+       "missing": 0,
+       "p95_abs_bp": 37.7051,
+       "pass": false,
+       "share": 0.877404,
+       "within_5bp": 1460
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 278.5458,
+       "mean_abs_bp": 14.3998,
+       "median_abs_bp": 0.6738,
+       "missing": 0,
+       "p95_abs_bp": 84.3371,
+       "pass": false,
+       "share": 0.720113,
+       "within_5bp": 512
+      }
+     },
+     "one day (trades BD10 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 1291.4439,
+       "mean_abs_bp": 11.0791,
+       "median_abs_bp": 0.3449,
+       "missing": 0,
+       "p95_abs_bp": 46.7397,
+       "pass": false,
+       "share": 0.891226,
+       "within_5bp": 1483
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 1291.4439,
+       "mean_abs_bp": 21.5449,
+       "median_abs_bp": 0.4991,
+       "missing": 0,
+       "p95_abs_bp": 100.8605,
+       "pass": false,
+       "share": 0.752461,
+       "within_5bp": 535
+      }
+     },
+     "one day (trades BD5 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 7.4346,
+       "median_abs_bp": 0.3441,
+       "missing": 0,
+       "p95_abs_bp": 25.5737,
+       "pass": false,
+       "share": 0.914062,
+       "within_5bp": 1521
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 533.0566,
+       "mean_abs_bp": 13.0154,
+       "median_abs_bp": 0.4989,
+       "missing": 0,
+       "p95_abs_bp": 67.815,
+       "pass": false,
+       "share": 0.805907,
+       "within_5bp": 573
+      }
+     },
+     "one day (trades BD6 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 5.6578,
+       "median_abs_bp": 0.3449,
+       "missing": 0,
+       "p95_abs_bp": 15.6717,
+       "pass": false,
+       "share": 0.919471,
+       "within_5bp": 1530
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 374.1818,
+       "mean_abs_bp": 8.8571,
+       "median_abs_bp": 0.4947,
+       "missing": 0,
+       "p95_abs_bp": 56.3411,
+       "pass": false,
+       "share": 0.818565,
+       "within_5bp": 582
+      }
+     },
+     "one day (trades BD7 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 5.248,
+       "median_abs_bp": 0.3449,
+       "missing": 0,
+       "p95_abs_bp": 15.2329,
+       "pass": false,
+       "share": 0.920673,
+       "within_5bp": 1532
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 283.4077,
+       "mean_abs_bp": 7.8979,
+       "median_abs_bp": 0.4947,
+       "missing": 0,
+       "p95_abs_bp": 54.4324,
+       "pass": false,
+       "share": 0.821378,
+       "within_5bp": 584
+      }
+     },
+     "one day (trades BD8 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 5.8687,
+       "median_abs_bp": 0.3449,
+       "missing": 0,
+       "p95_abs_bp": 16.4803,
+       "pass": false,
+       "share": 0.91887,
+       "within_5bp": 1529
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 428.3149,
+       "mean_abs_bp": 9.3506,
+       "median_abs_bp": 0.4947,
+       "missing": 0,
+       "p95_abs_bp": 56.4358,
+       "pass": false,
+       "share": 0.817159,
+       "within_5bp": 581
+      }
+     },
+     "one day (trades BD9 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 930.9339,
+       "mean_abs_bp": 7.2751,
+       "median_abs_bp": 0.3449,
+       "missing": 0,
+       "p95_abs_bp": 31.6207,
+       "pass": false,
+       "share": 0.914663,
+       "within_5bp": 1522
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 428.3149,
+       "mean_abs_bp": 12.6422,
+       "median_abs_bp": 0.4967,
+       "missing": 0,
+       "p95_abs_bp": 67.1319,
+       "pass": false,
+       "share": 0.807314,
+       "within_5bp": 574
+      }
+     }
+    },
+    "verdict": {
+     "days": 1664,
+     "max_abs_bp": 930.9339,
+     "mean_abs_bp": 2.191,
+     "median_abs_bp": 0.3427,
+     "missing": 0,
+     "p95_abs_bp": 2.1602,
+     "pass": true,
+     "share": 0.995793,
+     "within_5bp": 1657
+    }
+   },
+   "roll_days_proven": true,
+   "rounding_floor": {
+    "max_bound_bp": 17.98561,
+    "median_bound_bp": 0.02412,
+    "note": "the fewest decimals that fit, so a 4-decimal NAV ending in 0 or 00 counts as 3 or 2; the ~1% and ~9% of rows at 2 and 3 are that arithmetic, and max_bound_bp is an upper bound",
+    "rows": 1664,
+    "rows_by_published_decimals": {
+     "2": 11,
+     "3": 114,
+     "4": 1032,
+     "5": 486,
+     "6": 21
+    }
+   },
+   "schedules": {
+    "S0 (BCOM; trades BD5-9 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 2.4276,
+      "median_abs_bp": 0.3427,
+      "missing": 0,
+      "p95_abs_bp": 2.2323,
+      "pass": true,
+      "share": 0.990986,
+      "within_5bp": 1649
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 142.7813,
+      "mean_abs_bp": 1.2986,
+      "median_abs_bp": 0.4697,
+      "missing": 0,
+      "p95_abs_bp": 2.502,
+      "pass": true,
+      "share": 0.985915,
+      "within_5bp": 700
+     }
+    },
+    "S0+1 (trades BD6-10 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 4.6658,
+      "median_abs_bp": 0.3437,
+      "missing": 0,
+      "p95_abs_bp": 14.7404,
+      "pass": false,
+      "share": 0.911659,
+      "within_5bp": 1517
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 224.7587,
+      "mean_abs_bp": 6.5441,
+      "median_abs_bp": 0.4947,
+      "missing": 0,
+      "p95_abs_bp": 35.4829,
+      "pass": false,
+      "share": 0.8,
+      "within_5bp": 568
+     }
+    },
+    "S0+2 (trades BD7-11 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 7.7337,
+      "median_abs_bp": 0.3561,
+      "missing": 0,
+      "p95_abs_bp": 33.6741,
+      "pass": false,
+      "share": 0.88101,
+      "within_5bp": 1466
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 464.9766,
+      "mean_abs_bp": 13.7342,
+      "median_abs_bp": 0.5819,
+      "missing": 0,
+      "p95_abs_bp": 75.4995,
+      "pass": false,
+      "share": 0.728169,
+      "within_5bp": 517
+     }
+    },
+    "S0-1 (trades BD4-8 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 5.2304,
+      "median_abs_bp": 0.3529,
+      "missing": 0,
+      "p95_abs_bp": 18.5477,
+      "pass": false,
+      "share": 0.902043,
+      "within_5bp": 1501
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 276.3681,
+      "mean_abs_bp": 7.8675,
+      "median_abs_bp": 0.5639,
+      "missing": 0,
+      "p95_abs_bp": 45.6094,
+      "pass": false,
+      "share": 0.777465,
+      "within_5bp": 552
+     }
+    },
+    "S0-2 (trades BD3-7 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 8.2121,
+      "median_abs_bp": 0.3704,
+      "missing": 0,
+      "p95_abs_bp": 37.7051,
+      "pass": false,
+      "share": 0.876803,
+      "within_5bp": 1459
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 398.7984,
+      "mean_abs_bp": 14.8556,
+      "median_abs_bp": 0.6804,
+      "missing": 0,
+      "p95_abs_bp": 84.4978,
+      "pass": false,
+      "share": 0.71831,
+      "within_5bp": 510
+     }
+    },
+    "one day (trades BD10 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 1291.4439,
+      "mean_abs_bp": 10.6483,
+      "median_abs_bp": 0.3449,
+      "missing": 0,
+      "p95_abs_bp": 45.357,
+      "pass": false,
+      "share": 0.892428,
+      "within_5bp": 1485
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 1291.4439,
+      "mean_abs_bp": 20.5652,
+      "median_abs_bp": 0.499,
+      "missing": 0,
+      "p95_abs_bp": 99.2342,
+      "pass": false,
+      "share": 0.75493,
+      "within_5bp": 536
+     }
+    },
+    "one day (trades BD5 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 7.869,
+      "median_abs_bp": 0.3441,
+      "missing": 0,
+      "p95_abs_bp": 26.463,
+      "pass": false,
+      "share": 0.912861,
+      "within_5bp": 1519
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 615.3492,
+      "mean_abs_bp": 14.0515,
+      "median_abs_bp": 0.4978,
+      "missing": 0,
+      "p95_abs_bp": 75.0787,
+      "pass": false,
+      "share": 0.802817,
+      "within_5bp": 570
+     }
+    },
+    "one day (trades BD6 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 5.7813,
+      "median_abs_bp": 0.3449,
+      "missing": 0,
+      "p95_abs_bp": 15.9911,
+      "pass": false,
+      "share": 0.919471,
+      "within_5bp": 1530
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 374.1818,
+      "mean_abs_bp": 9.1584,
+      "median_abs_bp": 0.4947,
+      "missing": 0,
+      "p95_abs_bp": 56.3645,
+      "pass": false,
+      "share": 0.81831,
+      "within_5bp": 581
+     }
+    },
+    "one day (trades BD7 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 5.269,
+      "median_abs_bp": 0.3449,
+      "missing": 0,
+      "p95_abs_bp": 15.2329,
+      "pass": false,
+      "share": 0.920072,
+      "within_5bp": 1531
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 283.4077,
+      "mean_abs_bp": 7.9578,
+      "median_abs_bp": 0.4947,
+      "missing": 0,
+      "p95_abs_bp": 54.4794,
+      "pass": false,
+      "share": 0.819718,
+      "within_5bp": 582
+     }
+    },
+    "one day (trades BD8 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 5.7935,
+      "median_abs_bp": 0.3449,
+      "missing": 0,
+      "p95_abs_bp": 16.4803,
+      "pass": false,
+      "share": 0.91887,
+      "within_5bp": 1529
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 428.3149,
+      "mean_abs_bp": 9.1871,
+      "median_abs_bp": 0.4947,
+      "missing": 0,
+      "p95_abs_bp": 56.2596,
+      "pass": false,
+      "share": 0.816901,
+      "within_5bp": 580
+     }
+    },
+    "one day (trades BD9 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 930.9339,
+      "mean_abs_bp": 7.2184,
+      "median_abs_bp": 0.3449,
+      "missing": 0,
+      "p95_abs_bp": 30.3668,
+      "pass": false,
+      "share": 0.915264,
+      "within_5bp": 1523
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 428.3149,
+      "mean_abs_bp": 12.5267,
+      "median_abs_bp": 0.4957,
+      "missing": 0,
+      "p95_abs_bp": 64.7699,
+      "pass": false,
+      "share": 0.808451,
+      "within_5bp": 574
+     }
+    }
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1664,
+     "max_abs_bp": 931.2184,
+     "mean_abs_bp": 2.7564,
+     "median_abs_bp": 0.6452,
+     "missing": 0,
+     "p95_abs_bp": 2.7955,
+     "pass": true,
+     "share": 0.984976,
+     "within_5bp": 1639
+    },
+    "one-day accrual": {
+     "days": 1664,
+     "max_abs_bp": 930.9339,
+     "mean_abs_bp": 2.3598,
+     "median_abs_bp": 0.3146,
+     "missing": 0,
+     "p95_abs_bp": 1.8604,
+     "pass": true,
+     "share": 0.991587,
+     "within_5bp": 1650
+    },
+    "y month m": {
+     "days": 1664,
+     "max_abs_bp": 930.8823,
+     "mean_abs_bp": 2.4672,
+     "median_abs_bp": 0.3813,
+     "missing": 0,
+     "p95_abs_bp": 2.3789,
+     "pass": true,
+     "share": 0.990986,
+     "within_5bp": 1649
+    },
+    "y=0": {
+     "days": 1664,
+     "max_abs_bp": 930.3995,
+     "mean_abs_bp": 2.4718,
+     "median_abs_bp": 0.4278,
+     "missing": 0,
+     "p95_abs_bp": 2.1754,
+     "pass": true,
+     "share": 0.990986,
+     "within_5bp": 1649
+    }
+   },
+   "verdict": {
+    "days": 1664,
+    "max_abs_bp": 930.9339,
+    "mean_abs_bp": 2.4276,
+    "median_abs_bp": 0.3427,
+    "missing": 0,
+    "p95_abs_bp": 2.2323,
+    "pass": true,
+    "share": 0.990986,
+    "within_5bp": 1649
+   }
+  },
+  "KOLD": {
+   "L": -2,
+   "best_is_s0": true,
+   "best_schedule_on_roll_window": "S0 (BCOM; trades BD5-9 closes)",
+   "by_business_day": {
+    "1": {
+     "days": 79,
+     "max_abs_bp": 356.4925,
+     "mean_abs_bp": 5.3012,
+     "median_abs_bp": 0.5728,
+     "missing": 0,
+     "p95_abs_bp": 2.6801,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "10": {
+     "days": 79,
+     "max_abs_bp": 25.3283,
+     "mean_abs_bp": 1.4517,
+     "median_abs_bp": 0.852,
+     "missing": 0,
+     "p95_abs_bp": 3.0766,
+     "pass": true,
+     "share": 0.962025,
+     "within_5bp": 76
+    },
+    "11": {
+     "days": 79,
+     "max_abs_bp": 6.1247,
+     "mean_abs_bp": 0.7641,
+     "median_abs_bp": 0.537,
+     "missing": 0,
+     "p95_abs_bp": 2.0222,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "12": {
+     "days": 79,
+     "max_abs_bp": 3.0813,
+     "mean_abs_bp": 0.5436,
+     "median_abs_bp": 0.3155,
+     "missing": 0,
+     "p95_abs_bp": 1.7479,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "13": {
+     "days": 79,
+     "max_abs_bp": 2.5664,
+     "mean_abs_bp": 0.575,
+     "median_abs_bp": 0.37,
+     "missing": 0,
+     "p95_abs_bp": 1.929,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "14": {
+     "days": 79,
+     "max_abs_bp": 7.4763,
+     "mean_abs_bp": 0.781,
+     "median_abs_bp": 0.4006,
+     "missing": 0,
+     "p95_abs_bp": 2.2413,
+     "pass": true,
+     "share": 0.962025,
+     "within_5bp": 76
+    },
+    "15": {
+     "days": 79,
+     "max_abs_bp": 4.9966,
+     "mean_abs_bp": 0.778,
+     "median_abs_bp": 0.6051,
+     "missing": 0,
+     "p95_abs_bp": 1.9568,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "16": {
+     "days": 80,
+     "max_abs_bp": 4.7859,
+     "mean_abs_bp": 0.7159,
+     "median_abs_bp": 0.473,
+     "missing": 0,
+     "p95_abs_bp": 1.9821,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 80
+    },
+    "17": {
+     "days": 80,
+     "max_abs_bp": 2.5708,
+     "mean_abs_bp": 0.6247,
+     "median_abs_bp": 0.479,
+     "missing": 0,
+     "p95_abs_bp": 1.5989,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 80
+    },
+    "18": {
+     "days": 80,
+     "max_abs_bp": 762.4389,
+     "mean_abs_bp": 10.1964,
+     "median_abs_bp": 0.4276,
+     "missing": 0,
+     "p95_abs_bp": 2.3496,
+     "pass": true,
+     "share": 0.9875,
+     "within_5bp": 79
+    },
+    "19": {
+     "days": 79,
+     "max_abs_bp": 4.0862,
+     "mean_abs_bp": 0.7506,
+     "median_abs_bp": 0.5081,
+     "missing": 0,
+     "p95_abs_bp": 2.2391,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 79
+    },
+    "2": {
+     "days": 78,
+     "max_abs_bp": 5.3373,
+     "mean_abs_bp": 0.7125,
+     "median_abs_bp": 0.4202,
+     "missing": 0,
+     "p95_abs_bp": 2.3674,
+     "pass": true,
+     "share": 0.987179,
+     "within_5bp": 77
+    },
+    "20": {
+     "days": 72,
+     "max_abs_bp": 7.0146,
+     "mean_abs_bp": 0.6971,
+     "median_abs_bp": 0.4158,
+     "missing": 0,
+     "p95_abs_bp": 1.9127,
+     "pass": true,
+     "share": 0.986111,
+     "within_5bp": 71
+    },
+    "21": {
+     "days": 54,
+     "max_abs_bp": 2.0632,
+     "mean_abs_bp": 0.6205,
+     "median_abs_bp": 0.4547,
+     "missing": 0,
+     "p95_abs_bp": 1.534,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 54
+    },
+    "22": {
+     "days": 26,
+     "max_abs_bp": 1.8193,
+     "mean_abs_bp": 0.5745,
+     "median_abs_bp": 0.4813,
+     "missing": 0,
+     "p95_abs_bp": 1.4645,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 26
+    },
+    "23": {
+     "days": 9,
+     "max_abs_bp": 0.7528,
+     "mean_abs_bp": 0.3615,
+     "median_abs_bp": 0.2888,
+     "missing": 0,
+     "p95_abs_bp": 0.739,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 9
+    },
+    "3": {
+     "days": 77,
+     "max_abs_bp": 4.5628,
+     "mean_abs_bp": 0.8686,
+     "median_abs_bp": 0.5894,
+     "missing": 0,
+     "p95_abs_bp": 2.4948,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 77
+    },
+    "4": {
+     "days": 78,
+     "max_abs_bp": 4.0398,
+     "mean_abs_bp": 0.6827,
+     "median_abs_bp": 0.4604,
+     "missing": 0,
+     "p95_abs_bp": 1.7148,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 78
+    },
+    "5": {
+     "days": 78,
+     "max_abs_bp": 4.6415,
+     "mean_abs_bp": 0.8483,
+     "median_abs_bp": 0.5948,
+     "missing": 0,
+     "p95_abs_bp": 2.3245,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 78
+    },
+    "6": {
+     "days": 78,
+     "max_abs_bp": 23.166,
+     "mean_abs_bp": 1.5489,
+     "median_abs_bp": 0.9621,
+     "missing": 0,
+     "p95_abs_bp": 3.6017,
+     "pass": true,
+     "share": 0.974359,
+     "within_5bp": 76
+    },
+    "7": {
+     "days": 79,
+     "max_abs_bp": 78.931,
+     "mean_abs_bp": 2.3175,
+     "median_abs_bp": 0.9864,
+     "missing": 0,
+     "p95_abs_bp": 3.5769,
+     "pass": true,
+     "share": 0.962025,
+     "within_5bp": 76
+    },
+    "8": {
+     "days": 79,
+     "max_abs_bp": 37.8673,
+     "mean_abs_bp": 1.4803,
+     "median_abs_bp": 0.9036,
+     "missing": 0,
+     "p95_abs_bp": 3.5133,
+     "pass": true,
+     "share": 0.987342,
+     "within_5bp": 78
+    },
+    "9": {
+     "days": 79,
+     "max_abs_bp": 61.2749,
+     "mean_abs_bp": 2.0326,
+     "median_abs_bp": 0.9889,
+     "missing": 0,
+     "p95_abs_bp": 2.5927,
+     "pass": true,
+     "share": 0.974684,
+     "within_5bp": 77
+    }
+   },
+   "by_year": {
+    "2017": {
+     "days": 155,
+     "max_abs_bp": 6.1322,
+     "mean_abs_bp": 0.682,
+     "median_abs_bp": 0.4854,
+     "missing": 0,
+     "p95_abs_bp": 1.6827,
+     "pass": true,
+     "share": 0.987097,
+     "within_5bp": 153
+    },
+    "2018": {
+     "days": 251,
+     "max_abs_bp": 7.2738,
+     "mean_abs_bp": 0.6513,
+     "median_abs_bp": 0.4859,
+     "missing": 0,
+     "p95_abs_bp": 1.5831,
+     "pass": true,
+     "share": 0.992032,
+     "within_5bp": 249
+    },
+    "2019": {
+     "days": 252,
+     "max_abs_bp": 4.9966,
+     "mean_abs_bp": 0.7125,
+     "median_abs_bp": 0.482,
+     "missing": 0,
+     "p95_abs_bp": 1.983,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 252
+    },
+    "2020": {
+     "days": 253,
+     "max_abs_bp": 783.9032,
+     "mean_abs_bp": 10.3428,
+     "median_abs_bp": 0.8979,
+     "missing": 0,
+     "p95_abs_bp": 3.9945,
+     "pass": true,
+     "share": 0.968379,
+     "within_5bp": 245
+    },
+    "2021": {
+     "days": 252,
+     "max_abs_bp": 23.166,
+     "mean_abs_bp": 0.8289,
+     "median_abs_bp": 0.4149,
+     "missing": 0,
+     "p95_abs_bp": 2.181,
+     "pass": true,
+     "share": 0.984127,
+     "within_5bp": 248
+    },
+    "2022": {
+     "days": 251,
+     "max_abs_bp": 5.3373,
+     "mean_abs_bp": 0.8113,
+     "median_abs_bp": 0.5893,
+     "missing": 0,
+     "p95_abs_bp": 2.4901,
+     "pass": true,
+     "share": 0.996016,
+     "within_5bp": 250
+    },
+    "2023": {
+     "days": 250,
+     "max_abs_bp": 205.6414,
+     "mean_abs_bp": 2.5667,
+     "median_abs_bp": 0.6647,
+     "missing": 0,
+     "p95_abs_bp": 3.0155,
+     "pass": true,
+     "share": 0.98,
+     "within_5bp": 245
+    }
+   },
+   "calendar_check": {
+    "nav_days_without_ng_settlement": [
+     "2020-02-27",
+     "2020-06-30"
+    ],
+    "ng_settlement_days_without_nav": [
+     "2018-12-05",
+     "2021-04-02",
+     "2023-04-07"
+    ]
+   },
+   "classes": {
+    "calendar": {
+     "days": 5,
+     "max_abs_bp": 783.9032,
+     "mean_abs_bp": 281.3656,
+     "median_abs_bp": 205.6414,
+     "missing": 0,
+     "p95_abs_bp": 710.4081,
+     "pass": false,
+     "share": 0.4,
+     "within_5bp": 2
+    },
+    "january_cim": {
+     "days": 24,
+     "max_abs_bp": 1.3522,
+     "mean_abs_bp": 0.5269,
+     "median_abs_bp": 0.4063,
+     "missing": 0,
+     "p95_abs_bp": 1.265,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 24
+    },
+    "not_roll_window": {
+     "days": 954,
+     "max_abs_bp": 783.9032,
+     "mean_abs_bp": 3.1388,
+     "median_abs_bp": 0.4751,
+     "missing": 0,
+     "p95_abs_bp": 2.2215,
+     "pass": true,
+     "share": 0.990566,
+     "within_5bp": 945
+    },
+    "roll_window": {
+     "days": 710,
+     "max_abs_bp": 205.6414,
+     "mean_abs_bp": 1.5848,
+     "median_abs_bp": 0.6811,
+     "missing": 0,
+     "p95_abs_bp": 2.9889,
+     "pass": true,
+     "share": 0.98169,
+     "within_5bp": 697
+    },
+    "s0_roll": {
+     "days": 395,
+     "max_abs_bp": 205.6414,
+     "mean_abs_bp": 2.2829,
+     "median_abs_bp": 0.9392,
+     "missing": 0,
+     "p95_abs_bp": 3.5193,
+     "pass": true,
+     "share": 0.96962,
+     "within_5bp": 383
+    },
+    "split": {
+     "days": 2,
+     "max_abs_bp": 0.6824,
+     "mean_abs_bp": 0.4705,
+     "median_abs_bp": 0.4705,
+     "missing": 0,
+     "p95_abs_bp": 0.6612,
+     "pass": true,
+     "share": 1.0,
+     "within_5bp": 2
+    },
+    "swap_free": {
+     "days": 1664,
+     "max_abs_bp": 783.9032,
+     "mean_abs_bp": 2.4758,
+     "median_abs_bp": 0.5369,
+     "missing": 0,
+     "p95_abs_bp": 2.5277,
+     "pass": true,
+     "share": 0.986779,
+     "within_5bp": 1642
+    },
+    "swap_held": {
+     "days": 0,
+     "missing": 0,
+     "pass": false,
+     "share": NaN,
+     "within_5bp": 0
+    }
+   },
+   "controls": {
+    "b_sign_flipped": {
+     "days": 1664,
+     "max_abs_bp": 11372.1679,
+     "mean_abs_bp": 989.2853,
+     "median_abs_bp": 687.573,
+     "missing": 0,
+     "p95_abs_bp": 2830.8276,
+     "pass": false,
+     "share": 0.005409,
+     "within_5bp": 9
+    },
+    "c_index_lagged_one_day": {
+     "days": 1664,
+     "max_abs_bp": 5550.1589,
+     "mean_abs_bp": 708.0973,
+     "median_abs_bp": 501.0795,
+     "missing": 0,
+     "p95_abs_bp": 2091.3344,
+     "pass": false,
+     "share": 0.003005,
+     "within_5bp": 5
+    }
+   },
+   "failing_days": [
+    {
+     "bd": [
+      11
+     ],
+     "date": "2017-09-18",
+     "err_bp": 6.125,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2017-12-11",
+     "err_bp": 6.132,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2018-02-21",
+     "err_bp": 6.516,
+     "tags": []
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2018-11-14",
+     "err_bp": 7.274,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": -783.903,
+     "tags": [
+      "calendar"
+     ]
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": 762.439,
+     "tags": []
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-03-19",
+     "err_bp": 7.476,
+     "tags": []
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-04-21",
+     "err_bp": 5.716,
+     "tags": []
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": 416.427,
+     "tags": [
+      "calendar"
+     ]
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": -356.493,
+     "tags": []
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2020-10-08",
+     "err_bp": 5.151,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      20
+     ],
+     "date": "2020-12-29",
+     "err_bp": 7.015,
+     "tags": []
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2021-04-08",
+     "err_bp": -23.166,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2021-04-09",
+     "err_bp": 10.296,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      9
+     ],
+     "date": "2021-04-13",
+     "err_bp": 20.109,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2021-04-14",
+     "err_bp": 5.864,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      2
+     ],
+     "date": "2022-02-02",
+     "err_bp": 5.337,
+     "tags": []
+    },
+    {
+     "bd": [
+      5,
+      6
+     ],
+     "date": "2023-04-10",
+     "err_bp": 205.641,
+     "tags": [
+      "roll_window",
+      "calendar"
+     ]
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2023-04-11",
+     "err_bp": 78.931,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2023-04-12",
+     "err_bp": -37.867,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      9
+     ],
+     "date": "2023-04-13",
+     "err_bp": -61.275,
+     "tags": [
+      "roll_window"
+     ]
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2023-04-14",
+     "err_bp": 25.328,
+     "tags": [
+      "roll_window"
+     ]
+    }
+   ],
+   "investigation": {
+    "best_is_s0": true,
+    "best_schedule_on_roll_window": "S0 (BCOM; trades BD5-9 closes)",
+    "classes": {
+     "calendar": {
+      "days": 3,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 400.3577,
+      "median_abs_bp": 416.4275,
+      "missing": 0,
+      "p95_abs_bp": 747.1557,
+      "pass": false,
+      "share": 0.333333,
+      "within_5bp": 1
+     },
+     "january_cim": {
+      "days": 24,
+      "max_abs_bp": 1.3522,
+      "mean_abs_bp": 0.5269,
+      "median_abs_bp": 0.4063,
+      "missing": 0,
+      "p95_abs_bp": 1.265,
+      "pass": true,
+      "share": 1.0,
+      "within_5bp": 24
+     },
+     "not_roll_window": {
+      "days": 953,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 3.1428,
+      "median_abs_bp": 0.4766,
+      "missing": 0,
+      "p95_abs_bp": 2.2229,
+      "pass": true,
+      "share": 0.990556,
+      "within_5bp": 944
+     },
+     "roll_window": {
+      "days": 711,
+      "max_abs_bp": 7.2738,
+      "mean_abs_bp": 0.948,
+      "median_abs_bp": 0.6746,
+      "missing": 0,
+      "p95_abs_bp": 2.6557,
+      "pass": true,
+      "share": 0.994374,
+      "within_5bp": 707
+     },
+     "s0_roll": {
+      "days": 395,
+      "max_abs_bp": 7.2738,
+      "mean_abs_bp": 1.1423,
+      "median_abs_bp": 0.9433,
+      "missing": 0,
+      "p95_abs_bp": 3.0708,
+      "pass": true,
+      "share": 0.992405,
+      "within_5bp": 392
+     },
+     "split": {
+      "days": 2,
+      "max_abs_bp": 0.6824,
+      "mean_abs_bp": 0.4705,
+      "median_abs_bp": 0.4705,
+      "missing": 0,
+      "p95_abs_bp": 0.6612,
+      "pass": true,
+      "share": 1.0,
+      "within_5bp": 2
+     },
+     "swap_free": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 2.205,
+      "median_abs_bp": 0.5369,
+      "missing": 0,
+      "p95_abs_bp": 2.4847,
+      "pass": true,
+      "share": 0.992188,
+      "within_5bp": 1651
+     },
+     "swap_held": {
+      "days": 0,
+      "missing": 0,
+      "pass": false,
+      "share": NaN,
+      "within_5bp": 0
+     }
+    },
+    "failing_days": [
+     {
+      "bd": [
+       11
+      ],
+      "date": "2017-09-18",
+      "err_bp": 6.125,
+      "tags": [
+       "roll_window"
+      ]
+     },
+     {
+      "bd": [
+       7
+      ],
+      "date": "2017-12-11",
+      "err_bp": 6.132,
+      "tags": [
+       "roll_window"
+      ]
+     },
+     {
+      "bd": [
+       14
+      ],
+      "date": "2018-02-21",
+      "err_bp": 6.516,
+      "tags": []
+     },
+     {
+      "bd": [
+       10
+      ],
+      "date": "2018-11-14",
+      "err_bp": 7.274,
+      "tags": [
+       "roll_window"
+      ]
+     },
+     {
+      "bd": [],
+      "date": "2020-02-27",
+      "err_bp": -783.903,
+      "tags": [
+       "calendar"
+      ]
+     },
+     {
+      "bd": [
+       18
+      ],
+      "date": "2020-02-28",
+      "err_bp": 762.439,
+      "tags": []
+     },
+     {
+      "bd": [
+       14
+      ],
+      "date": "2020-03-19",
+      "err_bp": 7.476,
+      "tags": []
+     },
+     {
+      "bd": [
+       14
+      ],
+      "date": "2020-04-21",
+      "err_bp": 5.716,
+      "tags": []
+     },
+     {
+      "bd": [],
+      "date": "2020-06-30",
+      "err_bp": 416.427,
+      "tags": [
+       "calendar"
+      ]
+     },
+     {
+      "bd": [
+       1
+      ],
+      "date": "2020-07-01",
+      "err_bp": -356.493,
+      "tags": []
+     },
+     {
+      "bd": [
+       6
+      ],
+      "date": "2020-10-08",
+      "err_bp": 5.151,
+      "tags": [
+       "roll_window"
+      ]
+     },
+     {
+      "bd": [
+       20
+      ],
+      "date": "2020-12-29",
+      "err_bp": 7.015,
+      "tags": []
+     },
+     {
+      "bd": [
+       2
+      ],
+      "date": "2022-02-02",
+      "err_bp": 5.337,
+      "tags": []
+     }
+    ],
+    "roll_days_proven": true,
+    "schedules": {
+     "S0 (BCOM; trades BD5-9 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 2.205,
+       "median_abs_bp": 0.5369,
+       "missing": 0,
+       "p95_abs_bp": 2.4847,
+       "pass": true,
+       "share": 0.992188,
+       "within_5bp": 1651
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 7.2738,
+       "mean_abs_bp": 0.948,
+       "median_abs_bp": 0.6746,
+       "missing": 0,
+       "p95_abs_bp": 2.6557,
+       "pass": true,
+       "share": 0.994374,
+       "within_5bp": 707
+      }
+     },
+     "S0+1 (trades BD6-10 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 4.8491,
+       "median_abs_bp": 0.5474,
+       "missing": 0,
+       "p95_abs_bp": 15.9279,
+       "pass": false,
+       "share": 0.90625,
+       "within_5bp": 1508
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 214.603,
+       "mean_abs_bp": 7.1362,
+       "median_abs_bp": 0.7424,
+       "missing": 0,
+       "p95_abs_bp": 39.8892,
+       "pass": false,
+       "share": 0.793249,
+       "within_5bp": 564
+      }
+     },
+     "S0+2 (trades BD7-11 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 7.9864,
+       "median_abs_bp": 0.5736,
+       "missing": 0,
+       "p95_abs_bp": 37.5835,
+       "pass": false,
+       "share": 0.871995,
+       "within_5bp": 1451
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 441.8377,
+       "mean_abs_bp": 14.4786,
+       "median_abs_bp": 0.8781,
+       "missing": 0,
+       "p95_abs_bp": 80.571,
+       "pass": false,
+       "share": 0.71308,
+       "within_5bp": 507
+      }
+     },
+     "S0-1 (trades BD4-8 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 5.0568,
+       "median_abs_bp": 0.5664,
+       "missing": 0,
+       "p95_abs_bp": 18.722,
+       "pass": false,
+       "share": 0.900841,
+       "within_5bp": 1499
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 205.6414,
+       "mean_abs_bp": 7.6222,
+       "median_abs_bp": 0.7919,
+       "missing": 0,
+       "p95_abs_bp": 40.1341,
+       "pass": false,
+       "share": 0.780591,
+       "within_5bp": 555
+      }
+     },
+     "S0-2 (trades BD3-7 closes)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 8.1067,
+       "median_abs_bp": 0.5897,
+       "missing": 0,
+       "p95_abs_bp": 38.5911,
+       "pass": false,
+       "share": 0.876803,
+       "within_5bp": 1459
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 390.1374,
+       "mean_abs_bp": 14.76,
+       "median_abs_bp": 0.9541,
+       "missing": 0,
+       "p95_abs_bp": 81.1623,
+       "pass": false,
+       "share": 0.724332,
+       "within_5bp": 515
+      }
+     },
+     "one day (trades BD10 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 1223.6366,
+       "mean_abs_bp": 11.1702,
+       "median_abs_bp": 0.5483,
+       "missing": 0,
+       "p95_abs_bp": 47.6486,
+       "pass": false,
+       "share": 0.885216,
+       "within_5bp": 1473
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 1223.6366,
+       "mean_abs_bp": 21.9297,
+       "median_abs_bp": 0.7487,
+       "missing": 0,
+       "p95_abs_bp": 101.4177,
+       "pass": false,
+       "share": 0.744023,
+       "within_5bp": 529
+      }
+     },
+     "one day (trades BD5 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 7.3648,
+       "median_abs_bp": 0.5445,
+       "missing": 0,
+       "p95_abs_bp": 26.4053,
+       "pass": false,
+       "share": 0.912861,
+       "within_5bp": 1519
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 467.2195,
+       "mean_abs_bp": 13.0239,
+       "median_abs_bp": 0.7195,
+       "missing": 0,
+       "p95_abs_bp": 72.6723,
+       "pass": false,
+       "share": 0.80872,
+       "within_5bp": 575
+      }
+     },
+     "one day (trades BD6 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 5.6342,
+       "median_abs_bp": 0.5445,
+       "missing": 0,
+       "p95_abs_bp": 15.3478,
+       "pass": false,
+       "share": 0.917668,
+       "within_5bp": 1527
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 349.3882,
+       "mean_abs_bp": 8.9734,
+       "median_abs_bp": 0.7195,
+       "missing": 0,
+       "p95_abs_bp": 56.7716,
+       "pass": false,
+       "share": 0.819972,
+       "within_5bp": 583
+      }
+     },
+     "one day (trades BD7 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 5.1982,
+       "median_abs_bp": 0.5438,
+       "missing": 0,
+       "p95_abs_bp": 14.7847,
+       "pass": false,
+       "share": 0.916466,
+       "within_5bp": 1525
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 277.5145,
+       "mean_abs_bp": 7.9532,
+       "median_abs_bp": 0.7141,
+       "missing": 0,
+       "p95_abs_bp": 49.9354,
+       "pass": false,
+       "share": 0.817159,
+       "within_5bp": 581
+      }
+     },
+     "one day (trades BD8 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 5.8386,
+       "median_abs_bp": 0.5453,
+       "missing": 0,
+       "p95_abs_bp": 15.7443,
+       "pass": false,
+       "share": 0.911659,
+       "within_5bp": 1517
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 478.1899,
+       "mean_abs_bp": 9.452,
+       "median_abs_bp": 0.7275,
+       "missing": 0,
+       "p95_abs_bp": 55.1639,
+       "pass": false,
+       "share": 0.805907,
+       "within_5bp": 573
+      }
+     },
+     "one day (trades BD9 close)": {
+      "all": {
+       "days": 1664,
+       "max_abs_bp": 783.9032,
+       "mean_abs_bp": 7.2704,
+       "median_abs_bp": 0.5453,
+       "missing": 0,
+       "p95_abs_bp": 28.4152,
+       "pass": false,
+       "share": 0.908053,
+       "within_5bp": 1511
+      },
+      "roll_window": {
+       "days": 711,
+       "max_abs_bp": 478.1899,
+       "mean_abs_bp": 12.8028,
+       "median_abs_bp": 0.7275,
+       "missing": 0,
+       "p95_abs_bp": 70.6917,
+       "pass": false,
+       "share": 0.797468,
+       "within_5bp": 567
+      }
+     }
+    },
+    "verdict": {
+     "days": 1664,
+     "max_abs_bp": 783.9032,
+     "mean_abs_bp": 2.205,
+     "median_abs_bp": 0.5369,
+     "missing": 0,
+     "p95_abs_bp": 2.4847,
+     "pass": true,
+     "share": 0.992188,
+     "within_5bp": 1651
+    }
+   },
+   "roll_days_proven": true,
+   "rounding_floor": {
+    "max_bound_bp": 9.31099,
+    "median_bound_bp": 0.02191,
+    "note": "the fewest decimals that fit, so a 4-decimal NAV ending in 0 or 00 counts as 3 or 2; the ~1% and ~9% of rows at 2 and 3 are that arithmetic, and max_bound_bp is an upper bound",
+    "rows": 1664,
+    "rows_by_published_decimals": {
+     "2": 18,
+     "3": 114,
+     "4": 1042,
+     "5": 490
+    }
+   },
+   "schedules": {
+    "S0 (BCOM; trades BD5-9 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 2.4758,
+      "median_abs_bp": 0.5369,
+      "missing": 0,
+      "p95_abs_bp": 2.5277,
+      "pass": true,
+      "share": 0.986779,
+      "within_5bp": 1642
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 205.6414,
+      "mean_abs_bp": 1.5848,
+      "median_abs_bp": 0.6811,
+      "missing": 0,
+      "p95_abs_bp": 2.9889,
+      "pass": true,
+      "share": 0.98169,
+      "within_5bp": 697
+     }
+    },
+    "S0+1 (trades BD6-10 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 4.6266,
+      "median_abs_bp": 0.5474,
+      "missing": 0,
+      "p95_abs_bp": 14.264,
+      "pass": false,
+      "share": 0.911058,
+      "within_5bp": 1516
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 214.603,
+      "mean_abs_bp": 6.6257,
+      "median_abs_bp": 0.7479,
+      "missing": 0,
+      "p95_abs_bp": 38.1852,
+      "pass": false,
+      "share": 0.804225,
+      "within_5bp": 571
+     }
+    },
+    "S0+2 (trades BD7-11 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 7.7531,
+      "median_abs_bp": 0.5706,
+      "missing": 0,
+      "p95_abs_bp": 34.1797,
+      "pass": false,
+      "share": 0.873197,
+      "within_5bp": 1453
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 441.8377,
+      "mean_abs_bp": 13.9532,
+      "median_abs_bp": 0.8776,
+      "missing": 0,
+      "p95_abs_bp": 77.7059,
+      "pass": false,
+      "share": 0.715493,
+      "within_5bp": 508
+     }
+    },
+    "S0-1 (trades BD4-8 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 5.3107,
+      "median_abs_bp": 0.5673,
+      "missing": 0,
+      "p95_abs_bp": 19.0472,
+      "pass": false,
+      "share": 0.90024,
+      "within_5bp": 1498
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 390.1374,
+      "mean_abs_bp": 8.229,
+      "median_abs_bp": 0.8091,
+      "missing": 0,
+      "p95_abs_bp": 43.0416,
+      "pass": false,
+      "share": 0.778873,
+      "within_5bp": 553
+     }
+    },
+    "S0-2 (trades BD3-7 closes)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 8.3157,
+      "median_abs_bp": 0.5897,
+      "missing": 0,
+      "p95_abs_bp": 38.6852,
+      "pass": false,
+      "share": 0.875601,
+      "within_5bp": 1457
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 559.2252,
+      "mean_abs_bp": 15.2718,
+      "median_abs_bp": 0.9622,
+      "missing": 0,
+      "p95_abs_bp": 81.5345,
+      "pass": false,
+      "share": 0.721127,
+      "within_5bp": 512
+     }
+    },
+    "one day (trades BD10 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 1223.6366,
+      "mean_abs_bp": 10.6721,
+      "median_abs_bp": 0.5483,
+      "missing": 0,
+      "p95_abs_bp": 46.9444,
+      "pass": false,
+      "share": 0.886418,
+      "within_5bp": 1475
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 1223.6366,
+      "mean_abs_bp": 20.7942,
+      "median_abs_bp": 0.7544,
+      "missing": 0,
+      "p95_abs_bp": 99.8121,
+      "pass": false,
+      "share": 0.746479,
+      "within_5bp": 530
+     }
+    },
+    "one day (trades BD5 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 858.3024,
+      "mean_abs_bp": 7.9453,
+      "median_abs_bp": 0.5453,
+      "missing": 0,
+      "p95_abs_bp": 28.3439,
+      "pass": false,
+      "share": 0.911659,
+      "within_5bp": 1517
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 858.3024,
+      "mean_abs_bp": 14.4035,
+      "median_abs_bp": 0.7276,
+      "missing": 0,
+      "p95_abs_bp": 81.6228,
+      "pass": false,
+      "share": 0.805634,
+      "within_5bp": 572
+     }
+    },
+    "one day (trades BD6 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 5.769,
+      "median_abs_bp": 0.5445,
+      "missing": 0,
+      "p95_abs_bp": 16.1432,
+      "pass": false,
+      "share": 0.917067,
+      "within_5bp": 1526
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 349.3882,
+      "mean_abs_bp": 9.303,
+      "median_abs_bp": 0.7262,
+      "missing": 0,
+      "p95_abs_bp": 56.7787,
+      "pass": false,
+      "share": 0.81831,
+      "within_5bp": 581
+     }
+    },
+    "one day (trades BD7 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 5.2093,
+      "median_abs_bp": 0.5438,
+      "missing": 0,
+      "p95_abs_bp": 14.7847,
+      "pass": false,
+      "share": 0.916466,
+      "within_5bp": 1525
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 277.5145,
+      "mean_abs_bp": 7.9912,
+      "median_abs_bp": 0.7222,
+      "missing": 0,
+      "p95_abs_bp": 50.0228,
+      "pass": false,
+      "share": 0.816901,
+      "within_5bp": 580
+     }
+    },
+    "one day (trades BD8 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 5.7683,
+      "median_abs_bp": 0.5453,
+      "missing": 0,
+      "p95_abs_bp": 15.7443,
+      "pass": false,
+      "share": 0.911659,
+      "within_5bp": 1517
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 478.1899,
+      "mean_abs_bp": 9.3014,
+      "median_abs_bp": 0.7278,
+      "missing": 0,
+      "p95_abs_bp": 53.6226,
+      "pass": false,
+      "share": 0.805634,
+      "within_5bp": 572
+     }
+    },
+    "one day (trades BD9 close)": {
+     "all": {
+      "days": 1664,
+      "max_abs_bp": 783.9032,
+      "mean_abs_bp": 7.2098,
+      "median_abs_bp": 0.5453,
+      "missing": 0,
+      "p95_abs_bp": 27.847,
+      "pass": false,
+      "share": 0.908053,
+      "within_5bp": 1511
+     },
+     "roll_window": {
+      "days": 710,
+      "max_abs_bp": 478.1899,
+      "mean_abs_bp": 12.6799,
+      "median_abs_bp": 0.7278,
+      "missing": 0,
+      "p95_abs_bp": 68.144,
+      "pass": false,
+      "share": 0.797183,
+      "within_5bp": 566
+     }
+    }
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1664,
+     "max_abs_bp": 783.6634,
+     "mean_abs_bp": 2.81,
+     "median_abs_bp": 0.8424,
+     "missing": 0,
+     "p95_abs_bp": 3.1667,
+     "pass": true,
+     "share": 0.983774,
+     "within_5bp": 1637
+    },
+    "one-day accrual": {
+     "days": 1664,
+     "max_abs_bp": 783.9032,
+     "mean_abs_bp": 2.4124,
+     "median_abs_bp": 0.5116,
+     "missing": 0,
+     "p95_abs_bp": 2.3199,
+     "pass": true,
+     "share": 0.986178,
+     "within_5bp": 1641
+    },
+    "y month m": {
+     "days": 1664,
+     "max_abs_bp": 783.9468,
+     "mean_abs_bp": 2.5131,
+     "median_abs_bp": 0.5764,
+     "missing": 0,
+     "p95_abs_bp": 2.6332,
+     "pass": true,
+     "share": 0.986779,
+     "within_5bp": 1642
+    },
+    "y=0": {
+     "days": 1664,
+     "max_abs_bp": 784.3538,
+     "mean_abs_bp": 2.4422,
+     "median_abs_bp": 0.514,
+     "missing": 0,
+     "p95_abs_bp": 2.5198,
+     "pass": true,
+     "share": 0.986779,
+     "within_5bp": 1642
+    }
+   },
+   "verdict": {
+    "days": 1664,
+    "max_abs_bp": 783.9032,
+    "mean_abs_bp": 2.4758,
+    "median_abs_bp": 0.5369,
+    "missing": 0,
+    "p95_abs_bp": 2.5277,
+    "pass": true,
+    "share": 0.986779,
+    "within_5bp": 1642
+   }
+  }
+ },
+ "gate": "per fund, |iNAV - NAV| <= 5.0 bp on >= 95% of days (deposit line 191)",
+ "holiday_republications_in_strip": [
+  "2010-12-24",
+  "2011-04-22",
+  "2012-04-06",
+  "2013-03-29",
+  "2014-04-18",
+  "2015-04-03",
+  "2015-07-03",
+  "2021-04-02",
+  "2023-04-07"
+ ],
+ "investigation_rule": "POST HOC, written after the first run showed failures clustered on BD6-10 of April 2021 and April 2023. Those months contain Good Friday (2021-04-02, 2023-04-07), when the NYSE was closed and the strip nevertheless carries an NG settlement for every contract. Every one of them equals the previous day's, so these are holiday republications, not trading days. BCOM counts a Business Day only when more than half its weight is open for trading, so these days are not Business Days, and the pre-registered calendar (every day with an NG settlement) numbers the rest of the month one day late. The investigation drops every day on which EVERY NG settlement equals the previous day's (the rule is mechanical, and the full list across the strip is in holiday_republications_in_strip) and reruns S0 and the declared alternatives. It is reported beside the verdict and never replaces it.",
+ "reads": {
+  "fund_nav_daily": {
+   "cut_applied": "2024-01-01",
+   "date_col": "date",
+   "date_format": "iso_day",
+   "distinct_sessions_read": 3800,
+   "first_session_read": "2008-11-24",
+   "last_session_read": "2023-12-29",
+   "opened_on_the_word": false,
+   "panel": "fund_nav_daily",
+   "path": "data/fixtures/fund_nav_daily.csv.gz",
+   "reserved_from": "2024-01-01",
+   "reserved_rows_read": 0,
+   "rows_read": 13678,
+   "sessions_read": 13678,
+   "sha256": "54c2ee9f0bf2a0470d0036bc5f0727fa62ed4bbecf5bd0b3cc538e46532a3ce2",
+   "status": "present"
+  },
+  "fut_settle_strip": {
+   "cut_applied": "2024-01-01",
+   "date_col": "ref",
+   "date_format": "iso_day",
+   "distinct_sessions_read": 3430,
+   "first_session_read": "2010-06-04",
+   "last_session_read": "2023-12-29",
+   "opened_on_the_word": false,
+   "panel": "fut_settle_strip",
+   "path": "data/fixtures/fut_settle_strip.csv.gz",
+   "reserved_from": "2024-01-01",
+   "reserved_rows_read": 0,
+   "rows_read": 2657726,
+   "sessions_read": 2657726,
+   "sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346",
+   "status": "present"
+  }
+ },
+ "reserved_from": "2024-01-01",
+ "spec": "settlement-ledger AITODO item 1 / deposit Gate 0b: BOIL and KOLD NAV rebuilt from NG settlements under the Bloomberg Natural Gas Subindex (BCOM \u00a72.8, Table 9); see the script docstring",
+ "window": [
+  "2017-05-22",
+  "2023-12-29"
+ ]
+}

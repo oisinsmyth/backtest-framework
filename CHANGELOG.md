@@ -10,6 +10,35 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-24, settlement ledger item 1: daily holdings history and Gate 0b)
+- **Fourteen scripts** under `scripts/`. Each writes a `data/ledger_*` output and reproduces it
+  byte for byte with `--check`.
+  - **Gate 0b:** `gate_0b_ng_nav.py` (NG PASS) and `gate_0b_cl_nav.py` (CL: pre-registered FAIL,
+    passing under Bloomberg's documented BD2–3 roll).
+  - **Swap-free proof** from the audited statements: `prove_swap_free_quarters.py`.
+  - **Held months:** `check_ng_index_months.py`, `check_cl_index_months.py` and
+    `check_uscf_months_and_rolls.py`.
+  - **UNG/USO roll days:** `check_uscf_months_and_rolls.py` (USCF's official calendar,
+    2020–2023) and `check_ung_monthly_rolls.py` (UNG 2017–2019, from month-end NAV).
+  - **NG contract counts:** `check_ng_contract_counts.py`.
+  - **The 2020 settlement holes,** filled from EIA: `fill_settle_holes_2020.py`.
+  - **Estimates with measured bands:** `estimate_fut_share.py` (futures share),
+    `estimate_uscf_aum.py` (UNG/USO daily AUM) and `estimate_uso_ladder.py` (USO's weights by
+    contract month).
+  - **UNG/USO monthly statements:** `fetch_uscf_monthly_statements.py` and
+    `build_uscf_monthly_panel.py`.
+- **`data/fund_facts/`** gains three files:
+  - `uscf_monthly_statements.csv`: 168 exact month-ends;
+  - `uso_allocation_notices.csv`;
+  - `proshares_splits.csv`.
+- **`docs/internal/SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md`** holds the principal's amendments A1–A5
+  to the read-only deposit:
+  - crude oil co-primary;
+  - a per-instrument kill rule;
+  - the CL-alone guard;
+  - multiple-imputation error bars;
+  - var(f) in var_Q1.
+
 ### Added (2026-09-22, the last shared item and the settlement ledger's own infrastructure — round 4)
 - **D609 — the panel loader chokepoint, and seven roots that were 100x wrong.** *Part A:*
   `data/panels.py` and `data/panel_catalogue.py` — one door onto every bulk panel, with

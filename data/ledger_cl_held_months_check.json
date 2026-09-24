@@ -1,0 +1,1296 @@
+{
+ "by_era": {
+  "A": {
+   "days": 26,
+   "matched": 26
+  },
+  "B": {
+   "days": 51,
+   "matched": 51
+  },
+  "transition": {
+   "days": 2,
+   "matched": 0
+  }
+ },
+ "controls": {
+  "rule_a_shifted_one_month_matches": 12,
+  "rule_b_monthly_one_early_matches": 0
+ },
+ "mismatched": [],
+ "rows": [
+  {
+   "day": "2017-03-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2017-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2017-05"
+   ],
+   "source": "D620 quarter-end 0001193125-17-164348"
+  },
+  {
+   "day": "2017-06-30",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2017-09"
+   ],
+   "match": true,
+   "predicted": [
+    "2017-09"
+   ],
+   "source": "D620 quarter-end 0001193125-17-252322"
+  },
+  {
+   "day": "2017-09-30",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2017-11"
+   ],
+   "match": true,
+   "predicted": [
+    "2017-11"
+   ],
+   "source": "D620 quarter-end 0001193125-17-338612"
+  },
+  {
+   "day": "2017-12-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2018-03"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-03"
+   ],
+   "source": "D620 quarter-end 0001193125-18-067452"
+  },
+  {
+   "day": "2018-03-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2018-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-05"
+   ],
+   "source": "D620 quarter-end 0001193125-18-158945"
+  },
+  {
+   "day": "2018-06-30",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2018-09"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-09"
+   ],
+   "source": "D620 quarter-end 0001193125-18-243852"
+  },
+  {
+   "day": "2018-09-30",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2018-11"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-11"
+   ],
+   "source": "D620 quarter-end 0001193125-18-323432"
+  },
+  {
+   "day": "2018-12-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2019-03"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-03"
+   ],
+   "source": "D620 quarter-end 0001193125-19-060564"
+  },
+  {
+   "day": "2019-03-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2019-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-05"
+   ],
+   "source": "D620 quarter-end 0001193125-19-144122"
+  },
+  {
+   "day": "2019-06-30",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2019-09"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-09"
+   ],
+   "source": "D620 quarter-end 0001193125-19-218056"
+  },
+  {
+   "day": "2019-09-30",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2019-11"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-11"
+   ],
+   "source": "D620 quarter-end 0001193125-19-288009"
+  },
+  {
+   "day": "2019-12-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2020-03"
+   ],
+   "match": true,
+   "predicted": [
+    "2020-03"
+   ],
+   "source": "D620 quarter-end 0001193125-20-056815"
+  },
+  {
+   "day": "2020-03-31",
+   "era": "A",
+   "fund": "SCO",
+   "held_months": [
+    "2020-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2020-05"
+   ],
+   "source": "D620 quarter-end 0001193125-20-137391"
+  },
+  {
+   "day": "2020-06-30",
+   "era": "transition",
+   "fund": "SCO",
+   "held_months": [
+    "2020-09",
+    "2020-10",
+    "2020-12"
+   ],
+   "match": false,
+   "predicted": [
+    "2020-09"
+   ],
+   "source": "D620 quarter-end 0001193125-20-214552"
+  },
+  {
+   "day": "2020-09-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2020-12",
+    "2021-06",
+    "2021-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2020-12",
+    "2021-06",
+    "2021-12"
+   ],
+   "source": "D620 quarter-end 0001193125-20-288958"
+  },
+  {
+   "day": "2020-12-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2021-03",
+    "2021-06",
+    "2021-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-03",
+    "2021-06",
+    "2021-12"
+   ],
+   "source": "D620 quarter-end 0001193125-21-049128"
+  },
+  {
+   "day": "2021-03-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2021-06",
+    "2021-12",
+    "2022-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-06",
+    "2021-12",
+    "2022-06"
+   ],
+   "source": "D620 quarter-end 0001193125-21-154710"
+  },
+  {
+   "day": "2021-06-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2021-09",
+    "2021-12",
+    "2022-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-09",
+    "2021-12",
+    "2022-06"
+   ],
+   "source": "D620 quarter-end 0001193125-21-239173"
+  },
+  {
+   "day": "2021-09-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2021-12",
+    "2022-06",
+    "2022-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-12",
+    "2022-06",
+    "2022-12"
+   ],
+   "source": "D620 quarter-end 0001193125-21-321351"
+  },
+  {
+   "day": "2021-12-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2022-03",
+    "2022-06",
+    "2022-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-03",
+    "2022-06",
+    "2022-12"
+   ],
+   "source": "D620 quarter-end 0001193125-22-054559"
+  },
+  {
+   "day": "2022-03-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2022-06",
+    "2022-12",
+    "2023-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-06",
+    "2022-12",
+    "2023-06"
+   ],
+   "source": "D620 quarter-end 0001193125-22-144857"
+  },
+  {
+   "day": "2022-06-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2022-09",
+    "2022-12",
+    "2023-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-09",
+    "2022-12",
+    "2023-06"
+   ],
+   "source": "D620 quarter-end 0001193125-22-215910"
+  },
+  {
+   "day": "2022-09-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2022-12",
+    "2023-06",
+    "2023-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-12",
+    "2023-06",
+    "2023-12"
+   ],
+   "source": "D620 quarter-end 0001193125-22-280102"
+  },
+  {
+   "day": "2022-12-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2023-03",
+    "2023-06",
+    "2023-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-03",
+    "2023-06",
+    "2023-12"
+   ],
+   "source": "D620 quarter-end 0001193125-23-054105"
+  },
+  {
+   "day": "2023-03-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2023-06",
+    "2023-12",
+    "2024-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-06",
+    "2023-12",
+    "2024-06"
+   ],
+   "source": "D620 quarter-end 0001193125-23-138309"
+  },
+  {
+   "day": "2023-06-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2023-09",
+    "2023-12",
+    "2024-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-09",
+    "2023-12",
+    "2024-06"
+   ],
+   "source": "D620 quarter-end 0001193125-23-206111"
+  },
+  {
+   "day": "2023-09-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2023-12",
+    "2024-06",
+    "2024-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-12",
+    "2024-06",
+    "2024-12"
+   ],
+   "source": "D620 quarter-end 0001193125-23-271363"
+  },
+  {
+   "day": "2024-03-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2024-06",
+    "2024-12",
+    "2025-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-06",
+    "2024-12",
+    "2025-06"
+   ],
+   "source": "D620 quarter-end 0001193125-24-134425"
+  },
+  {
+   "day": "2024-06-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2024-09",
+    "2024-12",
+    "2025-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-09",
+    "2024-12",
+    "2025-06"
+   ],
+   "source": "D620 quarter-end 0001193125-24-196799"
+  },
+  {
+   "day": "2024-09-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2024-12",
+    "2025-06",
+    "2025-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-12",
+    "2025-06",
+    "2025-12"
+   ],
+   "source": "D620 quarter-end 0001193125-24-261004"
+  },
+  {
+   "day": "2024-12-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2025-03",
+    "2025-06",
+    "2025-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-03",
+    "2025-06",
+    "2025-12"
+   ],
+   "source": "D620 quarter-end 0001193125-25-039791"
+  },
+  {
+   "day": "2025-03-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2025-06",
+    "2025-12",
+    "2026-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-06",
+    "2025-12",
+    "2026-06"
+   ],
+   "source": "D620 quarter-end 0001193125-25-116684"
+  },
+  {
+   "day": "2025-06-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2025-09",
+    "2025-12",
+    "2026-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-09",
+    "2025-12",
+    "2026-06"
+   ],
+   "source": "D620 quarter-end 0001193125-25-176892"
+  },
+  {
+   "day": "2025-09-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2025-12",
+    "2026-06",
+    "2026-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-12",
+    "2026-06",
+    "2026-12"
+   ],
+   "source": "D620 quarter-end 0001193125-25-272134"
+  },
+  {
+   "day": "2025-12-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2026-03",
+    "2026-06",
+    "2026-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-03",
+    "2026-06",
+    "2026-12"
+   ],
+   "source": "D620 quarter-end 0001193125-26-077441"
+  },
+  {
+   "day": "2026-03-31",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2026-06",
+    "2026-12",
+    "2027-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-06",
+    "2026-12",
+    "2027-06"
+   ],
+   "source": "D620 quarter-end 0001193125-26-214433"
+  },
+  {
+   "day": "2026-06-30",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2026-09",
+    "2026-12",
+    "2027-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-09",
+    "2026-12",
+    "2027-06"
+   ],
+   "source": "D620 quarter-end 0001193125-26-340159"
+  },
+  {
+   "day": "2026-09-18",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "source": "D619 recorded page SCO__20260921T231721Z.html"
+  },
+  {
+   "day": "2026-09-23",
+   "era": "B",
+   "fund": "SCO",
+   "held_months": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "source": "ProShares all-funds holdings file (principal, 2026-09-24)"
+  },
+  {
+   "day": "2017-03-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2017-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2017-05"
+   ],
+   "source": "D620 quarter-end 0001193125-17-164348"
+  },
+  {
+   "day": "2017-06-30",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2017-09"
+   ],
+   "match": true,
+   "predicted": [
+    "2017-09"
+   ],
+   "source": "D620 quarter-end 0001193125-17-252322"
+  },
+  {
+   "day": "2017-09-30",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2017-11"
+   ],
+   "match": true,
+   "predicted": [
+    "2017-11"
+   ],
+   "source": "D620 quarter-end 0001193125-17-338612"
+  },
+  {
+   "day": "2017-12-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2018-03"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-03"
+   ],
+   "source": "D620 quarter-end 0001193125-18-067452"
+  },
+  {
+   "day": "2018-03-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2018-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-05"
+   ],
+   "source": "D620 quarter-end 0001193125-18-158945"
+  },
+  {
+   "day": "2018-06-30",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2018-09"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-09"
+   ],
+   "source": "D620 quarter-end 0001193125-18-243852"
+  },
+  {
+   "day": "2018-09-30",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2018-11"
+   ],
+   "match": true,
+   "predicted": [
+    "2018-11"
+   ],
+   "source": "D620 quarter-end 0001193125-18-323432"
+  },
+  {
+   "day": "2018-12-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2019-03"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-03"
+   ],
+   "source": "D620 quarter-end 0001193125-19-060564"
+  },
+  {
+   "day": "2019-03-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2019-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-05"
+   ],
+   "source": "D620 quarter-end 0001193125-19-144122"
+  },
+  {
+   "day": "2019-06-30",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2019-09"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-09"
+   ],
+   "source": "D620 quarter-end 0001193125-19-218056"
+  },
+  {
+   "day": "2019-09-30",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2019-11"
+   ],
+   "match": true,
+   "predicted": [
+    "2019-11"
+   ],
+   "source": "D620 quarter-end 0001193125-19-288009"
+  },
+  {
+   "day": "2019-12-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2020-03"
+   ],
+   "match": true,
+   "predicted": [
+    "2020-03"
+   ],
+   "source": "D620 quarter-end 0001193125-20-056815"
+  },
+  {
+   "day": "2020-03-31",
+   "era": "A",
+   "fund": "UCO",
+   "held_months": [
+    "2020-05"
+   ],
+   "match": true,
+   "predicted": [
+    "2020-05"
+   ],
+   "source": "D620 quarter-end 0001193125-20-137391"
+  },
+  {
+   "day": "2020-06-30",
+   "era": "transition",
+   "fund": "UCO",
+   "held_months": [
+    "2020-09",
+    "2020-10",
+    "2020-12"
+   ],
+   "match": false,
+   "predicted": [
+    "2020-09"
+   ],
+   "source": "D620 quarter-end 0001193125-20-214552"
+  },
+  {
+   "day": "2020-09-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2020-12",
+    "2021-06",
+    "2021-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2020-12",
+    "2021-06",
+    "2021-12"
+   ],
+   "source": "D620 quarter-end 0001193125-20-288958"
+  },
+  {
+   "day": "2020-12-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2021-03",
+    "2021-06",
+    "2021-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-03",
+    "2021-06",
+    "2021-12"
+   ],
+   "source": "D620 quarter-end 0001193125-21-049128"
+  },
+  {
+   "day": "2021-03-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2021-06",
+    "2021-12",
+    "2022-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-06",
+    "2021-12",
+    "2022-06"
+   ],
+   "source": "D620 quarter-end 0001193125-21-154710"
+  },
+  {
+   "day": "2021-06-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2021-09",
+    "2021-12",
+    "2022-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-09",
+    "2021-12",
+    "2022-06"
+   ],
+   "source": "D620 quarter-end 0001193125-21-239173"
+  },
+  {
+   "day": "2021-09-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2021-12",
+    "2022-06",
+    "2022-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2021-12",
+    "2022-06",
+    "2022-12"
+   ],
+   "source": "D620 quarter-end 0001193125-21-321351"
+  },
+  {
+   "day": "2021-12-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2022-03",
+    "2022-06",
+    "2022-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-03",
+    "2022-06",
+    "2022-12"
+   ],
+   "source": "D620 quarter-end 0001193125-22-054559"
+  },
+  {
+   "day": "2022-03-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2022-06",
+    "2022-12",
+    "2023-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-06",
+    "2022-12",
+    "2023-06"
+   ],
+   "source": "D620 quarter-end 0001193125-22-144857"
+  },
+  {
+   "day": "2022-06-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2022-09",
+    "2022-12",
+    "2023-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-09",
+    "2022-12",
+    "2023-06"
+   ],
+   "source": "D620 quarter-end 0001193125-22-215910"
+  },
+  {
+   "day": "2022-09-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2022-12",
+    "2023-06",
+    "2023-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2022-12",
+    "2023-06",
+    "2023-12"
+   ],
+   "source": "D620 quarter-end 0001193125-22-280102"
+  },
+  {
+   "day": "2022-12-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2023-03",
+    "2023-06",
+    "2023-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-03",
+    "2023-06",
+    "2023-12"
+   ],
+   "source": "D620 quarter-end 0001193125-23-054105"
+  },
+  {
+   "day": "2023-03-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2023-06",
+    "2023-12",
+    "2024-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-06",
+    "2023-12",
+    "2024-06"
+   ],
+   "source": "D620 quarter-end 0001193125-23-138309"
+  },
+  {
+   "day": "2023-06-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2023-09",
+    "2023-12",
+    "2024-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-09",
+    "2023-12",
+    "2024-06"
+   ],
+   "source": "D620 quarter-end 0001193125-23-206111"
+  },
+  {
+   "day": "2023-09-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2023-12",
+    "2024-06",
+    "2024-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2023-12",
+    "2024-06",
+    "2024-12"
+   ],
+   "source": "D620 quarter-end 0001193125-23-271363"
+  },
+  {
+   "day": "2023-12-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2024-03",
+    "2024-06",
+    "2024-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-03",
+    "2024-06",
+    "2024-12"
+   ],
+   "source": "D620 quarter-end 0001193125-24-050920"
+  },
+  {
+   "day": "2024-03-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2024-06",
+    "2024-12",
+    "2025-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-06",
+    "2024-12",
+    "2025-06"
+   ],
+   "source": "D620 quarter-end 0001193125-24-134425"
+  },
+  {
+   "day": "2024-06-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2024-09",
+    "2024-12",
+    "2025-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-09",
+    "2024-12",
+    "2025-06"
+   ],
+   "source": "D620 quarter-end 0001193125-24-196799"
+  },
+  {
+   "day": "2024-09-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2024-12",
+    "2025-06",
+    "2025-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2024-12",
+    "2025-06",
+    "2025-12"
+   ],
+   "source": "D620 quarter-end 0001193125-24-261004"
+  },
+  {
+   "day": "2024-12-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2025-03",
+    "2025-06",
+    "2025-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-03",
+    "2025-06",
+    "2025-12"
+   ],
+   "source": "D620 quarter-end 0001193125-25-039791"
+  },
+  {
+   "day": "2025-03-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2025-06",
+    "2025-12",
+    "2026-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-06",
+    "2025-12",
+    "2026-06"
+   ],
+   "source": "D620 quarter-end 0001193125-25-116684"
+  },
+  {
+   "day": "2025-06-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2025-09",
+    "2025-12",
+    "2026-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-09",
+    "2025-12",
+    "2026-06"
+   ],
+   "source": "D620 quarter-end 0001193125-25-176892"
+  },
+  {
+   "day": "2025-09-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2025-12",
+    "2026-06",
+    "2026-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2025-12",
+    "2026-06",
+    "2026-12"
+   ],
+   "source": "D620 quarter-end 0001193125-25-272134"
+  },
+  {
+   "day": "2025-12-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2026-03",
+    "2026-06",
+    "2026-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-03",
+    "2026-06",
+    "2026-12"
+   ],
+   "source": "D620 quarter-end 0001193125-26-077441"
+  },
+  {
+   "day": "2026-03-31",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2026-06",
+    "2026-12",
+    "2027-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-06",
+    "2026-12",
+    "2027-06"
+   ],
+   "source": "D620 quarter-end 0001193125-26-214433"
+  },
+  {
+   "day": "2026-06-30",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2026-09",
+    "2026-12",
+    "2027-06"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-09",
+    "2026-12",
+    "2027-06"
+   ],
+   "source": "D620 quarter-end 0001193125-26-340159"
+  },
+  {
+   "day": "2026-09-18",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "source": "D619 recorded page UCO__20260921T231719Z.html"
+  },
+  {
+   "day": "2026-09-23",
+   "era": "B",
+   "fund": "UCO",
+   "held_months": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "match": true,
+   "predicted": [
+    "2026-12",
+    "2027-06",
+    "2027-12"
+   ],
+   "source": "ProShares all-funds holdings file (principal, 2026-09-24)"
+  }
+ ],
+ "spec": "settlement-ledger AITODO 1d: UCO/SCO held months vs the WTI Subindex (to 2020-09-16) and the Balanced WTI Index (from 2020-09-17); see the script docstring",
+ "switch": "2020-09-17",
+ "transition": [
+  "2020-04-01",
+  "2020-09-16"
+ ],
+ "transition_rows": [
+  {
+   "day": "2020-06-30",
+   "era": "transition",
+   "fund": "SCO",
+   "held_months": [
+    "2020-09",
+    "2020-10",
+    "2020-12"
+   ],
+   "match": false,
+   "predicted": [
+    "2020-09"
+   ],
+   "source": "D620 quarter-end 0001193125-20-214552"
+  },
+  {
+   "day": "2020-06-30",
+   "era": "transition",
+   "fund": "UCO",
+   "held_months": [
+    "2020-09",
+    "2020-10",
+    "2020-12"
+   ],
+   "match": false,
+   "predicted": [
+    "2020-09"
+   ],
+   "source": "D620 quarter-end 0001193125-20-214552"
+  }
+ ]
+}

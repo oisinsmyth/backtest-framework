@@ -54,7 +54,7 @@ FROZEN = {
     "docs/research/": "scoping and literature for work that is not a study yet",
     "docs/specs/": "the frozen models and prompts studies were built from",
     "docs/verification/": "a dated measurement, pinned by tests/unit/test_writeup.py",
-    "docs/internal/": "working logs: PICKUP.md is a journal, AITODO.md is frozen at 2026-09-01",
+    "docs/internal/": "working logs: PICKUP.md is a journal, AITODO.md is the live task list",
     "CHANGELOG.md": "Keep a Changelog: every entry is a statement about a past release",
     "MASTER_PROJECT_DOC.md": "frozen pre-implementation snapshot, 2026-07-13",
     "DESIGN_DECISIONS.md": "frozen pre-implementation snapshot, 2026-07-13",

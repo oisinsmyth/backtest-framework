@@ -1,0 +1,436 @@
+{
+ "funds": {
+  "UNG": {
+   "held_months": {
+    "control_matches": 0,
+    "matched": 27,
+    "mismatched": [],
+    "scored": 27,
+    "unscored_after_rule_change": []
+   },
+   "official_roll_calendar": {
+    "matched": 48,
+    "mismatches": [],
+    "months": 48,
+    "proven": true
+   },
+   "roll_days": {
+    "best": "documented",
+    "best_alternative": "documented shifted -1",
+    "control_wrong_pair_mean_abs_err_bp": 75.2679,
+    "documented_is_best": true,
+    "identified": false,
+    "schedules": {
+     "documented": {
+      "mean_abs_err_bp": 66.5333,
+      "median_abs_err_bp": 42.6346,
+      "roll_window_days": 951
+     },
+     "documented shifted +1": {
+      "mean_abs_err_bp": 67.3563,
+      "median_abs_err_bp": 42.7677,
+      "roll_window_days": 951
+     },
+     "documented shifted +2": {
+      "mean_abs_err_bp": 69.043,
+      "median_abs_err_bp": 44.547,
+      "roll_window_days": 951
+     },
+     "documented shifted +3": {
+      "mean_abs_err_bp": 71.5965,
+      "median_abs_err_bp": 46.3763,
+      "roll_window_days": 951
+     },
+     "documented shifted -1": {
+      "mean_abs_err_bp": 66.7671,
+      "median_abs_err_bp": 42.3121,
+      "roll_window_days": 951
+     },
+     "documented shifted -2": {
+      "mean_abs_err_bp": 67.6588,
+      "median_abs_err_bp": 42.3121,
+      "roll_window_days": 951
+     },
+     "documented shifted -3": {
+      "mean_abs_err_bp": 68.8362,
+      "median_abs_err_bp": 43.7921,
+      "roll_window_days": 951
+     },
+     "single day at close of D0+0": {
+      "mean_abs_err_bp": 67.5382,
+      "median_abs_err_bp": 42.5758,
+      "roll_window_days": 951
+     },
+     "single day at close of D0+1": {
+      "mean_abs_err_bp": 67.4067,
+      "median_abs_err_bp": 42.0939,
+      "roll_window_days": 951
+     },
+     "single day at close of D0+2": {
+      "mean_abs_err_bp": 67.1877,
+      "median_abs_err_bp": 42.6554,
+      "roll_window_days": 951
+     },
+     "single day at close of D0+3": {
+      "mean_abs_err_bp": 68.4128,
+      "median_abs_err_bp": 43.8607,
+      "roll_window_days": 951
+     }
+    },
+    "sign_test_vs_best_alternative": {
+     "months_lost": 41,
+     "months_won": 38,
+     "p_one_sided": 0.673518
+    },
+    "window": [
+     "2017-05-22",
+     "2023-12-29"
+    ]
+   },
+   "root": "NG"
+  },
+  "USO": {
+   "held_months": {
+    "control_matches": 0,
+    "matched": 13,
+    "mismatched": [],
+    "scored": 13,
+    "unscored_after_rule_change": [
+     {
+      "control_match": false,
+      "held": [
+       "2020-07",
+       "2020-08",
+       "2020-09",
+       "2020-10",
+       "2020-11",
+       "2020-12",
+       "2021-05"
+      ],
+      "match": false,
+      "period_end": "2020-06-30",
+      "predicted": [
+       "2020-08"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2020-11",
+       "2020-12",
+       "2021-01",
+       "2021-02",
+       "2021-03",
+       "2021-04",
+       "2021-06"
+      ],
+      "match": false,
+      "period_end": "2020-09-30",
+      "predicted": [
+       "2020-11"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2021-02",
+       "2021-03",
+       "2021-04",
+       "2021-05",
+       "2021-06",
+       "2021-07",
+       "2021-12"
+      ],
+      "match": false,
+      "period_end": "2020-12-31",
+      "predicted": [
+       "2021-02"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2021-05",
+       "2021-06",
+       "2021-07",
+       "2021-08",
+       "2021-09",
+       "2021-10",
+       "2021-12"
+      ],
+      "match": false,
+      "period_end": "2021-03-31",
+      "predicted": [
+       "2021-05"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2021-08",
+       "2021-09",
+       "2021-10",
+       "2021-11",
+       "2021-12",
+       "2022-01",
+       "2022-06"
+      ],
+      "match": false,
+      "period_end": "2021-06-30",
+      "predicted": [
+       "2021-08"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2021-11",
+       "2021-12",
+       "2022-01",
+       "2022-02",
+       "2022-03",
+       "2022-04",
+       "2022-06"
+      ],
+      "match": false,
+      "period_end": "2021-09-30",
+      "predicted": [
+       "2021-11"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2022-02",
+       "2022-03",
+       "2022-04",
+       "2022-05",
+       "2022-06",
+       "2022-07",
+       "2022-12"
+      ],
+      "match": false,
+      "period_end": "2021-12-31",
+      "predicted": [
+       "2022-02"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2022-05",
+       "2022-06",
+       "2022-07",
+       "2022-08",
+       "2022-09",
+       "2022-10",
+       "2022-12"
+      ],
+      "match": false,
+      "period_end": "2022-03-31",
+      "predicted": [
+       "2022-05"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2022-08",
+       "2022-09",
+       "2022-10",
+       "2022-11",
+       "2022-12",
+       "2023-01",
+       "2023-06"
+      ],
+      "match": false,
+      "period_end": "2022-06-30",
+      "predicted": [
+       "2022-08"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2022-11",
+       "2022-12",
+       "2023-01",
+       "2023-02",
+       "2023-03",
+       "2023-04",
+       "2023-06"
+      ],
+      "match": false,
+      "period_end": "2022-09-30",
+      "predicted": [
+       "2022-11"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2023-02",
+       "2023-03",
+       "2023-04",
+       "2023-05",
+       "2023-06",
+       "2023-07",
+       "2023-12"
+      ],
+      "match": false,
+      "period_end": "2022-12-31",
+      "predicted": [
+       "2023-02"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2023-05",
+       "2023-06",
+       "2023-07",
+       "2023-08",
+       "2023-09",
+       "2023-10",
+       "2023-12"
+      ],
+      "match": false,
+      "period_end": "2023-03-31",
+      "predicted": [
+       "2023-05"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2023-08",
+       "2023-09",
+       "2023-10",
+       "2023-11",
+       "2023-12",
+       "2024-01",
+       "2024-06"
+      ],
+      "match": false,
+      "period_end": "2023-06-30",
+      "predicted": [
+       "2023-08"
+      ],
+      "scored": false
+     },
+     {
+      "control_match": false,
+      "held": [
+       "2023-11",
+       "2023-12",
+       "2024-01",
+       "2024-02",
+       "2024-03",
+       "2024-06"
+      ],
+      "match": false,
+      "period_end": "2023-09-30",
+      "predicted": [
+       "2023-11"
+      ],
+      "scored": false
+     }
+    ]
+   },
+   "official_roll_calendar": {
+    "matched": 48,
+    "mismatches": [],
+    "months": 48,
+    "proven": true
+   },
+   "roll_days": {
+    "best": "documented shifted +2",
+    "best_alternative": "documented shifted +2",
+    "control_wrong_pair_mean_abs_err_bp": 39.484,
+    "documented_is_best": false,
+    "identified": false,
+    "schedules": {
+     "documented": {
+      "mean_abs_err_bp": 39.1993,
+      "median_abs_err_bp": 23.6664,
+      "roll_window_days": 407
+     },
+     "documented shifted +1": {
+      "mean_abs_err_bp": 39.1297,
+      "median_abs_err_bp": 23.2028,
+      "roll_window_days": 407
+     },
+     "documented shifted +2": {
+      "mean_abs_err_bp": 39.1277,
+      "median_abs_err_bp": 23.591,
+      "roll_window_days": 407
+     },
+     "documented shifted +3": {
+      "mean_abs_err_bp": 39.1833,
+      "median_abs_err_bp": 23.6664,
+      "roll_window_days": 407
+     },
+     "documented shifted -1": {
+      "mean_abs_err_bp": 39.2056,
+      "median_abs_err_bp": 24.0042,
+      "roll_window_days": 407
+     },
+     "documented shifted -2": {
+      "mean_abs_err_bp": 39.2386,
+      "median_abs_err_bp": 23.591,
+      "roll_window_days": 407
+     },
+     "documented shifted -3": {
+      "mean_abs_err_bp": 39.2218,
+      "median_abs_err_bp": 23.626,
+      "roll_window_days": 407
+     },
+     "single day at close of D0+0": {
+      "mean_abs_err_bp": 39.3938,
+      "median_abs_err_bp": 23.626,
+      "roll_window_days": 407
+     },
+     "single day at close of D0+1": {
+      "mean_abs_err_bp": 39.3087,
+      "median_abs_err_bp": 24.0236,
+      "roll_window_days": 407
+     },
+     "single day at close of D0+2": {
+      "mean_abs_err_bp": 39.1738,
+      "median_abs_err_bp": 24.0236,
+      "roll_window_days": 407
+     },
+     "single day at close of D0+3": {
+      "mean_abs_err_bp": 39.1315,
+      "median_abs_err_bp": 23.461,
+      "roll_window_days": 407
+     }
+    },
+    "sign_test_vs_best_alternative": {
+     "months_lost": 17,
+     "months_won": 17,
+     "p_one_sided": 0.567917
+    },
+    "window": [
+     "2017-05-22",
+     "2020-03-31"
+    ]
+   },
+   "root": "CL"
+  }
+ },
+ "reserved_from": "2024-01-01",
+ "spec": "settlement-ledger AITODO 1e: UNG/USO held months and roll days vs the funds' documented four-day rule; see the script docstring"
+}

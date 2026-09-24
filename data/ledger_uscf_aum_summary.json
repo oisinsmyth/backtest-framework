@@ -1,0 +1,83 @@
+{
+ "band_rel": [
+  -0.12011,
+  0.17696
+ ],
+ "funds": {
+  "UNG": {
+   "anchors": 84,
+   "gap_months": [],
+   "rows": 1664,
+   "split_effective_days": {
+    "2017-12 1-for-4": "2018-01-05",
+    "2023-12 1-for-4": "2024-01-23"
+   }
+  },
+  "USO": {
+   "anchors": 84,
+   "gap_months": [],
+   "rows": 1664,
+   "split_effective_days": {
+    "2020-04 1-for-8": "2020-04-29"
+   }
+  }
+ },
+ "validation_on_proshares": {
+  "BOIL": {
+   "days": 1664,
+   "monthly_anchor": {
+    "median_abs": 0.05661,
+    "p90_abs": 0.18542
+   },
+   "quarterly_anchor": {
+    "median_abs": 0.12033,
+    "p90_abs": 0.48184
+   }
+  },
+  "KOLD": {
+   "days": 1664,
+   "monthly_anchor": {
+    "median_abs": 0.09051,
+    "p90_abs": 0.3976
+   },
+   "quarterly_anchor": {
+    "median_abs": 0.22568,
+    "p90_abs": 0.64744
+   }
+  },
+  "SCO": {
+   "days": 1664,
+   "monthly_anchor": {
+    "median_abs": 0.05746,
+    "p90_abs": 0.1954
+   },
+   "quarterly_anchor": {
+    "median_abs": 0.12786,
+    "p90_abs": 0.34786
+   }
+  },
+  "UCO": {
+   "days": 1664,
+   "monthly_anchor": {
+    "median_abs": 0.02416,
+    "p90_abs": 0.10454
+   },
+   "quarterly_anchor": {
+    "median_abs": 0.05505,
+    "p90_abs": 0.23754
+   }
+  },
+  "pooled": {
+   "monthly_anchor": {
+    "median_abs": 0.04986,
+    "p10": -0.12011,
+    "p90": 0.17696,
+    "p90_abs": 0.22738
+   },
+   "quarterly_anchor": {
+    "median_abs": 0.11172,
+    "p90_abs": 0.48249
+   }
+  }
+ }
+}

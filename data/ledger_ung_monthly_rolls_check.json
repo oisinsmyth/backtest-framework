@@ -1,0 +1,447 @@
+{
+ "deviations": [
+  "2023-12 added to SPLIT_K: the first run's split guard raised on UNG's December 2023 statement, restated for the 1-for-4 split of 2024-01 (the panel's G2 lists it). The month is outside both windows; the docstring named only 2017-12."
+ ],
+ "post_hoc_exact_nav_per_share": {
+  "known_answer": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+2",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 2320.0099,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 181.8586
+   },
+   "documented_is_best": true,
+   "identified": true,
+   "months": [
+    "2020-01",
+    "2022-12",
+    36
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -10.7695,
+     "mean_abs_err_bp": 2.7281,
+     "median_abs_err_bp": 1.9682,
+     "months": 36
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -9.781,
+     "mean_abs_err_bp": 37.0249,
+     "median_abs_err_bp": 13.019,
+     "months": 36
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -10.3181,
+     "mean_abs_err_bp": 69.3165,
+     "median_abs_err_bp": 24.9734,
+     "months": 36
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -10.0849,
+     "mean_abs_err_bp": 105.4205,
+     "median_abs_err_bp": 34.4669,
+     "months": 36
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -10.2764,
+     "mean_abs_err_bp": 31.1782,
+     "median_abs_err_bp": 14.7647,
+     "months": 36
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -11.7059,
+     "mean_abs_err_bp": 43.3849,
+     "median_abs_err_bp": 21.6241,
+     "months": 36
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -11.3485,
+     "mean_abs_err_bp": 51.9797,
+     "median_abs_err_bp": 28.6457,
+     "months": 36
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -7.4387,
+     "mean_abs_err_bp": 48.4434,
+     "median_abs_err_bp": 26.9068,
+     "months": 36
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -12.8442,
+     "mean_abs_err_bp": 35.5157,
+     "median_abs_err_bp": 13.7344,
+     "months": 36
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -8.6626,
+     "mean_abs_err_bp": 24.006,
+     "median_abs_err_bp": 12.4033,
+     "months": 36
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -13.8324,
+     "mean_abs_err_bp": 66.0054,
+     "median_abs_err_bp": 27.3205,
+     "months": 36
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 5,
+    "months_won": 31,
+    "p_one_sided": 6e-06
+   }
+  },
+  "test": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+2",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 1130.0864,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 128.3586
+   },
+   "documented_is_best": true,
+   "identified": true,
+   "months": [
+    "2017-02",
+    "2019-12",
+    35
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -13.2726,
+     "mean_abs_err_bp": 2.1961,
+     "median_abs_err_bp": 0.8783,
+     "months": 35
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -14.494,
+     "mean_abs_err_bp": 15.1213,
+     "median_abs_err_bp": 9.0977,
+     "months": 35
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -13.9142,
+     "mean_abs_err_bp": 26.7887,
+     "median_abs_err_bp": 11.2912,
+     "months": 35
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -15.0627,
+     "mean_abs_err_bp": 40.6371,
+     "median_abs_err_bp": 24.7138,
+     "months": 35
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -11.8403,
+     "mean_abs_err_bp": 15.0994,
+     "median_abs_err_bp": 10.5267,
+     "months": 35
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -8.5752,
+     "mean_abs_err_bp": 24.9396,
+     "median_abs_err_bp": 16.1721,
+     "months": 35
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -9.4913,
+     "mean_abs_err_bp": 34.154,
+     "median_abs_err_bp": 18.1964,
+     "months": 35
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -15.6875,
+     "mean_abs_err_bp": 21.5329,
+     "median_abs_err_bp": 14.2563,
+     "months": 35
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -10.4001,
+     "mean_abs_err_bp": 17.087,
+     "median_abs_err_bp": 10.0053,
+     "months": 35
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -8.8219,
+     "mean_abs_err_bp": 9.7178,
+     "median_abs_err_bp": 7.9562,
+     "months": 35
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -19.673,
+     "mean_abs_err_bp": 21.5207,
+     "median_abs_err_bp": 15.9861,
+     "months": 35
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 8,
+    "months_won": 27,
+    "p_one_sided": 0.000939
+   }
+  }
+ },
+ "reserved_from": "2024-01-01",
+ "spec": "settlement-ledger AITODO 1e, optional: UNG's 2017-2019 roll days from its month-end NAV per share; see the script docstring",
+ "verdict": "PROVEN 2017-2019: the documented schedule is identified from month-end NAV",
+ "windows": {
+  "known_answer": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+2",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 2320.3237,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 181.4724
+   },
+   "documented_is_best": true,
+   "documented_monthly_err_bp": {
+    "2020-01": 1.005,
+    "2020-02": -2.304,
+    "2020-03": -0.267,
+    "2020-04": -6.016,
+    "2020-05": 4.139,
+    "2020-06": -7.062,
+    "2020-07": 2.749,
+    "2020-08": 4.761,
+    "2020-09": -14.694,
+    "2020-10": 13.31,
+    "2020-11": -1.36,
+    "2020-12": 7.959,
+    "2021-01": -7.47,
+    "2021-02": 8.146,
+    "2021-03": -4.468,
+    "2021-04": -5.21,
+    "2021-05": 0.206,
+    "2021-06": -2.695,
+    "2021-07": -0.206,
+    "2021-08": 4.851,
+    "2021-09": -1.938,
+    "2021-10": 3.941,
+    "2021-11": 2.905,
+    "2021-12": 4.738,
+    "2022-01": 5.769,
+    "2022-02": -2.366,
+    "2022-03": -0.832,
+    "2022-04": 2.72,
+    "2022-05": -2.113,
+    "2022-06": 4.094,
+    "2022-07": 2.022,
+    "2022-08": 3.699,
+    "2022-09": -1.484,
+    "2022-10": -2.562,
+    "2022-11": 4.043,
+    "2022-12": -9.098
+   },
+   "identified": true,
+   "months": [
+    "2020-01",
+    "2022-12",
+    36
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -11.2602,
+     "mean_abs_err_bp": 4.2557,
+     "median_abs_err_bp": 3.8198,
+     "months": 36
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -9.5351,
+     "mean_abs_err_bp": 36.8138,
+     "median_abs_err_bp": 14.2943,
+     "months": 36
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -11.4401,
+     "mean_abs_err_bp": 69.1752,
+     "median_abs_err_bp": 26.8887,
+     "months": 36
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -9.8379,
+     "mean_abs_err_bp": 105.097,
+     "median_abs_err_bp": 32.3549,
+     "months": 36
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -12.5853,
+     "mean_abs_err_bp": 31.5376,
+     "median_abs_err_bp": 17.723,
+     "months": 36
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -12.0143,
+     "mean_abs_err_bp": 43.9297,
+     "median_abs_err_bp": 20.1257,
+     "months": 36
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -8.0775,
+     "mean_abs_err_bp": 52.3129,
+     "median_abs_err_bp": 26.4133,
+     "months": 36
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -7.6837,
+     "mean_abs_err_bp": 48.8459,
+     "median_abs_err_bp": 28.2415,
+     "months": 36
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -12.6617,
+     "mean_abs_err_bp": 35.9066,
+     "median_abs_err_bp": 12.3512,
+     "months": 36
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -9.6795,
+     "mean_abs_err_bp": 25.0785,
+     "median_abs_err_bp": 13.6128,
+     "months": 36
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -13.4242,
+     "mean_abs_err_bp": 65.5017,
+     "median_abs_err_bp": 25.9177,
+     "months": 36
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 7,
+    "months_won": 29,
+    "p_one_sided": 0.000156
+   }
+  },
+  "test": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+2",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 1128.9018,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 128.147
+   },
+   "documented_is_best": true,
+   "documented_monthly_err_bp": {
+    "2017-02": 1.564,
+    "2017-03": -3.967,
+    "2017-04": -1.118,
+    "2017-05": 0.861,
+    "2017-06": -8.068,
+    "2017-07": 7.68,
+    "2017-08": 0.623,
+    "2017-09": -5.571,
+    "2017-10": 8.583,
+    "2017-11": -1.507,
+    "2017-12": -3.537,
+    "2018-01": 35.923,
+    "2018-02": -2.846,
+    "2018-03": -1.686,
+    "2018-04": 2.166,
+    "2018-05": -6.555,
+    "2018-06": -1.507,
+    "2018-07": 2.0,
+    "2018-08": 0.725,
+    "2018-09": -3.224,
+    "2018-10": 2.537,
+    "2018-11": 8.018,
+    "2018-12": -2.616,
+    "2019-01": 2.543,
+    "2019-02": 0.0,
+    "2019-03": -1.606,
+    "2019-04": -3.142,
+    "2019-05": 1.043,
+    "2019-06": -0.893,
+    "2019-07": 3.519,
+    "2019-08": -2.921,
+    "2019-09": 2.584,
+    "2019-10": 2.256,
+    "2019-11": 1.033,
+    "2019-12": -1.517
+   },
+   "identified": true,
+   "months": [
+    "2017-02",
+    "2019-12",
+    35
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -13.1738,
+     "mean_abs_err_bp": 3.8839,
+     "median_abs_err_bp": 2.5365,
+     "months": 35
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -13.355,
+     "mean_abs_err_bp": 15.9356,
+     "median_abs_err_bp": 11.4423,
+     "months": 35
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -15.3602,
+     "mean_abs_err_bp": 27.9729,
+     "median_abs_err_bp": 12.0984,
+     "months": 35
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -18.3371,
+     "mean_abs_err_bp": 41.9329,
+     "median_abs_err_bp": 22.6613,
+     "months": 35
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -9.5067,
+     "mean_abs_err_bp": 15.0479,
+     "median_abs_err_bp": 10.0982,
+     "months": 35
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -8.1394,
+     "mean_abs_err_bp": 25.1864,
+     "median_abs_err_bp": 16.1418,
+     "months": 35
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -8.1937,
+     "mean_abs_err_bp": 34.01,
+     "median_abs_err_bp": 17.2797,
+     "months": 35
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -19.0179,
+     "mean_abs_err_bp": 21.5061,
+     "median_abs_err_bp": 15.6675,
+     "months": 35
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -10.6522,
+     "mean_abs_err_bp": 17.3204,
+     "median_abs_err_bp": 11.9713,
+     "months": 35
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -8.3986,
+     "mean_abs_err_bp": 9.2758,
+     "median_abs_err_bp": 7.4353,
+     "months": 35
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -17.6591,
+     "mean_abs_err_bp": 22.501,
+     "median_abs_err_bp": 16.2368,
+     "months": 35
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 11,
+    "months_won": 24,
+    "p_one_sided": 0.02048
+   }
+  }
+ }
+}

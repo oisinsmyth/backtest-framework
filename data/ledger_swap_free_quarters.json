@@ -1,0 +1,2124 @@
+{
+ "controls": [
+  "BOIL 2023-Q1..Q3 read SWAPS_HELD (they held swaps at quarter-end)",
+  "UCO never reads FUTURES_ONLY_PROVEN (it held swaps at every quarter-end)",
+  "UNG 2023-Q1..Q3 and USO 2022-Q2..2023-Q3 read SWAPS_HELD (swap lines at quarter-end)",
+  "every Q3 nine-month figure equals Q1+Q2+Q3, realized and unrealized"
+ ],
+ "funds": {
+  "BOIL": {
+   "checks": [
+    "2017 nine months == Q1+Q2+Q3",
+    "2018 nine months == Q1+Q2+Q3",
+    "2019 nine months == Q1+Q2+Q3",
+    "2020 nine months == Q1+Q2+Q3",
+    "2021 nine months == Q1+Q2+Q3",
+    "2022 nine months == Q1+Q2+Q3",
+    "2023 nine months == Q1+Q2+Q3",
+    "2024 nine months == Q1+Q2+Q3",
+    "2025 nine months == Q1+Q2+Q3"
+   ],
+   "quarters": {
+    "2016-Q1": {
+     "source": "0001193125-16-583988",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q2": {
+     "source": "0001193125-16-676641",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q3": {
+     "source": "0001193125-16-764395",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q4": {
+     "source": "0001193125-17-064521",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2017-Q1": {
+     "source": "0001193125-17-164348",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q2": {
+     "source": "0001193125-17-252322",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q3": {
+     "source": "0001193125-17-338612",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q4": {
+     "source": "0001193125-18-067452 minus 0001193125-17-338612 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q1": {
+     "source": "0001193125-18-158945",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q2": {
+     "source": "0001193125-18-243852",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q3": {
+     "source": "0001193125-18-323432",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q4": {
+     "source": "0001193125-19-060564 minus 0001193125-18-323432 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q1": {
+     "source": "0001193125-19-144122",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q2": {
+     "source": "0001193125-19-218056",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q3": {
+     "source": "0001193125-19-288009",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q4": {
+     "source": "0001193125-20-056815 minus 0001193125-19-288009 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q1": {
+     "source": "0001193125-20-137391",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q2": {
+     "source": "0001193125-20-214552",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q3": {
+     "source": "0001193125-20-288958",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q4": {
+     "source": "0001193125-21-049128 minus 0001193125-20-288958 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q1": {
+     "source": "0001193125-21-154710",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q2": {
+     "source": "0001193125-21-239173",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q3": {
+     "source": "0001193125-21-321351",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q4": {
+     "source": "0001193125-22-054559 minus 0001193125-21-321351 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q1": {
+     "source": "0001193125-22-144857",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q2": {
+     "source": "0001193125-22-215910",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q3": {
+     "source": "0001193125-22-280102",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q4": {
+     "source": "0001193125-23-054105 minus 0001193125-22-280102 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q1": {
+     "source": "0001193125-23-138309",
+     "swap_line_at_end": true,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 39159789,
+     "swap_unrealized_change_usd": -39088319,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q2": {
+     "source": "0001193125-23-206111",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -77680050,
+     "swap_unrealized_change_usd": 85176576,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q3": {
+     "source": "0001193125-23-271363",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 15625140,
+     "swap_unrealized_change_usd": -47526551,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q4": {
+     "source": "0001193125-24-050920 minus 0001193125-23-271363 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -3507031,
+     "swap_unrealized_change_usd": 1438294,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q1": {
+     "source": "0001193125-24-134425",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q2": {
+     "source": "0001193125-24-196799",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q3": {
+     "source": "0001193125-24-261004",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q4": {
+     "source": "0001193125-25-039791 minus 0001193125-24-261004 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q1": {
+     "source": "0001193125-25-116684",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q2": {
+     "source": "0001193125-25-176892",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q3": {
+     "source": "0001193125-25-272134",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q4": {
+     "source": "0001193125-26-077441 minus 0001193125-25-272134 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    }
+   },
+   "unparsed": []
+  },
+  "KOLD": {
+   "checks": [
+    "2017 nine months == Q1+Q2+Q3",
+    "2018 nine months == Q1+Q2+Q3",
+    "2019 nine months == Q1+Q2+Q3",
+    "2020 nine months == Q1+Q2+Q3",
+    "2021 nine months == Q1+Q2+Q3",
+    "2022 nine months == Q1+Q2+Q3",
+    "2023 nine months == Q1+Q2+Q3",
+    "2024 nine months == Q1+Q2+Q3",
+    "2025 nine months == Q1+Q2+Q3"
+   ],
+   "quarters": {
+    "2016-Q1": {
+     "source": "0001193125-16-583988",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q2": {
+     "source": "0001193125-16-676641",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q3": {
+     "source": "0001193125-16-764395",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q4": {
+     "source": "0001193125-17-064521",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2017-Q1": {
+     "source": "0001193125-17-164348",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q2": {
+     "source": "0001193125-17-252322",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q3": {
+     "source": "0001193125-17-338612",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q4": {
+     "source": "0001193125-18-067452 minus 0001193125-17-338612 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q1": {
+     "source": "0001193125-18-158945",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q2": {
+     "source": "0001193125-18-243852",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q3": {
+     "source": "0001193125-18-323432",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q4": {
+     "source": "0001193125-19-060564 minus 0001193125-18-323432 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q1": {
+     "source": "0001193125-19-144122",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q2": {
+     "source": "0001193125-19-218056",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q3": {
+     "source": "0001193125-19-288009",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q4": {
+     "source": "0001193125-20-056815 minus 0001193125-19-288009 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q1": {
+     "source": "0001193125-20-137391",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q2": {
+     "source": "0001193125-20-214552",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q3": {
+     "source": "0001193125-20-288958",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q4": {
+     "source": "0001193125-21-049128 minus 0001193125-20-288958 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q1": {
+     "source": "0001193125-21-154710",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q2": {
+     "source": "0001193125-21-239173",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q3": {
+     "source": "0001193125-21-321351",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q4": {
+     "source": "0001193125-22-054559 minus 0001193125-21-321351 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q1": {
+     "source": "0001193125-22-144857",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q2": {
+     "source": "0001193125-22-215910",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q3": {
+     "source": "0001193125-22-280102",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q4": {
+     "source": "0001193125-23-054105 minus 0001193125-22-280102 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q1": {
+     "source": "0001193125-23-138309",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q2": {
+     "source": "0001193125-23-206111",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q3": {
+     "source": "0001193125-23-271363",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q4": {
+     "source": "0001193125-24-050920 minus 0001193125-23-271363 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q1": {
+     "source": "0001193125-24-134425",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q2": {
+     "source": "0001193125-24-196799",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q3": {
+     "source": "0001193125-24-261004",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q4": {
+     "source": "0001193125-25-039791 minus 0001193125-24-261004 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q1": {
+     "source": "0001193125-25-116684",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q2": {
+     "source": "0001193125-25-176892",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q3": {
+     "source": "0001193125-25-272134",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q4": {
+     "source": "0001193125-26-077441 minus 0001193125-25-272134 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    }
+   },
+   "unparsed": []
+  },
+  "SCO": {
+   "checks": [
+    "2017 nine months == Q1+Q2+Q3",
+    "2018 nine months == Q1+Q2+Q3",
+    "2019 nine months == Q1+Q2+Q3",
+    "2020 nine months == Q1+Q2+Q3",
+    "2021 nine months == Q1+Q2+Q3",
+    "2022 nine months == Q1+Q2+Q3",
+    "2023 nine months == Q1+Q2+Q3",
+    "2024 nine months == Q1+Q2+Q3",
+    "2025 nine months == Q1+Q2+Q3"
+   ],
+   "quarters": {
+    "2016-Q1": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2016-Q2": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2016-Q3": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2016-Q4": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2017-Q1": {
+     "source": "0001193125-17-164348",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -3683380,
+     "swap_unrealized_change_usd": 34684763,
+     "verdict": "SWAPS_HELD"
+    },
+    "2017-Q2": {
+     "source": "0001193125-17-252322",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 44264125,
+     "swap_unrealized_change_usd": -10225187,
+     "verdict": "SWAPS_HELD"
+    },
+    "2017-Q3": {
+     "source": "0001193125-17-338612",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -3398264,
+     "swap_unrealized_change_usd": -25931072,
+     "verdict": "SWAPS_HELD"
+    },
+    "2017-Q4": {
+     "source": "0001193125-18-067452 minus 0001193125-17-338612 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -43074084,
+     "swap_unrealized_change_usd": -16928765,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q1": {
+     "source": "0001193125-18-158945",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -45733461,
+     "swap_unrealized_change_usd": 16009117,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q2": {
+     "source": "0001193125-18-243852",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -21896224,
+     "swap_unrealized_change_usd": -19170175,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q3": {
+     "source": "0001193125-18-323432",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -20100329,
+     "swap_unrealized_change_usd": 11474108,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q4": {
+     "source": "0001193125-19-060564 minus 0001193125-18-323432 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 49526898,
+     "swap_unrealized_change_usd": 42940818,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q1": {
+     "source": "0001193125-19-144122",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -5965427,
+     "swap_unrealized_change_usd": -26686116,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q2": {
+     "source": "0001193125-19-218056",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 12117296,
+     "swap_unrealized_change_usd": -3960062,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q3": {
+     "source": "0001193125-19-288009",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -9243269,
+     "swap_unrealized_change_usd": 20406491,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q4": {
+     "source": "0001193125-20-056815 minus 0001193125-19-288009 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 2690402,
+     "swap_unrealized_change_usd": -14440970,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q1": {
+     "source": "0001193125-20-137391",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 45169333,
+     "swap_unrealized_change_usd": 21741150,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q2": {
+     "source": "0001193125-20-214552",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -228522,
+     "swap_unrealized_change_usd": -19802897,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q3": {
+     "source": "0001193125-20-288958",
+     "swap_line_at_end": false,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -3364704,
+     "swap_unrealized_change_usd": 2095678,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q4": {
+     "source": "0001193125-21-049128 minus 0001193125-20-288958 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q1": {
+     "source": "0001193125-21-154710",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q2": {
+     "source": "0001193125-21-239173",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q3": {
+     "source": "0001193125-21-321351",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q4": {
+     "source": "0001193125-22-054559 minus 0001193125-21-321351 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q1": {
+     "source": "0001193125-22-144857",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q2": {
+     "source": "0001193125-22-215910",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q3": {
+     "source": "0001193125-22-280102",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q4": {
+     "source": "0001193125-23-054105 minus 0001193125-22-280102 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q1": {
+     "source": "0001193125-23-138309",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q2": {
+     "source": "0001193125-23-206111",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q3": {
+     "source": "0001193125-23-271363",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q4": {
+     "source": "0001193125-24-050920 minus 0001193125-23-271363 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q1": {
+     "source": "0001193125-24-134425",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q2": {
+     "source": "0001193125-24-196799",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q3": {
+     "source": "0001193125-24-261004",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2024-Q4": {
+     "source": "0001193125-25-039791 minus 0001193125-24-261004 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q1": {
+     "source": "0001193125-25-116684",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q2": {
+     "source": "0001193125-25-176892",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q3": {
+     "source": "0001193125-25-272134",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2025-Q4": {
+     "source": "0001193125-26-077441 minus 0001193125-25-272134 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    }
+   },
+   "unparsed": [
+    "10-Q 2016-03-31 0001193125-16-583988: swap line present but not parsed",
+    "10-Q 2016-06-30 0001193125-16-676641: swap line present but not parsed",
+    "10-Q 2016-09-30 0001193125-16-764395: swap line present but not parsed",
+    "10-K 2016-12-31 0001193125-17-064521: swap line present but not parsed"
+   ]
+  },
+  "UCO": {
+   "checks": [
+    "2017 nine months == Q1+Q2+Q3",
+    "2018 nine months == Q1+Q2+Q3",
+    "2019 nine months == Q1+Q2+Q3",
+    "2020 nine months == Q1+Q2+Q3",
+    "2021 nine months == Q1+Q2+Q3",
+    "2022 nine months == Q1+Q2+Q3",
+    "2023 nine months == Q1+Q2+Q3",
+    "2024 nine months == Q1+Q2+Q3",
+    "2025 nine months == Q1+Q2+Q3"
+   ],
+   "quarters": {
+    "2016-Q1": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2016-Q2": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2016-Q3": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2016-Q4": {
+     "source": null,
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": null,
+     "swap_unrealized_change_usd": null,
+     "verdict": "UNPROVEN"
+    },
+    "2017-Q1": {
+     "source": "0001193125-17-164348",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 2282231,
+     "swap_unrealized_change_usd": -128386659,
+     "verdict": "SWAPS_HELD"
+    },
+    "2017-Q2": {
+     "source": "0001193125-17-252322",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -136327308,
+     "swap_unrealized_change_usd": 14272649,
+     "verdict": "SWAPS_HELD"
+    },
+    "2017-Q3": {
+     "source": "0001193125-17-338612",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 24084165,
+     "swap_unrealized_change_usd": 99552339,
+     "verdict": "SWAPS_HELD"
+    },
+    "2017-Q4": {
+     "source": "0001193125-18-067452 minus 0001193125-17-338612 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 104058202,
+     "swap_unrealized_change_usd": 21441461,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q1": {
+     "source": "0001193125-18-158945",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 95767623,
+     "swap_unrealized_change_usd": -37365709,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q2": {
+     "source": "0001193125-18-243852",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 25742177,
+     "swap_unrealized_change_usd": 57556218,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q3": {
+     "source": "0001193125-18-323432",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 46027532,
+     "swap_unrealized_change_usd": -35363528,
+     "verdict": "SWAPS_HELD"
+    },
+    "2018-Q4": {
+     "source": "0001193125-19-060564 minus 0001193125-18-323432 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -142630943,
+     "swap_unrealized_change_usd": -119832467,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q1": {
+     "source": "0001193125-19-144122",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 66798062,
+     "swap_unrealized_change_usd": 119079996,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q2": {
+     "source": "0001193125-19-218056",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -30785796,
+     "swap_unrealized_change_usd": 17642629,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q3": {
+     "source": "0001193125-19-288009",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 62998998,
+     "swap_unrealized_change_usd": -101884815,
+     "verdict": "SWAPS_HELD"
+    },
+    "2019-Q4": {
+     "source": "0001193125-20-056815 minus 0001193125-19-288009 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 22731052,
+     "swap_unrealized_change_usd": 59743905,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q1": {
+     "source": "0001193125-20-137391",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -416644056,
+     "swap_unrealized_change_usd": -249062832,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q2": {
+     "source": "0001193125-20-214552",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -640451755,
+     "swap_unrealized_change_usd": 237286565,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q3": {
+     "source": "0001193125-20-288958",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -8356234,
+     "swap_unrealized_change_usd": -10038323,
+     "verdict": "SWAPS_HELD"
+    },
+    "2020-Q4": {
+     "source": "0001193125-21-049128 minus 0001193125-20-288958 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 27630834,
+     "swap_unrealized_change_usd": 18242195,
+     "verdict": "SWAPS_HELD"
+    },
+    "2021-Q1": {
+     "source": "0001193125-21-154710",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 142674727,
+     "swap_unrealized_change_usd": -58990789,
+     "verdict": "SWAPS_HELD"
+    },
+    "2021-Q2": {
+     "source": "0001193125-21-239173",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 65060597,
+     "swap_unrealized_change_usd": 80496098,
+     "verdict": "SWAPS_HELD"
+    },
+    "2021-Q3": {
+     "source": "0001193125-21-321351",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 13693131,
+     "swap_unrealized_change_usd": 31138258,
+     "verdict": "SWAPS_HELD"
+    },
+    "2021-Q4": {
+     "source": "0001193125-22-054559 minus 0001193125-21-321351 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 35149041,
+     "swap_unrealized_change_usd": -6957469,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q1": {
+     "source": "0001193125-22-144857",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 533013238,
+     "swap_unrealized_change_usd": -192213567,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q2": {
+     "source": "0001193125-22-215910",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 118798382,
+     "swap_unrealized_change_usd": -24001881,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q3": {
+     "source": "0001193125-22-280102",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -286550709,
+     "swap_unrealized_change_usd": 28330957,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q4": {
+     "source": "0001193125-23-054105 minus 0001193125-22-280102 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -102992996,
+     "swap_unrealized_change_usd": 198115775,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q1": {
+     "source": "0001193125-23-138309",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 74946403,
+     "swap_unrealized_change_usd": -141361963,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q2": {
+     "source": "0001193125-23-206111",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -105727226,
+     "swap_unrealized_change_usd": 65510145,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q3": {
+     "source": "0001193125-23-271363",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 199284914,
+     "swap_unrealized_change_usd": 12933232,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q4": {
+     "source": "0001193125-24-050920 minus 0001193125-23-271363 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -130123347,
+     "swap_unrealized_change_usd": 6713944,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q1": {
+     "source": "0001193125-24-134425",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 76651763,
+     "swap_unrealized_change_usd": 29711430,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q2": {
+     "source": "0001193125-24-196799",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -5028524,
+     "swap_unrealized_change_usd": 8281227,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q3": {
+     "source": "0001193125-24-261004",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -61237840,
+     "swap_unrealized_change_usd": -43864043,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q4": {
+     "source": "0001193125-25-039791 minus 0001193125-24-261004 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 7302848,
+     "swap_unrealized_change_usd": 26132061,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q1": {
+     "source": "0001193125-25-116684",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 4358133,
+     "swap_unrealized_change_usd": -1449698,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q2": {
+     "source": "0001193125-25-176892",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -14238283,
+     "swap_unrealized_change_usd": -32742289,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q3": {
+     "source": "0001193125-25-272134",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 5508219,
+     "swap_unrealized_change_usd": -5067962,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q4": {
+     "source": "0001193125-26-077441 minus 0001193125-25-272134 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -28458150,
+     "swap_unrealized_change_usd": -10106782,
+     "verdict": "SWAPS_HELD"
+    }
+   },
+   "unparsed": [
+    "10-Q 2016-03-31 0001193125-16-583988: swap line present but not parsed",
+    "10-Q 2016-06-30 0001193125-16-676641: swap line present but not parsed",
+    "10-Q 2016-09-30 0001193125-16-764395: swap line present but not parsed",
+    "10-K 2016-12-31 0001193125-17-064521: swap line present but not parsed"
+   ]
+  },
+  "UNG": {
+   "checks": [
+    "2016 nine months == Q1+Q2+Q3",
+    "2017 nine months == Q1+Q2+Q3",
+    "2018 nine months == Q1+Q2+Q3",
+    "2019 nine months == Q1+Q2+Q3",
+    "2020 nine months == Q1+Q2+Q3",
+    "2021 nine months == Q1+Q2+Q3",
+    "2022 nine months == Q1+Q2+Q3",
+    "2023 nine months == Q1+Q2+Q3",
+    "2024 nine months == Q1+Q2+Q3",
+    "2025 nine months == Q1+Q2+Q3"
+   ],
+   "quarters": {
+    "2016-Q1": {
+     "futures_pl_usd": -113887436,
+     "source": "0001144204-16-098896",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q2": {
+     "futures_pl_usd": 152745282,
+     "source": "0001144204-16-116885",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q3": {
+     "futures_pl_usd": -19193050,
+     "source": "0001144204-16-132026",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q4": {
+     "futures_pl_usd": 83209215,
+     "source": "0001144204-17-010914 minus 0001144204-16-132026 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q1": {
+     "futures_pl_usd": -93984835,
+     "source": "0001144204-17-024861",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q2": {
+     "futures_pl_usd": -44606650,
+     "source": "0001144204-17-040826",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q3": {
+     "futures_pl_usd": -11834550,
+     "source": "0001144204-17-056505",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q4": {
+     "futures_pl_usd": -40989720,
+     "source": "0001144204-18-011710 minus 0001144204-17-056505 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q1": {
+     "futures_pl_usd": 11000830,
+     "source": "0001144204-18-026954",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q2": {
+     "futures_pl_usd": 19062923,
+     "source": "0001144204-18-042851",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q3": {
+     "futures_pl_usd": 18930510,
+     "source": "0001144204-18-058250",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q4": {
+     "futures_pl_usd": 59156490,
+     "source": "0001144204-19-013632 minus 0001144204-18-058250 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q1": {
+     "futures_pl_usd": -1425610,
+     "source": "0001144204-19-024729",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q2": {
+     "futures_pl_usd": -41346720,
+     "source": "0001144204-19-038527",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q3": {
+     "futures_pl_usd": 15356150,
+     "source": "0001104659-19-061524",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q4": {
+     "futures_pl_usd": -52892380,
+     "source": "0001104659-20-032888 minus 0001104659-19-061524 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q1": {
+     "futures_pl_usd": -133149280,
+     "source": "0001104659-20-058627",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q2": {
+     "futures_pl_usd": -71950600,
+     "source": "0001104659-20-092002",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q3": {
+     "futures_pl_usd": 54356921,
+     "source": "0001104659-20-122367",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q4": {
+     "futures_pl_usd": -49461870,
+     "source": "0001104659-21-029200 minus 0001104659-20-122367 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q1": {
+     "futures_pl_usd": 29738069,
+     "source": "0001104659-21-062900",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q2": {
+     "futures_pl_usd": 76606892,
+     "source": "0001104659-21-101321",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q3": {
+     "futures_pl_usd": 134703578,
+     "source": "0001104659-21-134819",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q4": {
+     "futures_pl_usd": -219126277,
+     "source": "0001410578-22-000219 minus 0001104659-21-134819 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q1": {
+     "futures_pl_usd": 210845157,
+     "source": "0001410578-22-001170",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q2": {
+     "futures_pl_usd": -53774210,
+     "source": "0001410578-22-002072",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q3": {
+     "futures_pl_usd": 113316349,
+     "source": "0001410578-22-002999",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q4": {
+     "futures_pl_usd": -197846016,
+     "source": "0001410578-23-000179 minus 0001410578-22-002999 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2023-Q1": {
+     "futures_pl_usd": -421034415,
+     "source": "0001410578-23-000915",
+     "swap_line_at_end": true,
+     "swap_line_at_start": false,
+     "swap_realized_usd": -31523321,
+     "swap_unrealized_change_usd": -2004,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q2": {
+     "futures_pl_usd": 80373468,
+     "source": "0001410578-23-001548",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -9438418,
+     "swap_unrealized_change_usd": 29569017,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q3": {
+     "futures_pl_usd": -57801688,
+     "source": "0001410578-23-002201",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 2076722,
+     "swap_unrealized_change_usd": -36595600,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q4": {
+     "futures_pl_usd": -179633453,
+     "source": "0001410578-24-000105 minus 0001410578-23-002201 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -105687944,
+     "swap_unrealized_change_usd": 21931798,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q1": {
+     "futures_pl_usd": -190911937,
+     "source": "0001410578-24-000685",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 33968121,
+     "swap_unrealized_change_usd": -14904042,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q2": {
+     "futures_pl_usd": 149769816,
+     "source": "0001410578-24-001240",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 16800888,
+     "swap_unrealized_change_usd": -434,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q3": {
+     "futures_pl_usd": -9273200,
+     "source": "0001410578-24-001821",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 3825620,
+     "swap_unrealized_change_usd": -410,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q4": {
+     "futures_pl_usd": 43325800,
+     "source": "0001410578-25-000230 minus 0001410578-24-001821 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 3765421,
+     "swap_unrealized_change_usd": -530,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q1": {
+     "futures_pl_usd": 149447170,
+     "source": "0001410578-25-001154",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 55505217,
+     "swap_unrealized_change_usd": 574,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q2": {
+     "futures_pl_usd": -63324730,
+     "source": "0001410578-25-001642",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -61483540,
+     "swap_unrealized_change_usd": 450,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q3": {
+     "futures_pl_usd": -35837387,
+     "source": "0001104659-25-108416",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -23570633,
+     "swap_unrealized_change_usd": 211,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q4": {
+     "futures_pl_usd": 8259103,
+     "source": "0001104659-26-021507 minus 0001104659-25-108416 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -8264057,
+     "swap_unrealized_change_usd": 63,
+     "verdict": "SWAPS_HELD"
+    }
+   },
+   "unparsed": []
+  },
+  "USO": {
+   "checks": [
+    "2016 nine months == Q1+Q2+Q3",
+    "2017 nine months == Q1+Q2+Q3",
+    "2018 nine months == Q1+Q2+Q3",
+    "2019 nine months == Q1+Q2+Q3",
+    "2020 nine months == Q1+Q2+Q3",
+    "2021 nine months == Q1+Q2+Q3",
+    "2022 nine months == Q1+Q2+Q3",
+    "2023 nine months == Q1+Q2+Q3",
+    "2024 nine months == Q1+Q2+Q3",
+    "2025 nine months == Q1+Q2+Q3"
+   ],
+   "quarters": {
+    "2016-Q1": {
+     "futures_pl_usd": -174030690,
+     "source": "0001144204-16-098891",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q2": {
+     "futures_pl_usd": 644971110,
+     "source": "0001144204-16-116880",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q3": {
+     "futures_pl_usd": -81187010,
+     "source": "0001144204-16-132023",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2016-Q4": {
+     "futures_pl_usd": 291353399,
+     "source": "0001144204-17-010922 minus 0001144204-16-132023 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q1": {
+     "futures_pl_usd": -251761930,
+     "source": "0001144204-17-024876",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q2": {
+     "futures_pl_usd": -258515740,
+     "source": "0001144204-17-040822",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q3": {
+     "futures_pl_usd": 264151269,
+     "source": "0001144204-17-056496",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2017-Q4": {
+     "futures_pl_usd": 323289470,
+     "source": "0001144204-18-011712 minus 0001144204-17-056496 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q1": {
+     "futures_pl_usd": 167825100,
+     "source": "0001144204-18-026968",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q2": {
+     "futures_pl_usd": 248703230,
+     "source": "0001144204-18-042841",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q3": {
+     "futures_pl_usd": 42812840,
+     "source": "0001144204-18-058243",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2018-Q4": {
+     "futures_pl_usd": -769911144,
+     "source": "0001144204-19-009786 minus 0001144204-18-058243 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q1": {
+     "futures_pl_usd": 414421340,
+     "source": "0001144204-19-024732",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q2": {
+     "futures_pl_usd": -31684590,
+     "source": "0001144204-19-038526",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q3": {
+     "futures_pl_usd": -88271886,
+     "source": "0001104659-19-061526",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2019-Q4": {
+     "futures_pl_usd": 157628550,
+     "source": "0001104659-20-023944 minus 0001104659-19-061526 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q1": {
+     "futures_pl_usd": -1619550470,
+     "source": "0001104659-20-058624",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q2": {
+     "futures_pl_usd": -919946546,
+     "source": "0001104659-20-091976",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q3": {
+     "futures_pl_usd": 90178058,
+     "source": "0001104659-20-122378",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2020-Q4": {
+     "futures_pl_usd": 561666089,
+     "source": "0001104659-21-029202 minus 0001104659-20-122378 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q1": {
+     "futures_pl_usd": 727459929,
+     "source": "0001104659-21-062904",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q2": {
+     "futures_pl_usd": 660648999,
+     "source": "0001104659-21-101317",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q3": {
+     "futures_pl_usd": 139949291,
+     "source": "0001104659-21-134823",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2021-Q4": {
+     "futures_pl_usd": 96698630,
+     "source": "0001410578-22-000223 minus 0001104659-21-134823 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2022-Q1": {
+     "futures_pl_usd": 791322919,
+     "source": "0001410578-22-001158",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 31524277,
+     "swap_unrealized_change_usd": -1287,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q2": {
+     "futures_pl_usd": 247558240,
+     "source": "0001410578-22-002075",
+     "swap_line_at_end": true,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 1153417,
+     "swap_unrealized_change_usd": -1109,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q3": {
+     "futures_pl_usd": -381139129,
+     "source": "0001410578-22-003004",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -64935404,
+     "swap_unrealized_change_usd": 456,
+     "verdict": "SWAPS_HELD"
+    },
+    "2022-Q4": {
+     "futures_pl_usd": 124882629,
+     "source": "0001410578-23-000163 minus 0001410578-22-003004 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 18653832,
+     "swap_unrealized_change_usd": -2205,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q1": {
+     "futures_pl_usd": -66028070,
+     "source": "0001410578-23-000917",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -17423934,
+     "swap_unrealized_change_usd": 2194,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q2": {
+     "futures_pl_usd": -35837591,
+     "source": "0001410578-23-001538",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -14492802,
+     "swap_unrealized_change_usd": 101,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q3": {
+     "futures_pl_usd": 272701561,
+     "source": "0001410578-23-002210",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 67005805,
+     "swap_unrealized_change_usd": -301,
+     "verdict": "SWAPS_HELD"
+    },
+    "2023-Q4": {
+     "futures_pl_usd": -253472060,
+     "source": "0001410578-24-000108 minus 0001410578-23-002210 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -59438985,
+     "swap_unrealized_change_usd": 245,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q1": {
+     "futures_pl_usd": 180856350,
+     "source": "0001410578-24-000684",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 45287234,
+     "swap_unrealized_change_usd": -182,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q2": {
+     "futures_pl_usd": 6893080,
+     "source": "0001410578-24-001237",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -586360,
+     "swap_unrealized_change_usd": -136,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q3": {
+     "futures_pl_usd": -106999870,
+     "source": "0001410578-24-001827",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -41699515,
+     "swap_unrealized_change_usd": 293,
+     "verdict": "SWAPS_HELD"
+    },
+    "2024-Q4": {
+     "futures_pl_usd": 65753480,
+     "source": "0001410578-25-000228 minus 0001410578-24-001827 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 19160737,
+     "swap_unrealized_change_usd": -137,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q1": {
+     "futures_pl_usd": 27287980,
+     "source": "0001410578-25-001156",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -1068769,
+     "swap_unrealized_change_usd": 6017769,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q2": {
+     "futures_pl_usd": -65484960,
+     "source": "0001410578-25-001643",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -440907,
+     "swap_unrealized_change_usd": -14935089,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q3": {
+     "futures_pl_usd": 13265990,
+     "source": "0001104659-25-108424",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -6618471,
+     "swap_unrealized_change_usd": 9010427,
+     "verdict": "SWAPS_HELD"
+    },
+    "2025-Q4": {
+     "futures_pl_usd": -52580770,
+     "source": "0001104659-26-021501 minus 0001104659-25-108424 (nine months)",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -10288671,
+     "swap_unrealized_change_usd": 872984,
+     "verdict": "SWAPS_HELD"
+    }
+   },
+   "unparsed": []
+  }
+ },
+ "rule": "FUTURES_ONLY_PROVEN when the quarter's swap realized gain/loss and change in unrealized are both zero (line absent or dash) AND no swap line at either bounding quarter-end; SWAPS_HELD otherwise; UNPROVEN when a statement or a quarter-end is missing or unparsed. Q4 = 10-K year minus Q3 10-Q nine months.",
+ "sources": {
+  "filings": "data/raw/recorder/sec_fund_filings",
+  "holdings": "data/fixtures/fund_holdings_quarterly.csv.gz"
+ },
+ "spec": "settlement-ledger AITODO item 1: swap-free quarters proven from audited statements of operations"
+}

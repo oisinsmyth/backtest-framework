@@ -1,0 +1,9 @@
+effective,allocation,roll,source_file,note
+2020-04-16,"front month (Benchmark Oil Futures Contract), second month when the front is within two weeks of expiration","four days, 25%/day, starting two weeks before expiration",10-K (2019 and earlier),the pre-2020 rule; UNG's is the same
+2020-04-17,"~80% front month, ~20% second month",unchanged,united-states-oil-fund-8-k-20200416.pdf,"8-K filed 2020-04-16 (reported as 04-17)"
+2020-04-21,"~40% June, ~55% July, ~5% August (2020)",unchanged,united-states-oil-fund-8-k-20200421.pdf,also: from 2020-04-22 USO may invest in any month or percentages without further disclosure
+2020-04-22,"~20% June, ~50% July, ~20% August, ~10% September",unchanged,united-states-oil-fund-8-k-20200424.pdf,stated as the 04-22 intention inside the 04-24 8-K
+2020-04-24,"~20% June, ~40% July, ~20% August, ~20% September",unchanged,united-states-oil-fund-8-k-20200424.pdf,USO will file an 8-K for any material deviation from the stated intention
+2020-04-27,"~30% July, ~15% August, ~15% September, ~15% October, ~15% December (2020), ~10% June 2021","moved into over three days, ~33.3% each on 2020-04-27, 04-28 and 04-29",united-states-oil-fund-8-k-20200427.pdf,the prototype of the ladder held 2020-09 → 2023-06 (quarter-ends: +2..+7 plus a June/December contract)
+2020-05-01,"ladder as above, rolled monthly","ten-day roll from Business Day 1 (official USCF calendar matches every month 2020-05 → 2023-12)",united-states-oil-fund-8-k-20200427.pdf,"commencing with the monthly roll occurring in May 2020"
+2023-09-01,"transition back to primarily the Benchmark Oil Futures Contract, over the monthly rolls September 2023 → January 2024",ten-day roll from Business Day 1,united-states-oil-fund-8-k-20230829.pdf,explains the 2023-09-30 quarter-end (40% in +2)
