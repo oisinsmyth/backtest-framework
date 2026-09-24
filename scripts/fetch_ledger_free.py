@@ -50,6 +50,23 @@ PLAN: list[tuple[str, str, list[str], tuple[str, str]]] = [
     ("ohlcv1s-TAS", "ohlcv-1s", ["CLT.FUT", "NGT.FUT"], SPAN),
     ("trades-post-vault", "trades", ["CL.FUT", "NG.FUT", "CLT.FUT", "NGT.FUT"], POST_VAULT),
 ]
+#: D624's sibling roots (HO, RB): the free last-12-months window, for choosing and checking the flow estimator
+SIBLING_SPAN = ("2025-09-25", "2026-09-19")
+SIBLING_PLAN: list[tuple[str, str, list[str], tuple[str, str]]] = [
+    ("siblings-trades", "trades", ["HO.FUT", "RB.FUT"], SIBLING_SPAN),
+    ("siblings-ohlcv1s", "ohlcv-1s", ["HO.FUT", "RB.FUT"], SIBLING_SPAN),
+]
+SIBLING_JOBS = REPO / "data" / "ledger_sibling_pull_jobs.json"
+#: D624's NG/CL top-up, taken just before the subscription lapses (~2026-10-11). Trades continue from where
+#: `trades-post-vault` stopped (2026-09-24, exclusive), so no session is counted twice. The one-second bars start
+#: after the vault. The end date is given at run time with --end.
+TOPUP_JOBS = REPO / "data" / "ledger_topup_pull_jobs.json"
+
+
+def topup_plan(end: str) -> list[tuple[str, str, list[str], tuple[str, str]]]:
+    roots = ["CL.FUT", "NG.FUT", "CLT.FUT", "NGT.FUT"]
+    return [("topup-trades", "trades", roots, ("2026-09-24", end)),
+            ("topup-ohlcv1s", "ohlcv-1s", roots, ("2026-09-19", end))]
 ETFS = ("BOIL", "KOLD", "UCO", "SCO", "UNG", "USO")
 AV_MONTHS = ("2017-05", "2026-09")
 
@@ -201,7 +218,14 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--wait", action="store_true")
     ap.add_argument("--alphavantage", action="store_true")
     ap.add_argument("--i-accept-the-cost", type=float, default=None)
+    ap.add_argument("--siblings", action="store_true", help="D624's HO/RB job set and its own job record")
+    ap.add_argument("--topup", metavar="END", help="D624's NG/CL top-up up to END (exclusive, YYYY-MM-DD)")
     a = ap.parse_args(argv)
+    global PLAN, JOBS
+    if a.siblings:
+        PLAN, JOBS = SIBLING_PLAN, SIBLING_JOBS
+    elif a.topup:
+        PLAN, JOBS = topup_plan(a.topup), TOPUP_JOBS
     if a.plan:
         return plan()
     if a.submit:

@@ -1,0 +1,331 @@
+{
+ "deviations": [
+  "K1 raised on the first sibling run: bar volume matched trade volume on 98.32% of 252,270 window seconds, with window totals 1,271,123 against 1,271,121. The diagnosis, on one day and without computing any correlation: Databento builds ohlcv-1s bars on ts_recv (the bars' ts_event column is the bucket start in RECEIVE time), while trades had been bucketed on the exchange's ts_event. Those clocks differ by milliseconds, so trades near a second's edge fell into the neighbouring bar. On 2025-10-01 the match is 99.26% on ts_event and 100% on ts_recv. Trades, and so the truth, are now bucketed and windowed on ts_recv, the same clock as the bars. The K1 threshold (99.9%) is unchanged. D624 did not name the timestamp. A crash in `load` before any statistic (`.dt` missing on a date conversion) is also fixed.",
+  "The second sibling run's numbers are VOID. `truth` subtracted sell size from buy size on Databento's UNSIGNED `size` (uint32), so every session with net selling wrapped to about +4.3e9, and numpy warned of the overflow. The correlations it printed (first-half mean r: E1 -0.20, E2 -0.22, E3 -0.19; second-half E3 r: HO 0.04, RB 0.13) were computed against a corrupted truth, and they are recorded here only so the void run is not hidden. The sums are now cast to int64 before subtracting, and the selftest has a net-selling case on uint32 sizes that must return -1. The selection and agreement are recomputed from scratch on the corrected truth. The void numbers are NOT uninformative. The wrapped truth is about 4.3e9 exactly on net-selling sessions, so each estimator's correlation with it measures, roughly, how often it had the day's sign right, and that ranking (E2 best) was seen before the corrected run. The selection rule is mechanical (the highest first-half mean r, within 0.005 the simpler wins) and was fixed in D624 before either run, so that exposure cannot move the choice. It is disclosed here all the same."
+ ],
+ "siblings": {
+  "agreement_second_half": {
+   "HO": {
+    "accuracy_mean": 0.609,
+    "all_outrights": {
+     "ci90": [
+      -0.2056,
+      0.0713
+     ],
+     "n": 141,
+     "r": -0.0685,
+     "spearman": -0.04
+    },
+    "band_truth_on_estimate": {
+     "intercept": 71.77,
+     "residual_sd": 179.84,
+     "slope": -0.0414
+    },
+    "pre_window": {
+     "13:50": {
+      "ci90": [
+       0.3158,
+       0.542
+      ],
+      "n": 141,
+      "r": 0.4358,
+      "spearman": 0.3532
+     },
+     "14:00": {
+      "ci90": [
+       0.4975,
+       0.6783
+      ],
+      "n": 141,
+      "r": 0.5954,
+      "spearman": 0.4196
+     },
+     "14:10": {
+      "ci90": [
+       0.5074,
+       0.6855
+      ],
+      "n": 141,
+      "r": 0.6039,
+      "spearman": 0.5193
+     }
+    },
+    "window": {
+     "ci90": [
+      -0.1715,
+      0.1065
+     ],
+     "n": 141,
+     "r": -0.0332,
+     "spearman": 0.035
+    }
+   },
+   "RB": {
+    "accuracy_mean": 0.6052,
+    "all_outrights": {
+     "ci90": [
+      -0.3164,
+      -0.0466
+     ],
+     "n": 140,
+     "r": -0.185,
+     "spearman": -0.123
+    },
+    "band_truth_on_estimate": {
+     "intercept": -149.41,
+     "residual_sd": 239.01,
+     "slope": -0.2578
+    },
+    "pre_window": {
+     "13:50": {
+      "ci90": [
+       0.3682,
+       0.5833
+      ],
+      "n": 140,
+      "r": 0.483,
+      "spearman": 0.4446
+     },
+     "14:00": {
+      "ci90": [
+       0.282,
+       0.516
+      ],
+      "n": 140,
+      "r": 0.4056,
+      "spearman": 0.4781
+     },
+     "14:10": {
+      "ci90": [
+       0.3813,
+       0.5932
+      ],
+      "n": 140,
+      "r": 0.4946,
+      "spearman": 0.4772
+     }
+    },
+    "window": {
+     "ci90": [
+      -0.3451,
+      -0.0786
+     ],
+     "n": 140,
+     "r": -0.2159,
+     "spearman": -0.0938
+    }
+   }
+  },
+  "all_estimators_second_half_for_the_record": {
+   "E1": {
+    "HO": {
+     "ci90": [
+      -0.2263,
+      0.0498
+     ],
+     "n": 141,
+     "r": -0.09,
+     "spearman": -0.0471
+    },
+    "RB": {
+     "ci90": [
+      -0.3168,
+      -0.047
+     ],
+     "n": 140,
+     "r": -0.1854,
+     "spearman": -0.0693
+    }
+   },
+   "E2": {
+    "HO": {
+     "ci90": [
+      -0.1715,
+      0.1065
+     ],
+     "n": 141,
+     "r": -0.0332,
+     "spearman": 0.035
+    },
+    "RB": {
+     "ci90": [
+      -0.3451,
+      -0.0786
+     ],
+     "n": 140,
+     "r": -0.2159,
+     "spearman": -0.0938
+    }
+   },
+   "E3": {
+    "HO": {
+     "ci90": [
+      -0.2222,
+      0.0541
+     ],
+     "n": 141,
+     "r": -0.0857,
+     "spearman": -0.0436
+    },
+    "RB": {
+     "ci90": [
+      -0.3569,
+      -0.0919
+     ],
+     "n": 140,
+     "r": -0.2286,
+     "spearman": -0.1423
+    }
+   }
+  },
+  "controls": {
+   "HO": {
+    "c1_day_shift": {
+     "ci90": [
+      -0.0677,
+      0.2101
+     ],
+     "n": 140,
+     "r": 0.0726,
+     "spearman": 0.1359
+    },
+    "c2_random_sign": {
+     "ci90": [
+      -0.1262,
+      0.152
+     ],
+     "n": 141,
+     "r": 0.0132,
+     "spearman": -0.0309
+    }
+   },
+   "RB": {
+    "c1_day_shift": {
+     "ci90": [
+      0.0245,
+      0.2974
+     ],
+     "n": 139,
+     "r": 0.1641,
+     "spearman": 0.1417
+    },
+    "c2_random_sign": {
+     "ci90": [
+      -0.1511,
+      0.1281
+     ],
+     "n": 140,
+     "r": -0.0117,
+     "spearman": -0.0962
+    }
+   }
+  },
+  "k1": {
+   "bar_volume": 1271123,
+   "share_equal": 1.0,
+   "trade_volume": 1271123,
+   "window_seconds": 252053
+  },
+  "roots": {},
+  "selection_first_half": {
+   "chosen": "E2",
+   "mean_r": {
+    "E1": 0.295,
+    "E2": 0.3286,
+    "E3": 0.3094
+   },
+   "per_estimator": {
+    "E1": {
+     "HO": {
+      "ci90": [
+       0.0631,
+       0.3664
+      ],
+      "n": 108,
+      "r": 0.22,
+      "spearman": 0.1715
+     },
+     "RB": {
+      "ci90": [
+       0.2247,
+       0.4992
+      ],
+      "n": 109,
+      "r": 0.37,
+      "spearman": 0.2918
+     }
+    },
+    "E2": {
+     "HO": {
+      "ci90": [
+       0.052,
+       0.3567
+      ],
+      "n": 108,
+      "r": 0.2094,
+      "spearman": 0.1651
+     },
+     "RB": {
+      "ci90": [
+       0.3114,
+       0.566
+      ],
+      "n": 109,
+      "r": 0.4477,
+      "spearman": 0.3689
+     }
+    },
+    "E3": {
+     "HO": {
+      "ci90": [
+       0.0686,
+       0.3711
+      ],
+      "n": 108,
+      "r": 0.2253,
+      "spearman": 0.119
+     },
+     "RB": {
+      "ci90": [
+       0.2506,
+       0.5195
+      ],
+      "n": 109,
+      "r": 0.3934,
+      "spearman": 0.351
+     }
+    }
+   }
+  },
+  "sessions": {
+   "HO": {
+    "excluded": [
+     {
+      "day": "2026-02-16",
+      "excluded": "15 true trades in the window"
+     },
+     {
+      "day": "2026-05-25",
+      "excluded": "5 true trades in the window"
+     }
+    ],
+    "usable": 249
+   },
+   "RB": {
+    "excluded": [
+     {
+      "day": "2026-05-25",
+      "excluded": "4 true trades in the window"
+     },
+     {
+      "day": "2026-09-07",
+      "excluded": "4 true trades in the window"
+     }
+    ],
+    "usable": 249
+   }
+  },
+  "siblings_agree": false
+ },
+ "spec": "D624; docs/decisions/D624-PRE-REG-validating-estimated-signed-flow-for-stage-A.md (6e1bfa4)"
+}

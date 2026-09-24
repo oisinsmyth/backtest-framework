@@ -31,7 +31,7 @@ source.
 
 | # | information | stage / test | status | free substitute or note |
 |---|---|---|---|---|
-| G1 | aggressor side of CL/NG trades, 2017-05 → 2025-09-24 | **A (the kill test)**, B, I, H5 | WEAKENED | estimated from one-second bars; validated after the vault. **Principal: if Stage A can't be tested on the estimate, they will source the data** |
+| G1 | aggressor side of CL/NG trades, 2017-05 → 2025-09-24 | **A (the kill test)**, B, I, H5 | **MISSING: the estimate FAILED (D624 RESULT, 2026-09-25)** | One-second bars cannot sign settlement-window flow (sibling r −0.22 to −0.03 against the 0.8 bar). **The principal will source it.** The cheapest real route is window-only `trades` (14:28–14:30 plus 11:50–12:20 ET): ~$108 in-sample, ~$7.50 vault |
 | G2 | aggressor side of TAS trades | D | WEAKENED | estimated from one-second bars |
 | G3 | ETF bid/ask (NBBO) quotes before 2023-03-28 | C2 premium | WEAKENED | see the ETF-premium options in the reply of 2026-09-24; the principal is choosing |
 | G4 | ETF trades with aggressor side | C1 features, C3 H11a | WEAKENED | estimated from Alpha Vantage 1-minute bars; thin funds have sparse minutes |
@@ -134,6 +134,22 @@ source.
           daily closing premium. **IEX's free historical quotes** measure the trade-price bias on a
           sample of days. The principal accepts IEX's terms for this use. The file names and sizes
           are stated before downloading.
+      - **D624 RESULT (2026-09-25): the siblings do NOT agree.**
+        - E2 was chosen at a first-half mean r of 0.33. On the second half it scored r −0.03 (HO) and
+          −0.22 (RB).
+        - **So neither CL nor NG runs Stage A on the estimate.**
+        - The NG/CL gate phase is moot for the decision. The free top-up (~2026-10-08) is optional, as
+          a record only, and it is the principal's call.
+        - Record: `docs/decisions/D624-RESULT-one-second-bars-cannot-carry-settlement-window-flow.md`.
+      - **The Stage A validation, as planned** (pre-registration committed `6e1bfa4`, 2026-09-24).
+        Runner `scripts/validate_flow_estimate.py`, which passes its selftest.
+        - **Sibling phase (HO/RB):** runs when the free sibling pull lands
+          (`data/ledger_sibling_pull_jobs.json`).
+        - **NG/CL gate:** read ONCE, after the top-up. **Top-up due ~2026-10-08:** free `trades` and
+          `ohlcv-1s` for CL/NG/CLT/NGT from 2026-09-19. Its job record must be
+          `data/ledger_topup_pull_jobs.json`, with labels `topup-trades` and `topup-ohlcv1s`.
+        - **Outcomes:** PASS ≥ 0.8; UNRESOLVED near miss 0.70–0.80; FAIL < 0.70; UNRESOLVED below 15
+          sessions. The siblings must agree.
       - **HELD by the principal ("not yet"):** amendment A8.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
