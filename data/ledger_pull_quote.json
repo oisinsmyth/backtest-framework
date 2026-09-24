@@ -1,0 +1,358 @@
+{
+ "quoted_utc": "2026-09-24T13:41:03Z",
+ "submitted": false,
+ "spans": {
+  "in_sample": [
+   "2017-05-21",
+   "2025-03-01"
+  ],
+  "etf_sub_sample": [
+   "2018-05-01",
+   "2025-03-01"
+  ],
+  "vault": [
+   "2025-03-01",
+   "2026-09-19"
+  ]
+ },
+ "dataset_ranges": {
+  "ARCX.PILLAR": {
+   "start": "2018-05-01T00:00:00.000000000Z",
+   "end": "2026-09-24T04:00:00.000000000Z",
+   "schema": "{'mbo': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'mbp-1': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'mbp-10': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'tbbo': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'trades': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'bbo-1s': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'bbo-1m': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1s': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1m': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1h': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1d': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T00:00:00.000000000Z'}, 'definition': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'imbalance': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'statistics': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'status': {'start': '2018-05-01T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}}"
+  },
+  "EQUS.MINI": {
+   "start": "2023-03-28T00:00:00.000000000Z",
+   "end": "2026-09-24T04:00:00.000000000Z",
+   "schema": "{'mbp-1': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'tbbo': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'trades': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'bbo-1s': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'bbo-1m': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1s': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1m': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1h': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}, 'ohlcv-1d': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T00:00:00.000000000Z'}, 'definition': {'start': '2023-03-28T00:00:00.000000000Z', 'end': '2026-09-24T04:00:00.000000000Z'}}"
+  },
+  "GLBX.MDP3": {
+   "start": "2010-06-06T00:00:00.000000000Z",
+   "end": "2026-09-24T13:30:00.000000000Z",
+   "schema": "{'mbo': {'start': '2017-05-21T00:00:00.000000000Z', 'end': '2026-09-24T05:41:08.907246000Z'}, 'mbp-1': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'mbp-10': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T05:41:08.907246000Z'}, 'tbbo': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'trades': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'bbo-1s': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'bbo-1m': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'ohlcv-1s': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:20:00.000000000Z'}, 'ohlcv-1m': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:20:00.000000000Z'}, 'ohlcv-1h': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T11:10:00.000000000Z'}, 'ohlcv-1d': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T00:00:00.000000000Z'}, 'definition': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'statistics': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'status': {'start': '2010-06-06T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'cmbp-1': {'start': '2017-05-21T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'cbbo-1s': {'start': '2017-05-21T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}, 'cbbo-1m': {'start': '2017-05-21T00:00:00.000000000Z', 'end': '2026-09-24T13:30:00.000000000Z'}}"
+  }
+ },
+ "quotes": {
+  "etf_arca_bbo-1m_sub_sample": {
+   "dataset": "ARCX.PILLAR",
+   "symbols": [
+    "BOIL",
+    "KOLD",
+    "UCO",
+    "SCO",
+    "UNG",
+    "USO"
+   ],
+   "schema": "bbo-1m",
+   "start": "2018-05-01",
+   "end_exclusive": "2025-03-01",
+   "billable_gb": 0.669,
+   "usd": 2.49
+  },
+  "etf_arca_bbo-1m_vault": {
+   "dataset": "ARCX.PILLAR",
+   "symbols": [
+    "BOIL",
+    "KOLD",
+    "UCO",
+    "SCO",
+    "UNG",
+    "USO"
+   ],
+   "schema": "bbo-1m",
+   "start": "2025-03-01",
+   "end_exclusive": "2026-09-19",
+   "billable_gb": 0.161,
+   "usd": 0.6
+  },
+  "etf_arca_trades_sub_sample": {
+   "dataset": "ARCX.PILLAR",
+   "symbols": [
+    "BOIL",
+    "KOLD",
+    "UCO",
+    "SCO",
+    "UNG",
+    "USO"
+   ],
+   "schema": "trades",
+   "start": "2018-05-01",
+   "end_exclusive": "2025-03-01",
+   "billable_gb": 2.127,
+   "usd": 11.89
+  },
+  "etf_arca_trades_vault": {
+   "dataset": "ARCX.PILLAR",
+   "symbols": [
+    "BOIL",
+    "KOLD",
+    "UCO",
+    "SCO",
+    "UNG",
+    "USO"
+   ],
+   "schema": "trades",
+   "start": "2025-03-01",
+   "end_exclusive": "2026-09-19",
+   "billable_gb": 1.506,
+   "usd": 8.41
+  },
+  "etf_consolidated_bbo-1m_check_window": {
+   "dataset": "EQUS.MINI",
+   "symbols": [
+    "BOIL",
+    "KOLD",
+    "UCO",
+    "SCO",
+    "UNG",
+    "USO"
+   ],
+   "schema": "bbo-1m",
+   "start": "2023-03-28",
+   "end_exclusive": "2025-03-01",
+   "billable_gb": 0.145,
+   "usd": 0.54
+  },
+  "etf_consolidated_bbo-1m_vault": {
+   "dataset": "EQUS.MINI",
+   "symbols": [
+    "BOIL",
+    "KOLD",
+    "UCO",
+    "SCO",
+    "UNG",
+    "USO"
+   ],
+   "schema": "bbo-1m",
+   "start": "2025-03-01",
+   "end_exclusive": "2026-09-19",
+   "billable_gb": 0.125,
+   "usd": 0.47
+  },
+  "cl_ng_trades_in_sample": {
+   "dataset": "GLBX.MDP3",
+   "symbols": [
+    "CL.FUT",
+    "NG.FUT"
+   ],
+   "schema": "trades",
+   "start": "2017-05-21",
+   "end_exclusive": "2025-03-01",
+   "billable_gb": 39.277,
+   "usd": 1024.23
+  },
+  "cl_ng_trades_vault": {
+   "dataset": "GLBX.MDP3",
+   "symbols": [
+    "CL.FUT",
+    "NG.FUT"
+   ],
+   "schema": "trades",
+   "start": "2025-03-01",
+   "end_exclusive": "2026-09-19",
+   "billable_gb": 9.173,
+   "usd": 71.37
+  },
+  "tas_trades_in_sample": {
+   "dataset": "GLBX.MDP3",
+   "symbols": [
+    "CLT.FUT",
+    "NGT.FUT"
+   ],
+   "schema": "trades",
+   "start": "2017-05-21",
+   "end_exclusive": "2025-03-01",
+   "billable_gb": 0.102,
+   "usd": 2.67
+  },
+  "tas_trades_vault": {
+   "dataset": "GLBX.MDP3",
+   "symbols": [
+    "CLT.FUT",
+    "NGT.FUT"
+   ],
+   "schema": "trades",
+   "start": "2025-03-01",
+   "end_exclusive": "2026-09-19",
+   "billable_gb": 0.027,
+   "usd": 0.23
+  },
+  "cl_ng_mbo_in_sample_whole_days": {
+   "dataset": "GLBX.MDP3",
+   "symbols": [
+    "CL.FUT",
+    "NG.FUT"
+   ],
+   "schema": "mbo",
+   "start": "2017-05-21",
+   "end_exclusive": "2025-03-01",
+   "billable_gb": 4314.195,
+   "usd": 7232.23
+  },
+  "cl_ng_mbo_vault_whole_days": {
+   "dataset": "GLBX.MDP3",
+   "symbols": [
+    "CL.FUT",
+    "NG.FUT"
+   ],
+   "schema": "mbo",
+   "start": "2025-03-01",
+   "end_exclusive": "2026-09-19",
+   "billable_gb": 1151.29,
+   "usd": 1821.29
+  }
+ },
+ "window_samples": {
+  "mbo": {
+   "windows_et": [
+    [
+     "13:30",
+     "14:35"
+    ]
+   ],
+   "days": [
+    {
+     "day": "2017-08-15",
+     "window_usd": 0.26,
+     "whole_day_usd": 2.09
+    },
+    {
+     "day": "2018-01-17",
+     "window_usd": 0.33,
+     "whole_day_usd": 2.83
+    },
+    {
+     "day": "2018-06-13",
+     "window_usd": 0.31,
+     "whole_day_usd": 2.49
+    },
+    {
+     "day": "2019-03-12",
+     "window_usd": 0.27,
+     "whole_day_usd": 2.25
+    },
+    {
+     "day": "2019-11-13",
+     "window_usd": 0.4,
+     "whole_day_usd": 2.64
+    },
+    {
+     "day": "2020-06-16",
+     "window_usd": 0.42,
+     "whole_day_usd": 4.06
+    },
+    {
+     "day": "2021-02-17",
+     "window_usd": 0.59,
+     "whole_day_usd": 4.32
+    },
+    {
+     "day": "2021-10-13",
+     "window_usd": 0.44,
+     "whole_day_usd": 3.71
+    },
+    {
+     "day": "2022-05-17",
+     "window_usd": 0.71,
+     "whole_day_usd": 5.43
+    },
+    {
+     "day": "2023-01-18",
+     "window_usd": 0.72,
+     "whole_day_usd": 5.24
+    },
+    {
+     "day": "2023-09-13",
+     "window_usd": 0.42,
+     "whole_day_usd": 3.73
+    },
+    {
+     "day": "2024-07-17",
+     "window_usd": 0.5,
+     "whole_day_usd": 3.62
+    }
+   ],
+   "window_share_of_whole_day_cost": 0.12662107993397784,
+   "in_sample_estimate_usd": 915.75,
+   "vault_estimate_usd": 230.61
+  },
+  "trades": {
+   "windows_et": [
+    [
+     "13:30",
+     "14:45"
+    ],
+    [
+     "10:30",
+     "12:30"
+    ]
+   ],
+   "days": [
+    {
+     "day": "2017-08-15",
+     "window_usd": 0.13,
+     "whole_day_usd": 0.4
+    },
+    {
+     "day": "2018-01-17",
+     "window_usd": 0.23,
+     "whole_day_usd": 0.57
+    },
+    {
+     "day": "2018-06-13",
+     "window_usd": 0.22,
+     "whole_day_usd": 0.48
+    },
+    {
+     "day": "2019-03-12",
+     "window_usd": 0.18,
+     "whole_day_usd": 0.48
+    },
+    {
+     "day": "2019-11-13",
+     "window_usd": 0.17,
+     "whole_day_usd": 0.47
+    },
+    {
+     "day": "2020-06-16",
+     "window_usd": 0.26,
+     "whole_day_usd": 0.66
+    },
+    {
+     "day": "2021-02-17",
+     "window_usd": 0.24,
+     "whole_day_usd": 0.7
+    },
+    {
+     "day": "2021-10-13",
+     "window_usd": 0.19,
+     "whole_day_usd": 0.53
+    },
+    {
+     "day": "2022-05-17",
+     "window_usd": 0.2,
+     "whole_day_usd": 0.52
+    },
+    {
+     "day": "2023-01-18",
+     "window_usd": 0.23,
+     "whole_day_usd": 0.6
+    },
+    {
+     "day": "2023-09-13",
+     "window_usd": 0.22,
+     "whole_day_usd": 0.49
+    },
+    {
+     "day": "2024-07-17",
+     "window_usd": 0.24,
+     "whole_day_usd": 0.57
+    }
+   ],
+   "window_share_of_whole_day_cost": 0.3879443585780526,
+   "in_sample_estimate_usd": 397.34,
+   "vault_estimate_usd": 27.69
+  }
+ },
+ "timing_s": 400.0
+}

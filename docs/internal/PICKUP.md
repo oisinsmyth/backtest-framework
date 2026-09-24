@@ -2,7 +2,27 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
-## SETTLEMENT LEDGER, ITEM 1: DAILY HOLDINGS HISTORY AND GATE 0b, CLOSED 2026-09-24
+## SETTLEMENT LEDGER, ITEMS 1 AND 2: DAILY HOLDINGS HISTORY, GATE 0b AND THE SEAL, CLOSED 2026-09-24
+
+**Item 2, the seal (principal, 2026-09-24): the deposit's vault (amendment A6).**
+- The ledger's in-sample runs to 2025-02-28. The vault, 2025-03-01 → 2026-09-18, is the one
+  confirmation look, and this study reads with `reserved_from="2025-03-01"`.
+- **The Q25 record** of earlier vault-window reads is in the amendments file:
+  - D562, D566, D574 and D578 scored returns;
+  - D507, D511 and D604 were censuses;
+  - D619, D620 and item 1 read fund composition.
+  - None scored settlement-window flow.
+- **1f:** `gate_0b_2024.py` → `ledger_gate_0b_2024.json`, spec sha256 `b3ba63d0…`, frozen before
+  the first read.
+  - Over 2024-01-02 → 2025-02-28 (291 days per fund): BOIL 100%, KOLD 99.66%, UCO 100%,
+    SCO 100%, all **PASS**.
+  - Both rules found in 2017–2023 held on unseen days. NG's best schedule is S0, and CL's best of 20
+    candidates is Bloomberg's documented BD2–3 roll; the 2017-era S0 gets only 88.7% and 87.6%.
+  - 2025-01-09, Carter's day of mourning (NYSE shut, NYMEX settled), is handled by the calendar.
+- **Not yet extended to 2025-02 (AITODO 11):** the f_fut estimate, UNG/USO month-ends and AUM,
+  USO's weights, and the contract-count check. All of them stop at 2023-12.
+
+### Item 1's record
 
 This is AITODO item 1 (deposit Q23): what each fund held, by contract month and futures versus swap,
 for every day. The principal can't pay for data (2026-09-24), which closed the vendor route (ETF

@@ -10,6 +10,13 @@ version (likely at the Phase C "first real number" milestone, see
 
 ## [Unreleased]
 
+### Added (2026-09-24, settlement ledger item 2: the seal, and Gate 0b to 2025-02)
+- **Amendment A6:** the ledger's seal is the deposit's vault. The in-sample runs to 2025-02-28, with
+  `reserved_from="2025-03-01"`.
+- **The Q25 record** lists every earlier read of the vault window in NG, CL and the six funds.
+- **`scripts/gate_0b_2024.py`** → `data/ledger_gate_0b_2024.json`: Gate 0b over 2024-01-02 →
+  2025-02-28, under the rules the 2017–2023 runs established. All four ProShares funds pass.
+
 ### Added (2026-09-24, settlement ledger item 1: daily holdings history and Gate 0b)
 - **Fourteen scripts** under `scripts/`. Each writes a `data/ledger_*` output and reproduces it
   byte for byte with `--check`.

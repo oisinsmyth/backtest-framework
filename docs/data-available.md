@@ -860,6 +860,26 @@ into `fund_nav_daily`. The meta carries D604's holdout sentence.
 - **The ledger's checks and Gate 0b outputs** are the `data/ledger_*.json` files, listed in
   `docs/internal/SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md`.
 
+**The settlement ledger's free pull (2026-09-24, `scripts/fetch_ledger_free.py`; job record
+`data/ledger_free_pull_jobs.json`).**
+- **Databento `ohlcv-1s`,** CL and NG (every contract and spread under the parent) and TAS (CLT,
+  NGT), 2017-05-21 → 2026-09-18. It comes to 3.3 GB compressed and was $0 under the CME Standard
+  subscription, which covers the full history of L0 schemas.
+- **Databento `trades`** with aggressor side for the same four roots, **2026-09-19 onward only**,
+  the free last-12-months window after the vault.
+- **Alpha Vantage 1-minute bars** for BOIL, KOLD, UCO, SCO, UNG and USO, 2017-05 → 2026-09.
+  - They are in `data/raw/alphavantage/1min/<SYM>/<YYYY-MM>.json.gz`, fetched unadjusted with
+    extended hours.
+- **What bites:**
+  - The one-second bars carry **no aggressor side**. Signed flow built from them is an estimate,
+    and it is admitted to Stage A only at a day-level correlation ≥ 0.8 with true flow. The
+    post-vault trades are its only free ground truth.
+  - Alpha Vantage prints a bar **only in minutes with a trade**. Regular-hours coverage runs from
+    USO at 99% down to KOLD at 67%.
+  - Its prices are trades, not quotes, so a premium built from them carries bid-ask bounce.
+  - Everything from 2025-03-01 is inside the ledger's sealed vault. It is on disk but is read only
+    through `load_panel(reserved_from="2025-03-01")` until the vault is opened.
+
 **`data/fixtures/robintrack_energy_funds.csv.gz` — the six energy funds' Robinhood holder counts ([D621](decisions/D621-retail-attention-from-creations-and-robinhood-holders.md), 2026-09-22).**
 `ticker, ts_utc, holders`, 115,290 rows, 433,420 bytes, sha256
 `36864d6feadebd36e8e4a1e7f188cb7b9349213cd7a219590dfc7b94c2b90d5d`. BOIL, KOLD, UCO, SCO, UNG
