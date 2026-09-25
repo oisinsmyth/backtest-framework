@@ -250,7 +250,7 @@ outputs stay byte-identical.
             instrument-year (offsets ≥ 20 days). Calibrated: 4–7% of null datasets beat their own p95, and the
             combined gate rejects 0–2%. Power at β = 0.25 (kept): CL 0.87, NG 1.00. A9 also records the summed
             dependent, the full-size cost line and the Newey-West report.
-        - **Next:** H1a's pre-registration (drafted as the next decision record, awaiting the principal's review; it is committed alone), then its runner.
+        - **D627 PRE-REGISTRATION COMMITTED `505d83b` (2026-09-25).** A failed placebo or rotation gives UNRESOLVED, never a kill (the principal). **Next:** its runner, `scripts/run_h1a_stage_a.py`, with the selftest first, committed before its one run.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
