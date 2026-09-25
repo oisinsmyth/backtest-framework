@@ -262,7 +262,8 @@ outputs stay byte-identical.
             instrument-year (offsets ≥ 20 days). Calibrated: 4–7% of null datasets beat their own p95, and the
             combined gate rejects 0–2%. Power at β = 0.25 (kept): CL 0.87, NG 1.00. A9 also records the summed
             dependent, the full-size cost line and the Newey-West report.
-        - **D627 PRE-REGISTRATION COMMITTED `505d83b`; runner `46e317d`; RUN ONCE 2026-09-25 → FAIL on BOTH roots, with NEGATIVE slopes** (CL β −0.74, t −4.12; NG β −0.10, t −3.07). **Premise KILLED under A8's kill row.** Result draft `docs/decisions/D627-RESULT-h1a-fails-with-negative-slopes-on-both-roots.md` (uncommitted). POST HOC: the dependent drifts (A_t > 0 on 74–77% of days, a life-cycle drift), and NG's TAS volume rises with |Q| (t 3.9 with year FE). **Principal to decide:** accept STOP → write-up, or spend unseen data (the vault or forward) on a corrected or TAS-based H1a.
+        - **D627: pre-registration `505d83b`, runner `46e317d`, RESULT `17c6867` → FAIL on BOTH roots, with NEGATIVE slopes** (CL β −0.74, t −4.12; NG β −0.10, t −3.07). **The premise is KILLED under A8's kill row.** POST HOC: the dependent drifts (A_t > 0 on 74–77% of days), and NG's TAS volume rises with |Q| (t 3.9 with year FE).
+        - **OPTION D (the principal, 2026-09-25): diagnose first, then decide.** `scripts/explore_h1a_lifecycle.py` is EXPLORATORY: it compares each contract with the previous 6 months' contracts at the same days-to-expiry, then refits the window and TAS lines. **The vault rule, committed before the run:** a line qualifies if β > 0 and its vault power ≥ 0.80 at HALF its exploratory effect (it needs t ≈ 12.7 with year FE, over 390 vault days). If no line qualifies → STOP → write-up, and the vault stays unread.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
