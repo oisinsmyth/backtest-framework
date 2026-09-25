@@ -1,0 +1,186 @@
+{
+ "approved": "principal, 2026-09-25: 'Go for the IEX download'",
+ "days": {
+  "2018-06-13": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2018-06-13",
+   "kept_rows": {
+    "BOIL": 581,
+    "KOLD": 2288,
+    "SCO": 27435,
+    "UCO": 40513,
+    "UNG": 13919,
+    "USO": 48001
+   },
+   "listed_bytes": 843956743,
+   "messages": 22668388,
+   "packets": 22353252,
+   "streamed_bytes": 843956743,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20180613%2F20180613_IEXTP1_TOPS1.6.pcap.gz?generation=1528935110876442&alt=media",
+   "wall_s": 1509.0
+  },
+  "2019-03-12": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2019-03-12",
+   "kept_rows": {
+    "BOIL": 1157,
+    "KOLD": 433,
+    "SCO": 528,
+    "UCO": 6805,
+    "UNG": 10991,
+    "USO": 45211
+   },
+   "listed_bytes": 1115489503,
+   "messages": 30623249,
+   "packets": 29742702,
+   "streamed_bytes": 1115489503,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20190312%2F20190312_IEXTP1_TOPS1.6.pcap.gz?generation=1552507378534317&alt=media",
+   "wall_s": 1880.6
+  },
+  "2019-11-13": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2019-11-13",
+   "kept_rows": {
+    "BOIL": 1217,
+    "KOLD": 3981,
+    "SCO": 581,
+    "UCO": 813,
+    "UNG": 17814,
+    "USO": 28413
+   },
+   "listed_bytes": 466470455,
+   "messages": 12443207,
+   "packets": 12354672,
+   "streamed_bytes": 466470455,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20191113%2F20191113_IEXTP1_TOPS1.6.pcap.gz?generation=1573746059446367&alt=media",
+   "wall_s": 159.5
+  },
+  "2020-06-16": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2020-06-16",
+   "kept_rows": {
+    "BOIL": 9483,
+    "KOLD": 7878,
+    "SCO": 780,
+    "UCO": 118971,
+    "UNG": 10105,
+    "USO": 114526
+   },
+   "listed_bytes": 970629999,
+   "messages": 26699940,
+   "packets": 26545406,
+   "streamed_bytes": 970629999,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20200616%2F20200616_IEXTP1_TOPS1.6.pcap.gz?generation=1592356338568277&alt=media",
+   "wall_s": 1757.6
+  },
+  "2021-02-17": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2021-02-17",
+   "kept_rows": {
+    "BOIL": 51980,
+    "KOLD": 39014,
+    "SCO": 18072,
+    "UCO": 153878,
+    "UNG": 51331,
+    "USO": 108204
+   },
+   "listed_bytes": 1737546445,
+   "messages": 46976720,
+   "packets": 46487394,
+   "streamed_bytes": 1737546445,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20210217%2F20210217_IEXTP1_TOPS1.6.pcap.gz?generation=1613611878464345&alt=media",
+   "wall_s": 2779.7
+  },
+  "2021-10-13": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2021-10-13",
+   "kept_rows": {
+    "BOIL": 10503,
+    "KOLD": 22863,
+    "SCO": 1041,
+    "UCO": 14235,
+    "UNG": 70108,
+    "USO": 126421
+   },
+   "listed_bytes": 3140948529,
+   "messages": 85812977,
+   "packets": 83478413,
+   "streamed_bytes": 3140948529,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20211013%2F20211013_IEXTP1_TOPS1.6.pcap.gz?generation=1634171963943430&alt=media",
+   "wall_s": 4502.1
+  },
+  "2022-05-17": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2022-05-17",
+   "kept_rows": {
+    "BOIL": 32278,
+    "KOLD": 33804,
+    "SCO": 18729,
+    "UCO": 76253,
+    "UNG": 55685,
+    "USO": 61141
+   },
+   "listed_bytes": 4996745441,
+   "messages": 132512297,
+   "packets": 127769596,
+   "streamed_bytes": 4996745441,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20220517%2F20220517_IEXTP1_TOPS1.6.pcap.gz?generation=1652828228919234&alt=media",
+   "wall_s": 6658.8
+  },
+  "2023-01-18": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2023-01-18",
+   "kept_rows": {
+    "BOIL": 25292,
+    "KOLD": 7039,
+    "SCO": 32053,
+    "UCO": 62819,
+    "UNG": 80668,
+    "USO": 99609
+   },
+   "listed_bytes": 4465071738,
+   "messages": 142399191,
+   "packets": 138356165,
+   "streamed_bytes": 4465071738,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20230118%2F20230118_IEXTP1_TOPS1.6.pcap.gz?generation=1674097092414161&alt=media",
+   "wall_s": 6224.1
+  },
+  "2023-09-13": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2023-09-13",
+   "kept_rows": {
+    "BOIL": 26649,
+    "KOLD": 10938,
+    "SCO": 65946,
+    "UCO": 74383,
+    "UNG": 53632,
+    "USO": 184389
+   },
+   "listed_bytes": 4173485938,
+   "messages": 133535153,
+   "packets": 129924114,
+   "streamed_bytes": 4173485938,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20230913%2F20230913_IEXTP1_TOPS1.6.pcap.gz?generation=1694644985167162&alt=media",
+   "wall_s": 5360.3
+  },
+  "2024-07-17": {
+   "columns": "Q: flags,bid_size,bid_px_e4,ask_px_e4,ask_size; T: flags,size,px_e4",
+   "day": "2024-07-17",
+   "kept_rows": {
+    "BOIL": 89366,
+    "KOLD": 7135,
+    "SCO": 14632,
+    "UCO": 79141,
+    "UNG": 102891,
+    "USO": 103089
+   },
+   "listed_bytes": 3429509461,
+   "messages": 111540990,
+   "packets": 109689533,
+   "streamed_bytes": 3429509461,
+   "url": "https://www.googleapis.com/download/storage/v1/b/iex/o/data%2Ffeeds%2F20240717%2F20240717_IEXTP1_TOPS1.6.pcap.gz?generation=1721255376327752&alt=media",
+   "wall_s": 4802.4
+  }
+ },
+ "terms": "https://www.iex.io/legal/hist-data-terms"
+}

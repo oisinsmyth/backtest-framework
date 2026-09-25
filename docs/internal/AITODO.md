@@ -159,6 +159,18 @@ outputs stay byte-identical.
           daily closing premium. **IEX's free historical quotes** measure the trade-price bias on a
           sample of days. The principal accepts IEX's terms for this use. The file names and sizes
           are stated before downloading.
+          - **DONE 2026-09-25.** IEX TOPS on 10 days, 2018-06-13 → 2024-07-17: 24.3 GB streamed = listed on every
+            day, and every packet's message count checked. Filtered to the six ETFs under `data/raw/iex/`. Record:
+            `data/ledger_iex_sample_pull.json`.
+          - Bias check (`scripts/check_etf_premium_bias.py` → `data/ledger_etf_premium_bias_check.json`):
+            - Alpha Vantage bars are stamped at the minute's START (exact matches 25.7% against 10.3%).
+            - The close's mean bias against the mid is below 1.3 bp for every ETF, and below 0.5 bp wherever
+              the sample gives an SE under 1 bp (USO +0.06 ± 0.11; UNG +0.04 ± 0.16). Per-minute noise has an sd of
+              3–10 bp.
+            - The primary measure uses one-tick IEX minutes only, where IEX's quote is the national best. That
+              covers USO 23%, UNG 15%, SCO 13%, BOIL 6%, and KOLD and UCO under 1%, which rest on the ≤ 3-tick
+              sample.
+            - **So the close stands in for the mid in a time-averaged premium.**
       - **D624 RESULT (2026-09-25): the siblings do NOT agree.**
         - E2 was chosen at a first-half mean r of 0.33. On the second half it scored r −0.03 (HO) and
           −0.22 (RB).
