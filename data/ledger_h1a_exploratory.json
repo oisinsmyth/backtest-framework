@@ -1,0 +1,186 @@
+{
+ "decision": {
+  "outcome": "STOP -> write-up; the vault stays unread",
+  "qualifying_lines": []
+ },
+ "label": "EXPLORATORY: spent in-sample, admits nothing, changes no verdict (D627 FAILS)",
+ "roots": {
+  "CL": {
+   "drift_check": {
+    "Astar_median": 225.33333333333326,
+    "Astar_ratio_median": 1.1850220264317182,
+    "Astar_share_positive": 0.6377638334284085,
+    "D627_A_share_positive": 0.7718526663001649,
+    "Tstar_share_positive": 0.5892755276668569
+   },
+   "first": "2017-09-22",
+   "last": "2025-02-28",
+   "lines": {
+    "T_tas": {
+     "eligible": false,
+     "pooled": {
+      "beta": -1.3250000021395743,
+      "constant_controls_dropped": 0,
+      "k": 10,
+      "n": 1753,
+      "se_hc1": 0.3759221168522448,
+      "t_hc1": -3.5246662612840147,
+      "t_nw5": -2.987315229490042
+     },
+     "qualifies": false,
+     "rotation": {
+      "p50": 1.0249757494793688,
+      "p95": 3.27594415634216,
+      "p95_se": 0.051132333346340826
+     },
+     "t_explore": -3.709350964426489,
+     "vault_power_at_half_effect": 0.0,
+     "year_fe": {
+      "beta": -1.780309463985382,
+      "constant_controls_dropped": 0,
+      "k": 18,
+      "n": 1753,
+      "se_hc1": 0.479951743865423,
+      "t_hc1": -3.709350964426489,
+      "t_nw5": -3.392708381714062
+     }
+    },
+    "W_placebo": {
+     "year_fe": {
+      "beta": -0.8583681498791663,
+      "constant_controls_dropped": 0,
+      "k": 18,
+      "n": 1753,
+      "se_hc1": 0.42356636104932754,
+      "t_hc1": -2.0265257792254254,
+      "t_nw5": -1.9411856290161014
+     }
+    },
+    "W_window": {
+     "eligible": false,
+     "pooled": {
+      "beta": -0.4639298920683135,
+      "constant_controls_dropped": 0,
+      "k": 10,
+      "n": 1753,
+      "se_hc1": 0.18431056280944164,
+      "t_hc1": -2.517109627341162,
+      "t_nw5": -2.3124207775056362
+     },
+     "qualifies": false,
+     "rotation": {
+      "p50": 2.2329151639657705,
+      "p95": 3.548677671694737,
+      "p95_se": 0.051439668449103845
+     },
+     "t_explore": -3.9674292380706992,
+     "vault_power_at_half_effect": 0.0,
+     "year_fe": {
+      "beta": -0.9604523478315521,
+      "constant_controls_dropped": 0,
+      "k": 18,
+      "n": 1753,
+      "se_hc1": 0.24208430452022517,
+      "t_hc1": -3.9674292380706992,
+      "t_nw5": -3.511084433028121
+     }
+    }
+   },
+   "n": 1753
+  },
+  "NG": {
+   "drift_check": {
+    "Astar_median": 103.33333333333348,
+    "Astar_ratio_median": 1.0710652073377525,
+    "Astar_share_positive": 0.5515766969535008,
+    "D627_A_share_positive": 0.743801652892562,
+    "Tstar_share_positive": 0.621058257616248
+   },
+   "first": "2017-09-21",
+   "last": "2025-02-28",
+   "lines": {
+    "T_tas": {
+     "eligible": true,
+     "pooled": {
+      "beta": 1.354495907451558,
+      "constant_controls_dropped": 0,
+      "k": 9,
+      "n": 1871,
+      "se_hc1": 0.14507836069455513,
+      "t_hc1": 9.336305572843386,
+      "t_nw5": 6.0524531009169715
+     },
+     "qualifies": false,
+     "rotation": {
+      "p50": 5.5034064349300955,
+      "p95": 6.925126655434405,
+      "p95_se": 0.036627434307246395
+     },
+     "t_explore": 6.919723321067812,
+     "vault_power_at_half_effect": 0.3371059574466546,
+     "year_fe": {
+      "beta": 1.2806117104198251,
+      "constant_controls_dropped": 0,
+      "k": 17,
+      "n": 1871,
+      "se_hc1": 0.18506689516340497,
+      "t_hc1": 6.919723321067812,
+      "t_nw5": 5.446510403143143
+     }
+    },
+    "W_placebo": {
+     "year_fe": {
+      "beta": -0.01682454499742246,
+      "constant_controls_dropped": 0,
+      "k": 17,
+      "n": 1871,
+      "se_hc1": 0.06348650779969396,
+      "t_hc1": -0.26500977263555775,
+      "t_nw5": -0.2576558896049785
+     }
+    },
+    "W_window": {
+     "eligible": false,
+     "pooled": {
+      "beta": -0.018472216354645236,
+      "constant_controls_dropped": 0,
+      "k": 9,
+      "n": 1871,
+      "se_hc1": 0.03581363032599566,
+      "t_hc1": -0.5157873185851535,
+      "t_nw5": -0.3701865227825255
+     },
+     "qualifies": false,
+     "rotation": {
+      "p50": 1.6444026718853022,
+      "p95": 2.984588767900119,
+      "p95_se": 0.053605941074019205
+     },
+     "t_explore": -2.29934795268185,
+     "vault_power_at_half_effect": 0.0,
+     "year_fe": {
+      "beta": -0.11016490240751324,
+      "constant_controls_dropped": 0,
+      "k": 17,
+      "n": 1871,
+      "se_hc1": 0.047911366471969655,
+      "t_hc1": -2.29934795268185,
+      "t_nw5": -1.6894738855464144
+     }
+    }
+   },
+   "n": 1871
+  }
+ },
+ "rule": {
+  "k_min": 4,
+  "k_prev": 6,
+  "n_vault": 390,
+  "power_min": 0.8,
+  "shrink": 0.5,
+  "vault": [
+   "2025-03-03",
+   "2026-09-18"
+  ]
+ }
+}
