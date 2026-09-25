@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 360 of these records carry neither field —
+**No Status or Category column, deliberately.** 361 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -699,7 +699,7 @@ would look like data. The tokens are what is shown.
 | D624 | one-second bars cannot stand in for settlement-window signed flow: the sibling check fails, so neither CL nor NG runs S… | [PRE-REG](D624-PRE-REG-validating-estimated-signed-flow-for-stage-A.md) · [RESULT](D624-RESULT-one-second-bars-cannot-carry-settlement-window-flow.md) |
 | D625 | the TAS premium does not pass as pre-registered; its control fired on a base-rate effect, and the TAS price level reads… | [PRE-REG](D625-PRE-REG-the-TAS-premium-as-a-signed-stand-in-for-window-flow.md) · [RESULT](D625-RESULT-the-TAS-premium-reads-backwards.md) |
 | D626 | REGISTRATION — a TAS premium goes with net SELLING in the settlement window: a confirmation on data no one has read | [PRE-REG](D626-PRE-REG-a-TAS-premium-goes-with-selling-in-the-window.md) |
-| D627 | REGISTRATION — Stage A, H1a: does the leveraged funds' predicted rebalance SIZE show up as extra settlement-window volu… | [PRE-REG](D627-PRE-REG-h1a-rebalance-size-and-window-volume.md) |
+| D627 | H1a FAILS on both roots, with NEGATIVE slopes. The premise is killed as pre-registered, and the dependent carried a lif… | [PRE-REG](D627-PRE-REG-h1a-rebalance-size-and-window-volume.md) · [RESULT](D627-RESULT-h1a-fails-with-negative-slopes-on-both-roots.md) |
 
 <!-- REGISTER:END -->
 

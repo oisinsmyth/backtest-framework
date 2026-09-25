@@ -250,7 +250,7 @@ outputs stay byte-identical.
             instrument-year (offsets ≥ 20 days). Calibrated: 4–7% of null datasets beat their own p95, and the
             combined gate rejects 0–2%. Power at β = 0.25 (kept): CL 0.87, NG 1.00. A9 also records the summed
             dependent, the full-size cost line and the Newey-West report.
-        - **D627 PRE-REGISTRATION COMMITTED `505d83b` (2026-09-25).** A failed placebo or rotation gives UNRESOLVED, never a kill (the principal). **Next:** its runner, `scripts/run_h1a_stage_a.py`, with the selftest first, committed before its one run.
+        - **D627 PRE-REGISTRATION COMMITTED `505d83b`; runner `46e317d`; RUN ONCE 2026-09-25 → FAIL on BOTH roots, with NEGATIVE slopes** (CL β −0.74, t −4.12; NG β −0.10, t −3.07). **Premise KILLED under A8's kill row.** Result draft `docs/decisions/D627-RESULT-h1a-fails-with-negative-slopes-on-both-roots.md` (uncommitted). POST HOC: the dependent drifts (A_t > 0 on 74–77% of days, a life-cycle drift), and NG's TAS volume rises with |Q| (t 3.9 with year FE). **Principal to decide:** accept STOP → write-up, or spend unseen data (the vault or forward) on a corrected or TAS-based H1a.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
