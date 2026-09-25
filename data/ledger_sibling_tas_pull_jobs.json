@@ -1,0 +1,116 @@
+{
+ "submitted_utc": "2026-09-25T00:34:22Z",
+ "quotes": [
+  {
+   "label": "siblings-tas-trades",
+   "schema": "trades",
+   "symbols": [
+    "HOT.FUT",
+    "RBT.FUT"
+   ],
+   "start": "2025-09-25",
+   "end": "2026-09-19",
+   "billable_gb": 0.013,
+   "usd": 0.0
+  },
+  {
+   "label": "siblings-tas-ohlcv1s",
+   "schema": "ohlcv-1s",
+   "symbols": [
+    "HOT.FUT",
+    "RBT.FUT"
+   ],
+   "start": "2025-09-25",
+   "end": "2026-09-19",
+   "billable_gb": 0.013,
+   "usd": 0.0
+  }
+ ],
+ "paid_schemas_submitted": [],
+ "jobs": [
+  {
+   "label": "siblings-tas-trades",
+   "schema": "trades",
+   "accepted_usd": 0.0,
+   "job": {
+    "id": "GLBX-20260925-5ETRCATSXF",
+    "user_id": "QWGCG4GQ",
+    "bill_id": null,
+    "cost_usd": 0.0,
+    "dataset": "GLBX.MDP3",
+    "symbols": "HOT.FUT,RBT.FUT",
+    "stype_in": "parent",
+    "stype_out": "instrument_id",
+    "schema": "trades",
+    "start": "2025-09-25T00:00:00.000000000Z",
+    "end": "2026-09-19T00:00:00.000000000Z",
+    "limit": null,
+    "encoding": "dbn",
+    "compression": "zstd",
+    "pretty_px": false,
+    "pretty_ts": false,
+    "map_symbols": false,
+    "split_symbols": false,
+    "split_duration": "year",
+    "split_size": null,
+    "packaging": null,
+    "delivery": "download",
+    "record_count": null,
+    "billed_size": null,
+    "actual_size": null,
+    "package_size": null,
+    "state": "done",
+    "ts_received": "2026-09-25T00:34:22.646417000Z",
+    "ts_queued": null,
+    "ts_process_start": null,
+    "ts_process_done": null,
+    "ts_expiration": null
+   },
+   "downloaded_utc": "2026-09-25T00:52:29Z",
+   "files": 5,
+   "bytes": 5594878
+  },
+  {
+   "label": "siblings-tas-ohlcv1s",
+   "schema": "ohlcv-1s",
+   "accepted_usd": 0.0,
+   "job": {
+    "id": "GLBX-20260925-TAGBDH3E3Q",
+    "user_id": "QWGCG4GQ",
+    "bill_id": null,
+    "cost_usd": 0.0,
+    "dataset": "GLBX.MDP3",
+    "symbols": "HOT.FUT,RBT.FUT",
+    "stype_in": "parent",
+    "stype_out": "instrument_id",
+    "schema": "ohlcv-1s",
+    "start": "2025-09-25T00:00:00.000000000Z",
+    "end": "2026-09-19T00:00:00.000000000Z",
+    "limit": null,
+    "encoding": "dbn",
+    "compression": "zstd",
+    "pretty_px": false,
+    "pretty_ts": false,
+    "map_symbols": false,
+    "split_symbols": false,
+    "split_duration": "year",
+    "split_size": null,
+    "packaging": null,
+    "delivery": "download",
+    "record_count": null,
+    "billed_size": null,
+    "actual_size": null,
+    "package_size": null,
+    "state": "done",
+    "ts_received": "2026-09-25T00:34:27.443560000Z",
+    "ts_queued": null,
+    "ts_process_start": null,
+    "ts_process_done": null,
+    "ts_expiration": null
+   },
+   "downloaded_utc": "2026-09-25T00:48:20Z",
+   "files": 5,
+   "bytes": 1986112
+  }
+ ]
+}

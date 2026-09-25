@@ -1,0 +1,516 @@
+{
+ "deviations": [],
+ "post_hoc_diagnostic": {
+  "HO": {
+   "first": {
+    "P": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.4953,
+       "chance": 0.4672,
+       "kappa": 0.0528,
+       "measure_plus_share": 0.5888,
+       "measure_zero_share": 0.0467,
+       "n": 107,
+       "truth_plus_share": 0.4579
+      },
+      "reversed_sign": {
+       "agreement": 0.4579,
+       "chance": 0.4861,
+       "kappa": -0.0547,
+       "measure_plus_share": 0.3645,
+       "measure_zero_share": 0.0467,
+       "n": 107,
+       "truth_plus_share": 0.4579
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.4953,
+       "chance": 0.4672,
+       "kappa": 0.0528,
+       "measure_plus_share": 0.5888,
+       "measure_zero_share": 0.0467,
+       "n": 107,
+       "truth_plus_share": 0.4579
+      },
+      "reversed_sign": {
+       "agreement": 0.4579,
+       "chance": 0.4861,
+       "kappa": -0.0547,
+       "measure_plus_share": 0.3645,
+       "measure_zero_share": 0.0467,
+       "n": 107,
+       "truth_plus_share": 0.4579
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.4579,
+       "chance": 0.4876,
+       "kappa": -0.058,
+       "measure_plus_share": 0.3458,
+       "measure_zero_share": 0.0467,
+       "n": 107,
+       "truth_plus_share": 0.4579
+      },
+      "reversed_sign": {
+       "agreement": 0.4953,
+       "chance": 0.4656,
+       "kappa": 0.0556,
+       "measure_plus_share": 0.6075,
+       "measure_zero_share": 0.0467,
+       "n": 107,
+       "truth_plus_share": 0.4579
+      }
+     }
+    },
+    "W": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.3241,
+       "chance": 0.4925,
+       "kappa": -0.3318,
+       "measure_plus_share": 0.537,
+       "measure_zero_share": 0.0185,
+       "n": 108,
+       "truth_plus_share": 0.5185
+      },
+      "reversed_sign": {
+       "agreement": 0.6574,
+       "chance": 0.489,
+       "kappa": 0.3295,
+       "measure_plus_share": 0.4444,
+       "measure_zero_share": 0.0185,
+       "n": 108,
+       "truth_plus_share": 0.5185
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.3241,
+       "chance": 0.4925,
+       "kappa": -0.3318,
+       "measure_plus_share": 0.537,
+       "measure_zero_share": 0.0185,
+       "n": 108,
+       "truth_plus_share": 0.5185
+      },
+      "reversed_sign": {
+       "agreement": 0.6574,
+       "chance": 0.489,
+       "kappa": 0.3295,
+       "measure_plus_share": 0.4444,
+       "measure_zero_share": 0.0185,
+       "n": 108,
+       "truth_plus_share": 0.5185
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.5648,
+       "chance": 0.4863,
+       "kappa": 0.1529,
+       "measure_plus_share": 0.3704,
+       "measure_zero_share": 0.0185,
+       "n": 108,
+       "truth_plus_share": 0.5185
+      },
+      "reversed_sign": {
+       "agreement": 0.4167,
+       "chance": 0.4952,
+       "kappa": -0.1556,
+       "measure_plus_share": 0.6111,
+       "measure_zero_share": 0.0185,
+       "n": 108,
+       "truth_plus_share": 0.5185
+      }
+     }
+    }
+   },
+   "second": {
+    "P": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.5106,
+       "chance": 0.4721,
+       "kappa": 0.0731,
+       "measure_plus_share": 0.5461,
+       "measure_zero_share": 0.0213,
+       "n": 141,
+       "truth_plus_share": 0.3475
+      },
+      "reversed_sign": {
+       "agreement": 0.4681,
+       "chance": 0.5067,
+       "kappa": -0.0782,
+       "measure_plus_share": 0.4326,
+       "measure_zero_share": 0.0213,
+       "n": 141,
+       "truth_plus_share": 0.3475
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.5106,
+       "chance": 0.4721,
+       "kappa": 0.0731,
+       "measure_plus_share": 0.5461,
+       "measure_zero_share": 0.0213,
+       "n": 141,
+       "truth_plus_share": 0.3475
+      },
+      "reversed_sign": {
+       "agreement": 0.4681,
+       "chance": 0.5067,
+       "kappa": -0.0782,
+       "measure_plus_share": 0.4326,
+       "measure_zero_share": 0.0213,
+       "n": 141,
+       "truth_plus_share": 0.3475
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.4681,
+       "chance": 0.5156,
+       "kappa": -0.0981,
+       "measure_plus_share": 0.4184,
+       "measure_zero_share": 0.0142,
+       "n": 141,
+       "truth_plus_share": 0.3475
+      },
+      "reversed_sign": {
+       "agreement": 0.5177,
+       "chance": 0.4702,
+       "kappa": 0.0897,
+       "measure_plus_share": 0.5674,
+       "measure_zero_share": 0.0142,
+       "n": 141,
+       "truth_plus_share": 0.3475
+      }
+     }
+    },
+    "W": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.2695,
+       "chance": 0.4735,
+       "kappa": -0.3875,
+       "measure_plus_share": 0.4397,
+       "measure_zero_share": 0.0071,
+       "n": 141,
+       "truth_plus_share": 0.7021
+      },
+      "reversed_sign": {
+       "agreement": 0.7234,
+       "chance": 0.5194,
+       "kappa": 0.4245,
+       "measure_plus_share": 0.5532,
+       "measure_zero_share": 0.0071,
+       "n": 141,
+       "truth_plus_share": 0.7021
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.2482,
+       "chance": 0.4592,
+       "kappa": -0.3901,
+       "measure_plus_share": 0.4043,
+       "measure_zero_share": 0.0071,
+       "n": 141,
+       "truth_plus_share": 0.7021
+      },
+      "reversed_sign": {
+       "agreement": 0.7447,
+       "chance": 0.5337,
+       "kappa": 0.4524,
+       "measure_plus_share": 0.5887,
+       "measure_zero_share": 0.0071,
+       "n": 141,
+       "truth_plus_share": 0.7021
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.5319,
+       "chance": 0.4764,
+       "kappa": 0.1061,
+       "measure_plus_share": 0.4468,
+       "measure_zero_share": 0.0071,
+       "n": 141,
+       "truth_plus_share": 0.7021
+      },
+      "reversed_sign": {
+       "agreement": 0.461,
+       "chance": 0.5165,
+       "kappa": -0.1149,
+       "measure_plus_share": 0.5461,
+       "measure_zero_share": 0.0071,
+       "n": 141,
+       "truth_plus_share": 0.7021
+      }
+     }
+    }
+   }
+  },
+  "RB": {
+   "first": {
+    "P": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.5047,
+       "chance": 0.4755,
+       "kappa": 0.0556,
+       "measure_plus_share": 0.514,
+       "measure_zero_share": 0.0561,
+       "n": 107,
+       "truth_plus_share": 0.5421
+      },
+      "reversed_sign": {
+       "agreement": 0.4393,
+       "chance": 0.4684,
+       "kappa": -0.0549,
+       "measure_plus_share": 0.4299,
+       "measure_zero_share": 0.0561,
+       "n": 107,
+       "truth_plus_share": 0.5421
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.5047,
+       "chance": 0.4755,
+       "kappa": 0.0556,
+       "measure_plus_share": 0.514,
+       "measure_zero_share": 0.0561,
+       "n": 107,
+       "truth_plus_share": 0.5421
+      },
+      "reversed_sign": {
+       "agreement": 0.4393,
+       "chance": 0.4684,
+       "kappa": -0.0549,
+       "measure_plus_share": 0.4299,
+       "measure_zero_share": 0.0561,
+       "n": 107,
+       "truth_plus_share": 0.5421
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.5514,
+       "chance": 0.4669,
+       "kappa": 0.1586,
+       "measure_plus_share": 0.4112,
+       "measure_zero_share": 0.0561,
+       "n": 107,
+       "truth_plus_share": 0.5421
+      },
+      "reversed_sign": {
+       "agreement": 0.3925,
+       "chance": 0.4771,
+       "kappa": -0.1617,
+       "measure_plus_share": 0.5327,
+       "measure_zero_share": 0.0561,
+       "n": 107,
+       "truth_plus_share": 0.5421
+      }
+     }
+    },
+    "W": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.2315,
+       "chance": 0.4608,
+       "kappa": -0.4253,
+       "measure_plus_share": 0.6389,
+       "measure_zero_share": 0.0093,
+       "n": 108,
+       "truth_plus_share": 0.3796
+      },
+      "reversed_sign": {
+       "agreement": 0.7593,
+       "chance": 0.5299,
+       "kappa": 0.4879,
+       "measure_plus_share": 0.3519,
+       "measure_zero_share": 0.0093,
+       "n": 108,
+       "truth_plus_share": 0.3796
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.25,
+       "chance": 0.4653,
+       "kappa": -0.4026,
+       "measure_plus_share": 0.6204,
+       "measure_zero_share": 0.0093,
+       "n": 108,
+       "truth_plus_share": 0.3796
+      },
+      "reversed_sign": {
+       "agreement": 0.7407,
+       "chance": 0.5255,
+       "kappa": 0.4537,
+       "measure_plus_share": 0.3704,
+       "measure_zero_share": 0.0093,
+       "n": 108,
+       "truth_plus_share": 0.3796
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.5278,
+       "chance": 0.5143,
+       "kappa": 0.0277,
+       "measure_plus_share": 0.4167,
+       "measure_zero_share": 0.0093,
+       "n": 108,
+       "truth_plus_share": 0.3796
+      },
+      "reversed_sign": {
+       "agreement": 0.463,
+       "chance": 0.4764,
+       "kappa": -0.0257,
+       "measure_plus_share": 0.5741,
+       "measure_zero_share": 0.0093,
+       "n": 108,
+       "truth_plus_share": 0.3796
+      }
+     }
+    }
+   },
+   "second": {
+    "P": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.55,
+       "chance": 0.5418,
+       "kappa": 0.0178,
+       "measure_plus_share": 0.8143,
+       "measure_zero_share": 0.0071,
+       "n": 140,
+       "truth_plus_share": 0.5714
+      },
+      "reversed_sign": {
+       "agreement": 0.4429,
+       "chance": 0.451,
+       "kappa": -0.0149,
+       "measure_plus_share": 0.1786,
+       "measure_zero_share": 0.0071,
+       "n": 140,
+       "truth_plus_share": 0.5714
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.55,
+       "chance": 0.5418,
+       "kappa": 0.0178,
+       "measure_plus_share": 0.8143,
+       "measure_zero_share": 0.0071,
+       "n": 140,
+       "truth_plus_share": 0.5714
+      },
+      "reversed_sign": {
+       "agreement": 0.4429,
+       "chance": 0.451,
+       "kappa": -0.0149,
+       "measure_plus_share": 0.1786,
+       "measure_zero_share": 0.0071,
+       "n": 140,
+       "truth_plus_share": 0.5714
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.4643,
+       "chance": 0.4602,
+       "kappa": 0.0076,
+       "measure_plus_share": 0.2429,
+       "measure_zero_share": 0.0071,
+       "n": 140,
+       "truth_plus_share": 0.5714
+      },
+      "reversed_sign": {
+       "agreement": 0.5286,
+       "chance": 0.5327,
+       "kappa": -0.0087,
+       "measure_plus_share": 0.75,
+       "measure_zero_share": 0.0071,
+       "n": 140,
+       "truth_plus_share": 0.5714
+      }
+     }
+    },
+    "W": {
+     "T1": {
+      "pre_registered_sign": {
+       "agreement": 0.1714,
+       "chance": 0.3041,
+       "kappa": -0.1906,
+       "measure_plus_share": 0.8429,
+       "measure_zero_share": 0.0,
+       "n": 140,
+       "truth_plus_share": 0.2143
+      },
+      "reversed_sign": {
+       "agreement": 0.8286,
+       "chance": 0.6959,
+       "kappa": 0.4362,
+       "measure_plus_share": 0.1571,
+       "measure_zero_share": 0.0,
+       "n": 140,
+       "truth_plus_share": 0.2143
+      }
+     },
+     "T2": {
+      "pre_registered_sign": {
+       "agreement": 0.1929,
+       "chance": 0.3,
+       "kappa": -0.1531,
+       "measure_plus_share": 0.85,
+       "measure_zero_share": 0.0,
+       "n": 140,
+       "truth_plus_share": 0.2143
+      },
+      "reversed_sign": {
+       "agreement": 0.8071,
+       "chance": 0.7,
+       "kappa": 0.3571,
+       "measure_plus_share": 0.15,
+       "measure_zero_share": 0.0,
+       "n": 140,
+       "truth_plus_share": 0.2143
+      }
+     },
+     "T3": {
+      "pre_registered_sign": {
+       "agreement": 0.6143,
+       "chance": 0.6388,
+       "kappa": -0.0678,
+       "measure_plus_share": 0.2571,
+       "measure_zero_share": 0.0,
+       "n": 140,
+       "truth_plus_share": 0.2143
+      },
+      "reversed_sign": {
+       "agreement": 0.3857,
+       "chance": 0.3612,
+       "kappa": 0.0383,
+       "measure_plus_share": 0.7429,
+       "measure_zero_share": 0.0,
+       "n": 140,
+       "truth_plus_share": 0.2143
+      }
+     }
+    }
+   }
+  },
+  "note": "POST HOC, written after C1 fired on the first sibling run (2026-09-25). This is not D625's statistic and it\nnever replaces a verdict. Per root, half, role and measure: the sign base rates, the raw agreement, the chance\nagreement from the base rates, and Cohen's kappa, for the pre-registered sign (+) AND the reversed sign (-). The\nreversed sign is reported because the first inspection saw it. It is the hypothesis that D626 tests on data\nD625 never read."
+ },
+ "siblings_preregistered_outcome": "RAISED: C1 failed (W, RB): day-shifted agreement 0.6115",
+ "spec": "D625; docs/decisions/D625-PRE-REG-the-TAS-premium-as-a-signed-stand-in-for-window-flow.md (158b2d2)"
+}

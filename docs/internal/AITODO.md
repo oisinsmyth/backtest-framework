@@ -138,19 +138,29 @@ source.
         - E2 was chosen at a first-half mean r of 0.33. On the second half it scored r −0.03 (HO) and
           −0.22 (RB).
         - **So neither CL nor NG runs Stage A on the estimate.**
-        - The NG/CL gate phase is moot for the decision. The free top-up (~2026-10-08) is optional, as
+        - The NG/CL gate phase is moot for the decision. The free top-up is SCHEDULED for Sat 2026-10-10 08:00 (task `d624-ng-cl-free-topup`; it also reads D625), as
           a record only, and it is the principal's call.
         - Record: `docs/decisions/D624-RESULT-one-second-bars-cannot-carry-settlement-window-flow.md`.
       - **The Stage A validation, as planned** (pre-registration committed `6e1bfa4`, 2026-09-24).
         Runner `scripts/validate_flow_estimate.py`, which passes its selftest.
         - **Sibling phase (HO/RB):** runs when the free sibling pull lands
           (`data/ledger_sibling_pull_jobs.json`).
-        - **NG/CL gate:** read ONCE, after the top-up. **Top-up due ~2026-10-08:** free `trades` and
+        - **NG/CL gate:** read ONCE, after the top-up. **Top-up scheduled Sat 2026-10-10 08:00 (15 sessions incl. Fri 10-09):** free `trades` and
           `ohlcv-1s` for CL/NG/CLT/NGT from 2026-09-19. Its job record must be
           `data/ledger_topup_pull_jobs.json`, with labels `topup-trades` and `topup-ohlcv1s`.
         - **Outcomes:** PASS ≥ 0.8; UNRESOLVED near miss 0.70–0.80; FAIL < 0.70; UNRESOLVED below 15
           sessions. The siblings must agree.
-      - **HELD by the principal ("not yet"):** amendment A8.
+      - **A8 WRITTEN 2026-09-25** (it replaces the held draft):
+        - **Stage A's H1 becomes H1a:** does the predicted flow's SIZE explain abnormal window volume
+          (free one-second bars, exact), with controls for |return|, activity and calendar flags?
+          - It must beat an 11:50–12:20 placebo and a day shuffle.
+          - τ is the earliest-pass time. TAS volume is reported beside it.
+        - **Direction rests on H2.**
+        - C2 runs on Alpha Vantage bars.
+        - Stage H is forward-only.
+        - Stage B, Stage I, H8a and H9 are blocked until real signed flow exists.
+        - **Next:** work up option 2, the TAS premium as a signed measure; then H1a's pre-registration
+          and POWER.md.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.

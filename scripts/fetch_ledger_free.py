@@ -57,6 +57,12 @@ SIBLING_PLAN: list[tuple[str, str, list[str], tuple[str, str]]] = [
     ("siblings-ohlcv1s", "ohlcv-1s", ["HO.FUT", "RB.FUT"], SIBLING_SPAN),
 ]
 SIBLING_JOBS = REPO / "data" / "ledger_sibling_pull_jobs.json"
+#: D625's sibling TAS contracts (HOT, RBT), same free span
+SIBLING_TAS_PLAN: list[tuple[str, str, list[str], tuple[str, str]]] = [
+    ("siblings-tas-trades", "trades", ["HOT.FUT", "RBT.FUT"], SIBLING_SPAN),
+    ("siblings-tas-ohlcv1s", "ohlcv-1s", ["HOT.FUT", "RBT.FUT"], SIBLING_SPAN),
+]
+SIBLING_TAS_JOBS = REPO / "data" / "ledger_sibling_tas_pull_jobs.json"
 #: D624's NG/CL top-up, taken just before the subscription lapses (~2026-10-11). Trades continue from where
 #: `trades-post-vault` stopped (2026-09-24, exclusive), so no session is counted twice. The one-second bars start
 #: after the vault. The end date is given at run time with --end.
@@ -65,8 +71,12 @@ TOPUP_JOBS = REPO / "data" / "ledger_topup_pull_jobs.json"
 
 def topup_plan(end: str) -> list[tuple[str, str, list[str], tuple[str, str]]]:
     roots = ["CL.FUT", "NG.FUT", "CLT.FUT", "NGT.FUT"]
+    # D626: HO/RB and their TAS after the siblings' year (which ended 2026-09-18), as fresh confirmation data
+    sib = ["HO.FUT", "RB.FUT", "HOT.FUT", "RBT.FUT"]
     return [("topup-trades", "trades", roots, ("2026-09-24", end)),
-            ("topup-ohlcv1s", "ohlcv-1s", roots, ("2026-09-19", end))]
+            ("topup-ohlcv1s", "ohlcv-1s", roots, ("2026-09-19", end)),
+            ("topup-sib-trades", "trades", sib, ("2026-09-19", end)),
+            ("topup-sib-ohlcv1s", "ohlcv-1s", sib, ("2026-09-19", end))]
 ETFS = ("BOIL", "KOLD", "UCO", "SCO", "UNG", "USO")
 AV_MONTHS = ("2017-05", "2026-09")
 
@@ -220,10 +230,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--i-accept-the-cost", type=float, default=None)
     ap.add_argument("--siblings", action="store_true", help="D624's HO/RB job set and its own job record")
     ap.add_argument("--topup", metavar="END", help="D624's NG/CL top-up up to END (exclusive, YYYY-MM-DD)")
+    ap.add_argument("--siblings-tas", action="store_true", help="D625's HOT/RBT job set and its own job record")
     a = ap.parse_args(argv)
     global PLAN, JOBS
     if a.siblings:
         PLAN, JOBS = SIBLING_PLAN, SIBLING_JOBS
+    elif a.siblings_tas:
+        PLAN, JOBS = SIBLING_TAS_PLAN, SIBLING_TAS_JOBS
     elif a.topup:
         PLAN, JOBS = topup_plan(a.topup), TOPUP_JOBS
     if a.plan:

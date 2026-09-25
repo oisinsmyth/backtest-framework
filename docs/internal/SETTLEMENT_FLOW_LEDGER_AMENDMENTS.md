@@ -126,6 +126,68 @@ The principal chose "choice 1" (deposit Q6). §9A and §13A.2 are otherwise unch
 - Every other stage (A, B, C1, the C3 parts that don't use ETF volume, D, E, F, H and I) runs on the
   full in-sample.
 
+## A8. Stage A without signed flow: H1 becomes H1a (flow SIZE), and direction rests on H2 (decided 2026-09-25)
+
+**Why.** The principal cannot buy aggressor-signed CL/NG trades, and D624 showed that the free one-second bars
+cannot estimate settlement-window signed flow (sibling r −0.22 to −0.03 against a bar of 0.8). This A8
+replaces the draft the principal held on 2026-09-24, whose first clause (estimated signed flow) died with
+D624. The principal's choices are quoted.
+
+**H1a replaces H1 at Stage A** (deposit line 538):
+- **Dependent:** abnormal window volume A_t. That is the outright volume in the traded contract over
+  W_start → W_end (14:28:00–14:30:00 ET), minus its trailing 20-day mean over the same window. It comes from
+  Databento `ohlcv-1s`, which is exact: D624's K1 matched it to the trades contract for contract.
+- **Predictor:** |Q_rem| at τ. At Stage A, Q_rem is P1 alone (K = 0, p = 0), in contracts, in the traded
+  contract.
+  - **τ is the earliest-pass rule's time** (§7.1: 13:50, else 14:00, else 14:10), per the principal.
+  - On a day where no candidate signals, τ = 14:10, the last evaluation, because H1a is scored on ALL days,
+    not only traded days.
+- **Controls** (the principal: "abnormal volume + controls"). Big-move days are busy days, and |Q_rem| scales
+  with |return|. Without controls, H1a would pass on the link between volatility and volume alone. The
+  controls are:
+  1. |the traded contract's return from the prior settlement to 14:28|;
+  2. abnormal volume 13:30 → 14:28, as the day's activity, minus its own 20-day mean;
+  3. indicator flags for index-roll days, the fund's own roll days, contract expiry and EIA report days.
+
+  With these in place, the coefficient on |Q_rem| is identified by **the same move producing more window
+  volume when the funds are larger**, which is the ledger's own claim that flow scales with AUM × L(L−1).
+- **Pass:** the coefficient on |Q_rem| is > 0, with day-clustered t ≥ 2, per instrument.
+- **Controls that must fire:**
+  1. **Time placebo:** the same regression on 11:50–12:20 volume, with the ledger computed at 11:30, must
+     give |t| < 2.
+  2. **Day shuffle:** |Q_rem| reassigned across days within instrument-year, 1,000 permutations. The observed
+     t must exceed the 95th percentile.
+- **Reported beside, never gating** (the principal: TAS "yes, reported"): the same regression on abnormal daily
+  TAS volume (CLT/NGT, from the session open to 14:30 ET). The funds may execute at settlement through TAS
+  rather than in the window.
+
+**Direction rests on H2.** H2, H3, H4 and H5's price placebos are unchanged, and they run on the free 1-minute
+bars.
+- **Gate 1** (deposit line 946) becomes: H1a and H2 pass at Stage A, **or** H1a passes and a later stage
+  lifts H2.
+- **The kill row** (line 964) becomes: H1a fails at Stage A → that instrument's line is killed (A2). The
+  premise is killed only if H1a fails on both.
+
+**What H1a cannot do, stated so no result is over-read.**
+- It cannot tell buying from selling. A flow that arrives but nets, or points the wrong way, still passes
+  H1a.
+- Only H2 carries direction.
+- A pass says the predicted **size** arrives in the window, scaled by fund AUM. It does not say that the
+  ledger's signed prediction is right.
+
+**The rest of this amendment:**
+- **C2 runs on Alpha Vantage 1-minute bars over the full in-sample,** time-averaged and anchored on the exact
+  daily closing premium. IEX's free quotes check the trade-price bias on a sample of days (decided
+  2026-09-24). This replaces A7's Arca sub-sample.
+- **Stage H is forward-only** until the principal sources order-book history (G5).
+- **Blocked until real signed flow exists (G1), and not run on estimates:**
+  - Stage B's update step (signed S_pre, line 371);
+  - Stage I (individual trade sizes);
+  - diagnostics H8a and H9.
+- **The retention rule** (line 417) keeps its H2 clause. Its flow clause is read on H1a's quantity: the
+  correlation of |Q_rem| with abnormal window volume, net of the controls.
+- **The vault look stays free.** The one-second bars run to 2026-09-18.
+
 ## Q25: earlier reads of the vault window in NG, CL and the six funds (recorded 2026-09-24)
 
 The deposit's §13A.8 requires "any earlier analysis that touched 2025-03-01 → 2026-09-18 data in NG,
