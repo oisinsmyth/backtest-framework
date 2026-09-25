@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 357 of these records carry neither field —
+**No Status or Category column, deliberately.** 358 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -698,6 +698,7 @@ would look like data. The tokens are what is shown.
 | D623 | the closing hour after a decline is heavier, and smaller-lotted, and BALANCED | [PRE-REG](D623-PRE-REG-the-signed-flow-census-who-sells-into-the-close.md) · [RESULT](D623-RESULT-the-close-is-heavier-and-smaller-lotted-but-BALANCED.md) |
 | D624 | one-second bars cannot stand in for settlement-window signed flow: the sibling check fails, so neither CL nor NG runs S… | [PRE-REG](D624-PRE-REG-validating-estimated-signed-flow-for-stage-A.md) · [RESULT](D624-RESULT-one-second-bars-cannot-carry-settlement-window-flow.md) |
 | D625 | REGISTRATION — does the TAS price say which way the settlement flow went? | [PRE-REG](D625-PRE-REG-the-TAS-premium-as-a-signed-stand-in-for-window-flow.md) |
+| D626 | REGISTRATION — a TAS premium goes with net SELLING in the settlement window: a confirmation on data no one has read | [PRE-REG](D626-PRE-REG-a-TAS-premium-goes-with-selling-in-the-window.md) |
 
 <!-- REGISTER:END -->
 
