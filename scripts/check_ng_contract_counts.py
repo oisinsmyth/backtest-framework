@@ -50,8 +50,14 @@ is labelled post hoc.
 WHAT THIS DOES NOT TOUCH. It reads only data before 2024-01-01, computes no return, and writes one
 new file, `data/ledger_ng_contract_counts_check.json`.
 
+A6 MODE (`--seal a6`), declared 2026-09-25 before its first run. The principal moved this study's seal to
+2025-03-01 (amendment A6). The same checks are re-run with `reserved_from="2025-03-01"`, which adds the
+quarter-ends through 2024-12-31 (filed 2025-02-28) and writes `data/ledger_ng_contract_counts_check_a6.json`.
+The original file stays byte-identical under `--check`.
+
     uv run python scripts/check_ng_contract_counts.py            # write the JSON
     uv run python scripts/check_ng_contract_counts.py --check    # rebuild and compare byte for byte
+    uv run python scripts/check_ng_contract_counts.py --seal a6 [--check]
 """
 from __future__ import annotations
 
@@ -195,7 +201,11 @@ def build() -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--seal", choices=["a6"], default=None)
     a = ap.parse_args(argv)
+    global RESERVED_FROM, OUT
+    if a.seal == "a6":
+        RESERVED_FROM, OUT = "2025-03-01", REPO / "data" / "ledger_ng_contract_counts_check_a6.json"
     doc = build()
     text = json.dumps(doc, indent=1, sort_keys=True) + "\n"
     if a.check:

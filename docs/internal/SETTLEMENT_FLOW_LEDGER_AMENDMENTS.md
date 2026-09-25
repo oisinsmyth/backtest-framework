@@ -1,4 +1,4 @@
-# Settlement flow ledger: amendments to the deposit (v1.9 + A1–A5)
+# Settlement flow ledger: amendments to the deposit (v1.9 + A1–A9)
 
 > The deposit, `User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md` (v1.9), is read-only here. Its §0
 > says agreed changes are versioned edits made *before* code. This file is those edits, kept beside
@@ -187,6 +187,37 @@ bars.
 - **The retention rule** (line 417) keeps its H2 clause. Its flow clause is read on H1a's quantity: the
   correlation of |Q_rem| with abnormal window volume, net of the controls.
 - **The vault look stays free.** The one-second bars run to 2026-09-18.
+
+## A9. H1a's design, settled before its pre-registration (decided 2026-09-25)
+
+Every choice below was made before any H1a statistic was computed. The power study behind the fourth reads no
+in-sample dependent; its noise is the pre-sample's (`scripts/ledger_power_h1a.py`,
+`SETTLEMENT_FLOW_LEDGER_POWER.md`).
+
+1. **The dependent is summed over the held contracts.** A_t is the window volume summed over every contract the
+   funds' index holds that day, minus the same contracts' mean over t−20 … t−1. This applies to NG, CL era A and
+   CL era B alike. The Balanced WTI index holds three components at about ⅓ each, so no single contract carries
+   CL era B's flow. The predictor is the total |Q_rem| over the same contracts. The largest-share contract is
+   reported beside it.
+2. **τ's §7.2 gate prices full-size CL and NG** on the repo's default cost line (`data/futures_costs.json`):
+   - CL: $21.46 a round trip (D508's effective crossing);
+   - NG: $16.00 (the one-tick convention).
+
+   A micro-size τ is reported beside it. Q7 (the NG execution contract) stays open for trading.
+3. **Serial correlation.** A8's day-clustered t (one row per day: HC1) stays the gate. A Newey-West t (5 lags) is
+   reported beside it, and the result says so if it falls below 2.
+4. **The day shuffle is replaced.** On the pre-sample noise, A8's within-year day shuffle is anti-conservative:
+   - its p95 of t is 0.94–1.43, where the true null's is 1.90–2.04, and 13–19% of null datasets beat it;
+   - the cause is that permuting days destroys the autocorrelation of |Q| (which tracks fund AUM) and of the noise.
+
+   **The control is now:** |Q| is residualised on H1a's controls, the residual is rotated circularly within
+   instrument-year by an offset of at least 20 business days, and it is added back to its fitted part, 1,000
+   rotations. The observed t must exceed the rotations' p95.
+   - Calibrated on 100 null datasets: 4–7% beat their own p95, against a nominal 5%.
+   - The combined gate (t ≥ 2 AND beating the rotations) rejects 0–2% of null datasets.
+   - Its power at the plausible effect is CL 0.87 and NG 1.00.
+5. **The plausible effect (§9A.2 rule 2) is β = 0.25:** a quarter of the predicted P1 lands in the window as extra
+   volume. Both roots are individually testable at that size: CL's power is 0.85–0.92 and NG's 1.00.
 
 ## Q25: earlier reads of the vault window in NG, CL and the six funds (recorded 2026-09-24)
 

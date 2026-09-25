@@ -1,0 +1,551 @@
+{
+ "deviations": [],
+ "inputs_sha256": {
+  "ledger_ung_monthly_rolls_check.json": "440a83c079119183114c9c3a56f0fe63f5b355eaaa838d5dcccef8a72757eaed",
+  "uscf_monthly_statements.csv": "b30320f8774383bad9099450d66fe06fc2f8638787487307bee30606e12eb442",
+  "uso_allocation_notices.csv": "750dc0b2f650f8b9894a75ec1c5cd8e1b138741cbe9c0755e8b3e77628c65487"
+ },
+ "known_answer_ung": {
+  "identified_and_controls_fire": true,
+  "primary_exact_nav_per_share": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+2",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 2320.0099,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 181.8586
+   },
+   "documented_is_best": true,
+   "documented_monthly_err_bp": {
+    "2020-01": -1.576,
+    "2020-02": -0.846,
+    "2020-03": -3.95,
+    "2020-04": -4.998,
+    "2020-05": 3.426,
+    "2020-06": -2.978,
+    "2020-07": 0.587,
+    "2020-08": -2.043,
+    "2020-09": -13.205,
+    "2020-10": 10.711,
+    "2020-11": 0.873,
+    "2020-12": 1.419,
+    "2021-01": 0.493,
+    "2021-02": -1.893,
+    "2021-03": -0.134,
+    "2021-04": -2.333,
+    "2021-05": -1.611,
+    "2021-06": -3.381,
+    "2021-07": -0.543,
+    "2021-08": 1.01,
+    "2021-09": 0.427,
+    "2021-10": 2.501,
+    "2021-11": 3.96,
+    "2021-12": 3.051,
+    "2022-01": 1.344,
+    "2022-02": -1.477,
+    "2022-03": -0.234,
+    "2022-04": 0.436,
+    "2022-05": 0.134,
+    "2022-06": 2.363,
+    "2022-07": 2.337,
+    "2022-08": 4.154,
+    "2022-09": -1.509,
+    "2022-10": -5.504,
+    "2022-11": 3.759,
+    "2022-12": -7.007
+   },
+   "identified": true,
+   "months": [
+    "2020-01",
+    "2022-12",
+    36
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -10.7695,
+     "mean_abs_err_bp": 2.7281,
+     "median_abs_err_bp": 1.9682,
+     "months": 36
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -9.781,
+     "mean_abs_err_bp": 37.0249,
+     "median_abs_err_bp": 13.019,
+     "months": 36
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -10.3181,
+     "mean_abs_err_bp": 69.3165,
+     "median_abs_err_bp": 24.9734,
+     "months": 36
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -10.0849,
+     "mean_abs_err_bp": 105.4205,
+     "median_abs_err_bp": 34.4669,
+     "months": 36
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -10.2764,
+     "mean_abs_err_bp": 31.1782,
+     "median_abs_err_bp": 14.7647,
+     "months": 36
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -11.7059,
+     "mean_abs_err_bp": 43.3849,
+     "median_abs_err_bp": 21.6241,
+     "months": 36
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -11.3485,
+     "mean_abs_err_bp": 51.9797,
+     "median_abs_err_bp": 28.6457,
+     "months": 36
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -7.4387,
+     "mean_abs_err_bp": 48.4434,
+     "median_abs_err_bp": 26.9068,
+     "months": 36
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -12.8442,
+     "mean_abs_err_bp": 35.5157,
+     "median_abs_err_bp": 13.7344,
+     "months": 36
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -8.6626,
+     "mean_abs_err_bp": 24.006,
+     "median_abs_err_bp": 12.4033,
+     "months": 36
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -13.8324,
+     "mean_abs_err_bp": 66.0054,
+     "median_abs_err_bp": 27.3205,
+     "months": 36
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 5,
+    "months_won": 31,
+    "p_one_sided": 6e-06
+   }
+  },
+  "printed_nav_per_share": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+2",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 2320.3237,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 181.4724
+   },
+   "documented_is_best": true,
+   "identified": true,
+   "months": [
+    "2020-01",
+    "2022-12",
+    36
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -11.2602,
+     "mean_abs_err_bp": 4.2557,
+     "median_abs_err_bp": 3.8198,
+     "months": 36
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -9.5351,
+     "mean_abs_err_bp": 36.8138,
+     "median_abs_err_bp": 14.2943,
+     "months": 36
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -11.4401,
+     "mean_abs_err_bp": 69.1752,
+     "median_abs_err_bp": 26.8887,
+     "months": 36
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -9.8379,
+     "mean_abs_err_bp": 105.097,
+     "median_abs_err_bp": 32.3549,
+     "months": 36
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -12.5853,
+     "mean_abs_err_bp": 31.5376,
+     "median_abs_err_bp": 17.723,
+     "months": 36
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -12.0143,
+     "mean_abs_err_bp": 43.9297,
+     "median_abs_err_bp": 20.1257,
+     "months": 36
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -8.0775,
+     "mean_abs_err_bp": 52.3129,
+     "median_abs_err_bp": 26.4133,
+     "months": 36
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -7.6837,
+     "mean_abs_err_bp": 48.8459,
+     "median_abs_err_bp": 28.2415,
+     "months": 36
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -12.6617,
+     "mean_abs_err_bp": 35.9066,
+     "median_abs_err_bp": 12.3512,
+     "months": 36
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -9.6795,
+     "mean_abs_err_bp": 25.0785,
+     "median_abs_err_bp": 13.6128,
+     "months": 36
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -13.4242,
+     "mean_abs_err_bp": 65.5017,
+     "median_abs_err_bp": 25.9177,
+     "months": 36
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 7,
+    "months_won": 29,
+    "p_one_sided": 0.000156
+   }
+  },
+  "reproduces_ung_ledger_known_answer": true,
+  "root": "NG",
+  "window": [
+   "2020-01",
+   "2022-12"
+  ]
+ },
+ "reserved_from": "2024-01-01",
+ "spec": "settlement-ledger gap G19: USO's 2017-02 -> 2020-03 roll days from its month-end NAV; see the script docstring",
+ "spec_sha256": "18f9e8558338d466effb29a204f2235a0d6be885514b8dde20d680ef750ffd90",
+ "uso": {
+  "allocation_change_effective": "2020-04-17",
+  "months_where_exact_and_printed_returns_differ": 38,
+  "official_calendar_2020_01_03": {
+   "matched": 3,
+   "months": 3,
+   "reported_only": true,
+   "rows": [
+    {
+     "match": true,
+     "month": "2020-01",
+     "official": [
+      "2020-01-07",
+      "2020-01-10"
+     ],
+     "predicted": [
+      "2020-01-07",
+      "2020-01-10"
+     ]
+    },
+    {
+     "match": true,
+     "month": "2020-02",
+     "official": [
+      "2020-02-06",
+      "2020-02-11"
+     ],
+     "predicted": [
+      "2020-02-06",
+      "2020-02-11"
+     ]
+    },
+    {
+     "match": true,
+     "month": "2020-03",
+     "official": [
+      "2020-03-06",
+      "2020-03-11"
+     ],
+     "predicted": [
+      "2020-03-06",
+      "2020-03-11"
+     ]
+    }
+   ]
+  },
+  "primary_exact_nav_per_share": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+1",
+   "best_alternative_monthly_err_bp": {
+    "2017-02": 8.124,
+    "2017-03": 3.073,
+    "2017-04": -0.693,
+    "2017-05": 1.437,
+    "2017-06": 6.81,
+    "2017-07": -4.904,
+    "2017-08": -0.074,
+    "2017-09": -17.056,
+    "2017-10": 4.311,
+    "2017-11": 0.276,
+    "2017-12": 1.328,
+    "2018-01": 1.453,
+    "2018-02": -0.78,
+    "2018-03": -2.269,
+    "2018-04": 5.682,
+    "2018-05": -6.074,
+    "2018-06": -1.287,
+    "2018-07": -8.781,
+    "2018-08": 3.719,
+    "2018-09": 0.475,
+    "2018-10": -0.946,
+    "2018-11": -3.507,
+    "2018-12": 0.129,
+    "2019-01": 1.326,
+    "2019-02": 0.626,
+    "2019-03": 0.631,
+    "2019-04": -3.547,
+    "2019-05": -4.124,
+    "2019-06": -4.478,
+    "2019-07": 3.019,
+    "2019-08": 2.092,
+    "2019-09": -3.335,
+    "2019-10": 0.074,
+    "2019-11": -3.632,
+    "2019-12": -0.76,
+    "2020-01": -4.509,
+    "2020-02": 1.448,
+    "2020-03": -1.56
+   },
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 981.8936,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 57.5109
+   },
+   "documented_is_best": true,
+   "documented_monthly_err_bp": {
+    "2017-02": -0.555,
+    "2017-03": 0.701,
+    "2017-04": -0.027,
+    "2017-05": -1.029,
+    "2017-06": -0.624,
+    "2017-07": 0.232,
+    "2017-08": 0.933,
+    "2017-09": -0.494,
+    "2017-10": -0.493,
+    "2017-11": 0.079,
+    "2017-12": 0.4,
+    "2018-01": 1.346,
+    "2018-02": 0.043,
+    "2018-03": 0.715,
+    "2018-04": 0.355,
+    "2018-05": -2.171,
+    "2018-06": -0.688,
+    "2018-07": -0.277,
+    "2018-08": 0.203,
+    "2018-09": 1.24,
+    "2018-10": -0.249,
+    "2018-11": -1.291,
+    "2018-12": -0.023,
+    "2019-01": 1.566,
+    "2019-02": -0.044,
+    "2019-03": 0.22,
+    "2019-04": 1.664,
+    "2019-05": -1.801,
+    "2019-06": 1.243,
+    "2019-07": 0.348,
+    "2019-08": -0.373,
+    "2019-09": 0.023,
+    "2019-10": 1.074,
+    "2019-11": 0.609,
+    "2019-12": -0.151,
+    "2020-01": -0.783,
+    "2020-02": -0.806,
+    "2020-03": -5.894
+   },
+   "identified": true,
+   "months": [
+    "2017-02",
+    "2020-03",
+    38
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -7.7862,
+     "mean_abs_err_bp": 0.8096,
+     "median_abs_err_bp": 0.5816,
+     "months": 38
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -6.8117,
+     "mean_abs_err_bp": 3.8712,
+     "median_abs_err_bp": 2.4648,
+     "months": 38
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -6.2527,
+     "mean_abs_err_bp": 6.4663,
+     "median_abs_err_bp": 3.5326,
+     "months": 38
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -6.4469,
+     "mean_abs_err_bp": 8.3982,
+     "median_abs_err_bp": 5.792,
+     "months": 38
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -8.8184,
+     "mean_abs_err_bp": 3.8157,
+     "median_abs_err_bp": 2.499,
+     "months": 38
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -8.1799,
+     "mean_abs_err_bp": 7.4287,
+     "median_abs_err_bp": 4.5533,
+     "months": 38
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -9.5319,
+     "mean_abs_err_bp": 10.7907,
+     "median_abs_err_bp": 6.9207,
+     "months": 38
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -9.7132,
+     "mean_abs_err_bp": 8.3295,
+     "median_abs_err_bp": 5.9461,
+     "months": 38
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -7.5792,
+     "mean_abs_err_bp": 3.1144,
+     "median_abs_err_bp": 2.1803,
+     "months": 38
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -8.1985,
+     "mean_abs_err_bp": 4.6804,
+     "median_abs_err_bp": 2.2234,
+     "months": 38
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -6.0891,
+     "mean_abs_err_bp": 5.2968,
+     "median_abs_err_bp": 3.3562,
+     "months": 38
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 5,
+    "months_won": 33,
+    "p_one_sided": 2e-06
+   }
+  },
+  "printed_nav_per_share": {
+   "best": "documented",
+   "best_alternative": "single day at close of D0+1",
+   "controls": {
+    "previous_month_fires": true,
+    "previous_month_nav_mean_abs_err_bp": 980.2523,
+    "wrong_pair_fires": true,
+    "wrong_pair_mean_abs_err_bp": 57.2228
+   },
+   "documented_is_best": true,
+   "identified": false,
+   "months": [
+    "2017-02",
+    "2020-03",
+    38
+   ],
+   "schedules": {
+    "documented": {
+     "constant_bp_per_month": -7.2864,
+     "mean_abs_err_bp": 3.2002,
+     "median_abs_err_bp": 2.7059,
+     "months": 38
+    },
+    "documented shifted +1": {
+     "constant_bp_per_month": -6.9411,
+     "mean_abs_err_bp": 5.2413,
+     "median_abs_err_bp": 3.2635,
+     "months": 38
+    },
+    "documented shifted +2": {
+     "constant_bp_per_month": -5.5812,
+     "mean_abs_err_bp": 7.4268,
+     "median_abs_err_bp": 4.496,
+     "months": 38
+    },
+    "documented shifted +3": {
+     "constant_bp_per_month": -5.2618,
+     "mean_abs_err_bp": 9.1823,
+     "median_abs_err_bp": 5.2938,
+     "months": 38
+    },
+    "documented shifted -1": {
+     "constant_bp_per_month": -8.9829,
+     "mean_abs_err_bp": 4.8402,
+     "median_abs_err_bp": 3.9553,
+     "months": 38
+    },
+    "documented shifted -2": {
+     "constant_bp_per_month": -10.1647,
+     "mean_abs_err_bp": 7.9399,
+     "median_abs_err_bp": 5.2127,
+     "months": 38
+    },
+    "documented shifted -3": {
+     "constant_bp_per_month": -10.6264,
+     "mean_abs_err_bp": 10.8995,
+     "median_abs_err_bp": 6.8269,
+     "months": 38
+    },
+    "single day at close of D0+0": {
+     "constant_bp_per_month": -9.8179,
+     "mean_abs_err_bp": 8.7416,
+     "median_abs_err_bp": 7.2675,
+     "months": 38
+    },
+    "single day at close of D0+1": {
+     "constant_bp_per_month": -8.3863,
+     "mean_abs_err_bp": 4.4332,
+     "median_abs_err_bp": 3.437,
+     "months": 38
+    },
+    "single day at close of D0+2": {
+     "constant_bp_per_month": -7.734,
+     "mean_abs_err_bp": 5.7923,
+     "median_abs_err_bp": 3.9211,
+     "months": 38
+    },
+    "single day at close of D0+3": {
+     "constant_bp_per_month": -6.4965,
+     "mean_abs_err_bp": 6.1964,
+     "median_abs_err_bp": 4.9864,
+     "months": 38
+    }
+   },
+   "sign_test_vs_best_alternative": {
+    "months_lost": 15,
+    "months_won": 23,
+    "p_one_sided": 0.127938
+   }
+  },
+  "root": "CL",
+  "window": [
+   "2017-02",
+   "2020-03"
+  ]
+ },
+ "verdict": "PROVEN 2017-02 -> 2020-03: USO's documented four-day roll is identified from its month-end NAV (exact NAV / shares), and both controls fire"
+}

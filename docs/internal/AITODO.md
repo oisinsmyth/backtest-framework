@@ -44,13 +44,38 @@ source.
 | G11 | 10 other fund facts (D619) | several | MISSING / to source | item 9 |
 | G12 | social-media archives (Q12) | C3 social part | MISSING | **kept OPEN: the principal will source it** |
 | G13 | hourly Wikipedia views | C3 | FREE but ~2.5 TB | daily views under D621's amendment, or the full download |
-| G14 | swap dissemination history (DTCC) | E netting, H15 | UNVERIFIED | item 8 |
-| G15 | non-US products (BetaPro, WisdomTree): NAV, units, leverage, restrikes | G | UNVERIFIED | item 7. Likely free on the issuers' sites |
+| G14 | swap dissemination history (DTCC) | E netting, H15 | **FREE, partial (checked 2026-09-25)** | DTCC's public daily cumulative commodity files, no files downloaded yet. See the note below the table |
+| G15 | non-US products (BetaPro, WisdomTree): NAV, units, leverage, restrikes | G | **PARTIAL (checked 2026-09-25)** | See the note below the table |
 | G16 | official intraday NAV (IIV) history | validation only | MISSING | not needed: the rebuilt iNAV passes Gate 0b |
 | G17 | vault trades with aggressor side, 2025-03-01 → 2025-09-24 | the vault look | WEAKENED | the same one-second estimate, which keeps the method consistent |
 | G18 | CL 2020-04-01 → 09-16 | all CL stages | EXCLUDED | A1 |
-| G19 | USO roll days 2017 → 2020-04 | F | WEAKENED | rest on the documented rule; USO's monthly NAV could check them for free (not run) |
-| G20 | the item-1 estimates run only to 2023-12 | A–F | TO EXTEND | free work (item 11) |
+| G19 | USO roll days 2017 → 2020-04 | F | **PROVEN 2026-09-25** | `check_uso_monthly_rolls.py`: exact NAV÷shares 0.81 bp against 3.11, sign test 33–5 (p 2e-6), both controls fire; UNG's known answer re-identified |
+| G20 | the item-1 estimates run only to 2023-12 | A–F | **Stage A's part DONE 2026-09-25** | See the note below the table. UNG/USO month-ends, AUM and USO weights past 2023 are still to extend; Stage A doesn't need them |
+
+**G14, the detail.** DTCC's public daily cumulative commodity files are free.
+- `…/slices/CUMULATIVE_COMMODITIES_YYYY_MM_DD.zip` returns 200 from 2013-06 to 2020-11; `…/cftc/eod/…` from
+  2020-11 onward.
+- The whole 2017 → 2026 span is ~0.3–0.5 GB.
+- It covers DTCC-reported swaps only. ICE Trade Vault needs its terms accepted, and CME's SDR blocks scripts.
+
+**G15, the detail.**
+- BetaPro (betapro.ca) has free daily NAV back to 2008, embedded in each product page. Units outstanding and
+  leverage are current values only. The leverage changes are dated from press releases: HOU/HOD went to 1x on
+  2020-04-22, to 1.5x on 2020-11-10 and back to 2x on 2021-01-20; HNU/HND changed index on 2020-08-27.
+- WisdomTree's NAV history is behind an investor-type and terms dialog. Its restrike history is public only
+  from 2024-08 (GlobeNewswire), with earlier events likely in LSE RNS. The ISINs changed, so series need
+  chaining.
+- FX is free: the Bank of Canada Valet API, the ECB data API and the Bank of England database.
+
+**G20, the detail.** Both extensions run under `--seal a6` (`reserved_from="2025-03-01"`), and both original
+outputs stay byte-identical.
+- **f_fut, to 2025-02-28** (`estimate_fut_share.py --seal a6`):
+  - BOIL, KOLD and SCO are proven through 2024; UCO is interpolated through 2024.
+  - January–February 2025 are carried from 2024-12-31, which was filed 2025-02-28.
+  - h is now 0.162 (70 quarter-ends; it was 0.151).
+  - UCO's 2024-Q2 is newly flagged DISFAVOURED.
+- **NG contract counts** (`check_ng_contract_counts.py --seal a6`): reading C matches 57 of 57 futures-only
+  quarter-ends, a maximum error of 0.13%.
 | G21 | live feeds for Tracks 2 and 3 | forward | COSTS | CME $199/month; ETF live quotes not checked |
 
 **Taken one at a time, in this order.** `[>]` means in progress. Each item names who owns it.
@@ -166,7 +191,66 @@ source.
           - Runner `scripts/validate_tas_sign.py`, uncommitted until its result.
           - **Read once by the scheduled task on Sat 2026-10-10.** A pass writes H1b, after its own
             pre-registration.
-        - **Next:** H1a's pre-registration and POWER.md.
+        - **H1a's inputs, BUILT 2026-09-25 (uncommitted), in-sample 2017-05-22 → 2025-02-28 under A6:**
+          - Step 1: f_fut and the NG contract counts to 2025-02 (`estimate_fut_share.py --seal a6`,
+            `check_ng_contract_counts.py --seal a6`).
+          - Step 2: calendar flags, `scripts/build_ledger_calendar.py` → `data/ledger_calendar_flags.csv`
+            (1,957 days per root). Window-volume panel, `scripts/build_window_volume_panel.py` →
+            `data/ledger_window_volume_daily.csv.gz` + summary; `--check` reproduces byte for byte.
+            - Known answer: window volume = the 1-minute fixture's 14:28 and 14:29 bars on all 1,966 front
+              days per root, exactly (CL 12,661,012; NG 7,487,344 contracts).
+            - The window is a median 3.4% (CL) and 5.9% (NG) of the 09:30–14:30 volume, against 0.67% if
+              spread evenly.
+            - The panel also has 51 CME holiday sessions per root, with no settlement; H1a joins on the
+              calendar, so they drop out. 2020-02-28 is a Databento gap (NYMEX at about 4% of a normal
+              day's volume in both bar fixtures; ES complete). It is the same event as the EIA-filled
+              settlement hole, so it drops from H1a.
+          - Step 3: P1 at 11:30/13:50/14:00/14:10/14:28, `scripts/build_predicted_flow_panel.py` →
+            `data/ledger_predicted_flow_{daily,contracts}.csv.gz` + summary. `--check` reproduces byte for
+            byte.
+            - Holdings are Gate 0b's, imported, not re-derived. The ratio at the settlement equals Gate 0b's
+              `index_returns` bit for bit on 3,708 days per root.
+            - Q equals `ledger.flows.q1_rebalance` on every single-component row. It uses f_pit[t−1] and
+              AUM[t−1], and carries q_lo/q_hi at f_lo/f_hi.
+            - The sign audit raises.
+            - Median |Q| was 2–3% of the traded contract's window volume in 2017–19, then 14–74% from 2020,
+              and about 100% for NG in 2023. That is AUM growth, which the within-year shuffle controls.
+            - **CL era B has no single traded contract:** the three Balanced WTI components each carry
+              about ⅓ (the largest has a median of 34.4%).
+          - **DECIDED 2026-09-25 (principal):** (1) H1a's dependent is the window volume SUMMED over the held
+            contracts, for every root and era, with the largest-share contract reported beside it. (2) τ's
+            §7.2 gate uses FULL-SIZE CL and NG on the repo's default cost line: CL $21.46 (D508 effective), NG
+            $16.00 (the one-tick convention). The micro-size τ is reported beside it.
+          - **Correction:** A4's primary f reading is f_est, not f_pit. The panel now stores Q at f = 1 per fund
+            plus f_est, f_pit, f_lo, f_hi and σ_q (h = 0.162; DISFAVOURED quarters at h), so the runner forms any
+            reading, or A4's draws, exactly.
+          - **The §7.2 gate and τ\*, BUILT:**
+            - V_d uses the new `vol_ses` (whole-session screen volume, added to the window panel; the old columns
+              are unchanged). Screen volume is 64–76% of cleared on the front month and 19–39% on the held months:
+              spread legs, TAS and blocks make up the rest.
+            - Evaluable on 1,936 days per root. It signals on CL 798 and NG 1,028 days, mostly first at 13:50.
+            - **The binding criterion is |I| ≥ 3 × cost, and it tracks AUM:** CL passes 7–12% of days in
+              2017–19 and 91% in 2022; NG 8–13% in 2017–19 and 89–98% from 2022. SNR ≥ 1.5 passes 73–79%.
+            - **Note for the pre-registration:** D5 treats BOIL's and KOLD's (and UCO's and SCO's) errors as
+              independent. They are perfectly correlated through r, so SNR is inflated by a factor from 1 to √2
+              (measured: the maximum departure is exactly √2 − 1).
+        - **POWER, BUILT 2026-09-25** (`scripts/ledger_power_h1a.py` → `docs/internal/SETTLEMENT_FLOW_LEDGER_POWER.md` +
+          `data/ledger_power_h1a.json`; `--check` reproduces).
+          - Noise comes from the PRE-SAMPLE (the principal): front-month window volume 2015-06-29 → 2017-05-19, 465 days
+            (the 1-minute fixture's day session is absent 2011–14). No in-sample vol_win is read, and a guard raises
+            if it is.
+          - n = 1,819 (CL, A1 transition excluded) and 1,936 (NG). At the plausible β = 0.25 (a quarter of predicted
+            P1 lands in the window), power is CL 0.92 HC1 / 0.85 Newey-West and NG 1.00. NG detects β = 0.1 at 98%.
+            Recovery within ±0.15: CL 94%, NG 100%. CL is an upper bound: A4's imputation is not simulated.
+          - **FINDING: A8's day shuffle is anti-conservative.** The null's p95 of t is 1.90–2.04. The within-year shuffle
+            gives 0.94–1.43, because permuting days destroys the autocorrelation of |Q| (AUM) and of the noise
+            (AC(1) 0.2). 13–19% of null datasets beat it. HC1's size is 4.4–5.5% against a nominal 2.3%; Newey-West's
+            is 1.4–2.8%. So t ≥ 2 binds, and the shuffle adds nothing.
+          - **RESOLVED by A9 (the principal, 2026-09-25):** residualise |Q| on the controls, then rotate it within
+            instrument-year (offsets ≥ 20 days). Calibrated: 4–7% of null datasets beat their own p95, and the
+            combined gate rejects 0–2%. Power at β = 0.25 (kept): CL 0.87, NG 1.00. A9 also records the summed
+            dependent, the full-size cost line and the Newey-West report.
+        - **Next:** H1a's pre-registration (drafted as the next decision record, awaiting the principal's review; it is committed alone), then its runner.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.

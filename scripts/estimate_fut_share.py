@@ -76,8 +76,22 @@ only swap P&L quarters up to 2023-Q3 are used. It computes no strategy return an
 window statistic. It writes two new files: `data/ledger_fut_share_daily.csv.gz` (rows, gitignored
 by suffix) and `data/ledger_fut_share_summary.json` (tracked).
 
-    uv run python scripts/estimate_fut_share.py            # write both
-    uv run python scripts/estimate_fut_share.py --check    # rebuild, compare byte for byte
+A6 MODE (`--seal a6`), declared 2026-09-25 before its first run. The principal moved this study's seal to
+2025-03-01 (amendment A6), so the in-sample now runs to 2025-02-28. The method above is unchanged and is re-run
+with four constants moved:
+  * every panel is read through `load_panel(reserved_from="2025-03-01")`;
+  * the window ends 2025-02-28;
+  * LAST_ANCHOR = 2024-12-31, the last quarter-end filed before the cut. All six funds' 2024-12-31 schedules
+    were filed on 2025-02-28 (checked in fund_holdings_quarterly), so 2025-01 → 02 is `carried`;
+  * the swap P&L quarters run to 2024-Q4, whose statements come from the 10-K filed 2025-02-28. Proven
+    quarters are likewise those up to 2024-Q4, so 2025-Q1 days are never `proven`.
+h is recomputed by the same rule over quarter-ends up to 2024-12-31, and reported beside the original h. The
+A6 outputs are separate files (`ledger_fut_share_daily_a6.csv.gz`, `ledger_fut_share_summary_a6.json`). The
+original outputs stay byte-identical under `--check`.
+
+    uv run python scripts/estimate_fut_share.py                      # write both (original seal)
+    uv run python scripts/estimate_fut_share.py --check              # rebuild, compare byte for byte
+    uv run python scripts/estimate_fut_share.py --seal a6 [--check]  # the A6 extension to 2025-02-28
 """
 from __future__ import annotations
 
@@ -101,6 +115,11 @@ SWAPQ = REPO / "data" / "ledger_swap_free_quarters.json"
 RESERVED_FROM = "2024-01-01"
 FIRST, LAST = "2017-05-22", "2023-12-29"
 LAST_ANCHOR = "2023-09-30"
+SWAP_Q_LAST = "2023-Q3"
+#: A6 (declared in the docstring before its first run): the moved constants
+A6_CONSTANTS = ("2025-03-01", "2025-02-28", "2024-12-31", "2024-Q4")  # RESERVED_FROM, LAST, LAST_ANCHOR, SWAP_Q_LAST
+A6_OUT_ROWS = REPO / "data" / "ledger_fut_share_daily_a6.csv.gz"
+A6_OUT_SUM = REPO / "data" / "ledger_fut_share_summary_a6.json"
 L_OF = {"BOIL": 2, "KOLD": -2, "UCO": 2, "SCO": -2, "UNG": 1, "USO": 1}
 ER = {"BOIL": 0.0095, "KOLD": 0.0095, "UCO": 0.0095, "SCO": 0.0095}
 PL_FUNDS = ("BOIL", "UCO", "SCO")
@@ -163,7 +182,7 @@ def pooled_h(anc: dict[str, list[tuple[str, float, str]]]) -> tuple[float, int]:
 
 def swap_quarters() -> dict[str, dict[str, dict[str, Any]]]:
     d = json.loads(SWAPQ.read_text(encoding="utf-8"))["funds"]
-    return {f: {q: v for q, v in d[f]["quarters"].items() if q <= "2023-Q3"} for f in d}
+    return {f: {q: v for q, v in d[f]["quarters"].items() if q <= SWAP_Q_LAST} for f in d}
 
 
 def calendars() -> tuple[Any, dict[str, list[str]]]:
@@ -327,8 +346,20 @@ def build() -> tuple[str, dict[str, Any]]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--seal", choices=["a6"], default=None)
     a = ap.parse_args(argv)
+    global RESERVED_FROM, LAST, LAST_ANCHOR, SWAP_Q_LAST, OUT_ROWS, OUT_SUM
+    h_original: tuple[float, int] = (float("nan"), 0)
+    if a.seal == "a6":
+        h_original = pooled_h(anchors())  # the original seal's h, for the report
+        RESERVED_FROM, LAST, LAST_ANCHOR, SWAP_Q_LAST = A6_CONSTANTS
+        OUT_ROWS, OUT_SUM = A6_OUT_ROWS, A6_OUT_SUM
+        G.RESERVED_FROM = RESERVED_FROM  # gate_0b_ng_nav's loaders read it at call time
     text, summary = build()
+    if a.seal == "a6":
+        summary["seal"] = {"mode": "A6", "reserved_from": RESERVED_FROM, "last_day": LAST, "last_anchor": LAST_ANCHOR,
+                           "swap_quarters_to": SWAP_Q_LAST,
+                           "h_original_seal": {"h": round(h_original[0], 6), "n": h_original[1]}}
     stext = json.dumps(summary, indent=1, sort_keys=True) + "\n"
     if a.check:
         with gzip.open(OUT_ROWS, "rt", encoding="utf-8", newline="") as fh:

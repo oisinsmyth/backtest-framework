@@ -1,0 +1,133 @@
+{
+ "a4_disfavoured": {
+  "BOIL": [],
+  "KOLD": [],
+  "SCO": [
+   "2019-Q2",
+   "2019-Q3"
+  ],
+  "UCO": [
+   "2019-Q2",
+   "2020-Q2",
+   "2020-Q3",
+   "2023-Q1",
+   "2023-Q2",
+   "2024-Q2"
+  ],
+  "UNG": [],
+  "USO": []
+ },
+ "a4_h": 0.162057,
+ "cut": "2025-03-01",
+ "gate": {
+  "Y": 0.7,
+  "k_cost": 3.0,
+  "sigma_rem_min_obs": 15,
+  "snr_min": 1.5,
+  "window": 20
+ },
+ "reads": {
+  "fund_nav_daily": {
+   "cut_applied": "2025-03-01",
+   "date_col": "date",
+   "date_format": "iso_day",
+   "distinct_sessions_read": 4091,
+   "first_session_read": "2008-11-24",
+   "last_session_read": "2025-02-28",
+   "opened_on_the_word": false,
+   "panel": "fund_nav_daily",
+   "path": "data/fixtures/fund_nav_daily.csv.gz",
+   "reserved_from": "2025-03-01",
+   "reserved_rows_read": 0,
+   "rows_read": 14842,
+   "sessions_read": 14842,
+   "sha256": "54c2ee9f0bf2a0470d0036bc5f0727fa62ed4bbecf5bd0b3cc538e46532a3ce2",
+   "status": "present"
+  },
+  "fut_share_a6": {
+   "sha256": "f8b0028c53d3a1329c9d793c4b615c2314e110d87eb22b5d413dd6964311a172"
+  },
+  "fut_share_summary_a6": {
+   "sha256": "96ad0c69dce938704117e86c1974b72009789049b3c3f9e54890325e6829008b"
+  },
+  "futures_costs": {
+   "sha256": "d69bfa01b42c486181754447ca659023201520d097bc1f37386c3e8054c1be4f"
+  },
+  "window_panel": {
+   "sha256": "4def03347cd1c242f418eabf8fea1c2bc5d0d291812813665ccaf4834bc99995"
+  }
+ },
+ "roots": {
+  "CL": {
+   "business_days": 1957,
+   "days_without_f_prev": [
+    "2017-05-22"
+   ],
+   "funds": {
+    "SCO": -2,
+    "UCO": 2
+   },
+   "known_answer_days": 3708,
+   "legs_without_any_bar_that_day": 0,
+   "single_component_q_checked": 8370,
+   "stale_legs": 5,
+   "tau_star": {
+    "evaluable_days": 1936,
+    "first_pass_at": {
+     "13:50": 738,
+     "14:00": 27,
+     "14:10": 33
+    },
+    "no_signal_days_scored_at_14:10": 1138,
+    "signal_days": 798
+   }
+  },
+  "NG": {
+   "business_days": 1957,
+   "days_without_f_prev": [
+    "2017-05-22"
+   ],
+   "funds": {
+    "BOIL": 2,
+    "KOLD": -2
+   },
+   "known_answer_days": 3708,
+   "legs_without_any_bar_that_day": 0,
+   "single_component_q_checked": 19560,
+   "stale_legs": 5,
+   "tau_star": {
+    "evaluable_days": 1936,
+    "first_pass_at": {
+     "13:50": 928,
+     "14:00": 52,
+     "14:10": 48
+    },
+    "no_signal_days_scored_at_14:10": 908,
+    "signal_days": 1028
+   }
+  }
+ },
+ "rt_cost": {
+  "CL": {
+   "line": "d508_exec",
+   "price_units": 0.02146198159140919,
+   "usd": 21.46198159140919
+  },
+  "NG": {
+   "line": "d556_one_tick",
+   "price_units": 0.0016,
+   "usd": 16.0
+  }
+ },
+ "taus": [
+  "11:30",
+  "13:50",
+  "14:00",
+  "14:10",
+  "14:28"
+ ],
+ "window": [
+  "2017-05-22",
+  "2025-02-28"
+ ]
+}

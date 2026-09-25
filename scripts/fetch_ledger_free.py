@@ -63,6 +63,12 @@ SIBLING_TAS_PLAN: list[tuple[str, str, list[str], tuple[str, str]]] = [
     ("siblings-tas-ohlcv1s", "ohlcv-1s", ["HOT.FUT", "RBT.FUT"], SIBLING_SPAN),
 ]
 SIBLING_TAS_JOBS = REPO / "data" / "ledger_sibling_tas_pull_jobs.json"
+#: A6's last in-sample months on their own. The panel builders never open a file that also holds vault days
+#: (the 2025 year files of the main pull run to 2025-12-31).
+A6_TAIL_PLAN: list[tuple[str, str, list[str], tuple[str, str]]] = [
+    ("a6-tail-ohlcv1s", "ohlcv-1s", ["CL.FUT", "NG.FUT", "CLT.FUT", "NGT.FUT"], ("2025-01-01", "2025-03-01")),
+]
+A6_TAIL_JOBS = REPO / "data" / "ledger_a6_tail_pull_jobs.json"
 #: D624's NG/CL top-up, taken just before the subscription lapses (~2026-10-11). Trades continue from where
 #: `trades-post-vault` stopped (2026-09-24, exclusive), so no session is counted twice. The one-second bars start
 #: after the vault. The end date is given at run time with --end.
@@ -231,12 +237,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--siblings", action="store_true", help="D624's HO/RB job set and its own job record")
     ap.add_argument("--topup", metavar="END", help="D624's NG/CL top-up up to END (exclusive, YYYY-MM-DD)")
     ap.add_argument("--siblings-tas", action="store_true", help="D625's HOT/RBT job set and its own job record")
+    ap.add_argument("--a6-tail", action="store_true", help="CL/NG/TAS one-second bars for 2025-01 -> 2025-02 alone")
     a = ap.parse_args(argv)
     global PLAN, JOBS
     if a.siblings:
         PLAN, JOBS = SIBLING_PLAN, SIBLING_JOBS
     elif a.siblings_tas:
         PLAN, JOBS = SIBLING_TAS_PLAN, SIBLING_TAS_JOBS
+    elif a.a6_tail:
+        PLAN, JOBS = A6_TAIL_PLAN, A6_TAIL_JOBS
     elif a.topup:
         PLAN, JOBS = topup_plan(a.topup), TOPUP_JOBS
     if a.plan:

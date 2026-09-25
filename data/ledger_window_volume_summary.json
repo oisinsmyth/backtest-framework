@@ -1,0 +1,143 @@
+{
+ "cut": "2025-03-01",
+ "files": [
+  {
+   "bytes": 108725042,
+   "name": "glbx-mdp3-20170521-20171231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 214996252,
+   "name": "glbx-mdp3-20180101-20181231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 205221716,
+   "name": "glbx-mdp3-20190101-20191231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 255001934,
+   "name": "glbx-mdp3-20200101-20201231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 215188390,
+   "name": "glbx-mdp3-20210101-20211231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 295010839,
+   "name": "glbx-mdp3-20220101-20221231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 214097044,
+   "name": "glbx-mdp3-20230101-20231231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 202854556,
+   "name": "glbx-mdp3-20240101-20241231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 46448937,
+   "name": "glbx-mdp3-20170521-20171231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 88770117,
+   "name": "glbx-mdp3-20180101-20181231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 79484352,
+   "name": "glbx-mdp3-20190101-20191231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 114750955,
+   "name": "glbx-mdp3-20200101-20201231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 105999493,
+   "name": "glbx-mdp3-20210101-20211231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 128721464,
+   "name": "glbx-mdp3-20220101-20221231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 117130372,
+   "name": "glbx-mdp3-20230101-20231231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 129327974,
+   "name": "glbx-mdp3-20240101-20241231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 670814,
+   "name": "glbx-mdp3-20170521-20171231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 1297004,
+   "name": "glbx-mdp3-20180101-20181231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 1548652,
+   "name": "glbx-mdp3-20190101-20191231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 1862787,
+   "name": "glbx-mdp3-20200101-20201231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 1532397,
+   "name": "glbx-mdp3-20210101-20211231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 1772193,
+   "name": "glbx-mdp3-20220101-20221231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 2183724,
+   "name": "glbx-mdp3-20230101-20231231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 2474537,
+   "name": "glbx-mdp3-20240101-20241231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 68138087,
+   "name": "glbx-mdp3-20250101-20250228.ohlcv-1s.dbn.zst"
+  }
+ ],
+ "per_root": {
+  "CL_outright": {
+   "contracts": 127,
+   "first": "2017-05-22",
+   "last": "2025-02-28",
+   "sessions": 2008,
+   "total_tas_volume": null,
+   "total_window_volume": 19178289
+  },
+  "CL_tas": {
+   "contracts": 107,
+   "first": "2017-05-22",
+   "last": "2025-02-28",
+   "sessions": 2006,
+   "total_tas_volume": 37061775,
+   "total_window_volume": null
+  },
+  "NG_outright": {
+   "contracts": 175,
+   "first": "2017-05-22",
+   "last": "2025-02-28",
+   "sessions": 2008,
+   "total_tas_volume": null,
+   "total_window_volume": 14408702
+  },
+  "NG_tas": {
+   "contracts": 106,
+   "first": "2017-05-22",
+   "last": "2025-02-28",
+   "sessions": 1974,
+   "total_tas_volume": 19937583,
+   "total_window_volume": null
+  }
+ },
+ "rows": 131779,
+ "rows_sha256": "e8a7c0ca1dbc9217652d66ec0f46585af5b35d556b47550da208b73028a9395d",
+ "span_first": "2017-05-22",
+ "spec": "settlement-ledger A8 H1a: Stage A's volume panel; see the script docstring"
+}
