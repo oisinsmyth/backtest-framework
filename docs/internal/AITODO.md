@@ -159,8 +159,14 @@ source.
         - C2 runs on Alpha Vantage bars.
         - Stage H is forward-only.
         - Stage B, Stage I, H8a and H9 are blocked until real signed flow exists.
-        - **Next:** work up option 2, the TAS premium as a signed measure; then H1a's pre-registration
-          and POWER.md.
+        - **Option 2, done 2026-09-25:** D625 did not pass, because its control fired on a base-rate
+          effect. Post hoc, the TAS level reads backwards (κ +0.33 to +0.49, reversed sign).
+          - **D626** (committed `9ee8142`) tests the reversed sign on data no one has read: pooled κ ≥ 0.2
+            over CL, NG, HO and RB, with CL and NG each > 0.
+          - Runner `scripts/validate_tas_sign.py`, uncommitted until its result.
+          - **Read once by the scheduled task on Sat 2026-10-10.** A pass writes H1b, after its own
+            pre-registration.
+        - **Next:** H1a's pre-registration and POWER.md.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
