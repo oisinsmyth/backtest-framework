@@ -1,0 +1,171 @@
+{
+ "NG": {
+  "by_source": {
+   "databento_to_2020_02_10": {
+    "days": 665,
+    "rho_a": -0.003042245491390286,
+    "rho_d": -0.07283480060045217,
+    "tas_alone_pcorr": -0.08744028638495589
+   },
+   "sierra_from_2020_02_11": {
+    "days": 1270,
+    "rho_a": 0.05490877994888759,
+    "rho_d": 0.04542546727268169,
+    "tas_alone_pcorr": 0.013538332214080287
+   }
+  },
+  "clause_flow": {
+   "days": 1935,
+   "pass": false,
+   "ratio": 0.31679758270266306,
+   "rho_a": 0.1354619346374228,
+   "rho_d": 0.042914013441361684
+  },
+  "clause_midday": {
+   "gain_midday": 0.02483551417119401,
+   "gain_window": -0.0925479211960611,
+   "n_days": 1935,
+   "pass": false,
+   "rho_a_midday": -0.03767678867096647,
+   "rho_d_midday": -0.012841274499772463
+  },
+  "clause_price": {
+   "direction_flips_vs_a_on_common_days": 0.20153550863723607,
+   "overlap_share_of_d": 0.6330498177399757,
+   "pass": false,
+   "stage_a": {
+    "mean": 66.0214007782101,
+    "n": 1028,
+    "se": 13.173390982526163,
+    "t": 5.011724078165154
+   },
+   "stage_d": {
+    "mean": 16.974483596597707,
+    "n": 823,
+    "se": 13.839071767397018,
+    "t": 1.226562292753427
+   },
+   "traded_days_a": 1028,
+   "traded_days_d": 823
+  },
+  "d629_puzzle": {
+   "mu_d": {
+    "beta": -0.017156048450146504,
+    "n": 1935,
+    "t_hc1": -2.6637824368974203,
+    "t_nw5": -2.7271305117790314
+   },
+   "p1": {
+    "beta": -0.06132203296229689,
+    "n": 1935,
+    "t_hc1": -7.976294066026645,
+    "t_nw5": -7.16278523679182
+   }
+  },
+  "error_budget": {
+   "stage_a": 257534.5200040724,
+   "stage_d": 261865.45547951845
+  },
+  "first_day": "2017-06-21",
+  "fixed_1410": {
+   "rho_a": 0.12986680628564964,
+   "rho_d": 0.031101470495008634
+  },
+  "h2": {
+   "stage_a": {
+    "distribution": {
+     "count": 1028,
+     "kurtosis_excess": 8.99150911422954,
+     "mean": 66.02140077821011,
+     "mean_ex_bottom_1pct": 83.14650934119959,
+     "mean_ex_top_1pct": 46.19469026548673,
+     "mean_trimmed_both": 63.29025844930416,
+     "median": 40.000000000000036,
+     "payoff": 1.1329098031337885,
+     "skew": 0.33471362197695353,
+     "trim_k": 11,
+     "win_rate": 0.5729571984435797
+    },
+    "mean_gross": 66.0214007782101,
+    "mean_net": 40.021400778210094,
+    "sharpe_gross": 1.7987501502299543,
+    "sharpe_net": 1.0943109681583696,
+    "sortino_gross": 3.017643569534623,
+    "sortino_net": 1.7542282697045215
+   },
+   "stage_d": {
+    "distribution": {
+     "count": 823,
+     "kurtosis_excess": 9.303374976911275,
+     "mean": 16.974483596597707,
+     "mean_ex_bottom_1pct": 33.59950859950851,
+     "mean_ex_top_1pct": -3.636363636363726,
+     "mean_trimmed_both": 12.944099378881898,
+     "median": 0.0,
+     "payoff": 1.0884746985206177,
+     "skew": 0.74114665173373,
+     "trim_k": 9,
+     "win_rate": 0.4933171324422843
+    },
+    "mean_gross": 16.974483596597707,
+    "mean_net": -9.025516403402293,
+    "sharpe_gross": 0.44256073500896104,
+    "sharpe_net": -0.23540304801925524,
+    "sortino_gross": 0.686356372888896,
+    "sortino_net": -0.3493547399969203
+   }
+  },
+  "known_answer": {
+   "days": 1936,
+   "gate_equal_at_every_tau": true,
+   "tau_star_equal": true
+  },
+  "mechanism_to_1430": {
+   "alone": {
+    "beta": -0.007397786265358454,
+    "n": 1935,
+    "t_hc1": -1.4684697359173053,
+    "t_nw5": -1.5514359400327369
+   },
+   "pcorr": -0.04712252203456129,
+   "with_p1": {
+    "beta": -0.004237808861555332,
+    "n": 1935,
+    "t_hc1": -0.8453809717362101,
+    "t_nw5": -0.8878127700020728
+   }
+  },
+  "n": 1935,
+  "sign_agreement_S_tas": 0.5007751937984496,
+  "tas_alone": {
+   "alone": {
+    "beta": -0.006384787326160928,
+    "n": 1935,
+    "t_hc1": -0.9297629938019857,
+    "t_nw5": -0.9412497668438234
+   },
+   "pcorr": -0.030539098290844145,
+   "with_p1": {
+    "beta": -0.002937906082828638,
+    "n": 1935,
+    "t_hc1": -0.43595637568122186,
+    "t_nw5": -0.4336824014424151
+   }
+  },
+  "verdict": "NOT RETAINED"
+ },
+ "deviations": [],
+ "inputs": {
+  "ledger_calendar_flags.csv": "7c2ade9617ba94e305f36d8368ebedbfa3ffb5da37b85917377eca496713cda2",
+  "ledger_predicted_flow_contracts.csv.gz": "5e34bcabfd25b766983f73ea8c03325b618a0203fdc8f22c80b9867d1db81e62",
+  "ledger_predicted_flow_daily.csv.gz": "b91d527f02978ad136426cdfae37271333fa2002a79c92f2c3aeb212d59335c2",
+  "ledger_signed_window_daily.csv.gz": "9e17c7ea99161e56920afe246a9efcf125260cee43d0b71fe075558bfcb1242f",
+  "ledger_tas_imbalance_daily.csv.gz": "140bd876b478f6a2bb30b95808f374c1610259dfa3d7c3c6f4c90c35f90609da",
+  "ledger_window_volume_daily.csv.gz": "4def03347cd1c242f418eabf8fea1c2bc5d0d291812813665ccaf4834bc99995",
+  "ng_minute_bars.csv.gz": "238a80fb1798ac75a5d9998d11b8898e61e452e0244d2ab990c646392b690b4d"
+ },
+ "spec": {
+  "record": "D633-PRE-REG-stage-d-the-tas-imbalance-on-ng.md",
+  "sha256": "edf4e3049caa8afc0ebfe6420845428aaa9744d95b940f99ee15737e6fc4f94c"
+ }
+}

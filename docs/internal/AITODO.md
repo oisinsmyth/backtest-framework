@@ -304,7 +304,11 @@ outputs stay byte-identical.
                - The forecast creations LOWER the flow correlation (0.137 → 0.094), and a better same-day forecast lowers it further (→ −0.02). The creations' futures are not window aggressive flow; they are likely blocks, EFPs or TAS at the settlement.
                - Price: C1 trades 404 days at $119 (t 4.47) against A's 1,010 at $68 (t 5.08). POST HOC: A's own top-404 |I| days give $141 (t 4.90), so C1's trade edge is only a stricter filter.
                - **Before C2:** the question to put is whether a hedging split h can make a term that lowers the flow fit at every forecast quality useful. C2's premium mostly forecasts same-day creations.
-               - **Stage D (the principal, 2026-09-26): D633, PRE-REGISTERED; the runner is next.**
+               - **D633 (2026-09-26): Stage D is NOT RETAINED (individually testable, so this is evidence against).**
+                 - The TAS imbalance is unrelated to window aggressive flow: partial correlation −0.03 to τ and −0.05 to 14:30; signs agree on 50.1% of days; nil in both source eras.
+                 - Adding it dilutes P1: flow 0.136 → 0.043; H2 t 5.01 → 1.23 ($17 gross).
+                 - B, C1 and D have now all failed the same way. **The ledger stays at Stage A on NG.**
+               - Stage D's pre-registration record:
                  - The NG TAS gap was bought ($0.29, job GLBX-20260926-ACYTFRDQDD). `build_tas_imbalance_panel.py` stitches Databento (≤ 2020-02-10) and Sierra (≥ 2020-02-11), which agree exactly on 2020-02-10.
                  - POWER: size 3.5%; 0.97 at γ = 0.061. The ratio rule breaks at γ = 0.25.
                - Background from the pre-registration (D632), kept as facts:
