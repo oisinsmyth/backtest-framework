@@ -1,5 +1,9 @@
 # Settlement flow ledger: write-up (STOPPED 2026-09-25)
 
+> **REOPENED 2026-09-26** by the first route in §7 below: aggressor-signed window trades for the in-sample, from
+> Sierra Chart. D629 passed NG's H1 on signed flow (provisional) and D630 passed H2 on NG. Gate 1 is met on NG. NG's
+> Stage A is frozen and waits for the joint vault run (amendment A10). This write-up stands as the record of the stop.
+
 > The deposit (`User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md`, v1.9) prescribes "STOP → write-up" when Gate 1
 > fails. This is that write-up. The deposit and `SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md` (A1–A9) are the
 > specification. The records cited here are the evidence. Nothing below is a new result: every number is quoted

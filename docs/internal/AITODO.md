@@ -5,6 +5,16 @@
 > stale. The build-phase list this file held until 2026-09-01 is in git history at `f78786e`
 > (`git show f78786e:docs/internal/AITODO.md`).
 
+## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)
+
+- No model opens the vault (2025-03-01 → 2026-09-18) by itself.
+- Every model that has passed its in-sample gates and is frozen (`scripts/freeze.py`) is scored in one joint run,
+  called by the principal: when the planned set is ready, or earlier on their word.
+- Each model is scored on its own pre-registered vault criteria, and the assembled book is scored on the same
+  period.
+- α stays in fixed slots of 0.005 per family, so a joint run changes no bar.
+- **Frozen and waiting:** the settlement ledger's NG Stage A (`data/FROZEN_ledger_stage_a_ng.json`).
+
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
 **The standard, the principal's, 2026-09-24:**
@@ -282,7 +292,8 @@ outputs stay byte-identical.
                - The move reverts after the settlement (+$29, t 3.98).
                - POST HOC partner control: traded beats untraded at the same move, +$65 (t 4.76).
                - Caveats: the stress fill nets −$9; the result is concentrated in 2022 (without it, net +$5); DSR 0.87 < 0.95; the MNG net Sharpe is 0.44 (misses C-a); fund size acts as a threshold.
-               - **Next: the vault's one look (D630 §8) is the principal's decision.** Build the NG vault inputs and freeze them first. Inputs: `build_ng_minute_bars.py` (exact against the volume panel) and POWER `ledger_power_h2_ng.py`. The detectable effect ($26) equals the cost, so a breakeven effect has about 0.41 power and a quarter of the ledger's predicted move 0.995. The vault is looked at only after an in-sample PASS and on the principal's word.
+               - **NG's Stage A is FROZEN (2026-09-26, A10):** `data/FROZEN_ledger_stage_a_ng.json`. `scripts/verify_ledger_stage_a_ng.py` must pass before the joint vault run and before any work that edits the files it hashes.
+               - **The vault waits for the JOINT RUN (A10).** No model opens it alone.
             3. The Sierra trial ends 2026-10-17. Every file is on disk.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.

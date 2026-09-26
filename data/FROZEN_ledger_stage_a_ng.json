@@ -1,0 +1,232 @@
+{
+ "code": [
+  {
+   "name": "build_ledger_calendar.py",
+   "path": "scripts/build_ledger_calendar.py",
+   "sha256": "1c80a2ef2b4a7a79e7c7c9430cefb64eb490d04680a0fa9c34d2c85b31229246"
+  },
+  {
+   "name": "build_ng_minute_bars.py",
+   "path": "scripts/build_ng_minute_bars.py",
+   "sha256": "910886e9735ff8ebefee72197e13125584a1fa1e80b907e4a630e812d44f9d7a"
+  },
+  {
+   "name": "build_predicted_flow_panel.py",
+   "path": "scripts/build_predicted_flow_panel.py",
+   "sha256": "d843596d5252e6b044e70fc2c5653b287cbf97d5ed5e11c01b03f9dc2dd16a74"
+  },
+  {
+   "name": "build_signed_window_panel.py",
+   "path": "scripts/build_signed_window_panel.py",
+   "sha256": "a30b670575bd5c78c7d3422912fdd390f0b49c01eaf6cc281870e9e2691ea880"
+  },
+  {
+   "name": "build_window_volume_panel.py",
+   "path": "scripts/build_window_volume_panel.py",
+   "sha256": "b84bfef4a0bc0a77e4848a59e9dee230cce0e1bbe76e028daeacb61e9ededaad"
+  },
+  {
+   "name": "check_uscf_months_and_rolls.py",
+   "path": "scripts/check_uscf_months_and_rolls.py",
+   "sha256": "117b4c2738507ff2566fa5fccabe43a058e83282ca662bfbfe52a97bcc87a868"
+  },
+  {
+   "name": "component_series.py",
+   "path": "src/backtest_framework/validation/component_series.py",
+   "sha256": "3f2fb17f75f8cd69d11626fd3e290d74be360fa836485e3618a317e3accb2ce8"
+  },
+  {
+   "name": "dsr.py",
+   "path": "src/backtest_framework/validation/dsr.py",
+   "sha256": "55e4fa686a866ffe9b5a1b899b8a36e707af653e009db29556571bd873bacd6e"
+  },
+  {
+   "name": "estimate_fut_share.py",
+   "path": "scripts/estimate_fut_share.py",
+   "sha256": "23d1f7e4486a2c976d78365bd2c96e470512b0b25130521487efa8214fd8245c"
+  },
+  {
+   "name": "flows.py",
+   "path": "src/backtest_framework/ledger/flows.py",
+   "sha256": "dec3a42117922cf8f51b6b562c8f2b69f2ccc064f02f509422e6531e8f39d670"
+  },
+  {
+   "name": "gate_0b_cl_nav.py",
+   "path": "scripts/gate_0b_cl_nav.py",
+   "sha256": "834cf76e8af5a5ca159b7ee641fe1dcc5933e094efd3ae78e544d5f689d9b911"
+  },
+  {
+   "name": "gate_0b_ng_nav.py",
+   "path": "scripts/gate_0b_ng_nav.py",
+   "sha256": "63ee26b7c76ef295127899297ea25cac0c104c1a38665ceb9044fbee03400930"
+  },
+  {
+   "name": "ledger_power_h1a.py",
+   "path": "scripts/ledger_power_h1a.py",
+   "sha256": "8f86d1354b458ae08f81a67b53437b361f9fea2ca2f578c1af2fae2d7cdfe4ae"
+  },
+  {
+   "name": "ledger_power_h2_ng.py",
+   "path": "scripts/ledger_power_h2_ng.py",
+   "sha256": "8690c9e8e0878b6a08501492a80ac548d89c6dc96888420db5cc36de21cbeb1a"
+  },
+  {
+   "name": "ledger_power_signed_h1.py",
+   "path": "scripts/ledger_power_signed_h1.py",
+   "sha256": "6129928ab60f99d4fff5b5c6c60c0891b28398636b38164403e5fcfd6d50db2d"
+  },
+  {
+   "name": "panels.py",
+   "path": "src/backtest_framework/data/panels.py",
+   "sha256": "64e7049c7109a4120252f1b8c2541bf7c0bea7bc09b7e7491fb8fc32a7478086"
+  },
+  {
+   "name": "run_h1a_stage_a.py",
+   "path": "scripts/run_h1a_stage_a.py",
+   "sha256": "b0e4c4354caaaf7f08858bad9dc2b9d40b3e7d233f75d269b9a74f3c773ad80c"
+  },
+  {
+   "name": "run_h2_ng_stage_a.py",
+   "path": "scripts/run_h2_ng_stage_a.py",
+   "sha256": "b118330f64a8b803bc33317c537897628056200149b488d984e440e9ed4382cb"
+  },
+  {
+   "name": "run_signed_h1_stage_a.py",
+   "path": "scripts/run_signed_h1_stage_a.py",
+   "sha256": "f20dae638afc996e8d0c0fbbe50ef950b06867a1f8afe6a9a969b1af22f437dc"
+  },
+  {
+   "name": "sierra_bulk_download.py",
+   "path": "scripts/sierra_bulk_download.py",
+   "sha256": "a48ab6f95ab504493ea42d1972e940f560e67847eb79d059f10bae2049e6e3c2"
+  }
+ ],
+ "content_sha256": "fda62d65c2dce820f05b3de10227561395e69ef486061239834fb9948bff47fa",
+ "evaluation_days": null,
+ "fixtures": [
+  {
+   "name": "ledger_calendar_flags.csv",
+   "path": "data/ledger_calendar_flags.csv",
+   "sha256": "7c2ade9617ba94e305f36d8368ebedbfa3ffb5da37b85917377eca496713cda2"
+  },
+  {
+   "name": "ledger_fut_share_daily_a6.csv.gz",
+   "path": "data/ledger_fut_share_daily_a6.csv.gz",
+   "sha256": "f8b0028c53d3a1329c9d793c4b615c2314e110d87eb22b5d413dd6964311a172"
+  },
+  {
+   "name": "ledger_h2_ng_stage_a.json",
+   "path": "data/ledger_h2_ng_stage_a.json",
+   "sha256": "cd4f73aa28493c681671e88f237d8fa5b6642a7d114af4ed4a7f7b486bc4c289"
+  },
+  {
+   "name": "ledger_power_h2_ng.json",
+   "path": "data/ledger_power_h2_ng.json",
+   "sha256": "5fedd0419420f5cbee092181e9531ac03da9f4282531bbe4e276970aa46c39d1"
+  },
+  {
+   "name": "ledger_power_signed_h1.json",
+   "path": "data/ledger_power_signed_h1.json",
+   "sha256": "ea8f7f5c35bd37efc152b8f6e1910b3c20602ced69dd90519b8a02cd089ff6a4"
+  },
+  {
+   "name": "ledger_predicted_flow_contracts.csv.gz",
+   "path": "data/ledger_predicted_flow_contracts.csv.gz",
+   "sha256": "5e34bcabfd25b766983f73ea8c03325b618a0203fdc8f22c80b9867d1db81e62"
+  },
+  {
+   "name": "ledger_predicted_flow_daily.csv.gz",
+   "path": "data/ledger_predicted_flow_daily.csv.gz",
+   "sha256": "b91d527f02978ad136426cdfae37271333fa2002a79c92f2c3aeb212d59335c2"
+  },
+  {
+   "name": "ledger_signed_h1_stage_a.json",
+   "path": "data/ledger_signed_h1_stage_a.json",
+   "sha256": "85e271f5270f98dc4a775817d62ff0e6244b210dbdc05af212aedc439da5b4b4"
+  },
+  {
+   "name": "ledger_signed_window_daily.csv.gz",
+   "path": "data/ledger_signed_window_daily.csv.gz",
+   "sha256": "9e17c7ea99161e56920afe246a9efcf125260cee43d0b71fe075558bfcb1242f"
+  },
+  {
+   "name": "ledger_window_volume_daily.csv.gz",
+   "path": "data/ledger_window_volume_daily.csv.gz",
+   "sha256": "4def03347cd1c242f418eabf8fea1c2bc5d0d291812813665ccaf4834bc99995"
+  },
+  {
+   "name": "ng_minute_bars.csv.gz",
+   "path": "data/ng_minute_bars.csv.gz",
+   "sha256": "238a80fb1798ac75a5d9998d11b8898e61e452e0244d2ab990c646392b690b4d"
+  },
+  {
+   "name": "sierra_ledger_download_record.json",
+   "path": "data/sierra_ledger_download_record.json",
+   "sha256": "e64e02c195079e7fc31ab4dbd3734b5700fd684cd2aab68509c183739022a94d"
+  }
+ ],
+ "frozen_utc": "2026-09-26T20:03:41Z",
+ "git_head": "3dc8d01eb0f1329345f656bd1007d6269cf81244",
+ "instruction": "the principal, 2026-09-26: 'Yes, freeze Stage A and write the combined-vault rule'",
+ "name": "ledger_stage_a_ng",
+ "params": {
+  "cost_per_trade_usd": {
+   "entry_slippage_one_tick": 10.0,
+   "round_trip": 16.0
+  },
+  "direction": "sign(Q_rem) at t0",
+  "entry": "close of the 1-minute bar t0+1 (last trade before t0+2 min), as-of",
+  "exit": "close of the 14:29 bar (last trade before 14:30:00), as-of",
+  "funds": {
+   "BOIL": 2,
+   "KOLD": -2
+  },
+  "gate": {
+   "abs_I_over_rt_cost": 3.0,
+   "rt_cost_usd_full_size": 16.0,
+   "snr_min": 1.5
+  },
+  "h2_gate": {
+   "net_mean_positive": true,
+   "placebo_abs_t_below": 2.0,
+   "rotation_beaten_by_2se": true,
+   "rotation_draws": 1000,
+   "rotation_seed": 630,
+   "t_holm": 2.2414
+  },
+  "holdings": "BCOM Natural Gas subindex under S0 (gate_0b_ng_nav.contracts_for, s0)",
+  "impact_Y": 0.7,
+  "in_sample": [
+   "2017-05-22",
+   "2025-02-28"
+  ],
+  "model": "settlement flow ledger, Stage A (P1 alone: K = 0, p = 0), NG",
+  "multiplier": 10000.0,
+  "n_trail_days": 20,
+  "q_rem": "P1 = AUM[t-1] x L(L-1) x r(tau) x f_est[t-1] / (multiplier x P_held), summed over both funds",
+  "records": {
+   "H1_signed": "D629 (pre-reg 2b5406b, result 31174b4)",
+   "H2": "D630 (pre-reg 96b34c2, amendment a9f4a4b, result 3dc8d01)"
+  },
+  "t0_candidates_et": [
+   "13:50",
+   "14:00",
+   "14:10"
+  ],
+  "timing_rule": "earliest pass (7.1); 14:10 on a day with no signal",
+  "traded_contract": "largest-share held contract at tau* (traded_ym)",
+  "vault": [
+   "2025-03-01",
+   "2026-09-18"
+  ],
+  "vault_pass": {
+   "net_mean_positive_at_1x_cost": true,
+   "one_sided_p_below": 0.1,
+   "same_sign_as_in_sample": true
+  },
+  "vault_rule": "A10: opened only in the programme's joint vault run"
+ },
+ "params_sha256": "f3f134542230240aadc730470369f5c2d32342df20d6aae5519f2d487ea1832d",
+ "schema": "frozen/1",
+ "spec": "D629 2b5406b; D630 96b34c2 + a9f4a4b; results 31174b4, 3dc8d01"
+}

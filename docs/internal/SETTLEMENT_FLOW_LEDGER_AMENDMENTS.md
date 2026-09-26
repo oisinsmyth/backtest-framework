@@ -1,4 +1,4 @@
-# Settlement flow ledger: amendments to the deposit (v1.9 + A1–A9)
+# Settlement flow ledger: amendments to the deposit (v1.9 + A1–A10)
 
 > The deposit, `User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md` (v1.9), is read-only here. Its §0
 > says agreed changes are versioned edits made *before* code. This file is those edits, kept beside
@@ -218,6 +218,48 @@ in-sample dependent; its noise is the pre-sample's (`scripts/ledger_power_h1a.py
    - Its power at the plausible effect is CL 0.87 and NG 1.00.
 5. **The plausible effect (§9A.2 rule 2) is β = 0.25:** a quarter of the predicted P1 lands in the window as extra
    volume. Both roots are individually testable at that size: CL's power is 0.85–0.92 and NG's 1.00.
+
+## A10. The vault is opened in one joint run, and NG's Stage A is frozen (decided 2026-09-26)
+
+*The principal: "freeze Stage A and write the combined-vault rule". D630 passed H2 on NG, and D630 §8 put the
+vault's one look to the principal. It is deferred to a joint run.*
+
+**The rule.** No model opens the vault (2025-03-01 → 2026-09-18) by itself. The vault is opened once, in a **joint
+run** of every model that, when the run is called, has passed its in-sample gates and been frozen.
+- **When:** the joint run is called by the principal: when the planned set of models is ready, or earlier by their
+  word.
+- **What is frozen first:** each model's `FROZEN_<name>.json` (`scripts/freeze.py`), plus one joint manifest
+  listing them. The manifest is written before any vault byte is decoded, and every model's verify script must pass
+  against it.
+- **What is scored:**
+  - each model on its OWN pre-registered vault criteria, unchanged (the ledger's are deposit line 902, and D630 §8
+    for H2 on NG);
+  - **the assembled book** of the models that pass, confirmed on the same unseen period (CLAUDE.md's book rule 3);
+  - the shared-period check (§13A.8.5) on the vault's daily P&L.
+- **What does not change:**
+  - α stays in the fixed slots of 0.005 per family (§13A.8.2). A joint run lowers no bar, and a separate one raises
+    none;
+  - the programme DSR counts every trial whenever it is run;
+  - one look per model: a model frozen after the joint run gets its own single look later, and its record discloses
+    the joint run's results as prior exposure of the period.
+- **Why:**
+  - the deposit opens the vault after EVERY in-sample gate, with the retained stages frozen (line 901). The ledger
+    is at Stage A of nine, so a look now would spend its one look on Stage A;
+  - a joint run lets no model's vault result shape another model's design;
+  - it confirms the assembled book on data no component has seen;
+  - nothing forces an early look: NG's vault one-second bars and the funds' NAVs are on disk, so the Databento lapse
+    (~2026-10-11) and the Sierra trial's end (2026-10-17) do not bind.
+
+**NG's Stage A is frozen:** `data/FROZEN_ledger_stage_a_ng.json` (2026-09-26, content sha256 `fda62d65…`, git head
+`3dc8d01`).
+- **Parameters:** `data/ledger_stage_a_ng_params.json`.
+- **Hashed:** 20 code files (the builders, the Gate 0b holdings, the runners, the power scripts, and the library
+  modules they import) and 12 inputs and outputs (the panels, the minute bars, the signed panel, the download
+  record, and D629's and D630's results).
+- **Check:** `uv run python scripts/verify_ledger_stage_a_ng.py` raises on any change. A change restarts Stage A
+  under a new frozen file (§13A.4).
+- **What the freeze means:** the version that enters the joint run is the one D629 and D630 scored. Later stages
+  are frozen in their own files when they pass. At the joint run, the ledger's "model" is its retained stages.
 
 ## Q25: earlier reads of the vault window in NG, CL and the six funds (recorded 2026-09-24)
 

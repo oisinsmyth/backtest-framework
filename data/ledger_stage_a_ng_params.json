@@ -1,0 +1,23 @@
+{
+ "model": "settlement flow ledger, Stage A (P1 alone: K = 0, p = 0), NG",
+ "records": {"H1_signed": "D629 (pre-reg 2b5406b, result 31174b4)", "H2": "D630 (pre-reg 96b34c2, amendment a9f4a4b, result 3dc8d01)"},
+ "in_sample": ["2017-05-22", "2025-02-28"],
+ "vault": ["2025-03-01", "2026-09-18"],
+ "funds": {"BOIL": 2, "KOLD": -2},
+ "holdings": "BCOM Natural Gas subindex under S0 (gate_0b_ng_nav.contracts_for, s0)",
+ "q_rem": "P1 = AUM[t-1] x L(L-1) x r(tau) x f_est[t-1] / (multiplier x P_held), summed over both funds",
+ "impact_Y": 0.7,
+ "n_trail_days": 20,
+ "t0_candidates_et": ["13:50", "14:00", "14:10"],
+ "timing_rule": "earliest pass (7.1); 14:10 on a day with no signal",
+ "gate": {"abs_I_over_rt_cost": 3.0, "snr_min": 1.5, "rt_cost_usd_full_size": 16.0},
+ "direction": "sign(Q_rem) at t0",
+ "traded_contract": "largest-share held contract at tau* (traded_ym)",
+ "entry": "close of the 1-minute bar t0+1 (last trade before t0+2 min), as-of",
+ "exit": "close of the 14:29 bar (last trade before 14:30:00), as-of",
+ "multiplier": 10000.0,
+ "cost_per_trade_usd": {"round_trip": 16.0, "entry_slippage_one_tick": 10.0},
+ "h2_gate": {"t_holm": 2.2414, "net_mean_positive": true, "placebo_abs_t_below": 2.0, "rotation_beaten_by_2se": true, "rotation_draws": 1000, "rotation_seed": 630},
+ "vault_pass": {"same_sign_as_in_sample": true, "one_sided_p_below": 0.10, "net_mean_positive_at_1x_cost": true},
+ "vault_rule": "A10: opened only in the programme's joint vault run"
+}
