@@ -135,6 +135,30 @@ Stage B is **RETAINED** only if both hold:
 - **The expected outcome is NOT RETAINED, whatever the truth.** The update step can matter only once the ledger
   carries participants with wide priors: P2 swaps, P3/P4 creations.
 
+## AMENDMENT, 2026-09-26: Q_rem is calibrated to P1's scale in each training window
+
+*Found by the runner's own selftest, before the runner was committed and before any in-sample Stage B statistic
+was computed. No real signed pre-window flow had been read by the runner.*
+
+**The defect.** §3's criterion (the largest partial correlation with the window flow) fixes only the MIX of the
+prior and the measurement: Q_rem = (1 − p)[(1 − Kp) μ + K z]. It does not fix the scale. Near-equivalent (p, R)
+pairs give the same direction at scales that differ a hundredfold. On the selftest's informative synthetic world:
+- within every test block, Stage B's correlation was about 0.70 against Stage A's 0.31;
+- pooled over the blocks it fell to 0.20, because the predictor's SD jumped between blocks (40 → 1,633 → 4,859
+  contracts).
+
+The same indeterminacy would also move §4's gate, which reads |Q_rem| in contracts.
+
+**The fix.** After (p, R) is fitted in a training window, Q_rem and σ_rem are multiplied by
+**λ = SD(μ) / SD(Q_rem)**, both taken over that training window. The fit chooses how to combine the prior and the
+measurement, and λ puts the result on P1's scale, the scale the §7.2 gate is calibrated in. λ is applied unchanged
+to the test block.
+- At p = 0, λ = 1 exactly, so the known answer (§8) is untouched.
+- λ per window and τ is reported with the parameter paths.
+- It applies alike to the raw-z variant and to the placebo (§7).
+
+Nothing else changes.
+
 ## 10. What this does not touch
 
 - No vault data. The vault's NG Sierra files are on disk and unread (A10).
