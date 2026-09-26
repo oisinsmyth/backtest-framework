@@ -195,6 +195,20 @@ the median return SD $247.
   to end on synthetic data before the one real run.
 - `-W error::RuntimeWarning`.
 
+## AMENDMENT, 2026-09-26: a near miss on the net bar is UNRESOLVED, not REAL, NOT TRADABLE
+
+*The principal, after the commit of this record and before its runner existed, with no H2 statistic computed:
+"add an unresolved/potential if it barely misses the net bar."*
+
+A new row goes into §6's ladder, between PASS and REAL, NOT TRADABLE:
+
+| outcome | condition | consequence |
+|---|---|---|
+| **UNRESOLVED (net, potential)** | §4's 1, 3 and 4 hold; the net mean is ≤ 0 but **within one standard error of zero** (mean g > $26 − SE, where SE is the gate's SE of the mean) | the cost bar lies inside the estimate's own uncertainty. Not promoted, and no vault look. It is written up as a potential and put to the principal (e.g. cheaper execution, or more data) |
+
+**REAL, NOT TRADABLE** now requires a net mean at or below −1 SE. Every other row is unchanged. The one-SE band is
+about $11.6 a trade on POWER's SE.
+
 ## 11. What this does not touch
 
 - No vault data (§8 governs its one look).
