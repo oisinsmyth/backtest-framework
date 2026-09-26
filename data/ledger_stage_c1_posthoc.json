@@ -1,0 +1,23 @@
+{
+ "c1": {
+  "mean": 119.05940594059398,
+  "n": 404,
+  "se": 26.616202680527753,
+  "t": 4.4731927904838615
+ },
+ "c1_days_median_absI_percentile_in_stage_a": 0.7138613861386138,
+ "note": "POST HOC, after D632's run; the verdict is unchanged",
+ "overlap_c1_with_top_absI_set": 0.5792079207920792,
+ "stage_a_all": {
+  "mean": 68.07920792079206,
+  "n": 1010,
+  "se": 13.391732586433763,
+  "t": 5.08367438502755
+ },
+ "stage_a_top_by_absI_same_count": {
+  "mean": 141.23762376237627,
+  "n": 404,
+  "se": 28.822618177419713,
+  "t": 4.90023574170042
+ }
+}

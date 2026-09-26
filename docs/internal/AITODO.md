@@ -300,11 +300,14 @@ outputs stay byte-identical.
                - Out of sample, the flow clause PASSED (ρ 0.137 → 0.170, ×1.24) and the price clause FAILED (H2 t 5.08 → 3.90; $68 → $51 a trade).
                - The midday placebo gains as much (−0.036 → +0.140), so the flow gain is order-flow persistence, not the funds. p swings from 0 to 0.9 across windows.
                - **Lesson for later stages:** a flow gain counts only in excess of the same update's gain at midday. Stage I must gate on that placebo.
-            5. **Stage C1 (the principal, 2026-09-26: "Start Stage C, pre-register it"): D632, PRE-REGISTERED; the runner is next.**
-               - The funds' creation flow (published AUM; the alignment is proven by the contract counts; `lag_c` = 0) is LARGER than P1 and runs AGAINST it on the same day (SD 2,162 vs 1,814; corr −0.68). The funds' net trade is much smaller than P1. That may explain D629's unconditional negative sign.
-               - C1's lagged forecast has R² 0.07 / 0.03, but the ceiling is 1.76×.
-               - POWER: 0.52 at D629's slope; false retention 11.5% on clauses 1 + 3.
-               - UNG is absent (G7).
+            5. **D632 (2026-09-26): Stage C1 is NOT RETAINED; the ledger stays at Stage A on NG.**
+               - The forecast creations LOWER the flow correlation (0.137 → 0.094), and a better same-day forecast lowers it further (→ −0.02). The creations' futures are not window aggressive flow; they are likely blocks, EFPs or TAS at the settlement.
+               - Price: C1 trades 404 days at $119 (t 4.47) against A's 1,010 at $68 (t 5.08). POST HOC: A's own top-404 |I| days give $141 (t 4.90), so C1's trade edge is only a stricter filter.
+               - **Before C2:** the question to put is whether a hedging split h can make a term that lowers the flow fit at every forecast quality useful. C2's premium mostly forecasts same-day creations.
+               - Background from the pre-registration (D632), kept as facts:
+                 - The funds' creation flow (published AUM; the alignment is proven by the contract counts; `lag_c` = 0) is LARGER than P1 and runs AGAINST it on the same day (SD 2,162 vs 1,814; corr −0.68).
+                 - It did NOT explain D629's unconditional negative sign: the slope is still −0.054, t −7.89, with C1.
+                 - UNG is absent (G7).
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
