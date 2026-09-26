@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 368 of these records carry neither field —
+**No Status or Category column, deliberately.** 369 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -704,6 +704,7 @@ would look like data. The tokens are what is shown.
 | D629 | signed H1: NG PASSES (provisional), CL is INCONCLUSIVE. NG's pass is conditional on the return control: without it, the… | [PRE-REG](D629-PRE-REG-signed-h1-rebalance-and-aggressor-window-flow.md) · [RESULT](D629-RESULT-ng-passes-conditional-on-the-return-and-cl-is-inconclusive.md) |
 | D630 | H2 on NG PASSES: $66 a trade gross, $40 net, t 5.01. The move reverts after the settlement, it is concentrated in 2022,… | [PRE-REG](D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md) · [RESULT](D630-RESULT-h2-ng-passes-and-the-move-reverts-after-the-settlement.md) |
 | D631 | Stage B on NG is NOT RETAINED: its flow gain passes but is general order-flow persistence (the midday placebo gains as… | [PRE-REG](D631-PRE-REG-stage-b-the-update-step-on-ng.md) · [RESULT](D631-RESULT-stage-b-not-retained-the-flow-gain-is-persistence.md) |
+| D632 | REGISTRATION — Stage C1 on NG: does forecasting the leveraged funds' creations improve the ledger? | [PRE-REG](D632-PRE-REG-stage-c1-the-funds-creation-flow-on-ng.md) |
 
 <!-- REGISTER:END -->
 
