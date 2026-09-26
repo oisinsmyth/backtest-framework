@@ -272,7 +272,14 @@ outputs stay byte-identical.
           - **The principal (2026-09-26): score only the covered contracts.** The inputs are built:
             - `scripts/build_signed_window_panel.py` → `data/ledger_signed_window_daily.csv.gz`. Sierra's window volume agrees with Databento's within 1% on 99.2% (CL) and 98.5% (NG) of covered contract-days. The vault is never decoded.
             - POWER (`scripts/ledger_power_signed_h1.py`, `SETTLEMENT_FLOW_LEDGER_POWER_SIGNED.md`, pre-sample 2015-07 → 2017-05): NG power 1.00 at β 0.25; CL 0.29, underpowered.
-          - **Next:** the D629 pre-registration committed alone, then `scripts/run_signed_h1_stage_a.py` and its one run. The CL/NG check of Sierra's sign follows D626's read (2026-10-10) and can VOID a root.
+          - **D629 (2026-09-26): NG PASSES (provisional), CL is INCONCLUSIVE.**
+            - NG: β 0.061 ± 0.015, t 4.21, placebo −1.41, rotation p95 1.84 ± 0.07.
+            - CL: Rubin t 1.79; β above 0.76 is excluded.
+            - POST HOC: NG's pass exists only with the return control. Without it, window flow runs against the funds (t −7.98). In the top fund-size tercile β is 0.008 ± 0.02, so the pass does not look like a proportional footprint.
+          - **Next:**
+            1. After D626's read (2026-10-10): extend `check_sierra_aggressor.py` to CL/NG on the post-vault sessions. r < 0.8 VOIDs that root (D629 §6).
+            2. The principal decides whether to pre-register H2 on NG. It would spend the vault's one look. D629 §4 warns that the pass does not imply H2's sign.
+            3. The Sierra trial ends 2026-10-17. Every file is on disk.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
