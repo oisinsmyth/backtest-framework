@@ -295,12 +295,11 @@ outputs stay byte-identical.
                - **NG's Stage A is FROZEN (2026-09-26, A10):** `data/FROZEN_ledger_stage_a_ng.json`. `scripts/verify_ledger_stage_a_ng.py` must pass before the joint vault run and before any work that edits the files it hashes.
                - **The vault waits for the JOINT RUN (A10).** No model opens it alone.
             3. The Sierra trial ends 2026-10-17. Every in-sample file is on disk, and so are **the vault's NG contracts (DONE 2026-09-26)**: NGK25 … NGX26, 10 files, none cut short (`scripts/sierra_vault_download.py` → `data/sierra_vault_download_record.json`). They are read only in the joint vault run (A10).
-            4. **Stage B (the principal, 2026-09-26: "pre-register Stage B") — STRUCTURALLY UNRETAINABLE on P1 alone. The principal decides what to do.**
-               - Inputs built: `build_signed_pre_tau_panel.py`, with signed flow 13:30 → τ; it matches the frozen panel exactly on 6,287 contract-days.
-               - POWER: `ledger_power_stage_b.py`.
-               - The ledger's own prior explains 95.2% of Var(Q_true), so even a perfect update can raise the correlation by at most 2.5%, against the 10% retention bar.
-               - Simulated retention is 1–7% at every pre-window footprint up to π = 1.
-               - The update matters only once latent participants with wide priors (P2 swaps, P3/P4 creations) are in the ledger.
+            4. **D631 (2026-09-26): Stage B is NOT RETAINED; the ledger stays at Stage A on NG.**
+               - The principal chose to run it after POWER showed a 2.5% ceiling against the 10% bar.
+               - Out of sample, the flow clause PASSED (ρ 0.137 → 0.170, ×1.24) and the price clause FAILED (H2 t 5.08 → 3.90; $68 → $51 a trade).
+               - The midday placebo gains as much (−0.036 → +0.140), so the flow gain is order-flow persistence, not the funds. p swings from 0 to 0.9 across windows.
+               - **Lesson for later stages:** a flow gain counts only in excess of the same update's gain at midday. Stage I must gate on that placebo.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.
