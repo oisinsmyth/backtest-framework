@@ -1,0 +1,25 @@
+target_year,announcement_date,component,exchange,ticker_root_if_known,target_weight_pct,prior_weight_pct,tracking_aum_usd_bn,source_url,source_kind
+2023,2022-10-27,Brent Crude Oil,ICE Futures Europe,CO,7.2283460,6.9631180,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Natural Gas,NYMEX,NG,7.9388780,7.9548670,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,WTI Crude Oil,NYMEX,CL,7.7716540,8.0368820,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Low Sulphur Gas Oil,ICE Futures Europe,QS,2.7136480,2.6496240,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,ULS Diesel,NYMEX,HO,2.0986570,2.0526330,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,RBOB Gasoline,NYMEX,XB,2.1961970,2.1728010,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Corn,CBOT,C,5.5132960,5.5899030,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Soybeans,CBOT,S,5.7839800,5.7888440,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Soybean Meal,CBOT,SM,3.5284850,3.5200260,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Soybean Oil,CBOT,BO,3.2648360,3.1716110,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Wheat,CBOT,W,2.7939000,2.8463610,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,HRW Wheat,CBOT,KW,1.7543100,1.6636530,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Copper,COMEX,HG,5.2289070,5.3982920,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Aluminum,LME,LA,4.0856610,4.2457680,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Zinc,LME,LX,2.9053380,3.1189270,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Nickel,LME,LN,2.7796880,2.7134270,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Lead,LME,LL,0.9361220,0.0000000,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Gold,COMEX,GC,14.8532180,15.0000000,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Silver,COMEX,SI,4.5901960,4.7468930,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Sugar,ICE Futures U.S.,SB,2.5559290,2.7943260,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Coffee,ICE Futures U.S.,KC,2.8579300,2.7333550,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Cotton,ICE Futures U.S.,CT,1.5589050,1.5032870,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Live Cattle,CME,LC,3.3187010,3.5807520,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY
+2023,2022-10-27,Lean Hogs,CME,LH,1.7432180,1.7546500,>110,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2023-target-weights-announced-301661824.html,PRIMARY

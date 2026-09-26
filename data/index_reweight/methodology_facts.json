@@ -1,0 +1,1949 @@
+{
+  "_meta": {
+    "built": "2026-09-27",
+    "access_dates": "sources fetched 2026-09-26 to 2026-09-27 (see SOURCES.md per source)",
+    "note": "Every value here is quoted or tabulated from the documents keyed in SOURCES.md. Items marked \"derived\" are arithmetic read-offs of a quoted formula or table, not outside knowledge."
+  },
+  "business_day_definition": {
+    "text": "A Business Day is any day on which the sum of the CIPs for those Index Commodities that are open for trading is greater than 50%; prior-year CIPs are used on days up to and including the CIM Determination Date.",
+    "unchanged_in_versions": [
+      "M2016",
+      "M2017",
+      "M2018",
+      "M2020",
+      "M2021",
+      "M2022",
+      "M2023",
+      "M2025",
+      "M2026"
+    ],
+    "source": "SRC-M2026 Appendix A (Glossary) p.36"
+  },
+  "roll_days": {
+    "index_roll_period": "Business Days 6 through 10 of every month (\"Roll Period\")",
+    "hedge_roll_period": "Business Days 5 through 9 of every month (\"Hedge Roll Period\")",
+    "day_counting": "Business Day k of the calendar month, counted with the BCOM Business Day definition (CIP-weighted >50% open), not the CME calendar.",
+    "source": "SRC-M2026 s.3.1 p.31 (Roll Period); Appendix A p.38-39 (Hedge Roll Period, Roll Period); s.3.3 p.34",
+    "unchanged_in_versions": [
+      "M2016",
+      "M2017",
+      "M2018",
+      "M2020",
+      "M2021",
+      "M2022",
+      "M2023",
+      "M2024",
+      "M2025",
+      "M2026"
+    ]
+  },
+  "roll_fractions": {
+    "index_weight_on_WAV2_by_business_day": {
+      "BD1-5": 0.0,
+      "BD6": 0.2,
+      "BD7": 0.4,
+      "BD8": 0.6,
+      "BD9": 0.8,
+      "BD10": 1.0,
+      "BD11+": 1.0
+    },
+    "rate": "20% per Business Day",
+    "formula": "BD6: BCOM_S = BCOM_PS*(0.8*WAV1_S+0.2*WAV2_S)/(0.8*WAV1_PS+0.2*WAV2_PS); ... BD10: BCOM_S = BCOM_PS*WAV2_S/WAV2_PS",
+    "derived_hedge_timing": "derived: the BD6 index return (close BD5 -> close BD6) is earned 20% on WAV2, so a replicating position must hold 20% in WAV2 from the close of BD5; likewise 40%..100% from the closes of BD6..BD9. This matches the methodology's Hedge Roll Period BD5-9.",
+    "source": "SRC-M2026 s.3.1 p.31-32; Appendix C Table 13 p.42"
+  },
+  "rebalance_days": {
+    "rule": "The January annual reweight is executed inside the January Roll Period: WAV1 keeps the prior year's CIMs (CIM_last_year) until the end of the January roll period; WAV2 uses the new CIMs. The index shifts from WAV1 to WAV2 on BD6-BD10 of January (hedge execution BD5-BD9).",
+    "quote": "CIM_last_year continues to be used for the calculation of WAV1 until the end of the roll period falling in the month of January",
+    "press_release_wording": "2026: \"will take effect during the January 2026 Roll Period\" (SRC-PR2026)",
+    "source": "SRC-M2026 s.2.7 p.27 and footnote 19; s.3.1; s.3.3 p.34",
+    "unchanged_in_versions": [
+      "M2016",
+      "M2017",
+      "M2018",
+      "M2020",
+      "M2021",
+      "M2022",
+      "M2023",
+      "M2024",
+      "M2025",
+      "M2026"
+    ]
+  },
+  "rebalance_fractions": {
+    "value": "Same as the roll: 20% per Business Day over five Business Days (index BD6-10; hedge BD5-9); in January an MDE never doubles up - the affected contract is spread over five non-disrupted Business Days.",
+    "source": "SRC-M2026 s.3.3 p.34 and Table 11 p.35"
+  },
+  "cim_determination_rule": {
+    "rule": "Fourth Business Day of January (\"CIM Determination Date\"), or as otherwise determined under s.3.3.",
+    "prices_used": "Settlement Prices (converted to USD) of the Lead Future for January for each Designated Contract on the CIM Determination Date (FPD_S).",
+    "formula": "ICIM = CIP*1000/FPD_S; Adjustment Factor = WAV1(CIM_last_year, FPD_S)/1000; CIM_new_year = ICIM*AF, rounded to 8 dp; fixed for the year.",
+    "mde_on_cim_date": "Limit event: use that day's settlement. Exchange fails to publish: use first prior Business Day without an MDE.",
+    "dates_printed_in_methodology_table10": {
+      "2016": "2016-01-06 (SRC-M2016)",
+      "2017": "2017-01-06 (SRC-M2017)",
+      "2018": "2018-01-05 per Table 8 header; Table 10 prints January 6th 2018, a Saturday (SRC-M2018)",
+      "2019": "NOT FOUND (no 2019 methodology version fetched; SRC-M2020 Table 8 header reads January 7th 2019, apparently a stale label)",
+      "2020": "2020-01-07 (SRC-M2020)",
+      "2021": "2021-01-07 (SRC-M2021)",
+      "2022": "2022-01-07 per Table 10; Table 8 header reads January 7th 2021 (SRC-M2022)",
+      "2023": "2023-01-06 (SRC-M2023)",
+      "2024": "2024-01-05 (SRC-M2024)",
+      "2025": "2025-01-07 (SRC-M2025)",
+      "2026": "2026-01-07 (SRC-M2026)"
+    },
+    "flag": "By a plain Mon-Fri count after Jan 1, 2016-01-06 is the 3rd weekday and 2022-01-07 the 5th weekday; whether BCOM counted Business Days differently in those Januaries is not established by the sources. Verify against data.",
+    "press_release_confirmation": "2016 and 2017 releases: new multipliers \"calculated on the fourth business day\" (SRC-PR2016, SRC-BB2017)",
+    "source": "SRC-M2026 s.2.1 p.10, s.2.7 p.26-28, s.3.3 p.35, Appendix A p.37"
+  },
+  "designated_contract_schedule": {
+    "meaning": "Column = calendar month; value = Lead Future contract month for that month. Next Future = the next month's column (December -> January column). In the Roll Period the index moves from Lead to Next.",
+    "table": {
+      "Natural Gas": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "WTI Crude Oil": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Brent Crude Oil": {
+        "Jan": "Mar",
+        "Feb": "May",
+        "Mar": "May",
+        "Apr": "Jul",
+        "May": "Jul",
+        "Jun": "Sep",
+        "Jul": "Sep",
+        "Aug": "Nov",
+        "Sep": "Nov",
+        "Oct": "Jan",
+        "Nov": "Jan",
+        "Dec": "Mar"
+      },
+      "RBOB Gasoline": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "ULS Diesel": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Live Cattle": {
+        "Jan": "Feb",
+        "Feb": "Apr",
+        "Mar": "Apr",
+        "Apr": "Jun",
+        "May": "Jun",
+        "Jun": "Aug",
+        "Jul": "Aug",
+        "Aug": "Oct",
+        "Sep": "Oct",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Feb"
+      },
+      "Lean Hogs": {
+        "Jan": "Feb",
+        "Feb": "Apr",
+        "Mar": "Apr",
+        "Apr": "Jun",
+        "May": "Jun",
+        "Jun": "Jul",
+        "Jul": "Aug",
+        "Aug": "Oct",
+        "Sep": "Oct",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Feb"
+      },
+      "Wheat (Chicago)": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Wheat (KC HRW)": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Corn": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Soybeans": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Nov",
+        "Aug": "Nov",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Soybean Oil": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Dec",
+        "Aug": "Dec",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Soybean Meal": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Dec",
+        "Aug": "Dec",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Aluminum": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Copper": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Zinc": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Nickel": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Lead": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Gold": {
+        "Jan": "Feb",
+        "Feb": "Apr",
+        "Mar": "Apr",
+        "Apr": "Jun",
+        "May": "Jun",
+        "Jun": "Aug",
+        "Jul": "Aug",
+        "Aug": "Dec",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Feb"
+      },
+      "Silver": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Sugar": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Oct",
+        "Aug": "Oct",
+        "Sep": "Oct",
+        "Oct": "Mar",
+        "Nov": "Mar",
+        "Dec": "Mar"
+      },
+      "Cotton": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Dec",
+        "Aug": "Dec",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Coffee": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      },
+      "Low Sulphur Gas Oil": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Nov",
+        "Oct": "Nov",
+        "Nov": "Jan",
+        "Dec": "Jan"
+      },
+      "Cocoa": {
+        "Jan": "Mar",
+        "Feb": "Mar",
+        "Mar": "May",
+        "Apr": "May",
+        "May": "Jul",
+        "Jun": "Jul",
+        "Jul": "Sep",
+        "Aug": "Sep",
+        "Sep": "Dec",
+        "Oct": "Dec",
+        "Nov": "Dec",
+        "Dec": "Mar"
+      }
+    },
+    "cross_version_check": {
+      "M2026": "identical to M2026 for all 25 rows",
+      "M2025": "identical to M2026 for all 25 rows",
+      "M2024": "identical to M2026 for all 25 rows",
+      "M2023": "identical to M2026 for all 25 rows",
+      "M2022": "identical to M2026 for all 25 rows",
+      "M2021": "identical to M2026 for all 25 rows",
+      "M2020": "identical to M2026 for all 25 rows",
+      "M2018": "identical to M2026 for all 25 rows",
+      "M2017": "identical to M2026 for all 25 rows",
+      "M2016": "identical to M2026 for all 25 rows"
+    },
+    "derived_january": "derived: components whose January and February columns are equal have no contract roll in January, so their January Roll Period flow is the reweight alone.",
+    "source": "SRC-M2026 s.2.8 Table 9a p.28-29 (Table 9 in earlier versions)"
+  },
+  "designated_contracts_and_exchanges": {
+    "CME_Group_divisions": "Glossary: NYMEX, COMEX and CBOT are divisions of the CME Group; Live Cattle and Lean Hogs are printed with exchange \"CME\". These four exchange labels are treated as CME Group.",
+    "CME_Group_components_2026": [
+      {
+        "component": "Natural Gas",
+        "exchange": "NYMEX",
+        "bloomberg_ticker": "NG"
+      },
+      {
+        "component": "WTI Crude Oil",
+        "exchange": "NYMEX",
+        "bloomberg_ticker": "CL"
+      },
+      {
+        "component": "ULS Diesel",
+        "exchange": "NYMEX",
+        "bloomberg_ticker": "HO"
+      },
+      {
+        "component": "RBOB Gasoline",
+        "exchange": "NYMEX",
+        "bloomberg_ticker": "XB"
+      },
+      {
+        "component": "Corn",
+        "exchange": "CBOT",
+        "bloomberg_ticker": "C"
+      },
+      {
+        "component": "Soybeans",
+        "exchange": "CBOT",
+        "bloomberg_ticker": "S"
+      },
+      {
+        "component": "Soybean Meal",
+        "exchange": "CBOT",
+        "bloomberg_ticker": "SM"
+      },
+      {
+        "component": "Soybean Oil",
+        "exchange": "CBOT",
+        "bloomberg_ticker": "BO"
+      },
+      {
+        "component": "Wheat",
+        "exchange": "CBOT",
+        "bloomberg_ticker": "W"
+      },
+      {
+        "component": "HRW Wheat",
+        "exchange": "CBOT",
+        "bloomberg_ticker": "KW"
+      },
+      {
+        "component": "Copper",
+        "exchange": "COMEX",
+        "bloomberg_ticker": "HG"
+      },
+      {
+        "component": "Gold",
+        "exchange": "COMEX",
+        "bloomberg_ticker": "GC"
+      },
+      {
+        "component": "Silver",
+        "exchange": "COMEX",
+        "bloomberg_ticker": "SI"
+      },
+      {
+        "component": "Live Cattle",
+        "exchange": "CME",
+        "bloomberg_ticker": "LC"
+      },
+      {
+        "component": "Lean Hogs",
+        "exchange": "CME",
+        "bloomberg_ticker": "LH"
+      }
+    ],
+    "non_CME_components_2026": [
+      {
+        "component": "Brent Crude Oil",
+        "exchange": "ICE Futures Europe",
+        "bloomberg_ticker": "CO"
+      },
+      {
+        "component": "Low Sulphur Gas Oil",
+        "exchange": "ICE Futures Europe",
+        "bloomberg_ticker": "QS"
+      },
+      {
+        "component": "Aluminum",
+        "exchange": "LME",
+        "bloomberg_ticker": "LA"
+      },
+      {
+        "component": "Zinc",
+        "exchange": "LME",
+        "bloomberg_ticker": "LX"
+      },
+      {
+        "component": "Nickel",
+        "exchange": "LME",
+        "bloomberg_ticker": "LN"
+      },
+      {
+        "component": "Lead",
+        "exchange": "LME",
+        "bloomberg_ticker": "LL"
+      },
+      {
+        "component": "Sugar",
+        "exchange": "ICE Futures U.S.",
+        "bloomberg_ticker": "SB"
+      },
+      {
+        "component": "Coffee",
+        "exchange": "ICE Futures U.S.",
+        "bloomberg_ticker": "KC"
+      },
+      {
+        "component": "Cocoa",
+        "exchange": "ICE Futures U.S.",
+        "bloomberg_ticker": "CC"
+      },
+      {
+        "component": "Cotton",
+        "exchange": "ICE Futures U.S.",
+        "bloomberg_ticker": "CT"
+      }
+    ],
+    "copper_note": "BCOM uses COMEX copper prices but LME copper volume for the liquidity percentage.",
+    "exchange_naming_by_version": "M2016 prints ICE (Brent) and NYBOT (softs); M2018 ICE Europe / ICE US; M2020+ ICE Futures Europe / ICE Futures U.S.",
+    "source": "SRC-M2026 s.2.2 Table 2 p.13; Appendix A p.37-39; SRC-M2016/M2018/M2020 Table 2"
+  },
+  "component_list_by_year": {
+    "by_target_year": {
+      "2016": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2017": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2018": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2019": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2020": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2021": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2022": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2023": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Lead",
+          "exchange": "LME",
+          "bloomberg_ticker": "LL"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2024": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Lead",
+          "exchange": "LME",
+          "bloomberg_ticker": "LL"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2025": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Lead",
+          "exchange": "LME",
+          "bloomberg_ticker": "LL"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ],
+      "2026": [
+        {
+          "component": "Brent Crude Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "CO"
+        },
+        {
+          "component": "Natural Gas",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "NG"
+        },
+        {
+          "component": "WTI Crude Oil",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "CL"
+        },
+        {
+          "component": "Low Sulphur Gas Oil",
+          "exchange": "ICE Futures Europe",
+          "bloomberg_ticker": "QS"
+        },
+        {
+          "component": "ULS Diesel",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "HO"
+        },
+        {
+          "component": "RBOB Gasoline",
+          "exchange": "NYMEX",
+          "bloomberg_ticker": "XB"
+        },
+        {
+          "component": "Corn",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "C"
+        },
+        {
+          "component": "Soybeans",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "S"
+        },
+        {
+          "component": "Soybean Meal",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "SM"
+        },
+        {
+          "component": "Soybean Oil",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "BO"
+        },
+        {
+          "component": "Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "W"
+        },
+        {
+          "component": "HRW Wheat",
+          "exchange": "CBOT",
+          "bloomberg_ticker": "KW"
+        },
+        {
+          "component": "Copper",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "HG"
+        },
+        {
+          "component": "Aluminum",
+          "exchange": "LME",
+          "bloomberg_ticker": "LA"
+        },
+        {
+          "component": "Zinc",
+          "exchange": "LME",
+          "bloomberg_ticker": "LX"
+        },
+        {
+          "component": "Nickel",
+          "exchange": "LME",
+          "bloomberg_ticker": "LN"
+        },
+        {
+          "component": "Lead",
+          "exchange": "LME",
+          "bloomberg_ticker": "LL"
+        },
+        {
+          "component": "Gold",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "GC"
+        },
+        {
+          "component": "Silver",
+          "exchange": "COMEX",
+          "bloomberg_ticker": "SI"
+        },
+        {
+          "component": "Sugar",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "SB"
+        },
+        {
+          "component": "Coffee",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "KC"
+        },
+        {
+          "component": "Cocoa",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CC"
+        },
+        {
+          "component": "Cotton",
+          "exchange": "ICE Futures U.S.",
+          "bloomberg_ticker": "CT"
+        },
+        {
+          "component": "Live Cattle",
+          "exchange": "CME",
+          "bloomberg_ticker": "LC"
+        },
+        {
+          "component": "Lean Hogs",
+          "exchange": "CME",
+          "bloomberg_ticker": "LH"
+        }
+      ]
+    },
+    "counts": {
+      "2016": 22,
+      "2017": 22,
+      "2018": 22,
+      "2019": 23,
+      "2020": 23,
+      "2021": 23,
+      "2022": 23,
+      "2023": 24,
+      "2024": 24,
+      "2025": 24,
+      "2026": 25
+    },
+    "changes": {
+      "2019": "Low Sulphur Gas Oil (QS, ICE Futures Europe) added (SRC-BB2019, SRC-TW2019 shows 2018 weight 0.0000000%)",
+      "2023": "Lead (LL, LME) added as the 24th contract (SRC-PR2023)",
+      "2026": "Cocoa (CC, ICE Futures U.S.) reintroduced; 25 contracts (SRC-PR2026)",
+      "other_years": "Releases for 2016, 2017, 2018, 2021, 2022, 2024, 2025 state no additions or deletions; the 2020 release does not say so explicitly, but its table lists the same 23 tickers as 2019."
+    },
+    "source": "weights/<year>.csv and the per-year sources in SOURCES.md"
+  },
+  "holiday_rule": {
+    "business_day": "see business_day_definition (CIP-weighted >50% open)",
+    "market_disruption_event": "(a) termination/suspension/material limitation of trading in a Lead or Next Future; (b) settlement at the maximum permitted price change; (c) exchange fails to publish settlement; (d) for an LME contract, a Business Day on which the LME is not open.",
+    "feb_to_dec": "An MDE during the Hedge Roll Period postpones that commodity's daily roll to the next non-disrupted Business Day; other commodities unaffected; period extended only if the MDE hits the scheduled final day.",
+    "january": "Rolling or rebalancing always occurs over five non-disrupted Business Days at 20% per day; the January Hedge Roll Period is extended until the affected contract finishes; no doubling up.",
+    "source": "SRC-M2026 s.3.3 p.34-35 (Table 11). The s.3.3 Hedge Roll Period (BD5-9) wording and the January five-day rule were checked present in M2016, M2017, M2018, M2020, M2021, M2022, M2023, M2024 (hedge period only), M2025, M2026; the MDE definition (a)-(d) was read in M2026 only."
+  },
+  "repo_cross_check": {
+    "repo_claim": "BCOM s.2.8 rolls NG over the closes of business days 5-9 (BD5-9)",
+    "finding": "Consistent with the methodology's Hedge Roll Period (BD5-9, defined in Appendix A and s.3.3), and with the index Roll Period BD6-10 of s.3.1. Section 2.8 itself holds the contract calendar, not the roll days."
+  },
+  "conflicts_and_flags": [
+    "Spec 3.2 says the January rebalance runs over the 6th-10th business day: that is the INDEX Roll Period; the methodology's Hedge Roll Period (where a replicating hedger trades) is BD5-9.",
+    "CIM date labels inside methodology versions disagree with each other (2018, 2019 label in M2020, 2022); see cim_determination_rule.",
+    "2023 targets: press release dated 2022-10-27; the bbhub 2023 PDF is dated November 30, 2022 with identical numbers.",
+    "2026 Cocoa prior weight: PDF prints \"-\", PR Newswire text prints 0.0000000%; CSV leaves it blank.",
+    "M2026 footnote 10 says the Calculation Period is typically Q3 or Q4; its glossary says the sixth month of the prior year."
+  ],
+  "not_found": [
+    "Tracking-AUM estimate in the 2016, 2017, 2018, 2020 and 2021 target-weight announcements (none printed).",
+    "2027 target weights: not yet published as of 2026-09-27 (search found only 2026).",
+    "2019 CIM Determination Date as printed in a 2019 methodology version (no 2019 version located).",
+    "A methodology version in force during 2019 (versions found: Jan-2016, Jul-2017, Jan-2018, Nov-2020 capture, Oct-2021, Mar-2022, 2023, Feb-2024, Jan-2025, Feb-2026).",
+    "CME Globex root codes (ZC, ZS, ZM, ZL, ZW, KE, LE, HE, RB) are not printed in any Bloomberg document fetched; the CSVs carry the Bloomberg tickers printed in the announcements."
+  ]
+}

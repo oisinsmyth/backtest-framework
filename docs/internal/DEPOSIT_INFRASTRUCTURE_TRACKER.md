@@ -155,7 +155,8 @@ holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
   date, holiday rules. ✗
 - Daily settlements for all BCOM components: CME ✓ (settle strip fixture), ICE and LME ✗.
 - 1-minute bars for the ~15 CME contracts ✓; signed window flow for calibration ◐ (vault only).
-- CIT supplement and COT ✓ raw; MBO ◐.
+- COT ✓ raw (futures-only); CIT supplement ✗: not on disk, corrected 2026-09-27 (see
+  `INDEX_REWEIGHT_FLOW_AMENDMENTS.md` IR-A11); MBO ◐.
 - Derived: sub-index reconstruction and drift tracker, contract-count flow, `FROZEN_2027.json`
   before late October.
 

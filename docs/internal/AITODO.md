@@ -15,6 +15,72 @@
 - α stays in fixed slots of 0.005 per family, so a joint run changes no bar.
 - **Frozen and waiting:** the settlement ledger's NG Stage A (`data/FROZEN_ledger_stage_a_ng.json`).
 
+## Index reweight flow — opened 2026-09-27 (the principal: "start the index-reweight pre-registration")
+
+- The spec is `docs/internal/User-Doc-Deposit/INDEX_REWEIGHT_FLOW_PREREG.md` v1.3 (read-only).
+  The facts are in `data/index_reweight/`:
+  - `SOURCES.md`, `methodology_facts.json`, `weights/2016–2026.csv` (BCOM);
+  - `SOURCES_GSCI_CFTC.md` (GSCI, CIT, COT);
+  - `DATA_INVENTORY.md` (what's on disk; free Databento quotes).
+  - The GSCI methodology PDF (Aug 2026) is cached at `data/raw/index_reweight/`.
+  - None of this is committed yet.
+- **The deadline.** The model freezes before BCOM's 2027 announcement. BCOM announced between 10-20 and 11-09 in
+  2015–2025 (2025: 10-30); GSCI in early November.
+  - **Freeze by Fri 2026-10-16.**
+  - Until then, read no 2027 weight, pro-forma or advisory publication from either index. GSCI's advisory pro-forma
+    comes about a month before its announcement.
+- **The split (programme rule A10):**
+  - in-sample: the January events 2016–2025 (10) and the monthly rolls to 2025-02;
+  - vault: January 2026 and the rolls 2025-03 → 2026-09;
+  - forward: January 2027.
+- **Facts established (all sourced, no fabrication):**
+  - **Trading days.** BCOM's replicating book trades the closes of **business days 5–9**, 20% a day: the "Hedge Roll
+    Period". The index roll period is BD6–10, so the spec's "6th–10th" is the index window, not the trading days.
+    GSCI also rolls on BD5–9. The two indices therefore trade on the SAME days, and a combined κ (R-D4) is near
+    certain.
+  - **January rebalance** runs inside the January roll. Most CME components have no contract roll in January, so
+    their January flow is the reweight alone.
+  - **The multiplier (CIM) date** is BD4 of January, at that day's settlements. Three printed dates are to be
+    checked against data: 2016-01-06, 2018 (Jan 5 or 6) and 2022-01-07.
+  - **BCOM weights** 2016–2026: each year sums to 100%, and each year's printed prior weights chain exactly to the
+    previous year's targets.
+  - **Tracking AUM** is stated for 2019 (~85), 2022 (>100), 2023 (>110), 2024 (105.5), 2025 (102) and 2026
+    (108.8), in $bn. It is **not stated for 2016–2018, 2020 or 2021.**
+  - **GSCI** publishes quantity weights for 2015–2026 but no AUM (its "Investment Support Level" is not AUM), so κ_G
+    must absorb the scale. GSCI holds no ZL, ZM or COMEX copper.
+  - **Roll counts.** Grains, softs and precious metals roll 4–5 times a year and livestock 6–8, not the ~12 in the
+    spec's §5.
+- **Gaps (IR-G):**
+
+| # | information | gate / test | status | route |
+|---|---|---|---|---|
+| IR-G1 | non-CME component prices (31.5% of BCOM) | R0 | MISSING | the BCOM aggregate ER index level nearly replaces them. The drifted weight is CIM_i·P_i(t)/Σ_j CIM_j·P_j(t); the CME numerators are exact, and the denominator follows the ER level up to the non-CME roll gaps, which can be bounded (a band, not exact). Needs the principal's ruling and a source. Otherwise ICE via Databento from 2018-12 only ($24, closes) and no LME |
+| IR-G2 | published BCOM single-commodity sub-index levels | R0's 5 bp test | to source | public pages; terms to check |
+| IR-G3 | KE settlements | R0, C0 | MISSING, **$0 until ~10-11** | Databento statistics + definition, 2.2 GB. Needs approval |
+| IR-G4 | aggressor-signed window flow, 13 roots, 2016 → 2025-02 | **C0**, R1 | MISSING (CL/NG only, via Sierra) | Databento `trades` in windows ≈ $243 (exact windows) / $471 (padded), exchange flag. Or Sierra: free, ~725 files, sign r ≈ 0.88 (HO/RB), pre-2020 coverage unverified |
+| IR-G5 | settlement windows with effective dates, 11 roots before 2026-09-21 | C0, R1 | MISSING | CME settlement procedure notices (to source) |
+| IR-G6 | BCOM tracking AUM, 5 years | ΔN scale | MISSING | an estimate with a band (A2's standard) |
+| IR-G7 | CIT supplement | 5A.2 | not on disk; tracker line 158 wrong | free CFTC yearly zips |
+| IR-G8 | designated-contract 1-minute panel | R1, C0 | raw bars on disk; builder not written | build |
+
+- **Rulings taken, 2026-09-27.** They are recorded in
+  [`INDEX_REWEIGHT_FLOW_AMENDMENTS.md`](INDEX_REWEIGHT_FLOW_AMENDMENTS.md), IR-A1–IR-A12.
+  - IR-G1 → ICE from Sierra Chart and LME from Westmetall (IR-A4). The LME prices are on disk:
+    `data/index_reweight/lme_westmetall_daily.csv.gz`.
+  - IR-G3 → the KE jobs were ordered at $0.00 (IR-A8).
+  - IR-G4 → Sierra Chart, validated per root at r ≥ 0.8 (IR-A7).
+  - The freeze contingency → freeze the code and rules (IR-A10).
+- **Running (2026-09-27):**
+  - the Sierra CME download: 775 contracts, 659 to fetch, about 8–15 h. Log in `temp/sierra_index_reweight.log`;
+    the record is `data/index_reweight/sierra_download_record.json`;
+  - the KE Databento download.
+- **Next:**
+  1. Once the CME queueing ends, probe the Sierra gasoil symbol, then queue `--set ice` (218 contracts, under 1 GB).
+  2. Source the settlement windows for 11 roots and the ICE settlement times (IR-A9).
+  3. Measure the ICE and LME bands (IR-A4).
+  4. **The Gate R0 pre-registration.**
+  5. Fetch post-vault Databento `trades` for the sign check (IR-A7).
+
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
 **The standard, the principal's, 2026-09-24:**

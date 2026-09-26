@@ -1,0 +1,24 @@
+target_year,announcement_date,component,exchange,ticker_root_if_known,target_weight_pct,prior_weight_pct,tracking_aum_usd_bn,source_url,source_kind
+2022,2021-11-09,Brent Crude Oil,ICE Futures Europe,CO,6.9631180,6.8551680,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Natural Gas,NYMEX,NG,7.9548670,8.0720060,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,WTI Crude Oil,NYMEX,CL,8.0368820,8.1448320,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Low Sulphur Gas Oil,ICE Futures Europe,QS,2.6496240,2.6415190,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,ULS Diesel,NYMEX,HO,2.0526330,2.0820140,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,RBOB Gasoline,NYMEX,XB,2.1728010,2.1791840,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Corn,CBOT,C,5.5899030,5.5866490,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Soybeans,CBOT,S,5.7888440,5.8174090,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Soybean Meal,CBOT,SM,3.5200260,3.5987640,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Soybean Oil,CBOT,BO,3.1716110,3.1955900,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Wheat,CBOT,W,2.8463610,2.8850050,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,HRW Wheat,CBOT,KW,1.6636530,1.5713880,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Copper,COMEX,HG,5.3982920,5.3937680,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Aluminum,LME,LA,4.2457680,4.2083970,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Zinc,LME,LX,3.1189270,3.2468830,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Nickel,LME,LN,2.7134270,2.7139540,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Gold,COMEX,GC,15.0000000,14.6459560,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Silver,COMEX,SI,4.7468930,4.3539140,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Sugar,ICE Futures U.S.,SB,2.7943260,2.9870850,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Coffee,ICE Futures U.S.,KC,2.7333550,2.7366190,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Cotton,ICE Futures U.S.,CT,1.5032870,1.5110980,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Live Cattle,CME,LC,3.5807520,3.8464030,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY
+2022,2021-11-09,Lean Hogs,CME,LH,1.7546500,1.7263950,>100,https://www.prnewswire.com/news-releases/bloomberg-commodity-index-2022-target-weights-announced-301420460.html,PRIMARY

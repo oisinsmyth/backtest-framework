@@ -1,0 +1,24 @@
+target_year,announcement_date,component,exchange,ticker_root_if_known,target_weight_pct,prior_weight_pct,tracking_aum_usd_bn,source_url,source_kind
+2020,2019-10-30,Brent Crude Oil,ICE Futures Europe,CO,7.0093550,7.3421390,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Natural Gas,NYMEX,NG,7.9601350,8.2601380,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,WTI Crude Oil,NYMEX,CL,7.9906450,7.6578610,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Low Sulphur Gas Oil,ICE Futures Europe,QS,2.5990850,2.6247780,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,ULS Diesel,NYMEX,HO,2.1137150,2.1596670,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,RBOB Gasoline,NYMEX,XB,2.2583580,2.2941050,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Corn,CBOT,C,5.8331390,5.8921720,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Soybeans,CBOT,S,5.6367600,6.0250010,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Soybean Meal,CBOT,SM,3.2950770,3.4430260,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Soybean Oil,CBOT,BO,2.8985800,3.1037850,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Wheat,CBOT,W,3.0422510,3.1403970,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,HRW Wheat,CBOT,KW,1.4859640,1.2937850,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Copper,COMEX,HG,6.9605820,7.3185670,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Aluminum,LME,LA,4.3266510,4.4126180,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Zinc,LME,LX,3.4262380,3.2068700,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Nickel,LME,LN,2.7507970,2.7093210,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Gold,COMEX,GC,13.6224130,12.2425030,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Silver,COMEX,SI,3.7785780,3.8878360,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Sugar,ICE Futures U.S.,SB,3.0098940,3.1480610,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Coffee,ICE Futures U.S.,KC,2.7121520,2.4780560,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Cotton,ICE Futures U.S.,CT,1.4915570,1.4194190,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Live Cattle,CME,LC,4.0201190,4.0907470,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY
+2020,2019-10-30,Lean Hogs,CME,LH,1.7779520,1.8491490,,https://data.bloomberglp.com/professional/sites/10/BCOM-2020-Target-Weights.pdf,PRIMARY

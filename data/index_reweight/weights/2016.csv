@@ -1,0 +1,23 @@
+target_year,announcement_date,component,exchange,ticker_root_if_known,target_weight_pct,prior_weight_pct,tracking_aum_usd_bn,source_url,source_kind
+2016,2015-10-29,Brent Crude Oil,ICE Futures Europe,CO,7.5302370,7.1565050,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Natural Gas,NYMEX,NG,8.4488420,8.7397550,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,WTI Crude Oil,NYMEX,CL,7.4697630,7.8434950,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,ULS Diesel,NYMEX,HO,3.8290390,3.7609190,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,RBOB Gasoline,NYMEX,XB,3.7478780,3.6928490,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Corn,CBOT,C,7.3587030,7.2463450,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Soybeans,CBOT,S,5.7038300,5.6812590,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Soybean Meal,CBOT,SM,2.8446630,2.7453110,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Soybean Oil,CBOT,BO,2.8375480,2.8129680,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Wheat,CBOT,W,3.3268340,3.3276410,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,HRW Wheat,CBOT,KW,1.1531400,1.1705090,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Copper,COMEX,HG,7.6272480,7.5375780,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Aluminum,LME,LA,4.5987080,4.5931580,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Zinc,LME,LX,2.5276320,2.4041340,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Nickel,LME,LN,2.3593750,2.1193960,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Gold,COMEX,GC,11.3798610,11.9041430,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Silver,COMEX,SI,4.2131830,4.2760540,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Sugar,ICE Futures U.S.,SB,3.6272510,3.9956530,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Coffee,ICE Futures U.S.,KC,2.2943230,2.2121760,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Cotton,ICE Futures U.S.,CT,1.4931910,1.5129990,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Live Cattle,CME,LC,3.5666190,3.3273920,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY
+2016,2015-10-29,Lean Hogs,CME,LH,2.0621330,1.9397640,,https://www.prnewswire.com/news-releases/2016-target-weights-for-the-bloomberg-commodity-index-announced-300169215.html,PRIMARY

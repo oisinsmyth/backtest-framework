@@ -1,0 +1,25 @@
+target_year,announcement_date,component,exchange,ticker_root_if_known,target_weight_pct,prior_weight_pct,tracking_aum_usd_bn,source_url,source_kind
+2025,2024-10-31,Brent Crude Oil,ICE Futures Europe,CO,8.0339950,7.6379950,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Natural Gas,NYMEX,NG,7.7783690,7.9841690,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,WTI Crude Oil,NYMEX,CL,6.9660050,7.3620050,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Low Sulphur Gas Oil,ICE Futures Europe,QS,2.8583140,2.7798210,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,ULS Diesel,NYMEX,HO,2.2039330,2.1604180,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,RBOB Gasoline,NYMEX,XB,2.1702560,2.2073490,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Corn,CBOT,C,5.6241090,5.6623490,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Soybeans,CBOT,S,5.9660320,5.9068480,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Soybean Meal,CBOT,SM,3.5290020,3.5401900,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Soybean Oil,CBOT,BO,3.3642880,3.3491640,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Wheat,CBOT,W,2.8250830,2.8184120,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,HRW Wheat,CBOT,KW,1.8422120,1.8189100,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Copper,COMEX,HG,5.3747820,5.2978220,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Aluminum,LME,LA,4.1595000,4.1056260,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Zinc,LME,LX,2.2654760,2.4945660,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Nickel,LME,LN,2.3993070,2.5842820,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Lead,LME,LL,0.9219700,0.8661400,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Gold,COMEX,GC,14.2907530,14.3468000,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Silver,COMEX,SI,4.4913890,4.4770770,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Sugar,ICE Futures U.S.,SB,2.9956340,2.8076370,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Coffee,ICE Futures U.S.,KC,3.0069210,2.9741780,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Cotton,ICE Futures U.S.,CT,1.6071050,1.5703150,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Live Cattle,CME,LC,3.5918600,3.4650870,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
+2025,2024-10-31,Lean Hogs,CME,LH,1.7337010,1.7828380,102,https://assets.bbhub.io/professional/sites/27/BCOM-2025-Target-Weights.pdf,PRIMARY
