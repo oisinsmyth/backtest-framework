@@ -1,0 +1,48 @@
+{
+ "first": "2017-05-22",
+ "known_answer_2020_02_10": {
+  "NGTH20": {
+   "databento_net": 10117,
+   "databento_v": 15881,
+   "sierra_first_et": "2020-02-10 03:46:50-05:00",
+   "sierra_net": 10117,
+   "sierra_rows_that_day": 1,
+   "sierra_v": 15881
+  },
+  "NGTK20": {
+   "databento_net": -106,
+   "databento_v": 1324,
+   "sierra_first_et": "2020-02-10 09:40:04-05:00",
+   "sierra_net": -106,
+   "sierra_rows_that_day": 1,
+   "sierra_v": 1324
+  },
+  "NGTN20": {
+   "databento_net": -113,
+   "databento_v": 213,
+   "sierra_first_et": "2020-02-10 10:31:51-05:00",
+   "sierra_net": -113,
+   "sierra_rows_that_day": 1,
+   "sierra_v": 213
+  }
+ },
+ "last": "2025-02-28",
+ "net_to_1430_sum_by_source": {
+  "databento": -355517,
+  "sierra": -284592
+ },
+ "rows": 7449,
+ "rows_by_source": {
+  "databento": 4305,
+  "sierra": 3144
+ },
+ "spans_from_18:00_prior": {
+  "to_1130": "11:30:00",
+  "to_1350": "13:50:00",
+  "to_1400": "14:00:00",
+  "to_1410": "14:10:00",
+  "to_1430": "14:30:00"
+ },
+ "switch_to_sierra": "2020-02-11",
+ "trade_dates": 1972
+}

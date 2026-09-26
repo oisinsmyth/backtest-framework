@@ -1,0 +1,45 @@
+{
+ "gammas": [
+  0.0,
+  0.03,
+  0.061,
+  0.12,
+  0.25
+ ],
+ "n_days": 1936,
+ "scale": {
+  "corr_p1_tas_imb": -0.17029936151131708,
+  "median_abs_tas_imb": 834.5,
+  "sd_p1": 1692.491465413297,
+  "sd_tas_imb_at_tau_star": 2474.5565570352005,
+  "share_days_with_tas": 0.9989669421487604
+ },
+ "seed": 20260929,
+ "sims": {
+  "0": {
+   "clause1_and_midday": 0.035,
+   "ratio_median": 0.3297920086438128,
+   "reps": 200
+  },
+  "0.03": {
+   "clause1_and_midday": 0.645,
+   "ratio_median": 1.4645415779067155,
+   "reps": 200
+  },
+  "0.061": {
+   "clause1_and_midday": 0.97,
+   "ratio_median": 3.088040060713448,
+   "reps": 200
+  },
+  "0.12": {
+   "clause1_and_midday": 0.925,
+   "ratio_median": 7.82017014348068,
+   "reps": 200
+  },
+  "0.25": {
+   "clause1_and_midday": 0.33,
+   "ratio_median": -19.69144320415841,
+   "reps": 200
+  }
+ }
+}

@@ -304,6 +304,9 @@ outputs stay byte-identical.
                - The forecast creations LOWER the flow correlation (0.137 → 0.094), and a better same-day forecast lowers it further (→ −0.02). The creations' futures are not window aggressive flow; they are likely blocks, EFPs or TAS at the settlement.
                - Price: C1 trades 404 days at $119 (t 4.47) against A's 1,010 at $68 (t 5.08). POST HOC: A's own top-404 |I| days give $141 (t 4.90), so C1's trade edge is only a stricter filter.
                - **Before C2:** the question to put is whether a hedging split h can make a term that lowers the flow fit at every forecast quality useful. C2's premium mostly forecasts same-day creations.
+               - **Stage D (the principal, 2026-09-26): D633, PRE-REGISTERED; the runner is next.**
+                 - The NG TAS gap was bought ($0.29, job GLBX-20260926-ACYTFRDQDD). `build_tas_imbalance_panel.py` stitches Databento (≤ 2020-02-10) and Sierra (≥ 2020-02-11), which agree exactly on 2020-02-10.
+                 - POWER: size 3.5%; 0.97 at γ = 0.061. The ratio rule breaks at γ = 0.25.
                - Background from the pre-registration (D632), kept as facts:
                  - The funds' creation flow (published AUM; the alignment is proven by the contract counts; `lag_c` = 0) is LARGER than P1 and runs AGAINST it on the same day (SD 2,162 vs 1,814; corr −0.68).
                  - It did NOT explain D629's unconditional negative sign: the slope is still −0.054, t −7.89, with C1.

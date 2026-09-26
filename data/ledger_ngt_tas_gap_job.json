@@ -1,0 +1,60 @@
+{
+ "submitted_utc": "2026-09-26T21:40:30Z",
+ "approved_by": "the principal, 2026-09-26: 'Approve the $0.29'",
+ "quote": {
+  "label": "ngt-tas-gap",
+  "schema": "trades",
+  "symbols": [
+   "NGT.FUT"
+  ],
+  "start": "2017-05-21",
+  "end": "2020-02-11",
+  "billable_mb": 11.19,
+  "usd": 0.291734397411
+ },
+ "job": {
+  "id": "GLBX-20260926-ACYTFRDQDD",
+  "user_id": "QWGCG4GQ",
+  "bill_id": null,
+  "cost_usd": null,
+  "dataset": "GLBX.MDP3",
+  "symbols": "NGT.FUT",
+  "stype_in": "parent",
+  "stype_out": "instrument_id",
+  "schema": "trades",
+  "start": "2017-05-21T00:00:00.000000000Z",
+  "end": "2020-02-11T00:00:00.000000000Z",
+  "limit": null,
+  "encoding": "dbn",
+  "compression": "zstd",
+  "pretty_px": false,
+  "pretty_ts": false,
+  "map_symbols": false,
+  "split_symbols": false,
+  "split_duration": "year",
+  "split_size": null,
+  "packaging": null,
+  "delivery": "download",
+  "record_count": null,
+  "billed_size": null,
+  "actual_size": null,
+  "package_size": null,
+  "state": "queued",
+  "ts_received": "2026-09-26T21:40:25.468740000Z",
+  "ts_queued": null,
+  "ts_process_start": null,
+  "ts_process_done": null,
+  "ts_expiration": null
+ },
+ "downloaded_utc": "2026-09-26T21:49:52Z",
+ "files": [
+  "condition.json",
+  "metadata.json",
+  "glbx-mdp3-20170521-20171231.trades.dbn.zst",
+  "glbx-mdp3-20180101-20181231.trades.dbn.zst",
+  "glbx-mdp3-20190101-20191231.trades.dbn.zst",
+  "glbx-mdp3-20200101-20200210.trades.dbn.zst",
+  "manifest.json"
+ ],
+ "bytes": 4645862
+}
