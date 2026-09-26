@@ -214,7 +214,15 @@ def read_log() -> str:
     import time
     ml = [h for h in sierra_top() if _text(h) == "Message Log"]
     if not ml:
-        raise SystemExit("the Message Log window is not open (Window > Message Log)")
+        # reopen it through Window > Message Log (57590), then look again
+        user32.PostMessageW(main_window(), WM_COMMAND, 57590, 0)
+        for _ in range(30):
+            time.sleep(0.2)
+            ml = [h for h in sierra_top() if _text(h) == "Message Log"]
+            if ml:
+                break
+    if not ml:
+        return ""
     user32.PostMessageW(ml[0], WM_COMMAND, 51004, 0)
     time.sleep(1.0)
     out = subprocess.run(["powershell.exe", "-NoProfile", "-Command", "Get-Clipboard"], capture_output=True,
