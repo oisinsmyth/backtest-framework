@@ -1,0 +1,150 @@
+{
+ "comparison": {
+  "ts_event": {
+   "exact_net_share": 0.019,
+   "pass": false,
+   "r_net": 0.8767,
+   "sessions": 686,
+   "sign_agreement": 0.7974,
+   "total_ratio_median": 1.0,
+   "total_ratio_p10_p90": [
+    1.0,
+    1.0
+   ],
+   "usable_r_ge_0.8": true,
+   "within_1pct_gross_share": 0.0554,
+   "worst": [
+    {
+     "contract": "HOK26",
+     "day": "2026-03-19",
+     "sc_net": 649,
+     "sc_total": 1147,
+     "tr_net": 243,
+     "tr_total": 1147
+    },
+    {
+     "contract": "HOZ25",
+     "day": "2025-11-07",
+     "sc_net": -507,
+     "sc_total": 2279,
+     "tr_net": -30,
+     "tr_total": 2279
+    },
+    {
+     "contract": "HOZ25",
+     "day": "2025-10-31",
+     "sc_net": -878,
+     "sc_total": 2022,
+     "tr_net": -384,
+     "tr_total": 2022
+    }
+   ]
+  },
+  "ts_recv": {
+   "exact_net_share": 0.019,
+   "pass": false,
+   "r_net": 0.8767,
+   "sessions": 686,
+   "sign_agreement": 0.7974,
+   "total_ratio_median": 1.0,
+   "total_ratio_p10_p90": [
+    1.0,
+    1.0
+   ],
+   "usable_r_ge_0.8": true,
+   "within_1pct_gross_share": 0.0554,
+   "worst": [
+    {
+     "contract": "HOK26",
+     "day": "2026-03-19",
+     "sc_net": 649,
+     "sc_total": 1147,
+     "tr_net": 243,
+     "tr_total": 1147
+    },
+    {
+     "contract": "HOZ25",
+     "day": "2025-11-07",
+     "sc_net": -507,
+     "sc_total": 2279,
+     "tr_net": -30,
+     "tr_total": 2279
+    },
+    {
+     "contract": "HOZ25",
+     "day": "2025-10-31",
+     "sc_net": -878,
+     "sc_total": 2022,
+     "tr_net": -384,
+     "tr_total": 2022
+    }
+   ]
+  }
+ },
+ "contracts": [
+  "HOK26",
+  "HOM26",
+  "HON26",
+  "HOQ26",
+  "HOU26",
+  "HOV26",
+  "HOZ25"
+ ],
+ "min_gross": 20,
+ "root": "HO",
+ "sierra_files": {
+  "HOK26": {
+   "first": "2025-11-26 20:39:45.077000-05:00",
+   "last": "2026-04-30 14:27:01.001000-04:00",
+   "records": 864995,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  },
+  "HOM26": {
+   "first": "2025-12-28 18:25:09.334000-05:00",
+   "last": "2026-05-29 14:29:15.751000-04:00",
+   "records": 1094614,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  },
+  "HON26": {
+   "first": "2026-01-26 20:06:26.071000-05:00",
+   "last": "2026-06-30 14:26:09.329000-04:00",
+   "records": 765653,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  },
+  "HOQ26": {
+   "first": "2026-02-26 20:02:12.965000-05:00",
+   "last": "2026-07-31 14:26:33.491000-04:00",
+   "records": 737235,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  },
+  "HOU26": {
+   "first": "2026-03-24 07:30:40.879000-04:00",
+   "last": "2026-08-31 14:28:14.908001-04:00",
+   "records": 759004,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  },
+  "HOV26": {
+   "first": "2026-03-24 07:52:57.140000-04:00",
+   "last": "2026-09-18 16:59:38.190000-04:00",
+   "records": 672516,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  },
+  "HOZ25": {
+   "first": "2025-06-29 18:00:01.004000-04:00",
+   "last": "2025-11-28 14:26:55.040000-05:00",
+   "records": 953298,
+   "share_records_one_trade": 1.0,
+   "share_volume_with_side": 1.0
+  }
+ },
+ "window_et": [
+  "14:28:00",
+  "14:30:00"
+ ]
+}
