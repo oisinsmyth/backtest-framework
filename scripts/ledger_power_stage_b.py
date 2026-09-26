@@ -9,7 +9,10 @@ with μ = P1 (`q_est`), σ² = its prior variance (`sigma_Q`², A5's form) and z
 training window (D631 §2). p = 0 gives K = 0 and Q_rem = μ: Stage A exactly.
 
 FIT (deposit §8, §10): in each 252-day training window, the (p, R) on a grid that maximises the partial correlation of
-Q_rem with the abnormal signed window flow S_win, net of [1, r, flags]; applied unchanged to the next 63 days.
+Q_rem with the abnormal signed window flow S_win, net of [1, r, flags]; applied unchanged to the next 63 days, after
+Q_rem is put on P1's scale by λ = SD(μ)/SD(Q_rem) over the training window (D631's amendment; a first version without
+λ understated Stage B: the fit does not fix Q_rem's scale, and pooling blocks at different scales wrecks the
+correlation).
 RETENTION, clause 1 (deposit line 417, read net of the controls as A8 read H1a's): the out-of-sample partial correlation
 of Stage B's Q_rem with S_win is ≥ 1.10 × Stage A's on the same days, with Stage A's > 0.
 
@@ -100,7 +103,10 @@ def walk_forward(mu: np.ndarray, s2: np.ndarray, z_raw: np.ndarray, s_win: np.nd
                     best, arg = c, (p, k * z_var)
         fitted.append(arg[0])
         qa[te] = mu[te]
-        qb[te] = kalman_q_rem(mu[te], s2[te], z[te], *arg)
+        # D631's amendment: Q_rem on P1's scale via the training window's SDs (λ = 1 at p = 0)
+        q_tr = kalman_q_rem(mu[tr], s2[tr], z[tr], *arg)
+        lam = float(np.std(mu[tr]) / np.std(q_tr)) if arg[0] > 0 and np.std(q_tr) > 0 else 1.0
+        qb[te] = lam * kalman_q_rem(mu[te], s2[te], z[te], *arg)
         start += TEST
     oos = np.isfinite(qb)
     M = residualiser(C[oos])

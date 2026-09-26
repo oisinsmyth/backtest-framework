@@ -159,6 +159,11 @@ to the test block.
 
 Nothing else changes.
 
+**POWER rerun with λ** (`ledger_power_stage_b.py`, the same seed and design): clause 1 now retains Stage B
+**2%, 2%, 1%, 1%, 2%, 6%, 3% and 6%** at π = 0, 0.015, 0.03, 0.06, 0.15, 0.3, 0.6 and 1.0. §9's first figures, 1–7%,
+came from the uncalibrated fit. The conclusion does not change: §9's ceiling (at most 2.5% against the 10% bar) is
+arithmetic, and the calibration does not touch it.
+
 ## 10. What this does not touch
 
 - No vault data. The vault's NG Sierra files are on disk and unread (A10).

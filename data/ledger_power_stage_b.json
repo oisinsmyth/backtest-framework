@@ -18,9 +18,9 @@
    "n_oos": 1689,
    "p_fitted_median": 0.01,
    "reps": 100,
-   "retention_rate": 0.01,
+   "retention_rate": 0.02,
    "rho_a_median": 0.0739997118180922,
-   "rho_b_median": 0.04111623520383202,
+   "rho_b_median": 0.041254942207101096,
    "share_windows_p_zero": 0.4977777777777777
   },
   "0.015": {
@@ -29,43 +29,43 @@
    "reps": 100,
    "retention_rate": 0.02,
    "rho_a_median": 0.06572833892433719,
-   "rho_b_median": 0.04154483430357382,
+   "rho_b_median": 0.03875773422015678,
    "share_windows_p_zero": 0.5318518518518518
   },
   "0.03": {
    "n_oos": 1689,
    "p_fitted_median": 0.0,
    "reps": 100,
-   "retention_rate": 0.03,
+   "retention_rate": 0.01,
    "rho_a_median": 0.07180851183442062,
-   "rho_b_median": 0.043974586226920964,
+   "rho_b_median": 0.037264287845929736,
    "share_windows_p_zero": 0.5022222222222222
   },
   "0.06": {
    "n_oos": 1689,
    "p_fitted_median": 0.0,
    "reps": 100,
-   "retention_rate": 0.06,
+   "retention_rate": 0.01,
    "rho_a_median": 0.06758846114895772,
-   "rho_b_median": 0.04035127285569921,
+   "rho_b_median": 0.04254965311869568,
    "share_windows_p_zero": 0.5188888888888888
   },
   "0.15": {
    "n_oos": 1689,
    "p_fitted_median": 0.0,
    "reps": 100,
-   "retention_rate": 0.05,
+   "retention_rate": 0.02,
    "rho_a_median": 0.06968779624052115,
-   "rho_b_median": 0.03323931464924518,
+   "rho_b_median": 0.038238841851654125,
    "share_windows_p_zero": 0.5196296296296297
   },
   "0.3": {
    "n_oos": 1689,
    "p_fitted_median": 0.01,
    "reps": 100,
-   "retention_rate": 0.07,
+   "retention_rate": 0.06,
    "rho_a_median": 0.07118047929764833,
-   "rho_b_median": 0.042184917995074664,
+   "rho_b_median": 0.050183067211369975,
    "share_windows_p_zero": 0.5133333333333333
   },
   "0.6": {
@@ -74,16 +74,16 @@
    "reps": 100,
    "retention_rate": 0.03,
    "rho_a_median": 0.0733343485537486,
-   "rho_b_median": 0.03956625332354703,
+   "rho_b_median": 0.050795506345180055,
    "share_windows_p_zero": 0.4907407407407407
   },
   "1": {
    "n_oos": 1689,
    "p_fitted_median": 0.02,
    "reps": 100,
-   "retention_rate": 0.05,
+   "retention_rate": 0.06,
    "rho_a_median": 0.07446408334244548,
-   "rho_b_median": 0.034924019493937336,
+   "rho_b_median": 0.048005764706105014,
    "share_windows_p_zero": 0.44222222222222224
   }
  },
