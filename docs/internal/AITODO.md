@@ -300,6 +300,11 @@ outputs stay byte-identical.
                - Out of sample, the flow clause PASSED (ρ 0.137 → 0.170, ×1.24) and the price clause FAILED (H2 t 5.08 → 3.90; $68 → $51 a trade).
                - The midday placebo gains as much (−0.036 → +0.140), so the flow gain is order-flow persistence, not the funds. p swings from 0 to 0.9 across windows.
                - **Lesson for later stages:** a flow gain counts only in excess of the same update's gain at midday. Stage I must gate on that placebo.
+            5. **Stage C1 (the principal, 2026-09-26: "Start Stage C, pre-register it"): D632, PRE-REGISTERED; the runner is next.**
+               - The funds' creation flow (published AUM; the alignment is proven by the contract counts; `lag_c` = 0) is LARGER than P1 and runs AGAINST it on the same day (SD 2,162 vs 1,814; corr −0.68). The funds' net trade is much smaller than P1. That may explain D629's unconditional negative sign.
+               - C1's lagged forecast has R² 0.07 / 0.03, but the ceiling is 1.76×.
+               - POWER: 0.52 at D629's slope; false retention 11.5% on clauses 1 + 3.
+               - UNG is absent (G7).
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
         - Stage H forward-only.

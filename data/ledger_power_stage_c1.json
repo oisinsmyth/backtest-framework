@@ -1,0 +1,58 @@
+{
+ "betas": [
+  0.0,
+  0.03,
+  0.061,
+  0.12
+ ],
+ "ceilings": {
+  "corr_p1_q3": -0.6835396017027052,
+  "deposit_c1": 1.7558124679360467,
+  "perfect_foresight": 4.802546948421189,
+  "same_day_variant_not_c1": 2.2430485847643205,
+  "sd_p1": 1814.1826978900567,
+  "sd_q3": 2162.4954078829865,
+  "sd_q3_hat": 771.0273010431246
+ },
+ "forecast_r2": {
+  "BOIL": {
+   "days_without_nav": 2,
+   "oos_r2_c1": 0.07117606852044478,
+   "oos_r2_same_day_variant": 0.39213107656617996
+  },
+  "KOLD": {
+   "days_without_nav": 2,
+   "oos_r2_c1": 0.031120203239744848,
+   "oos_r2_same_day_variant": 0.29449564540563955
+  }
+ },
+ "n_days": 1936,
+ "n_oos": 1684,
+ "seed": 20260928,
+ "sims": {
+  "0": {
+   "clause1_and_midday": 0.115,
+   "excess_gain_over_midday_median": 0.0018725201291047112,
+   "ratio_median": 0.7693251276141002,
+   "reps": 200
+  },
+  "0.03": {
+   "clause1_and_midday": 0.335,
+   "excess_gain_over_midday_median": 0.017358665194055073,
+   "ratio_median": 0.8795386761752919,
+   "reps": 200
+  },
+  "0.061": {
+   "clause1_and_midday": 0.52,
+   "excess_gain_over_midday_median": 0.024190429746952825,
+   "ratio_median": 1.3191711628452094,
+   "reps": 200
+  },
+  "0.12": {
+   "clause1_and_midday": 0.72,
+   "excess_gain_over_midday_median": 0.04192638033520878,
+   "ratio_median": 2.0840939215628156,
+   "reps": 200
+  }
+ }
+}
