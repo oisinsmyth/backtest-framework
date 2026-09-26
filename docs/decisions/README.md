@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 370 of these records carry neither field —
+**No Status or Category column, deliberately.** 371 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -705,6 +705,7 @@ would look like data. The tokens are what is shown.
 | D630 | H2 on NG PASSES: $66 a trade gross, $40 net, t 5.01. The move reverts after the settlement, it is concentrated in 2022,… | [PRE-REG](D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md) · [RESULT](D630-RESULT-h2-ng-passes-and-the-move-reverts-after-the-settlement.md) |
 | D631 | Stage B on NG is NOT RETAINED: its flow gain passes but is general order-flow persistence (the midday placebo gains as… | [PRE-REG](D631-PRE-REG-stage-b-the-update-step-on-ng.md) · [RESULT](D631-RESULT-stage-b-not-retained-the-flow-gain-is-persistence.md) |
 | D632 | Stage C1 on NG is NOT RETAINED: the forecast creation flow makes the ledger WORSE on window flow, and a better forecast… | [PRE-REG](D632-PRE-REG-stage-c1-the-funds-creation-flow-on-ng.md) · [RESULT](D632-RESULT-stage-c1-not-retained-creations-are-not-window-flow.md) |
+| D633 | REGISTRATION — Stage D on NG: does the TAS imbalance improve the ledger? | [PRE-REG](D633-PRE-REG-stage-d-the-tas-imbalance-on-ng.md) |
 
 <!-- REGISTER:END -->
 
