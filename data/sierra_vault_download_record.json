@@ -1,0 +1,88 @@
+{
+ "contracts": {
+  "NGF26": {
+   "bytes": 132773696,
+   "cut_short": false,
+   "expected_last_day": "2025-12-29",
+   "first_utc": "2025-07-30 00:00:02.990000",
+   "last_utc": "2025-12-29 19:26:46.611000",
+   "records": 3319341
+  },
+  "NGH26": {
+   "bytes": 163607936,
+   "cut_short": false,
+   "expected_last_day": "2026-02-25",
+   "first_utc": "2025-09-28 22:00:00.169000",
+   "last_utc": "2026-02-25 19:26:19.890001",
+   "records": 4090197
+  },
+  "NGK25": {
+   "bytes": 123031136,
+   "cut_short": false,
+   "expected_last_day": "2025-04-28",
+   "first_utc": "2024-11-27 00:42:04.627000",
+   "last_utc": "2025-04-28 18:26:12.154000",
+   "records": 3075777
+  },
+  "NGK26": {
+   "bytes": 102038976,
+   "cut_short": false,
+   "expected_last_day": "2026-04-28",
+   "first_utc": "2025-11-27 00:25:27.366000",
+   "last_utc": "2026-04-28 18:26:20.076000",
+   "records": 2550973
+  },
+  "NGN25": {
+   "bytes": 102814976,
+   "cut_short": false,
+   "expected_last_day": "2025-06-26",
+   "first_utc": "2025-01-27 00:00:01.037000",
+   "last_utc": "2025-06-26 18:25:55.995000",
+   "records": 2570373
+  },
+  "NGN26": {
+   "bytes": 102667896,
+   "cut_short": false,
+   "expected_last_day": "2026-06-26",
+   "first_utc": "2026-01-27 00:05:48.412000",
+   "last_utc": "2026-06-26 18:28:05.013000",
+   "records": 2566696
+  },
+  "NGU25": {
+   "bytes": 89825576,
+   "cut_short": false,
+   "expected_last_day": "2025-08-27",
+   "first_utc": "2025-03-30 22:00:02.805000",
+   "last_utc": "2025-08-27 18:29:04.109000",
+   "records": 2245638
+  },
+  "NGU26": {
+   "bytes": 86380856,
+   "cut_short": false,
+   "expected_last_day": "2026-08-27",
+   "first_utc": "2026-03-24 11:07:55.419000",
+   "last_utc": "2026-08-27 18:27:06.132000",
+   "records": 2159520
+  },
+  "NGX25": {
+   "bytes": 115272816,
+   "cut_short": false,
+   "expected_last_day": "2025-10-29",
+   "first_utc": "2025-05-29 00:00:00.012000",
+   "last_utc": "2025-10-29 18:29:01.895000",
+   "records": 2881819
+  },
+  "NGX26": {
+   "bytes": 55708336,
+   "cut_short": false,
+   "expected_last_day": "2026-09-25",
+   "first_utc": "2026-03-24 20:14:04.419000",
+   "last_utc": "2026-09-25 20:59:58.268000",
+   "records": 1392707
+  }
+ },
+ "vault": [
+  "2025-03-01",
+  "2026-09-18"
+ ]
+}
