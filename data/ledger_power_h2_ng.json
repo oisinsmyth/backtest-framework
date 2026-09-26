@@ -1,0 +1,102 @@
+{
+ "analytic": {
+  "mde_80pct_usd": 35.70736592605464,
+  "mde_t_holm_usd": 25.95993836738854,
+  "plausible_effect_usd": 26.0,
+  "se_of_mean_usd": 11.58201943757854,
+  "underpowered": false
+ },
+ "betas": [
+  0.0,
+  0.1,
+  0.25,
+  0.5,
+  1.0
+ ],
+ "cost_usd_rt_plus_slip": 26.0,
+ "pre_sample": {
+  "days": 456,
+  "first": "2015-07-02",
+  "last": "2017-05-10",
+  "u_kurtosis": {
+   "13:50": 2.012382238044975,
+   "14:00": 2.7366924142739673,
+   "14:10": 1.5671395088685434
+  },
+  "u_mean": {
+   "13:50": -0.008378867371803224,
+   "14:00": 0.004141161254546766,
+   "14:10": 0.03829094042659394
+  },
+  "u_sd": {
+   "13:50": 1.1002451529639865,
+   "14:00": 1.0889578296417342,
+   "14:10": 1.0673925265243331
+  }
+ },
+ "seed": 20260926,
+ "sim": {
+  "0": {
+   "net_mean_median_usd": -26.043845662845655,
+   "null_t_p95": 1.7413661457682543,
+   "power_t_holm": 0.018,
+   "power_t_holm_and_net_positive": 0.018,
+   "reps": 1000,
+   "rotation": {
+    "beats_own_p95": 0.07,
+    "combined_gate": 0.01,
+    "datasets": 100,
+    "draws": 200,
+    "p95_median": 1.5879694853057411
+   },
+   "size_two_sided_holm": 0.027,
+   "t_median": -0.00319395696938834,
+   "vault_pass_rate": 0.091
+  },
+  "0.1": {
+   "net_mean_median_usd": 2.4800895363431934,
+   "power_t_holm": 0.41,
+   "power_t_holm_and_net_positive": 0.41,
+   "reps": 400,
+   "t_median": 2.0147593820888225,
+   "vault_pass_rate": 0.395
+  },
+  "0.25": {
+   "net_mean_median_usd": 41.90526373850079,
+   "power_t_holm": 0.995,
+   "power_t_holm_and_net_positive": 0.995,
+   "reps": 400,
+   "t_median": 4.893685625293269,
+   "vault_pass_rate": 0.82
+  },
+  "0.5": {
+   "net_mean_median_usd": 109.91415271456081,
+   "power_t_holm": 1.0,
+   "power_t_holm_and_net_positive": 1.0,
+   "reps": 400,
+   "rotation": {
+    "beats_own_p95": 1.0,
+    "combined_gate": 1.0,
+    "datasets": 100,
+    "draws": 200,
+    "p95_median": 1.9023229216574005
+   },
+   "t_median": 9.49637617238628,
+   "vault_pass_rate": 1.0
+  },
+  "1": {
+   "net_mean_median_usd": 247.81363670285404,
+   "power_t_holm": 1.0,
+   "power_t_holm_and_net_positive": 1.0,
+   "reps": 400,
+   "t_median": 16.664965600665326,
+   "vault_pass_rate": 1.0
+  },
+  "median_absI_usd_traded": 162.7140032550635,
+  "median_sd_usd_traded": 246.50542259934127,
+  "n_days": 1936,
+  "n_traded": 1028
+ },
+ "t_holm": 2.2414,
+ "t_vault_one_sided_p10": 1.2816
+}

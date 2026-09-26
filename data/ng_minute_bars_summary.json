@@ -1,0 +1,63 @@
+{
+ "blocks_et": [
+  [
+   "11:30:00",
+   "12:20:00"
+  ],
+  [
+   "13:49:00",
+   "15:00:00"
+  ]
+ ],
+ "contracts": 160,
+ "cut": "2025-03-01",
+ "files": [
+  {
+   "bytes": 46448937,
+   "name": "glbx-mdp3-20170521-20171231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 88770117,
+   "name": "glbx-mdp3-20180101-20181231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 79484352,
+   "name": "glbx-mdp3-20190101-20191231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 114750955,
+   "name": "glbx-mdp3-20200101-20201231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 105999493,
+   "name": "glbx-mdp3-20210101-20211231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 128721464,
+   "name": "glbx-mdp3-20220101-20221231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 117130372,
+   "name": "glbx-mdp3-20230101-20231231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 129327974,
+   "name": "glbx-mdp3-20240101-20241231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 68138087,
+   "name": "glbx-mdp3-20250101-20250228.ohlcv-1s.dbn.zst"
+  }
+ ],
+ "first": "2017-05-22",
+ "known_answer": {
+  "pairs": 58827,
+  "placebo_volume_mismatches": 0,
+  "px_1350_mismatches": 0,
+  "px_1350_vs_1349_close_pairs": 15866,
+  "window_volume_mismatches": 0
+ },
+ "rows": 2050911,
+ "rows_sha256": "b93f81e623fdaefbcfeb7ab71991273cc0eea045a8f7bd07fa6ae2bcda65a117",
+ "sessions": 2006
+}

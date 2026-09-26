@@ -278,7 +278,7 @@ outputs stay byte-identical.
             - POST HOC: NG's pass exists only with the return control. Without it, window flow runs against the funds (t −7.98). In the top fund-size tercile β is 0.008 ± 0.02, so the pass does not look like a proportional footprint.
           - **Next:**
             1. After D626's read (2026-10-10): extend `check_sierra_aggressor.py` to CL/NG on the post-vault sessions. r < 0.8 VOIDs that root (D629 §6).
-            2. The principal decides whether to pre-register H2 on NG. It would spend the vault's one look. D629 §4 warns that the pass does not imply H2's sign.
+            2. **H2 on NG (the principal, 2026-09-26: "Pre-register H2 on NG"):** D630. Inputs: `build_ng_minute_bars.py` (exact against the volume panel) and POWER `ledger_power_h2_ng.py`. The detectable effect ($26) equals the cost, so a breakeven effect has about 0.41 power and a quarter of the ledger's predicted move 0.995. The vault is looked at only after an in-sample PASS and on the principal's word.
             3. The Sierra trial ends 2026-10-17. Every file is on disk.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
