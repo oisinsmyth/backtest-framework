@@ -1,0 +1,102 @@
+{
+ "comparison": {
+  "HO_to_1350": {
+   "exact_net_share": 0.8537,
+   "exchange_flag_r_ge_0.99": true,
+   "no_aggressor_share_of_truth_volume": 0.00191,
+   "r_net": 0.9998,
+   "sessions": 868,
+   "sign_agreement": 0.9988,
+   "total_ratio_median": 1.0,
+   "usable_r_ge_0.8": true
+  },
+  "HO_to_1430": {
+   "exact_net_share": 0.8681,
+   "exchange_flag_r_ge_0.99": true,
+   "no_aggressor_share_of_truth_volume": 0.00117,
+   "r_net": 0.9999,
+   "sessions": 963,
+   "sign_agreement": 0.999,
+   "total_ratio_median": 1.0,
+   "usable_r_ge_0.8": true
+  },
+  "RB_to_1350": {
+   "exact_net_share": 0.802,
+   "exchange_flag_r_ge_0.99": true,
+   "no_aggressor_share_of_truth_volume": 0.00319,
+   "r_net": 0.9998,
+   "sessions": 884,
+   "sign_agreement": 0.9977,
+   "total_ratio_median": 1.0,
+   "usable_r_ge_0.8": true
+  },
+  "RB_to_1430": {
+   "exact_net_share": 0.8185,
+   "exchange_flag_r_ge_0.99": true,
+   "no_aggressor_share_of_truth_volume": 0.00191,
+   "r_net": 0.9998,
+   "sessions": 964,
+   "sign_agreement": 1.0,
+   "total_ratio_median": 1.0,
+   "usable_r_ge_0.8": true
+  }
+ },
+ "contracts": [
+  "HOTX25",
+  "HOTZ25",
+  "HOTF26",
+  "HOTG26",
+  "HOTH26",
+  "HOTJ26",
+  "HOTK26",
+  "HOTM26",
+  "HOTN26",
+  "HOTQ26",
+  "HOTU26",
+  "HOTV26",
+  "RBTX25",
+  "RBTZ25",
+  "RBTF26",
+  "RBTG26",
+  "RBTH26",
+  "RBTJ26",
+  "RBTK26",
+  "RBTM26",
+  "RBTN26",
+  "RBTQ26",
+  "RBTU26",
+  "RBTV26"
+ ],
+ "last_trade_date": "2026-09-18",
+ "min_gross": 20,
+ "sierra_contracts_with_data": [
+  "HOTF26",
+  "HOTG26",
+  "HOTH26",
+  "HOTJ26",
+  "HOTK26",
+  "HOTM26",
+  "HOTN26",
+  "HOTQ26",
+  "HOTU26",
+  "HOTV26",
+  "HOTX25",
+  "HOTZ25",
+  "RBTF26",
+  "RBTG26",
+  "RBTH26",
+  "RBTJ26",
+  "RBTK26",
+  "RBTM26",
+  "RBTN26",
+  "RBTQ26",
+  "RBTU26",
+  "RBTV26",
+  "RBTX25",
+  "RBTZ25"
+ ],
+ "spans_et_from_18:00_prior": {
+  "to_1350": "13:50:00",
+  "to_1430": "14:30:00"
+ }
+}
