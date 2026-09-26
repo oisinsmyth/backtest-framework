@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 362 of these records carry neither field —
+**No Status or Category column, deliberately.** 363 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -701,6 +701,7 @@ would look like data. The tokens are what is shown.
 | D626 | REGISTRATION — a TAS premium goes with net SELLING in the settlement window: a confirmation on data no one has read | [PRE-REG](D626-PRE-REG-a-TAS-premium-goes-with-selling-in-the-window.md) |
 | D627 | H1a FAILS on both roots, with NEGATIVE slopes. The premise is killed as pre-registered, and the dependent carried a lif… | [PRE-REG](D627-PRE-REG-h1a-rebalance-size-and-window-volume.md) · [RESULT](D627-RESULT-h1a-fails-with-negative-slopes-on-both-roots.md) |
 | D628 | Option D's diagnosis: correcting the life cycle does not rescue the window line, NG's TAS link is too weak for the vaul… | [record](D628-the-settlement-ledger-stops-and-the-vault-stays-unread.md) |
+| D629 | REGISTRATION — signed H1: does the leveraged funds' predicted rebalance show up as aggressor-signed flow in the settlem… | [PRE-REG](D629-PRE-REG-signed-h1-rebalance-and-aggressor-window-flow.md) |
 
 <!-- REGISTER:END -->
 
