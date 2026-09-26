@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 365 of these records carry neither field —
+**No Status or Category column, deliberately.** 366 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -702,7 +702,7 @@ would look like data. The tokens are what is shown.
 | D627 | H1a FAILS on both roots, with NEGATIVE slopes. The premise is killed as pre-registered, and the dependent carried a lif… | [PRE-REG](D627-PRE-REG-h1a-rebalance-size-and-window-volume.md) · [RESULT](D627-RESULT-h1a-fails-with-negative-slopes-on-both-roots.md) |
 | D628 | Option D's diagnosis: correcting the life cycle does not rescue the window line, NG's TAS link is too weak for the vaul… | [record](D628-the-settlement-ledger-stops-and-the-vault-stays-unread.md) |
 | D629 | signed H1: NG PASSES (provisional), CL is INCONCLUSIVE. NG's pass is conditional on the return control: without it, the… | [PRE-REG](D629-PRE-REG-signed-h1-rebalance-and-aggressor-window-flow.md) · [RESULT](D629-RESULT-ng-passes-conditional-on-the-return-and-cl-is-inconclusive.md) |
-| D630 | REGISTRATION — H2 on NG: does NG's price move into the settlement in the direction of the leveraged funds' predicted re… | [PRE-REG](D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md) |
+| D630 | H2 on NG PASSES: $66 a trade gross, $40 net, t 5.01. The move reverts after the settlement, it is concentrated in 2022,… | [PRE-REG](D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md) · [RESULT](D630-RESULT-h2-ng-passes-and-the-move-reverts-after-the-settlement.md) |
 
 <!-- REGISTER:END -->
 

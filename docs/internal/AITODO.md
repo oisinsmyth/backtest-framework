@@ -278,7 +278,11 @@ outputs stay byte-identical.
             - POST HOC: NG's pass exists only with the return control. Without it, window flow runs against the funds (t −7.98). In the top fund-size tercile β is 0.008 ± 0.02, so the pass does not look like a proportional footprint.
           - **Next:**
             1. After D626's read (2026-10-10): extend `check_sierra_aggressor.py` to CL/NG on the post-vault sessions. r < 0.8 VOIDs that root (D629 §6).
-            2. **H2 on NG (the principal, 2026-09-26: "Pre-register H2 on NG"):** D630. Inputs: `build_ng_minute_bars.py` (exact against the volume panel) and POWER `ledger_power_h2_ng.py`. The detectable effect ($26) equals the cost, so a breakeven effect has about 0.41 power and a quarter of the ledger's predicted move 0.995. The vault is looked at only after an in-sample PASS and on the principal's word.
+            2. **D630 RESULT (2026-09-26): H2 on NG PASSES.** $66 a trade gross, $40 net, t 5.01; placebo −0.42; rotation p95 1.47. Gate 1 is met on NG, with H1 provisional.
+               - The move reverts after the settlement (+$29, t 3.98).
+               - POST HOC partner control: traded beats untraded at the same move, +$65 (t 4.76).
+               - Caveats: the stress fill nets −$9; the result is concentrated in 2022 (without it, net +$5); DSR 0.87 < 0.95; the MNG net Sharpe is 0.44 (misses C-a); fund size acts as a threshold.
+               - **Next: the vault's one look (D630 §8) is the principal's decision.** Build the NG vault inputs and freeze them first. Inputs: `build_ng_minute_bars.py` (exact against the volume panel) and POWER `ledger_power_h2_ng.py`. The detectable effect ($26) equals the cost, so a breakeven effect has about 0.41 power and a quarter of the ledger's predicted move 0.995. The vault is looked at only after an in-sample PASS and on the principal's word.
             3. The Sierra trial ends 2026-10-17. Every file is on disk.
         - Signed flow estimated from one-second bars, carried with a measured band.
         - C2 on Alpha Vantage trade bars, full in-sample; this replaces A7's Arca clause.
