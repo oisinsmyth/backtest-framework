@@ -1,4 +1,4 @@
-# Index reweight flow: amendments to the deposit (v1.3 + IR-A1–IR-A13)
+# Index reweight flow: amendments to the deposit (v1.3 + IR-A1–IR-A14)
 
 > The deposit, `User-Doc-Deposit/INDEX_REWEIGHT_FLOW_PREREG.md` (v1.3), is read-only here. Its §0.2
 > says agreed changes are versioned edits made *before* code. This file is those edits, kept beside
@@ -231,3 +231,24 @@ IR-A4 and before any drift, CIM or ΔN is computed.*
   - The Brent comparison above is written into Gate R0's output as a known answer.
 - **Unchanged:** the LME row of IR-A4 (Westmetall, interpolated, with its band). CME prices remain the settlement
   strip; KE's come from its own pull, with Sierra's daily file as a cross-check.
+
+## IR-A14. Gate R0's rulings after its UNRESOLVED (proxy) run
+
+*Source: the principal, 2026-09-27 ("Go with your recommendations, fill the holes and rerun R0"), on
+D634-RESULT §5. Written after that result and before the re-run.*
+
+1. **The 2020 holes are filled and R0 is re-run once.**
+   - `fut_settle_strip` lacks most CME roots on 2020-02-27 and 2020-06-30. Those settlements are filled from Sierra
+     Chart's daily files, and only where the strip has none (`scripts/fill_strip_holes_2020_sierra.py` →
+     `data/index_reweight/strip_holes_2020_sierra.csv`, 44 settlements across 13 roots).
+   - **Known answers:** Sierra equals the strip exactly on 156 neighbouring cells, and equals the ledger's EIA fills
+     for CL and NG on all 4 shared cells.
+   - The re-run writes `gate_r0_rerun.json` and `drift_tracker_daily_rerun.csv.gz`, and happens once. The first
+     run's output stays as it is and reproduces byte for byte.
+2. **UNRESOLVED (proxy) is resolved by the long/short pair split** (D634-RESULT §4). For each single-commodity pair,
+   the rebuild's part of the monthly error (the half-sum of the two funds' errors) must be within 5 bp in ≥ 90% of
+   months, with both daily rules passing and coverage holding. **The re-run's tracker is then the one that is
+   frozen.**
+3. **The LME stays a measured band.** It moves any weight by at most 0.015% and flips no ΔN sign. The BCOM
+   aggregate check (UCD/CMD) is reported and does not gate.
+4. **det stays the rule's BD4** (IR-A3). BCOM's printed dates are reported beside.

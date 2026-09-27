@@ -52,6 +52,9 @@ from backtest_framework.instruments.future import Future  # noqa: E402
 
 IR = REPO / "data" / "index_reweight"
 OUT = IR / "gate_r0.json"
+RERUN = IR / "gate_r0_rerun.json"
+HOLE_FILL = IR / "strip_holes_2020_sierra.csv"
+TRACKER_RERUN = IR / "drift_tracker_daily_rerun.csv.gz"
 TRACKER = IR / "drift_tracker_daily.csv.gz"
 FACTS = IR / "methodology_facts.json"
 KE_STRIP = IR / "ke_settle_strip.csv.gz"
@@ -212,12 +215,19 @@ def cme_ym(contract: str, session: str) -> tuple[int, int] | None:
 Prices = dict[str, dict[str, dict[tuple[int, int], float]]]  # comp -> day -> contract -> price
 
 
-def load_cme(reads: dict[str, Any]) -> tuple[Prices, dict[str, list[str]]]:
+def load_cme(reads: dict[str, Any], fill: bool = False) -> tuple[Prices, dict[str, list[str]]]:
     st = load_panel("fut_settle_strip", reserved_from=CUT, usecols=["root", "contract", "ref", "settle"])
     reads["fut_settle_strip"] = {"sha256": st.sha256, **st.record}
     ke = pd.read_csv(KE_STRIP, encoding="utf-8", dtype={"root": str, "contract": str, "ref": str})
     reads["ke_settle_strip"] = {"sha256": sha256(KE_STRIP), "rows": int(len(ke))}
     df = pd.concat([st.frame, ke], ignore_index=True)
+    if fill:
+        # IR-A14 ruling 1: the 2020 holes, from Sierra's daily settlements, only where the strip has none
+        h = pd.read_csv(HOLE_FILL, encoding="utf-8", dtype={"root": str, "contract": str, "ref": str})
+        have = set(zip(df["root"].astype(str), df["contract"].astype(str), df["ref"].astype(str)))
+        h = h[[k not in have for k in zip(h["root"], h["contract"], h["ref"])]]
+        reads["strip_holes_2020_sierra"] = {"sha256": sha256(HOLE_FILL), "rows_added": int(len(h))}
+        df = pd.concat([df, h[["root", "contract", "ref", "settle"]]], ignore_index=True)
     df = df[(df["ref"].astype(str) >= START) & (df["ref"].astype(str) < CUT)]
     out: Prices = {}
     copies: dict[str, list[str]] = {}
@@ -705,12 +715,13 @@ def year_excluded(missing_weight: dict[str, float]) -> bool:
 
 
 # ------------------------------------------------------------------ build
-def build() -> dict[str, Any]:
+def build(fill: bool = False) -> dict[str, Any]:
+    tracker_path = TRACKER_RERUN if fill else TRACKER
     reads: dict[str, Any] = {"spec_sha256": sha256(SPEC)}
     known: dict[str, Any] = {"table13_worst_miss": table13(), "unit_tests": unit_tests(),
                              "brent_vs_bz": brent_known_answer()}
     cip = cips()
-    cme, copies = load_cme(reads)
+    cme, copies = load_cme(reads, fill)
     prices: Prices = {**cme, **load_ice(reads), **load_lme(reads)}
     assert_no_vault(prices)
     for y in range(2015, 2026):
@@ -791,9 +802,11 @@ def build() -> dict[str, Any]:
     rates = load_rates()
     Ragg = aggregate_returns(prices, cip, cim, bdays, bd, det, rws)
     pub: dict[str, Any] = {}
+    fund_rows: dict[str, list[dict[str, Any]]] = {}
     for f, (L, comp, first, last) in FUNDS.items():
         Rs = Ragg if comp == "BCOM" else R[comp]
         rows = replicate(navs[f], L, bdays, bd, Rs, rates, first, last)
+        fund_rows[f] = rows
         v = fund_verdict(rows, L)
         v["component"], v["L"], v["span"] = comp, L, [first, last]
         flip = share(replicate(navs[f], -L, bdays, bd, Rs, rates, first, last))
@@ -871,9 +884,9 @@ def build() -> dict[str, Any]:
     else:
         verdict = "PASS"
 
-    TRACKER.parent.mkdir(parents=True, exist_ok=True)
+    tracker_path.parent.mkdir(parents=True, exist_ok=True)
     tr = pd.DataFrame(tracker, columns=["day", "target_year", "component", "weight"])
-    tr.to_csv(TRACKER, index=False, encoding="utf-8", lineterminator="\n", compression={"method": "gzip", "mtime": 0})
+    tr.to_csv(tracker_path, index=False, encoding="utf-8", lineterminator="\n", compression={"method": "gzip", "mtime": 0})
     doc = {"spec": "D634 (8fb1619 + its s.8 amendment), IR-A1..IR-A13", "cut": CUT,
            "verdict": {"verdict": verdict, "roll_day_failures": roll_fail, "coverage_failures": cov_fail,
                        "daily_failures": daily_fail, "monthly_failures": mon_fail, "aggregate_failures": agg_fail},
@@ -883,11 +896,68 @@ def build() -> dict[str, Any]:
            "bands": {"lme_3m_end": band_lme, "printed_det_dates": printed_dn,
                      "aum": "dN_aum_low/dN_aum_high per row (IR-A5); the sign never changes with AUM"},
            "deviations": DEVIATIONS, "reads": reads,
-           "tracker": {"file": str(TRACKER.relative_to(REPO)), "sha256": sha256(TRACKER), "rows": len(tr)}}
+           "tracker": {"file": str(tracker_path.relative_to(REPO)), "sha256": sha256(tracker_path), "rows": len(tr)}}
+    if fill:
+        split = pair_split(fund_rows)
+        ok = all(v["rebuild_share_within_5bp"] >= MONTHLY_MIN for v in split.values())
+        ruled = ("RESOLVED" if (not roll_fail and not cov_fail and not daily_fail and ok) else
+                 "NOT RESOLVED: " + ("the rebuild part misses 5 bp a month" if not ok else "a daily or coverage rule fails"))
+        doc["rerun"] = {"rulings": RULINGS, "rerun_of": {"file": str(OUT.relative_to(REPO)), "sha256": sha256(OUT)},
+                        "pair_split": split, "verdict_under_rulings": ruled}
     missing = [k for k in REQUIRED_OUTPUTS if k not in doc]
     if missing:
         raise GateR0Error(f"declared outputs missing: {missing}")
     return doc
+
+
+RULINGS = [
+    "1. The 2020-02-27 and 2020-06-30 strip holes are filled from Sierra Chart's daily settlements, only where the "
+    "strip has none (fill_strip_holes_2020_sierra.py; exact on 156 neighbouring cells, and equal to the ledger's "
+    "EIA fills on CL and NG), and R0 is re-run once as a logged data fix.",
+    "2. UNRESOLVED (proxy) is resolved by the long/short pair split: for each single-commodity pair, the rebuild's "
+    "part of the monthly error (the half-sum of the two funds' errors) must be within 5 bp in >= 90% of months, "
+    "with the daily rules passing and coverage holding.",
+    "3. The LME stays a measured band (<= 0.015% of weight, no dN sign flip in the first run); the BCOM aggregate "
+    "check is reported and does not gate.",
+    "4. det stays the rule's BD4 (IR-A3); BCOM's printed dates are reported beside.",
+]
+PAIRS = {"Natural Gas": ("BOIL", "KOLD"), "WTI Crude Oil": ("UCO", "SCO"), "Gold": ("UGL", "GLL"),
+         "Silver": ("AGQ", "ZSL")}
+
+
+def month_errors(rows: list[dict[str, Any]], L: int) -> dict[str, float]:
+    by: dict[str, list[dict[str, Any]]] = {}
+    for r in rows:
+        by.setdefault(r["date"][:7], []).append(r)
+    out = {}
+    for mth, rs in by.items():
+        if any(r["ratio"] is None for r in rs):
+            continue
+        rec = float(np.prod([r["ratio"] for r in rs])) - 1
+        imp = float(np.prod([1 + ((r["nav1"] - r["acc"]) / r["nav0"] - 1) / L for r in rs])) - 1
+        out[mth] = (rec - imp) * 1e4
+    return out
+
+
+def pair_split(fund_rows: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
+    """IR-A14 ruling 2: an error in the rebuilt subindex enters both funds' monthly errors with the same sign, an
+    accrual the NAV model misses with opposite signs (after dividing by +-L). Half-sum = rebuild; half-difference =
+    proxy."""
+    out = {}
+    for comp, (fl, fs) in PAIRS.items():
+        el = month_errors(fund_rows[fl], FUNDS[fl][0])
+        es = month_errors(fund_rows[fs], FUNDS[fs][0])
+        ms = sorted(set(el) & set(es))
+        reb = np.array([(el[m] + es[m]) / 2 for m in ms])
+        prx = np.array([(es[m] - el[m]) / 2 for m in ms])
+        out[comp] = {"funds": [fl, fs], "months": len(ms),
+                     "rebuild_share_within_5bp": round(float((np.abs(reb) <= BP_TOL).mean()), 6),
+                     "rebuild_median_abs_bp": round(float(np.median(np.abs(reb))), 4),
+                     "rebuild_worst": sorted(((m, round(float(v), 2)) for m, v in zip(ms, reb)),
+                                             key=lambda t: -abs(t[1]))[:5],
+                     "proxy_median_abs_bp": round(float(np.median(np.abs(prx))), 4),
+                     "proxy_mean_bp": round(float(prx.mean()), 4)}
+    return out
 
 
 def dump(doc: dict[str, Any]) -> str:
@@ -950,7 +1020,31 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--rerun", action="store_true", help="IR-A14: the one logged re-run with the 2020 holes filled")
+    ap.add_argument("--check-rerun", action="store_true")
     a = ap.parse_args(argv)
+    if a.rerun:
+        if not OUT.exists():
+            raise SystemExit("the first run's gate_r0.json is missing; the re-run follows it")
+        if RERUN.exists():
+            raise SystemExit(f"{RERUN.name} exists: the logged re-run happens once (IR-A14)")
+        doc = build(fill=True)
+        RERUN.write_text(dump(doc), encoding="utf-8", newline="\n")
+        v = doc["verdict"]
+        print(f"GATE R0 (re-run, holes filled): registered {v['verdict']}; under the rulings: "
+              f"{doc['rerun']['verdict_under_rulings']}")
+        for f, x in doc["published"].items():
+            print(f"  {f:4s} {x['component']:14s} roll {x['roll_days']['share']} other {x['other_days']['share']} "
+                  f"monthly {x['monthly']['share']} ({x['monthly']['months']} months)")
+        for c, s in doc["rerun"]["pair_split"].items():
+            print(f"  pair {c:14s} rebuild within 5 bp {s['rebuild_share_within_5bp']} (median "
+                  f"{s['rebuild_median_abs_bp']} bp); proxy mean {s['proxy_mean_bp']} bp")
+        return 0
+    if a.check_rerun:
+        if dump(build(fill=True)) != RERUN.read_text(encoding="utf-8"):
+            raise SystemExit("CHECK FAILED: the rebuild differs from gate_r0_rerun.json")
+        print("check OK: byte for byte")
+        return 0
     if a.selftest:
         return selftest()
     if a.run:
