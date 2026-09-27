@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 374 of these records carry neither field —
+**No Status or Category column, deliberately.** 375 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -707,6 +707,7 @@ would look like data. The tokens are what is shown.
 | D632 | Stage C1 on NG is NOT RETAINED: the forecast creation flow makes the ledger WORSE on window flow, and a better forecast… | [PRE-REG](D632-PRE-REG-stage-c1-the-funds-creation-flow-on-ng.md) · [RESULT](D632-RESULT-stage-c1-not-retained-creations-are-not-window-flow.md) |
 | D633 | Stage D on NG is NOT RETAINED: the TAS imbalance carries nothing about the window's aggressive flow, so adding it only… | [PRE-REG](D633-PRE-REG-stage-d-the-tas-imbalance-on-ng.md) · [RESULT](D633-RESULT-stage-d-not-retained-the-tas-imbalance-is-not-window-flow.md) |
 | D634 | Gate R0 is UNRESOLVED (proxy). The rebuilt subindices match the published ones; the misses are the fund proxy, two data… | [PRE-REG](D634-PRE-REG-gate-r0-rebuilding-bcom-drifted-weights.md) · [RESULT](D634-RESULT-gate-r0-unresolved-proxy-the-rebuild-is-right.md) |
+| D635 | REGISTRATION — Gate C0 of the index-reweight model: does the index funds' predicted roll flow reach the settlement wind… | [PRE-REG](D635-PRE-REG-gate-c0-index-roll-flow-in-the-settlement-window.md) |
 
 <!-- REGISTER:END -->
 
