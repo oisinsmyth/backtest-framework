@@ -91,9 +91,14 @@
     from Sierra. The rebuild meets 5 bp a month in 97–100% of months, and ΔN was unchanged. **The re-run's tracker
     (`drift_tracker_daily_rerun.csv.gz`) is the one to freeze.**
 - **Next:**
-  1. Source the CME settlement windows for 11 roots (IR-A9); C0 needs them.
-  2. The C0 pre-registration. It must settle the ZL/ZM roll-in gap and the GC/ZS norm pad.
-  3. Fetch post-vault Databento `trades` for the sign check (IR-A7).
+  - **Settlement windows DONE (`3764e43`):** the 11 roots are MEASURED over 2015-12 → 2025-02. The documented
+    window reproduces the settlement on 95–100% of days in every year (KE from 2017, ZM from 2016).
+  - **C0 is PRE-REGISTERED: D635 (`e001171`).**
+  1. **The sign-check inputs (D635 §7), on the principal's approval:** Databento `trades` for the 15 roots from
+     2026-09-19 (quote first), and Sierra files for the contracts trading now. Energy is readable only after
+     2026-10-10.
+  2. C0's POWER step (D635 §8), then the runner, then the one run.
+  3. Transcribe the GSCI RPDW and schedule into a CSV (the earlier agent's write was blocked).
   4. The freeze by 2026-10-16 (IR-A10).
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
