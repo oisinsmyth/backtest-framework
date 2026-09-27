@@ -34,6 +34,24 @@ source. Opened 2026-09-27 on the principal's word ("open the shock classifier").
   - Costs: the repo's default D508 line for MNQ, MES, MCL and MGC.
   - Prop limits: D386's fourteen plans through D440's `simulate_provider`.
 
+## SC-A6. Gate 0's coverage bar, read on usable sessions
+
+*Source: the principal, 2026-09-27 ("Define usable, re-run"), on Gate 0's literal G1 failure (`775f215`). Written
+before any price is read.*
+
+- **A usable session** is an NYSE trading day that is not a half day (the ES calendar's early closes). CME's
+  holiday sessions, when the NYSE is closed, are not trading days for the model.
+  - **Archive-outage days are excluded and logged:** NYSE days on which at least four of the nine non-equity roots
+    have no bar in their window. In 2016-01 → 2025-02 the rule finds 2020-02-27, 2020-02-28 and 2020-06-30, the holes
+    the settlement strip also has.
+  - The same usable set feeds shock detection, the time-of-day volatility, the peer betas and every test.
+- **The 99% bar applies to the four TRADED markets** (NQ, ES, CL, GC), on their bars in their windows.
+- **A peer needs a PRICE at each minute: its last trade no more than 5 minutes old** (forward-filled within the
+  session), on at least 99% of window minutes. Its literal bar coverage is reported beside it. A thin market prints
+  no bar in a minute with no trade, and the price has not moved in that minute.
+- **RTY is a peer from 2017-07-10**, when the fixture begins it. Before that NQ and ES have three peers, above the
+  deposit's minimum of two.
+
 ## Facts established at the opening (2026-09-27), recorded before any ruling
 
 - **The prior reads of this ground, to be disclosed in every result:**

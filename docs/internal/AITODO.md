@@ -213,8 +213,19 @@
   - calendar ✓ (D585, all five events 2016 → 2026);
   - **GC window 08:25: pre-09:00 bars to build** from the on-disk archive (GC, SI, 6E, ZN);
   - **no in-sample aggressor trades** (Q3).
-- **Rulings needed:** the prior-read handling; Q3 (bars-only v1, with the time exit replacing the flow-flip); the GC
-  extension; the MCL pre-listing cost line; Q1/Q2 defaults.
+- **Ruled (SC-A2..A6):**
+  - run as written, with the prior reads disclosed and the unconditional baseline beside each class;
+  - bars-only v1;
+  - the GC-complex pre-09:00 bars;
+  - the MCL cost line throughout; Q1/Q2 as for LETF;
+  - Gate 0 read on usable sessions.
+- **Phase 1 / GATE 0 PASSED** (`scripts/shock_gate0.py` → `data/shock/gate0.json`):
+  - 2,282 usable sessions, 2016-01 → 2025-02;
+  - traded markets 99.99–100%; peers priced within 5 minutes on ≥ 99.99% of minutes (BZ literal 96.3%, reported);
+  - calendar complete; roll days listed;
+  - outage days 2020-02-27, 2020-02-28 and 2020-06-30 excluded.
+- **Next: Phase 2**: σ_tod, the detector, betas, C, the classifier and the deposit's 13 unit tests. It reports shock
+  counts per class, instrument and year, before any return is read.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
