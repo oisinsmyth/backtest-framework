@@ -109,23 +109,24 @@ def test_every_row_carries_its_verbatim_text_so_the_page_renders_without_the_dep
 #: The per-document claimed counts D607 quotes, as amended 2026-09-21 when round 3's tests
 #: (D608-D606) were staged and recorded: 28 -> 43, and again 2026-09-22 when round 4's ledger
 #: tests (D610 seventeen, D611 thirteen, D612 five, D619 one) were staged: 43 -> 79, ledger
-#: 29 -> 65. The tracker (`docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md`) carries the
-#: running figure. **Editing these numbers is the point.** They are pinned so that a claim
-#: added without amending the record turns this red; the fix is to update both together, never
-#: to loosen the assertion into `>=`.
-CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 6, "shock": 2, "letf": 0}
-CLAIMED_TOTAL = 79
+#: 29 -> 65; and 2026-09-27 when the LETF close-flow model's Phase 3 claimed all nine of its
+#: tests (`tests/unit/test_letf_model.py`): letf 0 -> 9, 79 -> 88. The tracker
+#: (`docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md`) carries the running figure. **Editing these
+#: numbers is the point.** They are pinned so that a claim added without amending the record turns
+#: this red; the fix is to update both together, never to loosen the assertion into `>=`.
+CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 6, "shock": 2, "letf": 9}
+CLAIMED_TOTAL = 88
 
 
-def test_the_claimed_counts_are_the_ones_the_record_quotes_and_letf_is_at_zero():
+def test_the_claimed_counts_are_the_ones_the_record_quotes():
     """The numbers D607 quotes. A count that drifts silently is the whole defect."""
     claimed = {doc: sum(1 for r in ROWS if r.doc == doc and r.is_claimed) for doc in DOC_KEYS}
     assert claimed == CLAIMED_PER_DOC
     assert sum(claimed.values()) == CLAIMED_TOTAL == sum(CLAIMED_PER_DOC.values())
     assert sum(1 for r in ROWS if not r.is_claimed) == EXPECTED_TOTAL - CLAIMED_TOTAL
-    assert claimed["letf"] == 0, (
-        "LETF_CLOSE_FLOW_PREREG.md has nine numbered tests and no repository test names any "
-        "of them; when that changes, amend the record rather than this line alone"
+    assert claimed["letf"] == 9, (
+        "LETF_CLOSE_FLOW_PREREG.md has nine numbered tests, all claimed by test_letf_model.py; "
+        "when that changes, amend the record rather than this line alone"
     )
 
 

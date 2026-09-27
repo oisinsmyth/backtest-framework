@@ -80,7 +80,7 @@ def main() -> int:
         print(f"  {int(dup.sum())} duplicate (contract, day, bar) rows across files; first kept")
         b = b[~dup]
     b = b.sort_values(["root", "day", "contract", "hhmm"]).reset_index(drop=True)
-    b.to_csv(OUT, index=False, compression="gzip", float_format="%.2f")
+    b.to_csv(OUT, index=False, compression="gzip", float_format="%.2f", encoding="utf-8")
     META.write_text(json.dumps({"builder": "scripts/build_fut_index_anchor_bars.py", "rows": int(len(b)), "bars": list(KEEP),
                                 "built_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                                 "span": [b["day"].min(), b["day"].max()], "holdout": "every archive session; readers cut"},

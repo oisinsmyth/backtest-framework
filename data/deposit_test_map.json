@@ -259,7 +259,7 @@
       "claim": {
         "kind": "message",
         "file": "tests/unit/test_settlement_windows.py",
-        "line": 153,
+        "line": 166,
         "symbol": null
       },
       "covered_via": null,
@@ -2127,10 +2127,15 @@
       "text": "`rebalance_flow(L=3, A=1e9, r=0.02)` = +1.2e8.",
       "paraphrase": "Rebalance flow at leverage three and a two percent move",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 42,
+        "symbol": "test_letf_01_rebalance_flow_long_3x_up_day_buys"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2139,10 +2144,15 @@
       "text": "`rebalance_flow(L=-3, A=1e9, r=0.02)` = +2.4e8 (same sign as the move).",
       "paraphrase": "An inverse product's flow carries the same sign as the move",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 46,
+        "symbol": "test_letf_02_rebalance_flow_inverse_3x_up_day_also_buys"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2151,10 +2161,15 @@
       "text": "`rebalance_flow(L=2, A=1e9, r=-0.01)` = \u22122e7.",
       "paraphrase": "A negative move at leverage two gives negative flow",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 52,
+        "symbol": "test_letf_03_rebalance_flow_long_2x_down_day_sells"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2163,10 +2178,15 @@
       "text": "Zero return gives zero flow for all L.",
       "paraphrase": "A zero return gives zero flow at every leverage",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 56,
+        "symbol": "test_letf_04_zero_return_zero_flow_for_every_leverage"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2175,10 +2195,15 @@
       "text": "Point-in-time guard: the AUM used on day t equals the stored value for t\u22121, and never t.",
       "paraphrase": "The AUM used on day t is the stored prior-day value",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 70,
+        "symbol": "test_letf_05_aum_used_on_day_t_is_the_stored_value_for_t_minus_1"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2187,10 +2212,15 @@
       "text": "The rolling V and \u03c3_d on day t use no data from day t or later (look-ahead test).",
       "paraphrase": "Rolling volume and sigma read no data from day t onward",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 95,
+        "symbol": "test_letf_06_trailing_volume_and_sigma_use_no_data_from_day_t_or_later"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2199,10 +2229,15 @@
       "text": "Contract conversion: Q_usd = 1e7 at NQ price 25,000 gives 20 contracts.",
       "paraphrase": "Dollar notional to contract count at a stated price",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 118,
+        "symbol": "test_letf_07_ten_million_at_nq_25000_is_20_contracts"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2211,10 +2246,15 @@
       "text": "DST: 15:00 ET maps correctly to UTC in both March and November transition weeks.",
       "paraphrase": "The close maps to UTC in both DST transition weeks",
       "cls": "execution",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 126,
+        "symbol": "test_letf_08_1500_et_maps_to_utc_across_both_transition_weeks"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     },
     {
       "doc": "letf",
@@ -2223,10 +2263,15 @@
       "text": "Early-close sessions are excluded from the trade calendar.",
       "paraphrase": "Early-close sessions are excluded from the trade calendar",
       "cls": "data_guard",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_letf_model.py",
+        "line": 143,
+        "symbol": "test_letf_09_early_close_sessions_are_excluded_from_the_trade_calendar"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "LETF Phase 3: src/backtest_framework/letf/model.py."
     }
   ]
 }

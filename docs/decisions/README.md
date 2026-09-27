@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 376 of these records carry neither field —
+**No Status or Category column, deliberately.** 378 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -701,14 +701,16 @@ would look like data. The tokens are what is shown.
 | D626 | REGISTRATION — a TAS premium goes with net SELLING in the settlement window: a confirmation on data no one has read | [PRE-REG](D626-PRE-REG-a-TAS-premium-goes-with-selling-in-the-window.md) |
 | D627 | H1a FAILS on both roots, with NEGATIVE slopes. The premise is killed as pre-registered, and the dependent carried a lif… | [PRE-REG](D627-PRE-REG-h1a-rebalance-size-and-window-volume.md) · [RESULT](D627-RESULT-h1a-fails-with-negative-slopes-on-both-roots.md) |
 | D628 | Option D's diagnosis: correcting the life cycle does not rescue the window line, NG's TAS link is too weak for the vaul… | [record](D628-the-settlement-ledger-stops-and-the-vault-stays-unread.md) |
-| D629 | signed H1: NG PASSES (provisional), CL is INCONCLUSIVE. NG's pass is conditional on the return control: without it, the… | [PRE-REG](D629-PRE-REG-signed-h1-rebalance-and-aggressor-window-flow.md) · [RESULT](D629-RESULT-ng-passes-conditional-on-the-return-and-cl-is-inconclusive.md) |
+| D629 | signed H1: NG PASSES (provisional), CL is INCONCLUSIVE. NG's pass is conditional on the return control: without it, the… | [PRE-REG](D629-PRE-REG-signed-h1-rebalance-and-aggressor-window-flow.md) · [RESULT](D629-RESULT-ng-passes-conditional-on-the-return-cl-inconclusive.md) |
 | D630 | H2 on NG PASSES: $66 a trade gross, $40 net, t 5.01. The move reverts after the settlement, it is concentrated in 2022,… | [PRE-REG](D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md) · [RESULT](D630-RESULT-h2-ng-passes-and-the-move-reverts-after-the-settlement.md) |
 | D631 | Stage B on NG is NOT RETAINED: its flow gain passes but is general order-flow persistence (the midday placebo gains as… | [PRE-REG](D631-PRE-REG-stage-b-the-update-step-on-ng.md) · [RESULT](D631-RESULT-stage-b-not-retained-the-flow-gain-is-persistence.md) |
 | D632 | Stage C1 on NG is NOT RETAINED: the forecast creation flow makes the ledger WORSE on window flow, and a better forecast… | [PRE-REG](D632-PRE-REG-stage-c1-the-funds-creation-flow-on-ng.md) · [RESULT](D632-RESULT-stage-c1-not-retained-creations-are-not-window-flow.md) |
-| D633 | Stage D on NG is NOT RETAINED: the TAS imbalance carries nothing about the window's aggressive flow, so adding it only… | [PRE-REG](D633-PRE-REG-stage-d-the-tas-imbalance-on-ng.md) · [RESULT](D633-RESULT-stage-d-not-retained-the-tas-imbalance-is-not-window-flow.md) |
+| D633 | Stage D on NG is NOT RETAINED: the TAS imbalance carries nothing about the window's aggressive flow, so adding it only… | [PRE-REG](D633-PRE-REG-stage-d-the-tas-imbalance-on-ng.md) · [RESULT](D633-RESULT-stage-d-not-retained-tas-imbalance-is-not-window-flow.md) |
 | D634 | Gate R0 is UNRESOLVED (proxy). The rebuilt subindices match the published ones; the misses are the fund proxy, two data… | [PRE-REG](D634-PRE-REG-gate-r0-rebuilding-bcom-drifted-weights.md) · [RESULT](D634-RESULT-gate-r0-unresolved-proxy-the-rebuild-is-right.md) |
 | D635 | REGISTRATION — Gate C0 of the index-reweight model: does the index funds' predicted roll flow reach the settlement wind… | [PRE-REG](D635-PRE-REG-gate-c0-index-roll-flow-in-the-settlement-window.md) |
 | D636 | REGISTRATION — Stages R1, R2 and R3 of the index-reweight model: do the January rebalance flows move prices on the exec… | [PRE-REG](D636-PRE-REG-stages-r1-r2-r3-the-january-rebalance-trades.md) |
+| D637 | RESULT: LETF close-flow Gate 0. The Nasdaq set PASSES; the S&P set is estimated from 2019-10 and MISSING 39% of its flo… | [RESULT](D637-RESULT-letf-gate-0-nasdaq-passes-sp-incomplete-before-2019.md) |
+| D638 | LETF close-flow Phase 2, NQ: bars, calendar, event flags and the data QA. Every bar the model reads is present | [record](D638-letf-phase-2-nq-bars-calendar-flags-qa.md) |
 
 <!-- REGISTER:END -->
 

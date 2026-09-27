@@ -8,7 +8,7 @@ Five of the pre-registration documents deposited in `docs/internal/User-Doc-Depo
 
 **A percentage below is a COUNT, not a verdict.** "claimed" means one repository test names that number in its function name, a section banner, or a docstring or assertion message. It does not say the test is right, that the claimed items are the important ones, or that the unclaimed ones are not. Nothing here has been run against a market.
 
-**The three spellings, and why a grep misses half.** A claim is made in one of three conventions -- a function name (`def test_ledger_51_...`), a section banner (`# ===== ledger test 66`), or a docstring or assertion message (`Ledger unit test 11 and shock unit test 9, long side.`). Of the 79 claims here, **59 use the function name, 15 a docstring or message and 5 a banner**; at the 28 claims D607 opened with, `grep 'def test_ledger'` found six. **Going forward (D607): a test that discharges a numbered deposit item names the number in its FUNCTION NAME** -- `test_<doc>_<number>_<what>` -- because that is the spelling `pytest -k`, a traceback, a test id and a grep all see. The other two conventions stay valid for the tests that already use them, `scripts/deposit_test_map.py --scan` reads all three, and one function name can only carry ONE number -- an item discharged by a test named for a different document still needs the docstring spelling.
+**The three spellings, and why a grep misses half.** A claim is made in one of three conventions -- a function name (`def test_ledger_51_...`), a section banner (`# ===== ledger test 66`), or a docstring or assertion message (`Ledger unit test 11 and shock unit test 9, long side.`). Of the 88 claims here, **68 use the function name, 15 a docstring or message and 5 a banner**; at the 28 claims D607 opened with, `grep 'def test_ledger'` found six. **Going forward (D607): a test that discharges a numbered deposit item names the number in its FUNCTION NAME** -- `test_<doc>_<number>_<what>` -- because that is the spelling `pytest -k`, a traceback, a test id and a grep all see. The other two conventions stay valid for the tests that already use them, `scripts/deposit_test_map.py --scan` reads all three, and one function name can only carry ONE number -- an item discharged by a test named for a different document still needs the docstring spelling.
 
 ---
 
@@ -20,8 +20,8 @@ Five of the pre-registration documents deposited in `docs/internal/User-Doc-Depo
 | Index reweight flow (`INDEX_REWEIGHT_FLOW_PREREG.md`) | 13. Required unit tests (line 347) | 28 | 6 | 0 | 0 | 22 | 21.4% |
 | Opening agent state (`OPENING_AGENT_STATE_PREREG.md`) | 15. Required unit tests (line 334) | 25 | 6 | 4 | 0 | 15 | 24.0% |
 | Shock classifier (`SHOCK_CLASSIFIER_PREREG.md`) | 9. Required unit tests (line 293) | 13 | 2 | 0 | 0 | 11 | 15.4% |
-| LETF close flow (`LETF_CLOSE_FLOW_PREREG.md`) | 8. Required unit tests (line 242) | 9 | 0 | 0 | 0 | 9 | 0.0% |
-| **All five** | | **146** | **79** | **4** | **5** | **58** | **54.1%** |
+| LETF close flow (`LETF_CLOSE_FLOW_PREREG.md`) | 8. Required unit tests (line 242) | 9 | 9 | 0 | 0 | 0 | 100.0% |
+| **All five** | | **146** | **88** | **4** | **5** | **49** | **60.3%** |
 
 **By class**, over all 146 items: arithmetic 40, data_guard 25, execution 16, leak 31, rendering 3, statistical 31.
 
@@ -49,7 +49,7 @@ Section 12. Required unit tests, heading at line 705, items at lines 707–777. 
 | 10 | 716 | execution | claimed | `tests/golden/test_futures_fills_ledger.py:200` | Entry constraint: an entry that would complete less than 3 min before W_start is rejected.<br>**Note:** D587. The docstring of test_entry_must_complete_three_minutes_before_the_window. |
 | 11 | 717 | execution | claimed | `tests/golden/test_futures_fills_ledger.py:99` | Intra-bar pessimism: a bar spanning the stop and a profit exit records the stop.<br>**Note:** D587. One docstring claims ledger 11 and shock 9 together. |
 | 12 | 718 | data_guard | claimed | `tests/unit/test_ledger_flows.py:163` `test_ledger_12_flow_lands_on_the_held_months_never_the_front` | Contract mapping: flow is attributed to the held contract months per holdings, not the front month by default.<br>**Note:** D610. |
-| 13 | 719 | execution | claimed | `tests/unit/test_settlement_windows.py:153` | DST: W_start/W_end and the t0 grid map correctly to UTC in both transition weeks.<br>**Note:** D586. The DST test's own docstring. |
+| 13 | 719 | execution | claimed | `tests/unit/test_settlement_windows.py:166` | DST: W_start/W_end and the t0 grid map correctly to UTC in both transition weeks.<br>**Note:** D586. The DST test's own docstring. |
 | 14 | 720 | arithmetic | claimed | `tests/golden/test_ledger_funds_ledger.py:128` `test_ledger_14_inav_zero_move_is_nav_times_one_plus_accruals` | iNAV with zero futures move equals NAV[t−1] × (1 + accruals); with L = 2 and r = +1% it rises about 2%; with L = −2 it falls about 2%.<br>**Note:** D611. |
 | 15 | 721 | arithmetic | claimed | `tests/unit/test_ledger_premium.py:61` `test_ledger_15_the_premium_reads_the_midpoint_and_never_the_last_trade` | Premium uses the NBBO midpoint: a synthetic series with trades at the ask but a constant mid shows zero premium.<br>**Note:** D611. |
 | 16 | 722 | data_guard | claimed | `tests/unit/test_ledger_premium.py:92` `test_ledger_16_a_stale_or_futureless_minute_is_excluded_from_all_features` | Stale-minute exclusion: an ETF quote not updated for more than 60 s, or a futures minute with no trade, is excluded from all features.<br>**Note:** D611. |
@@ -198,19 +198,19 @@ Section 9. Required unit tests, heading at line 293, items at lines 295–307. *
 
 ### LETF close flow — `LETF_CLOSE_FLOW_PREREG.md`
 
-Section 8. Required unit tests, heading at line 242, items at lines 244–252. **0 of 9 claimed (0.0%).**
+Section 8. Required unit tests, heading at line 242, items at lines 244–252. **9 of 9 claimed (100.0%).**
 
 | # | Line | Class | Status | Claim | Item |
 |---:|---:|---|---|---|---|
-| 1 | 244 | arithmetic | **unclaimed** | — | `rebalance_flow(L=3, A=1e9, r=0.02)` = +1.2e8.<br>*Rebalance flow at leverage three and a two percent move* |
-| 2 | 245 | arithmetic | **unclaimed** | — | `rebalance_flow(L=-3, A=1e9, r=0.02)` = +2.4e8 (same sign as the move).<br>*An inverse product's flow carries the same sign as the move* |
-| 3 | 246 | arithmetic | **unclaimed** | — | `rebalance_flow(L=2, A=1e9, r=-0.01)` = −2e7.<br>*A negative move at leverage two gives negative flow* |
-| 4 | 247 | arithmetic | **unclaimed** | — | Zero return gives zero flow for all L.<br>*A zero return gives zero flow at every leverage* |
-| 5 | 248 | leak | **unclaimed** | — | Point-in-time guard: the AUM used on day t equals the stored value for t−1, and never t.<br>*The AUM used on day t is the stored prior-day value* |
-| 6 | 249 | leak | **unclaimed** | — | The rolling V and σ_d on day t use no data from day t or later (look-ahead test).<br>*Rolling volume and sigma read no data from day t onward* |
-| 7 | 250 | arithmetic | **unclaimed** | — | Contract conversion: Q_usd = 1e7 at NQ price 25,000 gives 20 contracts.<br>*Dollar notional to contract count at a stated price* |
-| 8 | 251 | execution | **unclaimed** | — | DST: 15:00 ET maps correctly to UTC in both March and November transition weeks.<br>*The close maps to UTC in both DST transition weeks* |
-| 9 | 252 | data_guard | **unclaimed** | — | Early-close sessions are excluded from the trade calendar.<br>*Early-close sessions are excluded from the trade calendar* |
+| 1 | 244 | arithmetic | claimed | `tests/unit/test_letf_model.py:42` `test_letf_01_rebalance_flow_long_3x_up_day_buys` | `rebalance_flow(L=3, A=1e9, r=0.02)` = +1.2e8.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 2 | 245 | arithmetic | claimed | `tests/unit/test_letf_model.py:46` `test_letf_02_rebalance_flow_inverse_3x_up_day_also_buys` | `rebalance_flow(L=-3, A=1e9, r=0.02)` = +2.4e8 (same sign as the move).<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 3 | 246 | arithmetic | claimed | `tests/unit/test_letf_model.py:52` `test_letf_03_rebalance_flow_long_2x_down_day_sells` | `rebalance_flow(L=2, A=1e9, r=-0.01)` = −2e7.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 4 | 247 | arithmetic | claimed | `tests/unit/test_letf_model.py:56` `test_letf_04_zero_return_zero_flow_for_every_leverage` | Zero return gives zero flow for all L.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 5 | 248 | leak | claimed | `tests/unit/test_letf_model.py:70` `test_letf_05_aum_used_on_day_t_is_the_stored_value_for_t_minus_1` | Point-in-time guard: the AUM used on day t equals the stored value for t−1, and never t.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 6 | 249 | leak | claimed | `tests/unit/test_letf_model.py:95` `test_letf_06_trailing_volume_and_sigma_use_no_data_from_day_t_or_later` | The rolling V and σ_d on day t use no data from day t or later (look-ahead test).<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 7 | 250 | arithmetic | claimed | `tests/unit/test_letf_model.py:118` `test_letf_07_ten_million_at_nq_25000_is_20_contracts` | Contract conversion: Q_usd = 1e7 at NQ price 25,000 gives 20 contracts.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 8 | 251 | execution | claimed | `tests/unit/test_letf_model.py:126` `test_letf_08_1500_et_maps_to_utc_across_both_transition_weeks` | DST: 15:00 ET maps correctly to UTC in both March and November transition weeks.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
+| 9 | 252 | data_guard | claimed | `tests/unit/test_letf_model.py:143` `test_letf_09_early_close_sessions_are_excluded_from_the_trade_calendar` | Early-close sessions are excluded from the trade calendar.<br>**Note:** LETF Phase 3: src/backtest_framework/letf/model.py. |
 
 ---
 

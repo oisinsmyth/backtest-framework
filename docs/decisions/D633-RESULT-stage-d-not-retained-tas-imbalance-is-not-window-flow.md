@@ -1,5 +1,7 @@
 # D633 RESULT — Stage D on NG is NOT RETAINED: the TAS imbalance carries nothing about the window's aggressive flow, so adding it only dilutes P1
 
+*Filename shortened 2026-09-27 to keep every tracked path within 85 characters (`tests/unit/test_public_cut.py`, D540); was `D633-RESULT-stage-d-not-retained-the-tas-imbalance-is-not-window-flow.md`. The H1 above is the full title.*
+
 *Run once on 2026-09-26 (`scripts/run_stage_d_ng.py --run`, committed `1ed2867` after the pre-registration
 `acab2bd`). Output: `data/ledger_stage_d_ng.json`, which `--check` reproduces byte for byte. The window flow is
 Sierra's futures flow: PROVISIONAL like D629, subject to the NG check after 2026-10-10. The TAS imbalance is

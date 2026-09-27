@@ -1,5 +1,7 @@
 # D629 RESULT — signed H1: NG PASSES (provisional), CL is INCONCLUSIVE. NG's pass is conditional on the return control: without it, the window flow runs against the funds
 
+*Filename shortened 2026-09-27 to keep every tracked path within 85 characters (`tests/unit/test_public_cut.py`, D540); was `D629-RESULT-ng-passes-conditional-on-the-return-and-cl-is-inconclusive.md`. The H1 above is the full title.*
+
 *Run once on 2026-09-26 (`scripts/run_signed_h1_stage_a.py --run`, committed `0b08571` after the
 pre-registration `2b5406b`). Output: `data/ledger_signed_h1_stage_a.json`, which `--check` reproduces byte for byte.
 Sections 1–3 are the registered result. Section 4 is POST HOC (`scripts/explore_signed_h1_decomposition.py` →

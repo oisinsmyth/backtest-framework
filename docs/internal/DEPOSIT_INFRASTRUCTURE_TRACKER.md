@@ -31,7 +31,7 @@ written: ✓ existed in the repo or on disk on 2026-09-21, ◐ partial or vault-
 | 15 | Track 3 logging | built, verified, untracked (log schema, shortfall, latency, 50-trade review, trial counter); **automation for the 14:30 UK open NOT built — deposit O-Q3 open**; no trade exists | D605 | 3 |
 | 16 | Episode / shared-period checks, haircut | built | D592 (`episodes.py`) | 2 |
 | 16 | Error-budget tooling | built, verified, untracked: `fit.py` (OLS bit-identical to D365, log loss, 11-feature budget, retention check) and `error_budget.py` (leave-one-term-out, `StageOrder`); no `ERROR_BUDGET.md` committed, no study has run | D606 | 3 |
-| 17 | Unit-test crosswalk (146 numbered tests: ledger 71, index 28, opening 25, shock 13, LETF 9 — the counts below were permuted when the split was written) | built, verified, untracked: `data/deposit_test_map.json` + `docs/results/DEPOSIT_TEST_MAP.md`; **79 of 146 claimed (54.1%) after round 4** (43 after round 3, 28 before; ledger 65/71 — the six left are 54–58 declined in D588 and 61), LETF 0 of 9 | D607, D610–D619 | 3, 4 |
+| 17 | Unit-test crosswalk (146 numbered tests: ledger 71, index 28, opening 25, shock 13, LETF 9 — the counts below were permuted when the split was written) | built, verified, untracked: `data/deposit_test_map.json` + `docs/results/DEPOSIT_TEST_MAP.md`; **88 of 146 claimed (60.3%) after LETF Phase 3, 2026-09-27** (79 after round 4, 43 after round 3, 28 before; ledger 65/71 — the six left are 54–58 declined in D588 and 61), LETF 9 of 9 (`tests/unit/test_letf_model.py`) | D607, D610–D619 | 3, 4 |
 
 Commits: round 1 `89feba9` (D585–D589), round 2 `c192908` (D590–D594), round 3 `f03ab6f` +
 merge `9bf41e8` (D604–D608). Round 4 (D609–D612, D619–D621, 2026-09-22) committed `804b807` + merge `3092d50`.
@@ -56,7 +56,7 @@ index-rebalance dates exist nowhere in the repo and need a source first. Recorde
 | Holdings history and Gate 0b (AITODO item 1, 2026-09-24).<br>**Proven:** swap-free quarters (BOIL, KOLD, SCO from 2020-Q4, UNG to 2022, USO to 2021); held months for all six; NG contract counts.<br>**Gate 0b:** NG PASS; CL pre-registered FAIL, passing under the documented BD2–3 roll.<br>**Roll days:** UNG/USO proven 2017–2023 (official calendar, and UNG's monthly NAV).<br>**Estimated with bands:** f_fut (UCO, SCO to 2020-Q3, BOIL 2023); UNG/USO daily AUM; USO's ladder weights.<br>**Filled:** the 2020 settlement holes, from EIA.<br>**Exact:** UNG/USO month-end NAV and shares.<br>The deposit amendments A1–A5 are in `SETTLEMENT_FLOW_LEDGER_AMENDMENTS.md` | built. Every output reproduces byte for byte (`--check`).<br>**Seal = the deposit's vault (A6);** in-sample runs to 2025-02-28.<br>Gate 0b 2024-01 → 2025-02 PASSES for all four ProShares funds (`gate_0b_2024.py`).<br>The estimates still stop at 2023-12 | — | — |
 | Still ✗ | ETF NBBO quotes/trades and IIV; swap dissemination records; CME settlement prices job; restrike-check job; Stage estimation of `p, n, R, h0, h1, g1, n9` (research, not infrastructure) | — | — |
 
-Crosswalk after round 4: **79 of 146 claimed** (ledger 65/71; the six unclaimed ledger items are 54–58 declined in D588 and 61). Per-document infrastructure for the other four documents and every research item below: **nothing built,
+Crosswalk after LETF Phase 3 (2026-09-27): **88 of 146 claimed** (79 after round 4; ledger 65/71; the six unclaimed ledger items are 54–58 declined in D588 and 61). Per-document infrastructure for the other four documents and every research item below: **nothing built,
 nothing run.** The vault window (2025-03-01 → 2026-09-18) versus this repo's 2024-01-01 futures
 holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
 
@@ -161,7 +161,8 @@ holdout is unreconciled; the free Databento refetch window closes ~2026-10-11.
   before late October.
 
 **LETF close flow**
-- Point-in-time AUM for ten index LETFs (NAV × shares, prior close) with per-ticker sources. ✗
+- Point-in-time AUM for ten index LETFs (NAV × shares, prior close) with per-ticker sources. ✓ (D637 and its
+  addendum: ProShares issuer data; Direxion estimated from EDGAR filings, banded)
 - NQ and ES 1-minute bars ✓, front-by-volume roll ✓, NQ-equivalent volume series (NQ + MNQ/10) ✗
   trivial.
 - Derived: flow, contract conversion, normalised flow and impact, activation gate.

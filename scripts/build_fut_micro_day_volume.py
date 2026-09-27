@@ -80,7 +80,7 @@ def main() -> int:
     front = (dv.sort_values(["root", "day", "volume", "contract"]).groupby(["root", "day"], sort=True).tail(1)
              .rename(columns={"contract": "front", "volume": "day_volume"}).set_index(["root", "day"]))
     out = front.join(tot).reset_index()
-    out.to_csv(OUT, index=False, compression="gzip")
+    out.to_csv(OUT, index=False, compression="gzip", encoding="utf-8")
     META.write_text(json.dumps({"builder": "scripts/build_fut_micro_day_volume.py", "built_utc": time.strftime(
         "%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "front_rule": "highest full-day volume per calendar ET day (as D462)",
         "roots": sorted(out["root"].unique().tolist()), "rows": int(len(out)),

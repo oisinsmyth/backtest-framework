@@ -175,8 +175,11 @@
 - **NQ Phase 2 DONE (D638):** 2,285 usable sessions, every bar the model reads present, t−1 priced in one contract
   on every day (36 rolls via `fut_index_anchor_bars`), MNQ volume built (`fut_micro_day_volume`). CME's settlement
   is NOT the 16:00 price (equal on 2.4% of days).
-- **Next:** NQ Phase 3 (model functions + the nine §8 unit tests); ES Phase 1 completion then ES Phase 2
-  (`build_letf_phase2.py --root ES`).
+- **ES Phase 2 DONE** (`data/letf/phase2_ES_qa.json`): 2,285 usable sessions, every model bar present, 36 rolls
+  priced in one contract; MES 1–7% of the ES-equivalent volume.
+- **Phase 3 DONE:** `src/backtest_framework/letf/model.py` (section 4's algebra) and `tests/unit/test_letf_model.py`
+  (the deposit's nine tests, all claimed: crosswalk 88 of 146).
+- **Next:** D639 PRE-REG (drafted, committed alone), then the POWER step, then the runner.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
