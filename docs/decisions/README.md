@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 378 of these records carry neither field —
+**No Status or Category column, deliberately.** 379 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -711,6 +711,7 @@ would look like data. The tokens are what is shown.
 | D636 | REGISTRATION — Stages R1, R2 and R3 of the index-reweight model: do the January rebalance flows move prices on the exec… | [PRE-REG](D636-PRE-REG-stages-r1-r2-r3-the-january-rebalance-trades.md) |
 | D637 | RESULT: LETF close-flow Gate 0. The Nasdaq set PASSES; the S&P set is estimated from 2019-10 and MISSING 39% of its flo… | [RESULT](D637-RESULT-letf-gate-0-nasdaq-passes-sp-incomplete-before-2019.md) |
 | D638 | LETF close-flow Phase 2, NQ: bars, calendar, event flags and the data QA. Every bar the model reads is present | [record](D638-letf-phase-2-nq-bars-calendar-flags-qa.md) |
+| D639 | PRE-REG: the LETF close-flow model, H1–H5 on NQ and ES (deposit Phases 4–7) | [PRE-REG](D639-PRE-REG-letf-close-flow-h1-h5-on-nq-and-es.md) |
 
 <!-- REGISTER:END -->
 
