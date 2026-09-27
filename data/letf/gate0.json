@@ -1,0 +1,2566 @@
+{
+ "tickers": {
+  "QID": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 2.081181352298067e-05,
+   "identity_share_within_1bp": 1.0,
+   "daum_over_25pct": [
+    {
+     "date": "2021-09-28",
+     "abs_daum": 0.25708435303900545,
+     "nav_ret": 0.05713489857028842,
+     "creation_usd": 44403075.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2021-12-30",
+     "abs_daum": 0.2531023759007036,
+     "nav_ret": 0.007477817546467369,
+     "creation_usd": 52541560.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2023-10-26",
+     "abs_daum": 0.4396906509212213,
+     "nav_ret": 0.0387029003301409,
+     "creation_usd": 180449430.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2023-10-27",
+     "abs_daum": 0.29584627874338354,
+     "nav_ret": -0.009489223656732992,
+     "creation_usd": -185524590.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2023-11-09",
+     "abs_daum": 0.26476456897103295,
+     "nav_ret": 0.016910770182015034,
+     "creation_usd": 95390425.0,
+     "unexplained_usd": -5.960464477539063e-08,
+     "unexplained_rel": -1.5487128433540967e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2023-11-30",
+     "abs_daum": 0.25427826688568733,
+     "nav_ret": 0.005287047154745039,
+     "creation_usd": 94483210.0,
+     "unexplained_usd": -5.960464477539063e-08,
+     "unexplained_rel": -1.5707587839420426e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2023-12-28",
+     "abs_daum": 0.3045231740108947,
+     "nav_ret": 0.0018676271606350436,
+     "creation_usd": 93050670.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2024-01-04",
+     "abs_daum": 0.25374594409405415,
+     "nav_ret": 0.011280577594131147,
+     "creation_usd": 79320500.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2024-02-01",
+     "abs_daum": 0.2531236503523646,
+     "nav_ret": -0.023526433155132254,
+     "creation_usd": 74706365.0,
+     "unexplained_usd": 2.9802322387695312e-08,
+     "unexplained_rel": 1.1036295203592427e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2024-05-23",
+     "abs_daum": 0.33401064294026517,
+     "nav_ret": 0.009722536107117818,
+     "creation_usd": 75841850.0,
+     "unexplained_usd": 2.9802322387695312e-08,
+     "unexplained_rel": 1.274301550705426e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2024-10-11",
+     "abs_daum": 0.2617111778502108,
+     "nav_ret": -0.0014573240379691654,
+     "creation_usd": 69210960.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2025-02-27",
+     "abs_daum": 0.3335299656066051,
+     "nav_ret": 0.05533289521182572,
+     "creation_usd": 58147650.00000001,
+     "unexplained_usd": -7.450580596923828e-09,
+     "unexplained_rel": -3.564597528540526e-17,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 323067390.0,
+     "panel_aum": 323068204.4,
+     "nport_net_assets": 323038691.69,
+     "rel_err": 8.883861512032354e-05
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 341376326.72,
+     "panel_aum": 341377110.1312,
+     "nport_net_assets": 341374537.78,
+     "rel_err": 5.24040255522884e-06
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 248521480.20000002,
+     "panel_aum": 248521946.792,
+     "nport_net_assets": 248509806.16,
+     "rel_err": 4.6976174423063455e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 279069515.56,
+     "panel_aum": 279069793.3776,
+     "nport_net_assets": 279068316.37,
+     "rel_err": 4.297119843510444e-06
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 231364687.62,
+     "panel_aum": 231364939.4952,
+     "nport_net_assets": 231363924.8,
+     "rel_err": 3.2970567933610084e-06
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 280108938.875,
+     "panel_aum": 263544501.479,
+     "nport_net_assets": 280095411.97,
+     "rel_err": 4.829391850735831e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 231112243.475,
+     "panel_aum": 221723486.8342,
+     "nport_net_assets": 231094294.88,
+     "rel_err": 7.766784121310266e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 214102545.15,
+     "panel_aum": 214102973.5068,
+     "nport_net_assets": 214102833.28,
+     "rel_err": -1.345755194281928e-06
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 222859983.15,
+     "panel_aum": 222860373.6828,
+     "nport_net_assets": 222860515.74,
+     "rel_err": -2.3897907542869135e-06
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 330363687.825,
+     "panel_aum": 345072483.4914,
+     "nport_net_assets": 330364332.65,
+     "rel_err": -1.951860223003976e-06
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 357484580.09999996,
+     "panel_aum": 365331698.1512,
+     "nport_net_assets": 357484388.51,
+     "rel_err": 5.359394874560053e-07
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 588530200.3,
+     "panel_aum": 576267715.4136,
+     "nport_net_assets": 588529634.1,
+     "rel_err": 9.620586070013815e-07
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 354458079.675,
+     "panel_aum": 346891983.5286,
+     "nport_net_assets": 354458734.95,
+     "rel_err": -1.8486637100023628e-06
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 538953707.875,
+     "panel_aum": 538954216.207,
+     "nport_net_assets": 538954859.15,
+     "rel_err": -2.1361250954754496e-06
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 527925673.425,
+     "panel_aum": 533951594.9586,
+     "nport_net_assets": 527925535.49,
+     "rel_err": 2.612773786214717e-07
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 423595190.65,
+     "panel_aum": 456673215.9828,
+     "nport_net_assets": 423596644.02,
+     "rel_err": -3.431023405164879e-06
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 381469980.425,
+     "panel_aum": 475953477.4626,
+     "nport_net_assets": 381471702.89,
+     "rel_err": -4.515315256470309e-06
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 264938814.9,
+     "panel_aum": 269579637.6488,
+     "nport_net_assets": 264937766.88,
+     "rel_err": 3.955721422199687e-06
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 258640809.83999997,
+     "panel_aum": 269602341.3768,
+     "nport_net_assets": 258640701.99,
+     "rel_err": 4.1698773300957725e-07
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 236901129.86,
+     "panel_aum": 234974875.4422,
+     "nport_net_assets": 236907967.02,
+     "rel_err": -2.8859983418838553e-05
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 232570649.42999998,
+     "panel_aum": 224203574.8361,
+     "nport_net_assets": 232572084.32,
+     "rel_err": -6.169657051580124e-06
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 269901346.68,
+     "panel_aum": 251684786.0436,
+     "nport_net_assets": 269901652.23,
+     "rel_err": -1.132079027632571e-06
+    }
+   ]
+  },
+  "QLD": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 2.220446049250313e-16,
+   "identity_share_within_1bp": 1.0,
+   "daum_over_25pct": [],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 2151940000.0,
+     "panel_aum": 2151940000.0,
+     "nport_net_assets": 2151884872.94,
+     "rel_err": 2.5618034074748053e-05
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 1981703500.0,
+     "panel_aum": 2004351540.0,
+     "nport_net_assets": 1981654619.17,
+     "rel_err": 2.466667477118989e-05
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 2371266000.0,
+     "panel_aum": 2371266000.0,
+     "nport_net_assets": 2371141748.68,
+     "rel_err": 5.240147286400543e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 3577682080.0,
+     "panel_aum": 3572466800.0,
+     "nport_net_assets": 3577682124.84,
+     "rel_err": -1.2533254323265908e-08
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 3585587975.0,
+     "panel_aum": 3596056845.0,
+     "nport_net_assets": 3585586488.73,
+     "rel_err": 4.145123830845421e-07
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 3774919680.0,
+     "panel_aum": 3803604480.0,
+     "nport_net_assets": 3774723174.24,
+     "rel_err": 5.205832346621975e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 4275774720.0,
+     "panel_aum": 4294863000.0,
+     "nport_net_assets": 4275440987.3,
+     "rel_err": 7.805807658001207e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 5526527940.0,
+     "panel_aum": 5526527940.0,
+     "nport_net_assets": 5526528205.99,
+     "rel_err": -4.812967380196653e-08
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 6208438800.0,
+     "panel_aum": 6186578100.0,
+     "nport_net_assets": 6208435295.08,
+     "rel_err": 5.645416008004389e-07
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 4599855515.0,
+     "panel_aum": 4593193885.0,
+     "nport_net_assets": 4599856172.03,
+     "rel_err": -1.4283707472362295e-07
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 3679353480.0,
+     "panel_aum": 3679353480.0,
+     "nport_net_assets": 3679350138.71,
+     "rel_err": 9.081196064020247e-07
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 3440513020.0,
+     "panel_aum": 3289816695.0,
+     "nport_net_assets": 3440513328.52,
+     "rel_err": -8.967266529325002e-08
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 3212738130.0,
+     "panel_aum": 3229895610.0,
+     "nport_net_assets": 3212739387.79,
+     "rel_err": -3.91500787344512e-07
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 3220264145.0,
+     "panel_aum": 3218177130.0,
+     "nport_net_assets": 3220263289.05,
+     "rel_err": 2.658012476786098e-07
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 4595347725.0,
+     "panel_aum": 4586758290.0,
+     "nport_net_assets": 4595349586.6,
+     "rel_err": -4.051051971654118e-07
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 5169652800.000001,
+     "panel_aum": 5265755320.0,
+     "nport_net_assets": 5169650392.6,
+     "rel_err": 4.656794594382063e-07
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 5126385180.0,
+     "panel_aum": 5126385180.0,
+     "nport_net_assets": 5126382669.74,
+     "rel_err": 4.896747203275709e-07
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 6163696215.0,
+     "panel_aum": 6168003480.0,
+     "nport_net_assets": 6163696536.5,
+     "rel_err": -5.216025777965427e-08
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 6315614250.0,
+     "panel_aum": 6315614250.0,
+     "nport_net_assets": 6315613726.57,
+     "rel_err": 8.287872299561627e-08
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 6359510780.0,
+     "panel_aum": 6349845870.0,
+     "nport_net_assets": 6359354096.18,
+     "rel_err": 2.46383229538516e-05
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 7749948200.000001,
+     "panel_aum": 7739124250.0,
+     "nport_net_assets": 7749770721.98,
+     "rel_err": 2.290106718882967e-05
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 6654109185.0,
+     "panel_aum": 6648840690.0,
+     "nport_net_assets": 6654110795.18,
+     "rel_err": -2.4198274573006273e-07
+    }
+   ]
+  },
+  "SDS": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 4.144601125957159e-06,
+   "identity_share_within_1bp": 1.0,
+   "daum_over_25pct": [
+    {
+     "date": "2022-06-10",
+     "abs_daum": 0.3316366121278569,
+     "nav_ret": 0.05810206085689984,
+     "creation_usd": -488871705.0,
+     "unexplained_usd": 2.384185791015625e-07,
+     "unexplained_rel": 1.900722412109211e-16,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 1080974400.0,
+     "panel_aum": 1077016168.8,
+     "nport_net_assets": 1081043085.5,
+     "rel_err": -6.353632054201253e-05
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 1266097648.6,
+     "panel_aum": 1242732325.6097,
+     "nport_net_assets": 1266088164.46,
+     "rel_err": 7.490900133300116e-06
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 1482209562.6,
+     "panel_aum": 1480153630.9977,
+     "nport_net_assets": 1482122459.8,
+     "rel_err": 5.8768962998945184e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 1082585544.0,
+     "panel_aum": 1075104546.588,
+     "nport_net_assets": 1082585440.43,
+     "rel_err": 9.566912329006527e-08
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 851124346.8,
+     "panel_aum": 851125243.4811,
+     "nport_net_assets": 851122763.46,
+     "rel_err": 1.8602956799451675e-06
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 737846206.2,
+     "panel_aum": 737846999.1249,
+     "nport_net_assets": 737810619.63,
+     "rel_err": 4.8232661679303845e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 579364406.4,
+     "panel_aum": 582689482.7928,
+     "nport_net_assets": 579323772.04,
+     "rel_err": 7.014101951474672e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 613444599.1999999,
+     "panel_aum": 604554170.7409,
+     "nport_net_assets": 613447364.26,
+     "rel_err": -4.5074119821020275e-06
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 542128683.4,
+     "panel_aum": 524251534.1843,
+     "nport_net_assets": 542131739.53,
+     "rel_err": -5.637246036638288e-06
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 655095796.875,
+     "panel_aum": 673513130.9475,
+     "nport_net_assets": 655095734.8,
+     "rel_err": 9.475714279894021e-08
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 800408266.875,
+     "panel_aum": 899884833.6243,
+     "nport_net_assets": 800408398.59,
+     "rel_err": -1.6455974261031514e-07
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 964170746.25,
+     "panel_aum": 952830850.8906,
+     "nport_net_assets": 964169687.25,
+     "rel_err": 1.0983543810016982e-06
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 821551428.125,
+     "panel_aum": 829723487.2645,
+     "nport_net_assets": 821551589.35,
+     "rel_err": -1.9624452329836117e-07
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 1063594180.0,
+     "panel_aum": 1061441656.9504,
+     "nport_net_assets": 1063593618.65,
+     "rel_err": 5.277861676589168e-07
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 1133612761.25,
+     "panel_aum": 1114139022.3026,
+     "nport_net_assets": 1133611555.99,
+     "rel_err": 1.063203699303017e-06
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 851443468.75,
+     "panel_aum": 875135774.9038,
+     "nport_net_assets": 851444084.9,
+     "rel_err": -7.23652922030027e-07
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 761736998.75,
+     "panel_aum": 807990445.7118,
+     "nport_net_assets": 761736227.01,
+     "rel_err": 1.0131328571638676e-06
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 617383668.7500001,
+     "panel_aum": 618710992.203,
+     "nport_net_assets": 617383068.31,
+     "rel_err": 9.725566361140636e-07
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 571671281.25,
+     "panel_aum": 564184156.293,
+     "nport_net_assets": 571670369.0,
+     "rel_err": 1.5957622598872234e-06
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 441045658.125,
+     "panel_aum": 441045636.4053,
+     "nport_net_assets": 441047792.24,
+     "rel_err": -4.83873865275708e-06
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 389595418.125,
+     "panel_aum": 393404459.0797,
+     "nport_net_assets": 389593016.29,
+     "rel_err": 6.164984739376322e-06
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 443407734.375,
+     "panel_aum": 414371465.0175,
+     "nport_net_assets": 443408836.89,
+     "rel_err": -2.48645247513668e-06
+    }
+   ]
+  },
+  "SPXL": {
+   "first": "2019-10-31",
+   "last": "2025-02-28",
+   "rows": 1339,
+   "estimated": true,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": null,
+   "identity_share_within_1bp": null,
+   "daum_over_25pct": [
+    {
+     "date": "2020-03-13",
+     "abs_daum": 0.33353438978842775,
+     "nav_ret": 0.27900882419064743,
+     "creation_usd": 36522868.44357257,
+     "unexplained_usd": 6.705522537231445e-08,
+     "unexplained_rel": 1.0010780219414824e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-16",
+     "abs_daum": 0.3180285589677968,
+     "nav_ret": -0.3591697839592637,
+     "creation_usd": 36749051.847406834,
+     "unexplained_usd": -8.940696716308594e-08,
+     "unexplained_rel": -1.0009270898021197e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-24",
+     "abs_daum": 0.3372918619528338,
+     "nav_ret": 0.28065915375440587,
+     "creation_usd": 36316858.80135143,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2020-01-31",
+     "forward_before_correction": 1052364755.2069046,
+     "nport_net_assets": 1046166399.92,
+     "rel_err": 0.005924827338536831
+    },
+    {
+     "date": "2020-04-30",
+     "forward_before_correction": 1517525897.999433,
+     "nport_net_assets": 1433729931.5,
+     "rel_err": 0.05844613037530988
+    },
+    {
+     "date": "2020-07-31",
+     "forward_before_correction": 1453092061.092847,
+     "nport_net_assets": 1453619152.73,
+     "rel_err": -0.0003626064200950019
+    },
+    {
+     "date": "2020-10-31",
+     "forward_before_correction": 1495044284.2140377,
+     "nport_net_assets": 1327013270.33,
+     "rel_err": 0.12662346160430782
+    },
+    {
+     "date": "2021-01-31",
+     "forward_before_correction": 1528381581.0135727,
+     "nport_net_assets": 1518046837.95,
+     "rel_err": 0.006807921076749546
+    },
+    {
+     "date": "2021-04-30",
+     "forward_before_correction": 2202351646.8359475,
+     "nport_net_assets": 2211675970.57,
+     "rel_err": -0.00421595380974793
+    },
+    {
+     "date": "2021-07-31",
+     "forward_before_correction": 2681536376.664227,
+     "nport_net_assets": 2687007056.61,
+     "rel_err": -0.0020359752804948172
+    },
+    {
+     "date": "2021-10-31",
+     "forward_before_correction": 3326153130.8767357,
+     "nport_net_assets": 3348755191.83,
+     "rel_err": -0.006749391836228247
+    },
+    {
+     "date": "2022-01-31",
+     "forward_before_correction": 3305362010.4463587,
+     "nport_net_assets": 3347145433.08,
+     "rel_err": -0.012483300612125658
+    },
+    {
+     "date": "2022-04-30",
+     "forward_before_correction": 2485512586.4177055,
+     "nport_net_assets": 2525583771.92,
+     "rel_err": -0.015866108243098087
+    },
+    {
+     "date": "2022-07-31",
+     "forward_before_correction": 2699522838.747067,
+     "nport_net_assets": 2759639383.24,
+     "rel_err": -0.021784202986098844
+    },
+    {
+     "date": "2022-10-31",
+     "forward_before_correction": 2524301133.148513,
+     "nport_net_assets": 2573089576.21,
+     "rel_err": -0.018961035601935627
+    },
+    {
+     "date": "2023-01-31",
+     "forward_before_correction": 2732929033.6738157,
+     "nport_net_assets": 2736158454.0,
+     "rel_err": -0.0011802753314462677
+    },
+    {
+     "date": "2023-04-30",
+     "forward_before_correction": 2461846108.4899254,
+     "nport_net_assets": 2512647596.61,
+     "rel_err": -0.020218310036240195
+    },
+    {
+     "date": "2023-07-31",
+     "forward_before_correction": 3412351845.108234,
+     "nport_net_assets": 3437987028.01,
+     "rel_err": -0.007456451316689372
+    },
+    {
+     "date": "2023-10-31",
+     "forward_before_correction": 2791723740.2066674,
+     "nport_net_assets": 2798397550.73,
+     "rel_err": -0.0023848686265436347
+    },
+    {
+     "date": "2024-01-31",
+     "forward_before_correction": 3734504185.282455,
+     "nport_net_assets": 3730691690.68,
+     "rel_err": 0.0010219270094014021
+    },
+    {
+     "date": "2024-04-30",
+     "forward_before_correction": 3711960643.3241673,
+     "nport_net_assets": 3714702711.17,
+     "rel_err": -0.0007381661626885139
+    },
+    {
+     "date": "2024-07-31",
+     "forward_before_correction": 4773272604.897545,
+     "nport_net_assets": 4798179137.75,
+     "rel_err": -0.00519083013314392
+    },
+    {
+     "date": "2024-10-31",
+     "forward_before_correction": 4968134476.663347,
+     "nport_net_assets": 4891050620.86,
+     "rel_err": 0.01576018360443676
+    },
+    {
+     "date": "2025-01-31",
+     "forward_before_correction": 5029708468.474604,
+     "nport_net_assets": 4992935361.88,
+     "rel_err": 0.0073650275698256
+    }
+   ]
+  },
+  "SPXS": {
+   "first": "2019-10-31",
+   "last": "2025-02-28",
+   "rows": 1339,
+   "estimated": true,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": null,
+   "identity_share_within_1bp": null,
+   "daum_over_25pct": [
+    {
+     "date": "2020-03-09",
+     "abs_daum": 0.25035220233645794,
+     "nav_ret": 0.22783815086907988,
+     "creation_usd": 16611291.38581578,
+     "unexplained_usd": 7.82310962677002e-08,
+     "unexplained_rel": 1.0603022286541602e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-12",
+     "abs_daum": 0.3028303457992887,
+     "nav_ret": 0.28507979261595584,
+     "creation_usd": 16616208.626457756,
+     "unexplained_usd": -6.51925802230835e-08,
+     "unexplained_rel": -6.964310502011501e-17,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-13",
+     "abs_daum": 0.26666524669763914,
+     "nav_ret": -0.2802862673656832,
+     "creation_usd": 16611833.208413979,
+     "unexplained_usd": -2.0489096641540527e-08,
+     "unexplained_rel": -1.6800217370507775e-17,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-16",
+     "abs_daum": 0.37841976560193746,
+     "nav_ret": 0.35984005432117394,
+     "creation_usd": 16616866.778277254,
+     "unexplained_usd": -9.499490261077881e-08,
+     "unexplained_rel": -1.0621604464927271e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-24",
+     "abs_daum": 0.2721340065381953,
+     "nav_ret": -0.28311161054119693,
+     "creation_usd": 16616420.893480059,
+     "unexplained_usd": 3.725290298461914e-09,
+     "unexplained_rel": 2.461105309915737e-18,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2020-01-31",
+     "forward_before_correction": 535449812.0885716,
+     "nport_net_assets": 536517106.55,
+     "rel_err": -0.0019893018291466946
+    },
+    {
+     "date": "2020-04-30",
+     "forward_before_correction": 1188964729.6920946,
+     "nport_net_assets": 1190010297.0,
+     "rel_err": -0.0008786203871860021
+    },
+    {
+     "date": "2020-07-31",
+     "forward_before_correction": 905677206.3911914,
+     "nport_net_assets": 903716714.09,
+     "rel_err": 0.002169365986735672
+    },
+    {
+     "date": "2020-10-31",
+     "forward_before_correction": 748405036.9368625,
+     "nport_net_assets": 801681488.9,
+     "rel_err": -0.06645588391499346
+    },
+    {
+     "date": "2021-01-31",
+     "forward_before_correction": 535339918.7095582,
+     "nport_net_assets": 532168773.16,
+     "rel_err": 0.005958909484162334
+    },
+    {
+     "date": "2021-04-30",
+     "forward_before_correction": 397859126.6797504,
+     "nport_net_assets": 397439045.73,
+     "rel_err": 0.0010569695007665025
+    },
+    {
+     "date": "2021-07-31",
+     "forward_before_correction": 394112423.22953945,
+     "nport_net_assets": 396011090.87,
+     "rel_err": -0.004794480973473125
+    },
+    {
+     "date": "2021-10-31",
+     "forward_before_correction": 389370482.5066839,
+     "nport_net_assets": 390236567.01,
+     "rel_err": -0.002219383257576424
+    },
+    {
+     "date": "2022-01-31",
+     "forward_before_correction": 335736881.1981892,
+     "nport_net_assets": 339126154.49,
+     "rel_err": -0.00999413712843178
+    },
+    {
+     "date": "2022-04-30",
+     "forward_before_correction": 463512130.99214196,
+     "nport_net_assets": 475265861.87,
+     "rel_err": -0.0247308544981778
+    },
+    {
+     "date": "2022-07-31",
+     "forward_before_correction": 610615210.2733192,
+     "nport_net_assets": 623983883.5,
+     "rel_err": -0.021424709163471167
+    },
+    {
+     "date": "2022-10-31",
+     "forward_before_correction": 836258170.9004897,
+     "nport_net_assets": 885462000.6,
+     "rel_err": -0.05556853898435976
+    },
+    {
+     "date": "2023-01-31",
+     "forward_before_correction": 1121746256.5399354,
+     "nport_net_assets": 1115687651.0,
+     "rel_err": 0.0054303778790640855
+    },
+    {
+     "date": "2023-04-30",
+     "forward_before_correction": 1199695920.2058327,
+     "nport_net_assets": 1235424844.75,
+     "rel_err": -0.028920354561428163
+    },
+    {
+     "date": "2023-07-31",
+     "forward_before_correction": 741641983.244227,
+     "nport_net_assets": 745943035.86,
+     "rel_err": -0.005765926363015428
+    },
+    {
+     "date": "2023-10-31",
+     "forward_before_correction": 682629187.6281302,
+     "nport_net_assets": 703652726.0,
+     "rel_err": -0.029877718930161334
+    },
+    {
+     "date": "2024-01-31",
+     "forward_before_correction": 603991473.2555751,
+     "nport_net_assets": 628986417.02,
+     "rel_err": -0.039738447584997894
+    },
+    {
+     "date": "2024-04-30",
+     "forward_before_correction": 557272286.786078,
+     "nport_net_assets": 572750389.2,
+     "rel_err": -0.027024167431018986
+    },
+    {
+     "date": "2024-07-31",
+     "forward_before_correction": 471839802.7055124,
+     "nport_net_assets": 479555767.04,
+     "rel_err": -0.016089816586115635
+    },
+    {
+     "date": "2024-10-31",
+     "forward_before_correction": 505193622.60772127,
+     "nport_net_assets": 508273703.33,
+     "rel_err": -0.006059886045843621
+    },
+    {
+     "date": "2025-01-31",
+     "forward_before_correction": 330912341.8672683,
+     "nport_net_assets": 343567766.18,
+     "rel_err": -0.036835307495352576
+    }
+   ]
+  },
+  "SPXU": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 8.639364644048369e-05,
+   "identity_share_within_1bp": 0.9908814589665653,
+   "daum_over_25pct": [
+    {
+     "date": "2020-03-13",
+     "abs_daum": 0.26581232497613383,
+     "nav_ret": -0.2802862673656832,
+     "creation_usd": 14579950.0,
+     "unexplained_usd": -1.1920928955078125e-07,
+     "unexplained_rel": -1.1834254501950493e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-16",
+     "abs_daum": 0.43782753166196,
+     "nav_ret": 0.35984005432117394,
+     "creation_usd": 57676800.0,
+     "unexplained_usd": 1.1920928955078125e-07,
+     "unexplained_rel": 1.6118841141763647e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2025-01-07",
+     "abs_daum": 0.2697866475922095,
+     "nav_ret": 0.03372961530784191,
+     "creation_usd": 108002225.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 612362590.0,
+     "panel_aum": 612354570.94,
+     "nport_net_assets": 612428165.19,
+     "rel_err": -0.00010707409248511546
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 702889375.3,
+     "panel_aum": 707937061.0998,
+     "nport_net_assets": 702870303.42,
+     "rel_err": 2.7134280545348943e-05
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 1328338619.7,
+     "panel_aum": 1323780252.9302,
+     "nport_net_assets": 1328254343.54,
+     "rel_err": 6.344881190112339e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 990725787.7,
+     "panel_aum": 995104886.6682,
+     "nport_net_assets": 990718623.32,
+     "rel_err": 7.231498259319125e-06
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 755283963.0,
+     "panel_aum": 756940783.858,
+     "nport_net_assets": 755281134.31,
+     "rel_err": 3.7452146910421646e-06
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 614642889.24,
+     "panel_aum": 566616884.7822,
+     "nport_net_assets": 614610023.19,
+     "rel_err": 5.3474640438366805e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 484865909.23999995,
+     "panel_aum": 476048200.8322,
+     "nport_net_assets": 484829075.61,
+     "rel_err": 7.597240316825626e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 589027635.2199999,
+     "panel_aum": 603600107.1841,
+     "nport_net_assets": 589027827.58,
+     "rel_err": -3.265720075473766e-07
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 622753910.52,
+     "panel_aum": 619153197.3306,
+     "nport_net_assets": 622754828.25,
+     "rel_err": -1.4736617981458977e-06
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 545890757.58,
+     "panel_aum": 541282933.6749,
+     "nport_net_assets": 545890538.06,
+     "rel_err": 4.0213190155569123e-07
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 679246896.96,
+     "panel_aum": 720735554.6288,
+     "nport_net_assets": 679244209.22,
+     "rel_err": 3.956956811101975e-06
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 1236983859.1000001,
+     "panel_aum": 1201027801.6605,
+     "nport_net_assets": 1236979887.13,
+     "rel_err": 3.2110222982772996e-06
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 1033402771.4399999,
+     "panel_aum": 1036241139.0732,
+     "nport_net_assets": 1033404699.82,
+     "rel_err": -1.8660453164898172e-06
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 1374941081.6200001,
+     "panel_aum": 1356001153.6011,
+     "nport_net_assets": 1374942578.16,
+     "rel_err": -1.088438181917617e-06
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 1352405643.12,
+     "panel_aum": 1345955559.4836,
+     "nport_net_assets": 1352400774.25,
+     "rel_err": 3.600168006823168e-06
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 971947635.12,
+     "panel_aum": 993742565.0436,
+     "nport_net_assets": 971946227.87,
+     "rel_err": 1.4478681635843316e-06
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 807591031.26,
+     "panel_aum": 874684829.4453,
+     "nport_net_assets": 807590086.67,
+     "rel_err": 1.1696404098593405e-06
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 644998167.8,
+     "panel_aum": 638208139.009,
+     "nport_net_assets": 644996740.95,
+     "rel_err": 2.212181720251394e-06
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 624208765.312,
+     "panel_aum": 614525771.2538,
+     "nport_net_assets": 624208618.36,
+     "rel_err": 2.3542129290454739e-07
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 508297274.83199996,
+     "panel_aum": 506993387.4018,
+     "nport_net_assets": 508303672.74,
+     "rel_err": -1.2586782947243691e-05
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 457377065.92,
+     "panel_aum": 457377215.258,
+     "nport_net_assets": 457369486.05,
+     "rel_err": 1.6572749672150167e-05
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 497290210.048,
+     "panel_aum": 441522883.1352,
+     "nport_net_assets": 497289443.0,
+     "rel_err": 1.5424578396761035e-06
+    }
+   ]
+  },
+  "SQQQ": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 0.0020557232796122316,
+   "identity_share_within_1bp": 0.7029960920538428,
+   "daum_over_25pct": [
+    {
+     "date": "2020-03-13",
+     "abs_daum": 0.3155263880911299,
+     "nav_ret": -0.3027970233512959,
+     "creation_usd": -22551100.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-16",
+     "abs_daum": 0.30994151650680823,
+     "nav_ret": 0.3671483874400805,
+     "creation_usd": -69369075.0,
+     "unexplained_usd": 2.384185791015625e-07,
+     "unexplained_rel": 1.966175977228658e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2023-11-09",
+     "abs_daum": 0.26622002155693947,
+     "nav_ret": 0.02552300559977394,
+     "creation_usd": 827624970.0,
+     "unexplained_usd": 4.76837158203125e-07,
+     "unexplained_rel": 1.3867788580253571e-16,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 1222573437.5,
+     "panel_aum": 1215061082.75,
+     "nport_net_assets": 1222486693.72,
+     "rel_err": 7.09568295880203e-05
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 1438388910.0,
+     "panel_aum": 1498509026.4816,
+     "nport_net_assets": 1438438728.95,
+     "rel_err": -3.463404384029811e-05
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 1115940084.375,
+     "panel_aum": 1113608529.6507,
+     "nport_net_assets": 1115912054.04,
+     "rel_err": 2.511876710942218e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 1313990995.625,
+     "panel_aum": 1354337958.1775,
+     "nport_net_assets": 1313998421.56,
+     "rel_err": -5.651403287898482e-06
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 1330024200.0,
+     "panel_aum": 1377094149.6,
+     "nport_net_assets": 1330032713.03,
+     "rel_err": -6.400617004853615e-06
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 1688463532.125,
+     "panel_aum": 1693519812.0795,
+     "nport_net_assets": 1688377680.49,
+     "rel_err": 5.0848596254260414e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 1733561699.625,
+     "panel_aum": 1759101629.0295,
+     "nport_net_assets": 1733428176.99,
+     "rel_err": 7.702807463982886e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 1555740737.0,
+     "panel_aum": 1546942873.756,
+     "nport_net_assets": 1555736699.82,
+     "rel_err": 2.59502780930454e-06
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 1698261804.625,
+     "panel_aum": 1641568361.7495,
+     "nport_net_assets": 1698251798.61,
+     "rel_err": 5.891950185743511e-06
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 2625262216.5,
+     "panel_aum": 2415489180.951,
+     "nport_net_assets": 2625266223.29,
+     "rel_err": -1.52624140148383e-06
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 2467032343.45,
+     "panel_aum": 2824881166.1043,
+     "nport_net_assets": 2467036070.41,
+     "rel_err": -1.5107034894157323e-06
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 5479909321.65,
+     "panel_aum": 5321139903.7251,
+     "nport_net_assets": 5479910365.85,
+     "rel_err": -1.905505621069281e-07
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 3529910106.7999997,
+     "panel_aum": 3531978729.4792,
+     "nport_net_assets": 3529913343.04,
+     "rel_err": -9.168043760832134e-07
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 5644357347.650001,
+     "panel_aum": 5626757301.0691,
+     "nport_net_assets": 5644360783.39,
+     "rel_err": -6.087031165780132e-07
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 4818671550.0,
+     "panel_aum": 4718187635.7,
+     "nport_net_assets": 4818668753.59,
+     "rel_err": 5.80328331833968e-07
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 3705268427.8999996,
+     "panel_aum": 4419216000.5426,
+     "nport_net_assets": 3705269392.79,
+     "rel_err": -2.604102152803378e-07
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 3775638557.7,
+     "panel_aum": 3851712460.4238,
+     "nport_net_assets": 3775633171.54,
+     "rel_err": 1.4265580778882736e-06
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 3344438614.6000004,
+     "panel_aum": 3374001969.2124,
+     "nport_net_assets": 3344438021.01,
+     "rel_err": 1.7748572300746446e-07
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 3020698781.1,
+     "panel_aum": 2765125263.0834,
+     "nport_net_assets": 3020688043.12,
+     "rel_err": 3.5548126275930514e-06
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 2408325861.75,
+     "panel_aum": 2397292020.9045,
+     "nport_net_assets": 2408311542.64,
+     "rel_err": 5.945705008114643e-06
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 2099482353.09,
+     "panel_aum": 2052223899.2145,
+     "nport_net_assets": 2099460740.54,
+     "rel_err": 1.0294333960381152e-05
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 2213127496.7999997,
+     "panel_aum": 2161343426.04,
+     "nport_net_assets": 2213129796.76,
+     "rel_err": -1.0392341216469703e-06
+    }
+   ]
+  },
+  "SSO": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 2.220446049250313e-16,
+   "identity_share_within_1bp": 1.0,
+   "daum_over_25pct": [],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 2688212000.0,
+     "panel_aum": 2688212000.0,
+     "nport_net_assets": 2688204304.95,
+     "rel_err": 2.862524245639264e-06
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 2205864765.0,
+     "panel_aum": 2256140885.0,
+     "nport_net_assets": 2205812418.89,
+     "rel_err": 2.373098888730496e-05
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 2153799720.0,
+     "panel_aum": 2165968080.0,
+     "nport_net_assets": 2153665507.38,
+     "rel_err": 6.231822887081684e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 3057084880.0,
+     "panel_aum": 3077091980.0,
+     "nport_net_assets": 3057085535.26,
+     "rel_err": -2.1434140218268283e-07
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 2907380740.0,
+     "panel_aum": 2903123960.0,
+     "nport_net_assets": 2907381263.37,
+     "rel_err": -1.8001423018887408e-07
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 3010748800.0,
+     "panel_aum": 2973114440.0,
+     "nport_net_assets": 3010601062.4,
+     "rel_err": 4.907245993002185e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 3839162880.0,
+     "panel_aum": 3827736800.0,
+     "nport_net_assets": 3838880670.28,
+     "rel_err": 7.351354320150882e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 4668823890.0,
+     "panel_aum": 4688663085.0,
+     "nport_net_assets": 4668824234.15,
+     "rel_err": -7.37123486693747e-08
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 4840311595.0,
+     "panel_aum": 4806651570.0,
+     "nport_net_assets": 4840310370.03,
+     "rel_err": 2.5307674644814426e-07
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 4001984775.0,
+     "panel_aum": 3989718155.0,
+     "nport_net_assets": 4001983486.1,
+     "rel_err": 3.220652970981064e-07
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 3416156840.0,
+     "panel_aum": 3424239230.0,
+     "nport_net_assets": 3416159505.23,
+     "rel_err": -7.801831255482838e-07
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 3111461670.0,
+     "panel_aum": 3104163480.0,
+     "nport_net_assets": 3111462879.88,
+     "rel_err": -3.888460338163924e-07
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 3281154450.0,
+     "panel_aum": 3253283640.0,
+     "nport_net_assets": 3281157406.57,
+     "rel_err": -9.010753322380438e-07
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 3197953695.0,
+     "panel_aum": 3202666965.0,
+     "nport_net_assets": 3197950564.38,
+     "rel_err": 9.789457144915303e-07
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 3504602790.0,
+     "panel_aum": 3512339220.0,
+     "nport_net_assets": 3504605997.52,
+     "rel_err": -9.152298439119022e-07
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 4260677540.0,
+     "panel_aum": 4157047440.0,
+     "nport_net_assets": 4260677906.91,
+     "rel_err": -8.611540414094065e-08
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 3646425280.0,
+     "panel_aum": 3922306140.0,
+     "nport_net_assets": 3646423623.44,
+     "rel_err": 4.5429718853462475e-07
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 4334682800.0,
+     "panel_aum": 4334682800.0,
+     "nport_net_assets": 4334681069.35,
+     "rel_err": 3.9925659400807945e-07
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 5097373920.0,
+     "panel_aum": 5109011760.0,
+     "nport_net_assets": 5097374884.54,
+     "rel_err": -1.8922288858025382e-07
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 5093466960.0,
+     "panel_aum": 5080384425.0,
+     "nport_net_assets": 5093367999.56,
+     "rel_err": 1.94292735196111e-05
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 5890070450.0,
+     "panel_aum": 5890070450.0,
+     "nport_net_assets": 5889957441.7,
+     "rel_err": 1.9186607224108698e-05
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 6004789890.0,
+     "panel_aum": 6004789890.0,
+     "nport_net_assets": 6004792397.65,
+     "rel_err": -4.1760810920443703e-07
+    }
+   ]
+  },
+  "TQQQ": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 2.220446049250313e-16,
+   "identity_share_within_1bp": 1.0,
+   "daum_over_25pct": [
+    {
+     "date": "2020-03-12",
+     "abs_daum": 0.2560328960887639,
+     "nav_ret": -0.2777470158693558,
+     "creation_usd": 93406530.0,
+     "unexplained_usd": -4.76837158203125e-07,
+     "unexplained_rel": -1.1084984282212136e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-13",
+     "abs_daum": 0.34718198364815644,
+     "nav_ret": 0.3010703855501322,
+     "creation_usd": 147570285.0,
+     "unexplained_usd": 4.76837158203125e-07,
+     "unexplained_rel": 1.4899831220944282e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-16",
+     "abs_daum": 0.3621169922863099,
+     "nav_ret": -0.365946843566779,
+     "creation_usd": 16511895.0,
+     "unexplained_usd": -4.76837158203125e-07,
+     "unexplained_rel": -1.1059998873051789e-16,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 3800478000.0,
+     "panel_aum": 3769422000.0,
+     "nport_net_assets": 3800380848.99,
+     "rel_err": 2.5563493202485077e-05
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 4314216480.0,
+     "panel_aum": 4585767340.0,
+     "nport_net_assets": 4314114920.5,
+     "rel_err": 2.3541213405753325e-05
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 5915147280.0,
+     "panel_aum": 5832302080.0,
+     "nport_net_assets": 5914831537.69,
+     "rel_err": 5.3381454397927186e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 8542072890.000001,
+     "panel_aum": 8590745670.0,
+     "nport_net_assets": 8542072293.64,
+     "rel_err": 6.981444089504407e-08
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 9311429580.0,
+     "panel_aum": 9303551890.0,
+     "nport_net_assets": 9311428091.44,
+     "rel_err": 1.5986376999954643e-07
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 10302139875.0,
+     "panel_aum": 10539022050.0,
+     "nport_net_assets": 10301632355.18,
+     "rel_err": 4.9265961209021825e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 12149668750.0,
+     "panel_aum": 12062702700.0,
+     "nport_net_assets": 12148795859.33,
+     "rel_err": 7.184997427778228e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 14636110184.999998,
+     "panel_aum": 14636110185.0,
+     "nport_net_assets": 14636108397.97,
+     "rel_err": 1.2209734645551862e-07
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 18484583040.0,
+     "panel_aum": 18582212880.0,
+     "nport_net_assets": 18484577599.63,
+     "rel_err": 2.943194112869918e-07
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 17120787685.0,
+     "panel_aum": 17086656380.0,
+     "nport_net_assets": 17120777488.21,
+     "rel_err": 5.955798449974736e-07
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 13783192425.0,
+     "panel_aum": 13697326125.0,
+     "nport_net_assets": 13783172827.64,
+     "rel_err": 1.4218322765824354e-06
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 12082532395.0,
+     "panel_aum": 12186824020.0,
+     "nport_net_assets": 12082513271.82,
+     "rel_err": 1.5827154145053868e-06
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 12522409020.0,
+     "panel_aum": 12719826400.0,
+     "nport_net_assets": 12522389445.76,
+     "rel_err": 1.5631393739390376e-06
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 11336101650.0,
+     "panel_aum": 11248662475.0,
+     "nport_net_assets": 11336097075.99,
+     "rel_err": 4.03490722611366e-07
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 15438606480.0,
+     "panel_aum": 15391775520.0,
+     "nport_net_assets": 15438586222.24,
+     "rel_err": 1.3121512363323262e-06
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 18943135190.0,
+     "panel_aum": 19273612610.0,
+     "nport_net_assets": 18943115986.24,
+     "rel_err": 1.0137592998393785e-06
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 18667937645.0,
+     "panel_aum": 18858807380.0,
+     "nport_net_assets": 18667940031.28,
+     "rel_err": -1.2782770864028237e-07
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 21679137780.0,
+     "panel_aum": 21745786890.0,
+     "nport_net_assets": 21679143285.88,
+     "rel_err": -2.53971290664623e-07
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 21364694050.0,
+     "panel_aum": 21486528100.0,
+     "nport_net_assets": 21364684618.02,
+     "rel_err": 4.4147527411553256e-07
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 22954285875.0,
+     "panel_aum": 22837330125.0,
+     "nport_net_assets": 22953832525.73,
+     "rel_err": 1.975048260427492e-05
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 25418738780.000004,
+     "panel_aum": 25366814895.0,
+     "nport_net_assets": 25418230119.07,
+     "rel_err": 2.0011658074636784e-05
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 22349408270.0,
+     "panel_aum": 22394414630.0,
+     "nport_net_assets": 22349419887.79,
+     "rel_err": -5.198251256111064e-07
+    }
+   ]
+  },
+  "UPRO": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false,
+   "calendar_days_missing": 0,
+   "longest_gap_trading_days": 0,
+   "rows_off_calendar": [],
+   "identity_abs_p99": 2.220446049250313e-16,
+   "identity_share_within_1bp": 1.0,
+   "daum_over_25pct": [
+    {
+     "date": "2020-03-12",
+     "abs_daum": 0.27059031935177935,
+     "nav_ret": -0.28509937267389596,
+     "creation_usd": 15656959.999999998,
+     "unexplained_usd": 1.210719347000122e-07,
+     "unexplained_rel": 1.1219541701417672e-16,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-13",
+     "abs_daum": 0.31601450445656143,
+     "nav_ret": 0.27900882419064743,
+     "creation_usd": 29127839.999999996,
+     "unexplained_usd": 3.725290298461914e-09,
+     "unexplained_rel": 4.732822676950724e-18,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-16",
+     "abs_daum": 0.35691730516825937,
+     "nav_ret": -0.3591697839592637,
+     "creation_usd": 2333250.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    },
+    {
+     "date": "2020-03-24",
+     "abs_daum": 0.33535593646262063,
+     "nav_ret": 0.28065915375440587,
+     "creation_usd": 34718945.0,
+     "unexplained_usd": 0.0,
+     "unexplained_rel": 0.0,
+     "split_within_3d": false
+    }
+   ],
+   "spot_checks": [
+    {
+     "date": "2019-11-30",
+     "panel_date": "2019-11-29",
+     "panel_nav_x_prior_shares": 1385884500.0,
+     "panel_aum": 1385884500.0,
+     "nport_net_assets": 1385756269.53,
+     "rel_err": 9.25346489997203e-05
+    },
+    {
+     "date": "2020-02-29",
+     "panel_date": "2020-02-28",
+     "panel_nav_x_prior_shares": 1149891210.0,
+     "panel_aum": 1199886480.0,
+     "nport_net_assets": 1149867059.39,
+     "rel_err": 2.1002958387805748e-05
+    },
+    {
+     "date": "2020-05-31",
+     "panel_date": "2020-05-29",
+     "panel_nav_x_prior_shares": 1373483210.0,
+     "panel_aum": 1373483210.0,
+     "nport_net_assets": 1373399055.64,
+     "rel_err": 6.127451424564612e-05
+    },
+    {
+     "date": "2020-08-31",
+     "panel_date": "2020-08-31",
+     "panel_nav_x_prior_shares": 1716004000.0,
+     "panel_aum": 1754422000.0,
+     "nport_net_assets": 1716003139.06,
+     "rel_err": 5.017123689832204e-07
+    },
+    {
+     "date": "2020-11-30",
+     "panel_date": "2020-11-30",
+     "panel_nav_x_prior_shares": 1686449920.0,
+     "panel_aum": 1676082400.0,
+     "nport_net_assets": 1686449657.26,
+     "rel_err": 1.5579474843541163e-07
+    },
+    {
+     "date": "2021-02-28",
+     "panel_date": "2021-02-26",
+     "panel_nav_x_prior_shares": 1750315890.0,
+     "panel_aum": 1762304355.0,
+     "nport_net_assets": 1750228755.07,
+     "rel_err": 4.978488083207111e-05
+    },
+    {
+     "date": "2021-05-31",
+     "panel_date": "2021-05-28",
+     "panel_nav_x_prior_shares": 2406700665.0,
+     "panel_aum": 2396075055.0,
+     "nport_net_assets": 2406527968.06,
+     "rel_err": 7.176186701007836e-05
+    },
+    {
+     "date": "2021-08-31",
+     "panel_date": "2021-08-31",
+     "panel_nav_x_prior_shares": 2892357090.0,
+     "panel_aum": 2885753535.0,
+     "nport_net_assets": 2892357883.28,
+     "rel_err": -2.742675810907258e-07
+    },
+    {
+     "date": "2021-11-30",
+     "panel_date": "2021-11-30",
+     "panel_nav_x_prior_shares": 3279926520.0000005,
+     "panel_aum": 3354163540.0,
+     "nport_net_assets": 3279926697.5,
+     "rel_err": -5.4117062942005134e-08
+    },
+    {
+     "date": "2022-02-28",
+     "panel_date": "2022-02-28",
+     "panel_nav_x_prior_shares": 2962331790.0,
+     "panel_aum": 2959436060.0,
+     "nport_net_assets": 2962332168.52,
+     "rel_err": -1.2777770297400792e-07
+    },
+    {
+     "date": "2022-05-31",
+     "panel_date": "2022-05-31",
+     "panel_nav_x_prior_shares": 2552220000.0,
+     "panel_aum": 2573101800.0,
+     "nport_net_assets": 2552221379.6,
+     "rel_err": -5.405487200071946e-07
+    },
+    {
+     "date": "2022-08-31",
+     "panel_date": "2022-08-31",
+     "panel_nav_x_prior_shares": 2122340220.0,
+     "panel_aum": 2149549710.0,
+     "nport_net_assets": 2122340544.62,
+     "rel_err": -1.5295377586710401e-07
+    },
+    {
+     "date": "2022-11-30",
+     "panel_date": "2022-11-30",
+     "panel_nav_x_prior_shares": 2550522520.0,
+     "panel_aum": 2548520540.0,
+     "nport_net_assets": 2550525472.89,
+     "rel_err": -1.1577575018684172e-06
+    },
+    {
+     "date": "2023-02-28",
+     "panel_date": "2023-02-28",
+     "panel_nav_x_prior_shares": 2218273610.0,
+     "panel_aum": 2218273610.0,
+     "nport_net_assets": 2218272401.0,
+     "rel_err": 5.450187270383822e-07
+    },
+    {
+     "date": "2023-05-31",
+     "panel_date": "2023-05-31",
+     "panel_nav_x_prior_shares": 2385088335.0,
+     "panel_aum": 2387080890.0,
+     "nport_net_assets": 2385090808.48,
+     "rel_err": -1.037059046637978e-06
+    },
+    {
+     "date": "2023-08-31",
+     "panel_date": "2023-08-31",
+     "panel_nav_x_prior_shares": 2745132640.0,
+     "panel_aum": 2730633700.0,
+     "nport_net_assets": 2745130390.9,
+     "rel_err": 8.193053442351328e-07
+    },
+    {
+     "date": "2023-11-30",
+     "panel_date": "2023-11-30",
+     "panel_nav_x_prior_shares": 2703732990.0,
+     "panel_aum": 2757176050.0,
+     "nport_net_assets": 2703733724.37,
+     "rel_err": -2.7161328541858154e-07
+    },
+    {
+     "date": "2024-02-29",
+     "panel_date": "2024-02-29",
+     "panel_nav_x_prior_shares": 2952291000.0,
+     "panel_aum": 2994699600.0,
+     "nport_net_assets": 2952290614.04,
+     "rel_err": 1.3073238736005521e-07
+    },
+    {
+     "date": "2024-05-31",
+     "panel_date": "2024-05-31",
+     "panel_nav_x_prior_shares": 3255762600.0,
+     "panel_aum": 3441306060.0,
+     "nport_net_assets": 3255761630.91,
+     "rel_err": 2.976538548971064e-07
+    },
+    {
+     "date": "2024-08-31",
+     "panel_date": "2024-08-30",
+     "panel_nav_x_prior_shares": 3823373820.0,
+     "panel_aum": 3806911500.0,
+     "nport_net_assets": 3823303333.43,
+     "rel_err": 1.8436039166402907e-05
+    },
+    {
+     "date": "2024-11-30",
+     "panel_date": "2024-11-29",
+     "panel_nav_x_prior_shares": 4505729100.0,
+     "panel_aum": 4505729100.0,
+     "nport_net_assets": 4505619124.1,
+     "rel_err": 2.4408609998083364e-05
+    },
+    {
+     "date": "2025-02-28",
+     "panel_date": "2025-02-28",
+     "panel_nav_x_prior_shares": 3977676750.0,
+     "panel_aum": 3770927450.0,
+     "nport_net_assets": 3977677359.69,
+     "rel_err": -1.5327789182340013e-07
+    }
+   ]
+  }
+ },
+ "verdict": {
+  "QID": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  },
+  "QLD": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  },
+  "SDS": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  },
+  "SPXL": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": false,
+   "identity_diagnostic": true,
+   "pass": false
+  },
+  "SPXS": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": false,
+   "identity_diagnostic": true,
+   "pass": false
+  },
+  "SPXU": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  },
+  "SQQQ": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": false,
+   "pass": true
+  },
+  "SSO": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  },
+  "TQQQ": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  },
+  "UPRO": {
+   "G1_gaps": true,
+   "G2_big_moves_explained": true,
+   "G3_spot_checks": true,
+   "identity_diagnostic": true,
+   "pass": true
+  }
+ },
+ "direxion": {
+  "SPXL": {
+   "first_anchor": "2019-10-31",
+   "last_anchor": "2025-01-31",
+   "filed_quarter_ends": 22,
+   "forward_checks": [
+    {
+     "quarter_end": "2020-01-31",
+     "forward": 1052364755.2069046,
+     "filed": 1046166399.92,
+     "rel_err": 0.005924827338536831
+    },
+    {
+     "quarter_end": "2020-04-30",
+     "forward": 1517525897.999433,
+     "filed": 1433729931.5,
+     "rel_err": 0.05844613037530988
+    },
+    {
+     "quarter_end": "2020-07-31",
+     "forward": 1453092061.092847,
+     "filed": 1453619152.73,
+     "rel_err": -0.0003626064200950019
+    },
+    {
+     "quarter_end": "2020-10-31",
+     "forward": 1495044284.2140377,
+     "filed": 1327013270.33,
+     "rel_err": 0.12662346160430782
+    },
+    {
+     "quarter_end": "2021-01-31",
+     "forward": 1528381581.0135727,
+     "filed": 1518046837.95,
+     "rel_err": 0.006807921076749546
+    },
+    {
+     "quarter_end": "2021-04-30",
+     "forward": 2202351646.8359475,
+     "filed": 2211675970.57,
+     "rel_err": -0.00421595380974793
+    },
+    {
+     "quarter_end": "2021-07-31",
+     "forward": 2681536376.664227,
+     "filed": 2687007056.61,
+     "rel_err": -0.0020359752804948172
+    },
+    {
+     "quarter_end": "2021-10-31",
+     "forward": 3326153130.8767357,
+     "filed": 3348755191.83,
+     "rel_err": -0.006749391836228247
+    },
+    {
+     "quarter_end": "2022-01-31",
+     "forward": 3305362010.4463587,
+     "filed": 3347145433.08,
+     "rel_err": -0.012483300612125658
+    },
+    {
+     "quarter_end": "2022-04-30",
+     "forward": 2485512586.4177055,
+     "filed": 2525583771.92,
+     "rel_err": -0.015866108243098087
+    },
+    {
+     "quarter_end": "2022-07-31",
+     "forward": 2699522838.747067,
+     "filed": 2759639383.24,
+     "rel_err": -0.021784202986098844
+    },
+    {
+     "quarter_end": "2022-10-31",
+     "forward": 2524301133.148513,
+     "filed": 2573089576.21,
+     "rel_err": -0.018961035601935627
+    },
+    {
+     "quarter_end": "2023-01-31",
+     "forward": 2732929033.6738157,
+     "filed": 2736158454.0,
+     "rel_err": -0.0011802753314462677
+    },
+    {
+     "quarter_end": "2023-04-30",
+     "forward": 2461846108.4899254,
+     "filed": 2512647596.61,
+     "rel_err": -0.020218310036240195
+    },
+    {
+     "quarter_end": "2023-07-31",
+     "forward": 3412351845.108234,
+     "filed": 3437987028.01,
+     "rel_err": -0.007456451316689372
+    },
+    {
+     "quarter_end": "2023-10-31",
+     "forward": 2791723740.2066674,
+     "filed": 2798397550.73,
+     "rel_err": -0.0023848686265436347
+    },
+    {
+     "quarter_end": "2024-01-31",
+     "forward": 3734504185.282455,
+     "filed": 3730691690.68,
+     "rel_err": 0.0010219270094014021
+    },
+    {
+     "quarter_end": "2024-04-30",
+     "forward": 3711960643.3241673,
+     "filed": 3714702711.17,
+     "rel_err": -0.0007381661626885139
+    },
+    {
+     "quarter_end": "2024-07-31",
+     "forward": 4773272604.897545,
+     "filed": 4798179137.75,
+     "rel_err": -0.00519083013314392
+    },
+    {
+     "quarter_end": "2024-10-31",
+     "forward": 4968134476.663347,
+     "filed": 4891050620.86,
+     "rel_err": 0.01576018360443676
+    },
+    {
+     "quarter_end": "2025-01-31",
+     "forward": 5029708468.474604,
+     "filed": 4992935361.88,
+     "rel_err": 0.0073650275698256
+    }
+   ],
+   "forward_abs_max": 0.12662346160430782,
+   "forward_over_1pct": 8,
+   "path_error_monthly": {
+    "n": 66,
+    "mean": 0.0005772740323723371,
+    "abs_p95": 0.0027381947444991925,
+    "abs_max": 0.004252244143750139
+   }
+  },
+  "SPXS": {
+   "first_anchor": "2019-10-31",
+   "last_anchor": "2025-01-31",
+   "filed_quarter_ends": 22,
+   "forward_checks": [
+    {
+     "quarter_end": "2020-01-31",
+     "forward": 535449812.0885716,
+     "filed": 536517106.55,
+     "rel_err": -0.0019893018291466946
+    },
+    {
+     "quarter_end": "2020-04-30",
+     "forward": 1188964729.6920946,
+     "filed": 1190010297.0,
+     "rel_err": -0.0008786203871860021
+    },
+    {
+     "quarter_end": "2020-07-31",
+     "forward": 905677206.3911914,
+     "filed": 903716714.09,
+     "rel_err": 0.002169365986735672
+    },
+    {
+     "quarter_end": "2020-10-31",
+     "forward": 748405036.9368625,
+     "filed": 801681488.9,
+     "rel_err": -0.06645588391499346
+    },
+    {
+     "quarter_end": "2021-01-31",
+     "forward": 535339918.7095582,
+     "filed": 532168773.16,
+     "rel_err": 0.005958909484162334
+    },
+    {
+     "quarter_end": "2021-04-30",
+     "forward": 397859126.6797504,
+     "filed": 397439045.73,
+     "rel_err": 0.0010569695007665025
+    },
+    {
+     "quarter_end": "2021-07-31",
+     "forward": 394112423.22953945,
+     "filed": 396011090.87,
+     "rel_err": -0.004794480973473125
+    },
+    {
+     "quarter_end": "2021-10-31",
+     "forward": 389370482.5066839,
+     "filed": 390236567.01,
+     "rel_err": -0.002219383257576424
+    },
+    {
+     "quarter_end": "2022-01-31",
+     "forward": 335736881.1981892,
+     "filed": 339126154.49,
+     "rel_err": -0.00999413712843178
+    },
+    {
+     "quarter_end": "2022-04-30",
+     "forward": 463512130.99214196,
+     "filed": 475265861.87,
+     "rel_err": -0.0247308544981778
+    },
+    {
+     "quarter_end": "2022-07-31",
+     "forward": 610615210.2733192,
+     "filed": 623983883.5,
+     "rel_err": -0.021424709163471167
+    },
+    {
+     "quarter_end": "2022-10-31",
+     "forward": 836258170.9004897,
+     "filed": 885462000.6,
+     "rel_err": -0.05556853898435976
+    },
+    {
+     "quarter_end": "2023-01-31",
+     "forward": 1121746256.5399354,
+     "filed": 1115687651.0,
+     "rel_err": 0.0054303778790640855
+    },
+    {
+     "quarter_end": "2023-04-30",
+     "forward": 1199695920.2058327,
+     "filed": 1235424844.75,
+     "rel_err": -0.028920354561428163
+    },
+    {
+     "quarter_end": "2023-07-31",
+     "forward": 741641983.244227,
+     "filed": 745943035.86,
+     "rel_err": -0.005765926363015428
+    },
+    {
+     "quarter_end": "2023-10-31",
+     "forward": 682629187.6281302,
+     "filed": 703652726.0,
+     "rel_err": -0.029877718930161334
+    },
+    {
+     "quarter_end": "2024-01-31",
+     "forward": 603991473.2555751,
+     "filed": 628986417.02,
+     "rel_err": -0.039738447584997894
+    },
+    {
+     "quarter_end": "2024-04-30",
+     "forward": 557272286.786078,
+     "filed": 572750389.2,
+     "rel_err": -0.027024167431018986
+    },
+    {
+     "quarter_end": "2024-07-31",
+     "forward": 471839802.7055124,
+     "filed": 479555767.04,
+     "rel_err": -0.016089816586115635
+    },
+    {
+     "quarter_end": "2024-10-31",
+     "forward": 505193622.60772127,
+     "filed": 508273703.33,
+     "rel_err": -0.006059886045843621
+    },
+    {
+     "quarter_end": "2025-01-31",
+     "forward": 330912341.8672683,
+     "filed": 343567766.18,
+     "rel_err": -0.036835307495352576
+    }
+   ],
+   "forward_abs_max": 0.06645588391499346,
+   "forward_over_1pct": 10,
+   "path_error_monthly": {
+    "n": 66,
+    "mean": 0.002235234935444387,
+    "abs_p95": 0.01854114032395261,
+    "abs_max": 0.02423277135933251
+   }
+  }
+ },
+ "band_measured_on_proshares": {
+  "QID": {
+   "days": 1319,
+   "p05": -0.1084839947607658,
+   "p50": -0.006144103466560136,
+   "p95": 0.11157472069394962,
+   "abs_p95": 0.1488571513604813,
+   "forward_check_abs_max": 0.06787296974857493
+  },
+  "QLD": {
+   "days": 1319,
+   "p05": -0.035001869866145605,
+   "p50": 0.0001324314358970291,
+   "p95": 0.03833272151447811,
+   "abs_p95": 0.05021457490247331,
+   "forward_check_abs_max": 0.022800781409191062
+  },
+  "SDS": {
+   "days": 1319,
+   "p05": -0.08073363369594967,
+   "p50": 0.0002898851223867016,
+   "p95": 0.07495646283056957,
+   "abs_p95": 0.12165911835910163,
+   "forward_check_abs_max": 0.13327739659951066
+  },
+  "SPXU": {
+   "days": 1319,
+   "p05": -0.10266966460953228,
+   "p50": -0.007619355604315037,
+   "p95": 0.07934972613870518,
+   "abs_p95": 0.12631142971698778,
+   "forward_check_abs_max": 0.039996657295060856
+  },
+  "SQQQ": {
+   "days": 1319,
+   "p05": -0.13893561826997955,
+   "p50": -0.011678926945863477,
+   "p95": 0.08782587051980116,
+   "abs_p95": 0.16157084166233887,
+   "forward_check_abs_max": 0.1250177454353022
+  },
+  "SSO": {
+   "days": 1319,
+   "p05": -0.0385239182218496,
+   "p50": 0.0007985739669909009,
+   "p95": 0.04753851668771293,
+   "abs_p95": 0.05864409799030196,
+   "forward_check_abs_max": 0.01498470937034524
+  },
+  "TQQQ": {
+   "days": 1319,
+   "p05": -0.05287306221550223,
+   "p50": 0.004785671857885809,
+   "p95": 0.05200544838987726,
+   "abs_p95": 0.06992536071695879,
+   "forward_check_abs_max": 0.032257608070410226
+  },
+  "UPRO": {
+   "days": 1319,
+   "p05": -0.03477053808128115,
+   "p50": 0.004043110518208826,
+   "p95": 0.04273369786206565,
+   "abs_p95": 0.05409201771073922,
+   "forward_check_abs_max": 0.044865257267852954
+  },
+  "_forward_checks": {
+   "n": 168,
+   "abs_p50": 0.006411109518711378,
+   "abs_p90": 0.032507746904996734,
+   "abs_max": 0.13327739659951066,
+   "over_1pct": 58
+  },
+  "_pooled": {
+   "days": 10552,
+   "p05": -0.08267214606098369,
+   "p95": 0.06726466439842411,
+   "abs_p50": 0.017786518444685928,
+   "abs_p95": 0.10656584349551584,
+   "abs_p99": 0.1986427066463024
+  }
+ },
+ "calendar": {
+  "source": "SPY daily dates, Alpha Vantage cache",
+  "days": 2303,
+  "first": "2016-01-04",
+  "last": "2025-02-28"
+ },
+ "direxion_absent_before": {
+  "SPXL": "2019-10-31",
+  "SPXS": "2019-10-31"
+ },
+ "all_pass": false
+}

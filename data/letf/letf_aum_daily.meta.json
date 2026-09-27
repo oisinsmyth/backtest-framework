@@ -1,0 +1,78 @@
+{
+ "path": "data/letf/letf_aum_daily.csv.gz",
+ "rows": 21102,
+ "reserved_from": "2025-03-01",
+ "columns": [
+  "date",
+  "ticker",
+  "nav",
+  "shares_out",
+  "aum",
+  "source",
+  "estimated"
+ ],
+ "builder": "scripts/build_letf_aum.py",
+ "holdout": "A10: nothing on or after 2025-03-01 is parsed; the vault is scored only in the joint run",
+ "per_ticker": {
+  "QID": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "QLD": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "SDS": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "SPXL": {
+   "first": "2019-10-31",
+   "last": "2025-02-28",
+   "rows": 1339,
+   "estimated": true
+  },
+  "SPXS": {
+   "first": "2019-10-31",
+   "last": "2025-02-28",
+   "rows": 1339,
+   "estimated": true
+  },
+  "SPXU": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "SQQQ": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "SSO": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "TQQQ": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  },
+  "UPRO": {
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 2303,
+   "estimated": false
+  }
+ }
+}

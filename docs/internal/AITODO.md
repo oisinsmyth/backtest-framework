@@ -163,8 +163,14 @@
   written, D530/D463/D487 disclosed in every result; LETF-A2 in-sample 2016-01 → 2025-02-28 (A10); LETF-A3 Direxion
   from N-PORT (2019-Q3 on: quarter-end net assets plus monthly flows and returns, CIK 1424958), band measured on the
   ProShares funds, else the principal sources it; LETF-A4 Q1/Q2 defaults (proposed).
-- **Next:** build Phase 1 (the AUM panel and Gate 0): ProShares from the principal's file, Direxion's N-PORT
-  month-ends and the daily estimate with its measured band; check N-SAR/N-CSR for 2016 → 2019-Q2.
+- **Phase 1 / Gate 0 DONE (D637, 2026-09-27):** `scripts/build_letf_aum.py` → `data/letf/letf_aum_daily.csv.gz`,
+  `gate0.json`. **NQ set PASSES** (four ProShares funds, 2016-01 → 2025-02, 22 N-PORT spot checks each within
+  0.011%). **ES set:** ProShares four PASS; Direxion (39% of the S&P flow) estimated from N-PORT 2019-10 → 2025-02
+  with a measured band (impact I moved by 2.1% at p95), failing the proposed 1% bar that the method also fails on
+  known-good funds; **Direxion absent 2016-01 → 2019-10.** Stop-and-report for ES.
+- **Rulings needed (D637 end):** (1) accept Direxion's 2019-10+ estimate and replace the 1% bar; (2) Direxion
+  2016-01 → 2019-10: transcribe the N-Q/N-CSR/N-SAR anchors, the principal sources it, or ES in-sample from 2019-11;
+  (3) NQ to Phase 2 now, or wait for ES.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
