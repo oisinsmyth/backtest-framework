@@ -181,7 +181,15 @@
   priced in one contract; MES 1–7% of the ES-equivalent volume.
 - **Phase 3 DONE:** `src/backtest_framework/letf/model.py` (section 4's algebra) and `tests/unit/test_letf_model.py`
   (the deposit's nine tests, all claimed: crosswalk 88 of 146).
-- **Next:** D639 PRE-REG (drafted, committed alone), then the POWER step, then the runner.
+- **D639 PRE-REG committed alone** (`e95c0a9`).
+- **POWER DONE** (`scripts/power_letf.py` → `data/letf/power.json`, `docs/results/LETF_CLOSE_FLOW_POWER.md`):
+  - **Every primary cell is UNDERPOWERED by D639's default** (MDE vs the mean cost).
+  - **NQ:** about 950 active days per cell, MDE (t = 2) 3.1–4.7 bp against a 1.6 bp cost. But against the model's
+    own predicted impact (about 10 bp) it is powered even at Holm 80% (5.4–8.3 bp).
+  - **ES:** 60–69 active days per cell and **none in 2024+**. MDE 27–38 bp, above even its own 15 bp prediction.
+  - **Open for the principal before the runner:** whether to add the model's-own-prediction comparison as a
+    pre-registered reading (LETF-A7).
+- **Next:** the runner (`scripts/run_letf_close_flow.py`), committed before its one run.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
