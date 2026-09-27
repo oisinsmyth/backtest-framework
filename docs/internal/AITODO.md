@@ -99,9 +99,13 @@
   - **Sign-check inputs on disk:**
     - Databento `trades` for the 15 roots, 2026-09-19 → 09-25 ($0; 5 sessions);
     - Sierra files for the 24 current contracts.
-  1. **Top up both to ≥ 10 post-vault sessions** (from about 2026-10-05), then run the sign check on the 11
-     non-energy roots. Energy (CL, NG, HO, RB) only after D626's read on 2026-10-10.
-  2. Build and commit the C0 runner (`run_gate_c0.py`, D635 §9). Run it once after the sign check.
+  - **The C0 runner and the sign check are committed (`bef2903`).** Both steps below are SCHEDULED. Each task
+    reports; neither commits or runs C0.
+  1. **Scheduled for Mon 2026-10-05 08:00, task `c0-signcheck-nonenergy`:** top up the $0 trades and the Sierra
+     files, then run `check_c0_sierra_sign.py --group nonenergy`.
+  2. **Scheduled for Sun 2026-10-11 09:00, task `c0-signcheck-energy`:** it first checks that D626's read
+     (2026-10-10) happened, then runs `--group energy`, and reports whether all 15 roots have a verdict.
+  3. **The principal calls C0's one run:** `uv run python -W error::RuntimeWarning scripts/run_gate_c0.py --run`.
   3. The freeze by 2026-10-16 (IR-A10). If the energy sign check or C0 is not done by then, the code is frozen and
      κ follows from the in-sample data (IR-A10).
 
