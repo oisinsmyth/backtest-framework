@@ -115,9 +115,8 @@
   - **The Track 2 recorder:** `scripts/record_index_reweight_2027.py`.
     - `--settlements` works: 125 post-vault settlements for 21 components, 2026-09-21 → 25. Scheduled daily.
     - CL, NG, HO and RB are skipped until 2026-10-11 (D626's sample).
-    - `--cim2026`: the principal ALLOWED the single 2026-01-07 read (IR-A15; `track2/cim2026_ruling.json`). It needs
-      21 expired Sierra daily files (the Feb/Mar 2026 lead contracts) that are not on disk: **download on the
-      principal's approval**, then run it once.
+    - `--cim2026` DONE (IR-A15): the 21 expired Sierra daily files were downloaded on the principal's approval
+      (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)

@@ -1,0 +1,167 @@
+{
+ "components": {
+  "Aluminum": {
+   "cim": 0.012775781650123242,
+   "cip": 0.039706419602935805,
+   "contract": "2026-03",
+   "price": 3107.9444444444443
+  },
+  "Brent Crude Oil": {
+   "cim": 1.3942888452966047,
+   "cip": 0.08360155916398442,
+   "contract": "2026-03",
+   "price": 59.96
+  },
+  "Cocoa": {
+   "cim": 0.002897208762236704,
+   "cip": 0.017136989828630104,
+   "contract": "2026-03",
+   "price": 5915.0
+  },
+  "Coffee": {
+   "cim": 0.07762820537633482,
+   "cip": 0.029145509708544903,
+   "contract": "2026-03",
+   "price": 375.45
+  },
+  "Copper": {
+   "cim": 10.85569479802099,
+   "cip": 0.06361979936380201,
+   "contract": "2026-03",
+   "price": 5.8605
+  },
+  "Corn": {
+   "cim": 0.12374260648501378,
+   "cip": 0.05528200944717991,
+   "contract": "2026-03",
+   "price": 446.75
+  },
+  "Cotton": {
+   "cim": 0.24594895667697922,
+   "cip": 0.0159497898405021,
+   "contract": "2026-03",
+   "price": 64.85
+  },
+  "Gold": {
+   "cim": 0.03337978454015173,
+   "cip": 0.1489572885104271,
+   "contract": "2026-02",
+   "price": 4462.5
+  },
+  "HRW Wheat": {
+   "cim": 0.033699755072221636,
+   "cip": 0.0179114198208858,
+   "contract": "2026-03",
+   "price": 531.5
+  },
+  "Lead": {
+   "cim": 0.0046182544108677,
+   "cip": 0.009498209905017901,
+   "contract": "2026-03",
+   "price": 2056.6666666666665
+  },
+  "Lean Hogs": {
+   "cim": 0.20974528092141512,
+   "cip": 0.017786399822136003,
+   "contract": "2026-02",
+   "price": 84.8
+  },
+  "Live Cattle": {
+   "cim": 0.1645033562059418,
+   "cip": 0.038580149614198506,
+   "contract": "2026-02",
+   "price": 234.525
+  },
+  "Low Sulphur Gas Oil": {
+   "cim": 0.04833720687448746,
+   "cip": 0.028905649710943504,
+   "contract": "2026-03",
+   "price": 598.0
+  },
+  "Natural Gas": {
+   "cim": 24.709711390390016,
+   "cip": 0.07197938928020611,
+   "contract": "2026-03",
+   "price": 2.913
+  },
+  "Nickel": {
+   "cim": 0.001197371919946257,
+   "cip": 0.022277769777222303,
+   "contract": "2026-03",
+   "price": 18605.555555555555
+  },
+  "RBOB Gasoline": {
+   "cim": 12.53400604067704,
+   "cip": 0.021547209784527902,
+   "contract": "2026-03",
+   "price": 1.7191
+  },
+  "Silver": {
+   "cim": 0.5081164187138185,
+   "cip": 0.0394364396056356,
+   "contract": "2026-03",
+   "price": 77.613
+  },
+  "Soybean Meal": {
+   "cim": 0.09605346989735661,
+   "cip": 0.029334729706652705,
+   "contract": "2026-03",
+   "price": 305.4
+  },
+  "Soybean Oil": {
+   "cim": 0.572671460507315,
+   "cip": 0.028238429717615705,
+   "contract": "2026-03",
+   "price": 49.31
+  },
+  "Soybeans": {
+   "cim": 0.05019054307822578,
+   "cip": 0.0535533094644669,
+   "contract": "2026-03",
+   "price": 1067.0
+  },
+  "Sugar": {
+   "cim": 1.9702423033950403,
+   "cip": 0.029514229704857706,
+   "contract": "2026-03",
+   "price": 14.98
+  },
+  "ULS Diesel": {
+   "cim": 10.693380703758354,
+   "cip": 0.021922499780775002,
+   "contract": "2026-03",
+   "price": 2.0501
+  },
+  "WTI Crude Oil": {
+   "cim": 1.1878075015387408,
+   "cip": 0.06639843933601561,
+   "contract": "2026-03",
+   "price": 55.9
+  },
+  "Wheat": {
+   "cim": 0.0525425670421419,
+   "cip": 0.027217049727829505,
+   "contract": "2026-03",
+   "price": 518.0
+  },
+  "Zinc": {
+   "cim": 0.007034453830857435,
+   "cip": 0.022499309775006904,
+   "contract": "2026-03",
+   "price": 3198.4444444444443
+  }
+ },
+ "det": "2026-01-07",
+ "ruling": {
+  "amendment": "IR-A15 (docs/internal/INDEX_REWEIGHT_FLOW_AMENDMENTS.md)",
+  "asked": "Allow that single-day read now (one day of settlements, 2026-01-07, for the 25 components' January lead contracts, to compute CIM(2026)), or defer it to the combined vault run",
+  "instruction": "the principal, 2026-09-27: 'Allow the single-day read, freeze now, and schedule daily recording'",
+  "scope": {
+   "components": 25,
+   "date": "2026-01-07",
+   "excludes": "every other vault day, intraday data, any return",
+   "includes": "CL, NG, HO and RB (March 2026 contracts)",
+   "what": "the settlement of each component's January 2026 lead contract"
+  }
+ }
+}
