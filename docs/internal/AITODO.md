@@ -87,14 +87,14 @@
   - The rebuilt subindices match the published ones: 0.2–1.0 bp a month, and 99.4–100% of roll days.
   - The misses: the fund proxy's accrual (−4 to −6 bp a month); two 2020 strip holes (02-27, 06-30); and the LME
     stand-in in the 2016 aggregate.
-  - **C0 waits for the principal's four rulings (D634-RESULT §5).**
+  - **Rulings taken (IR-A14), and the logged re-run gave RESOLVED** (D634-RESULT §6). The 2020 holes were filled
+    from Sierra. The rebuild meets 5 bp a month in 97–100% of months, and ΔN was unchanged. **The re-run's tracker
+    (`drift_tracker_daily_rerun.csv.gz`) is the one to freeze.**
 - **Next:**
-  1. The rulings. Recommended: fill the 2020 holes from Sierra's daily settlements and re-run R0 once; accept the
-     rebuild-versus-proxy split; keep LME as a band; keep det = BD4.
-  2. Source the CME settlement windows for 11 roots (IR-A9).
-  3. The C0 pre-registration. It must settle the ZL/ZM roll-in gap and the GC/ZS norm pad.
-  4. Fetch post-vault Databento `trades` for the sign check (IR-A7).
-  5. The freeze by 2026-10-16 (IR-A10).
+  1. Source the CME settlement windows for 11 roots (IR-A9); C0 needs them.
+  2. The C0 pre-registration. It must settle the ZL/ZM roll-in gap and the GC/ZS norm pad.
+  3. Fetch post-vault Databento `trades` for the sign check (IR-A7).
+  4. The freeze by 2026-10-16 (IR-A10).
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 

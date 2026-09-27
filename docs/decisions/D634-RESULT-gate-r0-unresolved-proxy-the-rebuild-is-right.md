@@ -120,3 +120,34 @@ run, and no output existed before it. Output: `data/index_reweight/gate_r0.json`
   4. **det.** Keep the rule's BD4 as pre-registered (IR-A3), with BCOM's printed dates reported beside.
 - **Recommended:** 1 (fill and re-run once), 2 (accept), 3 (leave as a band) and 4 (keep). Then freeze the tracker
   and pre-register C0. C0 also has to settle the ZL/ZM roll-in gap in the Sierra flow files (AITODO).
+
+## 6. The rulings and the one logged re-run (IR-A14): R0 is RESOLVED
+
+*The principal, 2026-09-27: "Go with your recommendations, fill the holes and rerun R0". The rulings (IR-A14) and
+the fill were committed at `667a4cf`, before the re-run. Output: `data/index_reweight/gate_r0_rerun.json` and
+`drift_tracker_daily_rerun.csv.gz`. `--check-rerun` reproduces it byte for byte, and the first run's `gate_r0.json`
+is unchanged and still reproduces.*
+
+- **The fill.** 44 settlements across 13 roots on 2020-02-27 and 2020-06-30, from Sierra's daily files, only where
+  the strip had none. Sierra equals the strip on all 156 neighbouring cells, and the ledger's EIA fills on CL and NG
+  on all 4 shared cells.
+- **The re-run:**
+  - The registered verdict is still **UNRESOLVED (proxy)**: the per-fund monthly rule still fails on the funds'
+    accrual.
+  - **Under ruling 2, R0 is RESOLVED.** The daily rules pass for every single-commodity fund (roll days
+    99.4–100%, other days 99.4–100%; gold and silver are now 100% on both), and coverage holds.
+  - The rebuild's part of the monthly error, now over all months including 2020:
+
+| subindex | months | rebuild within 5 bp | rebuild median | proxy mean |
+|---|---|---|---|---|
+| natural gas | 110 | **97.3%** | 1.12 bp | −6.29 bp |
+| WTI | 51 | **98.0%** | 0.21 bp | −3.55 bp |
+| gold | 74 | **100%** | 0.46 bp | −4.02 bp |
+| silver | 74 | **100%** | 0.42 bp | −5.01 bp |
+
+- **ΔN is identical in both runs.** No component-year changed, by 0 contracts. A hole moved one day's return to the
+  next day within the year, which leaves the drifted weight at det unchanged.
+- **The BCOM aggregate** is unchanged (2016, 16% of days within 5 bp). It is reported, not gating (ruling 3).
+- **What follows:**
+  - the tracker frozen into the model is the re-run's;
+  - Gate C0 (the κ calibration on monthly rolls) is next to pre-register.
