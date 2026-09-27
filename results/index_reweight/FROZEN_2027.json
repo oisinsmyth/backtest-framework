@@ -1,0 +1,456 @@
+{
+ "code": [
+  {
+   "name": "build_fund_panel.py",
+   "path": "scripts/build_fund_panel.py",
+   "sha256": "49e7e57606b1d2ec085ee1c497e168d782ec2dc108b9274016928e4d1e1b61b6"
+  },
+  {
+   "name": "build_gsci_inputs.py",
+   "path": "scripts/build_gsci_inputs.py",
+   "sha256": "687134c1ab9a140bbdd353f70f75add0d66c3ac94cbc06921b391fedbec1f21c"
+  },
+  {
+   "name": "build_index_window_flow_panel.py",
+   "path": "scripts/build_index_window_flow_panel.py",
+   "sha256": "ab9f4ab542d029b3a12e8324a7ca9be9a262a46583c2dbb0bae26cd489b4424a"
+  },
+  {
+   "name": "build_ke_settle_strip.py",
+   "path": "scripts/build_ke_settle_strip.py",
+   "sha256": "9d2986e878e1d99878755b5a181ab99228041cc113b1d81ca135fe4f9b62ceff"
+  },
+  {
+   "name": "c0_design.py",
+   "path": "scripts/c0_design.py",
+   "sha256": "279118df46d9113ea9a5a79dd6180d1633c91718502743dae98d31db3fb093a8"
+  },
+  {
+   "name": "check_c0_sierra_sign.py",
+   "path": "scripts/check_c0_sierra_sign.py",
+   "sha256": "f0267a164d2479c56e53b920554a893d76779a4ee7e07d63e42556e7f4ee08d3"
+  },
+  {
+   "name": "fetch_westmetall_lme.py",
+   "path": "scripts/fetch_westmetall_lme.py",
+   "sha256": "2fa53b6a65bfe64487bb5f69dee21e5ba0beb588ec10da838c8d3b65738ac012"
+  },
+  {
+   "name": "fill_strip_holes_2020_sierra.py",
+   "path": "scripts/fill_strip_holes_2020_sierra.py",
+   "sha256": "43c262af4cc417fd973be42a523108599343d01c4871d279568a724b154f871e"
+  },
+  {
+   "name": "freeze_index_reweight_2027.py",
+   "path": "scripts/freeze_index_reweight_2027.py",
+   "sha256": "10b87353d246f7209b8e77a0571bc613210ce1773a741237aa3069e1ec048818"
+  },
+  {
+   "name": "future.py",
+   "path": "src/backtest_framework/instruments/future.py",
+   "sha256": "55f56e4232ef44f9159def85d8f5e5f384651ef75414136b14f63023313a6274"
+  },
+  {
+   "name": "gate_0b_ng_nav.py",
+   "path": "scripts/gate_0b_ng_nav.py",
+   "sha256": "63ee26b7c76ef295127899297ea25cac0c104c1a38665ceb9044fbee03400930"
+  },
+  {
+   "name": "panels.py",
+   "path": "src/backtest_framework/data/panels.py",
+   "sha256": "64e7049c7109a4120252f1b8c2541bf7c0bea7bc09b7e7491fb8fc32a7478086"
+  },
+  {
+   "name": "power_gate_c0.py",
+   "path": "scripts/power_gate_c0.py",
+   "sha256": "bc035b256c45d4a4978dac17316a73579c9dff254eb27d9a6d178963843f2fbd"
+  },
+  {
+   "name": "power_r_stages.py",
+   "path": "scripts/power_r_stages.py",
+   "sha256": "aee11da554a66511fde166096b0bb8a613c1fbe905836e286ad5ec98a525ea3e"
+  },
+  {
+   "name": "r_common.py",
+   "path": "scripts/r_common.py",
+   "sha256": "ace666e16f3df5bd334a1e9f5ad7995d859691724b6db7bee006f9e7433e2984"
+  },
+  {
+   "name": "r_design.py",
+   "path": "scripts/r_design.py",
+   "sha256": "0f183e2bf36152b397a39092e5b8ce616ffc460888576ceeebce33027f6ae086"
+  },
+  {
+   "name": "record_index_reweight_2027.py",
+   "path": "scripts/record_index_reweight_2027.py",
+   "sha256": "1b16ad1924edab17a184b848938036a3728ff306f90d08d11cd607c6e869d4a1"
+  },
+  {
+   "name": "recorder.py",
+   "path": "src/backtest_framework/data/recorder.py",
+   "sha256": "7283847ac5f500757956dab527ef4655fa4b895fa0aaec283f71dddbd07f195c"
+  },
+  {
+   "name": "run_gate_c0.py",
+   "path": "scripts/run_gate_c0.py",
+   "sha256": "5e4df88806bc76ce31efa1a6e613f1d13dbaab5e2537853f70ca359b3ce07a23"
+  },
+  {
+   "name": "run_gate_r0.py",
+   "path": "scripts/run_gate_r0.py",
+   "sha256": "0378228e7ef7dce29003eadb6465973d537922754b14ad813a67ef04711d63a2"
+  },
+  {
+   "name": "run_stage_r1.py",
+   "path": "scripts/run_stage_r1.py",
+   "sha256": "34294ccd332d195289622b93caa01293db1a5bb991a915027893b483e7d90bc0"
+  },
+  {
+   "name": "run_stage_r2.py",
+   "path": "scripts/run_stage_r2.py",
+   "sha256": "99a35d36b22da864b8ff8c480b555ca82b126a67094f23b503f8b451e10c51e1"
+  },
+  {
+   "name": "run_stage_r3.py",
+   "path": "scripts/run_stage_r3.py",
+   "sha256": "df477deec7d2fdd4386f266d49c4ad051ed101a522cc64eedf242b2a437378a4"
+  },
+  {
+   "name": "settlement_windows.py",
+   "path": "scripts/settlement_windows.py",
+   "sha256": "4133beda132412095032e0dd4979ab888d0fbb7964340fb8a56abe09613755d1"
+  },
+  {
+   "name": "sierra_index_reweight_download.py",
+   "path": "scripts/sierra_index_reweight_download.py",
+   "sha256": "24de4836920236e016d7c587e94bc04ee97a8e2e44cc8c5068b2476e363671d8"
+  },
+  {
+   "name": "sierra_ui.py",
+   "path": "scripts/sierra_ui.py",
+   "sha256": "52bd5fe11b5910e83fbac8b9f8bec3da1ab2911f5b14e1e07bf26fc8acc0515e"
+  },
+  {
+   "name": "verify_settlement_windows_vwap.py",
+   "path": "scripts/verify_settlement_windows_vwap.py",
+   "sha256": "0aa5ccdf52cca322223457a7aaba55fe5e8345b5d12ddf581c0db7bd364f0ff4"
+  }
+ ],
+ "content_sha256": "11c54c31e1a29480bb93472fc05a085fbfce14726646ea0750bad1c81b5a721f",
+ "evaluation_days": 5,
+ "fixtures": [
+  {
+   "name": "2016.csv",
+   "path": "data/index_reweight/weights/2016.csv",
+   "sha256": "104c9aa3ddde35d02e9584b63716011baa26e02aa9c04c42d268ae7cd1b60822"
+  },
+  {
+   "name": "2017.csv",
+   "path": "data/index_reweight/weights/2017.csv",
+   "sha256": "9ab69a02f6f2863cc9826265fe0a7931b5b8f7f729156f630ece987acb8544e7"
+  },
+  {
+   "name": "2018.csv",
+   "path": "data/index_reweight/weights/2018.csv",
+   "sha256": "d53d63c1d7b8047a144d8aaaef6f05e9964cc58d82e81ee324d88ee617bf1874"
+  },
+  {
+   "name": "2019.csv",
+   "path": "data/index_reweight/weights/2019.csv",
+   "sha256": "38e430da3ed92776556244ce3f04ab70e23394dc7f710eaa3a7cb4a7bfa88303"
+  },
+  {
+   "name": "2020.csv",
+   "path": "data/index_reweight/weights/2020.csv",
+   "sha256": "e1787ae4b927ec8595859f347bad93653afc86a99235c0b2f8b78be47d959132"
+  },
+  {
+   "name": "2021.csv",
+   "path": "data/index_reweight/weights/2021.csv",
+   "sha256": "42929e4693e2d635b027e18a7073bcf640275de7392654732d04aa1749d241c2"
+  },
+  {
+   "name": "2022.csv",
+   "path": "data/index_reweight/weights/2022.csv",
+   "sha256": "683571fa2b3a6be37deb664e5599bd09ef8ce645d3a0b44edde4a8034c18bfcc"
+  },
+  {
+   "name": "2023.csv",
+   "path": "data/index_reweight/weights/2023.csv",
+   "sha256": "32747726cbe97d63d03e4fcb4688ff3a1020aeec1a0b24bb2aed722fef7f639e"
+  },
+  {
+   "name": "2024.csv",
+   "path": "data/index_reweight/weights/2024.csv",
+   "sha256": "c8784e9fd4870069c388d728bf3b7384e29968b4322ed0e3c8bb5a829f9debea"
+  },
+  {
+   "name": "2025.csv",
+   "path": "data/index_reweight/weights/2025.csv",
+   "sha256": "87c5617eb29aaf8548dfb56f9389f59813b32b818f7fd2f3552a5fa5dc8263fa"
+  },
+  {
+   "name": "2026.csv",
+   "path": "data/index_reweight/weights/2026.csv",
+   "sha256": "a6b7a092e2485bcabf4eb44e2a554945a28923aa0d2864b54164e4f717a513b1"
+  },
+  {
+   "name": "drift_tracker_daily_rerun.csv.gz",
+   "path": "data/index_reweight/drift_tracker_daily_rerun.csv.gz",
+   "sha256": "1703d495c12f533dec9b651824652c87d8746924c3a0ec819542ce42b711d26c"
+  },
+  {
+   "name": "fut_settle_strip.csv.gz",
+   "path": "data/fixtures/fut_settle_strip.csv.gz",
+   "sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346"
+  },
+  {
+   "name": "gate_r0.json",
+   "path": "data/index_reweight/gate_r0.json",
+   "sha256": "fc07b49e1de79f612205be0bb7ce8cec67ccc2ed7b5ba7729f31e8a49cd04003"
+  },
+  {
+   "name": "gate_r0_rerun.json",
+   "path": "data/index_reweight/gate_r0_rerun.json",
+   "sha256": "4debb3ffcedba5d3124055cd2071f6e46f40493d6db347917617f72fdf04b08e"
+  },
+  {
+   "name": "gsci_cpw.csv",
+   "path": "data/index_reweight/gsci_cpw.csv",
+   "sha256": "9a8c0ee2fc654248beb3add6a11407d6558a646847a501fd9be20ce78eec6dfb"
+  },
+  {
+   "name": "gsci_rpdw.csv",
+   "path": "data/index_reweight/gsci_rpdw.csv",
+   "sha256": "ffb9b9c7ef76f634a412742c2ffe3608f33f0d802e4bdc68bdb321bde6d1f854"
+  },
+  {
+   "name": "gsci_schedule.csv",
+   "path": "data/index_reweight/gsci_schedule.csv",
+   "sha256": "86ed8eb26a3a41712de777f9a8957fdff9059afb5cd0d90706ee1371e2d04198"
+  },
+  {
+   "name": "ke_settle_strip.csv.gz",
+   "path": "data/index_reweight/ke_settle_strip.csv.gz",
+   "sha256": "ed4abe652cff28d8693cdeca7ef836ca5a9027dd07ad461f200e62dba75b75fc"
+  },
+  {
+   "name": "lme_copper_westmetall_daily.csv.gz",
+   "path": "data/index_reweight/lme_copper_westmetall_daily.csv.gz",
+   "sha256": "390807f89911af510361e38ab002939288b08d2c52825052dd9d92d7b2b406d4"
+  },
+  {
+   "name": "lme_westmetall_daily.csv.gz",
+   "path": "data/index_reweight/lme_westmetall_daily.csv.gz",
+   "sha256": "93444f8f2b470725b57ed5112bac827f0fa61c34f5f3d6fb550b39ff3b93a3a1"
+  },
+  {
+   "name": "methodology_facts.json",
+   "path": "data/index_reweight/methodology_facts.json",
+   "sha256": "9d27fef57301afca85d835daa86f51fb19cfbc3df0e20f9e85bf80d629f90b60"
+  },
+  {
+   "name": "power_c0.json",
+   "path": "data/index_reweight/power_c0.json",
+   "sha256": "80d93975c01f5dbbcc2284fd17d6ad2a0f4d9193e88775f3b379668da1c37e11"
+  },
+  {
+   "name": "power_r.json",
+   "path": "data/index_reweight/power_r.json",
+   "sha256": "05ea442a2eb0b7d6f045fa8a1d05dfa9da17f60b14ee85862f6d764e6d4e9f2e"
+  },
+  {
+   "name": "settlement_windows.csv",
+   "path": "data/settlement_windows.csv",
+   "sha256": "518a0fe68da08cfcdb89fdae99ae97df5078713355c88a24dc0356298fd4a377"
+  },
+  {
+   "name": "settlement_windows_vwap_check.json",
+   "path": "data/settlement_windows_vwap_check.json",
+   "sha256": "3bdf10ec0971b54447136ab611b56d7bb707a36bd2f2ed7ee84ad435d101edf0"
+  },
+  {
+   "name": "sierra_download_record.json",
+   "path": "data/index_reweight/sierra_download_record.json",
+   "sha256": "6a6d4046eae6b98902b6844cebd30feb75a029792219156f18cc9397964cd7ae"
+  },
+  {
+   "name": "sierra_download_record_ice.json",
+   "path": "data/index_reweight/sierra_download_record_ice.json",
+   "sha256": "b884d295329f21bffd9f84e612d3f12ae95683a05b4ad7fce9d67c4c5fe8ab5a"
+  },
+  {
+   "name": "strip_holes_2020_sierra.csv",
+   "path": "data/index_reweight/strip_holes_2020_sierra.csv",
+   "sha256": "ecd4393a792e7fa1b534ec4948e35c48c7861fadfbf6f8166caad0e4adc60f86"
+  },
+  {
+   "name": "window_flow_daily.csv.gz",
+   "path": "data/index_reweight/window_flow_daily.csv.gz",
+   "sha256": "a68da9b863b86c1937b3be31ef952afd90556a8f7b9d50c88d749f6f9e4960e0"
+  }
+ ],
+ "frozen_utc": "2026-09-27T17:45:46Z",
+ "git_head": null,
+ "instruction": "the principal, 2026-09-27: 'Allow the single-day read, freeze now, and schedule daily recording' (IR-A15)",
+ "name": "2027",
+ "params": {
+  "aum_bn": {
+   "2016": [
+    85,
+    60,
+    110
+   ],
+   "2017": [
+    85,
+    60,
+    110
+   ],
+   "2018": [
+    85,
+    60,
+    110
+   ],
+   "2019": [
+    85,
+    76.5,
+    93.5
+   ],
+   "2020": [
+    90,
+    76.5,
+    103.5
+   ],
+   "2021": [
+    95,
+    80.75,
+    109.25
+   ],
+   "2022": [
+    100,
+    100,
+    110
+   ],
+   "2023": [
+    110,
+    110,
+    121
+   ],
+   "2024": [
+    105.5,
+    105.5,
+    105.5
+   ],
+   "2025": [
+    102,
+    102,
+    102
+   ],
+   "2027": "the figure published with the 2027 targets"
+  },
+  "bootstrap": {
+   "draws": 9999,
+   "seed": 636,
+   "weights": "Webb six-point"
+  },
+  "c0_gate": {
+   "price_clause": "L/N spread move on 0.7 sqrt impact, slope t >= 2",
+   "separable": "|corr(Q_B,Q_G)| < 0.9 and both t >= 2",
+   "t_min": 2.0
+  },
+  "calendar": "BCOM business day: > 50% of CIPs open (prior-year CIPs to det); det = BD4 of January (IR-A3)",
+  "cim_2026": "CIM_i(2026) = CIP_i(2026) / P_lead,Jan(2026-01-07), read once by record_index_reweight_2027.py --cim2026 on the principal's ruling (IR-A15)",
+  "cost_usd": "16 + one tick per round trip, full size",
+  "deposit": "docs/internal/User-Doc-Deposit/INDEX_REWEIGHT_FLOW_PREREG.md v1.3, amendments IR-A1..IR-A14 (docs/internal/INDEX_REWEIGHT_FLOW_AMENDMENTS.md)",
+  "drift": "w_i(t) = CIM_i x H_i(t) / sum_j CIM_j x H_j(t); CIM_i proportional to CIP_i / P_lead,Jan(det) (IR-A4)",
+  "execution_days": "hedge BD5-BD9, phi = 0.2 a day (IR-A3)",
+  "flow_bcom": "dN_i = AUM_B x (CIP_i(y) - w_i(det)) / (P_i x mult_i)",
+  "flow_gsci": "dN_G,i per $1bn = 1e9 x (w_new,i - w_old,i) / (P_i x mult_i), GSCI dollar weights CPW x price-in-dollars at BD4 of January (D636 s.1, s.11)",
+  "forward_2027": {
+   "consistency": "the 2027 cross-sectional correlation and calibration ratio within the 2016-2025 90% intervals, same sign (s.11 v1.3)",
+   "sign_test": ">= 9 of 11, then >= 10 of 12 with 2026 (IR-A1)",
+   "track3": "a fill and cost check only, never efficacy evidence (R-D21)"
+  },
+  "kappa": "Gate C0's full in-sample estimate from its one run (D635 s.5); if C0 has not run at the freeze, whatever the frozen run_gate_c0.py returns on the in-sample (IR-A10)",
+  "model": "index-reweight flow (BCOM primary, GSCI stacked): the drift tracker, the flow formula, Gate C0, Stages R1-R3; frozen for the January 2027 forward event (IR-A10)",
+  "not_read_before_freeze": "any 2027 BCOM target-weight or GSCI CPW publication, pro-forma or advisory document (IR-A10)",
+  "placebos": {
+   "date": "January BD12-BD16",
+   "kill": "overturns a pooled pass only (D636 s.11)",
+   "label_shuffle": 1000
+  },
+  "r1": {
+   "B": {
+    "entry": "common, 10 min before the earliest chosen window",
+    "k": 3,
+    "weights": "inverse dollar vol, equal-risk books"
+   },
+   "adoption": "H-R1 AND yearly sign test (>= 9 of 10) AND calibration 90% CI overlapping [0.5, 2], with C0 PASSED",
+   "exit": "last trade before W_end",
+   "fill": "close of bar t0+1 (last trade before t0+2 min)",
+   "gate_A": {
+    "abs_I_over_rt_cost": 3.0,
+    "snr_min": 1.5
+   },
+   "impact_Y": 0.7,
+   "t0": "W_start - 10 min (W_start - 20 reported)",
+   "tests": "mean gross >= mean cost AND Webb wild cluster bootstrap by year, Holm across A and B, p < 0.05",
+   "trailing_days": 20
+  },
+  "r2": {
+   "adoption": "H-R2 AND sign test",
+   "entry": "settlement of BD9, against the total flow",
+   "holds": [
+    1,
+    3,
+    5
+   ],
+   "holm": "6 tests"
+  },
+  "r3": {
+   "adoption": "H-R3(b) AND sign test",
+   "entry": "settlement of December BD1 (y-1)",
+   "exit": "settlement of det(y)"
+  },
+  "r_universe": [
+   "NG",
+   "CL",
+   "HO",
+   "RB",
+   "ZC",
+   "ZS",
+   "ZM",
+   "ZL",
+   "ZW",
+   "KE",
+   "HG",
+   "SI"
+  ],
+  "records": {
+   "C0": "D635 (pre-reg e001171, POWER b0e992a, runner bef2903; not yet run)",
+   "R0": "D634 (pre-reg 8fb1619, runner a4ebd9b + 68397c2, result fc98f59, re-run 57824da: RESOLVED)",
+   "R1_R3": "D636 (pre-reg 1315ecf with s.11, POWER 7ec7a21, runners c019f34; not yet run)"
+  },
+  "settlement_windows": "data/settlement_windows.csv: measured rows 2015-12 -> 2025-02 (KE from 2017, ZM from 2016); current_only rows from 2026-09-21",
+  "split": {
+   "forward_event": 2027,
+   "in_sample_events": [
+    2016,
+    2025
+   ],
+   "in_sample_rolls": [
+    "2016-02",
+    "2025-02"
+   ],
+   "vault": [
+    "2025-03-01",
+    "2026-09-18"
+   ],
+   "vault_event": 2026
+  },
+  "vault_rule": "A10: 2025-03-01 -> 2026-09-18 opened only in the programme's joint vault run, except (IR-A15) the 25 lead-contract settlements of 2026-01-07 for CIM(2026)"
+ },
+ "params_sha256": "beb4fc36d7f6a4b45cfe69590cf2e8d1ee635ed93932366cdd5b1e9814c301d5",
+ "schema": "frozen/1",
+ "spec": "4945c1f"
+}
