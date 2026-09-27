@@ -1,0 +1,637 @@
+{
+ "root": "NQ",
+ "span": [
+  "2016-01-04",
+  "2025-02-28"
+ ],
+ "sessions": 2362,
+ "excluded": [
+  {
+   "day": "2016-01-18",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 209
+  },
+  {
+   "day": "2016-02-15",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 207
+  },
+  {
+   "day": "2016-05-30",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 204
+  },
+  {
+   "day": "2016-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2016-09-05",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2016-11-24",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 205
+  },
+  {
+   "day": "2016-11-25",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2017-01-16",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 205
+  },
+  {
+   "day": "2017-02-20",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2017-05-29",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 204
+  },
+  {
+   "day": "2017-07-03",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2017-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2017-09-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2017-11-23",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2017-11-24",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2018-01-15",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2018-02-19",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2018-05-28",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2018-07-03",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2018-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 211
+  },
+  {
+   "day": "2018-09-03",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2018-11-22",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2018-11-23",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2018-12-24",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2019-01-21",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2019-02-18",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2019-05-27",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2019-07-03",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2019-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2019-09-02",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2019-11-28",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2019-11-29",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2019-12-24",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2020-01-20",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 209
+  },
+  {
+   "day": "2020-02-17",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2020-05-25",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2020-07-03",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2020-09-07",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2020-11-26",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2020-11-27",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2020-12-24",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2021-01-18",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2021-02-15",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2021-05-31",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2021-07-05",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2021-09-06",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2021-11-25",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2021-11-26",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2022-01-17",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-02-21",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-05-30",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-06-20",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-09-05",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-11-24",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2022-11-25",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2023-01-16",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-02-20",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-05-29",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-06-19",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-07-03",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2023-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-09-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-11-23",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2023-11-24",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2024-01-15",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-02-19",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-05-27",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-06-19",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-07-03",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2024-07-04",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-09-02",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-11-28",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2024-11-29",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2024-12-24",
+   "exclusion_reason": "early close (s.3.4)",
+   "bars": 225
+  },
+  {
+   "day": "2025-01-20",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  },
+  {
+   "day": "2025-02-17",
+   "exclusion_reason": "NYSE closed: no fund NAV, no rebalance",
+   "bars": 210
+  }
+ ],
+ "bars_per_session_non_excluded": {
+  "min": 376,
+  "p01": 390.0,
+  "median": 390.0,
+  "sessions_below_380": 4
+ },
+ "sessions_below_380": [
+  {
+   "day": "2020-03-09",
+   "bars": 376,
+   "max_bar_gap_min": 14.0
+  },
+  {
+   "day": "2020-03-12",
+   "bars": 377,
+   "max_bar_gap_min": 14.0
+  },
+  {
+   "day": "2020-03-16",
+   "bars": 376,
+   "max_bar_gap_min": 15.0
+  },
+  {
+   "day": "2020-03-18",
+   "bars": 377,
+   "max_bar_gap_min": 14.0
+  }
+ ],
+ "coverage": {
+  "h4_full_share": 1.0,
+  "h4_min": 1.0,
+  "entry_exit_full_share": 1.0,
+  "entry_exit_min": 1.0,
+  "sessions_entry_exit_incomplete": [],
+  "next_0945_same_present_share": 0.999124343257443
+ },
+ "p1600_missing": 77,
+ "same_contract_anchors": {
+  "roll_days": 36,
+  "prev_close_missing": [],
+  "prev_close_after_half_day": 18,
+  "p0945_next_same_missing": [
+   "2020-03-06",
+   "2020-03-11",
+   "2025-02-28"
+  ],
+  "roll_days_priced": 36,
+  "anchor_vs_fixture_prior_p1600": {
+   "n": 2322,
+   "abs_max": 0.0
+  }
+ },
+ "nyse_closed_sessions": [
+  "2016-01-18",
+  "2016-02-15",
+  "2016-05-30",
+  "2016-07-04",
+  "2016-09-05",
+  "2016-11-24",
+  "2017-01-16",
+  "2017-02-20",
+  "2017-05-29",
+  "2017-07-04",
+  "2017-09-04",
+  "2017-11-23",
+  "2018-01-15",
+  "2018-02-19",
+  "2018-05-28",
+  "2018-07-04",
+  "2018-09-03",
+  "2018-11-22",
+  "2019-01-21",
+  "2019-02-18",
+  "2019-05-27",
+  "2019-07-04",
+  "2019-09-02",
+  "2019-11-28",
+  "2020-01-20",
+  "2020-02-17",
+  "2020-05-25",
+  "2020-07-03",
+  "2020-09-07",
+  "2020-11-26",
+  "2021-01-18",
+  "2021-02-15",
+  "2021-05-31",
+  "2021-07-05",
+  "2021-09-06",
+  "2021-11-25",
+  "2022-01-17",
+  "2022-02-21",
+  "2022-05-30",
+  "2022-06-20",
+  "2022-07-04",
+  "2022-09-05",
+  "2022-11-24",
+  "2023-01-16",
+  "2023-02-20",
+  "2023-05-29",
+  "2023-06-19",
+  "2023-07-04",
+  "2023-09-04",
+  "2023-11-23",
+  "2024-01-15",
+  "2024-02-19",
+  "2024-05-27",
+  "2024-06-19",
+  "2024-07-04",
+  "2024-09-02",
+  "2024-11-28",
+  "2025-01-20",
+  "2025-02-17"
+ ],
+ "settlement_vs_1559_close_ticks": {
+  "n": 2306,
+  "exact_share": 0.024284475281873375,
+  "within_1_tick": 0.07111882046834345,
+  "abs_p99": 180.94999999999982,
+  "abs_max": 427.0
+ },
+ "flags": {
+  "fomc": 77,
+  "cpi": 108,
+  "quad_witching": 36,
+  "quarter_end": 36,
+  "month_end": 110,
+  "index_rebalance": 37,
+  "dst_transition_week": 90,
+  "is_early_close": 77
+ },
+ "rebalance_vs_quad_witching": {
+  "rebalance_not_quad": [
+   "2023-07-21"
+  ],
+  "quad_not_rebalance": []
+ },
+ "dst_weeks": {
+  "sessions": 90,
+  "first_bar_not_0930": []
+ },
+ "volume": {
+  "MNQ_first_nonzero": "2019-05-06",
+  "NQ_day_volume_zero": 0,
+  "micro_share_of_equiv_by_year": {
+   "2016": 0.0,
+   "2017": 0.0,
+   "2018": 0.0,
+   "2019": 0.028,
+   "2020": 0.1115,
+   "2021": 0.1493,
+   "2022": 0.1746,
+   "2023": 0.1445,
+   "2024": 0.1813,
+   "2025": 0.2158
+  }
+ },
+ "reads": {
+  "fut_index_sessions": {
+   "first_session_read": "2010-06-07",
+   "last_session_read": "2025-02-28",
+   "reserved_from": "2025-03-01",
+   "sessions_read": 11669,
+   "distinct_sessions_read": 3239,
+   "reserved_rows_read": 0,
+   "panel": "fut_index_sessions",
+   "path": "data/fixtures/fut_index_sessions.csv.gz",
+   "date_col": "day",
+   "date_format": "iso_day",
+   "cut_applied": "2025-03-01",
+   "rows_read": 11669,
+   "sha256": "ee1e8415e35f395ef930f6f112530cbe7384eb09324fcf199513272048fc4299",
+   "opened_on_the_word": false,
+   "status": "present"
+  },
+  "fut_NQ_rth_1m": {
+   "first_session_read": "2010-06-07",
+   "last_session_read": "2025-02-28",
+   "reserved_from": "2025-03-01",
+   "sessions_read": 1239762,
+   "distinct_sessions_read": 3233,
+   "reserved_rows_read": 0,
+   "panel": "fut_NQ_rth_1m",
+   "path": "data/fixtures/fut_NQ_rth_1m.csv.gz",
+   "date_col": "day",
+   "date_format": "iso_day",
+   "cut_applied": "2025-03-01",
+   "rows_read": 1239762,
+   "sha256": "1d8ba6c1f9197013533bafd43d7e8ad94794523d591189b365a968aaaf09f81f",
+   "opened_on_the_word": false,
+   "status": "present"
+  },
+  "cme_session_calendar": {
+   "first_session_read": "2010-06-07",
+   "last_session_read": "2025-02-28",
+   "reserved_from": "2025-03-01",
+   "sessions_read": 185340,
+   "distinct_sessions_read": 5381,
+   "reserved_rows_read": 0,
+   "panel": "cme_session_calendar",
+   "path": "data/fixtures/cme_session_calendar.csv.gz",
+   "date_col": "day",
+   "date_format": "iso_day",
+   "cut_applied": "2025-03-01",
+   "rows_read": 185340,
+   "sha256": "1164a241ad72d27a79025938347d6c56d4198fcdae809520dd0b673455c9e518",
+   "opened_on_the_word": false,
+   "status": "present"
+  },
+  "fut_settle_strip": {
+   "first_session_read": "2010-06-04",
+   "last_session_read": "2025-02-28",
+   "reserved_from": "2025-03-01",
+   "sessions_read": 2936169,
+   "distinct_sessions_read": 3722,
+   "reserved_rows_read": 0,
+   "panel": "fut_settle_strip",
+   "path": "data/fixtures/fut_settle_strip.csv.gz",
+   "date_col": "ref",
+   "date_format": "iso_day",
+   "cut_applied": "2025-03-01",
+   "rows_read": 2936169,
+   "sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346",
+   "opened_on_the_word": false,
+   "status": "present"
+  },
+  "fut_micro_day_volume": {
+   "first_session_read": "2019-05-05",
+   "last_session_read": "2025-02-28",
+   "reserved_from": "2025-03-01",
+   "sessions_read": 3628,
+   "distinct_sessions_read": 1814,
+   "reserved_rows_read": 0
+  },
+  "fut_index_anchor_bars": {
+   "first_session_read": "2010-06-07",
+   "last_session_read": "2025-02-28",
+   "reserved_from": "2025-03-01",
+   "sessions_read": 22545,
+   "distinct_sessions_read": 3378,
+   "reserved_rows_read": 0
+  }
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "builder": "scripts/build_fut_index_anchor_bars.py",
+ "rows": 25418,
+ "bars": [
+  "09:45",
+  "15:59"
+ ],
+ "built_utc": "2026-09-27T19:23:50Z",
+ "span": [
+  "2010-06-07",
+  "2026-09-09"
+ ],
+ "holdout": "every archive session; readers cut"
+}

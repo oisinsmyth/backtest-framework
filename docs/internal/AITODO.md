@@ -168,9 +168,14 @@
   0.011%). **ES set:** ProShares four PASS; Direxion (39% of the S&P flow) estimated from N-PORT 2019-10 → 2025-02
   with a measured band (impact I moved by 2.1% at p95), failing the proposed 1% bar that the method also fails on
   known-good funds; **Direxion absent 2016-01 → 2019-10.** Stop-and-report for ES.
-- **Rulings needed (D637 end):** (1) accept Direxion's 2019-10+ estimate and replace the 1% bar; (2) Direxion
-  2016-01 → 2019-10: transcribe the N-Q/N-CSR/N-SAR anchors, the principal sources it, or ES in-sample from 2019-11;
-  (3) NQ to Phase 2 now, or wait for ES.
+- **Ruled 2026-09-27 (LETF-A5):** Direxion's 2019-10+ estimate accepted (Gate 0 now passes on every present row);
+  the pre-2019 filings are being transcribed (background agent → `scripts/fetch_direxion_pre2019.py`,
+  `data/letf/direxion_pre2019_filings.csv`); NQ went ahead.
+- **NQ Phase 2 DONE (D638):** 2,285 usable sessions, every bar the model reads present, t−1 priced in one contract
+  on every day (36 rolls via `fut_index_anchor_bars`), MNQ volume built (`fut_micro_day_volume`). CME's settlement
+  is NOT the 16:00 price (equal on 2.4% of days).
+- **Next:** NQ Phase 3 (model functions + the nine §8 unit tests); ES Phase 1 completion then ES Phase 2
+  (`build_letf_phase2.py --root ES`).
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
