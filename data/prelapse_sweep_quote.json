@@ -1,0 +1,247 @@
+{
+ "dataset": "GLBX.MDP3",
+ "quoted_utc": "2026-09-27T17:53:30Z",
+ "submitted": false,
+ "available_end": "2026-09-27",
+ "instruction": "the principal, 2026-09-27: 'Yes, do the sweep, then open LETF close-flow'",
+ "subscription_note": "USD 0.00 under CME Standard until the lapse (~2026-10-11); billed after",
+ "nq_options": {
+  "families": {
+   "NQ": {
+    "2016": 4338,
+    "2026": 3395
+   },
+   "QN1": {
+    "2016": 283,
+    "2026": 3247
+   },
+   "QN2": {
+    "2016": 600,
+    "2026": 1999
+   },
+   "QN3": {
+    "2016": -1,
+    "2026": 2002
+   },
+   "QN4": {
+    "2016": 293,
+    "2026": 619
+   },
+   "QN5": {
+    "2016": -1,
+    "2026": -1
+   },
+   "QNE": {
+    "2016": 2762,
+    "2026": 4245
+   },
+   "Q1A": {
+    "2016": -1,
+    "2026": -1
+   },
+   "Q2A": {
+    "2016": -1,
+    "2026": 1038
+   },
+   "Q3A": {
+    "2016": -1,
+    "2026": 323
+   },
+   "Q4A": {
+    "2016": -1,
+    "2026": -1
+   },
+   "Q5A": {
+    "2016": -1,
+    "2026": -1
+   },
+   "Q1B": {
+    "2016": -1,
+    "2026": 2198
+   },
+   "Q2B": {
+    "2016": -1,
+    "2026": 2325
+   },
+   "Q3B": {
+    "2016": -1,
+    "2026": 844
+   },
+   "Q4B": {
+    "2016": -1,
+    "2026": 243
+   },
+   "Q5B": {
+    "2016": -1,
+    "2026": -1
+   },
+   "Q1C": {
+    "2016": -1,
+    "2026": 1997
+   },
+   "Q2C": {
+    "2016": -1,
+    "2026": 2056
+   },
+   "Q3C": {
+    "2016": -1,
+    "2026": 467
+   },
+   "Q4C": {
+    "2016": -1,
+    "2026": 244
+   },
+   "Q5C": {
+    "2016": -1,
+    "2026": -1
+   },
+   "Q1D": {
+    "2016": -1,
+    "2026": 2189
+   },
+   "Q2D": {
+    "2016": -1,
+    "2026": 1298
+   },
+   "Q3D": {
+    "2016": -1,
+    "2026": 431
+   },
+   "Q4D": {
+    "2016": -1,
+    "2026": 230
+   },
+   "Q5D": {
+    "2016": -1,
+    "2026": -1
+   }
+  },
+  "resolved": [
+   "NQ.OPT",
+   "QN1.OPT",
+   "QN2.OPT",
+   "QN3.OPT",
+   "QN4.OPT",
+   "QNE.OPT",
+   "Q2A.OPT",
+   "Q3A.OPT",
+   "Q1B.OPT",
+   "Q2B.OPT",
+   "Q3B.OPT",
+   "Q4B.OPT",
+   "Q1C.OPT",
+   "Q2C.OPT",
+   "Q3C.OPT",
+   "Q4C.OPT",
+   "Q1D.OPT",
+   "Q2D.OPT",
+   "Q3D.OPT",
+   "Q4D.OPT"
+  ],
+  "schemas": {
+   "definition": {
+    "start": "2016-01-01",
+    "end": "2026-09-27",
+    "billable_bytes": 27238216720,
+    "billable_gb": 27.24,
+    "usd": 0.0
+   },
+   "statistics": {
+    "start": "2016-01-01",
+    "end": "2026-09-27",
+    "billable_bytes": 247010364000,
+    "billable_gb": 247.01,
+    "usd": 0.0
+   }
+  }
+ },
+ "energy_options": {
+  "resolved": [
+   "LN1.OPT",
+   "LN2.OPT",
+   "LN3.OPT",
+   "LO.OPT",
+   "LO1.OPT",
+   "LO2.OPT",
+   "LO3.OPT",
+   "LO4.OPT",
+   "LO5.OPT",
+   "ON.OPT",
+   "ON1.OPT",
+   "ON2.OPT",
+   "ON3.OPT",
+   "ON4.OPT",
+   "ON5.OPT"
+  ],
+  "schemas": {
+   "definition": {
+    "start": "2016-01-01",
+    "end": "2026-09-27",
+    "billable_bytes": 60715895760,
+    "billable_gb": 60.72,
+    "usd": 0.0
+   },
+   "statistics": {
+    "start": "2016-01-01",
+    "end": "2026-09-27",
+    "billable_bytes": 118716192240,
+    "billable_gb": 118.72,
+    "usd": 0.0
+   }
+  }
+ },
+ "topup": {
+  "ohlcv-1m ALL_SYMBOLS": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 283730328,
+   "billable_gb": 0.28,
+   "usd": 0.0
+  },
+  "tbbo ALL_SYMBOLS": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 4960596720,
+   "billable_gb": 4.96,
+   "usd": 0.0
+  },
+  "statistics 41 roots": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 272232160,
+   "billable_gb": 0.27,
+   "usd": 0.0
+  },
+  "definition 41 roots": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 275730520,
+   "billable_gb": 0.28,
+   "usd": 0.0
+  },
+  "mbo 8 roots": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 81339230840,
+   "billable_gb": 81.34,
+   "usd": 0.0
+  },
+  "statistics ES options": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 1766535280,
+   "billable_gb": 1.77,
+   "usd": 0.0
+  },
+  "definition ES options": {
+   "start": "2026-09-11",
+   "end": "2026-09-27",
+   "billable_bytes": 585353080,
+   "billable_gb": 0.59,
+   "usd": 0.0
+  }
+ },
+ "total_usd": 0.0,
+ "total_gb": 543.16,
+ "timing_s": 138.1
+}
