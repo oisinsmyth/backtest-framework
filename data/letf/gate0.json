@@ -855,7 +855,12 @@
      "nport_net_assets": 4992935361.88,
      "rel_err": 0.0073650275698256
     }
-   ]
+   ],
+   "g3_rule": {
+    "ref_abs_max": 0.13327739659951066,
+    "ref_over_1pct_share": 0.34523809523809523,
+    "own_over_1pct_share": 0.38095238095238093
+   }
   },
   "SPXS": {
    "first": "2019-10-31",
@@ -1041,7 +1046,12 @@
      "nport_net_assets": 343567766.18,
      "rel_err": -0.036835307495352576
     }
-   ]
+   ],
+   "g3_rule": {
+    "ref_abs_max": 0.13327739659951066,
+    "ref_over_1pct_share": 0.34523809523809523,
+    "own_over_1pct_share": 0.47619047619047616
+   }
   },
   "SPXU": {
    "first": "2016-01-04",
@@ -2140,16 +2150,16 @@
   "SPXL": {
    "G1_gaps": true,
    "G2_big_moves_explained": true,
-   "G3_spot_checks": false,
+   "G3_spot_checks": true,
    "identity_diagnostic": true,
-   "pass": false
+   "pass": true
   },
   "SPXS": {
    "G1_gaps": true,
    "G2_big_moves_explained": true,
-   "G3_spot_checks": false,
+   "G3_spot_checks": true,
    "identity_diagnostic": true,
-   "pass": false
+   "pass": true
   },
   "SPXU": {
    "G1_gaps": true,
@@ -2562,5 +2572,10 @@
   "SPXL": "2019-10-31",
   "SPXS": "2019-10-31"
  },
- "all_pass": false
+ "all_pass": true,
+ "coverage": {
+  "NQ_set_complete_from": "2016-01-01",
+  "ES_set_complete_from": "2019-10-31",
+  "note": "every present row passes; the ES set lacks Direxion (39% of its flow) before the date"
+ }
 }

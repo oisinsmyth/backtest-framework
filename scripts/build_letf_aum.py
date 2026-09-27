@@ -292,7 +292,8 @@ def direxion(ps: pd.DataFrame, nport: dict) -> tuple[pd.DataFrame, dict]:
     return pd.concat(rows, ignore_index=True), info
 
 
-def gate0(panel: pd.DataFrame, cal: pd.DatetimeIndex, nport: dict, dx_info: dict) -> dict:
+def gate0(panel: pd.DataFrame, cal: pd.DatetimeIndex, nport: dict, dx_info: dict,
+          ref: dict | None = None) -> dict:
     res: dict = {"tickers": {}}
     splits = pd.read_csv(SPLITS, encoding="utf-8")
     scol = [c for c in splits.columns if "date" in c.lower()][0]
@@ -350,7 +351,15 @@ def gate0(panel: pd.DataFrame, cal: pd.DatetimeIndex, nport: dict, dx_info: dict
     verdict = {}
     for tk, t in res["tickers"].items():
         sc = t["spot_checks"]
-        ok_sc = len(sc) >= 5 and all(abs(c["rel_err"]) <= (0.01 if tk in DIREXION else 0.001) for c in sc)
+        if tk in DIREXION and ref is not None:
+            # LETF-A5: within the same estimator's distribution on the ProShares funds' own filings
+            over = sum(abs(c["rel_err"]) > 0.01 for c in sc) / max(len(sc), 1)
+            p0 = ref["over_1pct"] / ref["n"]
+            ok_sc = (len(sc) >= 5 and all(abs(c["rel_err"]) <= ref["abs_max"] for c in sc)
+                     and over <= p0 + 2 * (p0 * (1 - p0) / len(sc)) ** 0.5)
+            t["g3_rule"] = {"ref_abs_max": ref["abs_max"], "ref_over_1pct_share": p0, "own_over_1pct_share": over}
+        else:
+            ok_sc = len(sc) >= 5 and all(abs(c["rel_err"]) <= (0.01 if tk in DIREXION else 0.001) for c in sc)
         ok_gap = t["longest_gap_trading_days"] <= 3
         # diagnostic, not a gate: A is the PUBLISHED aum; nav and shares before a later reverse split are restated and
         # rounded (SQQQ 2016-2019 reads nav x shares ~0.33% below aum), and G3 checks aum's parse against N-PORT
@@ -371,13 +380,16 @@ def build() -> int:
     if (panel["date"] >= RESERVED_FROM).any():
         raise RuntimeError("a row on or after the seal is in the panel")
     b = band(ps, nport)
-    g0 = gate0(panel, cal, nport, dx_info)
+    g0 = gate0(panel, cal, nport, dx_info, b["_forward_checks"])
     g0["direxion"] = dx_info
     g0["band_measured_on_proshares"] = b
     g0["calendar"] = {"source": "SPY daily dates, Alpha Vantage cache", "days": int(len(cal)),
                       "first": str(cal[0].date()), "last": str(cal[-1].date())}
     g0["direxion_absent_before"] = {tk: dx_info[tk]["first_anchor"] for tk in DIREXION}
     g0["all_pass"] = all(v["pass"] for v in g0["verdict"].values())
+    g0["coverage"] = {"NQ_set_complete_from": START,
+                      "ES_set_complete_from": max(dx_info[tk]["first_anchor"] for tk in DIREXION),
+                      "note": "every present row passes; the ES set lacks Direxion (39% of its flow) before the date"}
     panel.to_csv(OUT / "letf_aum_daily.csv.gz", index=False, encoding="utf-8", lineterminator="\n")
     (OUT / "gate0.json").write_text(json.dumps(g0, indent=1, default=str) + "\n", encoding="utf-8", newline="\n")
     meta = {"path": "data/letf/letf_aum_daily.csv.gz", "rows": int(len(panel)), "reserved_from": RESERVED_FROM,
@@ -398,7 +410,7 @@ def build() -> int:
         i = dx_info[tk]
         print(f"  {tk}: anchors {i['first_anchor']}..{i['last_anchor']}, forward check max |err| {i['forward_abs_max']}, "
               f"over 1%: {i['forward_over_1pct']}; path error {i['path_error_monthly']}")
-    print(f"  GATE 0: {'PASS' if g0['all_pass'] else 'FAIL'} (Direxion absent before its first anchor)")
+    print(f"  GATE 0 on present rows: {'PASS' if g0['all_pass'] else 'FAIL'}; coverage {g0['coverage']}")
     return 0
 
 
@@ -442,7 +454,22 @@ def selftest() -> int:
         raise AssertionError("a missing quarter must raise")
     except RuntimeError:
         pass
-    print("selftest: 10 checks fire as they must")
+    ref = {"n": 100, "over_1pct": 30, "abs_max": 0.10}
+    dcal = pd.bdate_range("2020-01-01", "2020-03-31")
+    dx = pd.DataFrame({"date": dcal, "ticker": "SPXL", "nav": 1.0, "shares_out": 1e8, "aum": 1e8, "source": "t",
+                       "estimated": True})
+    inside: dict[str, dict[str, list[dict]]] = {"SPXL": {"forward_checks": [{"quarter_end": "q", "forward": 1, "filed": 1, "rel_err": e}
+                                          for e in (0.02, -0.005, 0.003, 0.08, -0.004, 0.001)]},
+              "SPXS": {"forward_checks": []}}
+    assert gate0(dx, dcal, {}, inside, ref)["verdict"]["SPXL"]["G3_spot_checks"], "within the reference must pass"
+    outside = {"SPXL": {"forward_checks": [dict(c, rel_err=0.12) if i == 0 else c
+                                           for i, c in enumerate(inside["SPXL"]["forward_checks"])]},
+               "SPXS": {"forward_checks": []}}
+    assert not gate0(dx, dcal, {}, outside, ref)["verdict"]["SPXL"]["G3_spot_checks"], "beyond the max must fail"
+    often = {"SPXL": {"forward_checks": [dict(c, rel_err=0.02) for c in inside["SPXL"]["forward_checks"]]},
+             "SPXS": {"forward_checks": []}}
+    assert not gate0(dx, dcal, {}, often, ref)["verdict"]["SPXL"]["G3_spot_checks"], "too many >1% must fail"
+    print("selftest: 13 checks fire as they must")
     return 0
 
 

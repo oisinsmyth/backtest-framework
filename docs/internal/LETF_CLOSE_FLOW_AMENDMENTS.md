@@ -49,6 +49,20 @@ mechanism should move the test to the unread slice.*
 - **"Does not work"** (proposed, not yet the principal's) means: the rebuilt month-ends miss N-PORT's own quarter-end `netAssets` by more than 1%, or the
   ProShares-measured band moves more than 10% of days' flow sign or impact gate.
 
+## LETF-A5. Direxion's estimate is accepted; the spot-check bar is the method's own measured distribution
+
+*Source: the principal, 2026-09-27 ("Accept the estimate, transcribe the pre-2019 filings, start NQ Phase 2"), on
+D637. Replaces LETF-A3's proposed "does not work" bar (1% at every quarter-end), which the method fails on the
+ProShares funds too (58 of 168 quarters over 1%, max 13.3%).*
+
+- **Direxion's G3 (spot checks):** the forward check at each filed quarter-end (before correction) must lie within
+  the same estimator's distribution on the ProShares funds' own filings: every |miss| at or below that
+  distribution's maximum, and the share of quarters over 1% no higher than the ProShares share plus two binomial
+  standard errors. Both numbers are computed by `scripts/build_letf_aum.py` and written into `gate0.json`.
+- **2016-01 → 2019-10:** the pre-N-PORT filings (N-Q, N-CSR, N-CSRS, N-SAR) are transcribed with citations, and the
+  band is re-measured for the flow granularity those filings allow.
+- **NQ proceeds to Phase 2** on its complete panel; ES follows once the pre-2019 Direxion anchors are in.
+
 ## LETF-A4. Open questions Q1 and Q2: defaults unless the principal says otherwise
 
 *Source: proposed, 2026-09-27; the deposit asks for them before Phase 6.*
