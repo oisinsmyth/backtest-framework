@@ -202,6 +202,20 @@
   - **Its one `--run` waits for the principal.** It writes `data/letf/letf_close_flow_signal.json` and
     `data/letf/trials.csv`. Phases 6–7 run only if Gates 1–2 pass.
 
+## Shock classifier — opened 2026-09-27 (the principal: "open the shock classifier")
+
+- **Spec:** `docs/internal/User-Doc-Deposit/SHOCK_CLASSIFIER_PREREG.md` v1.2 (read-only).
+- **Amendments:** `docs/internal/SHOCK_CLASSIFIER_AMENDMENTS.md`: SC-A1 (the A10 split; D592 paths), plus the opening
+  facts.
+- **Prior reads, disclosed:** D528 (1-minute spikes, reversion 4–8× too small), D499, D526.
+- **Data:**
+  - bars ✓ (`fut_day1m`, 100% on usable sessions);
+  - calendar ✓ (D585, all five events 2016 → 2026);
+  - **GC window 08:25: pre-09:00 bars to build** from the on-disk archive (GC, SI, 6E, ZN);
+  - **no in-sample aggressor trades** (Q3).
+- **Rulings needed:** the prior-read handling; Q3 (bars-only v1, with the time exit replacing the flow-flip); the GC
+  extension; the MCL pre-listing cost line; Q1/Q2 defaults.
+
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
 **The standard, the principal's, 2026-09-24:**
