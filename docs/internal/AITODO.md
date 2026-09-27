@@ -108,7 +108,8 @@
   3. **The principal calls C0's one run:** `uv run python -W error::RuntimeWarning scripts/run_gate_c0.py --run`.
   - **R1–R3 are pre-registered (D636), POWER-checked and their runners committed** (`c019f34`). Each runs once
     after C0.
-  - **FROZEN on 2026-09-27** on the principal's word (IR-A15): `results/index_reweight/FROZEN_2027.json`, 27 code
+  - **FROZEN on 2026-09-27** on the principal's word (IR-A15), and re-frozen the same day after a logged path fix
+    (IR-A16; only the wrapper's hash changed): `data/index_reweight/FROZEN_2027.json`, 27 code
     files, 30 inputs, 24 parameters. `uv run python scripts/freeze_index_reweight_2027.py --verify` before every run.
     C0 has not run, so κ is what the frozen `run_gate_c0.py` returns on the in-sample data (IR-A10). A code change
     from here is a logged bug fix under a NEW frozen file.
