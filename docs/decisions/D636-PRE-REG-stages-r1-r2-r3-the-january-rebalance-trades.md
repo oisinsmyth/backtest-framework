@@ -242,6 +242,15 @@ runner existed and before any execution-day, reversal or December return was rea
   beside, as R1 with Q plus C0's κ̂_G times GSCI's roll-in flow.
 - **R3's November placebo** (§8) is 1 November BD1 → 1 December BD1, settlement to settlement. It ends where R3's own
   entry begins.
+- **The verdict order** (settled while building the runners; no real outcome read):
+  - the date placebo and the label shuffle are **specificity checks**, so they KILL a stage only when its pooled
+    test passed. A stage that fails its pooled test is recorded as FAIL (R1), INCONCLUSIVE (R2, underpowered) or
+    NOT DETECTED with its MDE (R3), with both checks reported beside;
+  - D636 §7's "kills R1" and the deposit's §14 row read this way.
+  - A smoke test on placebo data, which has no effect by construction, labelled R3 "killed" before this change.
+- **The runners:** `run_stage_r1.py`, `run_stage_r2.py` and `run_stage_r3.py`, on `r_design.py` and `r_common.py`.
+  Each selftest reads placebo data only. In each, a synthetic effect passes and the raw placebo does not; R1's
+  gate audit and B's risk-parity check fire on breaks; the deposit's unit tests 21–28 hold.
 - **POWER only** (declared in `power_r_stages.py`; not the runners):
   - κ is assumed on a grid, since C0 has not run;
   - the SNR gate is taken as passed;

@@ -132,10 +132,11 @@ class Base:
         ng = sorted(d for d in self.prices["Natural Gas"] if d[:7] == f"{y}-01")
         return ng[3]  # BD4 on NG's CME calendar
 
-    def gsci_jan_flow(self, y: int) -> dict[str, Any]:
+    def gsci_jan_flow(self, y: int, day: str | None = None) -> dict[str, Any]:
         """dN_G per $1bn for the CME components GSCI holds: 1e9 (w_new - w_old) / (P mult), P the settlement of the
-        contract receiving the flow (the roll-in contract for a component GSCI rolls in January, else the held one)."""
-        day = self.ref_day(y)
+        contract receiving the flow (the roll-in contract for a component GSCI rolls in January, else the held one).
+        `day` prices the January reweight on an earlier day (R3's forecast); by default GSCI's reference day."""
+        day = day or self.ref_day(y)
         px = {}
         for ric, row in self.sched.iterrows():
             lm = LETTER.index(row["m01"]) + 1
@@ -230,10 +231,49 @@ def q_daily(dN_B: float, dN_G: float, aum: float, kappa: dict[str, Any]) -> floa
     return 0.2 * kappa["kappa_C"] * (dN_B + aum * dN_G)
 
 
+def next_sym(b: Base, comp: str, y: int) -> tuple[tuple[int, int], str]:
+    """The contract BCOM rolls INTO in January (the February lead); equal to the lead for a non-rolling component."""
+    N = G.lead_of(G.lead_table()[G.COMP[comp][2]], y, 2)
+    root, ex = SD.ROOTS[G.COMP[comp][2]]
+    return N, f"{root}{LETTER[N[1] - 1]}{N[0] % 100:02d}-{ex}"
+
+
+def bcom_roll_buy(b: Base, comp: str, y: int) -> float:
+    """BCOM's January roll buy on the next contract, in contracts: AUM x w_drift(det) / (P_L mult) x P_L / P_N."""
+    L, _ = b.lead_sym(comp, y)
+    N, _ = next_sym(b, comp, y)
+    if L == N:
+        return 0.0
+    det = b.r0[str(y)]["det"]
+    w = json.loads((IR / "gate_r0_rerun.json").read_text(encoding="utf-8"))["weights_at_det"][str(y)][comp]["drift"]
+    pl, pn = b.settle(comp, det, L), b.settle(comp, det, N)
+    return G.AUM[y][0] * 1e9 * w / (pl * G.mult(comp)) * pl / pn if pl and pn else 0.0
+
+
+def gsci_roll_in(b: Base, comp: str, y: int) -> float:
+    """GSCI's January roll-in buy on BCOM's lead, per $1bn, where GSCI rolls in January into that contract (energy):
+    RPDW_i(y) x 1e9 / (P_out mult) x P_out / P_in (C0's Q_G formula)."""
+    if comp not in RIC_OF:
+        return 0.0
+    row = b.sched.loc[RIC_OF[comp]]
+    out_, in_ = (y, LETTER.index(row["m01"]) + 1), (y, LETTER.index(row["m02"]) + 1)
+    L, _ = b.lead_sym(comp, y)
+    if out_ == in_ or in_ != L:
+        return 0.0
+    rp = b.rpdw[(b.rpdw["target_year"] == y) & (b.rpdw["ric"] == RIC_OF[comp])]["rpdw_pct"]
+    day = b.ref_day(y)
+    po, pi = b.settle(comp, day, out_), b.settle(comp, day, in_)
+    return float(rp.iloc[0]) / 100 * 1e9 / (po * G.mult(comp)) * po / pi if po and pi and len(rp) else 0.0
+
+
 def r1_rows(b: Base, kappa: dict[str, Any], days_of: str = "hedge", comps: list[str] | None = None,
-            with_moves: bool = False, t0_min: int = 10, headline: bool = False) -> pd.DataFrame:
+            with_moves: bool = False, t0_min: int = 10, headline: bool = False, next_contract: bool = False,
+            extra_dnb: dict[tuple[int, str], float] | None = None,
+            extra_dng: dict[tuple[int, str], float] | None = None) -> pd.DataFrame:
     """One row per (year, component, day): Q, the gate inputs, and (if asked) the fill, exit and stress fill.
-    days_of: 'hedge' (BD5-9) or 'placebo' (BD12-16); the placebo day k carries hedge day k's Q (D636 s.7)."""
+    days_of: 'hedge' (BD5-9) or 'placebo' (BD12-16); the placebo day k carries hedge day k's Q (D636 s.7).
+    next_contract trades the February lead; extra_dnb / extra_dng add contracts to the BCOM / GSCI flow (the
+    reported-beside variants of D636 s.7 and s.11)."""
     comps = comps or UNIVERSE
     rows = []
     for y in YEARS:
@@ -243,10 +283,10 @@ def r1_rows(b: Base, kappa: dict[str, Any], days_of: str = "hedge", comps: list[
         days = hedge if days_of == "hedge" else january_days(b, y, 12, 16)
         for comp in comps:
             r = b.r0[str(y)]["rows"][comp]
-            dnb = r["dN_headline_only"] if headline else r["dN"]
-            dng = gf["dN_G_per_bn"].get(comp, 0.0)
+            dnb = (r["dN_headline_only"] if headline else r["dN"]) + (extra_dnb or {}).get((y, comp), 0.0)
+            dng = gf["dN_G_per_bn"].get(comp, 0.0) + (extra_dng or {}).get((y, comp), 0.0)
             q = q_daily(dnb, dng, aum, kappa)
-            ym, sym = b.lead_sym(comp, y)
+            ym, sym = next_sym(b, comp, y) if next_contract else b.lead_sym(comp, y)
             for k, d in enumerate(days):
                 w = window_utc(G.COMP[comp][1], d)
                 prev = b.bdays[b.bdays.index(d) - 1]
