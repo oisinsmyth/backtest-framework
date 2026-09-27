@@ -103,6 +103,19 @@ adds a reading and changes no test, threshold or gate of D639.*
   reported beside H1 for every cell. ES cells carry POWER's note that they are underpowered even for their own
   prediction (MDE 27–38 bp against about 15 bp).
 
+## LETF-A8. H3's slope is the raw move on the signed flow, not the direction-signed return on it
+
+*Source: found while writing the runner, 2026-09-27, before it existed and before any return was read. A correction
+of D639 §4's H3 formula to what the deposit's H3 means.*
+
+- **The defect.** D639 defines β_y as "the OLS slope of s on q". But s = direction × move and q = Q_contracts / V both
+  carry the flow's sign, so s · q = move × |q|. That product holds no information about whether the flow predicts
+  the move, and the slope sits near zero whatever the effect.
+- **The correction.** β_y = the OLS slope of the RAW τ → close move (bp, not signed by direction) on the SIGNED q,
+  over all usable days of the year: the flow's predictive slope, positive when flow predicts the move. The yearly
+  comparison with the set's mean L(L−1)A, the Spearman ρ, the exact permutation p and the "fails only if ρ < 0 with
+  one-sided p < 0.05" rule are unchanged.
+
 ## LETF-A4. Open questions Q1 and Q2: defaults unless the principal says otherwise
 
 *Source: proposed, 2026-09-27; the deposit asks for them before Phase 6.*
