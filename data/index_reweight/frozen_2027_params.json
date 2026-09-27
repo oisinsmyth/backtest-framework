@@ -31,5 +31,6 @@
                   "track3": "a fill and cost check only, never efficacy evidence (R-D21)"},
  "settlement_windows": "data/settlement_windows.csv: measured rows 2015-12 -> 2025-02 (KE from 2017, ZM from 2016); current_only rows from 2026-09-21",
  "not_read_before_freeze": "any 2027 BCOM target-weight or GSCI CPW publication, pro-forma or advisory document (IR-A10)",
- "vault_rule": "A10: 2025-03-01 -> 2026-09-18 opened only in the programme's joint vault run"
+ "vault_rule": "A10: 2025-03-01 -> 2026-09-18 opened only in the programme's joint vault run, except (IR-A15) the 25 lead-contract settlements of 2026-01-07 for CIM(2026)",
+ "cim_2026": "CIM_i(2026) = CIP_i(2026) / P_lead,Jan(2026-01-07), read once by record_index_reweight_2027.py --cim2026 on the principal's ruling (IR-A15)"
 }

@@ -101,17 +101,29 @@ def sierra_sym(comp: str, ym: tuple[int, int]) -> str | None:
     return f"{code}{LETTER[ym[1] - 1]}{ym[0] % 100:02d}-{ex}"
 
 
-def dly(sym: str) -> dict[str, float]:
+def dly(sym: str, dates: set[str]) -> dict[str, float]:
+    """The Close of `sym` on the wanted dates only. A daily file holds the contract's whole life (vault and sealed
+    sessions included), so only a line whose date field is wanted is ever split into prices."""
     p = Path(r"C:\SierraChart\Data") / f"{sym}.dly"
     if not p.exists():
         return {}
-    d = pd.read_csv(p, skipinitialspace=True, encoding="utf-8")
-    d.columns = [c.strip() for c in d.columns]
-    return {r: float(c) for r, c in zip(pd.to_datetime(d["Date"]).dt.strftime("%Y-%m-%d"), d["Close"]) if c}
+    want = {d.replace("-", "/"): d for d in dates}
+    with p.open(encoding="utf-8") as f:
+        head = [c.strip() for c in f.readline().split(",")]
+        close = head.index("Close")
+        out = {}
+        for line in f:
+            d = line[:10]
+            if d in want:
+                c = line.split(",")[close].strip()
+                if c:
+                    out[want[d]] = float(c)
+    return out
 
 
-def westmetall(year: int) -> pd.DataFrame:
-    """Fetch the current-year LME pages into Track 2's own raw folder (the in-sample file is never touched)."""
+def westmetall(year: int, dates: set[str]) -> pd.DataFrame:
+    """Fetch the current-year LME pages into Track 2's own raw folder (the in-sample file is never touched). The page
+    carries the whole year, vault days included: its bytes are kept as fetched, but only the wanted dates are parsed."""
     RAW.mkdir(parents=True, exist_ok=True)
     rows = []
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -121,8 +133,11 @@ def westmetall(year: int) -> pd.DataFrame:
             html = r.read()
         (RAW / f"LME_{m}_{year}_{stamp}.html").write_bytes(html)
         for d, cash, three in ROW.findall(html.decode("utf-8", errors="replace")):
+            iso = pd.to_datetime(d, format="%d. %B %Y").strftime("%Y-%m-%d")
+            if iso not in dates:
+                continue
             num = [float(x.replace(",", "")) if x.strip() not in ("", "-") else float("nan") for x in (cash, three)]
-            rows.append((pd.to_datetime(d, format="%d. %B %Y").strftime("%Y-%m-%d"), comp, name, *num))
+            rows.append((iso, comp, name, *num))
     return pd.DataFrame(rows, columns=["date", "component", "metal", "cash", "three_month"])
 
 
@@ -154,11 +169,12 @@ def record_settlements(refresh: bool) -> int:
         SD = _load("sierra_index_reweight_download", "sierra_index_reweight_download.py")
         syms = sorted({s for comp, v in want.items() for _d, ym in v if (s := sierra_sym(comp, ym))})
         SD.queue(syms, "dly", refresh=True)
-    lme = westmetall(today.year)
+    lme = westmetall(today.year, set(days))
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    new = []
+    new: list[dict[str, Any]] = []
     for comp, v in want.items():
         for d, ym in v:
+            px: float | None
             if comp in LME:
                 r = lme[(lme["component"] == comp) & (lme["date"] == d)]
                 if r.empty or r[["cash", "three_month"]].isna().any(axis=None):
@@ -166,7 +182,7 @@ def record_settlements(refresh: bool) -> int:
                 px, src = lme_price(r.iloc[0], ym), "Westmetall LME cash/3M interpolated to the prompt"
             else:
                 s = sierra_sym(comp, ym)
-                px = dly(s).get(d) if s else None
+                px = dly(s, set(days)).get(d) if s else None
                 if px is None:
                     continue
                 src = f"Sierra Chart daily {s}"
@@ -180,7 +196,7 @@ def record_settlements(refresh: bool) -> int:
         k = (r["trade_date"], r["component"], r["contract"])
         if k not in have:
             add.append(r)
-        elif abs(float(have[k]) - r["settle"]) > 1e-9 and not ((old["trade_date"] == k[0]) & (old["component"] == k[1])
+        elif abs(float(have[k]) - float(r["settle"])) > 1e-9 and not ((old["trade_date"] == k[0]) & (old["component"] == k[1])
                                                                & (old["contract"] == k[2]) & (old["settle"] == r["settle"])).any():
             add.append({**r, "kind": "revision"})
     if add:
@@ -201,7 +217,7 @@ def cim2026() -> int:
                          "words before its settlements are read.")
     cip = pd.read_csv(REPO / "data" / "index_reweight" / "weights" / "2026.csv", encoding="utf-8")
     cip = dict(zip(cip["component"], cip["target_weight_pct"] / cip["target_weight_pct"].sum()))
-    lme = westmetall(2026)
+    lme = westmetall(2026, {DET_2026})
     out: dict[str, Any] = {"det": DET_2026, "ruling": json.loads(RULING.read_text(encoding="utf-8")), "components": {}}
     for comp, w in cip.items():
         L, _ = lead_next(comp, 2026, 1)
@@ -210,7 +226,7 @@ def cim2026() -> int:
             px = lme_price(r.iloc[0], L) if not r.empty else None
         else:
             s = sierra_sym(comp, L)
-            px = dly(s).get(DET_2026) if s else None
+            px = dly(s, {DET_2026}).get(DET_2026) if s else None
         if px is None or px <= 0:
             raise RuntimeError(f"no {DET_2026} settlement for {comp} {L}")
         out["components"][comp] = {"contract": f"{L[0]}-{L[1]:02d}", "price": px, "cip": w, "cim": w * 1000 / px}
@@ -220,9 +236,9 @@ def cim2026() -> int:
 
 
 def forecast() -> int:
-    for p in (CIM, TARGETS, SETTLE):
-        if not p.exists():
-            raise SystemExit(f"REFUSING: {p.name} is missing. The forecast needs the 2026 multipliers (--cim2026, on "
+    for need in (CIM, TARGETS, SETTLE):
+        if not need.exists():
+            raise SystemExit(f"REFUSING: {need.name} is missing. The forecast needs the 2026 multipliers (--cim2026, on "
                              "the principal's ruling), the 2027 targets (after the announcement) and recorded settlements.")
     G = _load("run_gate_r0", "run_gate_r0.py")
     cim = {c: v["cim"] for c, v in json.loads(CIM.read_text(encoding="utf-8"))["components"].items()}

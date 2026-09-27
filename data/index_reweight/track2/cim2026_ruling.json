@@ -1,0 +1,7 @@
+{
+ "instruction": "the principal, 2026-09-27: 'Allow the single-day read, freeze now, and schedule daily recording'",
+ "asked": "Allow that single-day read now (one day of settlements, 2026-01-07, for the 25 components' January lead contracts, to compute CIM(2026)), or defer it to the combined vault run",
+ "scope": {"date": "2026-01-07", "what": "the settlement of each component's January 2026 lead contract", "components": 25,
+           "includes": "CL, NG, HO and RB (March 2026 contracts)", "excludes": "every other vault day, intraday data, any return"},
+ "amendment": "IR-A15 (docs/internal/INDEX_REWEIGHT_FLOW_AMENDMENTS.md)"
+}

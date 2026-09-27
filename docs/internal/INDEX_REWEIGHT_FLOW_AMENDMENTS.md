@@ -252,3 +252,28 @@ D634-RESULT §5. Written after that result and before the re-run.*
 3. **The LME stays a measured band.** It moves any weight by at most 0.015% and flips no ΔN sign. The BCOM
    aggregate check (UCD/CMD) is reported and does not gate.
 4. **det stays the rule's BD4** (IR-A3). BCOM's printed dates are reported beside.
+
+## IR-A15. One vault day is opened for the 2026 multipliers; the freeze is run now
+
+*Source: the principal, 2026-09-27: "Allow the single-day read, freeze now, and schedule daily recording". Written
+before the freeze and before any 2026-01-07 settlement is read.*
+
+- **The exception to A10.** Forecasting the 2027 rebalance, and scoring it, needs CIM(2026): each component's 2026
+  target over its lead-contract settlement on det 2026 = **2026-01-07** (BD4, IR-A3; BCOM's printed date agrees).
+  That day is inside the vault (2025-03-01 → 2026-09-18).
+  - **Read:** the settlement of each of the 25 components' January lead contract on 2026-01-07, and nothing else.
+    That includes CL, NG, HO and RB (all March 2026). No other vault day, no intraday data, no return.
+  - **Use:** an index fact (the 2026 multipliers), written to `data/index_reweight/track2/cim_2026.json` with the
+    ruling inside it. It enters no tested outcome of 2016–2025, and no C0 or R-stage run reads it.
+  - **How:** `record_index_reweight_2027.py --cim2026`, which refuses without `track2/cim2026_ruling.json`. The
+    Sierra daily file of an expired contract holds its whole life, so the reader splits only the line dated
+    2026-01-07 into prices; the Westmetall 2026 page is parsed for that date alone (its bytes are kept as fetched).
+  - **Cost to the vault:** the programme's joint vault run later sees one day it did not see first. The 2026 event's
+    own scoring (R-stages on the vault) needs BD5–9 and later days, which stay closed.
+- **The freeze runs now,** ahead of the 16 October target, on the code as committed with this amendment. Gate C0 has
+  not run: κ is what the frozen `run_gate_c0.py` returns on the in-sample data (IR-A10).
+- **Before the freeze, the recorder's readers were narrowed** (a bug fix of the same kind as the D626 guard): the
+  Sierra daily reader and the Westmetall parser now parse only the wanted dates. Re-run on the 125 recorded
+  settlements, it returns all 105 Sierra values bit-identically and records no revision.
+- **Daily recording:** a scheduled task runs `--settlements --refresh` each morning, and `--forecast` once the 2027
+  targets are transcribed. It commits nothing.

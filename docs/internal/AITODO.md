@@ -108,18 +108,17 @@
   3. **The principal calls C0's one run:** `uv run python -W error::RuntimeWarning scripts/run_gate_c0.py --run`.
   - **R1–R3 are pre-registered (D636), POWER-checked and their runners committed** (`c019f34`). Each runs once
     after C0.
-  - **The freeze machinery is ready:** `scripts/freeze_index_reweight_2027.py` (`--freeze`, `--verify`,
-    `--dry-run`) with `data/index_reweight/frozen_2027_params.json`. The dry run hashes 27 code files, 30 inputs and
-    23 parameters and verifies. **THE FREEZE ITSELF WAITS FOR THE PRINCIPAL'S WORD** (by 2026-10-16), and writes
-    `results/index_reweight/FROZEN_2027.json`.
+  - **FROZEN on 2026-09-27** on the principal's word (IR-A15): `results/index_reweight/FROZEN_2027.json`, 27 code
+    files, 30 inputs, 24 parameters. `uv run python scripts/freeze_index_reweight_2027.py --verify` before every run.
+    C0 has not run, so κ is what the frozen `run_gate_c0.py` returns on the in-sample data (IR-A10). A code change
+    from here is a logged bug fix under a NEW frozen file.
   - **The Track 2 recorder:** `scripts/record_index_reweight_2027.py`.
-    - `--settlements` works now: 125 post-vault settlements for 21 components, 2026-09-21 → 25.
+    - `--settlements` works: 125 post-vault settlements for 21 components, 2026-09-21 → 25. Scheduled daily.
     - CL, NG, HO and RB are skipped until 2026-10-11 (D626's sample).
-    - `--cim2026` REFUSES until the principal rules on reading the 2026-01-07 (vault) settlements for the 2026
-      multipliers. The 2027 forecast and the 2027 event's scoring both need them.
+    - `--cim2026`: the principal ALLOWED the single 2026-01-07 read (IR-A15; `track2/cim2026_ruling.json`). It needs
+      21 expired Sierra daily files (the Feb/Mar 2026 lead contracts) that are not on disk: **download on the
+      principal's approval**, then run it once.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
-  3. The freeze by 2026-10-16 (IR-A10). If the energy sign check or C0 is not done by then, the code is frozen and
-     κ follows from the in-sample data (IR-A10).
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
