@@ -94,12 +94,16 @@
   - **Settlement windows DONE (`3764e43`):** the 11 roots are MEASURED over 2015-12 → 2025-02. The documented
     window reproduces the settlement on 95–100% of days in every year (KE from 2017, ZM from 2016).
   - **C0 is PRE-REGISTERED: D635 (`e001171`).**
-  1. **The sign-check inputs (D635 §7), on the principal's approval:** Databento `trades` for the 15 roots from
-     2026-09-19 (quote first), and Sierra files for the contracts trading now. Energy is readable only after
-     2026-10-10.
-  2. C0's POWER step (D635 §8), then the runner, then the one run.
-  3. Transcribe the GSCI RPDW and schedule into a CSV (the earlier agent's write was blocked).
-  4. The freeze by 2026-10-16 (IR-A10).
+  - **C0 POWER DONE (`b0e992a`):** size 3.25%, power 100% from κ = 0.02; corr(Q_B, Q_G) = 0.47 (separable).
+    `docs/internal/INDEX_REWEIGHT_POWER.md`.
+  - **Sign-check inputs on disk:**
+    - Databento `trades` for the 15 roots, 2026-09-19 → 09-25 ($0; 5 sessions);
+    - Sierra files for the 24 current contracts.
+  1. **Top up both to ≥ 10 post-vault sessions** (from about 2026-10-05), then run the sign check on the 11
+     non-energy roots. Energy (CL, NG, HO, RB) only after D626's read on 2026-10-10.
+  2. Build and commit the C0 runner (`run_gate_c0.py`, D635 §9). Run it once after the sign check.
+  3. The freeze by 2026-10-16 (IR-A10). If the energy sign check or C0 is not done by then, the code is frozen and
+     κ follows from the in-sample data (IR-A10).
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
