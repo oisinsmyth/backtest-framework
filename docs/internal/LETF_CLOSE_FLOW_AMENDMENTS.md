@@ -78,6 +78,31 @@ ProShares funds too (58 of 168 quarters over 1%, max 13.3%).*
   elsewhere). The ES results are reported with and without it.
 - **LETF-A3 corrected:** N-SAR's monthly flows end at October 2017, not mid-2018.
 
+## LETF-A7. A second pre-registered reading: each cell against the model's OWN predicted impact
+
+*Source: the principal, 2026-09-27 ("Yes, add LETF-A7, then build the runner"), on D639's POWER step
+(`docs/results/LETF_CLOSE_FLOW_POWER.md`). Written after POWER, which read no return, and before any runner exists. It
+adds a reading and changes no test, threshold or gate of D639.*
+
+- **Why.** Against D639's default plausible effect (the cost, about 1.6 bp on NQ) every primary cell is
+  underpowered, so an H1 null would be "inconclusive". But an active day is, by construction, one where the model
+  predicts an impact I ≥ 3 × cost: about 10 bp on NQ, which the NQ cells can detect even at Holm 80% (MDE 5.4–8.3 bp).
+  Without this reading, a null could never count against the mechanism the model claims.
+- **The statistic, per primary cell** (and at τ = 11:00 for H4): the calibration ratio **β = mean(s) / mean(I_bp)**
+  on the active days.
+  - s is D639 §3's signed return in bp.
+  - I_bp = I / P(t, τ) × 10⁴, the model's own predicted impact for that day.
+  - The 90% confidence interval on mean(s) uses D639's HAC standard error and lag rule; I_bp's mean is treated as
+    known (it is the model's claim).
+- **The labels** (one-sided 5% each; across the six cells the "BELOW" and "ABOVE" labels are Holm-adjusted):
+  - **BELOW THE CLAIM:** the upper 95% bound of β < 1. The move is smaller than the model predicts. With an H1 fail
+    this is a POWERED NULL against the mechanism, not an inconclusive one.
+  - **AT THE CLAIM:** the interval contains 1.
+  - **ABOVE THE CLAIM:** the lower 95% bound of β > 1.
+- **What it does not do:** it is not a gate, and it cannot turn an H1 fail into a pass or a pass into a fail. It is
+  reported beside H1 for every cell. ES cells carry POWER's note that they are underpowered even for their own
+  prediction (MDE 27–38 bp against about 15 bp).
+
 ## LETF-A4. Open questions Q1 and Q2: defaults unless the principal says otherwise
 
 *Source: proposed, 2026-09-27; the deposit asks for them before Phase 6.*
