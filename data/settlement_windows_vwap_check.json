@@ -1,0 +1,1771 @@
+{
+ "CL": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "documented": 0.9048,
+     "documented +60 min": 0.0476,
+     "documented -60 min": 0.0476
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.7968,
+     "documented +60 min": 0.0199,
+     "documented -60 min": 0.0239
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.816,
+     "documented +60 min": 0.048,
+     "documented -60 min": 0.008
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.788,
+     "documented +60 min": 0.024,
+     "documented -60 min": 0.012
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.788,
+     "documented +60 min": 0.044,
+     "documented -60 min": 0.016
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "documented": 0.7631,
+     "documented +60 min": 0.0241,
+     "documented -60 min": 0.004
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.753,
+     "documented +60 min": 0.012,
+     "documented -60 min": 0.0239
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.7,
+     "documented +60 min": 0.024,
+     "documented -60 min": 0.012
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "documented": 0.8153,
+     "documented +60 min": 0.0201,
+     "documented -60 min": 0.012
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.7769,
+     "documented +60 min": 0.0279,
+     "documented -60 min": 0.008
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 40,
+    "exact_share": {
+     "documented": 0.85,
+     "documented +60 min": 0.025,
+     "documented -60 min": 0.025
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/New_York",
+    "14:28:00",
+    "14:30:00"
+   ],
+   [
+    "documented -60 min",
+    "America/New_York",
+    "13:28:00",
+    "13:30:00"
+   ],
+   [
+    "documented +60 min",
+    "America/New_York",
+    "15:28:00",
+    "15:30:00"
+   ]
+  ]
+ },
+ "GC": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 22,
+    "exact_share": {
+     "documented": 0.9545,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0909
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9802,
+     "documented +60 min": 0.0317,
+     "documented -60 min": 0.0198
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9841,
+     "documented +60 min": 0.0239,
+     "documented -60 min": 0.0398
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9881,
+     "documented +60 min": 0.0317,
+     "documented -60 min": 0.0357
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9881,
+     "documented +60 min": 0.0556,
+     "documented -60 min": 0.0476
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9841,
+     "documented +60 min": 0.0199,
+     "documented -60 min": 0.012
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9841,
+     "documented +60 min": 0.0476,
+     "documented -60 min": 0.004
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9801,
+     "documented +60 min": 0.0239,
+     "documented -60 min": 0.0199
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.988,
+     "documented +60 min": 0.044,
+     "documented -60 min": 0.016
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9841,
+     "documented +60 min": 0.0397,
+     "documented -60 min": 0.0079
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 40,
+    "exact_share": {
+     "documented": 0.975,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.025
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/New_York",
+    "13:29:00",
+    "13:30:00"
+   ],
+   [
+    "documented -60 min",
+    "America/New_York",
+    "12:29:00",
+    "12:30:00"
+   ],
+   [
+    "documented +60 min",
+    "America/New_York",
+    "14:29:00",
+    "14:30:00"
+   ]
+  ]
+ },
+ "HE": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.4762,
+     "2 min 12:58-13:00 CT": 0.3333,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.444,
+     "2 min 12:58-13:00 CT": 0.336,
+     "documented": 1.0,
+     "documented +60 min": 0.004,
+     "documented -60 min": 0.02
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.4315,
+     "2 min 12:58-13:00 CT": 0.2944,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0202
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.4418,
+     "2 min 12:58-13:00 CT": 0.3293,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0321
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.4257,
+     "2 min 12:58-13:00 CT": 0.2972,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.012
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.532,
+     "2 min 12:58-13:00 CT": 0.348,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.012
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.4861,
+     "2 min 12:58-13:00 CT": 0.3386,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0279
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.444,
+     "2 min 12:58-13:00 CT": 0.332,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.032
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.6426,
+     "2 min 12:58-13:00 CT": 0.502,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0241
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.584,
+     "2 min 12:58-13:00 CT": 0.492,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.036
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.4615,
+     "2 min 12:58-13:00 CT": 0.359,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0513
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "12:59:30",
+    "13:00:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "11:59:30",
+    "12:00:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "13:59:30",
+    "14:00:00"
+   ],
+   [
+    "1 min 12:59-13:00 CT",
+    "America/Chicago",
+    "12:59:00",
+    "13:00:00"
+   ],
+   [
+    "2 min 12:58-13:00 CT",
+    "America/Chicago",
+    "12:58:00",
+    "13:00:00"
+   ]
+  ]
+ },
+ "HG": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 22,
+    "exact_share": {
+     "documented": 0.9545,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0455
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9683,
+     "documented +60 min": 0.0913,
+     "documented -60 min": 0.0437
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9721,
+     "documented +60 min": 0.0637,
+     "documented -60 min": 0.0598
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9762,
+     "documented +60 min": 0.0516,
+     "documented -60 min": 0.0317
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9802,
+     "documented +60 min": 0.0397,
+     "documented -60 min": 0.0635
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9762,
+     "documented +60 min": 0.0397,
+     "documented -60 min": 0.0357
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9841,
+     "documented +60 min": 0.0278,
+     "documented -60 min": 0.0317
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9641,
+     "documented +60 min": 0.0239,
+     "documented -60 min": 0.0199
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.984,
+     "documented +60 min": 0.028,
+     "documented -60 min": 0.024
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9484,
+     "documented +60 min": 0.0198,
+     "documented -60 min": 0.0079
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 40,
+    "exact_share": {
+     "documented": 0.975,
+     "documented +60 min": 0.025,
+     "documented -60 min": 0.025
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/New_York",
+    "12:59:00",
+    "13:00:00"
+   ],
+   [
+    "documented -60 min",
+    "America/New_York",
+    "11:59:00",
+    "12:00:00"
+   ],
+   [
+    "documented +60 min",
+    "America/New_York",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ },
+ "KE": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.381,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.788,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.044
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9839,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0363
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9478,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0442
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0602
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9677,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0524
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9801,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0239
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.972,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.04
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.996,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0321
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.98,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.036
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0513
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "13:14:00",
+    "13:15:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "12:14:00",
+    "12:15:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "14:14:00",
+    "14:15:00"
+   ],
+   [
+    "SER-6245R 13:59-14:00 CT",
+    "America/Chicago",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ },
+ "LE": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.5238,
+     "2 min 12:58-13:00 CT": 0.3333,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.468,
+     "2 min 12:58-13:00 CT": 0.34,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.036
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.504,
+     "2 min 12:58-13:00 CT": 0.371,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0282
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.5181,
+     "2 min 12:58-13:00 CT": 0.3815,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0201
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.6145,
+     "2 min 12:58-13:00 CT": 0.4699,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0361
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.504,
+     "2 min 12:58-13:00 CT": 0.392,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.024
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.5936,
+     "2 min 12:58-13:00 CT": 0.4582,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0319
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.604,
+     "2 min 12:58-13:00 CT": 0.504,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.048
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.7189,
+     "2 min 12:58-13:00 CT": 0.5743,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0402
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.676,
+     "2 min 12:58-13:00 CT": 0.516,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.024
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "1 min 12:59-13:00 CT": 0.5128,
+     "2 min 12:58-13:00 CT": 0.359,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0769
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "12:59:30",
+    "13:00:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "11:59:30",
+    "12:00:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "13:59:30",
+    "14:00:00"
+   ],
+   [
+    "1 min 12:59-13:00 CT",
+    "America/Chicago",
+    "12:59:00",
+    "13:00:00"
+   ],
+   [
+    "2 min 12:58-13:00 CT",
+    "America/Chicago",
+    "12:58:00",
+    "13:00:00"
+   ]
+  ]
+ },
+ "NG": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "documented": 0.9048,
+     "documented +60 min": 0.0952,
+     "documented -60 min": 0.0476
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.7809,
+     "documented +60 min": 0.0438,
+     "documented -60 min": 0.0359
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.796,
+     "documented +60 min": 0.032,
+     "documented -60 min": 0.056
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.764,
+     "documented +60 min": 0.084,
+     "documented -60 min": 0.032
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.812,
+     "documented +60 min": 0.048,
+     "documented -60 min": 0.016
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "documented": 0.8193,
+     "documented +60 min": 0.0402,
+     "documented -60 min": 0.012
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.8048,
+     "documented +60 min": 0.0279,
+     "documented -60 min": 0.012
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.652,
+     "documented +60 min": 0.004,
+     "documented -60 min": 0.004
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "documented": 0.759,
+     "documented +60 min": 0.0281,
+     "documented -60 min": 0.0161
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.753,
+     "documented +60 min": 0.0159,
+     "documented -60 min": 0.0319
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 40,
+    "exact_share": {
+     "documented": 0.775,
+     "documented +60 min": 0.05,
+     "documented -60 min": 0.0
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/New_York",
+    "14:28:00",
+    "14:30:00"
+   ],
+   [
+    "documented -60 min",
+    "America/New_York",
+    "13:28:00",
+    "13:30:00"
+   ],
+   [
+    "documented +60 min",
+    "America/New_York",
+    "15:28:00",
+    "15:30:00"
+   ]
+  ]
+ },
+ "SI": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 22,
+    "exact_share": {
+     "documented": 1.0,
+     "documented +60 min": 0.0909,
+     "documented -60 min": 0.1364
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9762,
+     "documented +60 min": 0.0357,
+     "documented -60 min": 0.0635
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9761,
+     "documented +60 min": 0.0717,
+     "documented -60 min": 0.0398
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9802,
+     "documented +60 min": 0.0833,
+     "documented -60 min": 0.0516
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9762,
+     "documented +60 min": 0.0794,
+     "documented -60 min": 0.0913
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9801,
+     "documented +60 min": 0.0598,
+     "documented -60 min": 0.0518
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9921,
+     "documented +60 min": 0.0476,
+     "documented -60 min": 0.0357
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "documented": 0.9721,
+     "documented +60 min": 0.0199,
+     "documented -60 min": 0.0199
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "documented": 0.988,
+     "documented +60 min": 0.036,
+     "documented -60 min": 0.016
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 252,
+    "exact_share": {
+     "documented": 0.9841,
+     "documented +60 min": 0.0198,
+     "documented -60 min": 0.0357
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 40,
+    "exact_share": {
+     "documented": 1.0,
+     "documented +60 min": 0.025,
+     "documented -60 min": 0.05
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "12:24:00",
+    "12:25:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "11:24:00",
+    "11:25:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "13:24:00",
+    "13:25:00"
+   ]
+  ]
+ },
+ "ZC": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.956,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.096
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9435,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.1411
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9478,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0964
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9398,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.1044
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9435,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0887
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9761,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0438
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.968,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.036
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9679,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0522
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.968,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.096
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9487,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0769
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "13:14:00",
+    "13:15:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "12:14:00",
+    "12:15:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "14:14:00",
+    "14:15:00"
+   ],
+   [
+    "SER-6245R 13:59-14:00 CT",
+    "America/Chicago",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ },
+ "ZL": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.96,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.032
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9758,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0323
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9679,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0643
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9679,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0643
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9677,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0403
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9522,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0199
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.952,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.024
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9839,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0201
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.964,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.012
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9744,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0256
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "13:14:00",
+    "13:15:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "12:14:00",
+    "12:15:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "14:14:00",
+    "14:15:00"
+   ],
+   [
+    "SER-6245R 13:59-14:00 CT",
+    "America/Chicago",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ },
+ "ZM": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.8095,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.96,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.04
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9758,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0524
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9679,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0402
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9639,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0522
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9637,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0524
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9641,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0239
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.972,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.048
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9799,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0321
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.976,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.044
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "13:14:00",
+    "13:15:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "12:14:00",
+    "12:15:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "14:14:00",
+    "14:15:00"
+   ],
+   [
+    "SER-6245R 13:59-14:00 CT",
+    "America/Chicago",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ },
+ "ZS": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9048,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0476
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.992,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.048
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9839,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0444
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9799,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0321
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9558,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0843
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9637,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0403
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9801,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0319
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.972,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.024
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9799,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0402
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.976,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.048
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9744,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0256
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "13:14:00",
+    "13:15:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "12:14:00",
+    "12:15:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "14:14:00",
+    "14:15:00"
+   ],
+   [
+    "SER-6245R 13:59-14:00 CT",
+    "America/Chicago",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ },
+ "ZW": {
+  "by_year": {
+   "2015": {
+    "best": "documented",
+    "days": 21,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0476
+    }
+   },
+   "2016": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.968,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.052
+    }
+   },
+   "2017": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9839,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0363
+    }
+   },
+   "2018": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9719,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0803
+    }
+   },
+   "2019": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.988,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0643
+    }
+   },
+   "2020": {
+    "best": "documented",
+    "days": 248,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9839,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0847
+    }
+   },
+   "2021": {
+    "best": "documented",
+    "days": 251,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.9761,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0438
+    }
+   },
+   "2022": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.964,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.02
+    }
+   },
+   "2023": {
+    "best": "documented",
+    "days": 249,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.992,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0562
+    }
+   },
+   "2024": {
+    "best": "documented",
+    "days": 250,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 0.996,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.06
+    }
+   },
+   "2025": {
+    "best": "documented",
+    "days": 39,
+    "exact_share": {
+     "SER-6245R 13:59-14:00 CT": 0.0,
+     "documented": 1.0,
+     "documented +60 min": 0.0,
+     "documented -60 min": 0.0513
+    }
+   }
+  },
+  "candidates": [
+   [
+    "documented",
+    "America/Chicago",
+    "13:14:00",
+    "13:15:00"
+   ],
+   [
+    "documented -60 min",
+    "America/Chicago",
+    "12:14:00",
+    "12:15:00"
+   ],
+   [
+    "documented +60 min",
+    "America/Chicago",
+    "14:14:00",
+    "14:15:00"
+   ],
+   [
+    "SER-6245R 13:59-14:00 CT",
+    "America/Chicago",
+    "13:59:00",
+    "14:00:00"
+   ]
+  ]
+ }
+}

@@ -20,6 +20,12 @@ confirmed here for the ACTIVE month by SER-4867, and it is EASTERN time, not Cen
   record_only    a superseded window read verbatim from a dated source whose own start (ES/NQ) or
                  end (the CBOT ags) is NOT sourced. Carried so the record is not lost; NEVER served
                  by `window_for`, and excluded from the G5 overlap check.
+  measured       the window reproduces the published settlement from the trades themselves: the
+                 tick-rounded VWAP of the most-traded contract's outright trades in the window equals
+                 the settlement on >= 90% of days in EVERY calendar year of the period, and every
+                 alternative scored far below (`verify_settlement_windows_vwap.py` ->
+                 `data/settlement_windows_vwap_check.json`, 2026-09-27). Served only over the dates
+                 measured: `effective_to` is the last measured date, never extrapolated.
 
 Micros inherit their parent's row through MICRO_PARENT, not through duplicate rows.
 """
@@ -58,7 +64,7 @@ BAR0_ET_MIN, N_BARS = 9 * 60, 420
 MEASURE_YEARS = tuple(range(2016, 2024))
 FLANK = 5
 
-SERVED = ("dated_notice", "current_only")
+SERVED = ("dated_notice", "current_only", "measured")
 ALL_STATUS = SERVED + ("record_only",)
 
 
@@ -216,7 +222,12 @@ def expect_raise(fn, what, log=print):
 
 def g1_every_row_sourced(rows):
     for w in rows:
-        assert w.source_url.startswith("https://"), f"{w.root}: no source_url"
+        if w.history_status == "measured":
+            # the source is the measurement itself: a committed file in this repo
+            src = w.source_url.split(" ")[0]
+            assert src.startswith("data/") and (REPO / src).exists(), f"{w.root}: no measurement file"
+        else:
+            assert w.source_url.startswith("https://"), f"{w.root}: no source_url"
         assert w.accessed_utc.endswith("Z") and len(w.accessed_utc) == 20, f"{w.root}: accessed_utc"
         assert len(w.basis) > 20, f"{w.root}: basis is not a quoted procedure"
     return len(rows)

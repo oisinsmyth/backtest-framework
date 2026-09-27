@@ -104,8 +104,21 @@ def test_unmapped_variants_all_raise(bogus):
 def test_g3_date_before_the_earliest_sourced_effective_date_raises():
     with pytest.raises(SW.UnsourcedDate):
         SW.window_for("NG", "2009-05-29")
+    # GC is served over its MEASURED period (2015-12-01 -> 2025-02-28) and from its current_only date; before the
+    # measurement, and in the unmeasured gap between the two, it raises
     with pytest.raises(SW.UnsourcedDate):
-        SW.window_for("GC", "2023-06-01")
+        SW.window_for("GC", "2015-11-30")
+    with pytest.raises(SW.UnsourcedDate):
+        SW.window_for("GC", "2025-06-02")
+    assert SW.window_for("GC", "2023-06-01").history_status == "measured"
+
+
+def test_a_measured_row_starts_only_where_every_year_reproduces_the_settlement():
+    # KE's settlements were reproduced on 38% (Dec 2015) and 79% (2016) of days, so its measured row starts 2017
+    with pytest.raises(SW.UnsourcedDate):
+        SW.window_for("KE", "2016-06-10")
+    assert SW.window_for("KE", "2017-01-03").start_ct == "13:14:00"
+    assert SW.window_for("LE", "2016-03-01").start_ct == "12:59:30"
 
 
 def test_the_day_of_the_earliest_sourced_date_is_served_and_the_day_before_is_not():
