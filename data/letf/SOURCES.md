@@ -34,8 +34,9 @@ of `A[t-1]` = NAV × shares outstanding at the prior close. Nothing here is esti
 - **Issuer page** (`direxion.com/product/daily-sp-500-bull-bear-3x-etfs`, read 2026-09-27 in a browser; plain
   fetches return 403): the current NAV and market close (as of 09/24/2026), a premium/discount tool and a
   **current-day** holdings CSV. **No NAV history and no shares-outstanding history** is offered.
-- **Candidates, not yet checked:**
-  - EDGAR N-PORT (Direxion Shares ETF Trust is a 1940-Act trust, unlike the commodity pools): **monthly** net
-    assets from 2019, public with a lag. Daily AUM would be an estimate between month-ends.
-  - sharesoutstandinghistory.com: ~153 sparse points since 2009; third-party, terms unread.
-- **Status:** a ruling is needed (exclude with the share measured, or estimate with a band, or source).
+- **EDGAR N-PORT, checked 2026-09-27** (Direxion Shares ETF Trust, CIK 1424958; SPXL S000022767, SPXS
+  S000022765): NPORT-P from 2019-12, 1,728 filings to 2024-12. Each has the quarter-end `netAssets` and, per month,
+  `mon1Flow`–`mon3Flow` and `monthlyTotReturn`: month-end net assets rebuild from 2019-Q3.
+- **Ruling (LETF-A3):** estimate daily AUM from the N-PORT month-ends with a band measured on the ProShares funds;
+  before 2019-Q3 check N-SAR/N-CSR; if it does not work, the principal sources it.
+- Not used: sharesoutstandinghistory.com (~153 sparse points; third-party, terms unread).

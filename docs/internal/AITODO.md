@@ -131,7 +131,11 @@
     statistics + definition 41 roots 0.6 GB, ES options 2.4 GB, **mbo 8 roots 81.3 GB** (≈ 28 GB, and growing ~5 GB
     a session). Best pulled as late as possible (~10-09/10-10) so they reach the lapse.
   - Free disk 201 GB.
-- **Nothing submitted. Each pull needs the principal's approval.**
+- **The principal approved all four (2026-09-27).**
+  - NQ and CL/NG options: SUBMITTED 2026-09-27 by `scripts/fetch_prelapse_options.py` (7 batch jobs, each re-quoted
+    at USD 0.00 just before submission; records `data/prelapse_options_pull_jobs_{nq,energy}.json`); downloading.
+  - Top-ups including MBO: SCHEDULED for Fri 2026-10-09 07:30, task `prelapse-databento-topup`
+    (`scripts/fetch_prelapse_topup.py`; checks ≥ 90 GB free first, refuses any job no longer at USD 0.00).
 
 ## LETF close-flow — opened 2026-09-27 (the principal: "then open LETF close-flow")
 
@@ -155,8 +159,12 @@
 - **Already built:** ES/NQ 1-minute bars (`fut_{ES,NQ}_rth_1m`, `fut_index_sessions`), the session calendar with
   early closes and FOMC/CPI/quad-witching/quarter-end flags (D589, D585), the power module (D588). To build: the
   NQ-equivalent volume series (NQ + MNQ/10), the AUM panel and Gate 0.
-- **Rulings needed:** (1) how the D530 overlap is handled (which slice is the test); (2) the Direxion route;
-  (3) Q1/Q2 default to CostStack and `BOOK_PROP.md`'s account parameters unless the principal says otherwise.
+- **Rulings taken 2026-09-27** (`docs/internal/LETF_CLOSE_FLOW_AMENDMENTS.md`): LETF-A1 run the deposit as
+  written, D530/D463/D487 disclosed in every result; LETF-A2 in-sample 2016-01 → 2025-02-28 (A10); LETF-A3 Direxion
+  from N-PORT (2019-Q3 on: quarter-end net assets plus monthly flows and returns, CIK 1424958), band measured on the
+  ProShares funds, else the principal sources it; LETF-A4 Q1/Q2 defaults (proposed).
+- **Next:** build Phase 1 (the AUM panel and Gate 0): ProShares from the principal's file, Direxion's N-PORT
+  month-ends and the daily estimate with its measured band; check N-SAR/N-CSR for 2016 → 2019-Q2.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
