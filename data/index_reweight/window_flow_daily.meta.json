@@ -1,0 +1,125 @@
+{
+ "coverage": {
+  "CL": {
+   "contracts": 57,
+   "days": 2407,
+   "first": "2015-11-02",
+   "last": "2025-02-28",
+   "rows": 5740
+  },
+  "GC": {
+   "contracts": 47,
+   "days": 2386,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5848
+  },
+  "HE": {
+   "contracts": 65,
+   "days": 2327,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 7499
+  },
+  "HG": {
+   "contracts": 47,
+   "days": 2386,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5895
+  },
+  "HO": {
+   "contracts": 57,
+   "days": 2407,
+   "first": "2015-11-02",
+   "last": "2025-02-28",
+   "rows": 6114
+  },
+  "KE": {
+   "contracts": 42,
+   "days": 2053,
+   "first": "2017-01-03",
+   "last": "2025-02-28",
+   "rows": 4586
+  },
+  "LE": {
+   "contracts": 56,
+   "days": 2327,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 7048
+  },
+  "NG": {
+   "contracts": 57,
+   "days": 2407,
+   "first": "2015-11-02",
+   "last": "2025-02-28",
+   "rows": 6003
+  },
+  "RB": {
+   "contracts": 57,
+   "days": 2407,
+   "first": "2015-11-02",
+   "last": "2025-02-28",
+   "rows": 6114
+  },
+  "SI": {
+   "contracts": 47,
+   "days": 2386,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5684
+  },
+  "ZC": {
+   "contracts": 47,
+   "days": 2327,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5353
+  },
+  "ZL": {
+   "contracts": 48,
+   "days": 2327,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5280
+  },
+  "ZM": {
+   "contracts": 48,
+   "days": 2305,
+   "first": "2016-01-04",
+   "last": "2025-02-28",
+   "rows": 5286
+  },
+  "ZS": {
+   "contracts": 48,
+   "days": 2327,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5376
+  },
+  "ZW": {
+   "contracts": 47,
+   "days": 2327,
+   "first": "2015-12-01",
+   "last": "2025-02-28",
+   "rows": 5233
+  }
+ },
+ "cut": "2025-03-01",
+ "note": "an input: coverage only is reported",
+ "rows": 87059,
+ "skipped_no_served_window": {
+  "GC": 42,
+  "HE": 42,
+  "HG": 22,
+  "KE": 669,
+  "LE": 42,
+  "SI": 22,
+  "ZC": 22,
+  "ZL": 43,
+  "ZM": 112,
+  "ZS": 43,
+  "ZW": 22
+ }
+}

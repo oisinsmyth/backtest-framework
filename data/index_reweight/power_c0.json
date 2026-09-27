@@ -1,0 +1,65 @@
+{
+ "corr_QB_QG": 0.4668,
+ "draws": 400,
+ "grid": {
+  "0.0": {
+   "median_observations_used": 14585,
+   "median_t": 0.168,
+   "pass_rate": 0.0325,
+   "separable_rate": 0.0
+  },
+  "0.02": {
+   "median_observations_used": 14577,
+   "median_t": 80.439,
+   "pass_rate": 1.0,
+   "separable_rate": 1.0
+  },
+  "0.05": {
+   "median_observations_used": 14582,
+   "median_t": 142.938,
+   "pass_rate": 1.0,
+   "separable_rate": 1.0
+  },
+  "0.1": {
+   "median_observations_used": 14587,
+   "median_t": 173.961,
+   "pass_rate": 1.0,
+   "separable_rate": 1.0
+  },
+  "0.25": {
+   "median_observations_used": 14582,
+   "median_t": 185.568,
+   "pass_rate": 1.0,
+   "separable_rate": 1.0
+  }
+ },
+ "months": 100,
+ "noise_pool_cells": 14581,
+ "noise_sd_by_root_contracts": {
+  "CL": 619.6,
+  "GC": 162.8,
+  "HE": 176.1,
+  "HG": 123.6,
+  "HO": 132.3,
+  "KE": 149.0,
+  "LE": 150.3,
+  "NG": 470.6,
+  "RB": 150.7,
+  "SI": 136.3,
+  "ZC": 1152.4,
+  "ZL": 237.1,
+  "ZM": 215.7,
+  "ZS": 382.5,
+  "ZW": 375.3
+ },
+ "observations": 15000,
+ "reading": {
+  "power_at_plausible_0.05": 1.0,
+  "size_at_kappa_0": 0.0325,
+  "underpowered_at_plausible": false
+ },
+ "seed": 635,
+ "signal_scale": {
+  "median_abs_Q_comb_nonzero": 21675.4
+ }
+}

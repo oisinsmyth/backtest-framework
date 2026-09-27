@@ -142,8 +142,23 @@ def dly_span(sym: str) -> dict[str, Any]:
             "last": lines[-1].split(",")[0].replace("/", "-")}
 
 
-def queue(syms: list[str], ext: str = "scid") -> list[str]:
-    todo = [x for x in syms if (size(x) <= HDR if ext == "scid" else dly_span(x)["days"] == 0)]
+def signcheck_list() -> list[str]:
+    """D635 §7: the contracts trading in the post-vault sessions -- BCOM's lead for Sep, Oct and Nov 2026 per root.
+    Their files hold months of vault-period data too; the sign check reads them only from 2026-09-19 (and CL, NG,
+    HO, RB only after D626's read on 2026-10-10)."""
+    out = set()
+    for comp, row in lead_table(ROOTS).items():
+        root, ex = ROOTS[comp]
+        for m in (9, 10, 11):
+            y, lm = lead_of(row, 2026, m)
+            out.add(f"{root}{LETTER[lm - 1]}{str(y)[2:]}-{ex}")
+    return sorted(out)
+
+
+def queue(syms: list[str], ext: str = "scid", refresh: bool = False) -> list[str]:
+    """Open each chart and send 57078. `refresh` re-queues files that already hold data, so Sierra downloads from
+    the file's end to now."""
+    todo = [x for x in syms if refresh or (size(x) <= HDR if ext == "scid" else dly_span(x)["days"] == 0)]
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     for i, x in enumerate(todo):
         s.sendto(f"{x}.{ext}".encode(), UDP)
@@ -225,7 +240,16 @@ def main(argv: list[str] | None = None) -> int:
     for f in ("selftest", "list", "queue", "queue-daily", "wait", "record"):
         ap.add_argument(f"--{f}", action="store_true")
     ap.add_argument("--set", choices=sorted(SETS), default="cme")
+    ap.add_argument("--signcheck", action="store_true", help="queue (refresh) the D635 §7 contracts and stop")
     a = ap.parse_args(argv)
+    if a.signcheck:
+        syms = signcheck_list()
+        print(f"{len(syms)} sign-check contracts: {syms}", flush=True)
+        queue(syms, refresh=True)
+        wait_drained(syms, quiet_s=300)
+        for x in syms:
+            print(f"  {x}: {size(x) / 1e6:.1f} MB", flush=True)
+        return 0
     lst = contract_list(a.set)
     syms = list(lst)
     out = OUT if a.set == "cme" else OUT.with_name(f"sierra_download_record_{a.set}.json")
