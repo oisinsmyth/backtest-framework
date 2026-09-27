@@ -1,6 +1,6 @@
 {
  "path": "data/letf/letf_aum_daily.csv.gz",
- "rows": 21102,
+ "rows": 23030,
  "reserved_from": "2025-03-01",
  "columns": [
   "date",
@@ -33,15 +33,15 @@
    "estimated": false
   },
   "SPXL": {
-   "first": "2019-10-31",
+   "first": "2016-01-04",
    "last": "2025-02-28",
-   "rows": 1339,
+   "rows": 2303,
    "estimated": true
   },
   "SPXS": {
-   "first": "2019-10-31",
+   "first": "2016-01-04",
    "last": "2025-02-28",
-   "rows": 1339,
+   "rows": 2303,
    "estimated": true
   },
   "SPXU": {

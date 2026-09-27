@@ -690,9 +690,9 @@
    ]
   },
   "SPXL": {
-   "first": "2019-10-31",
+   "first": "2016-01-04",
    "last": "2025-02-28",
-   "rows": 1339,
+   "rows": 2303,
    "estimated": true,
    "calendar_days_missing": 0,
    "longest_gap_trading_days": 0,
@@ -730,142 +730,264 @@
    ],
    "spot_checks": [
     {
+     "date": "2016-01-31",
+     "forward_before_correction": 687690674.7233367,
+     "filed_net_assets": 676852300.0,
+     "rel_err": 0.016012909645629847,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2016-04-30",
+     "forward_before_correction": 432970774.28537667,
+     "filed_net_assets": 459361201.0,
+     "rel_err": -0.05745027367825806,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2016-07-31",
+     "forward_before_correction": 450607072.3161096,
+     "filed_net_assets": 460001336.0,
+     "rel_err": -0.020422253042957306,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2016-10-31",
+     "forward_before_correction": 452599991.49778765,
+     "filed_net_assets": 458407106.0,
+     "rel_err": -0.01266802897730901,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-01-31",
+     "forward_before_correction": 482835793.8925108,
+     "filed_net_assets": 509101384.0,
+     "rel_err": -0.051592061881900575,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-04-30",
+     "forward_before_correction": 596682667.604758,
+     "filed_net_assets": 577703248.0,
+     "rel_err": 0.03285323333470003,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-07-31",
+     "forward_before_correction": 595537382.4369227,
+     "filed_net_assets": 606910595.0,
+     "rel_err": -0.01873951889582237,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-10-31",
+     "forward_before_correction": 716476693.9499149,
+     "filed_net_assets": 692916472.0,
+     "rel_err": 0.034001532510710586,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2019-10-31",
+     "forward_before_correction": 938372118.9217032,
+     "filed_net_assets": 961663774.65,
+     "rel_err": -0.02422016544896244,
+     "regime": "nport_monthly"
+    },
+    {
      "date": "2020-01-31",
      "forward_before_correction": 1052364755.2069046,
-     "nport_net_assets": 1046166399.92,
-     "rel_err": 0.005924827338536831
+     "filed_net_assets": 1046166399.92,
+     "rel_err": 0.005924827338536831,
+     "regime": "nport_monthly"
     },
     {
      "date": "2020-04-30",
      "forward_before_correction": 1517525897.999433,
-     "nport_net_assets": 1433729931.5,
-     "rel_err": 0.05844613037530988
+     "filed_net_assets": 1433729931.5,
+     "rel_err": 0.05844613037530988,
+     "regime": "nport_monthly"
     },
     {
      "date": "2020-07-31",
      "forward_before_correction": 1453092061.092847,
-     "nport_net_assets": 1453619152.73,
-     "rel_err": -0.0003626064200950019
+     "filed_net_assets": 1453619152.73,
+     "rel_err": -0.0003626064200950019,
+     "regime": "nport_monthly"
     },
     {
      "date": "2020-10-31",
      "forward_before_correction": 1495044284.2140377,
-     "nport_net_assets": 1327013270.33,
-     "rel_err": 0.12662346160430782
+     "filed_net_assets": 1327013270.33,
+     "rel_err": 0.12662346160430782,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-01-31",
      "forward_before_correction": 1528381581.0135727,
-     "nport_net_assets": 1518046837.95,
-     "rel_err": 0.006807921076749546
+     "filed_net_assets": 1518046837.95,
+     "rel_err": 0.006807921076749546,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-04-30",
      "forward_before_correction": 2202351646.8359475,
-     "nport_net_assets": 2211675970.57,
-     "rel_err": -0.00421595380974793
+     "filed_net_assets": 2211675970.57,
+     "rel_err": -0.00421595380974793,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-07-31",
      "forward_before_correction": 2681536376.664227,
-     "nport_net_assets": 2687007056.61,
-     "rel_err": -0.0020359752804948172
+     "filed_net_assets": 2687007056.61,
+     "rel_err": -0.0020359752804948172,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-10-31",
      "forward_before_correction": 3326153130.8767357,
-     "nport_net_assets": 3348755191.83,
-     "rel_err": -0.006749391836228247
+     "filed_net_assets": 3348755191.83,
+     "rel_err": -0.006749391836228247,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-01-31",
      "forward_before_correction": 3305362010.4463587,
-     "nport_net_assets": 3347145433.08,
-     "rel_err": -0.012483300612125658
+     "filed_net_assets": 3347145433.08,
+     "rel_err": -0.012483300612125658,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-04-30",
      "forward_before_correction": 2485512586.4177055,
-     "nport_net_assets": 2525583771.92,
-     "rel_err": -0.015866108243098087
+     "filed_net_assets": 2525583771.92,
+     "rel_err": -0.015866108243098087,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-07-31",
      "forward_before_correction": 2699522838.747067,
-     "nport_net_assets": 2759639383.24,
-     "rel_err": -0.021784202986098844
+     "filed_net_assets": 2759639383.24,
+     "rel_err": -0.021784202986098844,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-10-31",
      "forward_before_correction": 2524301133.148513,
-     "nport_net_assets": 2573089576.21,
-     "rel_err": -0.018961035601935627
+     "filed_net_assets": 2573089576.21,
+     "rel_err": -0.018961035601935627,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-01-31",
      "forward_before_correction": 2732929033.6738157,
-     "nport_net_assets": 2736158454.0,
-     "rel_err": -0.0011802753314462677
+     "filed_net_assets": 2736158454.0,
+     "rel_err": -0.0011802753314462677,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-04-30",
      "forward_before_correction": 2461846108.4899254,
-     "nport_net_assets": 2512647596.61,
-     "rel_err": -0.020218310036240195
+     "filed_net_assets": 2512647596.61,
+     "rel_err": -0.020218310036240195,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-07-31",
      "forward_before_correction": 3412351845.108234,
-     "nport_net_assets": 3437987028.01,
-     "rel_err": -0.007456451316689372
+     "filed_net_assets": 3437987028.01,
+     "rel_err": -0.007456451316689372,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-10-31",
      "forward_before_correction": 2791723740.2066674,
-     "nport_net_assets": 2798397550.73,
-     "rel_err": -0.0023848686265436347
+     "filed_net_assets": 2798397550.73,
+     "rel_err": -0.0023848686265436347,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-01-31",
      "forward_before_correction": 3734504185.282455,
-     "nport_net_assets": 3730691690.68,
-     "rel_err": 0.0010219270094014021
+     "filed_net_assets": 3730691690.68,
+     "rel_err": 0.0010219270094014021,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-04-30",
      "forward_before_correction": 3711960643.3241673,
-     "nport_net_assets": 3714702711.17,
-     "rel_err": -0.0007381661626885139
+     "filed_net_assets": 3714702711.17,
+     "rel_err": -0.0007381661626885139,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-07-31",
      "forward_before_correction": 4773272604.897545,
-     "nport_net_assets": 4798179137.75,
-     "rel_err": -0.00519083013314392
+     "filed_net_assets": 4798179137.75,
+     "rel_err": -0.00519083013314392,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-10-31",
      "forward_before_correction": 4968134476.663347,
-     "nport_net_assets": 4891050620.86,
-     "rel_err": 0.01576018360443676
+     "filed_net_assets": 4891050620.86,
+     "rel_err": 0.01576018360443676,
+     "regime": "nport_monthly"
     },
     {
      "date": "2025-01-31",
      "forward_before_correction": 5029708468.474604,
-     "nport_net_assets": 4992935361.88,
-     "rel_err": 0.0073650275698256
+     "filed_net_assets": 4992935361.88,
+     "rel_err": 0.0073650275698256,
+     "regime": "nport_monthly"
+    },
+    {
+     "date": "2018-04-30",
+     "half": "FY2018 H1",
+     "solved_flow": 410325894.30810094,
+     "statement_flow": 468602777.0,
+     "rel_err": -0.08410376293074912,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2018-10-31",
+     "half": "FY2018 H2",
+     "solved_flow": -159554911.4917052,
+     "statement_flow": -209957313.0,
+     "rel_err": 0.04537601563062168,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-04-30",
+     "half": "FY2019 H1",
+     "solved_flow": -142524072.71933758,
+     "statement_flow": -146970849.0,
+     "rel_err": 0.004482434011849643,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-07-31",
+     "half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)",
+     "solved_flow": -100374796.31952292,
+     "statement_flow": -116083035.38000001,
+     "rel_err": 0.014776788302969754,
+     "regime": "semiannual_flow"
     }
    ],
    "g3_rule": {
-    "ref_abs_max": 0.13327739659951066,
-    "ref_over_1pct_share": 0.34523809523809523,
-    "own_over_1pct_share": 0.38095238095238093
+    "ref_abs_max": {
+     "nport_monthly": 0.13327739659951066,
+     "nsar_monthly": 0.1977811655660242,
+     "semiannual_flow": 0.33294503002350834
+    },
+    "expected_over_1pct_share": 0.44108499255558076,
+    "own_over_1pct_share": 0.5882352941176471,
+    "two_se": 0.16377015147346602,
+    "worst_vs_ref": 0.950074542533289
    }
   },
   "SPXS": {
-   "first": "2019-10-31",
+   "first": "2016-01-04",
    "last": "2025-02-28",
-   "rows": 1339,
+   "rows": 2303,
    "estimated": true,
    "calendar_days_missing": 0,
    "longest_gap_trading_days": 0,
@@ -921,136 +1043,258 @@
    ],
    "spot_checks": [
     {
+     "date": "2016-01-31",
+     "forward_before_correction": 242531937.44867098,
+     "filed_net_assets": 254737115.0,
+     "rel_err": -0.04791283575355332,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2016-04-30",
+     "forward_before_correction": 526295162.63413113,
+     "filed_net_assets": 541290631.0,
+     "rel_err": -0.02770317368724029,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2016-07-31",
+     "forward_before_correction": 508648836.4725838,
+     "filed_net_assets": 496927204.0,
+     "rel_err": 0.023588228573985903,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2016-10-31",
+     "forward_before_correction": 561552121.6626341,
+     "filed_net_assets": 562025085.0,
+     "rel_err": -0.0008415342125981384,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-01-31",
+     "forward_before_correction": 451295183.82911336,
+     "filed_net_assets": 451778708.0,
+     "rel_err": -0.0010702677269301963,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-04-30",
+     "forward_before_correction": 440897401.5806107,
+     "filed_net_assets": 441451705.0,
+     "rel_err": -0.001255637735931514,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-07-31",
+     "forward_before_correction": 414507035.5858177,
+     "filed_net_assets": 414583224.0,
+     "rel_err": -0.0001837710977478091,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2017-10-31",
+     "forward_before_correction": 380546523.86821926,
+     "filed_net_assets": 381924702.0,
+     "rel_err": -0.0036085074481009283,
+     "regime": "nsar_monthly"
+    },
+    {
+     "date": "2019-10-31",
+     "forward_before_correction": 458103705.7030932,
+     "filed_net_assets": 469727214.64,
+     "rel_err": -0.024745232072225343,
+     "regime": "nport_monthly"
+    },
+    {
      "date": "2020-01-31",
      "forward_before_correction": 535449812.0885716,
-     "nport_net_assets": 536517106.55,
-     "rel_err": -0.0019893018291466946
+     "filed_net_assets": 536517106.55,
+     "rel_err": -0.0019893018291466946,
+     "regime": "nport_monthly"
     },
     {
      "date": "2020-04-30",
      "forward_before_correction": 1188964729.6920946,
-     "nport_net_assets": 1190010297.0,
-     "rel_err": -0.0008786203871860021
+     "filed_net_assets": 1190010297.0,
+     "rel_err": -0.0008786203871860021,
+     "regime": "nport_monthly"
     },
     {
      "date": "2020-07-31",
      "forward_before_correction": 905677206.3911914,
-     "nport_net_assets": 903716714.09,
-     "rel_err": 0.002169365986735672
+     "filed_net_assets": 903716714.09,
+     "rel_err": 0.002169365986735672,
+     "regime": "nport_monthly"
     },
     {
      "date": "2020-10-31",
      "forward_before_correction": 748405036.9368625,
-     "nport_net_assets": 801681488.9,
-     "rel_err": -0.06645588391499346
+     "filed_net_assets": 801681488.9,
+     "rel_err": -0.06645588391499346,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-01-31",
      "forward_before_correction": 535339918.7095582,
-     "nport_net_assets": 532168773.16,
-     "rel_err": 0.005958909484162334
+     "filed_net_assets": 532168773.16,
+     "rel_err": 0.005958909484162334,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-04-30",
      "forward_before_correction": 397859126.6797504,
-     "nport_net_assets": 397439045.73,
-     "rel_err": 0.0010569695007665025
+     "filed_net_assets": 397439045.73,
+     "rel_err": 0.0010569695007665025,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-07-31",
      "forward_before_correction": 394112423.22953945,
-     "nport_net_assets": 396011090.87,
-     "rel_err": -0.004794480973473125
+     "filed_net_assets": 396011090.87,
+     "rel_err": -0.004794480973473125,
+     "regime": "nport_monthly"
     },
     {
      "date": "2021-10-31",
      "forward_before_correction": 389370482.5066839,
-     "nport_net_assets": 390236567.01,
-     "rel_err": -0.002219383257576424
+     "filed_net_assets": 390236567.01,
+     "rel_err": -0.002219383257576424,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-01-31",
      "forward_before_correction": 335736881.1981892,
-     "nport_net_assets": 339126154.49,
-     "rel_err": -0.00999413712843178
+     "filed_net_assets": 339126154.49,
+     "rel_err": -0.00999413712843178,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-04-30",
      "forward_before_correction": 463512130.99214196,
-     "nport_net_assets": 475265861.87,
-     "rel_err": -0.0247308544981778
+     "filed_net_assets": 475265861.87,
+     "rel_err": -0.0247308544981778,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-07-31",
      "forward_before_correction": 610615210.2733192,
-     "nport_net_assets": 623983883.5,
-     "rel_err": -0.021424709163471167
+     "filed_net_assets": 623983883.5,
+     "rel_err": -0.021424709163471167,
+     "regime": "nport_monthly"
     },
     {
      "date": "2022-10-31",
      "forward_before_correction": 836258170.9004897,
-     "nport_net_assets": 885462000.6,
-     "rel_err": -0.05556853898435976
+     "filed_net_assets": 885462000.6,
+     "rel_err": -0.05556853898435976,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-01-31",
      "forward_before_correction": 1121746256.5399354,
-     "nport_net_assets": 1115687651.0,
-     "rel_err": 0.0054303778790640855
+     "filed_net_assets": 1115687651.0,
+     "rel_err": 0.0054303778790640855,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-04-30",
      "forward_before_correction": 1199695920.2058327,
-     "nport_net_assets": 1235424844.75,
-     "rel_err": -0.028920354561428163
+     "filed_net_assets": 1235424844.75,
+     "rel_err": -0.028920354561428163,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-07-31",
      "forward_before_correction": 741641983.244227,
-     "nport_net_assets": 745943035.86,
-     "rel_err": -0.005765926363015428
+     "filed_net_assets": 745943035.86,
+     "rel_err": -0.005765926363015428,
+     "regime": "nport_monthly"
     },
     {
      "date": "2023-10-31",
      "forward_before_correction": 682629187.6281302,
-     "nport_net_assets": 703652726.0,
-     "rel_err": -0.029877718930161334
+     "filed_net_assets": 703652726.0,
+     "rel_err": -0.029877718930161334,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-01-31",
      "forward_before_correction": 603991473.2555751,
-     "nport_net_assets": 628986417.02,
-     "rel_err": -0.039738447584997894
+     "filed_net_assets": 628986417.02,
+     "rel_err": -0.039738447584997894,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-04-30",
      "forward_before_correction": 557272286.786078,
-     "nport_net_assets": 572750389.2,
-     "rel_err": -0.027024167431018986
+     "filed_net_assets": 572750389.2,
+     "rel_err": -0.027024167431018986,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-07-31",
      "forward_before_correction": 471839802.7055124,
-     "nport_net_assets": 479555767.04,
-     "rel_err": -0.016089816586115635
+     "filed_net_assets": 479555767.04,
+     "rel_err": -0.016089816586115635,
+     "regime": "nport_monthly"
     },
     {
      "date": "2024-10-31",
      "forward_before_correction": 505193622.60772127,
-     "nport_net_assets": 508273703.33,
-     "rel_err": -0.006059886045843621
+     "filed_net_assets": 508273703.33,
+     "rel_err": -0.006059886045843621,
+     "regime": "nport_monthly"
     },
     {
      "date": "2025-01-31",
      "forward_before_correction": 330912341.8672683,
-     "nport_net_assets": 343567766.18,
-     "rel_err": -0.036835307495352576
+     "filed_net_assets": 343567766.18,
+     "rel_err": -0.036835307495352576,
+     "regime": "nport_monthly"
+    },
+    {
+     "date": "2018-04-30",
+     "half": "FY2018 H1",
+     "solved_flow": -37476880.51661693,
+     "statement_flow": -47510151.0,
+     "rel_err": 0.026270284249336317,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2018-10-31",
+     "half": "FY2018 H2",
+     "solved_flow": 29387339.555026256,
+     "statement_flow": -617314.0,
+     "rel_err": 0.10421791841852975,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-04-30",
+     "half": "FY2019 H1",
+     "solved_flow": 187821414.8630172,
+     "statement_flow": 203786003.0,
+     "rel_err": -0.05663323787563212,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-07-31",
+     "half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)",
+     "solved_flow": 109624991.37460698,
+     "statement_flow": 126596288.70000002,
+     "rel_err": -0.047580738264539686,
+     "regime": "semiannual_flow"
     }
    ],
    "g3_rule": {
-    "ref_abs_max": 0.13327739659951066,
-    "ref_over_1pct_share": 0.34523809523809523,
-    "own_over_1pct_share": 0.47619047619047616
+    "ref_abs_max": {
+     "nport_monthly": 0.13327739659951066,
+     "nsar_monthly": 0.1977811655660242,
+     "semiannual_flow": 0.33294503002350834
+    },
+    "expected_over_1pct_share": 0.44108499255558076,
+    "own_over_1pct_share": 0.5294117647058824,
+    "two_se": 0.16377015147346602,
+    "worst_vs_ref": 0.49862831665814117
    }
   },
   "SPXU": {
@@ -2199,139 +2443,502 @@
  },
  "direxion": {
   "SPXL": {
-   "first_anchor": "2019-10-31",
+   "first_anchor": "2015-10-31",
    "last_anchor": "2025-01-31",
-   "filed_quarter_ends": 22,
+   "pre2019": {
+    "anchor_basis": {
+     "2015-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 36529.0
+     },
+     "2016-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2016-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2016-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2016-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2017-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2017-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 6544942.0
+     },
+     "2017-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2017-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 24453084.0,
+      "payable": 24518659.0
+     },
+     "2018-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2018-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 10445728.0,
+      "payable": 27660.0
+     },
+     "2018-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2018-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 186697.0,
+      "payable": 0.0
+     },
+     "2019-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2019-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2019-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     }
+    },
+    "halves": [
+     {
+      "half": "FY2018 H1",
+      "quarters": [
+       "2018-01-31",
+       "2018-04-30"
+      ],
+      "statement": 468602777.0,
+      "start_na": "2017-10-31",
+      "start_na_value": 692916472.0
+     },
+     {
+      "half": "FY2018 H2",
+      "quarters": [
+       "2018-07-31",
+       "2018-10-31"
+      ],
+      "statement": -209957313.0,
+      "start_na": "2018-04-30",
+      "start_na_value": 1110771865.0
+     },
+     {
+      "half": "FY2019 H1",
+      "quarters": [
+       "2019-01-31",
+       "2019-04-30"
+      ],
+      "statement": -146970849.0,
+      "start_na": "2018-10-31",
+      "start_na_value": 992045007.0
+     },
+     {
+      "half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)",
+      "quarters": [
+       "2019-07-31"
+      ],
+      "statement": -116083035.38000001,
+      "start_na": "2019-04-30",
+      "start_na_value": 1063034723.0
+     }
+    ],
+    "statement_basis_gap": {
+     "n": 8,
+     "max": 0.011329245633737548,
+     "median": 7.91208081310205e-05
+    }
+   },
+   "half_year_checks": [
+    {
+     "date": "2018-04-30",
+     "half": "FY2018 H1",
+     "solved_flow": 410325894.30810094,
+     "statement_flow": 468602777.0,
+     "rel_err": -0.08410376293074912,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2018-10-31",
+     "half": "FY2018 H2",
+     "solved_flow": -159554911.4917052,
+     "statement_flow": -209957313.0,
+     "rel_err": 0.04537601563062168,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-04-30",
+     "half": "FY2019 H1",
+     "solved_flow": -142524072.71933758,
+     "statement_flow": -146970849.0,
+     "rel_err": 0.004482434011849643,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-07-31",
+     "half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)",
+     "solved_flow": -100374796.31952292,
+     "statement_flow": -116083035.38000001,
+     "rel_err": 0.014776788302969754,
+     "regime": "semiannual_flow"
+    }
+   ],
+   "quarter_ends": 38,
    "forward_checks": [
+    {
+     "quarter_end": "2016-01-31",
+     "forward": 687690674.7233367,
+     "filed": 676852300.0,
+     "rel_err": 0.016012909645629847,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 237696000.00000003
+    },
+    {
+     "quarter_end": "2016-04-30",
+     "forward": 432970774.28537667,
+     "filed": 459361201.0,
+     "rel_err": -0.05745027367825806,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": -349554000.0
+    },
+    {
+     "quarter_end": "2016-07-31",
+     "forward": 450607072.3161096,
+     "filed": 460001336.0,
+     "rel_err": -0.020422253042957306,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": -83694000.0
+    },
+    {
+     "quarter_end": "2016-10-31",
+     "forward": 452599991.49778765,
+     "filed": 458407106.0,
+     "rel_err": -0.01266802897730901,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 21445000.000000004
+    },
+    {
+     "quarter_end": "2017-01-31",
+     "forward": 482835793.8925108,
+     "filed": 509101384.0,
+     "rel_err": -0.051592061881900575,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": -81956000.0
+    },
+    {
+     "quarter_end": "2017-04-30",
+     "forward": 596682667.604758,
+     "filed": 577703248.0,
+     "rel_err": 0.03285323333470003,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 12526000.0
+    },
+    {
+     "quarter_end": "2017-07-31",
+     "forward": 595537382.4369227,
+     "filed": 606910595.0,
+     "rel_err": -0.01873951889582237,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": -44842000.0
+    },
+    {
+     "quarter_end": "2017-10-31",
+     "forward": 716476693.9499149,
+     "filed": 692916472.0,
+     "rel_err": 0.034001532510710586,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 29400000.000000004
+    },
+    {
+     "quarter_end": "2018-01-31",
+     "forward": 1222378003.0000012,
+     "filed": 1222378003.0,
+     "rel_err": 8.881784197001252e-16,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 265508334.6089363
+    },
+    {
+     "quarter_end": "2018-04-30",
+     "forward": 1110771865.0000026,
+     "filed": 1110771865.0,
+     "rel_err": 2.4424906541753444e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 144817559.6991646
+    },
+    {
+     "quarter_end": "2018-07-31",
+     "forward": 920352274.9999995,
+     "filed": 920352275.0,
+     "rel_err": -5.551115123125783e-16,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": -377326588.0409585
+    },
+    {
+     "quarter_end": "2018-10-31",
+     "forward": 992045006.9999981,
+     "filed": 992045007.0,
+     "rel_err": -1.887379141862766e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 217771676.5492533
+    },
+    {
+     "quarter_end": "2019-01-31",
+     "forward": 1030400125.9999977,
+     "filed": 1030400126.0,
+     "rel_err": -2.220446049250313e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 83065808.70788263
+    },
+    {
+     "quarter_end": "2019-04-30",
+     "forward": 1063034723.0000017,
+     "filed": 1063034723.0,
+     "rel_err": 1.5543122344752192e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": -225589881.4272202
+    },
+    {
+     "quarter_end": "2019-07-31",
+     "forward": 977845318.9999957,
+     "filed": 977845319.0,
+     "rel_err": -4.440892098500626e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": -100374796.31952292
+    },
+    {
+     "quarter_end": "2019-10-31",
+     "forward": 938372118.9217032,
+     "filed": 961663774.65,
+     "rel_err": -0.02422016544896244,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -71988140.61999999
+    },
     {
      "quarter_end": "2020-01-31",
      "forward": 1052364755.2069046,
      "filed": 1046166399.92,
-     "rel_err": 0.005924827338536831
+     "rel_err": 0.005924827338536831,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -93056733.01000002
     },
     {
      "quarter_end": "2020-04-30",
      "forward": 1517525897.999433,
      "filed": 1433729931.5,
-     "rel_err": 0.05844613037530988
+     "rel_err": 0.05844613037530988,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 827547327.3100001
     },
     {
      "quarter_end": "2020-07-31",
      "forward": 1453092061.092847,
      "filed": 1453619152.73,
-     "rel_err": -0.0003626064200950019
+     "rel_err": -0.0003626064200950019,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -443922825.14
     },
     {
      "quarter_end": "2020-10-31",
      "forward": 1495044284.2140377,
      "filed": 1327013270.33,
-     "rel_err": 0.12662346160430782
+     "rel_err": 0.12662346160430782,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 79887238.5
     },
     {
      "quarter_end": "2021-01-31",
      "forward": 1528381581.0135727,
      "filed": 1518046837.95,
-     "rel_err": 0.006807921076749546
+     "rel_err": 0.006807921076749546,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -380673646.2299999
     },
     {
      "quarter_end": "2021-04-30",
      "forward": 2202351646.8359475,
      "filed": 2211675970.57,
-     "rel_err": -0.00421595380974793
+     "rel_err": -0.00421595380974793,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 42911277.859999985
     },
     {
      "quarter_end": "2021-07-31",
      "forward": 2681536376.664227,
      "filed": 2687007056.61,
-     "rel_err": -0.0020359752804948172
+     "rel_err": -0.0020359752804948172,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 109961226.57999997
     },
     {
      "quarter_end": "2021-10-31",
      "forward": 3326153130.8767357,
      "filed": 3348755191.83,
-     "rel_err": -0.006749391836228247
+     "rel_err": -0.006749391836228247,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 227149785.49999994
     },
     {
      "quarter_end": "2022-01-31",
      "forward": 3305362010.4463587,
      "filed": 3347145433.08,
-     "rel_err": -0.012483300612125658
+     "rel_err": -0.012483300612125658,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 213926892.85
     },
     {
      "quarter_end": "2022-04-30",
      "forward": 2485512586.4177055,
      "filed": 2525583771.92,
-     "rel_err": -0.015866108243098087
+     "rel_err": -0.015866108243098087,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 24834816.23999998
     },
     {
      "quarter_end": "2022-07-31",
      "forward": 2699522838.747067,
      "filed": 2759639383.24,
-     "rel_err": -0.021784202986098844
+     "rel_err": -0.021784202986098844,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 288300230.61
     },
     {
      "quarter_end": "2022-10-31",
      "forward": 2524301133.148513,
      "filed": 2573089576.21,
-     "rel_err": -0.018961035601935627
+     "rel_err": -0.018961035601935627,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 334847603.77000016
     },
     {
      "quarter_end": "2023-01-31",
      "forward": 2732929033.6738157,
      "filed": 2736158454.0,
-     "rel_err": -0.0011802753314462677
+     "rel_err": -0.0011802753314462677,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -107506180.03999992
     },
     {
      "quarter_end": "2023-04-30",
      "forward": 2461846108.4899254,
      "filed": 2512647596.61,
-     "rel_err": -0.020218310036240195
+     "rel_err": -0.020218310036240195,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -348240313.5499999
     },
     {
      "quarter_end": "2023-07-31",
      "forward": 3412351845.108234,
      "filed": 3437987028.01,
-     "rel_err": -0.007456451316689372
+     "rel_err": -0.007456451316689372,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 112818599.73999983
     },
     {
      "quarter_end": "2023-10-31",
      "forward": 2791723740.2066674,
      "filed": 2798397550.73,
-     "rel_err": -0.0023848686265436347
+     "rel_err": -0.0023848686265436347,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 312347878.19999987
     },
     {
      "quarter_end": "2024-01-31",
      "forward": 3734504185.282455,
      "filed": 3730691690.68,
-     "rel_err": 0.0010219270094014021
+     "rel_err": 0.0010219270094014021,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -392064781.11999977
     },
     {
      "quarter_end": "2024-04-30",
      "forward": 3711960643.3241673,
      "filed": 3714702711.17,
-     "rel_err": -0.0007381661626885139
+     "rel_err": -0.0007381661626885139,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -335180416.91000015
     },
     {
      "quarter_end": "2024-07-31",
      "forward": 4773272604.897545,
      "filed": 4798179137.75,
-     "rel_err": -0.00519083013314392
+     "rel_err": -0.00519083013314392,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 25275548.469999984
     },
     {
      "quarter_end": "2024-10-31",
      "forward": 4968134476.663347,
      "filed": 4891050620.86,
-     "rel_err": 0.01576018360443676
+     "rel_err": 0.01576018360443676,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -70570594.72000003
     },
     {
      "quarter_end": "2025-01-31",
      "forward": 5029708468.474604,
      "filed": 4992935361.88,
-     "rel_err": 0.0073650275698256
+     "rel_err": 0.0073650275698256,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -548408707.5399998
     }
    ],
    "forward_abs_max": 0.12662346160430782,
-   "forward_over_1pct": 8,
+   "forward_over_1pct": 17,
    "path_error_monthly": {
     "n": 66,
     "mean": 0.0005772740323723371,
@@ -2340,139 +2947,502 @@
    }
   },
   "SPXS": {
-   "first_anchor": "2019-10-31",
+   "first_anchor": "2015-10-31",
    "last_anchor": "2025-01-31",
-   "filed_quarter_ends": 22,
+   "pre2019": {
+    "anchor_basis": {
+     "2015-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2016-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2016-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 5462.0,
+      "payable": 18207103.0
+     },
+     "2016-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2016-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2017-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2017-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2017-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2017-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2018-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2018-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2018-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2018-10-31": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 1296211.0,
+      "payable": 16076458.0
+     },
+     "2019-01-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     },
+     "2019-04-30": {
+      "form": "N-CSR/N-CSRS",
+      "receivable": 0.0,
+      "payable": 0.0
+     },
+     "2019-07-31": {
+      "form": "N-Q/NPORT-EX",
+      "basis": "as filed, untested"
+     }
+    },
+    "halves": [
+     {
+      "half": "FY2018 H1",
+      "quarters": [
+       "2018-01-31",
+       "2018-04-30"
+      ],
+      "statement": -47510151.0,
+      "start_na": "2017-10-31",
+      "start_na_value": 381924702.0
+     },
+     {
+      "half": "FY2018 H2",
+      "quarters": [
+       "2018-07-31",
+       "2018-10-31"
+      ],
+      "statement": -617314.0,
+      "start_na": "2018-04-30",
+      "start_na_value": 287903021.0
+     },
+     {
+      "half": "FY2019 H1",
+      "quarters": [
+       "2019-01-31",
+       "2019-04-30"
+      ],
+      "statement": 203786003.0,
+      "start_na": "2018-10-31",
+      "start_na_value": 281894321.0
+     },
+     {
+      "half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)",
+      "quarters": [
+       "2019-07-31"
+      ],
+      "statement": 126596288.70000002,
+      "start_na": "2019-04-30",
+      "start_na_value": 356684195.0
+     }
+    ],
+    "statement_basis_gap": {
+     "n": 8,
+     "max": 0.05243187215538123,
+     "median": 0.0
+    }
+   },
+   "half_year_checks": [
+    {
+     "date": "2018-04-30",
+     "half": "FY2018 H1",
+     "solved_flow": -37476880.51661693,
+     "statement_flow": -47510151.0,
+     "rel_err": 0.026270284249336317,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2018-10-31",
+     "half": "FY2018 H2",
+     "solved_flow": 29387339.555026256,
+     "statement_flow": -617314.0,
+     "rel_err": 0.10421791841852975,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-04-30",
+     "half": "FY2019 H1",
+     "solved_flow": 187821414.8630172,
+     "statement_flow": 203786003.0,
+     "rel_err": -0.05663323787563212,
+     "regime": "semiannual_flow"
+    },
+    {
+     "date": "2019-07-31",
+     "half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)",
+     "solved_flow": 109624991.37460698,
+     "statement_flow": 126596288.70000002,
+     "rel_err": -0.047580738264539686,
+     "regime": "semiannual_flow"
+    }
+   ],
+   "quarter_ends": 38,
    "forward_checks": [
+    {
+     "quarter_end": "2016-01-31",
+     "forward": 242531937.44867098,
+     "filed": 254737115.0,
+     "rel_err": -0.04791283575355332,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": -171277999.99999994
+    },
+    {
+     "quarter_end": "2016-04-30",
+     "forward": 526295162.63413113,
+     "filed": 541290631.0,
+     "rel_err": -0.02770317368724029,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 359491999.99999976
+    },
+    {
+     "quarter_end": "2016-07-31",
+     "forward": 508648836.4725838,
+     "filed": 496927204.0,
+     "rel_err": 0.023588228573985903,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 54467000.0
+    },
+    {
+     "quarter_end": "2016-10-31",
+     "forward": 561552121.6626341,
+     "filed": 562025085.0,
+     "rel_err": -0.0008415342125981384,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 42910999.999999985
+    },
+    {
+     "quarter_end": "2017-01-31",
+     "forward": 451295183.82911336,
+     "filed": 451778708.0,
+     "rel_err": -0.0010702677269301963,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 2184000.0000000047
+    },
+    {
+     "quarter_end": "2017-04-30",
+     "forward": 440897401.5806107,
+     "filed": 441451705.0,
+     "rel_err": -0.001255637735931514,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 55894000.00000001
+    },
+    {
+     "quarter_end": "2017-07-31",
+     "forward": 414507035.5858177,
+     "filed": 414583224.0,
+     "rel_err": -0.0001837710977478091,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 24011000.0
+    },
+    {
+     "quarter_end": "2017-10-31",
+     "forward": 380546523.86821926,
+     "filed": 381924702.0,
+     "rel_err": -0.0036085074481009283,
+     "regime": "nsar_monthly",
+     "implied": false,
+     "flow_total": 20869000.0
+    },
+    {
+     "quarter_end": "2018-01-31",
+     "forward": 266198520.99999937,
+     "filed": 266198521.0,
+     "rel_err": -2.3314683517128287e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": -23648012.672497973
+    },
+    {
+     "quarter_end": "2018-04-30",
+     "forward": 287903021.00000036,
+     "filed": 287903021.0,
+     "rel_err": 1.3322676295501878e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": -13828867.84411896
+    },
+    {
+     "quarter_end": "2018-07-31",
+     "forward": 296556120.99999946,
+     "filed": 296556121.0,
+     "rel_err": -1.7763568394002505e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 64960013.28200607
+    },
+    {
+     "quarter_end": "2018-10-31",
+     "forward": 281894321.0000003,
+     "filed": 281894321.0,
+     "rel_err": 1.1102230246251565e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": -35572673.726979814
+    },
+    {
+     "quarter_end": "2019-01-31",
+     "forward": 319213576.99999917,
+     "filed": 319213577.0,
+     "rel_err": -2.6645352591003757e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 61496974.23900828
+    },
+    {
+     "quarter_end": "2019-04-30",
+     "forward": 356684194.9999993,
+     "filed": 356684195.0,
+     "rel_err": -1.9984014443252818e-15,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 126324440.62400892
+    },
+    {
+     "quarter_end": "2019-07-31",
+     "forward": 440479840.0000003,
+     "filed": 440479840.0,
+     "rel_err": 6.661338147750939e-16,
+     "regime": "semiannual",
+     "implied": true,
+     "flow_total": 109624991.37460698
+    },
+    {
+     "quarter_end": "2019-10-31",
+     "forward": 458103705.7030932,
+     "filed": 469727214.64,
+     "rel_err": -0.024745232072225343,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 65598144.29999998
+    },
     {
      "quarter_end": "2020-01-31",
      "forward": 535449812.0885716,
      "filed": 536517106.55,
-     "rel_err": -0.0019893018291466946
+     "rel_err": -0.0019893018291466946,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 154762380.37000006
     },
     {
      "quarter_end": "2020-04-30",
      "forward": 1188964729.6920946,
      "filed": 1190010297.0,
-     "rel_err": -0.0008786203871860021
+     "rel_err": -0.0008786203871860021,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 1048923909.4899998
     },
     {
      "quarter_end": "2020-07-31",
      "forward": 905677206.3911914,
      "filed": 903716714.09,
-     "rel_err": 0.002169365986735672
+     "rel_err": 0.002169365986735672,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 188740707.81
     },
     {
      "quarter_end": "2020-10-31",
      "forward": 748405036.9368625,
      "filed": 801681488.9,
-     "rel_err": -0.06645588391499346
+     "rel_err": -0.06645588391499346,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -92029775.57999998
     },
     {
      "quarter_end": "2021-01-31",
      "forward": 535339918.7095582,
      "filed": 532168773.16,
-     "rel_err": 0.005958909484162334
+     "rel_err": 0.005958909484162334,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 17764983.109999996
     },
     {
      "quarter_end": "2021-04-30",
      "forward": 397859126.6797504,
      "filed": 397439045.73,
-     "rel_err": 0.0010569695007665025
+     "rel_err": 0.0010569695007665025,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 37310138.00000001
     },
     {
      "quarter_end": "2021-07-31",
      "forward": 394112423.22953945,
      "filed": 396011090.87,
-     "rel_err": -0.004794480973473125
+     "rel_err": -0.004794480973473125,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 64635389.43000001
     },
     {
      "quarter_end": "2021-10-31",
      "forward": 389370482.5066839,
      "filed": 390236567.01,
-     "rel_err": -0.002219383257576424
+     "rel_err": -0.002219383257576424,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 62059589.59
     },
     {
      "quarter_end": "2022-01-31",
      "forward": 335736881.1981892,
      "filed": 339126154.49,
-     "rel_err": -0.00999413712843178
+     "rel_err": -0.00999413712843178,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -56988988.65
     },
     {
      "quarter_end": "2022-04-30",
      "forward": 463512130.99214196,
      "filed": 475265861.87,
-     "rel_err": -0.0247308544981778
+     "rel_err": -0.0247308544981778,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 53023025.81
     },
     {
      "quarter_end": "2022-07-31",
      "forward": 610615210.2733192,
      "filed": 623983883.5,
-     "rel_err": -0.021424709163471167
+     "rel_err": -0.021424709163471167,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 224107047.03000003
     },
     {
      "quarter_end": "2022-10-31",
      "forward": 836258170.9004897,
      "filed": 885462000.6,
-     "rel_err": -0.05556853898435976
+     "rel_err": -0.05556853898435976,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 117701035.05
     },
     {
      "quarter_end": "2023-01-31",
      "forward": 1121746256.5399354,
      "filed": 1115687651.0,
-     "rel_err": 0.0054303778790640855
+     "rel_err": 0.0054303778790640855,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 445395048.47000015
     },
     {
      "quarter_end": "2023-04-30",
      "forward": 1199695920.2058327,
      "filed": 1235424844.75,
-     "rel_err": -0.028920354561428163
+     "rel_err": -0.028920354561428163,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 177760775.78
     },
     {
      "quarter_end": "2023-07-31",
      "forward": 741641983.244227,
      "filed": 745943035.86,
-     "rel_err": -0.005765926363015428
+     "rel_err": -0.005765926363015428,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -234508614.85000035
     },
     {
      "quarter_end": "2023-10-31",
      "forward": 682629187.6281302,
      "filed": 703652726.0,
-     "rel_err": -0.029877718930161334
+     "rel_err": -0.029877718930161334,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -256327104.46999994
     },
     {
      "quarter_end": "2024-01-31",
      "forward": 603991473.2555751,
      "filed": 628986417.02,
-     "rel_err": -0.039738447584997894
+     "rel_err": -0.039738447584997894,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 188564874.44999993
     },
     {
      "quarter_end": "2024-04-30",
      "forward": 557272286.786078,
      "filed": 572750389.2,
-     "rel_err": -0.027024167431018986
+     "rel_err": -0.027024167431018986,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 582256.179999996
     },
     {
      "quarter_end": "2024-07-31",
      "forward": 471839802.7055124,
      "filed": 479555767.04,
-     "rel_err": -0.016089816586115635
+     "rel_err": -0.016089816586115635,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 43247206.38000005
     },
     {
      "quarter_end": "2024-10-31",
      "forward": 505193622.60772127,
      "filed": 508273703.33,
-     "rel_err": -0.006059886045843621
+     "rel_err": -0.006059886045843621,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": 73462265.96000001
     },
     {
      "quarter_end": "2025-01-31",
      "forward": 330912341.8672683,
      "filed": 343567766.18,
-     "rel_err": -0.036835307495352576
+     "rel_err": -0.036835307495352576,
+     "regime": "nport_monthly",
+     "implied": false,
+     "flow_total": -97443217.94000003
     }
    ],
    "forward_abs_max": 0.06645588391499346,
-   "forward_over_1pct": 10,
+   "forward_over_1pct": 14,
    "path_error_monthly": {
     "n": 66,
     "mean": 0.002235234935444387,
@@ -2562,6 +3532,38 @@
    "abs_p99": 0.1986427066463024
   }
  },
+ "band_by_regime_on_proshares": {
+  "nsar_monthly": {
+   "forward_checks": {
+    "n": 296,
+    "abs_p50": 0.01268377201202825,
+    "abs_p90": 0.05706582976544827,
+    "abs_max": 0.1977811655660242,
+    "over_1pct": 168
+   },
+   "daily": {
+    "days": 18272,
+    "abs_p50": 0.01719293906092556,
+    "abs_p95": 0.09993750549527802,
+    "abs_p99": 0.18516663196934813
+   }
+  },
+  "semiannual": {
+   "half_year_flow_checks": {
+    "n": 144,
+    "abs_p50": 0.022973578200734784,
+    "abs_p90": 0.0994167542766752,
+    "abs_max": 0.33294503002350834,
+    "over_1pct": 103
+   },
+   "daily": {
+    "days": 18272,
+    "abs_p50": 0.03038885982500794,
+    "abs_p95": 0.15963757069193033,
+    "abs_p99": 0.3066067438862129
+   }
+  }
+ },
  "calendar": {
   "source": "SPY daily dates, Alpha Vantage cache",
   "days": 2303,
@@ -2569,13 +3571,13 @@
   "last": "2025-02-28"
  },
  "direxion_absent_before": {
-  "SPXL": "2019-10-31",
-  "SPXS": "2019-10-31"
+  "SPXL": "2015-10-31",
+  "SPXS": "2015-10-31"
  },
  "all_pass": true,
  "coverage": {
   "NQ_set_complete_from": "2016-01-01",
-  "ES_set_complete_from": "2019-10-31",
-  "note": "every present row passes; the ES set lacks Direxion (39% of its flow) before the date"
+  "ES_set_complete_from": "2016-01-01",
+  "note": "Direxion estimated from its filings (LETF-A3, A5); ProShares issuer data"
  }
 }

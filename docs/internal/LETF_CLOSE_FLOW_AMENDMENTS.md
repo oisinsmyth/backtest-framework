@@ -63,6 +63,21 @@ ProShares funds too (58 of 168 quarters over 1%, max 13.3%).*
   band is re-measured for the flow granularity those filings allow.
 - **NQ proceeds to Phase 2** on its complete panel; ES follows once the pre-2019 Direxion anchors are in.
 
+## LETF-A6. How the pre-2019 Direxion filings are used (implementation of LETF-A5; D637 addendum)
+
+*Source: implementation, 2026-09-27, after the transcription. Stated so a reader can reproduce or dispute it.*
+
+- **Anchors on one basis:** N-CSR/N-CSRS net assets are converted to N-PORT's basis (receivable for shares sold
+  removed, payable for shares redeemed added back; at 2019-10-31 this reproduces N-PORT to about $10k). N-Q and
+  NPORT-EX totals are used as filed (their basis cannot be tested).
+- **Flows:** N-SAR monthly to 2017-10 (walked forward, checked at each quarter-end). From 2017-11 to 2019-07 each
+  quarter's flow is solved from its two anchors and checked against the half-year statement totals.
+- **G3 per regime:** each check is judged against the same procedure's distribution on the ProShares funds, run on
+  Direxion's quarter calendar and flow granularity.
+- **The 2017-11 → 2019-07 stretch carries the wider measured band** (ProShares daily error p95 16% vs 10–11%
+  elsewhere). The ES results are reported with and without it.
+- **LETF-A3 corrected:** N-SAR's monthly flows end at October 2017, not mid-2018.
+
 ## LETF-A4. Open questions Q1 and Q2: defaults unless the principal says otherwise
 
 *Source: proposed, 2026-09-27; the deposit asks for them before Phase 6.*

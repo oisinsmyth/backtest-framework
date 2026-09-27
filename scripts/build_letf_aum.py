@@ -53,6 +53,8 @@ SPLITS = REPO / "data" / "fund_facts" / "proshares_splits.csv"
 SPY = REPO / "data" / "raw" / "alphavantage" / "daily" / "SPY.json.gz"
 RESERVED_FROM = "2025-03-01"
 START = "2016-01-01"
+WARM = "2015-10-01"  # read from here for the path to 2015-10-31, Direxion's first pre-2019 anchor
+PRE2019 = REPO / "data" / "letf" / "direxion_pre2019_filings.csv"
 UA = {"User-Agent": "BacktestFramework research script research@backtest-framework.org"}  # never a personal address
 PROSHARES = {"TQQQ": 3, "SQQQ": -3, "QLD": 2, "QID": -2, "UPRO": 3, "SPXU": -3, "SSO": 2, "SDS": -2}
 DIREXION = {"SPXL": 3, "SPXS": -3}
@@ -183,16 +185,24 @@ def forward_estimate(path: pd.Series, reports: list[dict]) -> tuple[pd.Series, p
             raise RuntimeError(f"a quarter is missing between {a['report_date']} and {b['report_date']}")
         per = pd.Series(seg.to_period("M"), index=seg)
         ndays = per.value_counts()
+        if b.get("implied_flow"):
+            # the quarter's flow is SOLVED from its two anchors, as one even daily flow f:
+            # NA_b = NA_a x P(d1)/P(d0) + f x sum_t P(d1)/P(t). No check is possible here; the caller checks the
+            # solved flows against an independent total (the half-year statements).
+            f = (b["net_assets"] - a["net_assets"] * path[d1] / path[d0]) / float((path[d1] / path[seg]).sum())
+            daily = pd.Series(f, index=seg)
+        else:
+            daily = pd.Series([months[per[t]] / ndays[per[t]] for t in seg], index=seg)
         vals, x = [], a["net_assets"]
         prev = d0
         for t in seg:
-            m = per[t]
-            x = x * path[t] / path[prev] + months[m] / ndays[m]
+            x = x * path[t] / path[prev] + daily[t]
             vals.append(x)
             prev = t
         ratio = b["net_assets"] / vals[-1]
         checks.append({"quarter_end": b["report_date"], "forward": vals[-1], "filed": b["net_assets"],
-                       "rel_err": vals[-1] / b["net_assets"] - 1})
+                       "rel_err": vals[-1] / b["net_assets"] - 1, "regime": b.get("regime", "nport_monthly"),
+                       "implied": bool(b.get("implied_flow")), "flow_total": float(daily.sum())})
         n = len(seg)
         est[d0] = a["net_assets"]
         est[seg] = [v * ratio ** ((j + 1) / n) for j, v in enumerate(vals)]
@@ -208,14 +218,14 @@ def calendar() -> pd.DatetimeIndex:
     return pd.DatetimeIndex(sorted(pd.Timestamp(x) for x in d if START <= x < RESERVED_FROM))
 
 
-def proshares() -> pd.DataFrame:
+def proshares(start: str = START) -> pd.DataFrame:
     with zipfile.ZipFile(PS_ZIP) as z:
         raw = z.read("historical_nav.csv")
     df = pd.read_csv(io.BytesIO(raw), encoding="utf-8", usecols=["Date", "Ticker", "NAV", "Shares Outstanding (000)",
                                                                  "Assets Under Management"])
     df = df[df["Ticker"].isin(list(PROSHARES))].copy()
     df["date"] = pd.to_datetime(df["Date"])
-    df = df[(df["date"] >= START) & (df["date"] < RESERVED_FROM)]
+    df = df[(df["date"] >= start) & (df["date"] < RESERVED_FROM)]
     out = pd.DataFrame({"date": df["date"], "ticker": df["Ticker"], "nav": df["NAV"].astype(float),
                         "shares_out": df["Shares Outstanding (000)"].astype(float) * 1000,
                         "aum": df["Assets Under Management"].astype(float),
@@ -231,6 +241,159 @@ def accounting_basis(g: pd.DataFrame) -> pd.Series:
     return (g["nav"] * g["shares_out"].shift(1)).dropna()
 
 
+
+
+def quarter_ends(first: str, last: str) -> list[str]:
+    """Direxion's fiscal quarter-ends (FY to 31 October): Jan, Apr, Jul, Oct."""
+    return [str(d.date()) for d in pd.date_range(first, last, freq="ME") if d.month in (1, 4, 7, 10)]
+
+
+def spread(total: float, months: list[pd.Period], tdays: pd.DatetimeIndex) -> dict[pd.Period, float]:
+    """A period total spread evenly over its trading days, returned per month."""
+    per = pd.Series(tdays.to_period("M"))
+    n = {m: int((per == m).sum()) for m in months}
+    tot = sum(n.values())
+    if tot == 0:
+        raise RuntimeError(f"no trading days in {months[0]}..{months[-1]}")
+    return {m: total * n[m] / tot for m in months}
+
+
+def pre2019_reports(tk: str, tdays: pd.DatetimeIndex, nport_first: dict) -> tuple[list[dict], dict]:
+    """Direxion's quarter-ends 2015-10-31 -> 2019-07-31 from the transcribed filings (data/letf/direxion_pre2019_filings.csv,
+    `scripts/fetch_direxion_pre2019.py`), as reports forward_estimate can walk.
+
+    Anchors are put on N-PORT's (the books') basis: an N-CSR/N-CSRS net assets figure includes creations and
+    redemptions traded but not settled, so the receivable for shares sold is removed and the payable for shares
+    redeemed added back (at 2019-10-31 that reproduces N-PORT to -$4,094 SPXL and -$11,202 SPXS). The N-Q and NPORT-EX
+    totals are taken as filed: their basis is untested (no overlap), and the size of the difference is reported.
+    Flows: N-SAR's monthly sales less redemptions to October 2017 (regime `nsar_monthly`, walked forward and checked
+    at each quarter-end). From November 2017 to July 2019 there are no monthly flows: each quarter's flow is SOLVED
+    from its two anchors (regime `semiannual`), and the solved flows are checked against the half-year statement
+    totals (sales + redemptions + transaction fees; May-July 2019 = the half less N-PORT's own Aug-Oct months)."""
+    d = pd.read_csv(PRE2019, encoding="utf-8", dtype={"as_of": str, "period_start": str, "period_end": str})
+    d = d[d["ticker"] == tk]
+
+    def val(field: str, as_of: str, forms: tuple[str, ...]) -> float | None:
+        r = d[(d["field"] == field) & (d["as_of"] == as_of) & d["form"].isin(forms)]
+        return float(r["value"].iloc[0]) if len(r) else None
+
+    anchors: dict[str, float] = {}
+    basis: dict[str, dict] = {}
+    for q in quarter_ends("2015-10-31", "2019-07-31"):
+        na = val("net_assets", q, ("N-CSR", "N-CSRS"))
+        if na is not None:
+            rec = val("receivable_shares_sold_usd", q, ("N-CSR", "N-CSRS")) or 0.0
+            pay = val("payable_shares_redeemed_usd", q, ("N-CSR", "N-CSRS")) or 0.0
+            anchors[q], basis[q] = na - rec + pay, {"form": "N-CSR/N-CSRS", "receivable": rec, "payable": pay}
+        else:
+            na = val("net_assets", q, ("N-Q", "NPORT-EX"))
+            if na is None:
+                raise RuntimeError(f"{tk}: no net assets at {q}")
+            anchors[q], basis[q] = na, {"form": "N-Q/NPORT-EX", "basis": "as filed, untested"}
+    flow: dict[pd.Period, float] = {}
+    ms = d[d["field"].isin(["month_sales_usd", "month_redemptions_usd"])]
+    for (ps_, _pe), g in ms.groupby(["period_start", "period_end"]):
+        m = pd.Period(ps_[:7], "M")
+        if pd.Period("2015-11", "M") <= m <= pd.Period("2017-10", "M"):
+            s = g.loc[g["field"] == "month_sales_usd", "value"].sum()
+            r = g.loc[g["field"] == "month_redemptions_usd", "value"].sum()
+            flow[m] = float(s) - abs(float(r))
+
+    def cap(start: str, end: str) -> float:
+        g = d[(d["period_start"] == start) & (d["period_end"] == end)
+              & d["field"].isin(["sales_usd", "redemptions_usd", "transaction_fees_usd"])]
+        if g["field"].nunique() != 3:
+            raise RuntimeError(f"{tk}: statement flows incomplete for {start}..{end}")
+        return float(g["value"].sum())
+
+    halves: list[dict] = []  # the statement totals the solved quarterly flows are checked against
+    for fy in (2018, 2019):
+        h1 = cap(f"{fy - 1}-11-01", f"{fy}-04-30")
+        h2 = cap(f"{fy - 1}-11-01", f"{fy}-10-31") - h1
+        m1 = list(pd.period_range(f"{fy - 1}-11", f"{fy}-04", freq="M"))
+        flow.update(spread(h1, m1, tdays))
+        halves.append({"half": f"FY{fy} H1", "quarters": [f"{fy}-01-31", f"{fy}-04-30"], "statement": h1,
+                       "start_na": f"{fy - 1}-10-31"})
+        if fy == 2019:
+            aug_oct = float(sum(nport_first["flow"]))  # N-PORT's own Aug, Sep, Oct 2019
+            flow.update(spread(h2 - aug_oct, list(pd.period_range("2019-05", "2019-07", freq="M")), tdays))
+            halves.append({"half": "FY2019 May-Jul (H2 less N-PORT Aug-Oct)", "quarters": ["2019-07-31"],
+                           "statement": h2 - aug_oct, "start_na": "2019-04-30"})
+        else:
+            flow.update(spread(h2, list(pd.period_range(f"{fy}-05", f"{fy}-10", freq="M")), tdays))
+            halves.append({"half": f"FY{fy} H2", "quarters": [f"{fy}-07-31", f"{fy}-10-31"], "statement": h2,
+                           "start_na": f"{fy}-04-30"})
+    reports = []
+    for q in sorted(anchors):
+        months = [pd.Period(q[:7], "M") - k for k in (2, 1, 0)]
+        regime = "nsar_monthly" if q <= "2017-10-31" else "semiannual"
+        reports.append({"report_date": q, "net_assets": anchors[q], "regime": regime, "implied_flow": regime == "semiannual",
+                        "flow": [flow.get(m, 0.0) for m in months] if q > "2015-10-31" else [0.0, 0.0, 0.0]})
+        if q > "2015-10-31" and any(m not in flow for m in months):
+            raise RuntimeError(f"{tk}: no flow for a month of the quarter ending {q}")
+    gap = [abs(float(b["receivable"]) - float(b["payable"])) / anchors[q] for q, b in basis.items() if "receivable" in b]
+    for h in halves:
+        h["start_na_value"] = anchors[h["start_na"]]
+    return reports, {"anchor_basis": basis, "halves": halves,
+                     "statement_basis_gap": {"n": len(gap), "max": max(gap), "median": float(np.median(gap))}}
+
+
+def half_year_checks(checks: pd.DataFrame, halves: list[dict]) -> list[dict]:
+    """The solved quarterly flows of each half-year against the statement's total, relative to net assets at the
+    half's start (an independent check: the statements' flows never entered the solve)."""
+    fl = checks.set_index("quarter_end")["flow_total"]
+    out = []
+    for h in halves:
+        solved = float(sum(fl[q] for q in h["quarters"]))
+        out.append({"date": h["quarters"][-1], "half": h["half"], "solved_flow": solved, "statement_flow": h["statement"],
+                    "rel_err": (solved - h["statement"]) / h["start_na_value"], "regime": "semiannual_flow"})
+    return out
+
+
+def band_regimes(psw: pd.DataFrame) -> dict:
+    """The pre-2019 procedures where the daily truth is known: each ProShares fund on Direxion's quarter-end calendar
+    (Jan/Apr/Jul/Oct, 2015-10 -> 2025-01), anchors on the books' basis.
+    - `nsar_monthly`: the fund's issuer flows (shares change x NAV, day t's orders) summed by month, walked forward;
+      the forward checks are the G3 reference.
+    - `semiannual`: each quarter's flow SOLVED from its two anchors (as Direxion's Nov 2017 -> Jul 2019); the check is
+      the solved half-year flow against the true half-year total, relative to net assets at the half's start, and
+      that distribution is the G3 reference for Direxion's half-year statement checks.
+    Scored against the issuer's published AUM, per day."""
+    out: dict = {}
+    for regime in ("nsar_monthly", "semiannual"):
+        pooled, fwd = [], []
+        for _tk, g in psw.groupby("ticker"):
+            g = g.set_index("date").sort_index()
+            acct = accounting_basis(g)
+            f = ((g["shares_out"] - g["shares_out"].shift(1)) * g["nav"]).dropna()
+            per = f.groupby(f.index.to_period("M")).sum()
+            qs = [q for q in quarter_ends("2015-10-31", "2025-01-31") if (acct.index <= q).any() and q >= str(acct.index[0].date())]
+            na = {q: float(acct[acct.index <= q].iloc[-1]) for q in qs}
+            reps = [{"report_date": q, "net_assets": na[q], "regime": regime, "implied_flow": regime == "semiannual",
+                     "flow": [float(per.get(pd.Period(q[:7], "M") - k, 0.0)) for k in (2, 1, 0)]} for q in qs]
+            est, chk = forward_estimate(g["nav"], reps)
+            err = (est[(est.index >= START) & (est.index <= qs[-1])] / g["aum"] - 1).dropna()
+            pooled.append(err)
+            if regime == "nsar_monthly":
+                fwd.append(chk["rel_err"])
+            else:
+                fl = chk.set_index("quarter_end")["flow_total"]
+                for q1, q2 in zip(qs, qs[1:]):
+                    if q2[5:7] in ("04", "10") and q1 in fl.index and q2 in fl.index:
+                        start = [q for q in qs if q < q1]
+                        if not start:
+                            continue
+                        lo, hi = pd.Timestamp(start[-1]), pd.Timestamp(q2)
+                        true = float(f[(f.index > lo) & (f.index <= hi)].sum())
+                        fwd.append(pd.Series([(fl[q1] + fl[q2] - true) / na[start[-1]]]))
+        e, fc = pd.concat(pooled), pd.concat(fwd)
+        key = "forward_checks" if regime == "nsar_monthly" else "half_year_flow_checks"
+        out[regime] = {key: {"n": int(len(fc)), "abs_p50": float(fc.abs().median()),
+                             "abs_p90": float(fc.abs().quantile(0.9)), "abs_max": float(fc.abs().max()),
+                             "over_1pct": int((fc.abs() > 0.01).sum())},
+                       "daily": {"days": int(len(e)), "abs_p50": float(e.abs().median()),
+                                 "abs_p95": float(e.abs().quantile(0.95)), "abs_p99": float(e.abs().quantile(0.99))}}
+    return out
 
 
 def band(ps: pd.DataFrame, nport: dict) -> dict:
@@ -263,8 +426,12 @@ def direxion(ps: pd.DataFrame, nport: dict) -> tuple[pd.DataFrame, dict]:
     rows, info = [], {}
     for tk in DIREXION:
         path = ps[ps["ticker"] == PATH_OF[tk]].set_index("date")["nav"].sort_index()
-        est, checks = forward_estimate(path, nport[tk]["reports"])  # nothing before the first filing
-        first = pd.Timestamp(nport[tk]["reports"][0]["report_date"])
+        pre, pre_info = pre2019_reports(tk, path.index, nport[tk]["reports"][0])
+        reps = pre + nport[tk]["reports"]
+        est, checks = forward_estimate(path, reps)  # nothing before the first anchor
+        est = est[est.index >= START]
+        hy = half_year_checks(checks, pre_info["halves"])
+        first = pd.Timestamp(reps[0]["report_date"])
         last_filed = max(r["report_date"] for r in nport[tk]["reports"])
         # path error: the fund's filed monthly return against the proxy's compounded month
         pe = []
@@ -276,14 +443,20 @@ def direxion(ps: pd.DataFrame, nport: dict) -> tuple[pd.DataFrame, dict]:
                 if len(p) and len(p0) and not np.isnan(r["ret"][k - 1]):
                     pe.append(r["ret"][k - 1] - (p.iloc[-1] / p0.iloc[-1] - 1))
         pe_s = pd.Series(pe)
-        scale = path / path.iloc[0]
+        scale = path / path[path.index >= START].iloc[0]
+        src = pd.Series(f"estimate: N-PORT quarter-ends + monthly flows (EDGAR series {nport[tk]['series']}), "
+                        f"daily path {PATH_OF[tk]} NAV (LETF-A3)", index=est.index)
+        src[est.index <= "2019-07-31"] = (f"estimate: N-CSR/N-CSRS/N-Q quarter-ends + N-SAR monthly flows, daily path "
+                                          f"{PATH_OF[tk]} NAV (LETF-A5)")
+        src[(est.index > "2017-10-31") & (est.index <= "2019-07-31")] = (
+            f"estimate: N-CSR/N-CSRS/N-Q quarter-ends + half-year statement flows spread, daily path {PATH_OF[tk]} NAV (LETF-A5)")
+        src[est.index > last_filed] += "; AFTER THE LAST FILING: path only, no flow"
         rows.append(pd.DataFrame({"date": est.index, "ticker": tk, "nav": scale.reindex(est.index).values,
                                   "shares_out": (est / scale.reindex(est.index)).values, "aum": est.values,
-                                  "source": f"estimate: N-PORT quarter-ends + monthly flows (EDGAR series "
-                                            f"{nport[tk]['series']}), daily path {PATH_OF[tk]} NAV (LETF-A3)", "estimated": True}))
-        rows[-1].loc[rows[-1]["date"] > last_filed, "source"] += "; AFTER THE LAST FILING: path only, no flow"
-        info[tk] = {"first_anchor": str(first.date()), "last_anchor": last_filed,
-                    "filed_quarter_ends": len(nport[tk]["reports"]),
+                                  "source": src.values, "estimated": True}))
+        info[tk] = {"first_anchor": str(first.date()), "last_anchor": last_filed, "pre2019": pre_info,
+                    "half_year_checks": hy,
+                    "quarter_ends": len(reps),
                     "forward_checks": checks.to_dict("records"),
                     "forward_abs_max": float(checks["rel_err"].abs().max()) if len(checks) else None,
                     "forward_over_1pct": int((checks["rel_err"].abs() > 0.01).sum()) if len(checks) else None,
@@ -293,7 +466,7 @@ def direxion(ps: pd.DataFrame, nport: dict) -> tuple[pd.DataFrame, dict]:
 
 
 def gate0(panel: pd.DataFrame, cal: pd.DatetimeIndex, nport: dict, dx_info: dict,
-          ref: dict | None = None) -> dict:
+          ref: dict[str, dict] | None = None) -> dict:
     res: dict = {"tickers": {}}
     splits = pd.read_csv(SPLITS, encoding="utf-8")
     scol = [c for c in splits.columns if "date" in c.lower()][0]
@@ -346,18 +519,26 @@ def gate0(panel: pd.DataFrame, cal: pd.DatetimeIndex, nport: dict, dx_info: dict
         res["tickers"][tk]["spot_checks"] = chk
     for tk in [t for t in DIREXION if t in res["tickers"]]:
         res["tickers"][tk]["spot_checks"] = [{"date": c["quarter_end"], "forward_before_correction": c["forward"],
-                                             "nport_net_assets": c["filed"], "rel_err": c["rel_err"]}
-                                            for c in dx_info[tk]["forward_checks"]]
+                                             "filed_net_assets": c["filed"], "rel_err": c["rel_err"],
+                                             "regime": c.get("regime", "nport_monthly")}
+                                            for c in dx_info[tk]["forward_checks"] if not c.get("implied")] + list(
+            dx_info[tk].get("half_year_checks", []))
     verdict = {}
     for tk, t in res["tickers"].items():
         sc = t["spot_checks"]
         if tk in DIREXION and ref is not None:
-            # LETF-A5: within the same estimator's distribution on the ProShares funds' own filings
-            over = sum(abs(c["rel_err"]) > 0.01 for c in sc) / max(len(sc), 1)
-            p0 = ref["over_1pct"] / ref["n"]
-            ok_sc = (len(sc) >= 5 and all(abs(c["rel_err"]) <= ref["abs_max"] for c in sc)
-                     and over <= p0 + 2 * (p0 * (1 - p0) / len(sc)) ** 0.5)
-            t["g3_rule"] = {"ref_abs_max": ref["abs_max"], "ref_over_1pct_share": p0, "own_over_1pct_share": over}
+            # LETF-A5: each quarter within the same estimator's distribution on the ProShares funds, measured in the
+            # same flow regime (N-PORT monthly, N-SAR monthly, or half-year totals spread)
+            n = max(len(sc), 1)
+            over = sum(abs(c["rel_err"]) > 0.01 for c in sc) / n
+            p0s = [ref[c["regime"]]["over_1pct"] / ref[c["regime"]]["n"] for c in sc]
+            expect = sum(p0s) / n
+            se = sum(p * (1 - p) for p in p0s) ** 0.5 / n
+            ok_sc = (len(sc) >= 5 and all(abs(c["rel_err"]) <= ref[c["regime"]]["abs_max"] for c in sc)
+                     and over <= expect + 2 * se)
+            t["g3_rule"] = {"ref_abs_max": {k: v["abs_max"] for k, v in ref.items()}, "expected_over_1pct_share": expect,
+                            "own_over_1pct_share": over, "two_se": 2 * se,
+                            "worst_vs_ref": max(abs(c["rel_err"]) / ref[c["regime"]]["abs_max"] for c in sc)}
         else:
             ok_sc = len(sc) >= 5 and all(abs(c["rel_err"]) <= (0.01 if tk in DIREXION else 0.001) for c in sc)
         ok_gap = t["longest_gap_trading_days"] <= 3
@@ -374,22 +555,27 @@ def gate0(panel: pd.DataFrame, cal: pd.DatetimeIndex, nport: dict, dx_info: dict
 def build() -> int:
     nport = json.loads((OUT / "nport_reports.json").read_text(encoding="utf-8"))
     cal = calendar()
-    ps = proshares()
-    dx, dx_info = direxion(ps, nport)
+    psw = proshares(WARM)  # the path and the regime bands need Direxion's first anchor, 2015-10-31
+    ps = psw[psw["date"] >= START].reset_index(drop=True)
+    dx, dx_info = direxion(psw, nport)
     panel = pd.concat([ps, dx], ignore_index=True).sort_values(["ticker", "date"]).reset_index(drop=True)
-    if (panel["date"] >= RESERVED_FROM).any():
-        raise RuntimeError("a row on or after the seal is in the panel")
+    if (panel["date"] >= RESERVED_FROM).any() or (panel["date"] < START).any():
+        raise RuntimeError("a row outside the in-sample span is in the panel")
     b = band(ps, nport)
-    g0 = gate0(panel, cal, nport, dx_info, b["_forward_checks"])
+    br = band_regimes(psw)
+    refs = {"nport_monthly": b["_forward_checks"], "nsar_monthly": br["nsar_monthly"]["forward_checks"],
+            "semiannual_flow": br["semiannual"]["half_year_flow_checks"]}
+    g0 = gate0(panel, cal, nport, dx_info, refs)
     g0["direxion"] = dx_info
     g0["band_measured_on_proshares"] = b
+    g0["band_by_regime_on_proshares"] = br
     g0["calendar"] = {"source": "SPY daily dates, Alpha Vantage cache", "days": int(len(cal)),
                       "first": str(cal[0].date()), "last": str(cal[-1].date())}
     g0["direxion_absent_before"] = {tk: dx_info[tk]["first_anchor"] for tk in DIREXION}
     g0["all_pass"] = all(v["pass"] for v in g0["verdict"].values())
     g0["coverage"] = {"NQ_set_complete_from": START,
-                      "ES_set_complete_from": max(dx_info[tk]["first_anchor"] for tk in DIREXION),
-                      "note": "every present row passes; the ES set lacks Direxion (39% of its flow) before the date"}
+                      "ES_set_complete_from": max(max(dx_info[tk]["first_anchor"] for tk in DIREXION), START),
+                      "note": "Direxion estimated from its filings (LETF-A3, A5); ProShares issuer data"}
     panel.to_csv(OUT / "letf_aum_daily.csv.gz", index=False, encoding="utf-8", lineterminator="\n")
     (OUT / "gate0.json").write_text(json.dumps(g0, indent=1, default=str) + "\n", encoding="utf-8", newline="\n")
     meta = {"path": "data/letf/letf_aum_daily.csv.gz", "rows": int(len(panel)), "reserved_from": RESERVED_FROM,
@@ -406,10 +592,13 @@ def build() -> int:
               f">25%: {len(t['daum_over_25pct'])}  spot {len(sc)} max|err| "
               f"{max((abs(c['rel_err']) for c in sc), default=float('nan')):.5f}  -> {'PASS' if v['pass'] else 'FAIL'} {v}")
     print(f"  band (ProShares through the same estimator): {b['_pooled']}; forward checks {b['_forward_checks']}")
+    for k, v in br.items():
+        print(f"  band, regime {k}: {v}")
     for tk in DIREXION:
         i = dx_info[tk]
         print(f"  {tk}: anchors {i['first_anchor']}..{i['last_anchor']}, forward check max |err| {i['forward_abs_max']}, "
               f"over 1%: {i['forward_over_1pct']}; path error {i['path_error_monthly']}")
+        print(f"    statement-basis gap {i['pre2019']['statement_basis_gap']}; G3 {g0['tickers'][tk].get('g3_rule')}")
     print(f"  GATE 0 on present rows: {'PASS' if g0['all_pass'] else 'FAIL'}; coverage {g0['coverage']}")
     return 0
 
@@ -454,7 +643,7 @@ def selftest() -> int:
         raise AssertionError("a missing quarter must raise")
     except RuntimeError:
         pass
-    ref = {"n": 100, "over_1pct": 30, "abs_max": 0.10}
+    ref = {"nport_monthly": {"n": 100, "over_1pct": 30, "abs_max": 0.10}}
     dcal = pd.bdate_range("2020-01-01", "2020-03-31")
     dx = pd.DataFrame({"date": dcal, "ticker": "SPXL", "nav": 1.0, "shares_out": 1e8, "aum": 1e8, "source": "t",
                        "estimated": True})

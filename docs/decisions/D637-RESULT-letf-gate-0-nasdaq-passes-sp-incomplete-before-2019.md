@@ -97,3 +97,45 @@ monthly) flows after 2017.
    re-measured), or source it yourself, or start the ES in-sample at 2019-11 (the deposit's Q3, which needs a written
    answer).
 3. **The NQ cells** can proceed to Phase 2 now on a complete panel, or wait so both instruments move together.
+
+## Addendum, 2026-09-27: Direxion 2016-01 → 2019-10 from the pre-N-PORT filings (LETF-A5). Gate 0 PASSES on every row
+
+*The principal: "Accept the estimate, transcribe the pre-2019 filings, start NQ Phase 2".*
+
+**Transcription.** `scripts/fetch_direxion_pre2019.py` → `data/letf/direxion_pre2019_filings.csv`, 398 rows from 24
+EDGAR filings (N-CSR, N-CSRS, N-Q, NSAR-A/B, one NPORT-EX), each with its accession, locator and a quote of 14 words or
+fewer. `--check` re-finds every quote in the cached bytes and re-parses its value (all 398 pass).
+- **Coverage:** every quarter-end 2015-10-31 → 2019-10-31 has net assets for both funds (17 of 17).
+- **Statement identity:** exact to the dollar in all 20 periods.
+- **N-SAR 74T vs the statements:** within $897.
+- **Monthly flows:** N-SAR's monthly flows end at **October 2017** (LETF-A3's "to mid-2018" is wrong). The 2019-07-31
+  schedule is an NPORT-EX, not an N-Q (§ "Before 2019-10" above is wrong on that one date).
+- **N-SAR vs statement half-years:** three disagree, all flagged in the CSV. NSAR-B 2015 (both funds) reports the fiscal
+  year, not the half; this is outside the window used. SPXL's NSAR-B 2017 sales exceed the statements by $2.05m (0.3% of
+  net assets).
+
+**The anchors' basis.** An N-CSR/N-CSRS net-assets figure includes creations and redemptions traded but not settled.
+At 2019-10-31 the N-CSR differs from N-PORT by −1.44% (SPXL) and +4.10% (SPXS). Removing the receivable for shares sold
+and adding back the payable for shares redeemed reproduces N-PORT to −$4,094 and −$11,202. So every N-CSR/N-CSRS anchor
+is converted to the books' basis before use. The N-Q and NPORT-EX totals are used as filed: their basis cannot be
+tested, since no filing overlaps them. The statement-basis gap, where it could be measured, was a median of 0.008%
+(SPXL) and 0.0% (SPXS), with maximums of 1.1% and 5.2%.
+
+**Two flow regimes, each banded on the ProShares funds by the identical procedure (Jan/Apr/Jul/Oct anchors):**
+
+| span | flows | Direxion check | ProShares, same procedure: check | ProShares daily error vs issuer AUM |
+|---|---|---|---|---|
+| 2015-11 → 2017-10 | N-SAR monthly, walked | quarter-end miss: SPXL max 5.8%, SPXS max 4.8% | median 1.3%, max 19.8% | median 1.7%, p95 10.0%, p99 18.5% |
+| 2017-11 → 2019-07 | none monthly; each quarter's flow SOLVED from its two anchors | solved half-year flow vs statement: 0.4–8.4% (SPXL), 2.6–10.4% (SPXS) of net assets | median 2.3%, p90 9.9%, max 33% | **median 3.0%, p95 16.0%, p99 30.7%** |
+| 2019-08 → 2025-02 | N-PORT monthly (unchanged) | as above | as above | median 1.8%, p95 10.7% |
+
+A first form of the middle regime spread each half-year total evenly. It hit every half-year total, but split it
+between the two quarters wrongly (SPXL +31.8% then −27.9%), so it was replaced by the solved form.
+
+**Gate 0 (LETF-A5 rule, per regime):** SPXL and SPXS PASS. The worst |miss| is 0.95× the ProShares maximum for SPXL and
+0.50× for SPXS. The share of checks over 1% is 58.8% and 52.9%, against an expected 44.1% + 2 SE (16.4%). **All ten
+funds now pass on every row, 2016-01-04 → 2025-02-28; the ES set is complete from 2016-01.**
+
+**The caveat that travels with ES:** from 2017-11 to 2019-07, Direxion's daily AUM (39% of the S&P flow) carries the
+wider band: p95 16% at the fund, so p95 about 3% on predicted impact at the mean share. Phase 3 reports the ES cells
+with and without that stretch.

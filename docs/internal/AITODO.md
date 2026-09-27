@@ -168,9 +168,10 @@
   0.011%). **ES set:** ProShares four PASS; Direxion (39% of the S&P flow) estimated from N-PORT 2019-10 → 2025-02
   with a measured band (impact I moved by 2.1% at p95), failing the proposed 1% bar that the method also fails on
   known-good funds; **Direxion absent 2016-01 → 2019-10.** Stop-and-report for ES.
-- **Ruled 2026-09-27 (LETF-A5):** Direxion's 2019-10+ estimate accepted (Gate 0 now passes on every present row);
-  the pre-2019 filings are being transcribed (background agent → `scripts/fetch_direxion_pre2019.py`,
-  `data/letf/direxion_pre2019_filings.csv`); NQ went ahead.
+- **Ruled 2026-09-27 (LETF-A5, A6):** Direxion's 2019-10+ estimate accepted; the pre-2019 filings transcribed
+  (`scripts/fetch_direxion_pre2019.py` → `data/letf/direxion_pre2019_filings.csv`, 398 cited rows, all re-verified).
+  **Gate 0 PASSES for all ten funds on every row, 2016-01 → 2025-02; ES is complete from 2016-01** (D637 addendum).
+  Caveat: Direxion 2017-11 → 2019-07 has only quarterly anchors (wider band, p95 16% at the fund).
 - **NQ Phase 2 DONE (D638):** 2,285 usable sessions, every bar the model reads present, t−1 priced in one contract
   on every day (36 rolls via `fut_index_anchor_bars`), MNQ volume built (`fut_micro_day_volume`). CME's settlement
   is NOT the 16:00 price (equal on 2.4% of days).
