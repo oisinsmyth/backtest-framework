@@ -189,7 +189,13 @@
   - **ES:** 60–69 active days per cell and **none in 2024+**. MDE 27–38 bp, above even its own 15 bp prediction.
   - **Open for the principal before the runner:** whether to add the model's-own-prediction comparison as a
     pre-registered reading (LETF-A7).
-- **Next:** the runner (`scripts/run_letf_close_flow.py`), committed before its one run.
+- **LETF-A7** (the model's-own-prediction reading) and **LETF-A8** (H3's slope corrected) committed before the runner.
+- **The runner is committed, NOT RUN:** `scripts/run_letf_close_flow.py`.
+  - `--selftest` shows 7 checks firing (on synthetic prices).
+  - `--dry-run` substitutes synthetic prices and reads only the bars' calendar. Every path ran (6 cells, 71 trials,
+    5.2 min).
+  - **Its one `--run` waits for the principal.** It writes `data/letf/letf_close_flow_signal.json` and
+    `data/letf/trials.csv`. Phases 6–7 run only if Gates 1–2 pass.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
