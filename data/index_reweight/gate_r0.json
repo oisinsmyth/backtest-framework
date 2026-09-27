@@ -1,0 +1,6002 @@
+{
+ "bands": {
+  "aum": "dN_aum_low/dN_aum_high per row (IR-A5); the sign never changes with AUM",
+  "lme_3m_end": {
+   "2016": {
+    "max_abs_weight_diff": 4.467248316762998e-05,
+    "sign_flips": []
+   },
+   "2017": {
+    "max_abs_weight_diff": 6.180484180327156e-05,
+    "sign_flips": []
+   },
+   "2018": {
+    "max_abs_weight_diff": 7.847873897728203e-05,
+    "sign_flips": []
+   },
+   "2019": {
+    "max_abs_weight_diff": 0.0001460013519922615,
+    "sign_flips": []
+   },
+   "2020": {
+    "max_abs_weight_diff": 0.000148138642763182,
+    "sign_flips": []
+   },
+   "2021": {
+    "max_abs_weight_diff": 7.076655396969639e-05,
+    "sign_flips": []
+   },
+   "2022": {
+    "max_abs_weight_diff": 7.411012455815075e-05,
+    "sign_flips": []
+   },
+   "2023": {
+    "max_abs_weight_diff": 0.00010959964609032896,
+    "sign_flips": []
+   },
+   "2024": {
+    "max_abs_weight_diff": 0.00014972418336910154,
+    "sign_flips": []
+   },
+   "2025": {
+    "max_abs_weight_diff": 9.223364777236759e-05,
+    "sign_flips": []
+   }
+  },
+  "printed_det_dates": {
+   "2016": {
+    "date": "2016-01-06",
+    "max_abs_weight_diff": 0.003966449816547868,
+    "sign_flips": [
+     "Wheat"
+    ]
+   },
+   "2022": {
+    "date": "2022-01-07",
+    "max_abs_weight_diff": 0.0010962256417870603,
+    "sign_flips": []
+   }
+  }
+ },
+ "calendar": {
+  "business_days": 2555,
+  "cme_republication_days": {
+   "CL": 4,
+   "GC": 4,
+   "HE": 4,
+   "HG": 4,
+   "HO": 4,
+   "KE": 4,
+   "LE": 4,
+   "NG": 4,
+   "RB": 4,
+   "SI": 4,
+   "ZC": 4,
+   "ZL": 4,
+   "ZM": 4,
+   "ZS": 4,
+   "ZW": 4
+  },
+  "det": {
+   "2015": {
+    "agree": false,
+    "printed": null,
+    "printed_text": "",
+    "rule_BD4": "2015-01-07"
+   },
+   "2016": {
+    "agree": false,
+    "printed": "2016-01-06",
+    "printed_text": "2016-01-06 (SRC-M2016)",
+    "rule_BD4": "2016-01-07"
+   },
+   "2017": {
+    "agree": true,
+    "printed": "2017-01-06",
+    "printed_text": "2017-01-06 (SRC-M2017)",
+    "rule_BD4": "2017-01-06"
+   },
+   "2018": {
+    "agree": true,
+    "printed": "2018-01-05",
+    "printed_text": "2018-01-05 per Table 8 header; Table 10 prints January 6th 2018, a Saturday (SRC-M2018)",
+    "rule_BD4": "2018-01-05"
+   },
+   "2019": {
+    "agree": false,
+    "printed": null,
+    "printed_text": "NOT FOUND (no 2019 methodology version fetched; SRC-M2020 Table 8 header reads January 7th 2019, apparently a stale label)",
+    "rule_BD4": "2019-01-07"
+   },
+   "2020": {
+    "agree": true,
+    "printed": "2020-01-07",
+    "printed_text": "2020-01-07 (SRC-M2020)",
+    "rule_BD4": "2020-01-07"
+   },
+   "2021": {
+    "agree": true,
+    "printed": "2021-01-07",
+    "printed_text": "2021-01-07 (SRC-M2021)",
+    "rule_BD4": "2021-01-07"
+   },
+   "2022": {
+    "agree": false,
+    "printed": "2022-01-07",
+    "printed_text": "2022-01-07 per Table 10; Table 8 header reads January 7th 2021 (SRC-M2022)",
+    "rule_BD4": "2022-01-06"
+   },
+   "2023": {
+    "agree": true,
+    "printed": "2023-01-06",
+    "printed_text": "2023-01-06 (SRC-M2023)",
+    "rule_BD4": "2023-01-06"
+   },
+   "2024": {
+    "agree": true,
+    "printed": "2024-01-05",
+    "printed_text": "2024-01-05 (SRC-M2024)",
+    "rule_BD4": "2024-01-05"
+   },
+   "2025": {
+    "agree": true,
+    "printed": "2025-01-07",
+    "printed_text": "2025-01-07 (SRC-M2025)",
+    "rule_BD4": "2025-01-07"
+   }
+  },
+  "first": "2015-01-02",
+  "last": "2025-02-28"
+ },
+ "cims": {
+  "2015": {
+   "Aluminum": 0.0257383854,
+   "Brent Crude Oil": 1.3717662997,
+   "Coffee": 0.1263739465,
+   "Copper": 27.3249148953,
+   "Corn": 0.1828730545,
+   "Cotton": 0.2503721586,
+   "Gold": 0.0983244622,
+   "HRW Wheat": 0.0188791769,
+   "Lean Hogs": 0.2445337462,
+   "Live Cattle": 0.2005661182,
+   "Natural Gas": 30.5052521389,
+   "Nickel": 0.0013654924,
+   "RBOB Gasoline": 26.825867276,
+   "Silver": 2.5846553867,
+   "Soybean Meal": 0.0775511559,
+   "Soybean Oil": 0.8483015427,
+   "Soybeans": 0.0537870658,
+   "Sugar": 2.7034187281,
+   "ULS Diesel": 22.4465466259,
+   "WTI Crude Oil": 1.5981040678,
+   "Wheat": 0.0574226212,
+   "Zinc": 0.0111649967
+  },
+  "2016": {
+   "Aluminum": 0.0315077228,
+   "Brent Crude Oil": 2.2089284027,
+   "Coffee": 0.1936954814,
+   "Copper": 37.7213052608,
+   "Corn": 0.2084618393,
+   "Cotton": 0.2430719494,
+   "Gold": 0.1027248681,
+   "HRW Wheat": 0.0249192866,
+   "Lean Hogs": 0.3462859747,
+   "Live Cattle": 0.2671124482,
+   "Natural Gas": 35.2917373246,
+   "Nickel": 0.0028220519,
+   "RBOB Gasoline": 31.8426334964,
+   "Silver": 2.9372441145,
+   "Soybean Meal": 0.1063823101,
+   "Soybean Oil": 0.9579837852,
+   "Soybeans": 0.0659783683,
+   "Sugar": 2.4591531957,
+   "ULS Diesel": 35.2939345719,
+   "WTI Crude Oil": 2.1657764353,
+   "Wheat": 0.0710103301,
+   "Zinc": 0.0169911659
+  },
+  "2017": {
+   "Aluminum": 0.0266456753,
+   "Brent Crude Oil": 1.3698530648,
+   "Coffee": 0.1664284214,
+   "Copper": 29.814461901,
+   "Corn": 0.2069936592,
+   "Cotton": 0.1956776591,
+   "Gold": 0.095206724,
+   "HRW Wheat": 0.0273000923,
+   "Lean Hogs": 0.3273345838,
+   "Live Cattle": 0.3463626388,
+   "Natural Gas": 24.2594434307,
+   "Nickel": 0.0024846264,
+   "RBOB Gasoline": 22.6998613121,
+   "Silver": 2.4912258611,
+   "Soybean Meal": 0.0932065532,
+   "Soybean Oil": 0.8025854774,
+   "Soybeans": 0.0586958532,
+   "Sugar": 1.6375306024,
+   "ULS Diesel": 22.3087556798,
+   "WTI Crude Oil": 1.3082083106,
+   "Wheat": 0.078379681,
+   "Zinc": 0.0103827097
+  },
+  "2018": {
+   "Aluminum": 0.0202934671,
+   "Brent Crude Oil": 1.1358578936,
+   "Coffee": 0.2028056852,
+   "Copper": 22.1665244514,
+   "Corn": 0.1746455533,
+   "Cotton": 0.1863493161,
+   "Gold": 0.0903416934,
+   "HRW Wheat": 0.0298252346,
+   "Lean Hogs": 0.2906595759,
+   "Live Cattle": 0.3615519533,
+   "Natural Gas": 29.1952534796,
+   "Nickel": 0.0022085822,
+   "RBOB Gasoline": 20.748243832,
+   "Silver": 2.124952292,
+   "Soybean Meal": 0.0943008086,
+   "Soybean Oil": 0.814016892,
+   "Soybeans": 0.0613926867,
+   "Sugar": 2.3452420659,
+   "ULS Diesel": 17.9387237503,
+   "WTI Crude Oil": 1.1918790219,
+   "Wheat": 0.0756569712,
+   "Zinc": 0.0091845188
+  },
+  "2019": {
+   "Aluminum": 0.0235867969,
+   "Brent Crude Oil": 1.2806800849,
+   "Coffee": 0.2411733309,
+   "Copper": 27.7533823542,
+   "Corn": 0.1541444589,
+   "Cotton": 0.1951091389,
+   "Gold": 0.0949104805,
+   "HRW Wheat": 0.0257213715,
+   "Lean Hogs": 0.298731661,
+   "Live Cattle": 0.3320411493,
+   "Low Sulphur Gas Oil": 0.048293983,
+   "Natural Gas": 29.0134805669,
+   "Nickel": 0.0024425901,
+   "RBOB Gasoline": 16.9419169711,
+   "Silver": 2.4675272665,
+   "Soybean Meal": 0.1068598996,
+   "Soybean Oil": 1.0886653697,
+   "Soybeans": 0.0651880004,
+   "Sugar": 2.4885857459,
+   "ULS Diesel": 12.1918650695,
+   "WTI Crude Oil": 1.5685909306,
+   "Wheat": 0.0607720749,
+   "Zinc": 0.0129507712
+  },
+  "2020": {
+   "Aluminum": 0.0237812084,
+   "Brent Crude Oil": 1.0267108848,
+   "Coffee": 0.2215810524,
+   "Copper": 24.9170653618,
+   "Corn": 0.1517071307,
+   "Cotton": 0.2135983166,
+   "Gold": 0.0865299715,
+   "HRW Wheat": 0.0312834536,
+   "Lean Hogs": 0.2568366997,
+   "Live Cattle": 0.3177331848,
+   "Low Sulphur Gas Oil": 0.0420563928,
+   "Natural Gas": 36.972295582,
+   "Nickel": 0.0019758042,
+   "RBOB Gasoline": 13.0292394147,
+   "Silver": 2.0543566103,
+   "Soybean Meal": 0.1093620013,
+   "Soybean Oil": 0.8343638707,
+   "Soybeans": 0.0597114425,
+   "Sugar": 2.2147859384,
+   "ULS Diesel": 10.4000937975,
+   "WTI Crude Oil": 1.2782987106,
+   "Wheat": 0.0552885251,
+   "Zinc": 0.0146484408
+  },
+  "2021": {
+   "Aluminum": 0.0208586031,
+   "Brent Crude Oil": 1.2606046341,
+   "Coffee": 0.2259800991,
+   "Copper": 14.5935281385,
+   "Corn": 0.1130900607,
+   "Cotton": 0.1894556169,
+   "Gold": 0.0765361413,
+   "HRW Wheat": 0.0262554386,
+   "Lean Hogs": 0.2497497288,
+   "Live Cattle": 0.3345425527,
+   "Low Sulphur Gas Oil": 0.0596953446,
+   "Natural Gas": 29.9963062059,
+   "Nickel": 0.0015109448,
+   "RBOB Gasoline": 14.6637776731,
+   "Silver": 1.5971218957,
+   "Soybean Meal": 0.0832661731,
+   "Soybean Oil": 0.7297533683,
+   "Soybeans": 0.042924988,
+   "Sugar": 1.9147980769,
+   "ULS Diesel": 13.5257194829,
+   "WTI Crude Oil": 1.6011071358,
+   "Wheat": 0.0449202803,
+   "Zinc": 0.0113624713
+  },
+  "2022": {
+   "Aluminum": 0.0145356553,
+   "Brent Crude Oil": 0.8492643005,
+   "Coffee": 0.1179695727,
+   "Copper": 12.3970421403,
+   "Corn": 0.0925863851,
+   "Cotton": 0.1310396618,
+   "Gold": 0.0838363514,
+   "HRW Wheat": 0.0216480547,
+   "Lean Hogs": 0.2115310428,
+   "Live Cattle": 0.2607027303,
+   "Low Sulphur Gas Oil": 0.0376500746,
+   "Natural Gas": 21.675386921,
+   "Nickel": 0.0013308942,
+   "RBOB Gasoline": 9.4048435268,
+   "Silver": 2.1392036954,
+   "Soybean Meal": 0.0856454015,
+   "Soybean Oil": 0.538473854,
+   "Soybeans": 0.0417289169,
+   "Sugar": 1.5361880154,
+   "ULS Diesel": 8.3804883028,
+   "WTI Crude Oil": 1.0188744929,
+   "Wheat": 0.0381549732,
+   "Zinc": 0.0087551286
+  },
+  "2023": {
+   "Aluminum": 0.018021883,
+   "Brent Crude Oil": 0.9199880361,
+   "Coffee": 0.1805388503,
+   "Copper": 13.3697443109,
+   "Corn": 0.0843011621,
+   "Cotton": 0.181945028,
+   "Gold": 0.0794417179,
+   "HRW Wheat": 0.0210854567,
+   "Lead": 0.0042444246,
+   "Lean Hogs": 0.217155777,
+   "Live Cattle": 0.2116856004,
+   "Low Sulphur Gas Oil": 0.0324502003,
+   "Natural Gas": 23.4047110849,
+   "Nickel": 0.0010062705,
+   "RBOB Gasoline": 9.7543726405,
+   "Silver": 1.9140171796,
+   "Soybean Meal": 0.0738795017,
+   "Soybean Oil": 0.5168333069,
+   "Soybeans": 0.0387536348,
+   "Sugar": 1.3480638186,
+   "ULS Diesel": 7.1837372493,
+   "WTI Crude Oil": 1.0496561318,
+   "Wheat": 0.0375776732,
+   "Zinc": 0.009733343
+  },
+  "2024": {
+   "Aluminum": 0.0182096072,
+   "Brent Crude Oil": 0.9697809996,
+   "Coffee": 0.1627012068,
+   "Copper": 13.9196587124,
+   "Corn": 0.122894175,
+   "Cotton": 0.1958242962,
+   "Gold": 0.0699912201,
+   "HRW Wheat": 0.0289635356,
+   "Lead": 0.004226002,
+   "Lean Hogs": 0.254691148,
+   "Live Cattle": 0.2031415547,
+   "Low Sulphur Gas Oil": 0.0369779987,
+   "Natural Gas": 30.4623012579,
+   "Nickel": 0.0016216864,
+   "RBOB Gasoline": 10.3568199885,
+   "Silver": 1.9202560967,
+   "Soybean Meal": 0.0958362228,
+   "Soybean Oil": 0.7031627266,
+   "Soybeans": 0.0470196865,
+   "Sugar": 1.3300033426,
+   "ULS Diesel": 8.3870415902,
+   "WTI Crude Oil": 0.9967513062,
+   "Wheat": 0.0457534425,
+   "Zinc": 0.0098388339
+  },
+  "2025": {
+   "Aluminum": 0.0165923533,
+   "Brent Crude Oil": 1.0426989385,
+   "Coffee": 0.0938196917,
+   "Copper": 12.8108263973,
+   "Corn": 0.1227971446,
+   "Cotton": 0.2345796328,
+   "Gold": 0.0536157934,
+   "HRW Wheat": 0.0331482155,
+   "Lead": 0.0047695506,
+   "Lean Hogs": 0.2189707697,
+   "Live Cattle": 0.1836564051,
+   "Low Sulphur Gas Oil": 0.0409207461,
+   "Natural Gas": 25.6373411705,
+   "Nickel": 0.0015700502,
+   "RBOB Gasoline": 10.5639412325,
+   "Silver": 1.4636606855,
+   "Soybean Meal": 0.1162768416,
+   "Soybean Oil": 0.8155850023,
+   "Soybeans": 0.0598248407,
+   "Sugar": 1.540171784,
+   "ULS Diesel": 9.3836296171,
+   "WTI Crude Oil": 0.9468540545,
+   "Wheat": 0.0520752648,
+   "Zinc": 0.0078762337
+  }
+ },
+ "coverage": {
+  "Copper": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Corn": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Gold": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": true,
+   "share_missing": 0.0
+  },
+  "HRW Wheat": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Lean Hogs": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Live Cattle": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Natural Gas": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": true,
+   "share_missing": 0.0
+  },
+  "RBOB Gasoline": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [
+    {
+     "R": 0.7681,
+     "b": 0.0,
+     "date": "2020-03-16",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      5
+     ]
+    },
+    {
+     "R": 0.7876,
+     "b": 0.0,
+     "date": "2020-03-23",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      5
+     ]
+    },
+    {
+     "R": 1.2128,
+     "b": 0.0,
+     "date": "2020-04-02",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      7
+     ]
+    }
+   ],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Silver": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": true,
+   "share_missing": 0.0
+  },
+  "Soybean Meal": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Soybean Oil": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "Soybeans": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "ULS Diesel": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  },
+  "WTI Crude Oil": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [
+    {
+     "R": 0.7581,
+     "b": 0.0,
+     "date": "2020-03-09",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      5
+     ]
+    },
+    {
+     "R": 0.7622,
+     "b": 0.0,
+     "date": "2020-03-18",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      5
+     ]
+    },
+    {
+     "R": 1.2439,
+     "b": 0.0,
+     "date": "2020-03-19",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      5
+     ]
+    },
+    {
+     "R": 1.2467,
+     "b": 0.0,
+     "date": "2020-04-02",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      7
+     ]
+    },
+    {
+     "R": 0.7112,
+     "b": 1.0,
+     "date": "2020-04-21",
+     "lead": [
+      2020,
+      5
+     ],
+     "next": [
+      2020,
+      7
+     ]
+    }
+   ],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": true,
+   "share_missing": 0.0
+  },
+  "Wheat": {
+   "missing_needed_settlement": 0,
+   "moves_over_20pct": [],
+   "open_business_days": 2555,
+   "pass": true,
+   "published_series": false,
+   "share_missing": 0.0
+  }
+ },
+ "cut": "2025-03-01",
+ "dN": {
+  "2016": {
+   "aum_bn": [
+    85,
+    60,
+    110
+   ],
+   "det": "2016-01-07",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2016",
+     "dN": 12382.567490958325,
+     "dN_aum_high": 16024.499105946068,
+     "dN_aum_low": 8740.635875970584,
+     "dN_deposit_form": 4762.953918639232,
+     "dN_headline_only": 1507.8066741172445,
+     "gap": 0.007363985725505215,
+     "mult": 25000.0,
+     "price": 2.022
+    },
+    "Corn": {
+     "contract": "ZCH2016",
+     "dN": -33346.67769058145,
+     "dN_aum_high": -43154.524070164225,
+     "dN_aum_low": -23538.831310998667,
+     "dN_deposit_form": -18432.489128384936,
+     "dN_headline_only": 5411.01542395568,
+     "gap": -0.006924339543985442,
+     "mult": 50.0,
+     "price": 353.0
+    },
+    "Gold": {
+     "contract": "GCJ2016",
+     "dN": -16909.63665735534,
+     "dN_aum_high": -21883.05920363632,
+     "dN_aum_low": -11936.214111074358,
+     "dN_deposit_form": -24271.982521802507,
+     "dN_headline_only": -4020.5656186681545,
+     "gap": -0.022050166201191365,
+     "mult": 100.0,
+     "price": 1108.4
+    },
+    "HRW Wheat": {
+     "contract": "KEH2016",
+     "dN": 2334.7069607051785,
+     "dN_aum_high": 3021.3854785596423,
+     "dN_aum_low": 1648.028442850714,
+     "dN_deposit_form": 3598.68762284199,
+     "dN_headline_only": -638.0823318729794,
+     "gap": 0.0006355209682743067,
+     "mult": 50.0,
+     "price": 462.75000000000006
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2016",
+     "dN": 7967.976736688544,
+     "dN_aum_high": 10311.499306302823,
+     "dN_aum_low": 5624.454167074267,
+     "dN_deposit_form": 3288.769433667912,
+     "dN_headline_only": 3963.9360493845465,
+     "gap": 0.0024597612890671465,
+     "mult": 400.0,
+     "price": 65.60000000000001
+    },
+    "Live Cattle": {
+     "contract": "LEJ2016",
+     "dN": 3584.9551707051196,
+     "dN_aum_high": 4639.353750324272,
+     "dN_aum_low": 2530.556591085967,
+     "dN_deposit_form": -1716.4781045317734,
+     "dN_headline_only": 3785.238356891896,
+     "gap": 0.002265691667885636,
+     "mult": 400.0,
+     "price": 134.3
+    },
+    "Natural Gas": {
+     "contract": "NGH2016",
+     "dN": -23410.042486597158,
+     "dN_aum_high": -30295.349100302206,
+     "dN_aum_low": -16524.735872892114,
+     "dN_deposit_form": 43957.12435863075,
+     "dN_headline_only": -10328.984918605249,
+     "gap": -0.006593369613283953,
+     "mult": 10000.0,
+     "price": 2.394
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2016",
+     "dN": -3267.1019150874445,
+     "dN_aum_high": -4228.01424305434,
+     "dN_aum_low": -2306.189587120549,
+     "dN_deposit_form": -9264.700356189971,
+     "dN_headline_only": 946.2052900976007,
+     "gap": -0.0019000696008286203,
+     "mult": 42000.0,
+     "price": 1.177
+    },
+    "Silver": {
+     "contract": "SIH2016",
+     "dN": -4867.328996829068,
+     "dN_aum_high": -6298.8963488376185,
+     "dN_aum_low": -3435.761644820519,
+     "dN_deposit_form": -8205.204863584691,
+     "dN_headline_only": -745.1237698365949,
+     "gap": -0.004106880419442127,
+     "mult": 5000.0,
+     "price": 14.344
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2016",
+     "dN": 8212.059945501162,
+     "dN_aum_high": 10627.371694177971,
+     "dN_aum_low": 5796.748196824349,
+     "dN_deposit_form": -4513.401021950897,
+     "dN_headline_only": 3158.161773589888,
+     "gap": 0.0025834174463847184,
+     "mult": 100.0,
+     "price": 267.40000000000003
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2016",
+     "dN": -14168.057924285502,
+     "dN_aum_high": -18335.13378436947,
+     "dN_aum_low": -10000.982064201531,
+     "dN_deposit_form": -19811.643463002485,
+     "dN_headline_only": 1175.6160033493193,
+     "gap": -0.002962290887416494,
+     "mult": 600.0000000000001,
+     "price": 29.62
+    },
+    "Soybeans": {
+     "contract": "ZSH2016",
+     "dN": -1877.391551031881,
+     "dN_aum_high": -2429.565536629493,
+     "dN_aum_low": -1325.2175654342689,
+     "dN_deposit_form": -11854.160076845228,
+     "dN_headline_only": 443.85069727117667,
+     "gap": -0.0009547088210982713,
+     "mult": 50.0,
+     "price": 864.5
+    },
+    "ULS Diesel": {
+     "contract": "HOH2016",
+     "dN": 14771.412069819562,
+     "dN_aum_high": 19115.945031531195,
+     "dN_aum_low": 10426.879108107925,
+     "dN_deposit_form": 16336.374304776591,
+     "dN_headline_only": 1270.7351425104036,
+     "gap": 0.007918484801070401,
+     "mult": 42000.0,
+     "price": 1.0849
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2016",
+     "dN": 14674.082141056617,
+     "dN_aum_high": 18989.98865313209,
+     "dN_aum_low": 10358.175628981142,
+     "dN_deposit_form": 41420.99674990377,
+     "dN_headline_only": -9210.555624351042,
+     "gap": 0.005954224624059326,
+     "mult": 1000.0,
+     "price": 34.49
+    },
+    "Wheat": {
+     "contract": "ZWH2016",
+     "dN": -1031.2475986101626,
+     "dN_aum_high": -1334.5557158484457,
+     "dN_aum_low": -727.9394813718794,
+     "dN_deposit_form": -7107.5970550168695,
+     "dN_headline_only": -29.280402273026837,
+     "gap": -0.00028419970585227133,
+     "mult": 50.0,
+     "price": 468.50000000000006
+    }
+   }
+  },
+  "2017": {
+   "aum_bn": [
+    85,
+    60,
+    110
+   ],
+   "det": "2017-01-06",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2017",
+     "dN": -125.58262009246403,
+     "dN_aum_high": -162.51868482554167,
+     "dN_aum_low": -88.64655535938637,
+     "dN_deposit_form": -9732.250254027558,
+     "dN_headline_only": -487.2432862277125,
+     "gap": -9.403922081041571e-05,
+     "mult": 25000.0,
+     "price": 2.5460000000000003
+    },
+    "Corn": {
+     "contract": "ZCH2017",
+     "dN": 71440.50928152431,
+     "dN_aum_high": 92452.42377609028,
+     "dN_aum_low": 50428.59478695833,
+     "dN_deposit_form": 65587.8007362993,
+     "dN_headline_only": 2453.606846311368,
+     "gap": 0.015044530778109237,
+     "mult": 50.0,
+     "price": 358.0
+    },
+    "Gold": {
+     "contract": "GCJ2017",
+     "dN": 11797.444431614342,
+     "dN_aum_high": 15267.281029147971,
+     "dN_aum_low": 8327.60783408071,
+     "dN_deposit_form": 4843.573748825596,
+     "dN_headline_only": -1505.2138338109553,
+     "gap": 0.016326275158715237,
+     "mult": 100.0,
+     "price": 1176.3000000000002
+    },
+    "HRW Wheat": {
+     "contract": "KEH2017",
+     "dN": 12885.642993035171,
+     "dN_aum_high": 16675.537990986693,
+     "dN_aum_low": 9095.74799508365,
+     "dN_deposit_form": 15274.694107832065,
+     "dN_headline_only": 1188.9808443686195,
+     "gap": 0.0032858389632239686,
+     "mult": 50.0,
+     "price": 433.5
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2017",
+     "dN": 10623.645188493705,
+     "dN_aum_high": 13748.246714521267,
+     "dN_aum_low": 7499.043662466146,
+     "dN_deposit_form": 12043.246152270507,
+     "dN_headline_only": 996.7565076293997,
+     "gap": 0.0034095651852012743,
+     "mult": 400.0,
+     "price": 68.2
+    },
+    "Live Cattle": {
+     "contract": "LEJ2017",
+     "dN": 28839.940679426123,
+     "dN_aum_high": 37322.27617337498,
+     "dN_aum_low": 20357.605185477263,
+     "dN_deposit_form": 19295.934774645404,
+     "dN_headline_only": 7638.277809024982,
+     "gap": 0.015498923414543356,
+     "mult": 400.0,
+     "price": 114.2
+    },
+    "Natural Gas": {
+     "contract": "NGH2017",
+     "dN": -31188.833514897808,
+     "dN_aum_high": -40362.01984280892,
+     "dN_aum_low": -22015.647186986687,
+     "dN_deposit_form": 19741.182753008758,
+     "dN_headline_only": -12210.656270828595,
+     "gap": -0.012064574658468705,
+     "mult": 10000.0,
+     "price": 3.2880000000000003
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2017",
+     "dN": -5058.207396723722,
+     "dN_aum_high": -6545.91545458364,
+     "dN_aum_low": -3570.4993388638036,
+     "dN_deposit_form": -442.6879535163319,
+     "dN_headline_only": 203.3942907817304,
+     "gap": -0.004144921272500213,
+     "mult": 42000.0,
+     "price": 1.6584
+    },
+    "Silver": {
+     "contract": "SIH2017",
+     "dN": 2835.390201739962,
+     "dN_aum_high": 3669.3284963693623,
+     "dN_aum_low": 2001.4519071105613,
+     "dN_deposit_form": -816.4259534504748,
+     "dN_headline_only": -1007.7839359276647,
+     "gap": 0.002755165337796614,
+     "mult": 5000.0,
+     "price": 16.519000000000002
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2017",
+     "dN": 7666.233765186725,
+     "dN_aum_high": 9921.00840200635,
+     "dN_aum_low": 5411.459128367101,
+     "dN_deposit_form": 545.140213168793,
+     "dN_headline_only": 1552.4726687965012,
+     "gap": 0.002807645377767797,
+     "mult": 100.0,
+     "price": 311.3
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2017",
+     "dN": 6299.72937852743,
+     "dN_aum_high": 8152.590960447262,
+     "dN_aum_low": 4446.8677966075975,
+     "dN_deposit_form": 211.138265104567,
+     "dN_headline_only": -1219.190770003927,
+     "gap": 0.001555514355253338,
+     "mult": 600.0000000000001,
+     "price": 34.980000000000004
+    },
+    "Soybeans": {
+     "contract": "ZSH2017",
+     "dN": 11020.669370754542,
+     "dN_aum_high": 14262.042715094112,
+     "dN_aum_low": 7779.296026414971,
+     "dN_deposit_form": 2397.9665469465867,
+     "dN_headline_only": 2306.08793129036,
+     "gap": 0.006448712268563576,
+     "mult": 50.0,
+     "price": 994.75
+    },
+    "ULS Diesel": {
+     "contract": "HOH2017",
+     "dN": -11377.252248695144,
+     "dN_aum_high": -14723.50291007607,
+     "dN_aum_low": -8031.00158731422,
+     "dN_deposit_form": -10203.752346127147,
+     "dN_headline_only": 5.683057689222171,
+     "gap": -0.009650212127348512,
+     "mult": 42000.0,
+     "price": 1.7166
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2017",
+     "dN": -34485.842338976654,
+     "dN_aum_high": -44628.73714455802,
+     "dN_aum_low": -24342.947533395287,
+     "dN_deposit_form": -9711.016565311804,
+     "dN_headline_only": -4517.59315667971,
+     "gap": -0.022261625519289993,
+     "mult": 1000.0,
+     "price": 54.870000000000005
+    },
+    "Wheat": {
+     "contract": "ZWH2017",
+     "dN": 37713.5577785437,
+     "dN_aum_high": 48805.780654585964,
+     "dN_aum_low": 26621.33490250143,
+     "dN_deposit_form": 40480.69969563063,
+     "dN_headline_only": -378.1156159202082,
+     "gap": 0.009389566664569776,
+     "mult": 50.0,
+     "price": 423.25
+    }
+   }
+  },
+  "2018": {
+   "aum_bn": [
+    85,
+    60,
+    110
+   ],
+   "det": "2018-01-05",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2018",
+     "dN": -18912.426716107737,
+     "dN_aum_high": -24474.905162021776,
+     "dN_aum_low": -13349.948270193698,
+     "dN_deposit_form": -21535.835670613877,
+     "dN_headline_only": -4548.945522851559,
+     "gap": -0.017964024141079393,
+     "mult": 25000.0,
+     "price": 3.2295000000000003
+    },
+    "Corn": {
+     "contract": "ZCH2018",
+     "dN": -30377.867912328566,
+     "dN_aum_high": -39312.53494536637,
+     "dN_aum_low": -21443.20087929075,
+     "dN_deposit_form": -5781.351765050559,
+     "dN_headline_only": -61754.06393494011,
+     "gap": -0.006276603590709064,
+     "mult": 50.0,
+     "price": 351.25
+    },
+    "Gold": {
+     "contract": "GCJ2018",
+     "dN": 1519.7909178687205,
+     "dN_aum_high": 1966.7882466536385,
+     "dN_aum_low": 1072.7935890838028,
+     "dN_deposit_form": -1475.3691852758845,
+     "dN_headline_only": 4959.508338030278,
+     "gap": 0.0023728406201218577,
+     "mult": 100.0,
+     "price": 1327.1
+    },
+    "HRW Wheat": {
+     "contract": "KEH2018",
+     "dN": 7539.034947566591,
+     "dN_aum_high": 9756.398167439118,
+     "dN_aum_low": 5321.671727694064,
+     "dN_deposit_form": 13001.593913173238,
+     "dN_headline_only": 4717.063364171841,
+     "gap": 0.001940192817388461,
+     "mult": 50.0,
+     "price": 437.5
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2018",
+     "dN": -2748.9928619343546,
+     "dN_aum_high": -3557.520174267988,
+     "dN_aum_low": -1940.4655496007206,
+     "dN_deposit_form": -2358.561322586191,
+     "dN_headline_only": -505.22288378881336,
+     "gap": -0.0009841394445724988,
+     "mult": 400.0,
+     "price": 76.075
+    },
+    "Live Cattle": {
+     "contract": "LEJ2018",
+     "dN": 8265.14391400655,
+     "dN_aum_high": 10696.06859459671,
+     "dN_aum_low": 5834.219233416387,
+     "dN_deposit_form": 1655.1280821163643,
+     "dN_headline_only": 5879.9821400043365,
+     "gap": 0.0047004359623891365,
+     "mult": 400.0,
+     "price": 120.85
+    },
+    "Natural Gas": {
+     "contract": "NGH2018",
+     "dN": 56378.010990656316,
+     "dN_aum_high": 72959.77892908464,
+     "dN_aum_low": 39796.243052227976,
+     "dN_deposit_form": 86004.0004612526,
+     "dN_headline_only": 1164.0534834180278,
+     "gap": 0.018206781196394302,
+     "mult": 10000.0,
+     "price": 2.745
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2018",
+     "dN": -736.2818351407582,
+     "dN_aum_high": -952.8353160645106,
+     "dN_aum_low": -519.7283542170057,
+     "dN_deposit_form": -823.1118615146854,
+     "dN_headline_only": -155.44901992520278,
+     "gap": -0.000657659062142657,
+     "mult": 42000.0,
+     "price": 1.8077
+    },
+    "Silver": {
+     "contract": "SIH2018",
+     "dN": -3264.2983733340843,
+     "dN_aum_high": -4224.38613019705,
+     "dN_aum_low": -2304.210616471118,
+     "dN_deposit_form": -4607.288665216531,
+     "dN_headline_only": -4349.835912984315,
+     "gap": -0.003319023375475273,
+     "mult": 5000.0,
+     "price": 17.285
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2018",
+     "dN": 6471.7794325446375,
+     "dN_aum_high": 8375.243971528353,
+     "dN_aum_low": 4568.314893560921,
+     "dN_deposit_form": 6675.040124046484,
+     "dN_headline_only": 3538.974085185333,
+     "gap": 0.002450900940395434,
+     "mult": 100.0,
+     "price": 321.90000000000003
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2018",
+     "dN": 9572.49932013881,
+     "dN_aum_high": 12387.940296650226,
+     "dN_aum_low": 6757.058343627396,
+     "dN_deposit_form": 7926.45869855306,
+     "dN_headline_only": -2489.3624921490514,
+     "gap": 0.0022811828968086097,
+     "mult": 600.0000000000001,
+     "price": 33.760000000000005
+    },
+    "Soybeans": {
+     "contract": "ZSH2018",
+     "dN": 11564.224724542592,
+     "dN_aum_high": 14965.467290584531,
+     "dN_aum_low": 8162.982158500654,
+     "dN_deposit_form": 11071.637071528858,
+     "dN_headline_only": 2117.667796186629,
+     "gap": 0.006603512441970424,
+     "mult": 50.0,
+     "price": 970.75
+    },
+    "ULS Diesel": {
+     "contract": "HOH2018",
+     "dN": -5686.057423430103,
+     "dN_aum_high": -7358.427253850722,
+     "dN_aum_low": -4013.6875930094848,
+     "dN_deposit_form": -6742.134138741491,
+     "dN_headline_only": -1627.2189614500553,
+     "gap": -0.005740536543025886,
+     "mult": 42000.0,
+     "price": 2.0432
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2018",
+     "dN": -2109.943477022001,
+     "dN_aum_high": -2730.515087910824,
+     "dN_aum_low": -1489.371866133177,
+     "dN_deposit_form": -1728.0275881824389,
+     "dN_headline_only": 1954.2674192199547,
+     "gap": -0.0015243721049873066,
+     "mult": 1000.0,
+     "price": 61.41
+    },
+    "Wheat": {
+     "contract": "ZWH2018",
+     "dN": 4691.6331732682265,
+     "dN_aum_high": 6071.525283053,
+     "dN_aum_low": 3311.741063483454,
+     "dN_deposit_form": 20043.123428203948,
+     "dN_headline_only": -2308.6046337386383,
+     "gap": 0.0011887770525795816,
+     "mult": 50.0,
+     "price": 430.75
+    }
+   }
+  },
+  "2019": {
+   "aum_bn": [
+    85,
+    76.5,
+    93.5
+   ],
+   "det": "2019-01-07",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2019",
+     "dN": 12241.354795104333,
+     "dN_aum_high": 13465.490274614767,
+     "dN_aum_low": 11017.2193155939,
+     "dN_deposit_form": 12138.082742206081,
+     "dN_headline_only": 2061.504390495402,
+     "gap": 0.009494250763144155,
+     "mult": 25000.0,
+     "price": 2.637
+    },
+    "Corn": {
+     "contract": "ZCH2019",
+     "dN": -61458.40970970819,
+     "dN_aum_high": -67604.250680679,
+     "dN_aum_low": -55312.56873873737,
+     "dN_deposit_form": -30575.461069751495,
+     "dN_headline_only": -10773.847075268777,
+     "gap": -0.013819104183256443,
+     "mult": 50.0,
+     "price": 382.25
+    },
+    "Gold": {
+     "contract": "GCJ2019",
+     "dN": -2983.0959249022067,
+     "dN_aum_high": -3281.405517392427,
+     "dN_aum_low": -2684.7863324119858,
+     "dN_deposit_form": -3533.062086171801,
+     "dN_headline_only": 1944.8290990336843,
+     "gap": -0.004549747714168495,
+     "mult": 100.0,
+     "price": 1296.4
+    },
+    "HRW Wheat": {
+     "contract": "KEH2019",
+     "dN": -11520.322010595897,
+     "dN_aum_high": -12672.354211655484,
+     "dN_aum_low": -10368.289809536305,
+     "dN_deposit_form": -3718.7269003573388,
+     "dN_headline_only": -374.10226991775204,
+     "gap": -0.003408659983135139,
+     "mult": 50.0,
+     "price": 503.00000000000006
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2019",
+     "dN": -3562.254677631109,
+     "dN_aum_high": -3918.48014539422,
+     "dN_aum_low": -3206.0292098679984,
+     "dN_deposit_form": -7223.190649501835,
+     "dN_headline_only": -7263.80351653758,
+     "gap": -0.001112680725777717,
+     "mult": 400.0,
+     "price": 66.375
+    },
+    "Live Cattle": {
+     "contract": "LEJ2019",
+     "dN": -12958.945276879707,
+     "dN_aum_high": -14254.839804567677,
+     "dN_aum_low": -11663.050749191734,
+     "dN_deposit_form": -14685.810117221312,
+     "dN_headline_only": -3750.6710257677078,
+     "gap": -0.007627482731791667,
+     "mult": 400.0,
+     "price": 125.075
+    },
+    "Natural Gas": {
+     "contract": "NGH2019",
+     "dN": -23783.96823583203,
+     "dN_aum_high": -26162.365059415235,
+     "dN_aum_low": -21405.57141224883,
+     "dN_deposit_form": -32377.615000182614,
+     "dN_headline_only": 7345.7924716896105,
+     "gap": -0.007966230302048682,
+     "mult": 10000.0,
+     "price": 2.847
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2019",
+     "dN": -11466.270643394639,
+     "dN_aum_high": -12612.897707734102,
+     "dN_aum_low": -10319.643579055177,
+     "dN_deposit_form": -11685.888800586747,
+     "dN_headline_only": -21769.367131577514,
+     "gap": -0.007671906321003161,
+     "mult": 42000.0,
+     "price": 1.3541
+    },
+    "Silver": {
+     "contract": "SIH2019",
+     "dN": 2586.4950324583256,
+     "dN_aum_high": 2845.1445357041584,
+     "dN_aum_low": 2327.845529212493,
+     "dN_deposit_form": 2417.6311380075344,
+     "dN_headline_only": 2318.196696281595,
+     "gap": 0.0023972244547890223,
+     "mult": 5000.0,
+     "price": 15.756
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2019",
+     "dN": 3492.0524562005944,
+     "dN_aum_high": 3841.257701820654,
+     "dN_aum_low": 3142.8472105805354,
+     "dN_deposit_form": 4291.051031678574,
+     "dN_headline_only": 10749.86017790701,
+     "gap": 0.0013236932957503902,
+     "mult": 100.0,
+     "price": 322.20000000000005
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2019",
+     "dN": 28574.18379012688,
+     "dN_aum_high": 31431.602169139573,
+     "dN_aum_low": 25716.765411114193,
+     "dN_deposit_form": 31335.321351713344,
+     "dN_headline_only": 17673.000716637387,
+     "gap": 0.005750470446046006,
+     "mult": 600.0000000000001,
+     "price": 28.51
+    },
+    "Soybeans": {
+     "contract": "ZSH2019",
+     "dN": -2900.896050307589,
+     "dN_aum_high": -3190.9856553383484,
+     "dN_aum_low": -2610.80644527683,
+     "dN_deposit_form": 1476.9436394075028,
+     "dN_headline_only": 1201.190113715619,
+     "gap": -0.001577148926174582,
+     "mult": 50.0,
+     "price": 924.25
+    },
+    "ULS Diesel": {
+     "contract": "HOH2019",
+     "dN": -14883.990863812282,
+     "dN_aum_high": -16372.389950193507,
+     "dN_aum_low": -13395.591777431053,
+     "dN_deposit_form": -16683.541486375332,
+     "dN_headline_only": -17201.044902763348,
+     "gap": -0.013027659523277613,
+     "mult": 42000.0,
+     "price": 1.7714
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2019",
+     "dN": 22941.61297248496,
+     "dN_aum_high": 25235.774269733454,
+     "dN_aum_low": 20647.45167523646,
+     "dN_deposit_form": 15697.596332673978,
+     "dN_headline_only": 5894.143234204924,
+     "gap": 0.013176582886079008,
+     "mult": 1000.0,
+     "price": 48.82
+    },
+    "Wheat": {
+     "contract": "ZWH2019",
+     "dN": -36830.359612969216,
+     "dN_aum_high": -40513.395574266135,
+     "dN_aum_low": -33147.32365167229,
+     "dN_deposit_form": -21478.17285623741,
+     "dN_headline_only": -3899.2938323842527,
+     "gap": -0.011195346076471671,
+     "mult": 50.0,
+     "price": 516.75
+    }
+   }
+  },
+  "2020": {
+   "aum_bn": [
+    90,
+    76.5,
+    103.5
+   ],
+   "det": "2020-01-07",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2020",
+     "dN": -2161.750283734574,
+     "dN_aum_high": -2486.0128262947605,
+     "dN_aum_low": -1837.4877411743882,
+     "dN_deposit_form": -4800.927482972472,
+     "dN_headline_only": -4613.370269513919,
+     "gap": -0.0016774581715590375,
+     "mult": 25000.0,
+     "price": 2.7935000000000003
+    },
+    "Corn": {
+     "contract": "ZCH2020",
+     "dN": 17965.172084612703,
+     "dN_aum_high": 20659.94789730461,
+     "dN_aum_low": 15270.3962719208,
+     "dN_deposit_form": 34219.83320703946,
+     "dN_headline_only": -2763.562521492595,
+     "gap": 0.003837560370296436,
+     "mult": 50.0,
+     "price": 384.5
+    },
+    "Gold": {
+     "contract": "GCJ2020",
+     "dN": -658.4192238676429,
+     "dN_aum_high": -757.1821074477895,
+     "dN_aum_low": -559.6563402874965,
+     "dN_deposit_form": -1619.3995480900003,
+     "dN_headline_only": 7857.763226749052,
+     "gap": -0.0011562573148031219,
+     "mult": 100.0,
+     "price": 1580.5
+    },
+    "HRW Wheat": {
+     "contract": "KEH2020",
+     "dN": 13741.5829061948,
+     "dN_aum_high": 15802.820342124021,
+     "dN_aum_low": 11680.34547026558,
+     "dN_deposit_form": 16849.36948560951,
+     "dN_headline_only": 7282.57481116186,
+     "gap": 0.0036262510446902953,
+     "mult": 50.0,
+     "price": 475.00000000000006
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2020",
+     "dN": -3665.965775051592,
+     "dN_aum_high": -4215.860641309331,
+     "dN_aum_low": -3116.070908793853,
+     "dN_deposit_form": 11907.784539157501,
+     "dN_headline_only": -2114.760242671742,
+     "gap": -0.0012342084776007026,
+     "mult": 400.0,
+     "price": 75.75
+    },
+    "Live Cattle": {
+     "contract": "LEJ2020",
+     "dN": 2780.6546300249984,
+     "dN_aum_high": 3197.7528245287476,
+     "dN_aum_low": 2363.556435521248,
+     "dN_deposit_form": 1766.5342133252395,
+     "dN_headline_only": -1247.5967544663638,
+     "gap": 0.0015741594822197072,
+     "mult": 400.0,
+     "price": 127.375
+    },
+    "Natural Gas": {
+     "contract": "NGH2020",
+     "dN": 92665.44145276817,
+     "dN_aum_high": 106565.25767068341,
+     "dN_aum_low": 78765.62523485294,
+     "dN_deposit_form": 129798.65579273675,
+     "dN_headline_only": -12540.752937069577,
+     "gap": 0.02216763282753443,
+     "mult": 10000.0,
+     "price": 2.153
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2020",
+     "dN": -5459.626161052784,
+     "dN_aum_high": -6278.570085210701,
+     "dN_aum_low": -4640.682236894867,
+     "dN_deposit_form": -9961.926197382509,
+     "dN_headline_only": -441.9345753542988,
+     "gap": -0.004416146011644636,
+     "mult": 42000.0,
+     "price": 1.7333
+    },
+    "Silver": {
+     "contract": "SIH2020",
+     "dN": -3858.9305541719423,
+     "dN_aum_high": -4437.770137297734,
+     "dN_aum_low": -3280.090971046151,
+     "dN_deposit_form": -4132.093719085387,
+     "dN_headline_only": -1069.2335452385946,
+     "gap": -0.0039431838712713635,
+     "mult": 5000.0,
+     "price": 18.393
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2020",
+     "dN": 9999.72515398041,
+     "dN_aum_high": 11499.68392707747,
+     "dN_aum_low": 8499.766380883348,
+     "dN_deposit_form": 12712.292598690388,
+     "dN_headline_only": -4419.315633776482,
+     "gap": 0.0033476857654381083,
+     "mult": 100.0,
+     "price": 301.3
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2020",
+     "dN": -24989.684719175366,
+     "dN_aum_high": -28738.137427051675,
+     "dN_aum_low": -21241.23201129906,
+     "dN_deposit_form": -21862.649769865813,
+     "dN_headline_only": -8860.314421621235,
+     "gap": -0.005787610980961016,
+     "mult": 600.0000000000001,
+     "price": 34.74
+    },
+    "Soybeans": {
+     "contract": "ZSH2020",
+     "dN": -404.9453076971049,
+     "dN_aum_high": -465.68710385167066,
+     "dN_aum_low": -344.20351154253916,
+     "dN_deposit_form": 5036.419305158345,
+     "dN_headline_only": -7402.896050475986,
+     "gap": -0.0002123713169255928,
+     "mult": 50.0,
+     "price": 944.0
+    },
+    "ULS Diesel": {
+     "contract": "HOH2020",
+     "dN": -1734.8283729588115,
+     "dN_aum_high": -1995.0526289026334,
+     "dN_aum_low": -1474.60411701499,
+     "dN_deposit_form": -2986.091447637538,
+     "dN_headline_only": -484.4931571949919,
+     "gap": -0.0016454037530940283,
+     "mult": 42000.0,
+     "price": 2.0324
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2020",
+     "dN": -14753.294935474729,
+     "dN_aum_high": -16966.289175795937,
+     "dN_aum_low": -12540.300695153517,
+     "dN_deposit_form": -18809.376773829,
+     "dN_headline_only": 4791.327542283956,
+     "gap": -0.010246982960183615,
+     "mult": 1000.0,
+     "price": 62.510000000000005
+    },
+    "Wheat": {
+     "contract": "ZWH2020",
+     "dN": -1057.8804120925906,
+     "dN_aum_high": -1216.5624739064792,
+     "dN_aum_low": -899.198350278702,
+     "dN_deposit_form": -1476.3534931943018,
+     "dN_headline_only": -3210.5875364161047,
+     "gap": -0.0003233881648633044,
+     "mult": 50.0,
+     "price": 550.25
+    }
+   }
+  },
+  "2021": {
+   "aum_bn": [
+    95,
+    80.75,
+    109.25
+   ],
+   "det": "2021-01-07",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2021",
+     "dN": -27605.00038406868,
+     "dN_aum_high": -31745.750441678985,
+     "dN_aum_low": -23464.25032645838,
+     "dN_deposit_form": -36536.89508946704,
+     "dN_headline_only": -16109.020545201223,
+     "gap": -0.026849495110399434,
+     "mult": 25000.0,
+     "price": 3.696
+    },
+    "Corn": {
+     "contract": "ZCH2021",
+     "dN": -37984.82659676154,
+     "dN_aum_high": -43682.55058627577,
+     "dN_aum_low": -32287.102607247303,
+     "dN_deposit_form": -43630.097052458965,
+     "dN_headline_only": -9480.391345929818,
+     "gap": -0.009876054915158,
+     "mult": 50.0,
+     "price": 494.00000000000006
+    },
+    "Gold": {
+     "contract": "GCJ2021",
+     "dN": 596.5945129153941,
+     "dN_aum_high": 686.0836898527033,
+     "dN_aum_low": 507.105335978085,
+     "dN_deposit_form": -6481.110784090488,
+     "dN_headline_only": 5069.68436788956,
+     "gap": 0.0012044929218649747,
+     "mult": 100.0,
+     "price": 1918.0
+    },
+    "HRW Wheat": {
+     "contract": "KEH2021",
+     "dN": -2255.9673752467766,
+     "dN_aum_high": -2594.362481533793,
+     "dN_aum_low": -1917.57226895976,
+     "dN_deposit_form": -4322.413725162177,
+     "dN_headline_only": 2711.8716006691575,
+     "gap": -0.0007106297232027346,
+     "mult": 50.0,
+     "price": 598.5
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2021",
+     "dN": 5493.706154745638,
+     "dN_aum_high": 6317.762077957484,
+     "dN_aum_low": 4669.650231533792,
+     "dN_deposit_form": 16682.74972347658,
+     "dN_headline_only": -1676.2217888991647,
+     "gap": 0.0016897483562280796,
+     "mult": 400.0,
+     "price": 73.05000000000001
+    },
+    "Live Cattle": {
+     "contract": "LEJ2021",
+     "dN": 12754.65801645677,
+     "dN_aum_high": 14667.856718925284,
+     "dN_aum_low": 10841.459313988255,
+     "dN_deposit_form": 11950.503364648337,
+     "dN_headline_only": -3452.5170412844163,
+     "gap": 0.006417606875648775,
+     "mult": 400.0,
+     "price": 119.5
+    },
+    "Natural Gas": {
+     "contract": "NGH2021",
+     "dN": -23150.622072266993,
+     "dN_aum_high": -26623.21538310704,
+     "dN_aum_low": -19678.028761426944,
+     "dN_deposit_form": 112300.3909429125,
+     "dN_headline_only": 3949.357976073775,
+     "gap": -0.006557718315417946,
+     "mult": 10000.0,
+     "price": 2.6910000000000003
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2021",
+     "dN": 7315.30656950249,
+     "dN_aum_high": 8412.602554927864,
+     "dN_aum_low": 6218.0105840771175,
+     "dN_deposit_form": 8879.57293318296,
+     "dN_headline_only": -1205.0615763728854,
+     "gap": 0.004806248820035594,
+     "mult": 42000.0,
+     "price": 1.4861000000000002
+    },
+    "Silver": {
+     "contract": "SIH2021",
+     "dN": -3895.4130426342804,
+     "dN_aum_high": -4479.724999029422,
+     "dN_aum_low": -3311.101086239138,
+     "dN_deposit_form": -7056.006270635487,
+     "dN_headline_only": 4009.8975995783235,
+     "gap": -0.005589097629223848,
+     "mult": 5000.0,
+     "price": 27.261000000000003
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2021",
+     "dN": -12036.002056000352,
+     "dN_aum_high": -13841.402364400403,
+     "dN_aum_low": -10230.601747600298,
+     "dN_deposit_form": -17577.02044574746,
+     "dN_headline_only": 6675.209534713162,
+     "gap": -0.00547574746168774,
+     "mult": 100.0,
+     "price": 432.2000000000001
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2021",
+     "dN": -344.50270802103813,
+     "dN_aum_high": -396.1781142241939,
+     "dN_aum_low": -292.8273018178824,
+     "dN_deposit_form": -8995.992981106941,
+     "dN_headline_only": 10739.111570010948,
+     "gap": -9.527857000573431e-05,
+     "mult": 600.0000000000001,
+     "price": 43.790000000000006
+    },
+    "Soybeans": {
+     "contract": "ZSH2021",
+     "dN": -17965.814561580613,
+     "dN_aum_high": -20660.686745817708,
+     "dN_aum_low": -15270.942377343523,
+     "dN_deposit_form": -26763.655885577617,
+     "dN_headline_only": 2532.61596535451,
+     "gap": -0.012814826412937963,
+     "mult": 50.0,
+     "price": 1355.25
+    },
+    "ULS Diesel": {
+     "contract": "HOH2021",
+     "dN": 9957.907348836017,
+     "dN_aum_high": 11451.59345116142,
+     "dN_aum_low": 8464.221246510613,
+     "dN_deposit_form": 11048.855281664302,
+     "dN_headline_only": -465.8272350276638,
+     "gap": 0.006776680893122713,
+     "mult": 42000.0,
+     "price": 1.5393
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2021",
+     "dN": 45575.7672154291,
+     "dN_aum_high": 52412.132297743454,
+     "dN_aum_low": 38739.40213311473,
+     "dN_deposit_form": 70924.69531386037,
+     "dN_headline_only": 2879.446083479648,
+     "gap": 0.02440462398156714,
+     "mult": 1000.0,
+     "price": 50.870000000000005
+    },
+    "Wheat": {
+     "contract": "ZWH2021",
+     "dN": -6802.917600838524,
+     "dN_aum_high": -7823.3552409643025,
+     "dN_aum_low": -5782.479960712745,
+     "dN_deposit_form": -14797.509888322285,
+     "dN_headline_only": -4651.889037108787,
+     "gap": -0.0022995651732308116,
+     "mult": 50.0,
+     "price": 642.25
+    }
+   }
+  },
+  "2022": {
+   "aum_bn": [
+    100,
+    100,
+    110
+   ],
+   "det": "2022-01-06",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2022",
+     "dN": 2933.6640888882703,
+     "dN_aum_high": 3227.030497777098,
+     "dN_aum_low": 2933.6640888882703,
+     "dN_deposit_form": 3216.798460389328,
+     "dN_headline_only": 41.55700998966765,
+     "gap": 0.003193660068765994,
+     "mult": 25000.0,
+     "price": 4.354500000000001
+    },
+    "Corn": {
+     "contract": "ZCH2022",
+     "dN": 4402.20209730895,
+     "dN_aum_high": 4842.422307039847,
+     "dN_aum_low": 4402.20209730895,
+     "dN_deposit_form": -11623.411695561275,
+     "dN_headline_only": 107.79296066249485,
+     "gap": 0.0013289147581251395,
+     "mult": 50.0,
+     "price": 603.75
+    },
+    "Gold": {
+     "contract": "GCJ2022",
+     "dN": 22637.058445401737,
+     "dN_aum_high": 24900.76428994191,
+     "dN_aum_low": 22637.058445401737,
+     "dN_deposit_form": 23570.976056086474,
+     "dN_headline_only": 1976.2433714764197,
+     "gap": 0.04055429020493721,
+     "mult": 100.0,
+     "price": 1791.5
+    },
+    "HRW Wheat": {
+     "contract": "KEH2022",
+     "dN": 1327.694750605589,
+     "dN_aum_high": 1460.4642256661477,
+     "dN_aum_low": 1327.694750605589,
+     "dN_deposit_form": 3861.5027033029987,
+     "dN_headline_only": 2401.1711125569304,
+     "gap": 0.0005101667079201976,
+     "mult": 50.0,
+     "price": 768.5
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2022",
+     "dN": 2769.538562606512,
+     "dN_aum_high": 3046.492418867163,
+     "dN_aum_low": 2769.538562606512,
+     "dN_deposit_form": -509.352285454047,
+     "dN_headline_only": 791.2349481937817,
+     "gap": 0.0009890022207067854,
+     "mult": 400.0,
+     "price": 89.275
+    },
+    "Live Cattle": {
+     "contract": "LEJ2022",
+     "dN": -1608.9198840431593,
+     "dN_aum_high": -1769.8118724474755,
+     "dN_aum_low": -1608.9198840431593,
+     "dN_deposit_form": 10212.781484730527,
+     "dN_headline_only": -4662.1797121797135,
+     "gap": -0.0009167625499277923,
+     "mult": 400.0,
+     "price": 142.45000000000002
+    },
+    "Natural Gas": {
+     "contract": "NGH2022",
+     "dN": -22986.44388516376,
+     "dN_aum_high": -25285.088273680136,
+     "dN_aum_low": -22986.44388516376,
+     "dN_deposit_form": 391.76154557794035,
+     "dN_headline_only": -3191.7983651226004,
+     "gap": -0.0084360249058551,
+     "mult": 10000.0,
+     "price": 3.67
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2022",
+     "dN": -5511.734100834031,
+     "dN_aum_high": -6062.907510917435,
+     "dN_aum_low": -5511.734100834031,
+     "dN_deposit_form": -7443.994163593006,
+     "dN_headline_only": -65.78201552879537,
+     "gap": -0.005348178903125882,
+     "mult": 42000.0,
+     "price": 2.3103
+    },
+    "Silver": {
+     "contract": "SIH2022",
+     "dN": 17254.630334367317,
+     "dN_aum_high": 18980.09336780405,
+     "dN_aum_low": 17254.630334367317,
+     "dN_deposit_form": 17636.714260714343,
+     "dN_headline_only": 3541.9468228931973,
+     "gap": 0.01914401235598054,
+     "mult": 5000.0,
+     "price": 22.19
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2022",
+     "dN": 19096.346171036752,
+     "dN_aum_high": 21005.98078814043,
+     "dN_aum_low": 19096.346171036752,
+     "dN_deposit_form": 21818.37247248724,
+     "dN_headline_only": -1915.7664233576577,
+     "gap": 0.007848598276296106,
+     "mult": 100.0,
+     "price": 411.0
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2022",
+     "dN": -7461.493667796842,
+     "dN_aum_high": -8207.643034576526,
+     "dN_aum_low": -7461.493667796842,
+     "dN_deposit_form": -19168.369313026007,
+     "dN_headline_only": -678.5229202037452,
+     "gap": -0.0026368918621994045,
+     "mult": 600.0000000000001,
+     "price": 58.900000000000006
+    },
+    "Soybeans": {
+     "contract": "ZSH2022",
+     "dN": 14843.71852994217,
+     "dN_aum_high": 16328.090382936389,
+     "dN_aum_low": 14843.71852994217,
+     "dN_deposit_form": 11285.71490013814,
+     "dN_headline_only": -411.8219499008807,
+     "gap": 0.010295974265331138,
+     "mult": 50.0,
+     "price": 1387.25
+    },
+    "ULS Diesel": {
+     "contract": "HOH2022",
+     "dN": -5785.02412144275,
+     "dN_aum_high": -6363.526533587025,
+     "dN_aum_low": -5785.02412144275,
+     "dN_deposit_form": -6067.610995240268,
+     "dN_headline_only": -285.61124364006673,
+     "gap": -0.005951089023872886,
+     "mult": 42000.0,
+     "price": 2.4493
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2022",
+     "dN": -26078.282026847435,
+     "dN_aum_high": -28686.110229532176,
+     "dN_aum_low": -26078.282026847435,
+     "dN_deposit_form": -31432.728098535405,
+     "dN_headline_only": -1368.5344827585993,
+     "gap": -0.02057054886277726,
+     "mult": 1000.0,
+     "price": 78.88000000000001
+    },
+    "Wheat": {
+     "contract": "ZWH2022",
+     "dN": 4506.425100041231,
+     "dN_aum_high": 4957.067610045355,
+     "dN_aum_low": 4506.425100041231,
+     "dN_deposit_form": 8732.344669058946,
+     "dN_headline_only": -1036.0321715817743,
+     "gap": 0.0016808965623153795,
+     "mult": 50.0,
+     "price": 746.0
+    }
+   }
+  },
+  "2023": {
+   "aum_bn": [
+    110,
+    110,
+    121
+   ],
+   "det": "2023-01-06",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2023",
+     "dN": 4617.505619319573,
+     "dN_aum_high": 5079.2561812515305,
+     "dN_aum_low": 4617.505619319573,
+     "dN_deposit_form": 8378.175041602874,
+     "dN_headline_only": -1905.6353873689477,
+     "gap": 0.004104332835717921,
+     "mult": 25000.0,
+     "price": 3.911
+    },
+    "Corn": {
+     "contract": "ZCH2023",
+     "dN": -16966.76040934984,
+     "dN_aum_high": -18663.436450284826,
+     "dN_aum_low": -16966.76040934984,
+     "dN_deposit_form": -14541.359346395642,
+     "dN_headline_only": -2576.9938837920276,
+     "gap": -0.005043755139870362,
+     "mult": 50.0,
+     "price": 654.0
+    },
+    "Gold": {
+     "contract": "GCJ2023",
+     "dN": -4226.683423667825,
+     "dN_aum_high": -4649.351766034608,
+     "dN_aum_low": -4226.683423667825,
+     "dN_deposit_form": 3652.627585660813,
+     "dN_headline_only": -856.1440161196134,
+     "gap": -0.007246456607904683,
+     "mult": 100.0,
+     "price": 1885.9
+    },
+    "HRW Wheat": {
+     "contract": "KEH2023",
+     "dN": -942.9382118082077,
+     "dN_aum_high": -1037.2320329890285,
+     "dN_aum_low": -942.9382118082077,
+     "dN_deposit_form": 2681.463981852514,
+     "dN_headline_only": 2397.1802884615354,
+     "gap": -0.0003566020873747404,
+     "mult": 50.0,
+     "price": 832.0
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2023",
+     "dN": 1707.4433213542147,
+     "dN_aum_high": 1878.1876534896364,
+     "dN_aum_low": 1707.4433213542147,
+     "dN_deposit_form": 3522.491401633084,
+     "dN_headline_only": -350.6748466257702,
+     "gap": 0.000556626522761474,
+     "mult": 400.0,
+     "price": 89.65
+    },
+    "Live Cattle": {
+     "contract": "LEJ2023",
+     "dN": -12719.55176901322,
+     "dN_aum_high": -13991.506945914542,
+     "dN_aum_low": -12719.55176901322,
+     "dN_deposit_form": -2353.288085136722,
+     "dN_headline_only": -4485.080130698626,
+     "gap": -0.0074316872017679975,
+     "mult": 400.0,
+     "price": 160.675
+    },
+    "Natural Gas": {
+     "contract": "NGH2023",
+     "dN": 20498.312766888652,
+     "dN_aum_high": 22548.144043577515,
+     "dN_aum_low": 20498.312766888652,
+     "dN_deposit_form": 32080.964969218086,
+     "dN_headline_only": -518.5112028302203,
+     "gap": 0.006320934264116937,
+     "mult": 10000.0,
+     "price": 3.3920000000000003
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2023",
+     "dN": 1067.8903767482852,
+     "dN_aum_high": 1174.6794144231137,
+     "dN_aum_low": 1067.8903767482852,
+     "dN_deposit_form": -4520.819356556844,
+     "dN_headline_only": 272.1529562302361,
+     "gap": 0.0009180265245131644,
+     "mult": 42000.0,
+     "price": 2.2515
+    },
+    "Silver": {
+     "contract": "SIH2023",
+     "dN": -4662.812274637786,
+     "dN_aum_high": -5129.093502101565,
+     "dN_aum_low": -4662.812274637786,
+     "dN_deposit_form": -717.4952497900367,
+     "dN_headline_only": -1437.467267117005,
+     "gap": -0.005082889271380155,
+     "mult": 5000.0,
+     "price": 23.982000000000003
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2023",
+     "dN": -12359.381643371738,
+     "dN_aum_high": -13595.319807708913,
+     "dN_aum_low": -12359.381643371738,
+     "dN_deposit_form": -14123.217716862653,
+     "dN_headline_only": 194.82621440534976,
+     "gap": -0.005366218793522129,
+     "mult": 100.0,
+     "price": 477.6
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2023",
+     "dN": -3356.4094256862836,
+     "dN_aum_high": -3692.050368254912,
+     "dN_aum_low": -3356.4094256862836,
+     "dN_deposit_form": -8306.515438311219,
+     "dN_headline_only": 2705.5960107646106,
+     "gap": -0.0011564966368396504,
+     "mult": 600.0000000000001,
+     "price": 63.17
+    },
+    "Soybeans": {
+     "contract": "ZSH2023",
+     "dN": -5977.406293046314,
+     "dN_aum_high": -6575.146922350945,
+     "dN_aum_low": -5977.406293046314,
+     "dN_deposit_form": -9674.562826930918,
+     "dN_headline_only": -71.69715242881452,
+     "gap": -0.004055126769259829,
+     "mult": 50.0,
+     "price": 1492.5
+    },
+    "ULS Diesel": {
+     "contract": "HOH2023",
+     "dN": -2998.4962985182156,
+     "dN_aum_high": -3298.345928370037,
+     "dN_aum_low": -2998.4962985182156,
+     "dN_deposit_form": -9546.547480662468,
+     "dN_headline_only": 412.6071322620928,
+     "gap": -0.003344653614842062,
+     "mult": 42000.0,
+     "price": 2.9214
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2023",
+     "dN": 4079.6707536214553,
+     "dN_aum_high": 4487.637828983601,
+     "dN_aum_low": 4079.6707536214553,
+     "dN_deposit_form": -3552.962045813025,
+     "dN_headline_only": -3940.448406266893,
+     "gap": 0.0027459892963466598,
+     "mult": 1000.0,
+     "price": 74.04
+    },
+    "Wheat": {
+     "contract": "ZWH2023",
+     "dN": -750.5114393931054,
+     "dN_aum_high": -825.562583332416,
+     "dN_aum_low": -750.5114393931054,
+     "dN_deposit_form": 10074.091640289724,
+     "dN_headline_only": -1552.3093476798977,
+     "gap": -0.0002536387523585336,
+     "mult": 50.0,
+     "price": 743.5
+    }
+   }
+  },
+  "2024": {
+   "aum_bn": [
+    105.5,
+    105.5,
+    105.5
+   ],
+   "det": "2024-01-05",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2024",
+     "dN": -2148.8407033699186,
+     "dN_aum_high": -2148.8407033699186,
+     "dN_aum_low": -2148.8407033699186,
+     "dN_deposit_form": -969.1088912525001,
+     "dN_headline_only": 764.1138915821941,
+     "gap": -0.0019380302646980832,
+     "mult": 25000.0,
+     "price": 3.806
+    },
+    "Corn": {
+     "contract": "ZCH2024",
+     "dN": 67340.40013891825,
+     "dN_aum_high": 67340.40013891825,
+     "dN_aum_low": 67340.40013891825,
+     "dN_deposit_form": 41599.826560382484,
+     "dN_headline_only": 6825.872359221512,
+     "gap": 0.01470478168910265,
+     "mult": 50.0,
+     "price": 460.75000000000006
+    },
+    "Gold": {
+     "contract": "GCJ2024",
+     "dN": -16449.87837013174,
+     "dN_aum_high": -16449.87837013174,
+     "dN_aum_low": -16449.87837013174,
+     "dN_deposit_form": -12036.19496101865,
+     "dN_headline_only": -2581.391927731141,
+     "gap": -0.03227138697882623,
+     "mult": 100.0,
+     "price": 2069.7000000000003
+    },
+    "HRW Wheat": {
+     "contract": "KEH2024",
+     "dN": 13098.332883062294,
+     "dN_aum_high": 13098.332883062294,
+     "dN_aum_low": 13098.332883062294,
+     "dN_deposit_form": 12617.492773015281,
+     "dN_headline_only": 2170.478929267577,
+     "gap": 0.003898461161404323,
+     "mult": 50.0,
+     "price": 628.0
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2024",
+     "dN": 4915.152085637515,
+     "dN_aum_high": 4915.152085637515,
+     "dN_aum_low": 4915.152085637515,
+     "dN_deposit_form": 7019.05431622944,
+     "dN_headline_only": 1368.220543956867,
+     "gap": 0.001423297594466598,
+     "mult": 400.0,
+     "price": 76.375
+    },
+    "Live Cattle": {
+     "contract": "LEJ2024",
+     "dN": -6567.6020935101715,
+     "dN_aum_high": -6567.6020935101715,
+     "dN_aum_low": -6567.6020935101715,
+     "dN_deposit_form": -5960.133843598496,
+     "dN_headline_only": 2226.604716166921,
+     "gap": -0.004317809300529531,
+     "mult": 400.0,
+     "price": 173.4
+    },
+    "Natural Gas": {
+     "contract": "NGH2024",
+     "dN": 54897.20302099363,
+     "dN_aum_high": 54897.20302099363,
+     "dN_aum_low": 54897.20302099363,
+     "dN_deposit_form": 165588.57303319065,
+     "dN_headline_only": 1823.0512577630425,
+     "gap": 0.013638442570428844,
+     "mult": 10000.0,
+     "price": 2.621
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2024",
+     "dN": -427.7023587683011,
+     "dN_aum_high": -427.7023587683011,
+     "dN_aum_low": -427.7023587683011,
+     "dN_deposit_form": -5702.507994546967,
+     "dN_headline_only": 131.4356158108787,
+     "gap": -0.0003628967352056964,
+     "mult": 42000.0,
+     "price": 2.1313
+    },
+    "Silver": {
+     "contract": "SIH2024",
+     "dN": -3067.619919719631,
+     "dN_aum_high": -3067.619919719631,
+     "dN_aum_low": -3067.619919719631,
+     "dN_deposit_form": -959.6426600678824,
+     "dN_headline_only": -1023.7225008249915,
+     "gap": -0.003389647318875033,
+     "mult": 5000.0,
+     "price": 23.315
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2024",
+     "dN": 16989.897431458576,
+     "dN_aum_high": 16989.897431458576,
+     "dN_aum_low": 16989.897431458576,
+     "dN_deposit_form": 3048.2652664114617,
+     "dN_headline_only": 334.2947942071158,
+     "gap": 0.005948879726237723,
+     "mult": 100.0,
+     "price": 369.4
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2024",
+     "dN": 25563.907642102153,
+     "dN_aum_high": 25563.907642102153,
+     "dN_aum_low": 25563.907642102153,
+     "dN_deposit_form": 20043.361040894342,
+     "dN_headline_only": 3113.097860849677,
+     "gap": 0.006924790071999958,
+     "mult": 600.0000000000001,
+     "price": 47.63
+    },
+    "Soybeans": {
+     "contract": "ZSH2024",
+     "dN": 10963.73671113933,
+     "dN_aum_high": 10963.73671113933,
+     "dN_aum_low": 10963.73671113933,
+     "dN_deposit_form": -1840.2552383665045,
+     "dN_headline_only": 2063.695357365098,
+     "gap": 0.006527580210127386,
+     "mult": 50.0,
+     "price": 1256.25
+    },
+    "ULS Diesel": {
+     "contract": "HOH2024",
+     "dN": 1593.1160420409494,
+     "dN_aum_high": 1593.1160420409494,
+     "dN_aum_low": 1593.1160420409494,
+     "dN_deposit_form": -1965.1739152996693,
+     "dN_headline_only": 602.2666195709722,
+     "gap": 0.001633703504579316,
+     "mult": 42000.0,
+     "price": 2.5759000000000003
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2024",
+     "dN": -14353.909109367545,
+     "dN_aum_high": -14353.909109367545,
+     "dN_aum_low": -14353.909109367545,
+     "dN_deposit_form": -20266.603139721858,
+     "dN_headline_only": -5851.3341411006195,
+     "gap": -0.010049096936662436,
+     "mult": 1000.0,
+     "price": 73.86
+    },
+    "Wheat": {
+     "contract": "ZWH2024",
+     "dN": 10969.801767995921,
+     "dN_aum_high": 10969.801767995921,
+     "dN_aum_low": 10969.801767995921,
+     "dN_deposit_form": 20666.886427100315,
+     "dN_headline_only": 839.6175152108567,
+     "gap": 0.0032025582412727426,
+     "mult": 50.0,
+     "price": 616.0
+    }
+   }
+  },
+  "2025": {
+   "aum_bn": [
+    102,
+    102,
+    102
+   ],
+   "det": "2025-01-07",
+   "rows": {
+    "Copper": {
+     "contract": "HGH2025",
+     "dN": -730.8890169372302,
+     "dN_aum_high": -730.8890169372302,
+     "dN_aum_low": -730.8890169372302,
+     "dN_deposit_form": -2116.3309596362656,
+     "dN_headline_only": 748.4143602959637,
+     "gap": -0.0007515796251372914,
+     "mult": 25000.0,
+     "price": 4.1955
+    },
+    "Corn": {
+     "contract": "ZCH2025",
+     "dN": 16546.56524898225,
+     "dN_aum_high": 16546.56524898225,
+     "dN_aum_low": 16546.56524898225,
+     "dN_deposit_form": 35054.52394728183,
+     "dN_headline_only": -1703.2613994875687,
+     "gap": 0.0037148661196244465,
+     "mult": 50.0,
+     "price": 458.00000000000006
+    },
+    "Gold": {
+     "contract": "GCJ2025",
+     "dN": -11824.271652765661,
+     "dN_aum_high": -11824.271652765661,
+     "dN_aum_low": -11824.271652765661,
+     "dN_deposit_form": -11807.334798172355,
+     "dN_headline_only": -212.4954451621763,
+     "gap": -0.031187096105328882,
+     "mult": 100.0,
+     "price": 2690.3
+    },
+    "HRW Wheat": {
+     "contract": "KEH2025",
+     "dN": 12483.070038433103,
+     "dN_aum_high": 12483.070038433103,
+     "dN_aum_low": 12483.070038433103,
+     "dN_deposit_form": 12710.521345086394,
+     "dN_headline_only": 855.351437030594,
+     "gap": 0.0034007187126760766,
+     "mult": 50.0,
+     "price": 555.75
+    },
+    "Lean Hogs": {
+     "contract": "HEJ2025",
+     "dN": -4406.408344702881,
+     "dN_aum_high": -4406.408344702881,
+     "dN_aum_low": -4406.408344702881,
+     "dN_deposit_form": -7507.265850248289,
+     "dN_headline_only": -1461.642042429049,
+     "gap": -0.0014813308052927625,
+     "mult": 400.0,
+     "price": 85.72500000000001
+    },
+    "Live Cattle": {
+     "contract": "LEJ2025",
+     "dN": -1492.137327193105,
+     "dN_aum_high": -1492.137327193105,
+     "dN_aum_low": -1492.137327193105,
+     "dN_deposit_form": -4362.302328173778,
+     "dN_headline_only": 1634.5409665038267,
+     "gap": -0.0011572841564141817,
+     "mult": 400.0,
+     "price": 197.775
+    },
+    "Natural Gas": {
+     "contract": "NGH2025",
+     "dN": -28461.932247064145,
+     "dN_aum_high": -28461.932247064145,
+     "dN_aum_low": -28461.932247064145,
+     "dN_deposit_form": 99808.80629502135,
+     "dN_headline_only": -6918.781988120708,
+     "gap": -0.008466029650744375,
+     "mult": 10000.0,
+     "price": 3.0340000000000003
+    },
+    "RBOB Gasoline": {
+     "contract": "RBH2025",
+     "dN": 2182.92723661076,
+     "dN_aum_high": 2182.92723661076,
+     "dN_aum_low": 2182.92723661076,
+     "dN_deposit_form": -915.4450435829585,
+     "dN_headline_only": -438.48761871699,
+     "gap": 0.001846602353191295,
+     "mult": 42000.0,
+     "price": 2.0544
+    },
+    "Silver": {
+     "contract": "SIH2025",
+     "dN": -6698.169983481366,
+     "dN_aum_high": -6698.169983481366,
+     "dN_aum_low": -6698.169983481366,
+     "dN_deposit_form": -6682.395374470976,
+     "dN_headline_only": 95.1465288164337,
+     "gap": -0.010075492358485746,
+     "mult": 5000.0,
+     "price": 30.686000000000003
+    },
+    "Soybean Meal": {
+     "contract": "ZMH2025",
+     "dN": 27378.34234884208,
+     "dN_aum_high": 27378.34234884208,
+     "dN_aum_low": 27378.34234884208,
+     "dN_deposit_form": 21200.197871780958,
+     "dN_headline_only": -376.0029073011464,
+     "gap": 0.008146398924385855,
+     "mult": 100.0,
+     "price": 303.5
+    },
+    "Soybean Oil": {
+     "contract": "ZLH2025",
+     "dN": 27095.697492315998,
+     "dN_aum_high": 27095.697492315998,
+     "dN_aum_low": 27095.697492315998,
+     "dN_deposit_form": 24722.42925523269,
+     "dN_headline_only": 623.294906667014,
+     "gap": 0.006574691303282559,
+     "mult": 600.0000000000001,
+     "price": 41.25
+    },
+    "Soybeans": {
+     "contract": "ZSH2025",
+     "dN": 32529.01409736451,
+     "dN_aum_high": 32529.01409736451,
+     "dN_aum_low": 32529.01409736451,
+     "dN_deposit_form": 28694.720454606282,
+     "dN_headline_only": 1210.6854432572418,
+     "gap": 0.015901744759116057,
+     "mult": 50.0,
+     "price": 997.25
+    },
+    "ULS Diesel": {
+     "contract": "HOH2025",
+     "dN": 3780.697608163581,
+     "dN_aum_high": 3780.697608163581,
+     "dN_aum_low": 3780.697608163581,
+     "dN_deposit_form": 2015.1021551832428,
+     "dN_headline_only": 449.9484603229556,
+     "gap": 0.003656357135650389,
+     "mult": 42000.0,
+     "price": 2.3487
+    },
+    "WTI Crude Oil": {
+     "contract": "CLH2025",
+     "dN": 1700.919902787443,
+     "dN_aum_high": 1700.919902787443,
+     "dN_aum_low": 1700.919902787443,
+     "dN_deposit_form": -12936.523648263907,
+     "dN_headline_only": -5490.27954291001,
+     "gap": 0.001226830169098747,
+     "mult": 1000.0,
+     "price": 73.57000000000001
+    },
+    "Wheat": {
+     "contract": "ZWH2025",
+     "dN": 19130.489452316466,
+     "dN_aum_high": 19130.489452316466,
+     "dN_aum_low": 19130.489452316466,
+     "dN_deposit_form": 25477.943560671218,
+     "dN_headline_only": 250.85632323630793,
+     "gap": 0.00508739731758906,
+     "mult": 50.0,
+     "price": 542.5
+    }
+   }
+  }
+ },
+ "deviations": [
+  "D634 \u00a73 says 'y the OECD 3-month rate of the prior month'; the NAV model is Gate 0b's, whose rate is month t-2 (gate_0b_ng_nav.replicate, rate_lag=2). Gate 0b's is used, as \u00a73's 'The NAV model is Gate 0b's' requires.",
+  "The 2019 gold and silver benchmark change: the first NAV on the new benchmark is 2019-01-07, so intervals are counted from the one ending 2019-01-08 (the interval into 01-07 straddles the switch).",
+  "A CME holiday republication (every settlement of the root equal to the previous strip day's) is not a settlement, so the root is not open that day (D634 \u00a71.1's 'has a settlement').",
+  "Limit-move disruptions (an MDE under BCOM s.3.3) are not detectable from settlements and are not modelled; only a closed component postpones its roll step.",
+  "The business-day test before det(2015) (December 2014 and January 2015 BD1-4) uses the 2015 CIPs, because the 2014 CIPs are not on disk. It can move a business-day number only on a day where the open share is near 50%.",
+  "The CIPs are normalised to sum to exactly 1 (the published weights sum to 100% within 4e-8).",
+  "The first --run (after commit a4ebd9b) crashed before writing any output: aggregate_returns asked for the 2014 CIMs on January 2015 days. Those days now return None (only the 2016 aggregate check reads these returns). No result existed; the fix is committed before the run that produced gate_r0.json."
+ ],
+ "known_answers": {
+  "brent_vs_bz": {
+   "contract_days": 60886,
+   "exact_share": 0.999885,
+   "max_abs_usd": 0.03
+  },
+  "table13_worst_miss": 0.0010000000000047748,
+  "unit_tests": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5",
+   "6",
+   "7",
+   "8",
+   "12",
+   "13"
+  ],
+  "weights_equal_targets_at_det": true
+ },
+ "net_flow": {
+  "2016": {
+   "all_components_share_of_aum": 1.249000902703301e-16,
+   "cme_subset_share_of_aum": -0.016594938270851796
+  },
+  "2017": {
+   "all_components_share_of_aum": -3.8163916471489756e-17,
+   "cme_subset_share_of_aum": 0.028306364705326336
+  },
+  "2018": {
+   "all_components_share_of_aum": -1.0408340855860843e-17,
+   "cme_subset_share_of_aum": 0.0032782656660557286
+  },
+  "2019": {
+   "all_components_share_of_aum": 9.194034422677078e-17,
+   "cme_subset_share_of_aum": -0.03981374464129659
+  },
+  "2020": {
+   "all_components_share_of_aum": -5.0306980803327406e-17,
+   "cme_subset_share_of_aum": 0.003910278467272559
+  },
+  "2021": {
+   "all_components_share_of_aum": -5.724587470723463e-17,
+   "cme_subset_share_of_aum": -0.024969011462796932
+  },
+  "2022": {
+   "all_components_share_of_aum": -3.469446951953614e-18,
+   "cme_subset_share_of_aum": 0.04168601931262017
+  },
+  "2023": {
+   "all_components_share_of_aum": 8.673617379884035e-18,
+   "cme_subset_share_of_aum": -0.024691615431663986
+  },
+  "2024": {
+   "all_components_share_of_aum": -5.204170427930421e-18,
+   "cme_subset_share_of_aum": 0.005573627234822534
+  },
+  "2025": {
+   "all_components_share_of_aum": -4.9439619065339e-17,
+   "cme_subset_share_of_aum": -0.0035632059067887533
+  }
+ },
+ "published": {
+  "AGQ": {
+   "L": 2,
+   "all": {
+    "days": 1545,
+    "max_abs_bp": 649.6372,
+    "median_abs_bp": 0.3188,
+    "missing": 0,
+    "p95_abs_bp": 1.4263,
+    "share": 0.997411,
+    "within_5bp": 1541
+   },
+   "component": "Silver",
+   "controls": {
+    "index_lagged": {
+     "days": 1545,
+     "max_abs_bp": 4920.5492,
+     "median_abs_bp": 321.2673,
+     "missing": 0,
+     "p95_abs_bp": 1117.6632,
+     "share": 0.006472,
+     "within_5bp": 10
+    },
+    "sign_flipped": {
+     "days": 1545,
+     "max_abs_bp": 6050.6869,
+     "median_abs_bp": 387.0584,
+     "missing": 0,
+     "p95_abs_bp": 1654.1394,
+     "share": 0.009061,
+     "within_5bp": 14
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": 204.11
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": -216.61
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": -596.26
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": 649.64
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 3.8161,
+    "missing": 0,
+    "months": 74,
+    "share": 0.635135,
+    "within_5bp": 47,
+    "worst": [
+     [
+      "2020-07",
+      413.34
+     ],
+     [
+      "2020-06",
+      -301.77
+     ],
+     [
+      "2023-10",
+      11.23
+     ],
+     [
+      "2023-11",
+      10.46
+     ],
+     [
+      "2023-07",
+      9.09
+     ],
+     [
+      "2023-08",
+      8.89
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 1102,
+    "max_abs_bp": 649.6372,
+    "median_abs_bp": 0.3165,
+    "missing": 0,
+    "p95_abs_bp": 1.4471,
+    "share": 0.99637,
+    "within_5bp": 1098
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 443,
+    "max_abs_bp": 2.9214,
+    "median_abs_bp": 0.3231,
+    "missing": 0,
+    "p95_abs_bp": 1.3456,
+    "share": 1.0,
+    "within_5bp": 443
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1545,
+     "max_abs_bp": 649.9098,
+     "median_abs_bp": 0.5872,
+     "missing": 0,
+     "p95_abs_bp": 2.2328,
+     "share": 0.996764,
+     "within_5bp": 1540
+    },
+    "y=0": {
+     "days": 1545,
+     "max_abs_bp": 649.5878,
+     "median_abs_bp": 0.4256,
+     "missing": 0,
+     "p95_abs_bp": 2.7197,
+     "share": 0.997411,
+     "within_5bp": 1541
+    }
+   },
+   "span": [
+    "2019-01-08",
+    "2025-02-28"
+   ]
+  },
+  "BOIL": {
+   "L": 2,
+   "all": {
+    "days": 2302,
+    "max_abs_bp": 930.9339,
+    "median_abs_bp": 0.3345,
+    "missing": 0,
+    "p95_abs_bp": 2.0852,
+    "share": 0.996959,
+    "within_5bp": 2295
+   },
+   "component": "Natural Gas",
+   "controls": {
+    "index_lagged": {
+     "days": 2302,
+     "max_abs_bp": 10915.1912,
+     "median_abs_bp": 513.0149,
+     "missing": 0,
+     "p95_abs_bp": 1980.7082,
+     "share": 0.005213,
+     "within_5bp": 12
+    },
+    "sign_flipped": {
+     "days": 2302,
+     "max_abs_bp": 10714.5577,
+     "median_abs_bp": 714.112,
+     "missing": 0,
+     "p95_abs_bp": 2747.9407,
+     "share": 0.004344,
+     "within_5bp": 10
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [
+      11
+     ],
+     "date": "2018-11-15",
+     "err_bp": -6.07
+    },
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": 930.93
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": -885.72
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-03-19",
+     "err_bp": 6.98
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": -383.07
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": 416.23
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2023-12-11",
+     "err_bp": 5.42
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 4.9201,
+    "missing": 0,
+    "months": 110,
+    "share": 0.518182,
+    "within_5bp": 57,
+    "worst": [
+     [
+      "2020-07",
+      205.91
+     ],
+     [
+      "2020-06",
+      -168.61
+     ],
+     [
+      "2023-06",
+      13.82
+     ],
+     [
+      "2023-04",
+      11.93
+     ],
+     [
+      "2020-04",
+      11.92
+     ],
+     [
+      "2024-02",
+      11.65
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 1643,
+    "max_abs_bp": 930.9339,
+    "median_abs_bp": 0.2864,
+    "missing": 0,
+    "p95_abs_bp": 1.8624,
+    "share": 0.996348,
+    "within_5bp": 1637
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 659,
+    "max_abs_bp": 5.4179,
+    "median_abs_bp": 0.6048,
+    "missing": 0,
+    "p95_abs_bp": 2.3394,
+    "share": 0.998483,
+    "within_5bp": 658
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 2302,
+     "max_abs_bp": 931.2184,
+     "median_abs_bp": 0.6234,
+     "missing": 0,
+     "p95_abs_bp": 2.6128,
+     "share": 0.992615,
+     "within_5bp": 2285
+    },
+    "y=0": {
+     "days": 2302,
+     "max_abs_bp": 930.3995,
+     "median_abs_bp": 0.4296,
+     "missing": 0,
+     "p95_abs_bp": 2.2882,
+     "share": 0.996959,
+     "within_5bp": 2295
+    }
+   },
+   "span": [
+    "2016-01-05",
+    "2025-02-28"
+   ]
+  },
+  "CMD": {
+   "L": -2,
+   "all": {
+    "days": 163,
+    "max_abs_bp": 83.1138,
+    "median_abs_bp": 16.5693,
+    "missing": 0,
+    "p95_abs_bp": 41.2746,
+    "share": 0.153374,
+    "within_5bp": 25
+   },
+   "component": "BCOM",
+   "controls": {
+    "index_lagged": {
+     "days": 163,
+     "max_abs_bp": 794.8075,
+     "median_abs_bp": 203.4226,
+     "missing": 0,
+     "p95_abs_bp": 546.9474,
+     "share": 0.01227,
+     "within_5bp": 2
+    },
+    "sign_flipped": {
+     "days": 163,
+     "max_abs_bp": 1013.4977,
+     "median_abs_bp": 265.5285,
+     "missing": 0,
+     "p95_abs_bp": 796.7611,
+     "share": 0.006135,
+     "within_5bp": 1
+    }
+   },
+   "daily_pass": false,
+   "failing": [
+    {
+     "bd": [
+      2
+     ],
+     "date": "2016-01-05",
+     "err_bp": -8.64
+    },
+    {
+     "bd": [
+      3
+     ],
+     "date": "2016-01-06",
+     "err_bp": 23.26
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-01-11",
+     "err_bp": -27.09
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2016-01-12",
+     "err_bp": 9.13
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2016-01-13",
+     "err_bp": 25.45
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2016-01-15",
+     "err_bp": -16.74
+    },
+    {
+     "bd": [
+      11
+     ],
+     "date": "2016-01-19",
+     "err_bp": -23.04
+    },
+    {
+     "bd": [
+      12
+     ],
+     "date": "2016-01-20",
+     "err_bp": 21.41
+    },
+    {
+     "bd": [
+      13
+     ],
+     "date": "2016-01-21",
+     "err_bp": 29.37
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2016-01-22",
+     "err_bp": -56.72
+    },
+    {
+     "bd": [
+      15
+     ],
+     "date": "2016-01-25",
+     "err_bp": 17.28
+    },
+    {
+     "bd": [
+      16
+     ],
+     "date": "2016-01-26",
+     "err_bp": 31.7
+    },
+    {
+     "bd": [
+      17
+     ],
+     "date": "2016-01-27",
+     "err_bp": -14.86
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2016-01-28",
+     "err_bp": -30.2
+    },
+    {
+     "bd": [
+      19
+     ],
+     "date": "2016-01-29",
+     "err_bp": 16.58
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2016-02-01",
+     "err_bp": 6.86
+    },
+    {
+     "bd": [
+      2
+     ],
+     "date": "2016-02-02",
+     "err_bp": -31.68
+    },
+    {
+     "bd": [
+      3
+     ],
+     "date": "2016-02-03",
+     "err_bp": 33.19
+    },
+    {
+     "bd": [
+      4
+     ],
+     "date": "2016-02-04",
+     "err_bp": -13.56
+    },
+    {
+     "bd": [
+      5
+     ],
+     "date": "2016-02-05",
+     "err_bp": -52.12
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-02-08",
+     "err_bp": 83.11
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2016-02-09",
+     "err_bp": -33.84
+    },
+    {
+     "bd": [
+      9
+     ],
+     "date": "2016-02-11",
+     "err_bp": 8.64
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2016-02-12",
+     "err_bp": 11.18
+    },
+    {
+     "bd": [
+      11
+     ],
+     "date": "2016-02-16",
+     "err_bp": -13.33
+    },
+    {
+     "bd": [
+      12
+     ],
+     "date": "2016-02-17",
+     "err_bp": 10.44
+    },
+    {
+     "bd": [
+      13
+     ],
+     "date": "2016-02-18",
+     "err_bp": 5.23
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2016-02-19",
+     "err_bp": 16.89
+    },
+    {
+     "bd": [
+      15
+     ],
+     "date": "2016-02-22",
+     "err_bp": -19.73
+    },
+    {
+     "bd": [
+      16
+     ],
+     "date": "2016-02-23",
+     "err_bp": -29.68
+    },
+    {
+     "bd": [
+      17
+     ],
+     "date": "2016-02-24",
+     "err_bp": 41.25
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2016-02-25",
+     "err_bp": -59.01
+    },
+    {
+     "bd": [
+      19
+     ],
+     "date": "2016-02-26",
+     "err_bp": 34.43
+    },
+    {
+     "bd": [
+      20
+     ],
+     "date": "2016-02-29",
+     "err_bp": -15.02
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2016-03-01",
+     "err_bp": 18.1
+    },
+    {
+     "bd": [
+      4
+     ],
+     "date": "2016-03-04",
+     "err_bp": 22.59
+    },
+    {
+     "bd": [
+      5
+     ],
+     "date": "2016-03-07",
+     "err_bp": -34.05
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-03-08",
+     "err_bp": -45.9
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2016-03-09",
+     "err_bp": 67.2
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2016-03-10",
+     "err_bp": -26.2
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 11.2852,
+    "missing": 0,
+    "months": 8,
+    "share": 0.25,
+    "within_5bp": 2,
+    "worst": [
+     [
+      "2016-03",
+      -23.89
+     ],
+     [
+      "2016-06",
+      -19.42
+     ],
+     [
+      "2016-07",
+      -15.33
+     ],
+     [
+      "2016-02",
+      13.94
+     ],
+     [
+      "2016-08",
+      8.63
+     ],
+     [
+      "2016-04",
+      6.82
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 115,
+    "max_abs_bp": 59.0124,
+    "median_abs_bp": 14.6442,
+    "missing": 0,
+    "p95_abs_bp": 40.3679,
+    "share": 0.156522,
+    "within_5bp": 18
+   },
+   "roll_day_pass": false,
+   "roll_days": {
+    "days": 48,
+    "max_abs_bp": 83.1138,
+    "median_abs_bp": 19.5421,
+    "missing": 0,
+    "p95_abs_bp": 49.9407,
+    "share": 0.145833,
+    "within_5bp": 7
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 163,
+     "max_abs_bp": 83.8929,
+     "median_abs_bp": 16.3103,
+     "missing": 0,
+     "p95_abs_bp": 41.5353,
+     "share": 0.147239,
+     "within_5bp": 24
+    },
+    "y=0": {
+     "days": 163,
+     "max_abs_bp": 82.6649,
+     "median_abs_bp": 16.4969,
+     "missing": 0,
+     "p95_abs_bp": 41.122,
+     "share": 0.153374,
+     "within_5bp": 25
+    }
+   },
+   "span": [
+    "2016-01-05",
+    "2016-08-25"
+   ]
+  },
+  "GLL": {
+   "L": -2,
+   "all": {
+    "days": 1545,
+    "max_abs_bp": 222.0918,
+    "median_abs_bp": 0.3316,
+    "missing": 0,
+    "p95_abs_bp": 1.4363,
+    "share": 0.997411,
+    "within_5bp": 1541
+   },
+   "component": "Gold",
+   "controls": {
+    "index_lagged": {
+     "days": 1545,
+     "max_abs_bp": 1449.5971,
+     "median_abs_bp": 160.6152,
+     "missing": 0,
+     "p95_abs_bp": 559.9639,
+     "share": 0.017476,
+     "within_5bp": 27
+    },
+    "sign_flipped": {
+     "days": 1545,
+     "max_abs_bp": 2605.9848,
+     "median_abs_bp": 198.9047,
+     "missing": 0,
+     "p95_abs_bp": 769.915,
+     "share": 0.013592,
+     "within_5bp": 21
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": -7.18
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": 6.15
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": 222.09
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": -209.43
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 4.327,
+    "missing": 0,
+    "months": 74,
+    "share": 0.621622,
+    "within_5bp": 46,
+    "worst": [
+     [
+      "2020-06",
+      -116.04
+     ],
+     [
+      "2020-07",
+      114.08
+     ],
+     [
+      "2020-03",
+      -10.02
+     ],
+     [
+      "2023-10",
+      -9.81
+     ],
+     [
+      "2020-04",
+      -9.09
+     ],
+     [
+      "2024-01",
+      -8.94
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 1102,
+    "max_abs_bp": 222.0918,
+    "median_abs_bp": 0.3288,
+    "missing": 0,
+    "p95_abs_bp": 1.4577,
+    "share": 0.99637,
+    "within_5bp": 1098
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 443,
+    "max_abs_bp": 3.6352,
+    "median_abs_bp": 0.3473,
+    "missing": 0,
+    "p95_abs_bp": 1.3629,
+    "share": 1.0,
+    "within_5bp": 443
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1545,
+     "max_abs_bp": 222.3579,
+     "median_abs_bp": 0.6074,
+     "missing": 0,
+     "p95_abs_bp": 2.1845,
+     "share": 0.996764,
+     "within_5bp": 1540
+    },
+    "y=0": {
+     "days": 1545,
+     "max_abs_bp": 221.876,
+     "median_abs_bp": 0.4752,
+     "missing": 0,
+     "p95_abs_bp": 2.872,
+     "share": 0.997411,
+     "within_5bp": 1541
+    }
+   },
+   "span": [
+    "2019-01-08",
+    "2025-02-28"
+   ]
+  },
+  "KOLD": {
+   "L": -2,
+   "all": {
+    "days": 2302,
+    "max_abs_bp": 783.9032,
+    "median_abs_bp": 0.5536,
+    "missing": 0,
+    "p95_abs_bp": 2.4853,
+    "share": 0.992181,
+    "within_5bp": 2284
+   },
+   "component": "Natural Gas",
+   "controls": {
+    "index_lagged": {
+     "days": 2302,
+     "max_abs_bp": 5550.1589,
+     "median_abs_bp": 511.4133,
+     "missing": 0,
+     "p95_abs_bp": 1960.3496,
+     "share": 0.005647,
+     "within_5bp": 13
+    },
+    "sign_flipped": {
+     "days": 2302,
+     "max_abs_bp": 11372.1679,
+     "median_abs_bp": 716.5479,
+     "missing": 0,
+     "p95_abs_bp": 2695.629,
+     "share": 0.004344,
+     "within_5bp": 10
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [
+      20
+     ],
+     "date": "2016-03-29",
+     "err_bp": 13.06
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-04-08",
+     "err_bp": 7.11
+    },
+    {
+     "bd": [
+      20
+     ],
+     "date": "2016-06-28",
+     "err_bp": 15.14
+    },
+    {
+     "bd": [
+      22
+     ],
+     "date": "2016-06-30",
+     "err_bp": -5.24
+    },
+    {
+     "bd": [
+      11
+     ],
+     "date": "2017-09-18",
+     "err_bp": 6.12
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2017-12-11",
+     "err_bp": 6.13
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2018-02-21",
+     "err_bp": 6.52
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2018-11-14",
+     "err_bp": 7.27
+    },
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": -783.9
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": 762.44
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-03-19",
+     "err_bp": 7.48
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-04-21",
+     "err_bp": 5.72
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": 416.43
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": -356.49
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2020-10-08",
+     "err_bp": 5.15
+    },
+    {
+     "bd": [
+      20
+     ],
+     "date": "2020-12-29",
+     "err_bp": 7.01
+    },
+    {
+     "bd": [
+      2
+     ],
+     "date": "2022-02-02",
+     "err_bp": 5.34
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2024-01-02",
+     "err_bp": 5.19
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 6.948,
+    "missing": 0,
+    "months": 110,
+    "share": 0.236364,
+    "within_5bp": 26,
+    "worst": [
+     [
+      "2020-06",
+      -191.72
+     ],
+     [
+      "2020-07",
+      190.39
+     ],
+     [
+      "2020-04",
+      -24.18
+     ],
+     [
+      "2020-03",
+      -16.2
+     ],
+     [
+      "2016-03",
+      -14.66
+     ],
+     [
+      "2016-04",
+      -14.39
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 1643,
+    "max_abs_bp": 783.9032,
+    "median_abs_bp": 0.4859,
+    "missing": 0,
+    "p95_abs_bp": 2.211,
+    "share": 0.991479,
+    "within_5bp": 1629
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 659,
+    "max_abs_bp": 7.2738,
+    "median_abs_bp": 0.8793,
+    "missing": 0,
+    "p95_abs_bp": 2.8181,
+    "share": 0.99393,
+    "within_5bp": 655
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 2302,
+     "max_abs_bp": 783.6634,
+     "median_abs_bp": 0.8532,
+     "missing": 0,
+     "p95_abs_bp": 3.0097,
+     "share": 0.990009,
+     "within_5bp": 2279
+    },
+    "y=0": {
+     "days": 2302,
+     "max_abs_bp": 784.3538,
+     "median_abs_bp": 0.5418,
+     "missing": 0,
+     "p95_abs_bp": 2.6377,
+     "share": 0.992615,
+     "within_5bp": 2285
+    }
+   },
+   "span": [
+    "2016-01-05",
+    "2025-02-28"
+   ]
+  },
+  "SCO": {
+   "L": -2,
+   "all": {
+    "days": 1067,
+    "max_abs_bp": 610.4928,
+    "median_abs_bp": 0.2493,
+    "missing": 0,
+    "p95_abs_bp": 1.0326,
+    "share": 0.994377,
+    "within_5bp": 1061
+   },
+   "component": "WTI Crude Oil",
+   "controls": {
+    "index_lagged": {
+     "days": 1067,
+     "max_abs_bp": 18828.5532,
+     "median_abs_bp": 344.4141,
+     "missing": 0,
+     "p95_abs_bp": 1361.5757,
+     "share": 0.00656,
+     "within_5bp": 7
+    },
+    "sign_flipped": {
+     "days": 1067,
+     "max_abs_bp": 19064.745,
+     "median_abs_bp": 471.395,
+     "missing": 0,
+     "p95_abs_bp": 1837.614,
+     "share": 0.002812,
+     "within_5bp": 3
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [
+      18
+     ],
+     "date": "2018-12-27",
+     "err_bp": 66.57
+    },
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": -610.49
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": 562.46
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2020-03-19",
+     "err_bp": 7.38
+    },
+    {
+     "bd": [
+      16
+     ],
+     "date": "2020-03-23",
+     "err_bp": 5.93
+    },
+    {
+     "bd": [
+      17
+     ],
+     "date": "2020-03-24",
+     "err_bp": 5.97
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 3.3436,
+    "missing": 0,
+    "months": 51,
+    "share": 0.941176,
+    "within_5bp": 48,
+    "worst": [
+     [
+      "2018-12",
+      -40.32
+     ],
+     [
+      "2020-03",
+      -5.76
+     ],
+     [
+      "2019-04",
+      -5.12
+     ],
+     [
+      "2019-07",
+      -4.99
+     ],
+     [
+      "2016-02",
+      -4.89
+     ],
+     [
+      "2019-12",
+      -4.7
+     ]
+    ]
+   },
+   "monthly_pass": true,
+   "other_days": {
+    "days": 761,
+    "max_abs_bp": 610.4928,
+    "median_abs_bp": 0.2381,
+    "missing": 0,
+    "p95_abs_bp": 1.0261,
+    "share": 0.992116,
+    "within_5bp": 755
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 306,
+    "max_abs_bp": 3.2864,
+    "median_abs_bp": 0.272,
+    "missing": 0,
+    "p95_abs_bp": 1.0758,
+    "share": 1.0,
+    "within_5bp": 306
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1067,
+     "max_abs_bp": 610.2484,
+     "median_abs_bp": 0.5099,
+     "missing": 0,
+     "p95_abs_bp": 1.7625,
+     "share": 0.994377,
+     "within_5bp": 1061
+    },
+    "y=0": {
+     "days": 1067,
+     "max_abs_bp": 610.9518,
+     "median_abs_bp": 0.2752,
+     "missing": 0,
+     "p95_abs_bp": 1.3386,
+     "share": 0.995314,
+     "within_5bp": 1062
+    }
+   },
+   "span": [
+    "2016-01-05",
+    "2020-03-31"
+   ]
+  },
+  "UCD": {
+   "L": 2,
+   "all": {
+    "days": 163,
+    "max_abs_bp": 81.7348,
+    "median_abs_bp": 16.0641,
+    "missing": 0,
+    "p95_abs_bp": 43.9399,
+    "share": 0.159509,
+    "within_5bp": 26
+   },
+   "component": "BCOM",
+   "controls": {
+    "index_lagged": {
+     "days": 163,
+     "max_abs_bp": 733.9014,
+     "median_abs_bp": 210.2298,
+     "missing": 0,
+     "p95_abs_bp": 560.466,
+     "share": 0.018405,
+     "within_5bp": 3
+    },
+    "sign_flipped": {
+     "days": 163,
+     "max_abs_bp": 1013.3178,
+     "median_abs_bp": 267.022,
+     "missing": 0,
+     "p95_abs_bp": 788.636,
+     "share": 0.006135,
+     "within_5bp": 1
+    }
+   },
+   "daily_pass": false,
+   "failing": [
+    {
+     "bd": [
+      2
+     ],
+     "date": "2016-01-05",
+     "err_bp": 8.83
+    },
+    {
+     "bd": [
+      3
+     ],
+     "date": "2016-01-06",
+     "err_bp": -23.31
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-01-11",
+     "err_bp": 30.19
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2016-01-12",
+     "err_bp": -9.75
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2016-01-13",
+     "err_bp": -24.79
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2016-01-15",
+     "err_bp": 19.22
+    },
+    {
+     "bd": [
+      11
+     ],
+     "date": "2016-01-19",
+     "err_bp": 24.63
+    },
+    {
+     "bd": [
+      12
+     ],
+     "date": "2016-01-20",
+     "err_bp": -22.34
+    },
+    {
+     "bd": [
+      13
+     ],
+     "date": "2016-01-21",
+     "err_bp": -27.04
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2016-01-22",
+     "err_bp": 54.5
+    },
+    {
+     "bd": [
+      15
+     ],
+     "date": "2016-01-25",
+     "err_bp": -15.86
+    },
+    {
+     "bd": [
+      16
+     ],
+     "date": "2016-01-26",
+     "err_bp": -29.42
+    },
+    {
+     "bd": [
+      17
+     ],
+     "date": "2016-01-27",
+     "err_bp": 14.87
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2016-01-28",
+     "err_bp": 30.65
+    },
+    {
+     "bd": [
+      19
+     ],
+     "date": "2016-01-29",
+     "err_bp": -14.93
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2016-02-01",
+     "err_bp": -6.11
+    },
+    {
+     "bd": [
+      2
+     ],
+     "date": "2016-02-02",
+     "err_bp": 35.21
+    },
+    {
+     "bd": [
+      3
+     ],
+     "date": "2016-02-03",
+     "err_bp": -32.13
+    },
+    {
+     "bd": [
+      4
+     ],
+     "date": "2016-02-04",
+     "err_bp": 14.09
+    },
+    {
+     "bd": [
+      5
+     ],
+     "date": "2016-02-05",
+     "err_bp": 55.25
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-02-08",
+     "err_bp": -81.73
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2016-02-09",
+     "err_bp": 39.41
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2016-02-10",
+     "err_bp": 5.05
+    },
+    {
+     "bd": [
+      9
+     ],
+     "date": "2016-02-11",
+     "err_bp": -8.0
+    },
+    {
+     "bd": [
+      10
+     ],
+     "date": "2016-02-12",
+     "err_bp": -10.45
+    },
+    {
+     "bd": [
+      11
+     ],
+     "date": "2016-02-16",
+     "err_bp": 14.78
+    },
+    {
+     "bd": [
+      12
+     ],
+     "date": "2016-02-17",
+     "err_bp": -7.59
+    },
+    {
+     "bd": [
+      14
+     ],
+     "date": "2016-02-19",
+     "err_bp": -17.42
+    },
+    {
+     "bd": [
+      15
+     ],
+     "date": "2016-02-22",
+     "err_bp": 19.14
+    },
+    {
+     "bd": [
+      16
+     ],
+     "date": "2016-02-23",
+     "err_bp": 30.71
+    },
+    {
+     "bd": [
+      17
+     ],
+     "date": "2016-02-24",
+     "err_bp": -39.92
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2016-02-25",
+     "err_bp": 59.55
+    },
+    {
+     "bd": [
+      19
+     ],
+     "date": "2016-02-26",
+     "err_bp": -34.14
+    },
+    {
+     "bd": [
+      20
+     ],
+     "date": "2016-02-29",
+     "err_bp": 16.06
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2016-03-01",
+     "err_bp": -17.29
+    },
+    {
+     "bd": [
+      4
+     ],
+     "date": "2016-03-04",
+     "err_bp": -21.06
+    },
+    {
+     "bd": [
+      5
+     ],
+     "date": "2016-03-07",
+     "err_bp": 35.24
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2016-03-08",
+     "err_bp": 47.31
+    },
+    {
+     "bd": [
+      7
+     ],
+     "date": "2016-03-09",
+     "err_bp": -64.28
+    },
+    {
+     "bd": [
+      8
+     ],
+     "date": "2016-03-10",
+     "err_bp": 26.74
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 13.9528,
+    "missing": 0,
+    "months": 8,
+    "share": 0.0,
+    "within_5bp": 0,
+    "worst": [
+     [
+      "2016-02",
+      21.71
+     ],
+     [
+      "2016-04",
+      18.91
+     ],
+     [
+      "2016-03",
+      -16.17
+     ],
+     [
+      "2016-08",
+      15.86
+     ],
+     [
+      "2016-06",
+      -12.05
+     ],
+     [
+      "2016-05",
+      9.34
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 115,
+    "max_abs_bp": 59.5471,
+    "median_abs_bp": 14.872,
+    "missing": 0,
+    "p95_abs_bp": 40.9388,
+    "share": 0.173913,
+    "within_5bp": 20
+   },
+   "roll_day_pass": false,
+   "roll_days": {
+    "days": 48,
+    "max_abs_bp": 81.7348,
+    "median_abs_bp": 19.0218,
+    "missing": 0,
+    "p95_abs_bp": 52.4694,
+    "share": 0.125,
+    "within_5bp": 6
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 163,
+     "max_abs_bp": 80.952,
+     "median_abs_bp": 16.1002,
+     "missing": 0,
+     "p95_abs_bp": 44.1741,
+     "share": 0.165644,
+     "within_5bp": 27
+    },
+    "y=0": {
+     "days": 163,
+     "max_abs_bp": 82.186,
+     "median_abs_bp": 16.0928,
+     "missing": 0,
+     "p95_abs_bp": 43.8207,
+     "share": 0.159509,
+     "within_5bp": 26
+    }
+   },
+   "span": [
+    "2016-01-05",
+    "2016-08-25"
+   ]
+  },
+  "UCO": {
+   "L": 2,
+   "all": {
+    "days": 1067,
+    "max_abs_bp": 696.14,
+    "median_abs_bp": 0.2308,
+    "missing": 0,
+    "p95_abs_bp": 0.8392,
+    "share": 0.997188,
+    "within_5bp": 1064
+   },
+   "component": "WTI Crude Oil",
+   "controls": {
+    "index_lagged": {
+     "days": 1067,
+     "max_abs_bp": 9921.1362,
+     "median_abs_bp": 343.7189,
+     "missing": 0,
+     "p95_abs_bp": 1364.1108,
+     "share": 0.007498,
+     "within_5bp": 8
+    },
+    "sign_flipped": {
+     "days": 1067,
+     "max_abs_bp": 18715.6911,
+     "median_abs_bp": 465.549,
+     "missing": 0,
+     "p95_abs_bp": 1911.3958,
+     "share": 0.003749,
+     "within_5bp": 4
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": 696.14
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": -686.0
+    },
+    {
+     "bd": [
+      6
+     ],
+     "date": "2020-03-09",
+     "err_bp": -7.74
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 3.0913,
+    "missing": 0,
+    "months": 51,
+    "share": 1.0,
+    "within_5bp": 51,
+    "worst": [
+     [
+      "2019-02",
+      4.82
+     ],
+     [
+      "2016-02",
+      4.66
+     ],
+     [
+      "2019-01",
+      4.47
+     ],
+     [
+      "2019-04",
+      4.37
+     ],
+     [
+      "2019-12",
+      4.17
+     ],
+     [
+      "2018-04",
+      4.1
+     ]
+    ]
+   },
+   "monthly_pass": true,
+   "other_days": {
+    "days": 761,
+    "max_abs_bp": 696.14,
+    "median_abs_bp": 0.2163,
+    "missing": 0,
+    "p95_abs_bp": 0.8316,
+    "share": 0.997372,
+    "within_5bp": 759
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 306,
+    "max_abs_bp": 7.7376,
+    "median_abs_bp": 0.2688,
+    "missing": 0,
+    "p95_abs_bp": 0.8619,
+    "share": 0.996732,
+    "within_5bp": 305
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1067,
+     "max_abs_bp": 696.4184,
+     "median_abs_bp": 0.4923,
+     "missing": 0,
+     "p95_abs_bp": 1.6002,
+     "share": 0.997188,
+     "within_5bp": 1064
+    },
+    "y=0": {
+     "days": 1067,
+     "max_abs_bp": 695.6171,
+     "median_abs_bp": 0.2793,
+     "missing": 0,
+     "p95_abs_bp": 1.356,
+     "share": 0.997188,
+     "within_5bp": 1064
+    }
+   },
+   "span": [
+    "2016-01-05",
+    "2020-03-31"
+   ]
+  },
+  "UGL": {
+   "L": 2,
+   "all": {
+    "days": 1545,
+    "max_abs_bp": 219.3619,
+    "median_abs_bp": 0.2602,
+    "missing": 0,
+    "p95_abs_bp": 1.1438,
+    "share": 0.997411,
+    "within_5bp": 1541
+   },
+   "component": "Gold",
+   "controls": {
+    "index_lagged": {
+     "days": 1545,
+     "max_abs_bp": 1555.5389,
+     "median_abs_bp": 160.6636,
+     "missing": 0,
+     "p95_abs_bp": 572.8358,
+     "share": 0.01877,
+     "within_5bp": 29
+    },
+    "sign_flipped": {
+     "days": 1545,
+     "max_abs_bp": 2219.6806,
+     "median_abs_bp": 200.1225,
+     "missing": 0,
+     "p95_abs_bp": 792.7236,
+     "share": 0.013592,
+     "within_5bp": 21
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": 7.51
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": -7.51
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": -211.78
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": 219.36
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 3.212,
+    "missing": 0,
+    "months": 74,
+    "share": 0.756757,
+    "within_5bp": 56,
+    "worst": [
+     [
+      "2020-07",
+      119.79
+     ],
+     [
+      "2020-06",
+      -105.88
+     ],
+     [
+      "2023-10",
+      9.73
+     ],
+     [
+      "2023-11",
+      7.4
+     ],
+     [
+      "2024-01",
+      7.24
+     ],
+     [
+      "2020-04",
+      6.98
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 1102,
+    "max_abs_bp": 219.3619,
+    "median_abs_bp": 0.2513,
+    "missing": 0,
+    "p95_abs_bp": 1.1746,
+    "share": 0.99637,
+    "within_5bp": 1098
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 443,
+    "max_abs_bp": 2.2834,
+    "median_abs_bp": 0.2732,
+    "missing": 0,
+    "p95_abs_bp": 1.0867,
+    "share": 1.0,
+    "within_5bp": 443
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1545,
+     "max_abs_bp": 219.6283,
+     "median_abs_bp": 0.5231,
+     "missing": 0,
+     "p95_abs_bp": 1.937,
+     "share": 0.996764,
+     "within_5bp": 1540
+    },
+    "y=0": {
+     "days": 1545,
+     "max_abs_bp": 219.3136,
+     "median_abs_bp": 0.4496,
+     "missing": 0,
+     "p95_abs_bp": 3.1375,
+     "share": 0.996764,
+     "within_5bp": 1540
+    }
+   },
+   "span": [
+    "2019-01-08",
+    "2025-02-28"
+   ]
+  },
+  "ZSL": {
+   "L": -2,
+   "all": {
+    "days": 1545,
+    "max_abs_bp": 677.814,
+    "median_abs_bp": 0.4111,
+    "missing": 0,
+    "p95_abs_bp": 1.9039,
+    "share": 0.997411,
+    "within_5bp": 1541
+   },
+   "component": "Silver",
+   "controls": {
+    "index_lagged": {
+     "days": 1545,
+     "max_abs_bp": 3245.588,
+     "median_abs_bp": 321.4652,
+     "missing": 0,
+     "p95_abs_bp": 1166.6286,
+     "share": 0.008414,
+     "within_5bp": 13
+    },
+    "sign_flipped": {
+     "days": 1545,
+     "max_abs_bp": 4573.9338,
+     "median_abs_bp": 384.9298,
+     "missing": 0,
+     "p95_abs_bp": 1660.5255,
+     "share": 0.009061,
+     "within_5bp": 14
+    }
+   },
+   "daily_pass": true,
+   "failing": [
+    {
+     "bd": [],
+     "date": "2020-02-27",
+     "err_bp": -195.79
+    },
+    {
+     "bd": [
+      18
+     ],
+     "date": "2020-02-28",
+     "err_bp": 164.11
+    },
+    {
+     "bd": [],
+     "date": "2020-06-30",
+     "err_bp": 677.81
+    },
+    {
+     "bd": [
+      1
+     ],
+     "date": "2020-07-01",
+     "err_bp": -593.41
+    }
+   ],
+   "monthly": {
+    "median_abs_bp": 4.7246,
+    "missing": 0,
+    "months": 74,
+    "share": 0.554054,
+    "within_5bp": 41,
+    "worst": [
+     [
+      "2020-07",
+      408.51
+     ],
+     [
+      "2020-06",
+      -311.27
+     ],
+     [
+      "2023-10",
+      -15.6
+     ],
+     [
+      "2024-10",
+      -12.57
+     ],
+     [
+      "2025-01",
+      -11.62
+     ],
+     [
+      "2020-04",
+      -11.01
+     ]
+    ]
+   },
+   "monthly_pass": false,
+   "other_days": {
+    "days": 1102,
+    "max_abs_bp": 677.814,
+    "median_abs_bp": 0.393,
+    "missing": 0,
+    "p95_abs_bp": 1.8557,
+    "share": 0.99637,
+    "within_5bp": 1098
+   },
+   "roll_day_pass": true,
+   "roll_days": {
+    "days": 443,
+    "max_abs_bp": 3.7512,
+    "median_abs_bp": 0.4528,
+    "missing": 0,
+    "p95_abs_bp": 1.9581,
+    "share": 1.0,
+    "within_5bp": 443
+   },
+   "sensitivities": {
+    "ER=0": {
+     "days": 1545,
+     "max_abs_bp": 678.0919,
+     "median_abs_bp": 0.7008,
+     "missing": 0,
+     "p95_abs_bp": 2.6275,
+     "share": 0.996764,
+     "within_5bp": 1540
+    },
+    "y=0": {
+     "days": 1545,
+     "max_abs_bp": 677.5885,
+     "median_abs_bp": 0.4854,
+     "missing": 0,
+     "p95_abs_bp": 2.3076,
+     "share": 0.997411,
+     "within_5bp": 1541
+    }
+   },
+   "span": [
+    "2019-01-08",
+    "2025-02-28"
+   ]
+  }
+ },
+ "reads": {
+  "fut_settle_strip": {
+   "cut_applied": "2025-03-01",
+   "date_col": "ref",
+   "date_format": "iso_day",
+   "distinct_sessions_read": 3722,
+   "first_session_read": "2010-06-04",
+   "last_session_read": "2025-02-28",
+   "opened_on_the_word": false,
+   "panel": "fut_settle_strip",
+   "path": "data/fixtures/fut_settle_strip.csv.gz",
+   "reserved_from": "2025-03-01",
+   "reserved_rows_read": 0,
+   "rows_read": 2936169,
+   "sessions_read": 2936169,
+   "sha256": "33a74685fa5ddb8d756ef1a9d359d46ca6bbbe7c1c1414f97e99ec05c06bb346",
+   "status": "present"
+  },
+  "ke_settle_strip": {
+   "rows": 36880,
+   "sha256": "ed4abe652cff28d8693cdeca7ef836ca5a9027dd07ad461f200e62dba75b75fc"
+  },
+  "lme_westmetall_daily": {
+   "rows": 10280,
+   "sha256": "93444f8f2b470725b57ed5112bac827f0fa61c34f5f3d6fb550b39ff3b93a3a1"
+  },
+  "nav_AGQ": {
+   "file": "AGQ__20260926T234231Z.csv",
+   "rows_before_cut": 4087,
+   "sha256": "f0038a82355fb4c3af2b7c9738f10cc84a45d920d0a63d1594fe70de2bf86bfb"
+  },
+  "nav_BOIL": {
+   "file": "BOIL__20260921T231414Z.csv",
+   "rows_before_cut": 3289,
+   "sha256": "6643b060db19a623d1cbf6f2ec5e8fb324057591261a08e447717406edb5ca42"
+  },
+  "nav_CMD": {
+   "file": "CMD__20260926T234237Z.csv",
+   "rows_before_cut": 1955,
+   "sha256": "f8f0cc07a0ef26a841a1b1c305e4ff91aecbf28e4450e62f65265521dba5b036"
+  },
+  "nav_GLL": {
+   "file": "GLL__20260926T234229Z.csv",
+   "rows_before_cut": 4087,
+   "sha256": "358c797c990c17bc59ae5176dac841c6aacdacbe6448ab9e6f56e6afcaa6970b"
+  },
+  "nav_KOLD": {
+   "file": "KOLD__20260921T231415Z.csv",
+   "rows_before_cut": 3371,
+   "sha256": "ae085d67ea2615f23a139633ab89ac49be66596680d5689a470b1dea54bd6860"
+  },
+  "nav_SCO": {
+   "file": "SCO__20260921T231419Z.csv",
+   "rows_before_cut": 4091,
+   "sha256": "8c73c09bd0fde89119822da67e20a824f9daef6628c2387cff8e7829e2d053a0"
+  },
+  "nav_UCD": {
+   "file": "UCD__20260926T234236Z.csv",
+   "rows_before_cut": 1955,
+   "sha256": "70d8fb2927c8cf57d7826c1eb7bbc6a2cdef236acc5ea614ec57efa175fd54a4"
+  },
+  "nav_UCO": {
+   "file": "UCO__20260921T231417Z.csv",
+   "rows_before_cut": 4091,
+   "sha256": "70faf9ecf2c0998b92a5980b40c75665a88181a8ed56ca83a6ae1cb0dcb6fd4d"
+  },
+  "nav_UGL": {
+   "file": "UGL__20260926T234227Z.csv",
+   "rows_before_cut": 4087,
+   "sha256": "a5460a85f3d68b92f9c1ea1697855b7ef3ea4141591ad4171cb0125b151309e8"
+  },
+  "nav_ZSL": {
+   "file": "ZSL__20260926T234233Z.csv",
+   "rows_before_cut": 4087,
+   "sha256": "07adabbf4963e6e7fb02108fcf34c48e9c5a7ec21cfbb4f35a7044b79d9f3c57"
+  },
+  "sierra_ice_daily": {
+   "files": 237,
+   "record": "data\\index_reweight\\sierra_download_record_ice.json"
+  },
+  "spec_sha256": "5c20e9c6eb4221f9a22710410b16b44f481966d5b4fc38e41e1d392a29c8eafe"
+ },
+ "spec": "D634 (8fb1619 + its s.8 amendment), IR-A1..IR-A13",
+ "tracker": {
+  "file": "data\\index_reweight\\drift_tracker_daily.csv.gz",
+  "rows": 57568,
+  "sha256": "eacaf359e0fce7109433a105d838cef0abca31f596b84d98614192e6dee49c87"
+ },
+ "verdict": {
+  "aggregate_failures": [
+   "UCD",
+   "CMD"
+  ],
+  "coverage_failures": [],
+  "daily_failures": [],
+  "monthly_failures": [
+   "BOIL",
+   "KOLD",
+   "UGL",
+   "GLL",
+   "AGQ",
+   "ZSL"
+  ],
+  "roll_day_failures": [],
+  "verdict": "UNRESOLVED (proxy)"
+ },
+ "weights_at_det": {
+  "2016": {
+   "Aluminum": {
+    "drift": 0.046852514010514226,
+    "drift_deposit_form": 0.04831279274082601,
+    "target": 0.045987079540129205,
+    "target_prior": 0.04593157862205264
+   },
+   "Brent Crude Oil": {
+    "drift": 0.05832300828432195,
+    "drift_deposit_form": 0.05270074096725189,
+    "target": 0.07530236924697631,
+    "target_prior": 0.07156504785304857
+   },
+   "Coffee": {
+    "drift": 0.018669186724037466,
+    "drift_deposit_form": 0.01807747117881937,
+    "target": 0.022943229770567702,
+    "target_prior": 0.02212175933634722
+   },
+   "Copper": {
+    "drift": 0.06890849351177,
+    "drift_deposit_form": 0.07343992252448447,
+    "target": 0.07627247923727522,
+    "target_prior": 0.07537577773872667
+   },
+   "Corn": {
+    "drift": 0.08051136880811516,
+    "drift_deposit_form": 0.07741448141843553,
+    "target": 0.07358702926412972,
+    "target_prior": 0.07246344782609657
+   },
+   "Cotton": {
+    "drift": 0.019182240652932076,
+    "drift_deposit_form": 0.02023424426743905,
+    "target": 0.014931909850680903,
+    "target_prior": 0.015129989546100312
+   },
+   "Gold": {
+    "drift": 0.13584877506320528,
+    "drift_deposit_form": 0.1454492740704444,
+    "target": 0.11379860886201391,
+    "target_prior": 0.11904142642875719
+   },
+   "HRW Wheat": {
+    "drift": 0.010895878916411696,
+    "drift_deposit_form": 0.01055181594499769,
+    "target": 0.011531399884686003,
+    "target_prior": 0.01170508964884731
+   },
+   "Lean Hogs": {
+    "drift": 0.01816156850471956,
+    "drift_deposit_form": 0.01960606732391087,
+    "target": 0.020621329793786707,
+    "target_prior": 0.01939763941807082
+   },
+   "Live Cattle": {
+    "drift": 0.03340049797545247,
+    "drift_deposit_form": 0.03675100380540219,
+    "target": 0.035666189643338106,
+    "target_prior": 0.03327391900178243
+   },
+   "Natural Gas": {
+    "drift": 0.09108178876839977,
+    "drift_deposit_form": 0.07210802436516735,
+    "target": 0.08448841915511582,
+    "target_prior": 0.08739754737807358
+   },
+   "Nickel": {
+    "drift": 0.014238165651454488,
+    "drift_deposit_form": 0.015074349530257061,
+    "target": 0.023593749764062505,
+    "target_prior": 0.021193959364181218
+   },
+   "RBOB Gasoline": {
+    "drift": 0.03937884922604083,
+    "drift_deposit_form": 0.04286691135942274,
+    "target": 0.03747877962521221,
+    "target_prior": 0.03692848889214533
+   },
+   "Silver": {
+    "drift": 0.046238709998123836,
+    "drift_deposit_form": 0.0490550918471087,
+    "target": 0.04213182957868171,
+    "target_prior": 0.042760538717183834
+   },
+   "Soybean Meal": {
+    "drift": 0.025863212269148988,
+    "drift_deposit_form": 0.029866492578203906,
+    "target": 0.028446629715533706,
+    "target_prior": 0.027453109176406722
+   },
+   "Soybean Oil": {
+    "drift": 0.0313377706036617,
+    "drift_deposit_form": 0.03251774474712144,
+    "target": 0.028375479716245204,
+    "target_prior": 0.028129679156109626
+   },
+   "Soybeans": {
+    "drift": 0.05799300825071528,
+    "drift_deposit_form": 0.06306648848045977,
+    "target": 0.05703829942961701,
+    "target_prior": 0.05681258829562234
+   },
+   "Sugar": {
+    "drift": 0.049732251877292556,
+    "drift_deposit_form": 0.0485695468052752,
+    "target": 0.03627250963727491,
+    "target_prior": 0.03995652880130413
+   },
+   "ULS Diesel": {
+    "drift": 0.030371904816025704,
+    "drift_deposit_form": 0.02953297827243035,
+    "target": 0.038290389617096104,
+    "target_prior": 0.03760918887172433
+   },
+   "WTI Crude Oil": {
+    "drift": 0.06874340462896439,
+    "drift_deposit_form": 0.057890450689445115,
+    "target": 0.07469762925302371,
+    "target_prior": 0.07843494764695157
+   },
+   "Wheat": {
+    "drift": 0.03355253937316888,
+    "drift_deposit_form": 0.03522710979689037,
+    "target": 0.033268339667316606,
+    "target_prior": 0.03327640900170773
+   },
+   "Zinc": {
+    "drift": 0.020714862085523655,
+    "drift_deposit_form": 0.021686997286206558,
+    "target": 0.025276319747236806,
+    "target_prior": 0.024041339278759823
+   }
+  },
+  "2017": {
+   "Aluminum": {
+    "drift": 0.04274825537402481,
+    "drift_deposit_form": 0.04703531265346221,
+    "target": 0.045682530000000006,
+    "target_prior": 0.045987079540129205
+   },
+   "Brent Crude Oil": {
+    "drift": 0.09981497673878074,
+    "drift_deposit_form": 0.0920940369484938,
+    "target": 0.07821861000000001,
+    "target_prior": 0.07530236924697631
+   },
+   "Coffee": {
+    "drift": 0.021896650996818756,
+    "drift_deposit_form": 0.022166088473578486,
+    "target": 0.023774299999999998,
+    "target_prior": 0.022943229770567702
+   },
+   "Copper": {
+    "drift": 0.07600165922081041,
+    "drift_deposit_form": 0.08319535798433945,
+    "target": 0.07590762,
+    "target_prior": 0.07627247923727522
+   },
+   "Corn": {
+    "drift": 0.059059199221890755,
+    "drift_deposit_form": 0.06029171078612049,
+    "target": 0.07410372999999999,
+    "target_prior": 0.07358702926412972
+   },
+   "Cotton": {
+    "drift": 0.014232652093346959,
+    "drift_deposit_form": 0.015641334235023816,
+    "target": 0.01447819,
+    "target_prior": 0.014931909850680903
+   },
+   "Gold": {
+    "drift": 0.09538929484128476,
+    "drift_deposit_form": 0.10501263376383112,
+    "target": 0.11171557,
+    "target_prior": 0.11379860886201391
+   },
+   "HRW Wheat": {
+    "drift": 0.008548751036776032,
+    "drift_deposit_form": 0.007939543002502825,
+    "target": 0.01183459,
+    "target_prior": 0.011531399884686003
+   },
+   "Lean Hogs": {
+    "drift": 0.017531664814798727,
+    "drift_deposit_form": 0.01707605641136542,
+    "target": 0.02094123,
+    "target_prior": 0.020621329793786707
+   },
+   "Live Cattle": {
+    "drift": 0.024272166585456646,
+    "drift_deposit_form": 0.029401227641108214,
+    "target": 0.03977109,
+    "target_prior": 0.035666189643338106
+   },
+   "Natural Gas": {
+    "drift": 0.09182962465846871,
+    "drift_deposit_form": 0.0721286960127185,
+    "target": 0.07976505,
+    "target_prior": 0.08448841915511582
+   },
+   "Nickel": {
+    "drift": 0.02283875088086576,
+    "drift_deposit_form": 0.024927572014398623,
+    "target": 0.02540917,
+    "target_prior": 0.023593749764062505
+   },
+   "RBOB Gasoline": {
+    "drift": 0.04179037127250021,
+    "drift_deposit_form": 0.03800820829986685,
+    "target": 0.03764545,
+    "target_prior": 0.03747877962521221
+   },
+   "Silver": {
+    "drift": 0.038397394662203384,
+    "drift_deposit_form": 0.04194588590147343,
+    "target": 0.04115256,
+    "target_prior": 0.04213182957868171
+   },
+   "Soybean Meal": {
+    "drift": 0.026207554622232204,
+    "drift_deposit_form": 0.02881555041369477,
+    "target": 0.0290152,
+    "target_prior": 0.028446629715533706
+   },
+   "Soybean Oil": {
+    "drift": 0.02651892564474666,
+    "drift_deposit_form": 0.028022306236376297,
+    "target": 0.02807444,
+    "target_prior": 0.028375479716245204
+   },
+   "Soybeans": {
+    "drift": 0.051938987731436424,
+    "drift_deposit_form": 0.05698453692789699,
+    "target": 0.0583877,
+    "target_prior": 0.05703829942961701
+   },
+   "Sugar": {
+    "drift": 0.040381425671747094,
+    "drift_deposit_form": 0.043008214606245626,
+    "target": 0.033978760000000004,
+    "target_prior": 0.03627250963727491
+   },
+   "ULS Diesel": {
+    "drift": 0.047945422127348515,
+    "drift_deposit_form": 0.0469500567488141,
+    "target": 0.03829521,
+    "target_prior": 0.038290389617096104
+   },
+   "WTI Crude Oil": {
+    "drift": 0.09404301551929,
+    "drift_deposit_form": 0.07805013681104304,
+    "target": 0.07178139,
+    "target_prior": 0.07469762925302371
+   },
+   "Wheat": {
+    "drift": 0.023784633335430225,
+    "drift_deposit_form": 0.02309569638460255,
+    "target": 0.0331742,
+    "target_prior": 0.033268339667316606
+   },
+   "Zinc": {
+    "drift": 0.03482862294974227,
+    "drift_deposit_form": 0.03820983774304335,
+    "target": 0.026893410000000003,
+    "target_prior": 0.025276319747236806
+   }
+  },
+  "2018": {
+   "Aluminum": {
+    "drift": 0.05505911139055231,
+    "drift_deposit_form": 0.056702681744696094,
+    "target": 0.04508701045087011,
+    "target_prior": 0.045682530000000006
+   },
+   "Brent Crude Oil": {
+    "drift": 0.08615022772717906,
+    "drift_deposit_form": 0.0876434155210785,
+    "target": 0.07680671076806711,
+    "target_prior": 0.07821861000000001
+   },
+   "Coffee": {
+    "drift": 0.0198824033571757,
+    "drift_deposit_form": 0.01900749845960198,
+    "target": 0.026050390260503903,
+    "target_prior": 0.023774299999999998
+   },
+   "Copper": {
+    "drift": 0.0895508148569473,
+    "drift_deposit_form": 0.09204266756829364,
+    "target": 0.0715867907158679,
+    "target_prior": 0.07590762
+   },
+   "Corn": {
+    "drift": 0.06762085420415158,
+    "drift_deposit_form": 0.06253877991195664,
+    "target": 0.061344250613442515,
+    "target_prior": 0.07410372999999999
+   },
+   "Cotton": {
+    "drift": 0.01419707249120359,
+    "drift_deposit_form": 0.015048382247796555,
+    "target": 0.014537110145371101,
+    "target_prior": 0.01447819
+   },
+   "Gold": {
+    "drift": 0.11708598057446636,
+    "drift_deposit_form": 0.12176230642491719,
+    "target": 0.11945882119458821,
+    "target_prior": 0.11171557
+   },
+   "HRW Wheat": {
+    "drift": 0.01110834731309694,
+    "drift_deposit_form": 0.009702541696948171,
+    "target": 0.013048540130485401,
+    "target_prior": 0.01183459
+   },
+   "Lean Hogs": {
+    "drift": 0.021744499652176105,
+    "drift_deposit_form": 0.021604725161089463,
+    "target": 0.020760360207603606,
+    "target_prior": 0.02094123
+   },
+   "Live Cattle": {
+    "drift": 0.03841463446876157,
+    "drift_deposit_form": 0.042173789354803586,
+    "target": 0.043115070431150704,
+    "target_prior": 0.03977109
+   },
+   "Natural Gas": {
+    "drift": 0.061934189605015406,
+    "drift_deposit_form": 0.052366737711275785,
+    "target": 0.08014097080140971,
+    "target_prior": 0.07976505
+   },
+   "Nickel": {
+    "drift": 0.0288950285727073,
+    "drift_deposit_form": 0.029919821376508778,
+    "target": 0.027616480276164805,
+    "target_prior": 0.02540917
+   },
+   "RBOB Gasoline": {
+    "drift": 0.038164259437208664,
+    "drift_deposit_form": 0.03824181744690747,
+    "target": 0.03750660037506601,
+    "target_prior": 0.03764545
+   },
+   "Silver": {
+    "drift": 0.04004882374277328,
+    "drift_deposit_form": 0.04141432887190199,
+    "target": 0.036729800367298004,
+    "target_prior": 0.04115256
+   },
+   "Soybean Meal": {
+    "drift": 0.027904529363158872,
+    "drift_deposit_form": 0.027827553343635996,
+    "target": 0.030355430303554306,
+    "target_prior": 0.0290152
+   },
+   "Soybean Oil": {
+    "drift": 0.025200027378003493,
+    "drift_deposit_form": 0.02559228854071927,
+    "target": 0.027481210274812103,
+    "target_prior": 0.02807444
+   },
+   "Soybeans": {
+    "drift": 0.05299343815399909,
+    "drift_deposit_form": 0.05327472019174208,
+    "target": 0.05959695059596951,
+    "target_prior": 0.0583877
+   },
+   "Sugar": {
+    "drift": 0.02296667073244899,
+    "drift_deposit_form": 0.02311843290807684,
+    "target": 0.035366250353662504,
+    "target_prior": 0.033978760000000004
+   },
+   "ULS Diesel": {
+    "drift": 0.04239293690954989,
+    "drift_deposit_form": 0.04345913208223716,
+    "target": 0.03665240036652401,
+    "target_prior": 0.03829521
+   },
+   "WTI Crude Oil": {
+    "drift": 0.07471766283692022,
+    "drift_deposit_form": 0.0744417398400539,
+    "target": 0.07319329073193291,
+    "target_prior": 0.07178139
+   },
+   "Wheat": {
+    "drift": 0.03140046327331282,
+    "drift_deposit_form": 0.027510666551363666,
+    "target": 0.0325892403258924,
+    "target_prior": 0.0331742
+   },
+   "Zinc": {
+    "drift": 0.032568023959191526,
+    "drift_deposit_form": 0.03460597304439531,
+    "target": 0.030976320309763203,
+    "target_prior": 0.026893410000000003
+   }
+  },
+  "2019": {
+   "Aluminum": {
+    "drift": 0.041367264156271594,
+    "drift_deposit_form": 0.042173333859130434,
+    "target": 0.04412617955873821,
+    "target_prior": 0.04508701045087011
+   },
+   "Brent Crude Oil": {
+    "drift": 0.070954366943722,
+    "drift_deposit_form": 0.07606994123793792,
+    "target": 0.07342138926578612,
+    "target_prior": 0.07680671076806711
+   },
+   "Coffee": {
+    "drift": 0.022705712950556338,
+    "drift_deposit_form": 0.020961415166183946,
+    "target": 0.024780559752194405,
+    "target_prior": 0.026050390260503903
+   },
+   "Copper": {
+    "drift": 0.06369141850499915,
+    "drift_deposit_form": 0.06377151509426171,
+    "target": 0.07318566926814331,
+    "target_prior": 0.0715867907158679
+   },
+   "Corn": {
+    "drift": 0.07274082359403926,
+    "drift_deposit_form": 0.06579670176014311,
+    "target": 0.058921719410782815,
+    "target_prior": 0.061344250613442515
+   },
+   "Cotton": {
+    "drift": 0.014771819358923875,
+    "drift_deposit_form": 0.015113802273906674,
+    "target": 0.014194189858058103,
+    "target_prior": 0.014537110145371101
+   },
+   "Gold": {
+    "drift": 0.1269747764899182,
+    "drift_deposit_form": 0.12781357193870632,
+    "target": 0.1224250287757497,
+    "target_prior": 0.11945882119458821
+   },
+   "HRW Wheat": {
+    "drift": 0.01634650985375664,
+    "drift_deposit_form": 0.014038155535844879,
+    "target": 0.012937849870621502,
+    "target_prior": 0.013048540130485401
+   },
+   "Lean Hogs": {
+    "drift": 0.01960417054086282,
+    "drift_deposit_form": 0.020747674659135382,
+    "target": 0.018491489815085103,
+    "target_prior": 0.020760360207603606
+   },
+   "Live Cattle": {
+    "drift": 0.04853495232271698,
+    "drift_deposit_form": 0.0495513646516851,
+    "target": 0.04090746959092531,
+    "target_prior": 0.043115070431150704
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.0,
+    "drift_deposit_form": 0.0,
+    "target": 0.026247779737522205,
+    "target_prior": 0.0
+   },
+   "Natural Gas": {
+    "drift": 0.0905676094760349,
+    "drift_deposit_form": 0.09344597563345915,
+    "target": 0.08260137917398622,
+    "target_prior": 0.08014097080140971
+   },
+   "Nickel": {
+    "drift": 0.026692952978240227,
+    "drift_deposit_form": 0.02705543241474142,
+    "target": 0.027093209729067903,
+    "target_prior": 0.027616480276164805
+   },
+   "RBOB Gasoline": {
+    "drift": 0.030612956091592664,
+    "drift_deposit_form": 0.03075989924170397,
+    "target": 0.022941049770589503,
+    "target_prior": 0.03750660037506601
+   },
+   "Silver": {
+    "drift": 0.03648113515642738,
+    "drift_deposit_form": 0.03663764218707248,
+    "target": 0.038878359611216405,
+    "target_prior": 0.036729800367298004
+   },
+   "Soybean Meal": {
+    "drift": 0.03310656635994702,
+    "drift_deposit_form": 0.03280369889992466,
+    "target": 0.03443025965569741,
+    "target_prior": 0.030355430303554306
+   },
+   "Soybean Oil": {
+    "drift": 0.0252873792435755,
+    "drift_deposit_form": 0.02473170843029905,
+    "target": 0.031037849689621505,
+    "target_prior": 0.027481210274812103
+   },
+   "Soybeans": {
+    "drift": 0.06182715832367448,
+    "drift_deposit_form": 0.05944702989236909,
+    "target": 0.0602500093974999,
+    "target_prior": 0.05959695059596951
+   },
+   "Sugar": {
+    "drift": 0.03232595680238085,
+    "drift_deposit_form": 0.03052083362892733,
+    "target": 0.0314806096851939,
+    "target_prior": 0.035366250353662504
+   },
+   "ULS Diesel": {
+    "drift": 0.034624329307310915,
+    "drift_deposit_form": 0.036199439976227904,
+    "target": 0.021596669784033302,
+    "target_prior": 0.03665240036652401
+   },
+   "WTI Crude Oil": {
+    "drift": 0.0634020263481349,
+    "drift_deposit_form": 0.06756264861114163,
+    "target": 0.0765786092342139,
+    "target_prior": 0.07319329073193291
+   },
+   "Wheat": {
+    "drift": 0.04259931576243198,
+    "drift_deposit_form": 0.03793270252329012,
+    "target": 0.031403969685960306,
+    "target_prior": 0.0325892403258924
+   },
+   "Zinc": {
+    "drift": 0.024780799434482286,
+    "drift_deposit_form": 0.026865512383907657,
+    "target": 0.032068699679313,
+    "target_prior": 0.030976320309763203
+   }
+  },
+  "2020": {
+   "Aluminum": {
+    "drift": 0.039455723251652156,
+    "drift_deposit_form": 0.03931944887279724,
+    "target": 0.043266511297995344,
+    "target_prior": 0.04412617955873821
+   },
+   "Brent Crude Oil": {
+    "drift": 0.08038844739223087,
+    "drift_deposit_form": 0.09057213625246519,
+    "target": 0.07009355210280657,
+    "target_prior": 0.07342138926578612
+   },
+   "Coffee": {
+    "drift": 0.027141495977665173,
+    "drift_deposit_form": 0.02437726326631582,
+    "target": 0.027121520813645626,
+    "target_prior": 0.024780559752194405
+   },
+   "Copper": {
+    "drift": 0.0712832802597337,
+    "drift_deposit_form": 0.07333120845586455,
+    "target": 0.06960582208817466,
+    "target_prior": 0.07318566926814331
+   },
+   "Corn": {
+    "drift": 0.05449383137964532,
+    "drift_deposit_form": 0.05102165515654916,
+    "target": 0.05833139174994176,
+    "target_prior": 0.058921719410782815
+   },
+   "Cotton": {
+    "drift": 0.012526874781160395,
+    "drift_deposit_form": 0.012477638103354546,
+    "target": 0.014915570447467113,
+    "target_prior": 0.014194189858058103
+   },
+   "Gold": {
+    "drift": 0.13738039140152714,
+    "drift_deposit_form": 0.13906797962645318,
+    "target": 0.136224134086724,
+    "target_prior": 0.1224250287757497
+   },
+   "HRW Wheat": {
+    "drift": 0.01123338940109892,
+    "drift_deposit_form": 0.01041327905375337,
+    "target": 0.014859640445789215,
+    "target_prior": 0.012937849870621502
+   },
+   "Lean Hogs": {
+    "drift": 0.01901372901098632,
+    "drift_deposit_form": 0.013770566405202592,
+    "target": 0.017779520533385617,
+    "target_prior": 0.018491489815085103
+   },
+   "Live Cattle": {
+    "drift": 0.038627031723816034,
+    "drift_deposit_form": 0.0392011365597144,
+    "target": 0.04020119120603574,
+    "target_prior": 0.04090746959092531
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.027441293667624357,
+    "drift_deposit_form": 0.029041555912038844,
+    "target": 0.025990850779725523,
+    "target_prior": 0.026247779737522205
+   },
+   "Natural Gas": {
+    "drift": 0.05743371956050614,
+    "drift_deposit_form": 0.04855062950784477,
+    "target": 0.07960135238804057,
+    "target_prior": 0.08260137917398622
+   },
+   "Nickel": {
+    "drift": 0.03126715276554502,
+    "drift_deposit_form": 0.032171798617666454,
+    "target": 0.027507970825239127,
+    "target_prior": 0.027093209729067903
+   },
+   "RBOB Gasoline": {
+    "drift": 0.026999726689152057,
+    "drift_deposit_form": 0.030641517127204868,
+    "target": 0.02258358067750742,
+    "target_prior": 0.022941049770589503
+   },
+   "Silver": {
+    "drift": 0.0417289650048448,
+    "drift_deposit_form": 0.042008092232192186,
+    "target": 0.037785781133573434,
+    "target_prior": 0.038878359611216405
+   },
+   "Soybean Meal": {
+    "drift": 0.02960308522308502,
+    "drift_deposit_form": 0.02869497792187267,
+    "target": 0.03295077098852313,
+    "target_prior": 0.03443025965569741
+   },
+   "Soybean Oil": {
+    "drift": 0.03477341185053504,
+    "drift_deposit_form": 0.03404919055627495,
+    "target": 0.028985800869574026,
+    "target_prior": 0.031037849689621505
+   },
+   "Soybeans": {
+    "drift": 0.05657997300795364,
+    "drift_deposit_form": 0.05372627956654501,
+    "target": 0.05636760169102805,
+    "target_prior": 0.0602500093974999
+   },
+   "Sugar": {
+    "drift": 0.03109532840586896,
+    "drift_deposit_form": 0.02896490850174382,
+    "target": 0.03009894090296823,
+    "target_prior": 0.0314806096851939
+   },
+   "ULS Diesel": {
+    "drift": 0.02278255438720855,
+    "drift_deposit_form": 0.023969319021264503,
+    "target": 0.02113715063411452,
+    "target_prior": 0.021596669784033302
+   },
+   "WTI Crude Oil": {
+    "drift": 0.09015343535737719,
+    "drift_deposit_form": 0.09297060953199414,
+    "target": 0.07990645239719357,
+    "target_prior": 0.0765786092342139
+   },
+   "Wheat": {
+    "drift": 0.030745899077538632,
+    "drift_deposit_form": 0.030873823973580974,
+    "target": 0.030422510912675328,
+    "target_prior": 0.031403969685960306
+   },
+   "Zinc": {
+    "drift": 0.027851260423244643,
+    "drift_deposit_form": 0.030784985777306727,
+    "target": 0.034262381027871436,
+    "target_prior": 0.032068699679313
+   }
+  },
+  "2021": {
+   "Aluminum": {
+    "drift": 0.0420900041072109,
+    "drift_deposit_form": 0.04482026355134229,
+    "target": 0.04208397,
+    "target_prior": 0.043266511297995344
+   },
+   "Brent Crude Oil": {
+    "drift": 0.04897798771256397,
+    "drift_deposit_form": 0.04826371537091389,
+    "target": 0.06855168,
+    "target_prior": 0.07009355210280657
+   },
+   "Coffee": {
+    "drift": 0.023539125928934933,
+    "drift_deposit_form": 0.024343840712493722,
+    "target": 0.027366190000000002,
+    "target_prior": 0.027121520813645626
+   },
+   "Copper": {
+    "drift": 0.08078717511039943,
+    "drift_deposit_form": 0.08947461796070268,
+    "target": 0.053937679999999995,
+    "target_prior": 0.06960582208817466
+   },
+   "Corn": {
+    "drift": 0.065742544915158,
+    "drift_deposit_form": 0.06721031523363934,
+    "target": 0.055866490000000005,
+    "target_prior": 0.05833139174994176
+   },
+   "Cotton": {
+    "drift": 0.014945021334125666,
+    "drift_deposit_form": 0.01641790479112667,
+    "target": 0.015110980000000001,
+    "target_prior": 0.014915570447467113
+   },
+   "Gold": {
+    "drift": 0.14525506707813501,
+    "drift_deposit_form": 0.15954458156198478,
+    "target": 0.14645956,
+    "target_prior": 0.136224134086724
+   },
+   "HRW Wheat": {
+    "drift": 0.016424509723202734,
+    "drift_deposit_form": 0.017075440323426085,
+    "target": 0.01571388,
+    "target_prior": 0.014859640445789215
+   },
+   "Lean Hogs": {
+    "drift": 0.01557420164377192,
+    "drift_deposit_form": 0.012132687400842255,
+    "target": 0.01726395,
+    "target_prior": 0.017779520533385617
+   },
+   "Live Cattle": {
+    "drift": 0.03204642312435123,
+    "drift_deposit_form": 0.032451039885998,
+    "target": 0.03846403,
+    "target_prior": 0.04020119120603574
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.01632521329542623,
+    "drift_deposit_form": 0.015318405687248968,
+    "target": 0.02641519,
+    "target_prior": 0.025990850779725523
+   },
+   "Natural Gas": {
+    "drift": 0.08727777831541794,
+    "drift_deposit_form": 0.04890949662869709,
+    "target": 0.08072006,
+    "target_prior": 0.07960135238804057
+   },
+   "Nickel": {
+    "drift": 0.03113231054863387,
+    "drift_deposit_form": 0.03467269327042996,
+    "target": 0.027139540000000004,
+    "target_prior": 0.027507970825239127
+   },
+   "RBOB Gasoline": {
+    "drift": 0.016985591179964402,
+    "drift_deposit_form": 0.015957848419872266,
+    "target": 0.021791839999999996,
+    "target_prior": 0.02258358067750742
+   },
+   "Silver": {
+    "drift": 0.049128237629223845,
+    "drift_deposit_form": 0.05366302352335758,
+    "target": 0.04353914,
+    "target_prior": 0.037785781133573434
+   },
+   "Soybean Meal": {
+    "drift": 0.04146338746168774,
+    "drift_deposit_form": 0.04398425919647585,
+    "target": 0.03598764,
+    "target_prior": 0.03295077098852313
+   },
+   "Soybean Oil": {
+    "drift": 0.03205117857000574,
+    "drift_deposit_form": 0.034443907574585306,
+    "target": 0.0319559,
+    "target_prior": 0.028985800869574026
+   },
+   "Soybeans": {
+    "drift": 0.07098891641293796,
+    "drift_deposit_form": 0.07726432402048898,
+    "target": 0.05817409,
+    "target_prior": 0.05636760169102805
+   },
+   "Sugar": {
+    "drift": 0.030308882517031246,
+    "drift_deposit_form": 0.032817400231394414,
+    "target": 0.02987085,
+    "target_prior": 0.03009894090296823
+   },
+   "ULS Diesel": {
+    "drift": 0.014043459106877288,
+    "drift_deposit_form": 0.013301033439234042,
+    "target": 0.02082014,
+    "target_prior": 0.02113715063411452
+   },
+   "WTI Crude Oil": {
+    "drift": 0.05704369601843285,
+    "drift_deposit_form": 0.04347001209877812,
+    "target": 0.08144831999999999,
+    "target_prior": 0.07990645239719357
+   },
+   "Wheat": {
+    "drift": 0.031149615173230814,
+    "drift_deposit_form": 0.03385199775040789,
+    "target": 0.028850050000000002,
+    "target_prior": 0.030422510912675328
+   },
+   "Zinc": {
+    "drift": 0.03671967309327632,
+    "drift_deposit_form": 0.04061119136655988,
+    "target": 0.03246883,
+    "target_prior": 0.034262381027871436
+   }
+  },
+  "2022": {
+   "Aluminum": {
+    "drift": 0.04869452742607195,
+    "drift_deposit_form": 0.047813702860395886,
+    "target": 0.04245768,
+    "target_prior": 0.04208397
+   },
+   "Brent Crude Oil": {
+    "drift": 0.08260628200143418,
+    "drift_deposit_form": 0.09037606812260904,
+    "target": 0.06963118,
+    "target_prior": 0.06855168
+   },
+   "Coffee": {
+    "drift": 0.04184750003727656,
+    "drift_deposit_form": 0.03857305444226447,
+    "target": 0.027333549999999998,
+    "target_prior": 0.027366190000000002
+   },
+   "Copper": {
+    "drift": 0.050789259931234,
+    "drift_deposit_form": 0.050481032776058664,
+    "target": 0.05398292,
+    "target_prior": 0.053937679999999995
+   },
+   "Corn": {
+    "drift": 0.054570115241874856,
+    "drift_deposit_form": 0.059407847405597555,
+    "target": 0.055899029999999995,
+    "target_prior": 0.055866490000000005
+   },
+   "Cotton": {
+    "drift": 0.017370803745640012,
+    "drift_deposit_form": 0.017060948923398853,
+    "target": 0.01503287,
+    "target_prior": 0.015110980000000001
+   },
+   "Gold": {
+    "drift": 0.10944570979506278,
+    "drift_deposit_form": 0.10777259639552107,
+    "target": 0.15,
+    "target_prior": 0.14645956
+   },
+   "HRW Wheat": {
+    "drift": 0.016126363292079803,
+    "drift_deposit_form": 0.015152747586255823,
+    "target": 0.01663653,
+    "target_prior": 0.01571388
+   },
+   "Lean Hogs": {
+    "drift": 0.016557497779293214,
+    "drift_deposit_form": 0.01772838970113564,
+    "target": 0.0175465,
+    "target_prior": 0.01726395
+   },
+   "Live Cattle": {
+    "drift": 0.036724282549927795,
+    "drift_deposit_form": 0.029988277110000548,
+    "target": 0.03580752,
+    "target_prior": 0.03846403
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.033576247811893216,
+    "drift_deposit_form": 0.03362187115555167,
+    "target": 0.02649624,
+    "target_prior": 0.02641519
+   },
+   "Natural Gas": {
+    "drift": 0.0879846949058551,
+    "drift_deposit_form": 0.0794048935127729,
+    "target": 0.07954867,
+    "target_prior": 0.08072006
+   },
+   "Nickel": {
+    "drift": 0.024620479737814855,
+    "drift_deposit_form": 0.024355942041482732,
+    "target": 0.02713427,
+    "target_prior": 0.027139540000000004
+   },
+   "RBOB Gasoline": {
+    "drift": 0.027076188903125884,
+    "drift_deposit_form": 0.02895111108078255,
+    "target": 0.021728010000000002,
+    "target_prior": 0.021791839999999996
+   },
+   "Silver": {
+    "drift": 0.02832491764401946,
+    "drift_deposit_form": 0.027900995527737435,
+    "target": 0.04746893,
+    "target_prior": 0.04353914
+   },
+   "Soybean Meal": {
+    "drift": 0.027351661723703898,
+    "drift_deposit_form": 0.026232908913807747,
+    "target": 0.035200260000000004,
+    "target_prior": 0.03598764
+   },
+   "Soybean Oil": {
+    "drift": 0.0343530018621994,
+    "drift_deposit_form": 0.03849021171522339,
+    "target": 0.03171611,
+    "target_prior": 0.0319559
+   },
+   "Soybeans": {
+    "drift": 0.04759246573466886,
+    "drift_deposit_form": 0.05006038600239168,
+    "target": 0.05788844,
+    "target_prior": 0.05817409
+   },
+   "Sugar": {
+    "drift": 0.027837419335682304,
+    "drift_deposit_form": 0.027817317581600935,
+    "target": 0.027943259999999998,
+    "target_prior": 0.02987085
+   },
+   "ULS Diesel": {
+    "drift": 0.02647741902387289,
+    "drift_deposit_form": 0.026768117836469638,
+    "target": 0.020526330000000002,
+    "target_prior": 0.02082014
+   },
+   "WTI Crude Oil": {
+    "drift": 0.10093936886277727,
+    "drift_deposit_form": 0.10516295592412474,
+    "target": 0.08036882000000001,
+    "target_prior": 0.08144831999999999
+   },
+   "Wheat": {
+    "drift": 0.02678271343768462,
+    "drift_deposit_form": 0.025206445438441014,
+    "target": 0.02846361,
+    "target_prior": 0.028850050000000002
+   },
+   "Zinc": {
+    "drift": 0.03235107921680709,
+    "drift_deposit_form": 0.03167217794637594,
+    "target": 0.031189269999999998,
+    "target_prior": 0.03246883
+   }
+  },
+  "2023": {
+   "Aluminum": {
+    "drift": 0.03274917609449219,
+    "drift_deposit_form": 0.030380650185731065,
+    "target": 0.04085661,
+    "target_prior": 0.04245768
+   },
+   "Brent Crude Oil": {
+    "drift": 0.06631369426199933,
+    "drift_deposit_form": 0.07821367103730868,
+    "target": 0.07228346000000001,
+    "target_prior": 0.06963118
+   },
+   "Coffee": {
+    "drift": 0.018558997883450883,
+    "drift_deposit_form": 0.0180084798322393,
+    "target": 0.028579300000000002,
+    "target_prior": 0.027333549999999998
+   },
+   "Copper": {
+    "drift": 0.048184737164282086,
+    "drift_deposit_form": 0.044842014866429816,
+    "target": 0.05228907000000001,
+    "target_prior": 0.05398292
+   },
+   "Corn": {
+    "drift": 0.060176715139870364,
+    "drift_deposit_form": 0.0594557095511558,
+    "target": 0.05513296,
+    "target_prior": 0.055899029999999995
+   },
+   "Cotton": {
+    "drift": 0.011157986259383109,
+    "drift_deposit_form": 0.01288754055209962,
+    "target": 0.01558905,
+    "target_prior": 0.01503287
+   },
+   "Gold": {
+    "drift": 0.1557786366079047,
+    "drift_deposit_form": 0.14226991603291117,
+    "target": 0.14853218,
+    "target_prior": 0.15
+   },
+   "HRW Wheat": {
+    "drift": 0.01789970208737474,
+    "drift_deposit_form": 0.016529019075953957,
+    "target": 0.0175431,
+    "target_prior": 0.01663653
+   },
+   "Lead": {
+    "drift": 0.0,
+    "drift_deposit_form": 0.0,
+    "target": 0.00936122,
+    "target_prior": 0.0
+   },
+   "Lean Hogs": {
+    "drift": 0.016875553477238524,
+    "drift_deposit_form": 0.016283847803067613,
+    "target": 0.01743218,
+    "target_prior": 0.0175465
+   },
+   "Live Cattle": {
+    "drift": 0.04061869720176799,
+    "drift_deposit_form": 0.03456197204756124,
+    "target": 0.033187009999999996,
+    "target_prior": 0.03580752
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.031290000693066214,
+    "drift_deposit_form": 0.039217194497931034,
+    "target": 0.02713648,
+    "target_prior": 0.02649624
+   },
+   "Natural Gas": {
+    "drift": 0.07306784573588306,
+    "drift_deposit_form": 0.06949617698403747,
+    "target": 0.07938877999999999,
+    "target_prior": 0.07954867
+   },
+   "Nickel": {
+    "drift": 0.03653662627591577,
+    "drift_deposit_form": 0.034252574470268866,
+    "target": 0.027796880000000003,
+    "target_prior": 0.02713427
+   },
+   "RBOB Gasoline": {
+    "drift": 0.021043943475486836,
+    "drift_deposit_form": 0.02584835400740077,
+    "target": 0.02196197,
+    "target_prior": 0.021728010000000002
+   },
+   "Silver": {
+    "drift": 0.05098484927138015,
+    "drift_deposit_form": 0.04668409504911203,
+    "target": 0.04590196,
+    "target_prior": 0.04746893
+   },
+   "Soybean Meal": {
+    "drift": 0.04065106879352213,
+    "drift_deposit_form": 0.04141689434688509,
+    "target": 0.03528485,
+    "target_prior": 0.035200260000000004
+   },
+   "Soybean Oil": {
+    "drift": 0.03380485663683965,
+    "drift_deposit_form": 0.0355104831649352,
+    "target": 0.03264836,
+    "target_prior": 0.03171611
+   },
+   "Soybeans": {
+    "drift": 0.061894926769259825,
+    "drift_deposit_form": 0.06440311137236109,
+    "target": 0.0578398,
+    "target_prior": 0.05788844
+   },
+   "Sugar": {
+    "drift": 0.028945849956192808,
+    "drift_deposit_form": 0.02811028162736102,
+    "target": 0.02555929,
+    "target_prior": 0.027943259999999998
+   },
+   "ULS Diesel": {
+    "drift": 0.024331223614842065,
+    "drift_deposit_form": 0.03163520563654826,
+    "target": 0.020986570000000003,
+    "target_prior": 0.020526330000000002
+   },
+   "WTI Crude Oil": {
+    "drift": 0.07497055070365334,
+    "drift_deposit_form": 0.08010800645338179,
+    "target": 0.07771654,
+    "target_prior": 0.08036882000000001
+   },
+   "Wheat": {
+    "drift": 0.028192638752358532,
+    "drift_deposit_form": 0.02453441493883845,
+    "target": 0.027939,
+    "target_prior": 0.02846361
+   },
+   "Zinc": {
+    "drift": 0.025971723143835713,
+    "drift_deposit_form": 0.025350386466480784,
+    "target": 0.02905338,
+    "target_prior": 0.031189269999999998
+   }
+  },
+  "2024": {
+   "Aluminum": {
+    "drift": 0.04385185614333732,
+    "drift_deposit_form": 0.04098746705810898,
+    "target": 0.041056260821125214,
+    "target_prior": 0.04085661
+   },
+   "Brent Crude Oil": {
+    "drift": 0.07819822322535905,
+    "drift_deposit_form": 0.08259830591863314,
+    "target": 0.07637995152759904,
+    "target_prior": 0.07228346000000001
+   },
+   "Coffee": {
+    "drift": 0.03561687909995584,
+    "drift_deposit_form": 0.03785011322905664,
+    "target": 0.029741780594835614,
+    "target_prior": 0.028579300000000002
+   },
+   "Copper": {
+    "drift": 0.054916251324262505,
+    "drift_deposit_form": 0.05385225623494523,
+    "target": 0.05297822105956442,
+    "target_prior": 0.05228907000000001
+   },
+   "Corn": {
+    "drift": 0.04191870944336717,
+    "drift_deposit_form": 0.04753954796294554,
+    "target": 0.05662349113246982,
+    "target_prior": 0.05513296
+   },
+   "Cotton": {
+    "drift": 0.015745969428602083,
+    "drift_deposit_form": 0.015720803749329295,
+    "target": 0.015703150314063004,
+    "target_prior": 0.01558905
+   },
+   "Gold": {
+    "drift": 0.1757393898481863,
+    "drift_deposit_form": 0.16708062155260206,
+    "target": 0.14346800286936007,
+    "target_prior": 0.14853218
+   },
+   "HRW Wheat": {
+    "drift": 0.014290639202377685,
+    "drift_deposit_form": 0.014433751803851393,
+    "target": 0.018189100363782008,
+    "target_prior": 0.0175431
+   },
+   "Lead": {
+    "drift": 0.009388284144461915,
+    "drift_deposit_form": 0.009532327902264236,
+    "target": 0.008661400173228003,
+    "target_prior": 0.00936122
+   },
+   "Lean Hogs": {
+    "drift": 0.016405082762101005,
+    "drift_deposit_form": 0.01579584851428505,
+    "target": 0.017828380356567603,
+    "target_prior": 0.01743218
+   },
+   "Live Cattle": {
+    "drift": 0.038968679993546945,
+    "drift_deposit_form": 0.03856930560668558,
+    "target": 0.034650870693017415,
+    "target_prior": 0.033187009999999996
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.026326905640159316,
+    "drift_deposit_form": 0.030767346473398127,
+    "target": 0.027798210555964212,
+    "target_prior": 0.02713648
+   },
+   "Natural Gas": {
+    "drift": 0.06620324902640498,
+    "drift_deposit_form": 0.0387035257276402,
+    "target": 0.07984169159683382,
+    "target_prior": 0.07938877999999999
+   },
+   "Nickel": {
+    "drift": 0.017306002325110106,
+    "drift_deposit_form": 0.016620802041938075,
+    "target": 0.025842820516856407,
+    "target_prior": 0.027796880000000003
+   },
+   "RBOB Gasoline": {
+    "drift": 0.022436387176675503,
+    "drift_deposit_form": 0.026911952262594678,
+    "target": 0.022073490441469806,
+    "target_prior": 0.02196197
+   },
+   "Silver": {
+    "drift": 0.04816041821429045,
+    "drift_deposit_form": 0.04583115329444303,
+    "target": 0.04477077089541542,
+    "target_prior": 0.04590196
+   },
+   "Soybean Meal": {
+    "drift": 0.029453020981800294,
+    "drift_deposit_form": 0.03433457446214949,
+    "target": 0.03540190070803802,
+    "target_prior": 0.03528485
+   },
+   "Soybean Oil": {
+    "drift": 0.02656685059783286,
+    "drift_deposit_form": 0.02806226463356098,
+    "target": 0.03349164066983282,
+    "target_prior": 0.03264836
+   },
+   "Soybeans": {
+    "drift": 0.052540900971242234,
+    "drift_deposit_form": 0.060164130775302284,
+    "target": 0.05906848118136962,
+    "target_prior": 0.0578398
+   },
+   "Sugar": {
+    "drift": 0.03071197065506958,
+    "drift_deposit_form": 0.03413631368845595,
+    "target": 0.028076370561527415,
+    "target_prior": 0.02555929
+   },
+   "ULS Diesel": {
+    "drift": 0.019970476927504293,
+    "drift_deposit_form": 0.023619420645483207,
+    "target": 0.02160418043208361,
+    "target_prior": 0.020986570000000003
+   },
+   "WTI Crude Oil": {
+    "drift": 0.08366914840906346,
+    "drift_deposit_form": 0.08780859467524327,
+    "target": 0.07362005147240103,
+    "target_prior": 0.07771654
+   },
+   "Wheat": {
+    "drift": 0.024981562322409667,
+    "drift_deposit_form": 0.022150565094917578,
+    "target": 0.02818412056368241,
+    "target_prior": 0.027939
+   },
+   "Zinc": {
+    "drift": 0.02663314213687944,
+    "drift_deposit_form": 0.026929006692165948,
+    "target": 0.024945660498913207,
+    "target_prior": 0.02905338
+   }
+  },
+  "2025": {
+   "Aluminum": {
+    "drift": 0.04260034933151849,
+    "drift_deposit_form": 0.042210828902565306,
+    "target": 0.04159500166380007,
+    "target_prior": 0.041056260821125214
+   },
+   "Brent Crude Oil": {
+    "drift": 0.06973097481775403,
+    "drift_deposit_form": 0.07927844795212866,
+    "target": 0.08033995321359813,
+    "target_prior": 0.07637995152759904
+   },
+   "Coffee": {
+    "drift": 0.04866292733410092,
+    "drift_deposit_form": 0.054006145485708576,
+    "target": 0.03006921120276845,
+    "target_prior": 0.029741780594835614
+   },
+   "Copper": {
+    "drift": 0.05449940177505017,
+    "drift_deposit_form": 0.05592406394921532,
+    "target": 0.05374782214991288,
+    "target_prior": 0.05297822105956442
+   },
+   "Corn": {
+    "drift": 0.05252622613001924,
+    "drift_deposit_form": 0.04837100795167551,
+    "target": 0.05624109224964369,
+    "target_prior": 0.05662349113246982
+   },
+   "Cotton": {
+    "drift": 0.012519874181527963,
+    "drift_deposit_form": 0.012527762064950612,
+    "target": 0.016071050642842026,
+    "target_prior": 0.015703150314063004
+   },
+   "Gold": {
+    "drift": 0.17409463182163032,
+    "drift_deposit_form": 0.1740499600374025,
+    "target": 0.14290753571630144,
+    "target_prior": 0.14346800286936007
+   },
+   "HRW Wheat": {
+    "drift": 0.015021402024208751,
+    "drift_deposit_form": 0.014959438267506512,
+    "target": 0.018422120736884828,
+    "target_prior": 0.018189100363782008
+   },
+   "Lead": {
+    "drift": 0.007623395802756249,
+    "drift_deposit_form": 0.007564970619994089,
+    "target": 0.009219700368788013,
+    "target_prior": 0.008661400173228003
+   },
+   "Lean Hogs": {
+    "drift": 0.018818341498773188,
+    "drift_deposit_form": 0.019860776830784483,
+    "target": 0.017337010693480426,
+    "target_prior": 0.017828380356567603
+   },
+   "Live Cattle": {
+    "drift": 0.03707588559315824,
+    "drift_deposit_form": 0.03930195180127178,
+    "target": 0.03591860143674406,
+    "target_prior": 0.034650870693017415
+   },
+   "Low Sulphur Gas Oil": {
+    "drift": 0.024104006531933155,
+    "drift_deposit_form": 0.027490293019480166,
+    "target": 0.028583141143325646,
+    "target_prior": 0.027798210555964212
+   },
+   "Natural Gas": {
+    "drift": 0.0862497227620921,
+    "drift_deposit_form": 0.04809546582712274,
+    "target": 0.07778369311134772,
+    "target_prior": 0.07984169159683382
+   },
+   "Nickel": {
+    "drift": 0.023126962865590368,
+    "drift_deposit_form": 0.02309030603775797,
+    "target": 0.023993070959722838,
+    "target_prior": 0.025842820516856407
+   },
+   "RBOB Gasoline": {
+    "drift": 0.01985595851491114,
+    "drift_deposit_form": 0.022476962755323484,
+    "target": 0.021702560868102436,
+    "target_prior": 0.022073490441469806
+   },
+   "Silver": {
+    "drift": 0.05498938415504141,
+    "drift_deposit_form": 0.05496565574072314,
+    "target": 0.044913891796555666,
+    "target_prior": 0.04477077089541542
+   },
+   "Soybean Meal": {
+    "drift": 0.027143622487215007,
+    "drift_deposit_form": 0.028981923319360156,
+    "target": 0.03529002141160086,
+    "target_prior": 0.03540190070803802
+   },
+   "Soybean Oil": {
+    "drift": 0.027068190042432695,
+    "drift_deposit_form": 0.027644056599960262,
+    "target": 0.033642881345715255,
+    "target_prior": 0.03349164066983282
+   },
+   "Soybeans": {
+    "drift": 0.04375857762729684,
+    "drift_deposit_form": 0.04563296455633637,
+    "target": 0.059660322386412896,
+    "target_prior": 0.05906848118136962
+   },
+   "Sugar": {
+    "drift": 0.024140805702516543,
+    "drift_deposit_form": 0.026384323548321705,
+    "target": 0.029956341198253644,
+    "target_prior": 0.028076370561527415
+   },
+   "ULS Diesel": {
+    "drift": 0.018382973745922848,
+    "drift_deposit_form": 0.020090501880211345,
+    "target": 0.022039330881573237,
+    "target_prior": 0.02160418043208361
+   },
+   "WTI Crude Oil": {
+    "drift": 0.06843322261730336,
+    "drift_deposit_form": 0.0789908375393705,
+    "target": 0.06966005278640211,
+    "target_prior": 0.07362005147240103
+   },
+   "Wheat": {
+    "drift": 0.023163433812444182,
+    "drift_deposit_form": 0.02147544662921749,
+    "target": 0.02825083113003324,
+    "target_prior": 0.02818412056368241
+   },
+   "Zinc": {
+    "drift": 0.026409728824802827,
+    "drift_deposit_form": 0.02662590868361139,
+    "target": 0.022654760906190435,
+    "target_prior": 0.024945660498913207
+   }
+  }
+ }
+}

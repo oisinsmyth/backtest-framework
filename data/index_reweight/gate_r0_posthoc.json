@@ -1,0 +1,309 @@
+{
+ "aggregate_2016": {
+  "days": 163,
+  "implied_weight_error_by_component": {
+   "Aluminum": 0.02853,
+   "Brent Crude Oil": -0.00302,
+   "Coffee": -0.00292,
+   "Copper": -0.04268,
+   "Corn": 0.00095,
+   "Cotton": -0.0001,
+   "Gold": 0.00396,
+   "HRW Wheat": -0.00484,
+   "Lean Hogs": -0.0006,
+   "Live Cattle": 0.00769,
+   "Natural Gas": -0.00498,
+   "Nickel": 0.02534,
+   "RBOB Gasoline": 0.00432,
+   "Silver": -0.01502,
+   "Soybean Meal": 0.00828,
+   "Soybean Oil": 0.00588,
+   "Soybeans": -0.0182,
+   "Sugar": 0.00252,
+   "ULS Diesel": 0.00433,
+   "WTI Crude Oil": -0.00678,
+   "Wheat": -0.00075,
+   "Zinc": 0.01932
+  },
+  "median_abs_error_bp": 8.285,
+  "r2_on_component_returns": 0.6146
+ },
+ "pairs": {
+  "BCOM": {
+   "funds": [
+    "UCD",
+    "CMD"
+   ],
+   "hole_months": {},
+   "long_fund_all_months": {
+    "mean_bp": 4.496,
+    "median_abs_bp": 13.953,
+    "months": 8,
+    "share_within_5bp": 0.0
+   },
+   "long_fund_without_hole_months": {
+    "mean_bp": 4.496,
+    "median_abs_bp": 13.953,
+    "months": 8,
+    "share_within_5bp": 0.0
+   },
+   "proxy_part_without_hole_months": {
+    "mean_bp": -3.899,
+    "median_abs_bp": 3.651,
+    "months": 8,
+    "share_within_5bp": 0.875
+   },
+   "rebuild_part_without_hole_months": {
+    "mean_bp": 0.596,
+    "median_abs_bp": 12.595,
+    "months": 8,
+    "share_within_5bp": 0.125
+   },
+   "short_fund_all_months": {
+    "mean_bp": -3.303,
+    "median_abs_bp": 11.285,
+    "months": 8,
+    "share_within_5bp": 0.25
+   },
+   "short_fund_without_hole_months": {
+    "mean_bp": -3.303,
+    "median_abs_bp": 11.285,
+    "months": 8,
+    "share_within_5bp": 0.25
+   }
+  },
+  "Gold": {
+   "funds": [
+    "UGL",
+    "GLL"
+   ],
+   "hole_months": {
+    "2020-02": {
+     "long": 2.49,
+     "short": -1.29
+    },
+    "2020-03": {
+     "long": 4.96,
+     "short": -10.02
+    },
+    "2020-06": {
+     "long": -105.88,
+     "short": -116.04
+    },
+    "2020-07": {
+     "long": 119.79,
+     "short": 114.08
+    }
+   },
+   "long_fund_all_months": {
+    "mean_bp": 3.707,
+    "median_abs_bp": 3.212,
+    "months": 74,
+    "share_within_5bp": 0.7568
+   },
+   "long_fund_without_hole_months": {
+    "mean_bp": 3.614,
+    "median_abs_bp": 3.095,
+    "months": 70,
+    "share_within_5bp": 0.7714
+   },
+   "proxy_part_without_hole_months": {
+    "mean_bp": -4.006,
+    "median_abs_bp": 3.598,
+    "months": 70,
+    "share_within_5bp": 0.7143
+   },
+   "rebuild_part_without_hole_months": {
+    "mean_bp": -0.392,
+    "median_abs_bp": 0.401,
+    "months": 70,
+    "share_within_5bp": 1.0
+   },
+   "short_fund_all_months": {
+    "mean_bp": -4.34,
+    "median_abs_bp": 4.327,
+    "months": 74,
+    "share_within_5bp": 0.6216
+   },
+   "short_fund_without_hole_months": {
+    "mean_bp": -4.399,
+    "median_abs_bp": 4.146,
+    "months": 70,
+    "share_within_5bp": 0.6429
+   }
+  },
+  "Natural Gas": {
+   "funds": [
+    "BOIL",
+    "KOLD"
+   ],
+   "hole_months": {
+    "2020-02": {
+     "long": 4.63,
+     "short": -10.37
+    },
+    "2020-03": {
+     "long": 8.26,
+     "short": -16.2
+    },
+    "2020-06": {
+     "long": -168.61,
+     "short": -191.72
+    },
+    "2020-07": {
+     "long": 205.91,
+     "short": 190.39
+    }
+   },
+   "long_fund_all_months": {
+    "mean_bp": 5.317,
+    "median_abs_bp": 4.92,
+    "months": 110,
+    "share_within_5bp": 0.5182
+   },
+   "long_fund_without_hole_months": {
+    "mean_bp": 5.044,
+    "median_abs_bp": 4.8,
+    "months": 106,
+    "share_within_5bp": 0.5283
+   },
+   "proxy_part_without_hole_months": {
+    "mean_bp": -6.16,
+    "median_abs_bp": 5.776,
+    "months": 106,
+    "share_within_5bp": 0.3585
+   },
+   "rebuild_part_without_hole_months": {
+    "mean_bp": -1.116,
+    "median_abs_bp": 1.041,
+    "months": 106,
+    "share_within_5bp": 0.9811
+   },
+   "short_fund_all_months": {
+    "mean_bp": -7.265,
+    "median_abs_bp": 6.948,
+    "months": 110,
+    "share_within_5bp": 0.2364
+   },
+   "short_fund_without_hole_months": {
+    "mean_bp": -7.276,
+    "median_abs_bp": 6.816,
+    "months": 106,
+    "share_within_5bp": 0.2453
+   }
+  },
+  "Silver": {
+   "funds": [
+    "AGQ",
+    "ZSL"
+   ],
+   "hole_months": {
+    "2020-02": {
+     "long": 2.3,
+     "short": -4.76
+    },
+    "2020-03": {
+     "long": 3.06,
+     "short": -4.42
+    },
+    "2020-06": {
+     "long": -301.77,
+     "short": -311.27
+    },
+    "2020-07": {
+     "long": 413.34,
+     "short": 408.51
+    }
+   },
+   "long_fund_all_months": {
+    "mean_bp": 5.925,
+    "median_abs_bp": 3.816,
+    "months": 74,
+    "share_within_5bp": 0.6351
+   },
+   "long_fund_without_hole_months": {
+    "mean_bp": 4.593,
+    "median_abs_bp": 3.816,
+    "months": 70,
+    "share_within_5bp": 0.6429
+   },
+   "proxy_part_without_hole_months": {
+    "mean_bp": -5.089,
+    "median_abs_bp": 4.323,
+    "months": 70,
+    "share_within_5bp": 0.5857
+   },
+   "rebuild_part_without_hole_months": {
+    "mean_bp": -0.496,
+    "median_abs_bp": 0.414,
+    "months": 70,
+    "share_within_5bp": 1.0
+   },
+   "short_fund_all_months": {
+    "mean_bp": -4.093,
+    "median_abs_bp": 4.725,
+    "months": 74,
+    "share_within_5bp": 0.5541
+   },
+   "short_fund_without_hole_months": {
+    "mean_bp": -5.585,
+    "median_abs_bp": 4.674,
+    "months": 70,
+    "share_within_5bp": 0.5571
+   }
+  },
+  "WTI Crude Oil": {
+   "funds": [
+    "UCO",
+    "SCO"
+   ],
+   "hole_months": {
+    "2020-02": {
+     "long": 2.79,
+     "short": -3.29
+    },
+    "2020-03": {
+     "long": 1.84,
+     "short": -5.76
+    }
+   },
+   "long_fund_all_months": {
+    "mean_bp": 3.078,
+    "median_abs_bp": 3.091,
+    "months": 51,
+    "share_within_5bp": 1.0
+   },
+   "long_fund_without_hole_months": {
+    "mean_bp": 3.11,
+    "median_abs_bp": 3.097,
+    "months": 49,
+    "share_within_5bp": 1.0
+   },
+   "proxy_part_without_hole_months": {
+    "mean_bp": -3.558,
+    "median_abs_bp": 3.25,
+    "months": 49,
+    "share_within_5bp": 0.9796
+   },
+   "rebuild_part_without_hole_months": {
+    "mean_bp": -0.448,
+    "median_abs_bp": 0.206,
+    "months": 49,
+    "share_within_5bp": 0.9796
+   },
+   "short_fund_all_months": {
+    "mean_bp": -4.026,
+    "median_abs_bp": 3.344,
+    "months": 51,
+    "share_within_5bp": 0.9412
+   },
+   "short_fund_without_hole_months": {
+    "mean_bp": -4.006,
+    "median_abs_bp": 3.344,
+    "months": 49,
+    "share_within_5bp": 0.9592
+   }
+  }
+ },
+ "record": "POST HOC on D634's one run; admits nothing"
+}

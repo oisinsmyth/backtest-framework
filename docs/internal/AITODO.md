@@ -82,12 +82,19 @@
   - **ICE: the Sierra daily settlements cover all 237 (IR-A13).** The intraday files are on disk too.
   - **KE:** settlements are on disk (17 files); the definitions job is still processing.
   - **ProShares NAVs:** UGL, GLL, AGQ, ZSL, UCD and CMD are recorded. Their benchmark spans are in D634 §8.
+- **Gate R0 (D634) ran 2026-09-27: UNRESOLVED (proxy).** See
+  [D634-RESULT](../decisions/D634-RESULT-gate-r0-unresolved-proxy-the-rebuild-is-right.md).
+  - The rebuilt subindices match the published ones: 0.2–1.0 bp a month, and 99.4–100% of roll days.
+  - The misses: the fund proxy's accrual (−4 to −6 bp a month); two 2020 strip holes (02-27, 06-30); and the LME
+    stand-in in the 2016 aggregate.
+  - **C0 waits for the principal's four rulings (D634-RESULT §5).**
 - **Next:**
-  1. Once the CME queueing ends, probe the Sierra gasoil symbol, then queue `--set ice` (218 contracts, under 1 GB).
-  2. Source the settlement windows for 11 roots and the ICE settlement times (IR-A9).
-  3. Measure the ICE and LME bands (IR-A4).
-  4. **The Gate R0 pre-registration.**
-  5. Fetch post-vault Databento `trades` for the sign check (IR-A7).
+  1. The rulings. Recommended: fill the 2020 holes from Sierra's daily settlements and re-run R0 once; accept the
+     rebuild-versus-proxy split; keep LME as a band; keep det = BD4.
+  2. Source the CME settlement windows for 11 roots (IR-A9).
+  3. The C0 pre-registration. It must settle the ZL/ZM roll-in gap and the GC/ZS norm pad.
+  4. Fetch post-vault Databento `trades` for the sign check (IR-A7).
+  5. The freeze by 2026-10-16 (IR-A10).
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
