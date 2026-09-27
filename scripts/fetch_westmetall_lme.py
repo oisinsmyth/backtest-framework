@@ -24,14 +24,18 @@ RAW = REPO / "data" / "raw" / "index_reweight" / "westmetall"
 OUT = REPO / "data" / "index_reweight" / "lme_westmetall_daily.csv.gz"
 URL = "https://www.westmetall.com/en/markdaten.php?action=table&field=LME_{m}_cash&year={y}"
 METALS = {"Al": "aluminium", "Zn": "zinc", "Ni": "nickel", "Pb": "lead"}
+# D636 s.1 (the principal, 2026-09-27): LME copper for GSCI's weights, written to its own file so the BCOM file
+# Gate R0 hashed stays byte-identical
+COPPER = {"Cu": "copper"}
+OUT_CU = REPO / "data" / "index_reweight" / "lme_copper_westmetall_daily.csv.gz"
 YEARS = range(2015, 2027)
 UA = "Mozilla/5.0 (research data fetch)"
 ROW = re.compile(r"<tr>\s*<td >(\d\d\. \w+ \d{4})</td>\s*<td >([\d,.\-]*)</td>\s*<td >([\d,.\-]*)</td>")
 
 
-def fetch() -> None:
+def fetch(metals: dict[str, str] = METALS) -> None:
     RAW.mkdir(parents=True, exist_ok=True)
-    for m in METALS:
+    for m in metals:
         for y in YEARS:
             p = RAW / f"LME_{m}_{y}.html"
             if p.exists() and p.stat().st_size > 1000:
@@ -50,9 +54,9 @@ def num(s: str) -> float:
     return float(s) if s and s != "-" else float("nan")
 
 
-def parse() -> pd.DataFrame:
+def parse(metals: dict[str, str] = METALS, out: Path = OUT) -> pd.DataFrame:
     rows = []
-    for m, name in METALS.items():
+    for m, name in metals.items():
         for y in YEARS:
             t = (RAW / f"LME_{m}_{y}.html").read_text(encoding="utf-8", errors="replace")
             got = ROW.findall(t)
@@ -67,7 +71,7 @@ def parse() -> pd.DataFrame:
     df = df.sort_values(["metal", "date"]).reset_index(drop=True)
     if df.duplicated(["metal", "date"]).any():
         raise RuntimeError("a (metal, date) appears twice")
-    df.to_csv(OUT, index=False, encoding="utf-8", lineterminator="\n",
+    df.to_csv(out, index=False, encoding="utf-8", lineterminator="\n",
               compression={"method": "gzip", "mtime": 0})
     for name, g in df.groupby("metal"):
         print(f"  {name}: {len(g)} days {g['date'].iloc[0]} -> {g['date'].iloc[-1]}, "
@@ -79,11 +83,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--parse", action="store_true")
+    ap.add_argument("--copper", action="store_true", help="LME copper for GSCI (D636 s.1), into its own file")
     a = ap.parse_args()
+    metals, out = (COPPER, OUT_CU) if a.copper else (METALS, OUT)
     if a.fetch:
-        fetch()
+        fetch(metals)
     if a.parse:
-        parse()
+        parse(metals, out)
     return 0
 
 

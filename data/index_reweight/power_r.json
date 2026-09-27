@@ -1,0 +1,300 @@
+{
+ "R1": {
+  "0.02": {
+   "A": {
+    "mde_usd_2.8se": 26.74,
+    "mean_cost_usd": 26.12,
+    "n": 316,
+    "n_eff": 301.9,
+    "plausible_effect_usd": 108.8,
+    "power": 1.0,
+    "rho_within_year": 0.0015,
+    "se_usd": 9.55,
+    "sign_test_power": 1.0,
+    "size": 0.001,
+    "tcrit": 2.262,
+    "years": 10
+   },
+   "B": {
+    "mde_usd_2.8se": 0.21,
+    "mean_cost_usd": 0.26,
+    "n": 50,
+    "n_eff": 36.9,
+    "plausible_effect_usd": 0.62,
+    "power": 1.0,
+    "rho_within_year": 0.0887,
+    "se_usd": 0.07,
+    "size": 0.00025,
+    "tcrit": 2.262,
+    "years": 10
+   },
+   "traded_by_comp": {
+    "Copper": 30,
+    "HRW Wheat": 5,
+    "Natural Gas": 50,
+    "RBOB Gasoline": 48,
+    "Silver": 35,
+    "Soybean Meal": 23,
+    "Soybean Oil": 16,
+    "Soybeans": 18,
+    "ULS Diesel": 50,
+    "WTI Crude Oil": 36,
+    "Wheat": 5
+   }
+  },
+  "0.05": {
+   "A": {
+    "mde_usd_2.8se": 21.17,
+    "mean_cost_usd": 26.37,
+    "n": 393,
+    "n_eff": 394.9,
+    "plausible_effect_usd": 149.05,
+    "power": 1.0,
+    "rho_within_year": -0.0001,
+    "se_usd": 7.56,
+    "sign_test_power": 1.0,
+    "size": 0.0,
+    "tcrit": 2.262,
+    "years": 10
+   },
+   "B": {
+    "mde_usd_2.8se": 0.21,
+    "mean_cost_usd": 0.26,
+    "n": 50,
+    "n_eff": 36.9,
+    "plausible_effect_usd": 0.98,
+    "power": 1.0,
+    "rho_within_year": 0.0887,
+    "se_usd": 0.07,
+    "size": 0.00025,
+    "tcrit": 2.262,
+    "years": 10
+   },
+   "traded_by_comp": {
+    "Copper": 33,
+    "HRW Wheat": 23,
+    "Natural Gas": 50,
+    "RBOB Gasoline": 50,
+    "Silver": 38,
+    "Soybean Meal": 30,
+    "Soybean Oil": 26,
+    "Soybeans": 30,
+    "ULS Diesel": 50,
+    "WTI Crude Oil": 45,
+    "Wheat": 18
+   }
+  },
+  "0.1": {
+   "A": {
+    "mde_usd_2.8se": 20.26,
+    "mean_cost_usd": 26.66,
+    "n": 459,
+    "n_eff": 392.2,
+    "plausible_effect_usd": 187.82,
+    "power": 1.0,
+    "rho_within_year": 0.0038,
+    "se_usd": 7.24,
+    "sign_test_power": 1.0,
+    "size": 0.0,
+    "tcrit": 2.262,
+    "years": 10
+   },
+   "B": {
+    "mde_usd_2.8se": 0.21,
+    "mean_cost_usd": 0.26,
+    "n": 50,
+    "n_eff": 36.9,
+    "plausible_effect_usd": 1.38,
+    "power": 1.0,
+    "rho_within_year": 0.0887,
+    "se_usd": 0.07,
+    "size": 0.0,
+    "tcrit": 2.262,
+    "years": 10
+   },
+   "traded_by_comp": {
+    "Copper": 40,
+    "Corn": 2,
+    "HRW Wheat": 35,
+    "Natural Gas": 50,
+    "RBOB Gasoline": 50,
+    "Silver": 44,
+    "Soybean Meal": 35,
+    "Soybean Oil": 36,
+    "Soybeans": 35,
+    "ULS Diesel": 50,
+    "WTI Crude Oil": 47,
+    "Wheat": 35
+   }
+  }
+ },
+ "R2": {
+  "0.02": {
+   "h1": {
+    "mde_usd_2.8se": 403.13,
+    "mean_cost_usd": 26.55,
+    "n": 92,
+    "n_eff": 72.3,
+    "plausible_effect_usd": 89.2,
+    "power": 0.02975,
+    "rho_within_year": 0.0333,
+    "se_usd": 143.97,
+    "size": 0.012,
+    "tcrit": 2.933,
+    "years": 10
+   },
+   "h3": {
+    "mde_usd_2.8se": 774.78,
+    "mean_cost_usd": 26.55,
+    "n": 92,
+    "n_eff": 61.6,
+    "plausible_effect_usd": 89.2,
+    "power": 0.003,
+    "rho_within_year": 0.0602,
+    "se_usd": 276.71,
+    "size": 0.0015,
+    "tcrit": 2.933,
+    "years": 10
+   },
+   "h5": {
+    "mde_usd_2.8se": 792.11,
+    "mean_cost_usd": 26.55,
+    "n": 92,
+    "n_eff": 89.8,
+    "plausible_effect_usd": 89.2,
+    "power": 0.00475,
+    "rho_within_year": 0.003,
+    "se_usd": 282.9,
+    "size": 0.0015,
+    "tcrit": 2.933,
+    "years": 10
+   }
+  },
+  "0.05": {
+   "h1": {
+    "mde_usd_2.8se": 413.54,
+    "mean_cost_usd": 26.86,
+    "n": 105,
+    "n_eff": 65.4,
+    "plausible_effect_usd": 127.22,
+    "power": 0.047,
+    "rho_within_year": 0.0637,
+    "se_usd": 147.69,
+    "size": 0.01,
+    "tcrit": 2.933,
+    "years": 10
+   },
+   "h3": {
+    "mde_usd_2.8se": 797.5,
+    "mean_cost_usd": 26.86,
+    "n": 105,
+    "n_eff": 58.5,
+    "plausible_effect_usd": 127.22,
+    "power": 0.0025,
+    "rho_within_year": 0.0838,
+    "se_usd": 284.82,
+    "size": 0.00075,
+    "tcrit": 2.933,
+    "years": 10
+   },
+   "h5": {
+    "mde_usd_2.8se": 811.31,
+    "mean_cost_usd": 26.86,
+    "n": 105,
+    "n_eff": 84.9,
+    "plausible_effect_usd": 127.22,
+    "power": 0.00825,
+    "rho_within_year": 0.0249,
+    "se_usd": 289.75,
+    "size": 0.001,
+    "tcrit": 2.933,
+    "years": 10
+   }
+  },
+  "0.1": {
+   "h1": {
+    "mde_usd_2.8se": 350.12,
+    "mean_cost_usd": 26.96,
+    "n": 112,
+    "n_eff": 82.6,
+    "plausible_effect_usd": 170.24,
+    "power": 0.09425,
+    "rho_within_year": 0.0349,
+    "se_usd": 125.04,
+    "size": 0.00625,
+    "tcrit": 2.933,
+    "years": 10
+   },
+   "h3": {
+    "mde_usd_2.8se": 716.59,
+    "mean_cost_usd": 26.96,
+    "n": 112,
+    "n_eff": 66.9,
+    "plausible_effect_usd": 170.24,
+    "power": 0.00325,
+    "rho_within_year": 0.0662,
+    "se_usd": 255.92,
+    "size": 0.0015,
+    "tcrit": 2.933,
+    "years": 10
+   },
+   "h5": {
+    "mde_usd_2.8se": 732.69,
+    "mean_cost_usd": 26.96,
+    "n": 112,
+    "n_eff": 95.8,
+    "plausible_effect_usd": 170.24,
+    "power": 0.0065,
+    "rho_within_year": 0.0166,
+    "se_usd": 261.68,
+    "size": 0.00325,
+    "tcrit": 2.933,
+    "years": 10
+   }
+  }
+ },
+ "R3": {
+  "0.02": {
+   "mde_usd_2.8se": 2002.87,
+   "mean_cost_usd": 26.85,
+   "n": 95,
+   "n_eff": 62.9,
+   "plausible_effect_usd": 0.0,
+   "power": 0.04375,
+   "rho_within_year": 0.06,
+   "se_usd": 715.31,
+   "size": 0.0465,
+   "tcrit": 2.262,
+   "years": 10
+  },
+  "0.05": {
+   "mde_usd_2.8se": 1870.37,
+   "mean_cost_usd": 26.91,
+   "n": 104,
+   "n_eff": 71.1,
+   "plausible_effect_usd": 0.0,
+   "power": 0.0545,
+   "rho_within_year": 0.0493,
+   "se_usd": 667.99,
+   "size": 0.047,
+   "tcrit": 2.262,
+   "years": 10
+  },
+  "0.1": {
+   "mde_usd_2.8se": 1884.17,
+   "mean_cost_usd": 26.92,
+   "n": 106,
+   "n_eff": 70.4,
+   "plausible_effect_usd": 0.0,
+   "power": 0.0525,
+   "rho_within_year": 0.0527,
+   "se_usd": 672.92,
+   "size": 0.05525,
+   "tcrit": 2.262,
+   "years": 10
+  }
+ },
+ "declared": "(not the runners): kappa is assumed (C0 has not run): the combined form with GSCI's assets\nequal to BCOM's (kappa_C = kappa), on the grid 0.02 / 0.05 / 0.10; the SNR gate is taken as passed; B's legs each use\ntheir own t0; R3's forecast is BCOM-only.",
+ "draws": 4000,
+ "seed": 636
+}

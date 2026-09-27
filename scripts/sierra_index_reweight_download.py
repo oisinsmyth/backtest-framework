@@ -155,6 +155,15 @@ def signcheck_list() -> list[str]:
     return sorted(out)
 
 
+def gsci_jan_list() -> list[str]:
+    """D636 §1: the GSCI January contracts not otherwise on disk, for its reference-day weights (the principal,
+    2026-09-27: "Approve the downloads"). Feeder cattle (GF, March) and cocoa (CC, March) are held by GSCI but not
+    BCOM in 2016-2025; gasoil's February contract (GSCI's January holding) was not in BCOM's list. Symbols resolved
+    by chart title on 2026-09-27. Daily files only."""
+    return ([f"GFH{y % 100:02d}-CME" for y in range(2016, 2026)] + [f"CCH{y % 100:02d}-ICEUS" for y in range(2016, 2026)]
+            + [f"GASG{y % 100:02d}-ICEEU" for y in range(2016, 2026)])
+
+
 def queue(syms: list[str], ext: str = "scid", refresh: bool = False) -> list[str]:
     """Open each chart and send 57078. `refresh` re-queues files that already hold data, so Sierra downloads from
     the file's end to now."""
@@ -241,7 +250,14 @@ def main(argv: list[str] | None = None) -> int:
         ap.add_argument(f"--{f}", action="store_true")
     ap.add_argument("--set", choices=sorted(SETS), default="cme")
     ap.add_argument("--signcheck", action="store_true", help="queue (refresh) the D635 §7 contracts and stop")
+    ap.add_argument("--gsci-jan", action="store_true", help="queue the D636 §1 GSCI January daily files and stop")
     a = ap.parse_args(argv)
+    if a.gsci_jan:
+        syms = gsci_jan_list()
+        queue(syms, "dly")
+        for x in syms:
+            print(f"  {x}: {dly_span(x)}", flush=True)
+        return 0
     if a.signcheck:
         syms = signcheck_list()
         print(f"{len(syms)} sign-check contracts: {syms}", flush=True)

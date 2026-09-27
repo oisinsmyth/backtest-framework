@@ -22,6 +22,7 @@ REPO = Path(__file__).resolve().parents[1]
 SRC = REPO / "data" / "index_reweight" / "SOURCES_GSCI_CFTC.md"
 OUT_W = REPO / "data" / "index_reweight" / "gsci_rpdw.csv"
 OUT_S = REPO / "data" / "index_reweight" / "gsci_schedule.csv"
+OUT_C = REPO / "data" / "index_reweight" / "gsci_cpw.csv"
 RIC_TO_CME = {"W": "ZW", "KW": "KE", "C": "ZC", "S": "ZS", "LH": "HE", "LC": "LE", "CL": "CL", "HO": "HO",
               "RB": "RB", "NG": "NG", "GC": "GC", "SI": "SI"}
 NOT_IN_GSCI = ("ZL", "ZM", "HG")  # GSCI holds no soybean oil, no soybean meal, and LME (not COMEX) copper
@@ -73,6 +74,19 @@ def main() -> int:
     if got != set(RIC_TO_CME.values()):
         raise RuntimeError(f"CME roots in the schedule {sorted(got)} != {sorted(set(RIC_TO_CME.values()))}")
     s.to_csv(OUT_S, index=False, encoding="utf-8", lineterminator="\n")
+    # §2.4: the contract production weights (D636 s.1: GSCI's January reweight flow)
+    sec = section(text, "### 2.4")
+    head4 = next(ln for ln in sec if ln.startswith("| RIC"))
+    yrs4 = [int(re.match(r"\s*(\d{4})", c).group(1)) for c in head4.strip("|").split("|")[1:]]  # type: ignore[union-attr]
+    cpw = []
+    for ln in (x for x in sec if x.startswith("| ") and not x.startswith("| RIC") and "---" not in x):
+        cells = [c.strip() for c in ln.strip("|").split("|")]
+        for y, c in zip(yrs4, cells[1:]):
+            cpw.append({"year": y, "ric": cells[0], "cpw": float(re.sub(r"[^\d.]", "", c))})
+    c = pd.DataFrame(cpw)
+    if c.groupby("year")["ric"].nunique().min() != 24 or set(c["ric"]) != set(s["ric"]):
+        raise RuntimeError("the CPW table does not hold the 24 GSCI RICs in every year")
+    c.to_csv(OUT_C, index=False, encoding="utf-8", lineterminator="\n")
     print(f"RPDW: {w['target_year'].nunique()} years x {w['ric'].nunique()} RICs; schedule: {len(s)} rows; "
           f"no GSCI term for {NOT_IN_GSCI}")
     return 0

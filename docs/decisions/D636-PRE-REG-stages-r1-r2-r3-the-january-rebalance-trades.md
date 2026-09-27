@@ -218,3 +218,32 @@ These rules and their code are frozen for the January 2027 forward event (IR-A10
   January 2027 (forward) add the 11th and 12th sign-test votes, in whichever order they are scored: ≥ 9 of 11, then
   ≥ 10 of 12 (IR-A1).
 - **Deviations** are listed in each output and never replace a verdict.
+
+## 11. Settled before any runner (2026-09-27, after this record's commit `1315ecf`)
+
+*These were written while building the shared design (`scripts/r_design.py`) and the POWER step, before any R-stage
+runner existed and before any execution-day, reversal or December return was read.*
+
+- **The downloads** (the principal: "Approve the downloads"):
+  - feeder cattle (`GFH16`–`GFH25`, CME) and cocoa (`CCH16`–`CCH25`, ICE US) from Sierra Chart daily settlements;
+  - LME copper from Westmetall, into its own file, so the BCOM LME file Gate R0 hashed stays byte-identical.
+  - **Also fetched:** gasoil's February contract (`GASG16`–`GASG25`). GSCI holds it in January, and BCOM's list held
+    only March. It is the same kind of Sierra ICE daily settlement the principal approved for ICE (IR-A13).
+- **GSCI's dollar weights are computed with prices in US dollars.** The components the exchanges quote in cents
+  (W, KW, C, S, KC, SB, CT, LH, LC, FC) are divided by 100. S&P's printed ACRP for them is in cents under a "$"
+  header, and only in dollars do they reproduce the RPDW.
+  - **The known answer (raises):** each year's reference-day weights correlate with S&P's published RPDW at 0.985 to
+    0.999 (2016–2025), against a bar of 0.9.
+- **GSCI's reference day is BD4 of January on NG's settlement calendar**, the CME calendar of §1. GSCI's reweight
+  flow is priced on the contract receiving it: the roll-in contract where GSCI rolls in January (energy), else the
+  held one.
+- **GSCI's January ROLL flow** (energy: it rolls G→H during BD5–BD9, and H is BCOM's lead) is predictable index flow
+  on R1's traded contract. It is **not** in §1's Q, which is the deposit's reweight-only formula. It is reported
+  beside, as R1 with Q plus C0's κ̂_G times GSCI's roll-in flow.
+- **R3's November placebo** (§8) is 1 November BD1 → 1 December BD1, settlement to settlement. It ends where R3's own
+  entry begins.
+- **POWER only** (declared in `power_r_stages.py`; not the runners):
+  - κ is assumed on a grid, since C0 has not run;
+  - the SNR gate is taken as passed;
+  - B's legs each use their own t0;
+  - R3's forecast is BCOM-only.
