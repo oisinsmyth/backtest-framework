@@ -299,3 +299,8 @@ before the freeze and before any 2026-01-07 settlement is read.*
   `results/index_reweight/trials.csv` (read `data/index_reweight/trials.csv`, D592's translation), but the frozen
   runners write no trials file. The log is to be derived from each runner's own JSON output after its run, by a
   script outside the freeze, since outputs are not hashed. That is proposed, not yet ruled.
+  - **Ruled the same day** (the principal: "Yes, write the trials logger"). `scripts/log_index_reweight_trials.py`
+    rebuilds `data/index_reweight/trials.csv` after each R-stage run. Every output block carrying a trade count and a
+    mean is one configuration. Blocks that only describe an already-counted one (four groups, component line,
+    audits, reads, inputs) are skipped. A stage logged once whose output later vanishes raises. The row count is
+    the DSR's trial count.

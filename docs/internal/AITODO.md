@@ -107,7 +107,8 @@
      (2026-10-10) happened, then runs `--group energy`, and reports whether all 15 roots have a verdict.
   3. **The principal calls C0's one run:** `uv run python -W error::RuntimeWarning scripts/run_gate_c0.py --run`.
   - **R1–R3 are pre-registered (D636), POWER-checked and their runners committed** (`c019f34`). Each runs once
-    after C0.
+    after C0, **followed each time by `uv run python scripts/log_index_reweight_trials.py`** (IR-A16: the trials log
+    and the DSR's count).
   - **FROZEN on 2026-09-27** on the principal's word (IR-A15), and re-frozen the same day after a logged path fix
     (IR-A16; only the wrapper's hash changed): `data/index_reweight/FROZEN_2027.json`, 27 code
     files, 30 inputs, 24 parameters. `uv run python scripts/freeze_index_reweight_2027.py --verify` before every run.
