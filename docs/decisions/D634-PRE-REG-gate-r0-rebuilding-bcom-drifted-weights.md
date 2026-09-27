@@ -195,3 +195,32 @@ the shared code's inputs:
 - **No vault data:** no drift across 2025-03 → 2026-09, and no 2026 event.
 - **No 2027 publication of either index** (IR-A10).
 - **Deviations** are listed in the output and never replace the verdict.
+
+## 8. Amendment before the runner (2026-09-27): ICE prices are Sierra's daily settlements (IR-A13)
+
+*Written after this record's commit (`8fb1619`) and before any runner code, drift, CIM or ΔN existed.*
+
+- **§2's ICE row now reads:** the ICE daily price is the Close of Sierra Chart's daily file for the contract,
+  which is the exchange settlement.
+  - It matches the CME strip exactly on 1,095 of 1,095 days (NGH20, ZCH20).
+  - It matches NYMEX BZ, which cash-settles to ICE Brent, exactly on 99.99% of 60,867 contract-days (largest
+    difference $0.03).
+  - All 237 daily files cover their roll periods.
+  - The ICE settlement times are no longer an input to R0.
+- **§5's bands:** there is no ICE band now. The Brent comparison becomes an R0-a known answer: share of exact days
+  ≥ 99.9% and a maximum difference ≤ $0.05, else it raises.
+- **Also settled from the facts:**
+  - UCD and CMD, which track the BCOM aggregate, end on 2016-08-31, so their check covers January–August 2016 only.
+  - UGL, GLL, AGQ and ZSL have NAV files for the whole in-sample (2008-12 → 2026-09).
+- **The fund set's benchmark spans, sourced from ProShares Trust II's 10-Ks (CIK 0001415311, cached in
+  `data/raw/index_reweight/sec/`).** They replace the "expected" column of §3's table:
+
+| fund | benchmark is the Bloomberg subindex | source |
+|---|---|---|
+| BOIL, KOLD | throughout (Natural Gas Subindex) | the ledger's Gate 0b sources |
+| UCO, SCO | to 2020-09-16 (WTI Crude Oil Subindex). From 2020-09-17 the Balanced WTI index; the ledger's A1 departure window 2020-04-01 → 09-16 is excluded, **so the CL check runs 2016-01 → 2020-03-31** | 10-K filed 2021-02-19: "struck its NAV using its new benchmark for the first time on September 17, 2020" |
+| UGL, GLL, AGQ, ZSL | **from 2019-01-07 only.** Before that they tracked the LBMA gold and silver fixing prices (the 10-K filed 2017-03-01 lists them as "Commodity Funds", not index funds) | 10-K filed 2019-03-01: "struck their NAVs using their respective new benchmarks for the first time on January 7, 2019" |
+| UCD, CMD | the Bloomberg Commodity Index, **to 2016-08-25**, when they closed to creations and redemptions ahead of liquidation | 10-K filed 2017-03-01 |
+
+  So R0-b checks NG over 2016-01 → 2025-02, CL over 2016-01 → 2020-03, gold and silver over 2019-01-07 →
+  2025-02, and the BCOM aggregate over 2016-01 → 2016-08-25.

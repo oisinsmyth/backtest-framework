@@ -70,10 +70,18 @@
   - IR-G3 → the KE jobs were ordered at $0.00 (IR-A8).
   - IR-G4 → Sierra Chart, validated per root at r ≥ 0.8 (IR-A7).
   - The freeze contingency → freeze the code and rules (IR-A10).
-- **Running (2026-09-27):**
-  - the Sierra CME download: 775 contracts, 659 to fetch, about 8–15 h. Log in `temp/sierra_index_reweight.log`;
-    the record is `data/index_reweight/sierra_download_record.json`;
-  - the KE Databento download.
+- **Downloads (2026-09-27):**
+  - **Sierra CME: all 775 on disk (76.3 GB).** 686 cover roll-in minus 30 business days through roll-out, per
+    `data/index_reweight/sierra_download_record.json`. Of the rest:
+    - HG, KE, SI, ZC and ZW are 1–3 days short of the 30-day pad. That is harmless for a 20-day norm.
+    - **GC and ZS, 9 each, have only ~6 days of pad before roll-in**, so the norm there needs a rule.
+    - **ZL and ZM, 9 each (the Dec contract, which leads Jul–Nov), miss their roll-in period entirely**, because
+      Sierra's intraday history is capped near 5 months. **C0's pre-registration must say how those rolls are
+      treated:** the old-contract side only, or Databento `trades` for those windows (paid, small, needs
+      approval).
+  - **ICE: the Sierra daily settlements cover all 237 (IR-A13).** The intraday files are on disk too.
+  - **KE:** settlements are on disk (17 files); the definitions job is still processing.
+  - **ProShares NAVs:** UGL, GLL, AGQ, ZSL, UCD and CMD are recorded. Their benchmark spans are in D634 §8.
 - **Next:**
   1. Once the CME queueing ends, probe the Sierra gasoil symbol, then queue `--set ice` (218 contracts, under 1 GB).
   2. Source the settlement windows for 11 roots and the ICE settlement times (IR-A9).

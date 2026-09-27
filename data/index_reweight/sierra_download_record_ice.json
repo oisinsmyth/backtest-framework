@@ -1,0 +1,3837 @@
+{
+ "contracts": {
+  "BRNF16-ICEEU": {
+   "bytes": 2877056,
+   "covers": false,
+   "daily": {
+    "days": 1314,
+    "first": "2010-11-16",
+    "last": "2015-12-16"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-07-30 00:06:00",
+   "last_utc": "2015-12-16 19:29:00",
+   "need_from": "2015-07-27",
+   "need_until": "2015-11-13",
+   "records": 71925,
+   "root": "BRN"
+  },
+  "BRNF17-ICEEU": {
+   "bytes": 3127176,
+   "covers": false,
+   "daily": {
+    "days": 894,
+    "first": "2013-06-17",
+    "last": "2016-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-07-31 22:00:00",
+   "last_utc": "2016-11-30 19:29:00",
+   "need_from": "2016-07-27",
+   "need_until": "2016-11-14",
+   "records": 78178,
+   "root": "BRN"
+  },
+  "BRNF18-ICEEU": {
+   "bytes": 3093456,
+   "covers": false,
+   "daily": {
+    "days": 1152,
+    "first": "2013-06-17",
+    "last": "2017-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-07-30 22:00:00",
+   "last_utc": "2017-11-30 19:29:00",
+   "need_from": "2017-07-27",
+   "need_until": "2017-11-14",
+   "records": 77335,
+   "root": "BRN"
+  },
+  "BRNF19-ICEEU": {
+   "bytes": 3295816,
+   "covers": false,
+   "daily": {
+    "days": 1410,
+    "first": "2013-06-17",
+    "last": "2018-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-07-30 00:00:00",
+   "last_utc": "2018-11-30 19:29:00",
+   "need_from": "2018-07-27",
+   "need_until": "2018-11-14",
+   "records": 82394,
+   "root": "BRN"
+  },
+  "BRNF20-ICEEU": {
+   "bytes": 3213976,
+   "covers": false,
+   "daily": {
+    "days": 1667,
+    "first": "2013-06-17",
+    "last": "2019-11-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-07-30 00:00:00",
+   "last_utc": "2019-11-29 18:39:00",
+   "need_from": "2019-07-26",
+   "need_until": "2019-11-14",
+   "records": 80348,
+   "root": "BRN"
+  },
+  "BRNF21-ICEEU": {
+   "bytes": 3378136,
+   "covers": false,
+   "daily": {
+    "days": 1679,
+    "first": "2014-05-30",
+    "last": "2020-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-07-30 00:00:00",
+   "last_utc": "2020-11-30 19:29:00",
+   "need_from": "2020-07-27",
+   "need_until": "2020-11-13",
+   "records": 84452,
+   "root": "BRN"
+  },
+  "BRNF22-ICEEU": {
+   "bytes": 3499936,
+   "covers": false,
+   "daily": {
+    "days": 1758,
+    "first": "2015-02-09",
+    "last": "2021-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-07-30 00:19:00",
+   "last_utc": "2021-11-30 19:29:00",
+   "need_from": "2021-07-27",
+   "need_until": "2021-11-12",
+   "records": 87497,
+   "root": "BRN"
+  },
+  "BRNF23-ICEEU": {
+   "bytes": 3667576,
+   "covers": false,
+   "daily": {
+    "days": 1814,
+    "first": "2015-11-23",
+    "last": "2022-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-07-31 22:00:00",
+   "last_utc": "2022-11-30 19:29:00",
+   "need_from": "2022-07-27",
+   "need_until": "2022-11-14",
+   "records": 91688,
+   "root": "BRN"
+  },
+  "BRNF24-ICEEU": {
+   "bytes": 3711576,
+   "covers": false,
+   "daily": {
+    "days": 1825,
+    "first": "2016-11-07",
+    "last": "2023-11-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-07-30 22:00:00",
+   "last_utc": "2023-11-30 19:29:00",
+   "need_from": "2023-07-27",
+   "need_until": "2023-11-14",
+   "records": 92788,
+   "root": "BRN"
+  },
+  "BRNF25-ICEEU": {
+   "bytes": 3910816,
+   "covers": false,
+   "daily": {
+    "days": 1828,
+    "first": "2017-11-02",
+    "last": "2024-11-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-07-30 00:00:00",
+   "last_utc": "2024-11-29 19:29:00",
+   "need_from": "2024-07-26",
+   "need_until": "2024-11-14",
+   "records": 97769,
+   "root": "BRN"
+  },
+  "BRNH15-ICEEU": {
+   "bytes": 3090736,
+   "covers": false,
+   "daily": {
+    "days": 1348,
+    "first": "2009-11-24",
+    "last": "2015-02-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-09-28 22:07:00",
+   "last_utc": "2015-02-12 19:29:00",
+   "need_from": "2014-09-26",
+   "need_until": "2015-01-14",
+   "records": 77267,
+   "root": "BRN"
+  },
+  "BRNH16-ICEEU": {
+   "bytes": 2627376,
+   "covers": false,
+   "daily": {
+    "days": 1344,
+    "first": "2010-11-16",
+    "last": "2016-01-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-09-28 00:00:00",
+   "last_utc": "2016-01-29 19:29:00",
+   "need_from": "2015-09-25",
+   "need_until": "2016-01-14",
+   "records": 65683,
+   "root": "BRN"
+  },
+  "BRNH17-ICEEU": {
+   "bytes": 3191296,
+   "covers": false,
+   "daily": {
+    "days": 936,
+    "first": "2013-06-17",
+    "last": "2017-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-09-27 00:02:00",
+   "last_utc": "2017-01-31 19:29:00",
+   "need_from": "2016-09-26",
+   "need_until": "2017-01-13",
+   "records": 79781,
+   "root": "BRN"
+  },
+  "BRNH18-ICEEU": {
+   "bytes": 3152576,
+   "covers": false,
+   "daily": {
+    "days": 1194,
+    "first": "2013-06-17",
+    "last": "2018-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-09-27 00:00:00",
+   "last_utc": "2018-01-31 19:29:00",
+   "need_from": "2017-09-26",
+   "need_until": "2018-01-12",
+   "records": 78813,
+   "root": "BRN"
+  },
+  "BRNH19-ICEEU": {
+   "bytes": 3510016,
+   "covers": false,
+   "daily": {
+    "days": 1452,
+    "first": "2013-06-17",
+    "last": "2019-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-09-27 00:00:00",
+   "last_utc": "2019-01-31 19:29:00",
+   "need_from": "2018-09-26",
+   "need_until": "2019-01-14",
+   "records": 87749,
+   "root": "BRN"
+  },
+  "BRNH20-ICEEU": {
+   "bytes": 3215616,
+   "covers": false,
+   "daily": {
+    "days": 1585,
+    "first": "2013-12-09",
+    "last": "2020-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-09-29 22:00:00",
+   "last_utc": "2020-01-31 19:29:00",
+   "need_from": "2019-09-26",
+   "need_until": "2020-01-14",
+   "records": 80389,
+   "root": "BRN"
+  },
+  "BRNH21-ICEEU": {
+   "bytes": 3523216,
+   "covers": false,
+   "daily": {
+    "days": 1721,
+    "first": "2014-05-30",
+    "last": "2021-01-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-09-27 22:03:00",
+   "last_utc": "2021-01-29 19:29:00",
+   "need_from": "2020-09-25",
+   "need_until": "2021-01-14",
+   "records": 88079,
+   "root": "BRN"
+  },
+  "BRNH22-ICEEU": {
+   "bytes": 3767936,
+   "covers": false,
+   "daily": {
+    "days": 1802,
+    "first": "2015-02-09",
+    "last": "2022-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-09-27 00:01:00",
+   "last_utc": "2022-01-31 19:29:00",
+   "need_from": "2021-09-24",
+   "need_until": "2022-01-14",
+   "records": 94197,
+   "root": "BRN"
+  },
+  "BRNH23-ICEEU": {
+   "bytes": 3681216,
+   "covers": false,
+   "daily": {
+    "days": 1856,
+    "first": "2015-11-23",
+    "last": "2023-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-09-27 00:01:00",
+   "last_utc": "2023-01-31 19:29:00",
+   "need_from": "2022-09-26",
+   "need_until": "2023-01-13",
+   "records": 92029,
+   "root": "BRN"
+  },
+  "BRNH24-ICEEU": {
+   "bytes": 3816496,
+   "covers": false,
+   "daily": {
+    "days": 1867,
+    "first": "2016-11-07",
+    "last": "2024-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-09-28 00:00:00",
+   "last_utc": "2024-01-31 19:29:00",
+   "need_from": "2023-09-26",
+   "need_until": "2024-01-12",
+   "records": 95411,
+   "root": "BRN"
+  },
+  "BRNH25-ICEEU": {
+   "bytes": 3878656,
+   "covers": false,
+   "daily": {
+    "days": 1871,
+    "first": "2017-11-02",
+    "last": "2025-01-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-09-27 00:00:00",
+   "last_utc": "2025-01-31 19:29:00",
+   "need_from": "2024-09-26",
+   "need_until": "2025-01-14",
+   "records": 96965,
+   "root": "BRN"
+  },
+  "BRNK15-ICEEU": {
+   "bytes": 2975376,
+   "covers": false,
+   "daily": {
+    "days": 1391,
+    "first": "2009-11-24",
+    "last": "2015-04-15"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-11-27 01:00:00",
+   "last_utc": "2015-04-15 18:29:00",
+   "need_from": "2014-11-26",
+   "need_until": "2015-03-13",
+   "records": 74383,
+   "root": "BRN"
+  },
+  "BRNK16-ICEEU": {
+   "bytes": 3106856,
+   "covers": false,
+   "daily": {
+    "days": 1387,
+    "first": "2010-11-16",
+    "last": "2016-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-11-29 23:00:00",
+   "last_utc": "2016-03-31 18:29:00",
+   "need_from": "2015-11-26",
+   "need_until": "2016-03-14",
+   "records": 77670,
+   "root": "BRN"
+  },
+  "BRNK17-ICEEU": {
+   "bytes": 3064736,
+   "covers": false,
+   "daily": {
+    "days": 979,
+    "first": "2013-06-17",
+    "last": "2017-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-11-27 23:02:00",
+   "last_utc": "2017-03-31 18:29:00",
+   "need_from": "2016-11-25",
+   "need_until": "2017-03-14",
+   "records": 76617,
+   "root": "BRN"
+  },
+  "BRNK18-ICEEU": {
+   "bytes": 3099976,
+   "covers": false,
+   "daily": {
+    "days": 1235,
+    "first": "2013-06-17",
+    "last": "2018-03-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-11-27 00:46:00",
+   "last_utc": "2018-03-29 18:29:00",
+   "need_from": "2017-11-24",
+   "need_until": "2018-03-14",
+   "records": 77498,
+   "root": "BRN"
+  },
+  "BRNK19-ICEEU": {
+   "bytes": 3213776,
+   "covers": false,
+   "daily": {
+    "days": 1493,
+    "first": "2013-06-17",
+    "last": "2019-03-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-11-27 01:00:00",
+   "last_utc": "2019-03-29 18:29:00",
+   "need_from": "2018-11-26",
+   "need_until": "2019-03-14",
+   "records": 80343,
+   "root": "BRN"
+  },
+  "BRNK20-ICEEU": {
+   "bytes": 3331936,
+   "covers": false,
+   "daily": {
+    "days": 1506,
+    "first": "2014-05-30",
+    "last": "2020-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-11-28 01:00:00",
+   "last_utc": "2020-03-31 18:29:00",
+   "need_from": "2019-11-26",
+   "need_until": "2020-03-13",
+   "records": 83297,
+   "root": "BRN"
+  },
+  "BRNK21-ICEEU": {
+   "bytes": 3491976,
+   "covers": false,
+   "daily": {
+    "days": 1764,
+    "first": "2014-05-30",
+    "last": "2021-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-11-27 01:00:00",
+   "last_utc": "2021-03-31 18:29:00",
+   "need_from": "2020-11-26",
+   "need_until": "2021-03-12",
+   "records": 87298,
+   "root": "BRN"
+  },
+  "BRNK22-ICEEU": {
+   "bytes": 3683856,
+   "covers": false,
+   "daily": {
+    "days": 1845,
+    "first": "2015-02-09",
+    "last": "2022-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-11-28 23:00:00",
+   "last_utc": "2022-03-31 18:29:00",
+   "need_from": "2021-11-26",
+   "need_until": "2022-03-14",
+   "records": 92095,
+   "root": "BRN"
+  },
+  "BRNK23-ICEEU": {
+   "bytes": 3691096,
+   "covers": false,
+   "daily": {
+    "days": 1652,
+    "first": "2016-11-07",
+    "last": "2023-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-11-27 23:00:00",
+   "last_utc": "2023-03-31 18:29:00",
+   "need_from": "2022-11-25",
+   "need_until": "2023-03-14",
+   "records": 92276,
+   "root": "BRN"
+  },
+  "BRNK24-ICEEU": {
+   "bytes": 3623216,
+   "covers": false,
+   "daily": {
+    "days": 1653,
+    "first": "2017-11-02",
+    "last": "2024-03-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-11-28 01:00:00",
+   "last_utc": "2024-03-28 18:29:00",
+   "need_from": "2023-11-24",
+   "need_until": "2024-03-14",
+   "records": 90579,
+   "root": "BRN"
+  },
+  "BRNK25-ICEEU": {
+   "bytes": 3585856,
+   "covers": false,
+   "daily": {
+    "days": 1653,
+    "first": "2018-11-05",
+    "last": "2025-03-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-11-27 01:00:00",
+   "last_utc": "2025-03-31 18:29:00",
+   "need_from": "2024-11-26",
+   "need_until": "2025-03-14",
+   "records": 89645,
+   "root": "BRN"
+  },
+  "BRNN15-ICEEU": {
+   "bytes": 2911496,
+   "covers": false,
+   "daily": {
+    "days": 1434,
+    "first": "2009-11-24",
+    "last": "2015-06-15"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-01-27 01:00:00",
+   "last_utc": "2015-06-15 18:29:00",
+   "need_from": "2015-01-23",
+   "need_until": "2015-05-14",
+   "records": 72786,
+   "root": "BRN"
+  },
+  "BRNN16-ICEEU": {
+   "bytes": 3305216,
+   "covers": false,
+   "daily": {
+    "days": 1430,
+    "first": "2010-11-16",
+    "last": "2016-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-01-28 01:00:00",
+   "last_utc": "2016-05-31 18:29:00",
+   "need_from": "2016-01-25",
+   "need_until": "2016-05-13",
+   "records": 82629,
+   "root": "BRN"
+  },
+  "BRNN17-ICEEU": {
+   "bytes": 2973096,
+   "covers": false,
+   "daily": {
+    "days": 1021,
+    "first": "2013-06-17",
+    "last": "2017-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-01-27 01:00:00",
+   "last_utc": "2017-05-31 18:29:00",
+   "need_from": "2017-01-24",
+   "need_until": "2017-05-12",
+   "records": 74326,
+   "root": "BRN"
+  },
+  "BRNN18-ICEEU": {
+   "bytes": 3193056,
+   "covers": false,
+   "daily": {
+    "days": 1279,
+    "first": "2013-06-17",
+    "last": "2018-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-01-28 23:01:00",
+   "last_utc": "2018-05-31 18:29:00",
+   "need_from": "2018-01-24",
+   "need_until": "2018-05-14",
+   "records": 79825,
+   "root": "BRN"
+  },
+  "BRNN19-ICEEU": {
+   "bytes": 3181576,
+   "covers": false,
+   "daily": {
+    "days": 1537,
+    "first": "2013-06-17",
+    "last": "2019-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-01-27 23:00:00",
+   "last_utc": "2019-05-31 18:29:00",
+   "need_from": "2019-01-24",
+   "need_until": "2019-05-14",
+   "records": 79538,
+   "root": "BRN"
+  },
+  "BRNN20-ICEEU": {
+   "bytes": 3813416,
+   "covers": false,
+   "daily": {
+    "days": 1548,
+    "first": "2014-05-30",
+    "last": "2020-05-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-01-28 01:15:00",
+   "last_utc": "2020-05-29 18:29:00",
+   "need_from": "2020-01-24",
+   "need_until": "2020-05-14",
+   "records": 95334,
+   "root": "BRN"
+  },
+  "BRNN21-ICEEU": {
+   "bytes": 3509256,
+   "covers": false,
+   "daily": {
+    "days": 1805,
+    "first": "2014-05-30",
+    "last": "2021-05-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-01-27 01:00:00",
+   "last_utc": "2021-05-28 18:29:00",
+   "need_from": "2021-01-22",
+   "need_until": "2021-05-14",
+   "records": 87730,
+   "root": "BRN"
+  },
+  "BRNN22-ICEEU": {
+   "bytes": 3833936,
+   "covers": false,
+   "daily": {
+    "days": 1887,
+    "first": "2015-02-09",
+    "last": "2022-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-01-27 01:00:00",
+   "last_utc": "2022-05-31 18:29:00",
+   "need_from": "2022-01-24",
+   "need_until": "2022-05-13",
+   "records": 95847,
+   "root": "BRN"
+  },
+  "BRNN23-ICEEU": {
+   "bytes": 3666256,
+   "covers": false,
+   "daily": {
+    "days": 1694,
+    "first": "2016-11-07",
+    "last": "2023-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-01-27 01:00:00",
+   "last_utc": "2023-05-31 18:29:00",
+   "need_from": "2023-01-24",
+   "need_until": "2023-05-12",
+   "records": 91655,
+   "root": "BRN"
+  },
+  "BRNN24-ICEEU": {
+   "bytes": 3692776,
+   "covers": false,
+   "daily": {
+    "days": 1698,
+    "first": "2017-11-02",
+    "last": "2024-05-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-01-28 23:00:00",
+   "last_utc": "2024-05-31 18:29:00",
+   "need_from": "2024-01-25",
+   "need_until": "2024-05-14",
+   "records": 92318,
+   "root": "BRN"
+  },
+  "BRNU15-ICEEU": {
+   "bytes": 3066016,
+   "covers": false,
+   "daily": {
+    "days": 1478,
+    "first": "2009-11-24",
+    "last": "2015-08-14"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-03-29 23:19:00",
+   "last_utc": "2015-08-14 18:30:00",
+   "need_from": "2015-03-26",
+   "need_until": "2015-07-14",
+   "records": 76649,
+   "root": "BRN"
+  },
+  "BRNU16-ICEEU": {
+   "bytes": 3260296,
+   "covers": false,
+   "daily": {
+    "days": 1473,
+    "first": "2010-11-16",
+    "last": "2016-07-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-03-29 00:15:00",
+   "last_utc": "2016-07-29 18:29:00",
+   "need_from": "2016-03-25",
+   "need_until": "2016-07-14",
+   "records": 81506,
+   "root": "BRN"
+  },
+  "BRNU17-ICEEU": {
+   "bytes": 3122856,
+   "covers": false,
+   "daily": {
+    "days": 1064,
+    "first": "2013-06-17",
+    "last": "2017-07-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-03-29 00:18:00",
+   "last_utc": "2017-07-31 18:29:00",
+   "need_from": "2017-03-24",
+   "need_until": "2017-07-14",
+   "records": 78070,
+   "root": "BRN"
+  },
+  "BRNU18-ICEEU": {
+   "bytes": 3338696,
+   "covers": false,
+   "daily": {
+    "days": 1322,
+    "first": "2013-06-17",
+    "last": "2018-07-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-03-29 00:00:00",
+   "last_utc": "2018-07-31 18:29:00",
+   "need_from": "2018-03-26",
+   "need_until": "2018-07-13",
+   "records": 83466,
+   "root": "BRN"
+  },
+  "BRNU19-ICEEU": {
+   "bytes": 3339416,
+   "covers": false,
+   "daily": {
+    "days": 1580,
+    "first": "2013-06-17",
+    "last": "2019-07-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-03-29 00:06:00",
+   "last_utc": "2019-07-31 18:28:00",
+   "need_from": "2019-03-26",
+   "need_until": "2019-07-12",
+   "records": 83484,
+   "root": "BRN"
+  },
+  "BRNU20-ICEEU": {
+   "bytes": 3929816,
+   "covers": false,
+   "daily": {
+    "days": 1593,
+    "first": "2014-05-30",
+    "last": "2020-07-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-03-29 22:00:00",
+   "last_utc": "2020-07-31 18:29:00",
+   "need_from": "2020-03-26",
+   "need_until": "2020-07-14",
+   "records": 98244,
+   "root": "BRN"
+  },
+  "BRNU21-ICEEU": {
+   "bytes": 3598016,
+   "covers": false,
+   "daily": {
+    "days": 1850,
+    "first": "2014-05-30",
+    "last": "2021-07-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-03-29 00:00:00",
+   "last_utc": "2021-07-30 18:29:00",
+   "need_from": "2021-03-26",
+   "need_until": "2021-07-14",
+   "records": 89949,
+   "root": "BRN"
+  },
+  "BRNU22-ICEEU": {
+   "bytes": 3834336,
+   "covers": false,
+   "daily": {
+    "days": 1930,
+    "first": "2015-02-09",
+    "last": "2022-07-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-03-29 00:00:00",
+   "last_utc": "2022-07-29 18:29:00",
+   "need_from": "2022-03-25",
+   "need_until": "2022-07-14",
+   "records": 95857,
+   "root": "BRN"
+  },
+  "BRNU23-ICEEU": {
+   "bytes": 3720496,
+   "covers": false,
+   "daily": {
+    "days": 1737,
+    "first": "2016-11-07",
+    "last": "2023-07-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-03-29 00:00:00",
+   "last_utc": "2023-07-31 18:29:00",
+   "need_from": "2023-03-24",
+   "need_until": "2023-07-14",
+   "records": 93011,
+   "root": "BRN"
+  },
+  "BRNU24-ICEEU": {
+   "bytes": 3832656,
+   "covers": false,
+   "daily": {
+    "days": 1741,
+    "first": "2017-11-02",
+    "last": "2024-07-31"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-03-31 22:00:00",
+   "last_utc": "2024-07-31 18:29:00",
+   "need_from": "2024-03-26",
+   "need_until": "2024-07-12",
+   "records": 95815,
+   "root": "BRN"
+  },
+  "BRNX15-ICEEU": {
+   "bytes": 2908976,
+   "covers": false,
+   "daily": {
+    "days": 1522,
+    "first": "2009-11-24",
+    "last": "2015-10-15"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-05-29 00:00:00",
+   "last_utc": "2015-10-15 18:29:00",
+   "need_from": "2015-05-26",
+   "need_until": "2015-09-14",
+   "records": 72723,
+   "root": "BRN"
+  },
+  "BRNX16-ICEEU": {
+   "bytes": 3101496,
+   "covers": false,
+   "daily": {
+    "days": 1518,
+    "first": "2010-11-16",
+    "last": "2016-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-05-29 22:00:00",
+   "last_utc": "2016-09-30 18:29:00",
+   "need_from": "2016-05-26",
+   "need_until": "2016-09-14",
+   "records": 77536,
+   "root": "BRN"
+  },
+  "BRNX17-ICEEU": {
+   "bytes": 3018016,
+   "covers": false,
+   "daily": {
+    "days": 1108,
+    "first": "2013-06-17",
+    "last": "2017-09-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-05-29 00:00:00",
+   "last_utc": "2017-09-29 18:30:00",
+   "need_from": "2017-05-26",
+   "need_until": "2017-09-14",
+   "records": 75449,
+   "root": "BRN"
+  },
+  "BRNX18-ICEEU": {
+   "bytes": 3230856,
+   "covers": false,
+   "daily": {
+    "days": 1365,
+    "first": "2013-06-17",
+    "last": "2018-09-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-05-29 00:00:00",
+   "last_utc": "2018-09-28 18:29:00",
+   "need_from": "2018-05-25",
+   "need_until": "2018-09-14",
+   "records": 80770,
+   "root": "BRN"
+  },
+  "BRNX19-ICEEU": {
+   "bytes": 3310776,
+   "covers": false,
+   "daily": {
+    "days": 1623,
+    "first": "2013-06-17",
+    "last": "2019-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-05-29 00:01:00",
+   "last_utc": "2019-09-30 18:29:00",
+   "need_from": "2019-05-24",
+   "need_until": "2019-09-13",
+   "records": 82768,
+   "root": "BRN"
+  },
+  "BRNX20-ICEEU": {
+   "bytes": 3465736,
+   "covers": false,
+   "daily": {
+    "days": 1636,
+    "first": "2014-05-30",
+    "last": "2020-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-05-29 00:00:00",
+   "last_utc": "2020-09-30 18:29:00",
+   "need_from": "2020-05-26",
+   "need_until": "2020-09-14",
+   "records": 86642,
+   "root": "BRN"
+  },
+  "BRNX21-ICEEU": {
+   "bytes": 3449976,
+   "covers": false,
+   "daily": {
+    "days": 1894,
+    "first": "2014-05-30",
+    "last": "2021-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-05-30 22:00:00",
+   "last_utc": "2021-09-30 18:29:00",
+   "need_from": "2021-05-26",
+   "need_until": "2021-09-14",
+   "records": 86248,
+   "root": "BRN"
+  },
+  "BRNX22-ICEEU": {
+   "bytes": 3793096,
+   "covers": false,
+   "daily": {
+    "days": 1975,
+    "first": "2015-02-09",
+    "last": "2022-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-05-29 22:00:00",
+   "last_utc": "2022-09-30 18:29:00",
+   "need_from": "2022-05-26",
+   "need_until": "2022-09-14",
+   "records": 94826,
+   "root": "BRN"
+  },
+  "BRNX23-ICEEU": {
+   "bytes": 3681856,
+   "covers": false,
+   "daily": {
+    "days": 1781,
+    "first": "2016-11-07",
+    "last": "2023-09-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-05-29 00:04:00",
+   "last_utc": "2023-09-29 18:29:00",
+   "need_from": "2023-05-26",
+   "need_until": "2023-09-14",
+   "records": 92045,
+   "root": "BRN"
+  },
+  "BRNX24-ICEEU": {
+   "bytes": 3758536,
+   "covers": false,
+   "daily": {
+    "days": 1784,
+    "first": "2017-11-02",
+    "last": "2024-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-05-29 00:01:00",
+   "last_utc": "2024-09-30 18:29:00",
+   "need_from": "2024-05-24",
+   "need_until": "2024-09-13",
+   "records": 93962,
+   "root": "BRN"
+  },
+  "CTH15-ICEUS": {
+   "bytes": 1959096,
+   "covers": false,
+   "daily": {
+    "days": 739,
+    "first": "2012-04-02",
+    "last": "2015-03-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-09-29 01:00:00",
+   "last_utc": "2015-03-06 19:12:00",
+   "need_from": "2014-09-26",
+   "need_until": "2015-02-13",
+   "records": 48976,
+   "root": "CT"
+  },
+  "CTH16-ICEUS": {
+   "bytes": 1874016,
+   "covers": false,
+   "daily": {
+    "days": 741,
+    "first": "2013-04-01",
+    "last": "2016-03-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-09-28 01:00:00",
+   "last_utc": "2016-03-07 16:38:00",
+   "need_from": "2015-09-25",
+   "need_until": "2016-02-12",
+   "records": 46849,
+   "root": "CT"
+  },
+  "CTH17-ICEUS": {
+   "bytes": 2002376,
+   "covers": false,
+   "daily": {
+    "days": 741,
+    "first": "2014-04-01",
+    "last": "2017-03-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-09-27 01:00:00",
+   "last_utc": "2017-03-08 17:29:00",
+   "need_from": "2016-09-26",
+   "need_until": "2017-02-14",
+   "records": 50058,
+   "root": "CT"
+  },
+  "CTH18-ICEUS": {
+   "bytes": 2112536,
+   "covers": false,
+   "daily": {
+    "days": 739,
+    "first": "2015-04-01",
+    "last": "2018-03-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-09-27 01:00:00",
+   "last_utc": "2018-03-06 17:03:00",
+   "need_from": "2017-09-26",
+   "need_until": "2018-02-14",
+   "records": 52812,
+   "root": "CT"
+  },
+  "CTH19-ICEUS": {
+   "bytes": 1993656,
+   "covers": false,
+   "daily": {
+    "days": 739,
+    "first": "2016-04-01",
+    "last": "2019-03-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-09-27 01:00:00",
+   "last_utc": "2019-03-07 15:12:00",
+   "need_from": "2018-09-26",
+   "need_until": "2019-02-14",
+   "records": 49840,
+   "root": "CT"
+  },
+  "CTH20-ICEUS": {
+   "bytes": 2206336,
+   "covers": false,
+   "daily": {
+    "days": 739,
+    "first": "2017-04-03",
+    "last": "2020-03-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-09-30 01:00:00",
+   "last_utc": "2020-03-05 16:57:00",
+   "need_from": "2019-09-26",
+   "need_until": "2020-02-14",
+   "records": 55157,
+   "root": "CT"
+  },
+  "CTH21-ICEUS": {
+   "bytes": 2274016,
+   "covers": false,
+   "daily": {
+    "days": 741,
+    "first": "2018-04-02",
+    "last": "2021-03-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-09-28 01:00:00",
+   "last_utc": "2021-03-02 06:16:00",
+   "need_from": "2020-09-25",
+   "need_until": "2021-02-12",
+   "records": 56849,
+   "root": "CT"
+  },
+  "CTH22-ICEUS": {
+   "bytes": 2376776,
+   "covers": false,
+   "daily": {
+    "days": 742,
+    "first": "2019-04-01",
+    "last": "2022-03-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-09-27 01:00:00",
+   "last_utc": "2022-03-08 14:35:00",
+   "need_from": "2021-09-24",
+   "need_until": "2022-02-14",
+   "records": 59418,
+   "root": "CT"
+  },
+  "CTH23-ICEUS": {
+   "bytes": 2254176,
+   "covers": false,
+   "daily": {
+    "days": 740,
+    "first": "2020-04-01",
+    "last": "2023-03-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-09-27 01:00:00",
+   "last_utc": "2023-03-07 16:14:00",
+   "need_from": "2022-09-26",
+   "need_until": "2023-02-14",
+   "records": 56353,
+   "root": "CT"
+  },
+  "CTH24-ICEUS": {
+   "bytes": 2393936,
+   "covers": false,
+   "daily": {
+    "days": 737,
+    "first": "2021-04-01",
+    "last": "2024-03-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-09-28 01:00:00",
+   "last_utc": "2024-03-04 17:24:00",
+   "need_from": "2023-09-26",
+   "need_until": "2024-02-14",
+   "records": 59847,
+   "root": "CT"
+  },
+  "CTH25-ICEUS": {
+   "bytes": 2534576,
+   "covers": false,
+   "daily": {
+    "days": 736,
+    "first": "2022-04-01",
+    "last": "2025-03-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-09-27 01:00:00",
+   "last_utc": "2025-03-05 15:03:00",
+   "need_from": "2024-09-26",
+   "need_until": "2025-02-14",
+   "records": 63363,
+   "root": "CT"
+  },
+  "CTK15-ICEUS": {
+   "bytes": 1634336,
+   "covers": true,
+   "daily": {
+    "days": 738,
+    "first": "2012-06-01",
+    "last": "2015-05-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-11-28 13:00:00",
+   "last_utc": "2015-05-06 15:29:00",
+   "need_from": "2014-12-26",
+   "need_until": "2015-04-14",
+   "records": 40857,
+   "root": "CT"
+  },
+  "CTK16-ICEUS": {
+   "bytes": 1635536,
+   "covers": true,
+   "daily": {
+    "days": 739,
+    "first": "2013-06-03",
+    "last": "2016-05-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-11-30 02:00:00",
+   "last_utc": "2016-05-06 14:32:00",
+   "need_from": "2015-12-25",
+   "need_until": "2016-04-14",
+   "records": 40887,
+   "root": "CT"
+  },
+  "CTK17-ICEUS": {
+   "bytes": 1733216,
+   "covers": true,
+   "daily": {
+    "days": 740,
+    "first": "2014-06-02",
+    "last": "2017-05-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-11-28 02:00:00",
+   "last_utc": "2017-05-08 15:04:00",
+   "need_from": "2016-12-27",
+   "need_until": "2017-04-14",
+   "records": 43329,
+   "root": "CT"
+  },
+  "CTK18-ICEUS": {
+   "bytes": 1968336,
+   "covers": true,
+   "daily": {
+    "days": 741,
+    "first": "2015-06-01",
+    "last": "2018-05-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-11-27 02:00:00",
+   "last_utc": "2018-05-07 16:01:00",
+   "need_from": "2017-12-27",
+   "need_until": "2018-04-13",
+   "records": 49207,
+   "root": "CT"
+  },
+  "CTK19-ICEUS": {
+   "bytes": 1875416,
+   "covers": true,
+   "daily": {
+    "days": 740,
+    "first": "2016-06-01",
+    "last": "2019-05-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-11-27 02:00:00",
+   "last_utc": "2019-05-08 14:16:00",
+   "need_from": "2018-12-27",
+   "need_until": "2019-04-12",
+   "records": 46884,
+   "root": "CT"
+  },
+  "CTK20-ICEUS": {
+   "bytes": 2016496,
+   "covers": true,
+   "daily": {
+    "days": 737,
+    "first": "2017-06-05",
+    "last": "2020-05-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-11-29 13:00:00",
+   "last_utc": "2020-05-05 18:07:00",
+   "need_from": "2019-12-27",
+   "need_until": "2020-04-14",
+   "records": 50411,
+   "root": "CT"
+  },
+  "CTK21-ICEUS": {
+   "bytes": 2036616,
+   "covers": true,
+   "daily": {
+    "days": 738,
+    "first": "2018-06-04",
+    "last": "2021-05-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-11-27 13:00:00",
+   "last_utc": "2021-05-05 08:06:00",
+   "need_from": "2020-12-25",
+   "need_until": "2021-04-14",
+   "records": 50914,
+   "root": "CT"
+  },
+  "CTK22-ICEUS": {
+   "bytes": 2099936,
+   "covers": true,
+   "daily": {
+    "days": 740,
+    "first": "2019-06-03",
+    "last": "2022-05-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-11-29 02:00:00",
+   "last_utc": "2022-05-02 16:42:00",
+   "need_from": "2021-12-27",
+   "need_until": "2022-04-14",
+   "records": 52497,
+   "root": "CT"
+  },
+  "CTK23-ICEUS": {
+   "bytes": 2049736,
+   "covers": true,
+   "daily": {
+    "days": 740,
+    "first": "2020-06-01",
+    "last": "2023-05-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-11-28 02:00:00",
+   "last_utc": "2023-05-05 14:56:00",
+   "need_from": "2022-12-27",
+   "need_until": "2023-04-14",
+   "records": 51242,
+   "root": "CT"
+  },
+  "CTK24-ICEUS": {
+   "bytes": 2236536,
+   "covers": true,
+   "daily": {
+    "days": 740,
+    "first": "2021-06-01",
+    "last": "2024-05-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-11-28 02:00:00",
+   "last_utc": "2024-04-30 12:15:00",
+   "need_from": "2023-12-27",
+   "need_until": "2024-04-12",
+   "records": 55912,
+   "root": "CT"
+  },
+  "CTK25-ICEUS": {
+   "bytes": 2304816,
+   "covers": true,
+   "daily": {
+    "days": 737,
+    "first": "2022-06-01",
+    "last": "2025-05-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-11-27 02:00:00",
+   "last_utc": "2025-05-06 16:58:00",
+   "need_from": "2024-12-27",
+   "need_until": "2025-03-14",
+   "records": 57619,
+   "root": "CT"
+  },
+  "CTN15-ICEUS": {
+   "bytes": 1736216,
+   "covers": true,
+   "daily": {
+    "days": 740,
+    "first": "2012-08-01",
+    "last": "2015-07-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-01-27 02:00:00",
+   "last_utc": "2015-07-07 17:47:00",
+   "need_from": "2015-02-24",
+   "need_until": "2015-06-12",
+   "records": 43404,
+   "root": "CT"
+  },
+  "CTN16-ICEUS": {
+   "bytes": 1861576,
+   "covers": true,
+   "daily": {
+    "days": 739,
+    "first": "2013-08-01",
+    "last": "2016-07-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-01-28 02:00:00",
+   "last_utc": "2016-07-06 13:51:00",
+   "need_from": "2016-02-25",
+   "need_until": "2016-06-14",
+   "records": 46538,
+   "root": "CT"
+  },
+  "CTN17-ICEUS": {
+   "bytes": 1866176,
+   "covers": true,
+   "daily": {
+    "days": 739,
+    "first": "2014-08-01",
+    "last": "2017-07-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-01-27 06:45:00",
+   "last_utc": "2017-07-06 16:27:00",
+   "need_from": "2017-02-24",
+   "need_until": "2017-06-14",
+   "records": 46653,
+   "root": "CT"
+  },
+  "CTN18-ICEUS": {
+   "bytes": 2121016,
+   "covers": true,
+   "daily": {
+    "days": 739,
+    "first": "2015-08-03",
+    "last": "2018-07-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-01-29 02:00:00",
+   "last_utc": "2018-07-06 14:00:00",
+   "need_from": "2018-02-23",
+   "need_until": "2018-06-14",
+   "records": 53024,
+   "root": "CT"
+  },
+  "CTN19-ICEUS": {
+   "bytes": 2001496,
+   "covers": true,
+   "daily": {
+    "days": 735,
+    "first": "2016-08-08",
+    "last": "2019-07-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-01-28 02:00:00",
+   "last_utc": "2019-07-05 14:13:00",
+   "need_from": "2019-02-22",
+   "need_until": "2019-06-14",
+   "records": 50036,
+   "root": "CT"
+  },
+  "CTN20-ICEUS": {
+   "bytes": 2072296,
+   "covers": true,
+   "daily": {
+    "days": 737,
+    "first": "2017-08-07",
+    "last": "2020-07-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-01-28 02:00:00",
+   "last_utc": "2020-07-09 13:33:00",
+   "need_from": "2020-02-25",
+   "need_until": "2020-06-12",
+   "records": 51806,
+   "root": "CT"
+  },
+  "CTN21-ICEUS": {
+   "bytes": 2133216,
+   "covers": true,
+   "daily": {
+    "days": 737,
+    "first": "2018-08-06",
+    "last": "2021-07-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-01-27 02:00:00",
+   "last_utc": "2021-06-30 17:00:00",
+   "need_from": "2021-02-24",
+   "need_until": "2021-06-14",
+   "records": 53329,
+   "root": "CT"
+  },
+  "CTN22-ICEUS": {
+   "bytes": 2188656,
+   "covers": true,
+   "daily": {
+    "days": 739,
+    "first": "2019-08-01",
+    "last": "2022-07-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-01-27 02:00:00",
+   "last_utc": "2022-07-01 16:43:00",
+   "need_from": "2022-02-24",
+   "need_until": "2022-06-14",
+   "records": 54715,
+   "root": "CT"
+  },
+  "CTN23-ICEUS": {
+   "bytes": 2152016,
+   "covers": true,
+   "daily": {
+    "days": 737,
+    "first": "2020-08-03",
+    "last": "2023-07-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-01-27 02:00:00",
+   "last_utc": "2023-07-05 13:27:00",
+   "need_from": "2023-02-24",
+   "need_until": "2023-06-14",
+   "records": 53799,
+   "root": "CT"
+  },
+  "CTN24-ICEUS": {
+   "bytes": 2402336,
+   "covers": true,
+   "daily": {
+    "days": 738,
+    "first": "2021-08-02",
+    "last": "2024-07-09"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-01-29 02:00:00",
+   "last_utc": "2024-07-01 15:38:00",
+   "need_from": "2024-02-23",
+   "need_until": "2024-06-14",
+   "records": 60057,
+   "root": "CT"
+  },
+  "CTZ15-ICEUS": {
+   "bytes": 2225816,
+   "covers": false,
+   "daily": {
+    "days": 686,
+    "first": "2013-03-21",
+    "last": "2015-12-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-06-29 01:00:00",
+   "last_utc": "2015-12-07 18:17:00",
+   "need_from": "2015-04-24",
+   "need_until": "2015-11-13",
+   "records": 55644,
+   "root": "CT"
+  },
+  "CTZ16-ICEUS": {
+   "bytes": 2469336,
+   "covers": false,
+   "daily": {
+    "days": 740,
+    "first": "2014-01-02",
+    "last": "2016-12-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-06-29 01:00:00",
+   "last_utc": "2016-12-06 19:11:00",
+   "need_from": "2016-04-26",
+   "need_until": "2016-11-14",
+   "records": 61732,
+   "root": "CT"
+  },
+  "CTZ17-ICEUS": {
+   "bytes": 2348296,
+   "covers": false,
+   "daily": {
+    "days": 739,
+    "first": "2015-01-02",
+    "last": "2017-12-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-06-29 01:00:00",
+   "last_utc": "2017-12-05 17:13:00",
+   "need_from": "2017-04-26",
+   "need_until": "2017-11-14",
+   "records": 58706,
+   "root": "CT"
+  },
+  "CTZ18-ICEUS": {
+   "bytes": 2414616,
+   "covers": false,
+   "daily": {
+    "days": 739,
+    "first": "2016-01-04",
+    "last": "2018-12-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-06-29 01:00:00",
+   "last_utc": "2018-12-04 19:02:00",
+   "need_from": "2018-04-26",
+   "need_until": "2018-11-14",
+   "records": 60364,
+   "root": "CT"
+  },
+  "CTZ19-ICEUS": {
+   "bytes": 2479856,
+   "covers": false,
+   "daily": {
+    "days": 735,
+    "first": "2017-01-09",
+    "last": "2019-12-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-07-01 01:00:00",
+   "last_utc": "2019-12-06 17:49:00",
+   "need_from": "2019-04-26",
+   "need_until": "2019-11-14",
+   "records": 61995,
+   "root": "CT"
+  },
+  "CTZ20-ICEUS": {
+   "bytes": 2539096,
+   "covers": false,
+   "daily": {
+    "days": 740,
+    "first": "2018-01-03",
+    "last": "2020-12-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-06-29 01:00:00",
+   "last_utc": "2020-12-04 05:40:00",
+   "need_from": "2020-04-24",
+   "need_until": "2020-11-13",
+   "records": 63476,
+   "root": "CT"
+  },
+  "CTZ21-ICEUS": {
+   "bytes": 2720416,
+   "covers": false,
+   "daily": {
+    "days": 741,
+    "first": "2019-01-02",
+    "last": "2021-12-08"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-06-29 01:00:00",
+   "last_utc": "2021-12-07 17:10:00",
+   "need_from": "2021-04-26",
+   "need_until": "2021-11-12",
+   "records": 68009,
+   "root": "CT"
+  },
+  "CTZ22-ICEUS": {
+   "bytes": 2612256,
+   "covers": false,
+   "daily": {
+    "days": 740,
+    "first": "2020-01-02",
+    "last": "2022-12-07"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-06-29 01:00:00",
+   "last_utc": "2022-12-06 14:58:00",
+   "need_from": "2022-04-26",
+   "need_until": "2022-11-14",
+   "records": 65305,
+   "root": "CT"
+  },
+  "CTZ23-ICEUS": {
+   "bytes": 2788576,
+   "covers": false,
+   "daily": {
+    "days": 737,
+    "first": "2021-01-04",
+    "last": "2023-12-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-06-29 01:00:00",
+   "last_utc": "2023-12-04 17:54:00",
+   "need_from": "2023-04-26",
+   "need_until": "2023-11-14",
+   "records": 69713,
+   "root": "CT"
+  },
+  "CTZ24-ICEUS": {
+   "bytes": 2779816,
+   "covers": false,
+   "daily": {
+    "days": 737,
+    "first": "2022-01-03",
+    "last": "2024-12-06"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-07-01 01:00:00",
+   "last_utc": "2024-12-05 13:36:00",
+   "need_from": "2024-04-26",
+   "need_until": "2024-11-14",
+   "records": 69494,
+   "root": "CT"
+  },
+  "GASF19-ICEEU": {
+   "bytes": 2778736,
+   "covers": true,
+   "daily": {
+    "days": 1190,
+    "first": "2014-06-02",
+    "last": "2019-01-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-07-30 00:05:00",
+   "last_utc": "2019-01-10 11:47:00",
+   "need_from": "2018-09-26",
+   "need_until": "2018-12-14",
+   "records": 69467,
+   "root": "GAS"
+  },
+  "GASF20-ICEEU": {
+   "bytes": 2719536,
+   "covers": true,
+   "daily": {
+    "days": 1439,
+    "first": "2014-06-13",
+    "last": "2020-01-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-07-30 03:47:00",
+   "last_utc": "2020-01-10 11:31:00",
+   "need_from": "2019-08-26",
+   "need_until": "2019-12-13",
+   "records": 67987,
+   "root": "GAS"
+  },
+  "GASF21-ICEEU": {
+   "bytes": 2935536,
+   "covers": true,
+   "daily": {
+    "days": 1698,
+    "first": "2014-06-13",
+    "last": "2021-01-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-07-30 00:48:00",
+   "last_utc": "2021-01-12 10:02:00",
+   "need_from": "2020-08-26",
+   "need_until": "2020-12-14",
+   "records": 73387,
+   "root": "GAS"
+  },
+  "GASF22-ICEEU": {
+   "bytes": 3030216,
+   "covers": true,
+   "daily": {
+    "days": 1323,
+    "first": "2016-11-28",
+    "last": "2022-01-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-07-30 01:31:00",
+   "last_utc": "2022-01-12 10:59:00",
+   "need_from": "2021-08-26",
+   "need_until": "2021-12-14",
+   "records": 75754,
+   "root": "GAS"
+  },
+  "GASF23-ICEEU": {
+   "bytes": 3116456,
+   "covers": true,
+   "daily": {
+    "days": 1566,
+    "first": "2016-12-19",
+    "last": "2023-01-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-08-01 00:09:00",
+   "last_utc": "2023-01-12 10:47:00",
+   "need_from": "2022-08-26",
+   "need_until": "2022-12-14",
+   "records": 77910,
+   "root": "GAS"
+  },
+  "GASF24-ICEEU": {
+   "bytes": 3259616,
+   "covers": true,
+   "daily": {
+    "days": 1566,
+    "first": "2017-12-18",
+    "last": "2024-01-11"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-07-31 01:08:00",
+   "last_utc": "2024-01-11 09:46:00",
+   "need_from": "2023-08-25",
+   "need_until": "2023-12-14",
+   "records": 81489,
+   "root": "GAS"
+  },
+  "GASF25-ICEEU": {
+   "bytes": 3431936,
+   "covers": true,
+   "daily": {
+    "days": 1567,
+    "first": "2018-12-17",
+    "last": "2025-01-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-07-30 00:00:00",
+   "last_utc": "2025-01-10 11:00:00",
+   "need_from": "2024-08-26",
+   "need_until": "2024-12-13",
+   "records": 85797,
+   "root": "GAS"
+  },
+  "GASH19-ICEEU": {
+   "bytes": 2822536,
+   "covers": true,
+   "daily": {
+    "days": 1233,
+    "first": "2014-06-02",
+    "last": "2019-03-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-09-27 00:00:00",
+   "last_utc": "2019-03-12 10:19:00",
+   "need_from": "2018-10-26",
+   "need_until": "2019-02-14",
+   "records": 70562,
+   "root": "GAS"
+  },
+  "GASH20-ICEEU": {
+   "bytes": 2962616,
+   "covers": true,
+   "daily": {
+    "days": 1483,
+    "first": "2014-06-13",
+    "last": "2020-03-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-09-29 22:00:00",
+   "last_utc": "2020-03-12 11:39:00",
+   "need_from": "2019-10-25",
+   "need_until": "2020-02-14",
+   "records": 74064,
+   "root": "GAS"
+  },
+  "GASH21-ICEEU": {
+   "bytes": 3001056,
+   "covers": true,
+   "daily": {
+    "days": 1740,
+    "first": "2014-06-13",
+    "last": "2021-03-11"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-09-28 01:15:00",
+   "last_utc": "2021-03-11 11:16:00",
+   "need_from": "2020-10-26",
+   "need_until": "2021-02-12",
+   "records": 75025,
+   "root": "GAS"
+  },
+  "GASH22-ICEEU": {
+   "bytes": 3225376,
+   "covers": true,
+   "daily": {
+    "days": 1349,
+    "first": "2016-12-19",
+    "last": "2022-03-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-09-27 00:39:00",
+   "last_utc": "2022-03-10 11:00:00",
+   "need_from": "2021-10-26",
+   "need_until": "2022-02-14",
+   "records": 80633,
+   "root": "GAS"
+  },
+  "GASH23-ICEEU": {
+   "bytes": 3185896,
+   "covers": true,
+   "daily": {
+    "days": 1607,
+    "first": "2016-12-19",
+    "last": "2023-03-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-09-27 04:45:00",
+   "last_utc": "2023-03-10 11:59:00",
+   "need_from": "2022-10-26",
+   "need_until": "2023-02-14",
+   "records": 79646,
+   "root": "GAS"
+  },
+  "GASH24-ICEEU": {
+   "bytes": 3563496,
+   "covers": true,
+   "daily": {
+    "days": 1609,
+    "first": "2017-12-18",
+    "last": "2024-03-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-09-28 00:12:00",
+   "last_utc": "2024-03-12 10:46:00",
+   "need_from": "2023-10-26",
+   "need_until": "2024-02-14",
+   "records": 89086,
+   "root": "GAS"
+  },
+  "GASH25-ICEEU": {
+   "bytes": 3644456,
+   "covers": true,
+   "daily": {
+    "days": 1610,
+    "first": "2018-12-17",
+    "last": "2025-03-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-09-27 00:01:00",
+   "last_utc": "2025-03-12 11:15:00",
+   "need_from": "2024-10-25",
+   "need_until": "2025-02-14",
+   "records": 91110,
+   "root": "GAS"
+  },
+  "GASK19-ICEEU": {
+   "bytes": 2468496,
+   "covers": true,
+   "daily": {
+    "days": 1266,
+    "first": "2014-06-13",
+    "last": "2019-05-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-11-27 01:06:00",
+   "last_utc": "2019-05-10 10:52:00",
+   "need_from": "2018-12-27",
+   "need_until": "2019-04-12",
+   "records": 61711,
+   "root": "GAS"
+  },
+  "GASK20-ICEEU": {
+   "bytes": 3080216,
+   "covers": true,
+   "daily": {
+    "days": 1525,
+    "first": "2014-06-13",
+    "last": "2020-05-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-11-28 01:00:00",
+   "last_utc": "2020-05-12 09:54:00",
+   "need_from": "2019-12-27",
+   "need_until": "2020-04-14",
+   "records": 77004,
+   "root": "GAS"
+  },
+  "GASK21-ICEEU": {
+   "bytes": 2909976,
+   "covers": true,
+   "daily": {
+    "days": 1783,
+    "first": "2014-06-13",
+    "last": "2021-05-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-11-27 01:27:00",
+   "last_utc": "2021-05-12 10:51:00",
+   "need_from": "2020-12-25",
+   "need_until": "2021-04-14",
+   "records": 72748,
+   "root": "GAS"
+  },
+  "GASK22-ICEEU": {
+   "bytes": 2943096,
+   "covers": true,
+   "daily": {
+    "days": 1393,
+    "first": "2016-12-19",
+    "last": "2022-05-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-11-28 23:00:00",
+   "last_utc": "2022-05-12 10:00:00",
+   "need_from": "2021-12-27",
+   "need_until": "2022-04-14",
+   "records": 73576,
+   "root": "GAS"
+  },
+  "GASK23-ICEEU": {
+   "bytes": 3062816,
+   "covers": true,
+   "daily": {
+    "days": 1650,
+    "first": "2016-12-19",
+    "last": "2023-05-11"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-11-28 02:04:00",
+   "last_utc": "2023-05-11 10:22:00",
+   "need_from": "2022-12-27",
+   "need_until": "2023-04-14",
+   "records": 76569,
+   "root": "GAS"
+  },
+  "GASK24-ICEEU": {
+   "bytes": 3238536,
+   "covers": true,
+   "daily": {
+    "days": 1651,
+    "first": "2017-12-18",
+    "last": "2024-05-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-11-28 01:21:00",
+   "last_utc": "2024-05-10 08:55:00",
+   "need_from": "2023-12-27",
+   "need_until": "2024-04-12",
+   "records": 80962,
+   "root": "GAS"
+  },
+  "GASK25-ICEEU": {
+   "bytes": 3395616,
+   "covers": true,
+   "daily": {
+    "days": 1652,
+    "first": "2018-12-17",
+    "last": "2025-05-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-11-27 01:04:00",
+   "last_utc": "2025-05-12 09:21:00",
+   "need_from": "2024-12-27",
+   "need_until": "2025-03-14",
+   "records": 84889,
+   "root": "GAS"
+  },
+  "GASN19-ICEEU": {
+   "bytes": 2571736,
+   "covers": true,
+   "daily": {
+    "days": 1310,
+    "first": "2014-06-13",
+    "last": "2019-07-11"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-01-27 23:00:00",
+   "last_utc": "2019-07-11 10:43:00",
+   "need_from": "2019-02-22",
+   "need_until": "2019-06-14",
+   "records": 64292,
+   "root": "GAS"
+  },
+  "GASN20-ICEEU": {
+   "bytes": 3425616,
+   "covers": true,
+   "daily": {
+    "days": 1568,
+    "first": "2014-06-13",
+    "last": "2020-07-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-01-28 01:04:00",
+   "last_utc": "2020-07-10 10:10:00",
+   "need_from": "2020-02-25",
+   "need_until": "2020-06-12",
+   "records": 85639,
+   "root": "GAS"
+  },
+  "GASN21-ICEEU": {
+   "bytes": 2892736,
+   "covers": true,
+   "daily": {
+    "days": 1826,
+    "first": "2014-06-13",
+    "last": "2021-07-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-01-27 01:01:00",
+   "last_utc": "2021-07-12 10:51:00",
+   "need_from": "2021-02-24",
+   "need_until": "2021-06-14",
+   "records": 72317,
+   "root": "GAS"
+  },
+  "GASN22-ICEEU": {
+   "bytes": 3112176,
+   "covers": true,
+   "daily": {
+    "days": 1436,
+    "first": "2016-12-19",
+    "last": "2022-07-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-01-27 01:34:00",
+   "last_utc": "2022-07-12 10:43:00",
+   "need_from": "2022-02-24",
+   "need_until": "2022-06-14",
+   "records": 77803,
+   "root": "GAS"
+  },
+  "GASN23-ICEEU": {
+   "bytes": 3055496,
+   "covers": true,
+   "daily": {
+    "days": 1694,
+    "first": "2016-12-19",
+    "last": "2023-07-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-01-27 03:29:00",
+   "last_utc": "2023-07-12 10:59:00",
+   "need_from": "2023-02-24",
+   "need_until": "2023-06-14",
+   "records": 76386,
+   "root": "GAS"
+  },
+  "GASN24-ICEEU": {
+   "bytes": 3282376,
+   "covers": true,
+   "daily": {
+    "days": 1695,
+    "first": "2017-12-18",
+    "last": "2024-07-11"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-01-28 23:12:00",
+   "last_utc": "2024-07-11 09:59:00",
+   "need_from": "2024-02-23",
+   "need_until": "2024-06-14",
+   "records": 82058,
+   "root": "GAS"
+  },
+  "GASU19-ICEEU": {
+   "bytes": 2737296,
+   "covers": true,
+   "daily": {
+    "days": 1355,
+    "first": "2014-06-13",
+    "last": "2019-09-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-03-29 06:29:00",
+   "last_utc": "2019-09-12 10:29:00",
+   "need_from": "2019-04-26",
+   "need_until": "2019-08-14",
+   "records": 68431,
+   "root": "GAS"
+  },
+  "GASU20-ICEEU": {
+   "bytes": 3042616,
+   "covers": true,
+   "daily": {
+    "days": 1612,
+    "first": "2014-06-13",
+    "last": "2020-09-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-03-29 22:00:00",
+   "last_utc": "2020-09-10 10:09:00",
+   "need_from": "2020-04-24",
+   "need_until": "2020-08-14",
+   "records": 76064,
+   "root": "GAS"
+  },
+  "GASU21-ICEEU": {
+   "bytes": 2958536,
+   "covers": true,
+   "daily": {
+    "days": 1870,
+    "first": "2014-06-13",
+    "last": "2021-09-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-03-29 00:00:00",
+   "last_utc": "2021-09-10 10:49:00",
+   "need_from": "2021-04-26",
+   "need_until": "2021-08-13",
+   "records": 73962,
+   "root": "GAS"
+  },
+  "GASU22-ICEEU": {
+   "bytes": 3201736,
+   "covers": true,
+   "daily": {
+    "days": 1480,
+    "first": "2016-12-19",
+    "last": "2022-09-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-03-29 00:31:00",
+   "last_utc": "2022-09-12 10:06:00",
+   "need_from": "2022-04-26",
+   "need_until": "2022-08-12",
+   "records": 80042,
+   "root": "GAS"
+  },
+  "GASU23-ICEEU": {
+   "bytes": 3238896,
+   "covers": true,
+   "daily": {
+    "days": 1738,
+    "first": "2016-12-19",
+    "last": "2023-09-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-03-29 00:04:00",
+   "last_utc": "2023-09-12 10:39:00",
+   "need_from": "2023-04-26",
+   "need_until": "2023-08-14",
+   "records": 80971,
+   "root": "GAS"
+  },
+  "GASU24-ICEEU": {
+   "bytes": 3695176,
+   "covers": true,
+   "daily": {
+    "days": 1740,
+    "first": "2017-12-18",
+    "last": "2024-09-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-03-31 23:21:00",
+   "last_utc": "2024-09-12 09:33:00",
+   "need_from": "2024-04-26",
+   "need_until": "2024-08-14",
+   "records": 92378,
+   "root": "GAS"
+  },
+  "GASX19-ICEEU": {
+   "bytes": 2612976,
+   "covers": true,
+   "daily": {
+    "days": 1398,
+    "first": "2014-06-13",
+    "last": "2019-11-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-05-29 01:38:00",
+   "last_utc": "2019-11-12 11:47:00",
+   "need_from": "2019-06-26",
+   "need_until": "2019-10-14",
+   "records": 65323,
+   "root": "GAS"
+  },
+  "GASX20-ICEEU": {
+   "bytes": 2722216,
+   "covers": true,
+   "daily": {
+    "days": 1657,
+    "first": "2014-06-13",
+    "last": "2020-11-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-05-29 00:00:00",
+   "last_utc": "2020-11-12 11:23:00",
+   "need_from": "2020-06-26",
+   "need_until": "2020-10-14",
+   "records": 68054,
+   "root": "GAS"
+  },
+  "GASX21-ICEEU": {
+   "bytes": 2857816,
+   "covers": true,
+   "daily": {
+    "days": 1914,
+    "first": "2014-06-13",
+    "last": "2021-11-11"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-05-31 02:45:00",
+   "last_utc": "2021-11-11 10:41:00",
+   "need_from": "2021-06-25",
+   "need_until": "2021-10-14",
+   "records": 71444,
+   "root": "GAS"
+  },
+  "GASX22-ICEEU": {
+   "bytes": 3148296,
+   "covers": true,
+   "daily": {
+    "days": 1523,
+    "first": "2016-12-19",
+    "last": "2022-11-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-05-29 22:45:00",
+   "last_utc": "2022-11-10 11:20:00",
+   "need_from": "2022-06-24",
+   "need_until": "2022-10-14",
+   "records": 78706,
+   "root": "GAS"
+  },
+  "GASX23-ICEEU": {
+   "bytes": 3260256,
+   "covers": true,
+   "daily": {
+    "days": 1781,
+    "first": "2016-12-19",
+    "last": "2023-11-10"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-05-29 00:04:00",
+   "last_utc": "2023-11-10 11:58:00",
+   "need_from": "2023-06-26",
+   "need_until": "2023-10-13",
+   "records": 81505,
+   "root": "GAS"
+  },
+  "GASX24-ICEEU": {
+   "bytes": 3606656,
+   "covers": true,
+   "daily": {
+    "days": 1783,
+    "first": "2017-12-18",
+    "last": "2024-11-12"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-05-29 00:02:00",
+   "last_utc": "2024-11-12 11:54:00",
+   "need_from": "2024-06-26",
+   "need_until": "2024-10-14",
+   "records": 90165,
+   "root": "GAS"
+  },
+  "KCH15-ICEUS": {
+   "bytes": 1657576,
+   "covers": false,
+   "daily": {
+    "days": 747,
+    "first": "2012-04-02",
+    "last": "2015-03-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-09-29 08:15:00",
+   "last_utc": "2015-03-19 09:15:00",
+   "need_from": "2014-09-26",
+   "need_until": "2015-02-13",
+   "records": 41438,
+   "root": "KC"
+  },
+  "KCH16-ICEUS": {
+   "bytes": 1682936,
+   "covers": false,
+   "daily": {
+    "days": 749,
+    "first": "2013-04-01",
+    "last": "2016-03-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-09-28 08:15:00",
+   "last_utc": "2016-03-18 16:08:00",
+   "need_from": "2015-09-25",
+   "need_until": "2016-02-12",
+   "records": 42072,
+   "root": "KC"
+  },
+  "KCH17-ICEUS": {
+   "bytes": 1767656,
+   "covers": false,
+   "daily": {
+    "days": 749,
+    "first": "2014-04-01",
+    "last": "2017-03-21"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-09-27 08:15:00",
+   "last_utc": "2017-03-21 10:25:00",
+   "need_from": "2016-09-26",
+   "need_until": "2017-02-14",
+   "records": 44190,
+   "root": "KC"
+  },
+  "KCH18-ICEUS": {
+   "bytes": 1823616,
+   "covers": false,
+   "daily": {
+    "days": 747,
+    "first": "2015-04-01",
+    "last": "2018-03-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-09-27 08:15:00",
+   "last_utc": "2018-03-16 17:20:00",
+   "need_from": "2017-09-26",
+   "need_until": "2018-02-14",
+   "records": 45589,
+   "root": "KC"
+  },
+  "KCH19-ICEUS": {
+   "bytes": 1904816,
+   "covers": false,
+   "daily": {
+    "days": 747,
+    "first": "2016-04-01",
+    "last": "2019-03-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-09-27 08:15:00",
+   "last_utc": "2019-03-14 14:50:00",
+   "need_from": "2018-09-26",
+   "need_until": "2019-02-14",
+   "records": 47619,
+   "root": "KC"
+  },
+  "KCH20-ICEUS": {
+   "bytes": 1940976,
+   "covers": false,
+   "daily": {
+    "days": 747,
+    "first": "2017-04-03",
+    "last": "2020-03-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-09-30 08:15:00",
+   "last_utc": "2020-03-19 16:45:00",
+   "need_from": "2019-09-26",
+   "need_until": "2020-02-14",
+   "records": 48523,
+   "root": "KC"
+  },
+  "KCH21-ICEUS": {
+   "bytes": 1898416,
+   "covers": false,
+   "daily": {
+    "days": 749,
+    "first": "2018-04-02",
+    "last": "2021-03-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-09-28 08:15:00",
+   "last_utc": "2021-03-18 17:00:00",
+   "need_from": "2020-09-25",
+   "need_until": "2021-02-12",
+   "records": 47459,
+   "root": "KC"
+  },
+  "KCH22-ICEUS": {
+   "bytes": 1862016,
+   "covers": false,
+   "daily": {
+    "days": 750,
+    "first": "2019-04-01",
+    "last": "2022-03-21"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-09-27 08:15:00",
+   "last_utc": "2022-03-21 12:21:00",
+   "need_from": "2021-09-24",
+   "need_until": "2022-02-14",
+   "records": 46549,
+   "root": "KC"
+  },
+  "KCH23-ICEUS": {
+   "bytes": 1863136,
+   "covers": false,
+   "daily": {
+    "days": 748,
+    "first": "2020-04-01",
+    "last": "2023-03-21"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-09-27 08:15:00",
+   "last_utc": "2023-03-17 15:23:00",
+   "need_from": "2022-09-26",
+   "need_until": "2023-02-14",
+   "records": 46577,
+   "root": "KC"
+  },
+  "KCH24-ICEUS": {
+   "bytes": 1933176,
+   "covers": false,
+   "daily": {
+    "days": 745,
+    "first": "2021-04-01",
+    "last": "2024-03-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-09-28 08:15:00",
+   "last_utc": "2024-03-14 16:18:00",
+   "need_from": "2023-09-26",
+   "need_until": "2024-02-14",
+   "records": 48328,
+   "root": "KC"
+  },
+  "KCH25-ICEUS": {
+   "bytes": 1967856,
+   "covers": false,
+   "daily": {
+    "days": 744,
+    "first": "2022-04-01",
+    "last": "2025-03-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-09-27 08:15:00",
+   "last_utc": "2025-03-19 15:34:00",
+   "need_from": "2024-09-26",
+   "need_until": "2025-02-14",
+   "records": 49195,
+   "root": "KC"
+  },
+  "KCK15-ICEUS": {
+   "bytes": 1361096,
+   "covers": true,
+   "daily": {
+    "days": 746,
+    "first": "2012-06-01",
+    "last": "2015-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-11-28 09:15:00",
+   "last_utc": "2015-05-18 14:54:00",
+   "need_from": "2014-12-26",
+   "need_until": "2015-04-14",
+   "records": 34026,
+   "root": "KC"
+  },
+  "KCK16-ICEUS": {
+   "bytes": 1418776,
+   "covers": true,
+   "daily": {
+    "days": 747,
+    "first": "2013-06-03",
+    "last": "2016-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-11-30 09:15:00",
+   "last_utc": "2016-05-18 17:07:00",
+   "need_from": "2015-12-25",
+   "need_until": "2016-04-14",
+   "records": 35468,
+   "root": "KC"
+  },
+  "KCK17-ICEUS": {
+   "bytes": 1546456,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2014-06-02",
+    "last": "2017-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-11-28 09:15:00",
+   "last_utc": "2017-05-18 14:27:00",
+   "need_from": "2016-12-27",
+   "need_until": "2017-04-14",
+   "records": 38660,
+   "root": "KC"
+  },
+  "KCK18-ICEUS": {
+   "bytes": 1577536,
+   "covers": true,
+   "daily": {
+    "days": 749,
+    "first": "2015-06-01",
+    "last": "2018-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-11-27 09:15:00",
+   "last_utc": "2018-05-16 13:14:00",
+   "need_from": "2017-12-27",
+   "need_until": "2018-04-13",
+   "records": 39437,
+   "root": "KC"
+  },
+  "KCK19-ICEUS": {
+   "bytes": 1707296,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2016-06-01",
+    "last": "2019-05-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-11-27 09:15:00",
+   "last_utc": "2019-05-20 11:35:00",
+   "need_from": "2018-12-27",
+   "need_until": "2019-04-12",
+   "records": 42681,
+   "root": "KC"
+  },
+  "KCK20-ICEUS": {
+   "bytes": 1788976,
+   "covers": true,
+   "daily": {
+    "days": 745,
+    "first": "2017-06-05",
+    "last": "2020-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-11-29 09:15:00",
+   "last_utc": "2020-05-15 16:04:00",
+   "need_from": "2019-12-27",
+   "need_until": "2020-04-14",
+   "records": 44723,
+   "root": "KC"
+  },
+  "KCK21-ICEUS": {
+   "bytes": 1728576,
+   "covers": true,
+   "daily": {
+    "days": 746,
+    "first": "2018-06-04",
+    "last": "2021-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-11-27 09:15:00",
+   "last_utc": "2021-05-18 08:18:00",
+   "need_from": "2020-12-25",
+   "need_until": "2021-04-14",
+   "records": 43213,
+   "root": "KC"
+  },
+  "KCK22-ICEUS": {
+   "bytes": 1702576,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2019-06-03",
+    "last": "2022-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-11-29 09:15:00",
+   "last_utc": "2022-05-16 13:55:00",
+   "need_from": "2021-12-27",
+   "need_until": "2022-04-14",
+   "records": 42563,
+   "root": "KC"
+  },
+  "KCK23-ICEUS": {
+   "bytes": 1692256,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2020-06-01",
+    "last": "2023-05-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-11-28 09:15:00",
+   "last_utc": "2023-05-17 12:06:00",
+   "need_from": "2022-12-27",
+   "need_until": "2023-04-14",
+   "records": 42305,
+   "root": "KC"
+  },
+  "KCK24-ICEUS": {
+   "bytes": 1904416,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2021-06-01",
+    "last": "2024-05-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-11-28 09:15:00",
+   "last_utc": "2024-05-15 13:09:00",
+   "need_from": "2023-12-27",
+   "need_until": "2024-04-12",
+   "records": 47609,
+   "root": "KC"
+  },
+  "KCK25-ICEUS": {
+   "bytes": 1835976,
+   "covers": true,
+   "daily": {
+    "days": 745,
+    "first": "2022-06-01",
+    "last": "2025-05-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-11-27 09:15:00",
+   "last_utc": "2025-05-19 15:01:00",
+   "need_from": "2024-12-27",
+   "need_until": "2025-03-14",
+   "records": 45898,
+   "root": "KC"
+  },
+  "KCN15-ICEUS": {
+   "bytes": 1406536,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2012-08-01",
+    "last": "2015-07-21"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-01-27 09:15:00",
+   "last_utc": "2015-07-20 15:04:00",
+   "need_from": "2015-02-24",
+   "need_until": "2015-06-12",
+   "records": 35162,
+   "root": "KC"
+  },
+  "KCN16-ICEUS": {
+   "bytes": 1584016,
+   "covers": true,
+   "daily": {
+    "days": 747,
+    "first": "2013-08-01",
+    "last": "2016-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-01-28 09:15:00",
+   "last_utc": "2016-07-18 13:12:00",
+   "need_from": "2016-02-25",
+   "need_until": "2016-06-14",
+   "records": 39599,
+   "root": "KC"
+  },
+  "KCN17-ICEUS": {
+   "bytes": 1539896,
+   "covers": true,
+   "daily": {
+    "days": 747,
+    "first": "2014-08-01",
+    "last": "2017-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-01-27 09:15:00",
+   "last_utc": "2017-07-19 12:51:00",
+   "need_from": "2017-02-24",
+   "need_until": "2017-06-14",
+   "records": 38496,
+   "root": "KC"
+  },
+  "KCN18-ICEUS": {
+   "bytes": 1595696,
+   "covers": true,
+   "daily": {
+    "days": 747,
+    "first": "2015-08-03",
+    "last": "2018-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-01-29 09:15:00",
+   "last_utc": "2018-07-18 17:00:00",
+   "need_from": "2018-02-23",
+   "need_until": "2018-06-14",
+   "records": 39891,
+   "root": "KC"
+  },
+  "KCN19-ICEUS": {
+   "bytes": 1706416,
+   "covers": true,
+   "daily": {
+    "days": 743,
+    "first": "2016-08-08",
+    "last": "2019-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-01-28 09:15:00",
+   "last_utc": "2019-07-18 11:40:00",
+   "need_from": "2019-02-22",
+   "need_until": "2019-06-14",
+   "records": 42659,
+   "root": "KC"
+  },
+  "KCN20-ICEUS": {
+   "bytes": 1798216,
+   "covers": true,
+   "daily": {
+    "days": 745,
+    "first": "2017-08-07",
+    "last": "2020-07-21"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-01-28 09:15:00",
+   "last_utc": "2020-07-10 16:08:00",
+   "need_from": "2020-02-25",
+   "need_until": "2020-06-12",
+   "records": 44954,
+   "root": "KC"
+  },
+  "KCN21-ICEUS": {
+   "bytes": 1722776,
+   "covers": true,
+   "daily": {
+    "days": 745,
+    "first": "2018-08-06",
+    "last": "2021-07-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-01-27 09:15:00",
+   "last_utc": "2021-07-19 14:52:00",
+   "need_from": "2021-02-24",
+   "need_until": "2021-06-14",
+   "records": 43068,
+   "root": "KC"
+  },
+  "KCN22-ICEUS": {
+   "bytes": 1697856,
+   "covers": true,
+   "daily": {
+    "days": 747,
+    "first": "2019-08-01",
+    "last": "2022-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-01-27 09:15:00",
+   "last_utc": "2022-07-18 13:30:00",
+   "need_from": "2022-02-24",
+   "need_until": "2022-06-14",
+   "records": 42445,
+   "root": "KC"
+  },
+  "KCN23-ICEUS": {
+   "bytes": 1725856,
+   "covers": true,
+   "daily": {
+    "days": 745,
+    "first": "2020-08-03",
+    "last": "2023-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-01-27 09:15:00",
+   "last_utc": "2023-07-19 13:37:00",
+   "need_from": "2023-02-24",
+   "need_until": "2023-06-14",
+   "records": 43145,
+   "root": "KC"
+  },
+  "KCN24-ICEUS": {
+   "bytes": 1826616,
+   "covers": true,
+   "daily": {
+    "days": 746,
+    "first": "2021-08-02",
+    "last": "2024-07-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-01-29 09:15:00",
+   "last_utc": "2024-07-15 12:32:00",
+   "need_from": "2024-02-23",
+   "need_until": "2024-06-14",
+   "records": 45664,
+   "root": "KC"
+  },
+  "KCU15-ICEUS": {
+   "bytes": 1394976,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2012-10-01",
+    "last": "2015-09-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-03-30 08:15:00",
+   "last_utc": "2015-09-16 13:25:00",
+   "need_from": "2015-04-24",
+   "need_until": "2015-08-14",
+   "records": 34873,
+   "root": "KC"
+  },
+  "KCU16-ICEUS": {
+   "bytes": 1624856,
+   "covers": true,
+   "daily": {
+    "days": 749,
+    "first": "2013-10-01",
+    "last": "2016-09-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-03-29 08:15:00",
+   "last_utc": "2016-09-19 17:04:00",
+   "need_from": "2016-04-26",
+   "need_until": "2016-08-12",
+   "records": 40620,
+   "root": "KC"
+  },
+  "KCU17-ICEUS": {
+   "bytes": 1586576,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2014-10-01",
+    "last": "2017-09-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-03-29 08:15:00",
+   "last_utc": "2017-09-18 16:07:00",
+   "need_from": "2017-04-26",
+   "need_until": "2017-08-14",
+   "records": 39663,
+   "root": "KC"
+  },
+  "KCU18-ICEUS": {
+   "bytes": 1649736,
+   "covers": true,
+   "daily": {
+    "days": 747,
+    "first": "2015-10-01",
+    "last": "2018-09-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-03-29 08:15:00",
+   "last_utc": "2018-09-17 15:19:00",
+   "need_from": "2018-04-26",
+   "need_until": "2018-08-14",
+   "records": 41242,
+   "root": "KC"
+  },
+  "KCU19-ICEUS": {
+   "bytes": 1730656,
+   "covers": true,
+   "daily": {
+    "days": 746,
+    "first": "2016-10-03",
+    "last": "2019-09-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-03-29 09:15:00",
+   "last_utc": "2019-09-11 15:37:00",
+   "need_from": "2019-04-26",
+   "need_until": "2019-08-14",
+   "records": 43265,
+   "root": "KC"
+  },
+  "KCU20-ICEUS": {
+   "bytes": 1711576,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2017-10-02",
+    "last": "2020-09-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-03-30 08:15:00",
+   "last_utc": "2020-09-18 14:48:00",
+   "need_from": "2020-04-24",
+   "need_until": "2020-08-14",
+   "records": 42788,
+   "root": "KC"
+  },
+  "KCU21-ICEUS": {
+   "bytes": 1808096,
+   "covers": true,
+   "daily": {
+    "days": 749,
+    "first": "2018-10-01",
+    "last": "2021-09-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-03-29 08:15:00",
+   "last_utc": "2021-09-17 16:10:00",
+   "need_from": "2021-04-26",
+   "need_until": "2021-08-13",
+   "records": 45201,
+   "root": "KC"
+  },
+  "KCU22-ICEUS": {
+   "bytes": 1668896,
+   "covers": true,
+   "daily": {
+    "days": 748,
+    "first": "2019-10-02",
+    "last": "2022-09-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-03-29 08:15:00",
+   "last_utc": "2022-09-16 12:34:00",
+   "need_from": "2022-04-26",
+   "need_until": "2022-08-12",
+   "records": 41721,
+   "root": "KC"
+  },
+  "KCU23-ICEUS": {
+   "bytes": 1724056,
+   "covers": true,
+   "daily": {
+    "days": 746,
+    "first": "2020-10-01",
+    "last": "2023-09-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-03-29 08:15:00",
+   "last_utc": "2023-09-19 14:30:00",
+   "need_from": "2023-04-26",
+   "need_until": "2023-08-14",
+   "records": 43100,
+   "root": "KC"
+  },
+  "KCU24-ICEUS": {
+   "bytes": 1875496,
+   "covers": true,
+   "daily": {
+    "days": 745,
+    "first": "2021-10-01",
+    "last": "2024-09-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-04-01 11:30:00",
+   "last_utc": "2024-09-18 08:36:00",
+   "need_from": "2024-04-26",
+   "need_until": "2024-08-14",
+   "records": 46886,
+   "root": "KC"
+  },
+  "KCZ15-ICEUS": {
+   "bytes": 1700976,
+   "covers": false,
+   "daily": {
+    "days": 748,
+    "first": "2013-01-02",
+    "last": "2015-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-06-29 08:15:00",
+   "last_utc": "2015-12-17 17:01:00",
+   "need_from": "2015-06-26",
+   "need_until": "2015-11-13",
+   "records": 42523,
+   "root": "KC"
+  },
+  "KCZ16-ICEUS": {
+   "bytes": 1815656,
+   "covers": false,
+   "daily": {
+    "days": 748,
+    "first": "2014-01-02",
+    "last": "2016-12-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-06-29 08:15:00",
+   "last_utc": "2016-12-19 09:17:00",
+   "need_from": "2016-06-24",
+   "need_until": "2016-11-14",
+   "records": 45390,
+   "root": "KC"
+  },
+  "KCZ17-ICEUS": {
+   "bytes": 1855016,
+   "covers": false,
+   "daily": {
+    "days": 747,
+    "first": "2015-01-02",
+    "last": "2017-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-06-29 08:15:00",
+   "last_utc": "2017-12-15 18:24:00",
+   "need_from": "2017-06-26",
+   "need_until": "2017-11-14",
+   "records": 46374,
+   "root": "KC"
+  },
+  "KCZ18-ICEUS": {
+   "bytes": 1868936,
+   "covers": false,
+   "daily": {
+    "days": 747,
+    "first": "2016-01-04",
+    "last": "2018-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-06-29 08:15:00",
+   "last_utc": "2018-12-18 17:15:00",
+   "need_from": "2018-06-26",
+   "need_until": "2018-11-14",
+   "records": 46722,
+   "root": "KC"
+  },
+  "KCZ19-ICEUS": {
+   "bytes": 1901536,
+   "covers": false,
+   "daily": {
+    "days": 743,
+    "first": "2017-01-09",
+    "last": "2019-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-07-01 08:15:00",
+   "last_utc": "2019-12-17 17:30:00",
+   "need_from": "2019-06-26",
+   "need_until": "2019-11-14",
+   "records": 47537,
+   "root": "KC"
+  },
+  "KCZ20-ICEUS": {
+   "bytes": 1944976,
+   "covers": false,
+   "daily": {
+    "days": 749,
+    "first": "2018-01-02",
+    "last": "2020-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-06-29 08:15:00",
+   "last_utc": "2020-12-17 15:01:00",
+   "need_from": "2020-06-26",
+   "need_until": "2020-11-13",
+   "records": 48623,
+   "root": "KC"
+  },
+  "KCZ21-ICEUS": {
+   "bytes": 1932056,
+   "covers": false,
+   "daily": {
+    "days": 749,
+    "first": "2019-01-02",
+    "last": "2021-12-20"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-06-29 08:15:00",
+   "last_utc": "2021-12-17 17:44:00",
+   "need_from": "2021-06-25",
+   "need_until": "2021-11-12",
+   "records": 48300,
+   "root": "KC"
+  },
+  "KCZ22-ICEUS": {
+   "bytes": 1883136,
+   "covers": false,
+   "daily": {
+    "days": 748,
+    "first": "2020-01-02",
+    "last": "2022-12-19"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-06-29 08:15:00",
+   "last_utc": "2022-12-14 18:06:00",
+   "need_from": "2022-06-24",
+   "need_until": "2022-11-14",
+   "records": 47077,
+   "root": "KC"
+  },
+  "KCZ23-ICEUS": {
+   "bytes": 1924576,
+   "covers": false,
+   "daily": {
+    "days": 745,
+    "first": "2021-01-04",
+    "last": "2023-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-06-29 08:15:00",
+   "last_utc": "2023-12-15 18:00:00",
+   "need_from": "2023-06-26",
+   "need_until": "2023-11-14",
+   "records": 48113,
+   "root": "KC"
+  },
+  "KCZ24-ICEUS": {
+   "bytes": 1956696,
+   "covers": false,
+   "daily": {
+    "days": 745,
+    "first": "2022-01-03",
+    "last": "2024-12-18"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-07-01 08:15:00",
+   "last_utc": "2024-12-17 15:18:00",
+   "need_from": "2024-06-26",
+   "need_until": "2024-11-14",
+   "records": 48916,
+   "root": "KC"
+  },
+  "SBH15-ICEUS": {
+   "bytes": 2018056,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2012-04-02",
+    "last": "2015-02-27"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-09-29 07:30:00",
+   "last_utc": "2015-02-27 17:54:00",
+   "need_from": "2014-09-26",
+   "need_until": "2015-02-13",
+   "records": 50450,
+   "root": "SB"
+  },
+  "SBH16-ICEUS": {
+   "bytes": 2108776,
+   "covers": false,
+   "daily": {
+    "days": 735,
+    "first": "2013-04-01",
+    "last": "2016-02-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-09-28 07:30:00",
+   "last_utc": "2016-02-29 17:54:00",
+   "need_from": "2015-07-27",
+   "need_until": "2016-02-12",
+   "records": 52718,
+   "root": "SB"
+  },
+  "SBH17-ICEUS": {
+   "bytes": 2122496,
+   "covers": false,
+   "daily": {
+    "days": 734,
+    "first": "2014-04-01",
+    "last": "2017-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-09-27 07:30:00",
+   "last_utc": "2017-02-28 17:53:00",
+   "need_from": "2016-07-27",
+   "need_until": "2017-02-14",
+   "records": 53061,
+   "root": "SB"
+  },
+  "SBH18-ICEUS": {
+   "bytes": 2172536,
+   "covers": false,
+   "daily": {
+    "days": 734,
+    "first": "2015-04-01",
+    "last": "2018-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-09-27 07:30:00",
+   "last_utc": "2018-02-28 17:54:00",
+   "need_from": "2017-07-27",
+   "need_until": "2018-02-14",
+   "records": 54312,
+   "root": "SB"
+  },
+  "SBH19-ICEUS": {
+   "bytes": 2125296,
+   "covers": false,
+   "daily": {
+    "days": 734,
+    "first": "2016-04-01",
+    "last": "2019-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-09-27 07:30:00",
+   "last_utc": "2019-02-28 17:54:00",
+   "need_from": "2018-07-27",
+   "need_until": "2019-02-14",
+   "records": 53131,
+   "root": "SB"
+  },
+  "SBH20-ICEUS": {
+   "bytes": 2074696,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2017-04-03",
+    "last": "2020-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-09-30 07:30:00",
+   "last_utc": "2020-02-28 17:07:00",
+   "need_from": "2019-07-26",
+   "need_until": "2020-02-14",
+   "records": 51866,
+   "root": "SB"
+  },
+  "SBH21-ICEUS": {
+   "bytes": 2174656,
+   "covers": false,
+   "daily": {
+    "days": 734,
+    "first": "2018-04-02",
+    "last": "2021-02-26"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-09-28 07:30:00",
+   "last_utc": "2021-02-26 17:54:00",
+   "need_from": "2020-07-27",
+   "need_until": "2021-02-12",
+   "records": 54365,
+   "root": "SB"
+  },
+  "SBH22-ICEUS": {
+   "bytes": 2192976,
+   "covers": false,
+   "daily": {
+    "days": 735,
+    "first": "2019-04-01",
+    "last": "2022-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-09-27 07:30:00",
+   "last_utc": "2022-02-28 17:41:00",
+   "need_from": "2021-07-27",
+   "need_until": "2022-02-14",
+   "records": 54823,
+   "root": "SB"
+  },
+  "SBH23-ICEUS": {
+   "bytes": 2239496,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2020-04-01",
+    "last": "2023-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-09-27 07:30:00",
+   "last_utc": "2023-02-28 17:44:00",
+   "need_from": "2022-07-27",
+   "need_until": "2023-02-14",
+   "records": 55986,
+   "root": "SB"
+  },
+  "SBH24-ICEUS": {
+   "bytes": 2252256,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2021-04-01",
+    "last": "2024-02-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-09-28 07:30:00",
+   "last_utc": "2024-02-29 17:53:00",
+   "need_from": "2023-07-27",
+   "need_until": "2024-02-14",
+   "records": 56305,
+   "root": "SB"
+  },
+  "SBH25-ICEUS": {
+   "bytes": 2210256,
+   "covers": false,
+   "daily": {
+    "days": 731,
+    "first": "2022-04-01",
+    "last": "2025-02-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-09-27 07:30:00",
+   "last_utc": "2025-02-28 17:45:00",
+   "need_from": "2024-07-26",
+   "need_until": "2025-02-14",
+   "records": 55255,
+   "root": "SB"
+  },
+  "SBK15-ICEUS": {
+   "bytes": 1641696,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2012-06-01",
+    "last": "2015-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2014-11-28 08:30:00",
+   "last_utc": "2015-04-30 16:53:00",
+   "need_from": "2014-12-26",
+   "need_until": "2015-04-14",
+   "records": 41041,
+   "root": "SB"
+  },
+  "SBK16-ICEUS": {
+   "bytes": 1752536,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2013-06-03",
+    "last": "2016-04-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-11-30 08:30:00",
+   "last_utc": "2016-04-29 16:50:00",
+   "need_from": "2015-12-25",
+   "need_until": "2016-04-14",
+   "records": 43812,
+   "root": "SB"
+  },
+  "SBK17-ICEUS": {
+   "bytes": 1783696,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2014-06-02",
+    "last": "2017-04-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-11-28 08:30:00",
+   "last_utc": "2017-04-28 16:28:00",
+   "need_from": "2016-12-27",
+   "need_until": "2017-04-14",
+   "records": 44591,
+   "root": "SB"
+  },
+  "SBK18-ICEUS": {
+   "bytes": 1829096,
+   "covers": true,
+   "daily": {
+    "days": 735,
+    "first": "2015-06-01",
+    "last": "2018-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-11-27 08:30:00",
+   "last_utc": "2018-04-30 16:29:00",
+   "need_from": "2017-12-27",
+   "need_until": "2018-04-13",
+   "records": 45726,
+   "root": "SB"
+  },
+  "SBK19-ICEUS": {
+   "bytes": 1745056,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2016-06-01",
+    "last": "2019-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-11-27 08:30:00",
+   "last_utc": "2019-04-30 15:51:00",
+   "need_from": "2018-12-27",
+   "need_until": "2019-04-12",
+   "records": 43625,
+   "root": "SB"
+  },
+  "SBK20-ICEUS": {
+   "bytes": 1843496,
+   "covers": true,
+   "daily": {
+    "days": 733,
+    "first": "2017-06-05",
+    "last": "2020-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-11-29 08:30:00",
+   "last_utc": "2020-04-30 15:05:00",
+   "need_from": "2019-12-27",
+   "need_until": "2020-04-14",
+   "records": 46086,
+   "root": "SB"
+  },
+  "SBK21-ICEUS": {
+   "bytes": 1910416,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2018-06-04",
+    "last": "2021-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-11-27 08:30:00",
+   "last_utc": "2021-04-30 16:53:00",
+   "need_from": "2020-12-25",
+   "need_until": "2021-04-14",
+   "records": 47759,
+   "root": "SB"
+  },
+  "SBK22-ICEUS": {
+   "bytes": 1909056,
+   "covers": true,
+   "daily": {
+    "days": 735,
+    "first": "2019-06-03",
+    "last": "2022-04-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-11-29 08:30:00",
+   "last_utc": "2022-04-29 15:42:00",
+   "need_from": "2021-12-27",
+   "need_until": "2022-04-14",
+   "records": 47725,
+   "root": "SB"
+  },
+  "SBK23-ICEUS": {
+   "bytes": 1960176,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2020-06-01",
+    "last": "2023-04-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-11-28 08:30:00",
+   "last_utc": "2023-04-28 16:54:00",
+   "need_from": "2022-12-27",
+   "need_until": "2023-04-14",
+   "records": 49003,
+   "root": "SB"
+  },
+  "SBK24-ICEUS": {
+   "bytes": 2062816,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2021-06-01",
+    "last": "2024-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-11-28 08:30:00",
+   "last_utc": "2024-04-30 16:54:00",
+   "need_from": "2023-12-27",
+   "need_until": "2024-04-12",
+   "records": 51569,
+   "root": "SB"
+  },
+  "SBK25-ICEUS": {
+   "bytes": 1986896,
+   "covers": true,
+   "daily": {
+    "days": 732,
+    "first": "2022-06-01",
+    "last": "2025-04-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-11-27 08:30:00",
+   "last_utc": "2025-04-30 16:29:00",
+   "need_from": "2024-12-27",
+   "need_until": "2025-03-14",
+   "records": 49671,
+   "root": "SB"
+  },
+  "SBN15-ICEUS": {
+   "bytes": 1762776,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2012-08-01",
+    "last": "2015-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-01-27 08:30:00",
+   "last_utc": "2015-06-30 16:49:00",
+   "need_from": "2015-02-24",
+   "need_until": "2015-06-12",
+   "records": 44068,
+   "root": "SB"
+  },
+  "SBN16-ICEUS": {
+   "bytes": 1885136,
+   "covers": true,
+   "daily": {
+    "days": 735,
+    "first": "2013-08-01",
+    "last": "2016-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-01-28 08:30:00",
+   "last_utc": "2016-06-30 16:20:00",
+   "need_from": "2016-02-25",
+   "need_until": "2016-06-14",
+   "records": 47127,
+   "root": "SB"
+  },
+  "SBN17-ICEUS": {
+   "bytes": 1839936,
+   "covers": true,
+   "daily": {
+    "days": 735,
+    "first": "2014-08-01",
+    "last": "2017-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-01-27 08:30:00",
+   "last_utc": "2017-06-30 16:54:00",
+   "need_from": "2017-02-24",
+   "need_until": "2017-06-14",
+   "records": 45997,
+   "root": "SB"
+  },
+  "SBN18-ICEUS": {
+   "bytes": 1844136,
+   "covers": true,
+   "daily": {
+    "days": 734,
+    "first": "2015-08-03",
+    "last": "2018-06-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-01-29 08:30:00",
+   "last_utc": "2018-06-29 16:54:00",
+   "need_from": "2018-02-23",
+   "need_until": "2018-06-14",
+   "records": 46102,
+   "root": "SB"
+  },
+  "SBN19-ICEUS": {
+   "bytes": 1780816,
+   "covers": true,
+   "daily": {
+    "days": 729,
+    "first": "2016-08-08",
+    "last": "2019-06-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-01-28 08:30:00",
+   "last_utc": "2019-06-28 15:50:00",
+   "need_from": "2019-02-22",
+   "need_until": "2019-06-14",
+   "records": 44519,
+   "root": "SB"
+  },
+  "SBN20-ICEUS": {
+   "bytes": 2015616,
+   "covers": true,
+   "daily": {
+    "days": 731,
+    "first": "2017-08-07",
+    "last": "2020-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-01-28 08:30:00",
+   "last_utc": "2020-06-30 15:07:00",
+   "need_from": "2020-02-25",
+   "need_until": "2020-06-12",
+   "records": 50389,
+   "root": "SB"
+  },
+  "SBN21-ICEUS": {
+   "bytes": 1974696,
+   "covers": true,
+   "daily": {
+    "days": 732,
+    "first": "2018-08-06",
+    "last": "2021-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-01-27 08:30:00",
+   "last_utc": "2021-06-30 16:52:00",
+   "need_from": "2021-02-24",
+   "need_until": "2021-06-14",
+   "records": 49366,
+   "root": "SB"
+  },
+  "SBN22-ICEUS": {
+   "bytes": 1948896,
+   "covers": true,
+   "daily": {
+    "days": 735,
+    "first": "2019-08-01",
+    "last": "2022-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-01-27 08:30:00",
+   "last_utc": "2022-06-30 16:54:00",
+   "need_from": "2022-02-24",
+   "need_until": "2022-06-14",
+   "records": 48721,
+   "root": "SB"
+  },
+  "SBN23-ICEUS": {
+   "bytes": 2021976,
+   "covers": true,
+   "daily": {
+    "days": 733,
+    "first": "2020-08-03",
+    "last": "2023-06-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-01-27 08:30:00",
+   "last_utc": "2023-06-30 15:06:00",
+   "need_from": "2023-02-24",
+   "need_until": "2023-06-14",
+   "records": 50548,
+   "root": "SB"
+  },
+  "SBN24-ICEUS": {
+   "bytes": 2002696,
+   "covers": true,
+   "daily": {
+    "days": 732,
+    "first": "2021-08-02",
+    "last": "2024-06-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-01-29 08:30:00",
+   "last_utc": "2024-06-28 16:53:00",
+   "need_from": "2024-02-23",
+   "need_until": "2024-06-14",
+   "records": 50066,
+   "root": "SB"
+  },
+  "SBV15-ICEUS": {
+   "bytes": 1937616,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2012-11-01",
+    "last": "2015-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2015-04-29 07:30:00",
+   "last_utc": "2015-09-30 16:52:00",
+   "need_from": "2015-04-24",
+   "need_until": "2015-09-14",
+   "records": 48439,
+   "root": "SB"
+  },
+  "SBV16-ICEUS": {
+   "bytes": 2007776,
+   "covers": false,
+   "daily": {
+    "days": 734,
+    "first": "2013-11-01",
+    "last": "2016-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2016-04-29 07:30:00",
+   "last_utc": "2016-09-30 16:52:00",
+   "need_from": "2016-04-26",
+   "need_until": "2016-09-14",
+   "records": 50193,
+   "root": "SB"
+  },
+  "SBV17-ICEUS": {
+   "bytes": 2012856,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2014-11-03",
+    "last": "2017-09-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2017-05-01 11:30:00",
+   "last_utc": "2017-09-29 16:54:00",
+   "need_from": "2017-04-26",
+   "need_until": "2017-09-14",
+   "records": 50320,
+   "root": "SB"
+  },
+  "SBV18-ICEUS": {
+   "bytes": 2022176,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2015-11-02",
+    "last": "2018-09-28"
+   },
+   "daily_covers": true,
+   "first_utc": "2018-04-30 07:30:00",
+   "last_utc": "2018-09-28 15:25:00",
+   "need_from": "2018-04-26",
+   "need_until": "2018-09-14",
+   "records": 50553,
+   "root": "SB"
+  },
+  "SBV19-ICEUS": {
+   "bytes": 1957856,
+   "covers": false,
+   "daily": {
+    "days": 729,
+    "first": "2016-11-07",
+    "last": "2019-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2019-04-29 07:30:00",
+   "last_utc": "2019-09-30 16:24:00",
+   "need_from": "2019-04-26",
+   "need_until": "2019-09-13",
+   "records": 48945,
+   "root": "SB"
+  },
+  "SBV20-ICEUS": {
+   "bytes": 2053456,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2017-11-02",
+    "last": "2020-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2020-04-29 07:30:00",
+   "last_utc": "2020-09-30 16:54:00",
+   "need_from": "2020-04-24",
+   "need_until": "2020-09-14",
+   "records": 51335,
+   "root": "SB"
+  },
+  "SBV21-ICEUS": {
+   "bytes": 2148336,
+   "covers": false,
+   "daily": {
+    "days": 732,
+    "first": "2018-11-05",
+    "last": "2021-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2021-04-29 07:30:00",
+   "last_utc": "2021-09-30 16:54:00",
+   "need_from": "2021-04-26",
+   "need_until": "2021-09-14",
+   "records": 53707,
+   "root": "SB"
+  },
+  "SBV22-ICEUS": {
+   "bytes": 2081336,
+   "covers": false,
+   "daily": {
+    "days": 734,
+    "first": "2019-11-01",
+    "last": "2022-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2022-04-29 07:30:00",
+   "last_utc": "2022-09-30 16:54:00",
+   "need_from": "2022-04-26",
+   "need_until": "2022-09-14",
+   "records": 52032,
+   "root": "SB"
+  },
+  "SBV23-ICEUS": {
+   "bytes": 2150896,
+   "covers": false,
+   "daily": {
+    "days": 732,
+    "first": "2020-11-02",
+    "last": "2023-09-29"
+   },
+   "daily_covers": true,
+   "first_utc": "2023-05-01 11:30:00",
+   "last_utc": "2023-09-29 16:45:00",
+   "need_from": "2023-04-26",
+   "need_until": "2023-09-14",
+   "records": 53771,
+   "root": "SB"
+  },
+  "SBV24-ICEUS": {
+   "bytes": 2107256,
+   "covers": false,
+   "daily": {
+    "days": 733,
+    "first": "2021-10-28",
+    "last": "2024-09-30"
+   },
+   "daily_covers": true,
+   "first_utc": "2024-04-29 07:30:00",
+   "last_utc": "2024-09-30 16:54:00",
+   "need_from": "2024-04-26",
+   "need_until": "2024-09-13",
+   "records": 52680,
+   "root": "SB"
+  }
+ },
+ "span": [
+  "2015-12",
+  "2025-03"
+ ],
+ "summary": {
+  "BRN": {
+   "covers": 0,
+   "daily_covers": 62,
+   "files": 62,
+   "gb": 0.21,
+   "with_data": 62
+  },
+  "CT": {
+   "covers": 21,
+   "daily_covers": 42,
+   "files": 42,
+   "gb": 0.09,
+   "with_data": 42
+  },
+  "GAS": {
+   "covers": 39,
+   "daily_covers": 39,
+   "files": 39,
+   "gb": 0.12,
+   "with_data": 39
+  },
+  "KC": {
+   "covers": 31,
+   "daily_covers": 52,
+   "files": 52,
+   "gb": 0.09,
+   "with_data": 52
+  },
+  "SB": {
+   "covers": 21,
+   "daily_covers": 42,
+   "files": 42,
+   "gb": 0.08,
+   "with_data": 42
+  }
+ }
+}

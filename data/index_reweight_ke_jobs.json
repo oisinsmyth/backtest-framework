@@ -57,13 +57,16 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-26T23:20:03.915258000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "downloaded_utc": "2026-09-27T00:35:18Z",
+   "files": 17,
+   "bytes": 176290631
   },
   {
    "label": "definition-KE",
@@ -96,13 +99,16 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-26T23:20:13.084958000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "downloaded_utc": "2026-09-27T04:38:50Z",
+   "files": 17,
+   "bytes": 13525441
   }
  ]
 }

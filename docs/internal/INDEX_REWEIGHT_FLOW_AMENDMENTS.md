@@ -1,4 +1,4 @@
-# Index reweight flow: amendments to the deposit (v1.3 + IR-A1–IR-A12)
+# Index reweight flow: amendments to the deposit (v1.3 + IR-A1–IR-A13)
 
 > The deposit, `User-Doc-Deposit/INDEX_REWEIGHT_FLOW_PREREG.md` (v1.3), is read-only here. Its §0.2
 > says agreed changes are versioned edits made *before* code. This file is those edits, kept beside
@@ -208,3 +208,26 @@ same holds for the ICE settlement times of IR-A4.
 - **The GSCI weights** for 2017 come from a third-party mirror of S&P's February 2018 methodology. That mirror's
   other column matched S&P's own 2019 figures on all 24 rows. The 2016 document swaps the lead and nickel labels.
   Both are flagged in the sources and carried as they are.
+
+## IR-A13. The ICE prices are Sierra Chart's daily settlements (revises IR-A4's ICE row)
+
+*Source: fact, and within the principal's "Yes to both" (Sierra Chart for ICE). Written 2026-09-27, after
+IR-A4 and before any drift, CIM or ΔN is computed.*
+
+- **Why IR-A4's ICE row changes.**
+  - Sierra Chart's intraday ICE files hold about five months per contract. Many contracts therefore miss their
+    roll-in period (for example SBH20 starts 2019-09-30, after the September roll into it).
+  - Sierra's DAILY files (`.dly`) hold each contract's whole life. **Their Close is the exchange settlement:**
+    - it equals the CME settlement strip exactly on NGH20 and ZCH20, 1,095 of 1,095 days (2018–2020);
+    - on ICE Brent it equals NYMEX BZ's settlement (BZ is cash-settled to ICE Brent, with the same month label)
+      exactly on 99.99% of 60,867 contract-days (55 contracts, 2016 → 2025-02). The largest difference is $0.03.
+  - All 237 ICE daily files span their roll-in to their roll-out
+    (`data/index_reweight/sierra_download_record_ice.json`, `daily_covers`).
+- **Settled:**
+  - the ICE daily price is the Sierra daily file's Close, taken as the exchange settlement;
+  - it is not an estimate, so IR-A4's ICE band, the last-trade rule and the ICE settlement times are no longer
+    needed for pricing;
+  - IR-A9's ICE clause lapses; its CME clause stands.
+  - The Brent comparison above is written into Gate R0's output as a known answer.
+- **Unchanged:** the LME row of IR-A4 (Westmetall, interpolated, with its band). CME prices remain the settlement
+  strip; KE's come from its own pull, with Sierra's daily file as a cross-check.

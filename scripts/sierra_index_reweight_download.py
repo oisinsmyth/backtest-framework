@@ -55,9 +55,13 @@ ROOTS = {"Natural Gas": ("NG", "NYMEX"), "WTI Crude Oil": ("CL", "NYMEX"), "ULS 
          "Silver": ("SI", "COMEX"), "Live Cattle": ("LE", "CME"), "Lean Hogs": ("HE", "CME")}
 # The ICE components, for the drift only (amendment IR-A4; the principal, 2026-09-27: "Yes to both"). Gasoil joined
 # BCOM for target year 2019, so its list starts 2018-12. Cocoa is not in BCOM in 2016-2025, so it is not listed.
-ICE_ROOTS = {"Brent Crude Oil": ("BRN", "ICEEU"), "Low Sulphur Gas Oil": ("G", "ICEEU"),
+# The others start 2014-12: the 2016 event's drift runs from det(2015), BD4 of January 2015 (D634 §2).
+# Sierra's symbols were resolved by chart title on 2026-09-27: GASF20-ICEEU is "Gas Oil LS - ICE EU" (GF20 does
+# not resolve); KC and CT on ICEUS are "Coffee C Arabica" and "Cotton #2".
+ICE_ROOTS = {"Brent Crude Oil": ("BRN", "ICEEU"), "Low Sulphur Gas Oil": ("GAS", "ICEEU"),
              "Sugar": ("SB", "ICEUS"), "Coffee": ("KC", "ICEUS"), "Cotton": ("CT", "ICEUS")}
-ICE_FIRST_MONTH = {"Low Sulphur Gas Oil": "2018-12"}
+ICE_FIRST_MONTH = {"Low Sulphur Gas Oil": "2018-12", "Brent Crude Oil": "2014-12", "Sugar": "2014-12",
+                   "Coffee": "2014-12", "Cotton": "2014-12"}
 SETS = {"cme": ROOTS, "ice": ICE_ROOTS}
 
 
@@ -93,9 +97,9 @@ def contract_list(which: str = "cme") -> dict[str, dict[str, Any]]:
             r["lead_months"].append(str(p))
     for sym, r in out.items():
         first, last = pd.Period(r["lead_months"][0]), pd.Period(r["lead_months"][-1])
-        # it is rolled into during the roll period of the month before it first leads, and out of during the roll
-        # period of the month after it last leads
-        roll_in, roll_out = first - 1, last + 1
+        # the roll period of month m moves from lead(m) to lead(m+1): a contract is rolled into during the month
+        # before it first leads, and out of during the last month it leads
+        roll_in, roll_out = first - 1, last
         r["need_from"] = str((bday(roll_in.year, roll_in.month, 5) - NORM_BDAYS * pd.offsets.BDay()).date())
         r["need_until"] = str(bday(roll_out.year, roll_out.month, 10).date())
     return dict(sorted(out.items()))
@@ -121,11 +125,28 @@ def file_span(sym: str) -> dict[str, Any]:
     return {"records": int(n), "first_utc": str(t[0]), "last_utc": str(t[1])}
 
 
-def queue(syms: list[str]) -> list[str]:
-    todo = [x for x in syms if size(x) <= HDR]
+def dly_path(sym: str) -> Path:
+    return SC_DATA / f"{sym}.dly"
+
+
+def dly_span(sym: str) -> dict[str, Any]:
+    """A daily file's row count and first/last dates. Its Close is the exchange settlement: it equals the CME
+    settlement strip exactly on NGH20 and ZCH20, 1,095 of 1,095 days 2018-2020 (checked 2026-09-27)."""
+    p = dly_path(sym)
+    if not p.exists():
+        return {"days": 0}
+    lines = [ln for ln in p.read_text(encoding="utf-8").splitlines()[1:] if ln.strip()]
+    if not lines:
+        return {"days": 0}
+    return {"days": len(lines), "first": lines[0].split(",")[0].replace("/", "-"),
+            "last": lines[-1].split(",")[0].replace("/", "-")}
+
+
+def queue(syms: list[str], ext: str = "scid") -> list[str]:
+    todo = [x for x in syms if (size(x) <= HDR if ext == "scid" else dly_span(x)["days"] == 0)]
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     for i, x in enumerate(todo):
-        s.sendto(f"{x}.scid".encode(), UDP)
+        s.sendto(f"{x}.{ext}".encode(), UDP)
         for _ in range(30):
             time.sleep(0.2)
             if any(t.startswith(x) for _h, t in U.mdi_charts()):
@@ -162,12 +183,19 @@ def record(lst: dict[str, dict[str, Any]], out: Path = OUT) -> dict[str, Any]:
         sp = file_span(sym)
         covers = bool(sp.get("records", 0) > 0 and sp["first_utc"][:10] <= r["need_from"]
                       and sp["last_utc"][:10] >= r["need_until"])
+        dl = dly_span(sym)
+        # the daily file serves prices (settlements), for which the 30-day flow norm is not needed: it must span
+        # the roll-in period to the roll-out period
+        roll_in = str((pd.Timestamp(r["need_from"]) + NORM_BDAYS * pd.offsets.BDay()).date())
         rec["contracts"][sym] = {**{k: r[k] for k in ("root", "need_from", "need_until")}, "bytes": size(sym),
-                                 **sp, "covers": covers}
+                                 **sp, "covers": covers, "daily": dl,
+                                 "daily_covers": bool(dl["days"] > 0 and dl["first"] <= roll_in
+                                                      and dl["last"] >= r["need_until"])}
     c = rec["contracts"]
     rec["summary"] = {root: {"files": sum(1 for v in c.values() if v["root"] == root),
                              "with_data": sum(1 for v in c.values() if v["root"] == root and v.get("records", 0) > 0),
                              "covers": sum(1 for v in c.values() if v["root"] == root and v["covers"]),
+                             "daily_covers": sum(1 for v in c.values() if v["root"] == root and v["daily_covers"]),
                              "gb": round(sum(v["bytes"] for v in c.values() if v["root"] == root) / 1e9, 2)}
                       for root in sorted({v["root"] for v in c.values()})}
     out.write_text(json.dumps(rec, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
@@ -183,6 +211,8 @@ def selftest() -> None:
     lst = contract_list()
     assert "NGH16-NYMEX" in lst and "ZCZ16-CBOT" in lst and "GCG16-COMEX" in lst
     assert all(r["need_from"] < r["need_until"] for r in lst.values())
+    # NG Jan-17 leads Nov and Dec 2016 (Table 9a), so it is rolled out of in December 2016's roll period
+    assert lst["NGF17-NYMEX"]["need_until"] == str(bday(2016, 12, 10).date()), lst["NGF17-NYMEX"]
     ice = contract_list("ice")
     assert "BRNH16-ICEEU" in ice and "SBH16-ICEUS" in ice
     gas = [r for r in ice.values() if r["component"] == "Low Sulphur Gas Oil"]
@@ -192,7 +222,7 @@ def selftest() -> None:
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    for f in ("selftest", "list", "queue", "wait", "record"):
+    for f in ("selftest", "list", "queue", "queue-daily", "wait", "record"):
         ap.add_argument(f"--{f}", action="store_true")
     ap.add_argument("--set", choices=sorted(SETS), default="cme")
     a = ap.parse_args(argv)
@@ -209,6 +239,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{len(syms)} contracts ({have} already on disk): {roots}")
     if a.queue:
         queue(syms)
+    if a.queue_daily:
+        queue(syms, "dly")
     if a.wait:
         wait_drained(syms)
     if a.record:

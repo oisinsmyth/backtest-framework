@@ -283,3 +283,168 @@ Secondary pages were seen in search results only and were not used for any numbe
   The 2016 capture (20160228100117) returned navigation only, so SRC-PR2016 was used for 2016.
 - **CME Globex root codes for the Bloomberg tickers.** They are not in any Bloomberg document fetched.
 - **The 2017 table as HTML text.** In SRC-BB2017 the table is an image; SRC-TW2017 supplies the numbers.
+
+---
+
+## ICE settlement windows
+
+Sourced for `ice_settlement_windows.csv`: the daily settlement window (the trades that set the daily settlement
+price) of the five ICE contracts in BCOM, 2014-12-01 to 2025-03-01. All sources below were accessed 2026-09-27.
+Local copies are in `data/raw/index_reweight/ice/`: ice.com PDFs under their own names, Wayback captures as
+`wb_<timestamp>_<name>`, and secondary web pages as `secondary_*.html`. Every PDF has a `.txt` extraction beside it
+(pypdf). Nothing in the CSV was filled from memory.
+
+**CSV conventions.** Times are local clock time in `tz`. Brent and Gasoil are in Europe/London; the three softs are
+in America/New_York. `effective_from` and `effective_to` are inclusive trade dates. For permanent rows, `effective_to`
+is the day before the next row starts, and blank means still in force. The exception is the Gasoil pair: those
+two dates are the last and first dates evidenced, not a change date (see Gasoil below). A `temporary_dst` row
+overrides the permanent row on those trade dates only. It gives the first and last Monday–Friday trade dates of
+the exchange's stated period. The IFEU documents start that period on a Sunday, because Sunday evening opens
+Monday's trading day.
+
+**Primary vs secondary.** Every row is primary, meaning an ICE document or a Wayback capture of one, except the
+2021 spring Coffee row (a ccstrade.com repost of the ICE notice). The secondary sources listed here were used only
+where no ICE copy was found.
+
+### A. Permanent windows
+
+| Id | URL | Doc date | What it shows | Quote (≤15 words) |
+|---|---|---|---|---|
+| IFUS-2014 | https://www.ice.com/publicdocs/futures_us/exchange_notices/ExNot012714Hours.pdf | 2014-01-06 | From trade date Mon 2014-02-03: Sugar No. 11 12:53–12:55, Coffee C 13:23–13:25 (both were 13:28–13:30). Cotton is not in the list of changed windows. | "Also effective starting February 3, 2014, changes to the daily settlement window" |
+| IFUS-KC2019 | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_KC_ArbBlocks20181207.pdf | 2018-12-07 | Coffee C 12:23–12:25 from Mon 2019-01-07. It harmonises with IFEU Robusta. Trading hours are unchanged. | "will be from 12:23 to 12:25 pm New York time each day" |
+| IFUS-SW | Wayback captures of https://www.theice.com/publicdocs/futures_us/Settlement_Window.pdf (20111212142402, 20120610055801, 20130122132558, 20140707063859, 20150619093750, 20160419081014, 20170126165226, 20181009064003, 20210517034610, 20220621203929, 20220706162212) and of https://www.ice.com/publicdocs/futures_us/Settlement_Window.pdf (20230923192023, 20231224031910, 20241231060946) | May 2011, May 2012, Oct 2012, May 2014, Apr 2015, Oct 2015, Jan 2017, Jul 2018, May 2021, Apr 2022, Jun 2022, Jan 2023, Nov 2023, Nov 2024 | Sugar 12:53–12:55 in every capture from May 2014. Coffee 13:23–13:25 from May 2014 to Jul 2018, then 12:23–12:25 from May 2021. Cotton 14:14–14:15 in every capture from May 2011. | "Coffee “C” ® Futures and Options: 13:23 to 13:25" (Jul 2018 capture) |
+| IFUS-R27 | Wayback 20141223191358 and 20170420035300 of https://www.theice.com/publicdocs/rulebooks/futures_us/27_Electronic_Trading_Rules.pdf | Dec 2014, Apr 2017 | Rule 27.18(b): Coffee 1:23–1:25 PM, Cotton 2:14–2:15 PM, Sugar No. 11 12:53–12:55 PM. | "for Coffee “C” Futures and Options Contracts, 1:23 PM – 1:25 PM" |
+| IFUS-R4 | Wayback 20200315115616, 20210922114733, 20220418215606 (theice.com) and 20240419062152, 20250130124142 (ice.com) of `/publicdocs/rulebooks/futures_us/4_Trading.pdf` | Mar 2020 – Jan 2025 | Rule 4.25(b): Coffee 12:23–12:25 PM, Cotton 2:14–2:15 PM, Sugar No. 11 12:53–12:55 PM in all five. | "for Coffee “C” Futures and Options Contracts, 12:23 PM – 12:25 PM" |
+| IFEU-DSP-old | Wayback 20130513192315 and 20140707075617 of https://www.theice.com/publicdocs/futures/ICE_Futures_Designated_Settlement_Periods.pdf | undated (captured May 2013, Jul 2014) | Brent 19:28–19:30. LS Gasoil and legacy Gasoil 16:27–16:30. | "ICE Low Sulphur Gasoil and Options 16:27 – 16:30 10 Minutes" |
+| IFEU-13/096 | https://www.ice.com/publicdocs/circulars/13096.pdf and https://www.ice.com/publicdocs/circulars/13096%20attach.pdf | 2013-06-18 | The same table (Brent 19:28–19:30; Gasoil 16:27–16:30). Its footnote says the times move with US daylight saving. | "Times may vary in line with US daylight savings times" |
+| IFEU-GO-spec2013 | https://web.archive.org/web/20130530072216id_/https://www.theice.com/productguide/ProductSpec.shtml?specId=909 | captured 2013-05-30 | ICE Gasoil futures spec: a three-minute window. | "three minute settlement period from 16:27:00, London time" |
+| IFEU-15/030 | https://web.archive.org/web/20150424121459id_/https://www.theice.com/publicdocs/circulars/15030_attach.pdf | 2015 (covers 08–27 Mar 2015) | DST-week table. LS Gasoil is still 16:27–16:30 GMT, and gasoil is not shifted in DST weeks. Brent is 18:28–18:30 GMT. | "ICE LS Gasoil Futures & Options 16:27-16:30 GMT" |
+| IFEU-GO-page2015 | https://web.archive.org/web/20150908093209id_/https://www.theice.com/products/34361119/Low-Sulphur-Gasoil-Futures | captured 2015-09-08 | The first capture found with the two-minute LS Gasoil window. | "two minute settlement period from 16:28:00, London time" |
+| IFEU-product-pages | Wayback 20140626054552 (`productguide/ProductSpec.shtml?specId=219`), 20150618154533 and 20180716201110 (`/products/219/Brent-Crude-Futures`), 20180716202103 (`/products/34361119/Low-Sulphur-Gasoil-Futures`) | 2014–2018 | Brent: two minutes from 19:28:00 London. LS Gasoil (2018): two minutes from 16:28:00. | "two minute settlement period from 19:28:00, London time" |
+| IFEU-DSP | Wayback captures of https://www.theice.com/publicdocs/futures/Designated_Settlement_Periods_Volume_Thresholds.pdf (20160419015026, 20161003070619, 20161221095540, 20190918155830, 20210730060930, 20220120153931, 20220127210748, 20220629162806, 20220712180844, 20221007043718) and of the ice.com URL (20240526145949, 20250928100314) | 2016-04 to Dec 2025 | Brent 19:28–19:30 and LS Gasoil 16:28–16:30 in every capture. The legacy Gasoil line is gone by April 2016. | "ICE Brent Crude Futures and Options 19:28 – 19:30 5 Minutes" |
+| IFEU-11/159 | https://www.ice.com/publicdocs/circulars/11159.pdf | 2011-12-20 | Context only (a 2011 holiday schedule). Brent was then 19:27–19:30, so it had moved to 19:28 by May 2013, before this window. | "ICE Gasoil Settlement period on Friday 30 December 2011 will be 12:27" |
+
+### B. Temporary windows in US/UK daylight-saving mismatch weeks
+
+**ICE Futures U.S. (Sugar No. 11, Coffee C, Cotton No. 2), one notice per mismatch period.** Sugar No. 11's window
+never moves in NY time. Every notice found says so. Cotton appears in no DST notice, and its hours and window do not
+change. Coffee C's window moved to 13:23–13:25 NY in these weeks only from spring 2019. That was the first mismatch
+after its permanent window was aligned with London Robusta on 2019-01-07. Before 2019 every notice found says Coffee's
+window is unchanged (only Cocoa's moved).
+
+| Period (trade dates) | Coffee C window NY | Sugar / Cotton | Source (doc date) | Quote (≤15 words) |
+|---|---|---|---|---|
+| 2015-03-09 – 03-27 | unchanged (13:23–13:25) | unchanged | SECONDARY https://www.comunicaffe.com/ice-notice-changes-opening-times-sugar-no-11-coffee-c-cocoa-contracts-daily-settlement-window-cocoa-contracts/ (2015-02-06 repost) | "Daily Settlement Windows, and the Daily Close of Trading (other than for Cocoa" |
+| 2015-10-26 – 10-30 | unchanged | unchanged | SECONDARY https://www.comunicaffe.com/ice-announces-temporary-change-to-opening-times-for-sugar-no-11-coffee-c-and-cocoa-futures-and-option-contracts-daily-settlement/ (2015-09-15) | "Daily Settlement Window for Sugar No. 11 and Coffee “C” contracts – remain unchanged" |
+| 2016-03-14 – 03-24 | unchanged | unchanged | SECONDARY https://www.comunicaffe.com/ice-announces-temporary-change-to-opening-times-for-coffee-c-contract/ (2016-02-17); 25 Mar was Good Friday | same sentence |
+| 2016 autumn | NOT FOUND | — | — | — |
+| 2017-03-13 – 03-24 | unchanged | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/NewExNotDST_Start2017.pdf (2017-02-03) | same sentence |
+| 2017 autumn | NOT FOUND | — | — | — |
+| 2018-03-12 – 03-23 | unchanged | unchanged | SECONDARY https://www.comunicaffe.com/ice-notice-temporary-change-to-opening-times-for-coffee-c-contract/ (2018-02-13) | same sentence |
+| 2018 autumn | NOT FOUND | — | — | — |
+| 2019-03-11 – 03-29 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_2019DST_Start_20190114.pdf (2019-01-14) | "Coffee “C” futures and options contracts will be from 1:23 to 1:25 pm" |
+| 2019-10-28 – 11-01 | **UNRESOLVED** (see conflicts) | unchanged | SECONDARY https://community.optimusfutures.com/t/notice-temporary-change-to-opening-times-for-sugar-coffee-cocoa-effective-oct-28-nov-1/3054 (2019-10-25) | "Daily Settlement Window for Sugar No. 11 and Coffee “C” contracts – remain unchanged" |
+| 2020-03-09 – 03-27 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_Start_20190113.pdf (dated 2020-01-13 despite the file name) | as 2019 |
+| 2020-10-26 – 10-30 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_End_2020928.pdf (2020-09-28) | as 2019 |
+| 2021-03-15 – 03-26 | **13:23–13:25** | unchanged | SECONDARY https://ccstrade.com/ice-sugar-coffee-cocoa-futures-temporary-trading-hour-changes/ (2021-03-01 repost; prints "2020", a typo) | "will be from 1:23 to 1:25 pm" |
+| 2021-11-01 – 11-05 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_End2021.pdf (2021-09-20) | as 2019 |
+| 2022-03-14 – 03-25 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_Start_20220124.pdf (2022-01-24) | as 2019 |
+| 2022-10-31 – 11-04 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_End_20220929.pdf (2022-09-29) | as 2019 |
+| 2023-03-13 – 03-24 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_Start20230106.pdf (2023-01-06) | as 2019 |
+| 2023-10-30 – 11-03 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_End20230915.pdf (2023-09-15) | as 2019 |
+| 2024-03-11 – 03-28 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_Start2024_20240104.pdf (2024-01-04); 29 Mar was Good Friday, closed | as 2019 |
+| 2024-10-28 – 11-01 | **13:23–13:25** | unchanged | https://www.ice.com/publicdocs/futures_us/exchange_notices/ICE_Futures_US_DST_End20240912.pdf (2024-09-12) | as 2019 |
+
+Pre-range context, also fetched: https://www.ice.com/publicdocs/futures_us/exchange_notices/exnot2014DSTstart.pdf
+(2014-02-14), exnot2014DST2.pdf (2014-09-19) and 10092013exnotDST2.pdf (2013-10-09) all say Coffee and Sugar are
+unchanged. The next period after the range, 2025-03-10 to 03-28, is in ICE_Futures_US_DST_Start20250108.pdf
+(2025-01-08): Coffee 13:23–13:25. It is outside the range and not in the CSV.
+
+**ICE Futures Europe (Brent, Gasoil).** In mismatch weeks Brent moves to 18:28–18:30 London, which is 14:28–14:30 New
+York. Its window is therefore fixed in New York time all year. LS Gasoil stays at its normal London time in every
+table found. Each year's January/February circular gives both periods. The detailed table sits in a separate
+"Temporary Trading Times" PDF.
+
+| Period (trade dates) | Brent window London | Source (doc date) | Quote (≤15 words) |
+|---|---|---|---|
+| 2015-03-09 – 03-27 | 18:28–18:30 (table) | circular 15/030, https://web.archive.org/web/20150424122516id_/https://www.theice.com/publicdocs/circulars/15030.pdf (2015-02-18), plus its attachment https://web.archive.org/web/20150424121459id_/https://www.theice.com/publicdocs/circulars/15030_attach.pdf | "Sunday 08 March 2015 to Friday 27 March 2015 (inclusive) and Sunday 25 October 2015" |
+| 2015-10-26 – 10-30 | 18:28–18:30 (period only) | circular 15/213, https://web.archive.org/web/20260910084611id_/https://www.ice.com/publicdocs/circulars/15213.pdf (2015-10-09) | "for the period of Sunday 25 October 2015 to Friday 30 October 2015 (inclusive)" |
+| 2016-03-14 – 03-25 | 18:28–18:30 (table) | https://web.archive.org/web/20160411192412id_/https://www.theice.com/publicdocs/futures/Futures_Europe_TemporaryTradingHours.pdf; periods also in circular 16/019 (2016-02-25; local copy `wb_circ_16019.pdf`, from the Wayback capture 20160419020413 or 20260910082045) | "(13 March 2016 – 25 March 2016, inclusive)" |
+| 2016-10-31 – 11-04 | 18:28–18:30 (table) | https://web.archive.org/web/20161003082846id_/https://www.theice.com/publicdocs/futures/Futures_Europe_TemporaryTradingHours.pdf | "(30 October 2016 – 04 November 2016, inclusive)" |
+| 2017-03-13 – 03-24 | 18:28–18:30 (table) | https://web.archive.org/web/20170217174924id_/https://www.theice.com/publicdocs/futures/Futures_Europe_TemporaryTradingHours.pdf (last update Feb 2017) | "(12 March 2017 – 24 March 2017, inclusive)" |
+| 2017-10-30 – 11-03 | 18:28–18:30 (period only) | circular 17/017, https://web.archive.org/web/20220123021523id_/https://www.theice.com/publicdocs/circulars/17017.pdf (2017-02-24) | "Sunday 29 October 2017 to Friday 03 November 2017 (inclusive)" |
+| 2018-03-12 – 03-23 | 18:28–18:30 (period only) | circular 18/017, https://web.archive.org/web/20220119083455id_/https://www.theice.com/publicdocs/circulars/18017.pdf | "Sunday 11 March 2018 to Friday 23 March 2018 (inclusive)" |
+| 2018-10-29 – 11-02 | 18:28–18:30 (table) | https://web.archive.org/web/20220119083502id_/https://www.theice.com/publicdocs/futures/Futures_Europe_TemporaryTradingHours.pdf (last update Oct 2018) | "(28 October 2018 – 02 November 2018, inclusive)" |
+| 2019 spring and autumn | NOT FOUND | — | — |
+| 2020-03-09 – 03-27 | 18:28–18:30 (period only) | circular 20/020, https://web.archive.org/web/20200501181459id_/https://www.theice.com/publicdocs/circulars/20020%20%28002%29.pdf (2020-02-18) | "Sunday 08 March 2020 to Friday 27 March 2020 (inclusive)" |
+| 2020-10-26 – 10-30 | 18:28–18:30 (table) | https://web.archive.org/web/20201011144938id_/https://www.theice.com/publicdocs/futures/Trading_Schedule_Temporary_Trading_Hours_for_DST.pdf (last update Jun 2020) | "(25 October 2020 – 30 October 2020, inclusive)" |
+| 2021 spring | NOT FOUND | — | — |
+| 2021-11-01 – 11-05 | 18:28–18:30 (table) | https://www.ice.com/publicdocs/TempTradingHours2021.pdf (last update Sept 2021; June 2021 version at Wayback 20210730060730) | "(31 October 2021 – 05 November 2021, inclusive)" |
+| 2022-03-14 – 03-25 | 18:28–18:30 (table) | https://web.archive.org/web/20220629153537id_/https://www.theice.com/publicdocs/futures/TempTradingHours2022.pdf (last update Jan 2022) | "(13 March 2022 – 25 March 2022, inclusive)" |
+| 2022-10-31 – 11-04 | 18:28–18:30 (table) | https://web.archive.org/web/20221102171917id_/https://www.theice.com/publicdocs/futures/TempTradingHours2022.pdf | "30 Oct 22 - 04 Nov 22 (Inclusive)" |
+| 2023-03-13 – 03-24 | 18:28–18:30 (table) | https://web.archive.org/web/20230331065531id_/https://www.theice.com/publicdocs/futures/IFEU_Temporary_Trading_Hours_Mar2023.pdf; periods also in circular 23/037, https://web.archive.org/web/20240502110822id_/https://www.ice.com/publicdocs/circulars/23037.pdf (2023-02-24) | "Sunday 12 March 2023 to Friday 24 March 2023 (inclusive)" |
+| 2023-10-30 – 11-03 | 18:28–18:30 (table) | https://web.archive.org/web/20230921015200id_/https://www.ice.com/publicdocs/futures/IFEU_Temporary_Trading_Hours_Mar2023.pdf (July 2023 doc) | "29 Oct 23 - 03 Nov 23 (Inclusive)" |
+| 2024 spring | NOT FOUND | — | — |
+| 2024-10-28 – 11-01 | 18:28–18:30 (table) | https://web.archive.org/web/20241007200545id_/https://www.ice.com/publicdocs/futures/IFEU_Temporary_Trading_Hours_Mar2023.pdf (Aug 2024 doc) | "27 Oct 24 - 01 Nov 24 (Inclusive)" |
+
+A "table" row prints Brent 18:28-18:30 GMT / 14:28-14:30 EDT outright. A "period only" row is a circular that gives the
+dates and says designated settlement periods change, but whose table was not retrieved. For those rows the CSV takes
+18:28–18:30 from the identical Brent entry in every table fetched. The tables come from 2014 (circular 14/011,
+https://web.archive.org/web/20140707100126id_/https://www.theice.com/publicdocs/circulars/14011.pdf, 2014-02-18),
+2015–2024 (above) and 2025–2026 (Wayback 20250523135609 of Trading_Schedule_Temporary_Trading_Hours_for_DST.pdf, and
+the live March 2026 copy). The Brent quote common to all of them: "18:28-18:30 GMT 14:28-14:30 EDT".
+
+### C. Conflicts between sources
+
+1. **Coffee C, autumn 2019 (28 Oct – 1 Nov): UNRESOLVED, and the CSV has no row for it.** The only copy found is a
+   broker's repost (Optimus Futures, 2019-10-25), which says the Coffee C window is "unchanged". Against it, the
+   ICE notices for spring 2019 and for every period from spring 2020 move Coffee to 13:23–13:25 NY. The repost also
+   omits the Cocoa window change that every ICE notice of this kind carries, so it may reuse an old template. If
+   the ICE pattern held, Coffee settled 13:23–13:25 NY on 2019-10-28 to 11-01. That is an inference, not in the CSV.
+2. **Gasoil 16:27–16:30 vs 16:28–16:30.** ICE's own documents in 2013–March 2015 print a three-minute window from
+   16:27. Every document from September 2015 prints a two-minute window from 16:28. This is a change of unknown date,
+   not two sources disagreeing (see NOT FOUND). No source shows Gasoil at 17:28–17:30, and no Gasoil window other
+   than 16:27/16:28–16:30 London appears anywhere 2013–2026, apart from holiday early closes.
+3. **File name vs content.** `ICE_Futures_US_DST_Start_20190113.pdf` is the notice dated January 13, 2020, covering
+   March 2020. The 2019 notice is `ICE_Futures_US_2019DST_Start_20190114.pdf`.
+4. **Typos inside sources.** The autumn 2020 IFUS notice says "Friday, October 301, 2020". Its footnote says an
+   earlier version gave the end date as Friday, November 2. The ccstrade repost of the spring 2021 notice prints
+   "March 26, 2020". Its posting date (2021-03-01) and DST dates (US March 14, BST March 28) are those of 2021.
+5. **Cached IFEU document month.** The brief calls the cached IFEU table "September 2026". The cached file is titled
+   June 2026 (`Designated_Settlement_Periods_2026-06.txt`). Its Brent and Gasoil windows match the brief.
+6. **Brent before the range.** Circular 11/159 (Dec 2011) prints Brent's normal window as 19:27–19:30. By the
+   2013-05 capture it is 19:28–19:30. The change predates 2014-12 and is not dated here.
+7. A Yahoo/Reuters item returned by a search as an "October 2019" notice quotes opening times of 3:30, 4:30 and 5:00.
+   Those are the 2013 opening times (10092013exnotDST2.pdf), so it was not used.
+
+### NOT FOUND (ICE settlement windows)
+
+The search was cut short on 2026-09-27 at the coordinator's request, because the ICE windows became documentation
+only. Official settlements come from the Sierra Chart daily files.
+
+- **The date Gasoil moved from 16:27–16:30 to 16:28–16:30.** It is bounded between 2015-03-27 (circular 15/030
+  table) and 2015-09-08 (the first product-page capture showing 16:28). Where we looked:
+  - Wayback captures of ICE Futures Europe circulars 14/001–15/284. About 40 of roughly 150 mid-2015 numbers are
+    archived, and none of them mentions a Gasoil settlement period.
+  - ice.com circulars 14/001–14/040 fetched directly.
+  - Web searches.
+  The direct ice.com sweep of 15/045–15/175 was not run: ice.com returned HTTP 429 (Cloudflare, Retry-After
+  ~55 min) after an early 4-thread burst, the limit was honoured, and the sweep was then cancelled. Gasoil became a
+  BCOM component only in 2019, so this gap predates its index relevance.
+- **IFEU Brent DST tables or circulars for 2019 (both periods), spring 2021 and spring 2024.** The archived
+  circulars numbered ≤60 for those years (19/008–19/035, 21/002–21/036, 24/001–24/025) hold no DST circular. The
+  Wayback CDX lists no other Temporary Trading Times capture for those periods. By the structure of every other
+  year, these periods would be 10–29 Mar and 27 Oct–1 Nov 2019, 14–26 Mar 2021 and 10–28 Mar 2024. That is not
+  documented, so there are no CSV rows.
+- **ICE's own copies of the IFUS DST notices for spring 2015, spring 2016, spring 2018, autumn 2019 and spring 2021.**
+  Reposts were used instead: comunicaffe.com, optimusfutures.com and ccstrade.com.
+- **IFUS DST notices for autumn 2016, autumn 2017 and autumn 2018.** There is neither an ICE copy nor a repost. They
+  are pre-2019, when every notice found left Coffee and Sugar unchanged.
+- Where we looked for the IFUS notices:
+  - The Wayback CDX of `theice.com` and `ice.com` `/publicdocs/futures_us/exchange_notices/*` (about 1,000 URLs).
+  - Web searches.
+  - Guessed file names for autumn 2019. These returned only HTTP 429 and were abandoned.
+- **The CFTC rule-certification filing for the 2019 Coffee window change.** It was not located in one search. The
+  exchange notice and the rulebook captures are the evidence used.
+- **No Wayback capture of Settlement_Window.pdf between 2018-10 and 2021-05.** Rule 4.25(b) in the 2020-03 rulebook
+  capture and the 2018-12 notice cover that span.
