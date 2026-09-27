@@ -112,6 +112,9 @@ DEVIATIONS = [
     "The business-day test before det(2015) (December 2014 and January 2015 BD1-4) uses the 2015 CIPs, because the "
     "2014 CIPs are not on disk. It can move a business-day number only on a day where the open share is near 50%.",
     "The CIPs are normalised to sum to exactly 1 (the published weights sum to 100% within 4e-8).",
+    "The first --run (after commit a4ebd9b) crashed before writing any output: aggregate_returns asked for the 2014 "
+    "CIMs on January 2015 days. Those days now return None (only the 2016 aggregate check reads these returns). No "
+    "result existed; the fix is committed before the run that produced gate_r0.json.",
 ]
 
 
@@ -583,6 +586,9 @@ def aggregate_returns(prices: Prices, cip: dict[int, dict[str, float]], cim: dic
     for p, d in zip(bdays, bdays[1:]):
         y = int(d[:4])
         jan = d[5:7] == "01"
+        if (jan and y - 1 not in cim) or y not in cim:
+            R[d] = None  # January 2015 has no 2014 CIMs; only the 2016 aggregate check reads these returns
+            continue
         c_old = cim[y - 1] if jan else cim[y]
         c_new = cim[y]
         num = den = 0.0
