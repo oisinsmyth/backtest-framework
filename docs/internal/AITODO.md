@@ -119,6 +119,45 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
+## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
+
+- Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,
+  **all USD 0.00 now, billed after the lapse.** Billable sizes (disk is smaller by the ratios in data-available.md):
+  - **NQ options** (opening model S-H, O-Q2): definition 27.2 GB + statistics 247.0 GB, 2016 → 2026-09-27. Families
+    resolved and counted first: NQ.OPT, QN1–QN4, QNE from 2016; the Mon–Thu dailies Q{1-4}{A-D} exist only in 2026.
+    ≈ 48 GB on disk.
+  - **CL/NG options** (the ledger's options OI; D619's parents): definition 60.7 GB + statistics 118.7 GB. ≈ 25 GB.
+  - **Forward top-ups** from the archives' end (2026-09-11): ohlcv-1m all symbols 0.3 GB, tbbo all symbols 5.0 GB,
+    statistics + definition 41 roots 0.6 GB, ES options 2.4 GB, **mbo 8 roots 81.3 GB** (≈ 28 GB, and growing ~5 GB
+    a session). Best pulled as late as possible (~10-09/10-10) so they reach the lapse.
+  - Free disk 201 GB.
+- **Nothing submitted. Each pull needs the principal's approval.**
+
+## LETF close-flow — opened 2026-09-27 (the principal: "then open LETF close-flow")
+
+- The spec is `docs/internal/User-Doc-Deposit/LETF_CLOSE_FLOW_PREREG.md` v1.2 (read-only).
+- **PRIOR READS OF THIS MECHANISM (must be ruled on before a pre-registration):**
+  - **D530** (2026-09-14, closed by the principal as "avenue 3"): the LETF reset flow `L(L−1)·A·r` on ES/NQ/YM/RTY,
+    2016-01-04 → 2023-12-29. Its dose-response prediction (continuation rising with |return-of-day|) FAILED:
+    quintile 1 → 5 reads 47.2% → 50.6%, Q5 z ≈ 0.49; equity index hit 50.03%, z = +0.1. The closing-hour volume hump
+    is real (1.10–1.48×); the direction is not.
+  - **D463**: the last-30-minute intraday momentum (15:30 → 16:00, sign of return-of-day) on 2010–2023: NQ −0.01, ES
+    −0.29 net Sharpe (components K2–K4).
+  - **D487**: ES/NQ intraday continuation, 2016–2023: a 2018/2022 property, not a stress one.
+  - **All three left 2024-01-02 onward UNREAD.** So for this line the unread slices are 2024-01-02 → 2025-02-28
+    (~290 sessions), the vault (joint run) and the forward.
+  - What the deposit adds beyond D530: real AUM weights, the volume normalisation and impact gate, entries at
+    14:30/15:00, H3 (AUM scaling) and H4 (the 11:00 placebo). H2's |q| quintiles are close to D530's |r| quintiles
+    within a year.
+- **Gate 0 AUM (`data/letf/SOURCES.md`):** the eight ProShares tickers are ON DISK (the principal's all-funds file,
+  2006/2009/2010 → 2025-02-28, longest gap 5 calendar days, no zero-share rows). **Direxion SPXL/SPXS: no free
+  history found** (issuer page current-day only; N-PORT monthly is the candidate).
+- **Already built:** ES/NQ 1-minute bars (`fut_{ES,NQ}_rth_1m`, `fut_index_sessions`), the session calendar with
+  early closes and FOMC/CPI/quad-witching/quarter-end flags (D589, D585), the power module (D588). To build: the
+  NQ-equivalent volume series (NQ + MNQ/10), the AUM panel and Gate 0.
+- **Rulings needed:** (1) how the D530 overlap is handled (which slice is the test); (2) the Direxion route;
+  (3) Q1/Q2 default to CostStack and `BOOK_PROP.md`'s account parameters unless the principal says otherwise.
+
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
 **The standard, the principal's, 2026-09-24:**
