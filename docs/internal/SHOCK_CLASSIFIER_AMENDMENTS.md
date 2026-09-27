@@ -15,6 +15,25 @@ source. Opened 2026-09-27 on the principal's word ("open the shock classifier").
 - **Output paths follow D592's translation:** the deposit's `results/shock_classifier/` becomes `docs/results/`
   (pages) and `data/shock/` (state, including `trials.csv` through `validation.programme.TrialsCsv`).
 
+## SC-A2 – SC-A5. The opening rulings
+
+*Source: the principal, 2026-09-27, answering the four questions put at the opening.*
+
+- **SC-A2 (prior reads): run as written, disclosed.** The in-sample is 2016-01 → 2025-02. Every result states the
+  prior reads of D528, D499 and D526, and reports the **unconditional large-move baseline** (all shocks, unclassified)
+  beside each class. So the classifier is judged against what is already known about large moves on these roots,
+  not against zero.
+- **SC-A3 (deposit Q3): bars-only v1.** In the book frame, the INFO class exits on the time stop in place of the
+  flow-flip. The flow-flip is recorded forward (Track 2) from the 2025-09 → aggressor trades and tested there.
+- **SC-A4 (build):**
+  - GC, SI, 6E and ZN get 08:00 → 08:59 ET one-minute bars from the on-disk archive, with the same windowed-id labelling
+    (D520) and the front contract `fut_day1m` already names for that (root, day).
+  - CL trades are charged the MCL micro cost line for the whole sample, flagged "before MCL listed" for 2016-01 →
+    2021-06.
+- **SC-A5 (deposit Q1, Q2):** as for LETF.
+  - Costs: the repo's default D508 line for MNQ, MES, MCL and MGC.
+  - Prop limits: D386's fourteen plans through D440's `simulate_provider`.
+
 ## Facts established at the opening (2026-09-27), recorded before any ruling
 
 - **The prior reads of this ground, to be disclosed in every result:**
