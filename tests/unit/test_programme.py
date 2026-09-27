@@ -300,11 +300,18 @@ def test_67_the_counter_reads_the_census_and_not_a_registry():
     )
 
 
-def test_67_no_trials_csv_exists_in_the_repository_yet():
-    """The deposit's own counter is rows of `trials.csv`, and there are none — recorded
-    as a fact of today's tree, not assumed. If one appears, this test says so."""
-    assert list(REPO.glob("data/**/trials.csv")) == []
-    assert programme_trial_count()["trials_csv_rows"] == 0
+#: The committed trials.csv files and their row counts, recorded as a fact of the tree and amended
+#: together with the record that adds rows: the first is the LETF close-flow run of 2026-09-27
+#: (D640, 71 configurations). **Editing this is the point**: a trials.csv that appears or grows
+#: without a record turns this red.
+TRIALS_CSV_FILES = {"data/letf/trials.csv": 71}
+
+
+def test_67_the_trials_csv_files_are_the_ones_recorded():
+    """The deposit's own counter is rows of `trials.csv`."""
+    found = {p.relative_to(REPO).as_posix(): TrialsCsv(p).count() for p in REPO.glob("data/**/trials.csv")}
+    assert found == TRIALS_CSV_FILES
+    assert programme_trial_count()["trials_csv_rows"] == sum(TRIALS_CSV_FILES.values())
 
 
 def test_67_the_rule_names_both_counting_conventions():

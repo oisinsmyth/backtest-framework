@@ -190,7 +190,12 @@
   - **Open for the principal before the runner:** whether to add the model's-own-prediction comparison as a
     pre-registered reading (LETF-A7).
 - **LETF-A7** (the model's-own-prediction reading) and **LETF-A8** (H3's slope corrected) committed before the runner.
-- **The runner is committed, NOT RUN:** `scripts/run_letf_close_flow.py`.
+- **RUN ONCE 2026-09-27 → KILLED AT GATE 1 (D640; `docs/results/LETF_CLOSE_FLOW_REPORT.md`).**
+  - NQ 14:30 and 15:00 pass H1, but the 11:00 placebo is significant on NQ (t 2.08).
+  - The unread 2024+ slice is flat in every NQ cell. There is no AUM scaling. ES never passes.
+  - Component lines are entered in `COMPONENTS_PROP.md` as scored, not entered. NQ 15:30 is K2 (ρ 0.83).
+  - **The LETF line stops here.** Phases 6–7 do not run; the deposit's v2 overlays have no v1 effect to build on.
+- The runner (committed before its run): `scripts/run_letf_close_flow.py`.
   - `--selftest` shows 7 checks firing (on synthetic prices).
   - `--dry-run` substitutes synthetic prices and reads only the bars' calendar. Every path ran (6 cells, 71 trials,
     5.2 min).

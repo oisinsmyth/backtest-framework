@@ -29,11 +29,13 @@ from scipy import stats
 
 from backtest_framework.data.panels import load_panel
 from backtest_framework.letf import model as M
+from backtest_framework.validation.programme import TrialsCsv
 
 REPO = Path(__file__).resolve().parents[1]
 LETF = REPO / "data" / "letf"
 OUT = LETF / "letf_close_flow_signal.json"
-TRIALS = LETF / "trials.csv"
+TRIALS = LETF / "trials.csv"  # D592's union schema through TrialsCsv (append-only), doc and family below
+TRIAL_DOC, TRIAL_FAMILY = "LETF_CLOSE_FLOW_PREREG.md", "LETF close flow H1"
 SPEC = REPO / "docs" / "decisions" / "D639-PRE-REG-letf-close-flow-h1-h5-on-nq-and-es.md"
 AMEND = REPO / "docs" / "internal" / "LETF_CLOSE_FLOW_AMENDMENTS.md"
 RESERVED_FROM = "2025-03-01"
@@ -418,11 +420,12 @@ def trial(rows: list[dict], tid: str, tau: str, inst: str, k: int, hold: str, co
     t = float(x.mean() / hac_se(x)) if len(x) >= 10 and hac_se(x) > 0 else None
     per_year = len(a) / max(a["day"].str[:4].nunique(), 1) if len(a) else 0
     sh = float(net.mean() / net.std(ddof=1) * math.sqrt(per_year)) if len(net) > 2 and net.std(ddof=1) > 0 else None
-    rows.append({"trial_id": tid, "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "tau": tau,
+    rows.append({"trial_id": tid, "doc": TRIAL_DOC, "family": TRIAL_FAMILY,
+                 "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "tau": tau,
                  "instrument": inst, "k": k, "hold": hold, "cost_mult": cost_mult, "event_filter": event_filter,
                  "n_trades": int(len(x)), "mean_gross": float(x.mean()) if len(x) else None,
-                 "mean_net": float(net.mean()) if len(net) else None, "t_hac": t, "sharpe_net": sh, "notes": notes,
-                 "reads_2024_plus": bool(len(a) and (a["day"] >= SPLIT).any())})
+                 "mean_net": float(net.mean()) if len(net) else None, "t_hac": t, "sharpe_net": sh,
+                 "notes": "; ".join(z for z in (notes, f"reads_2024_plus={bool(len(a) and (a['day'] >= SPLIT).any())}") if z)})
 
 
 def build(dry: bool = False) -> tuple[dict[str, Any], list[dict]]:
@@ -602,8 +605,12 @@ def main() -> int:
             raise SystemExit(f"{OUT.name} exists: the signal frame runs once (D639)")
         t0 = time.time()
         doc, trials = build()
+        if TRIALS.exists():
+            raise SystemExit(f"{TRIALS.name} exists: the run's trials are logged once")
         OUT.write_text(dump(doc), encoding="utf-8", newline="\n")
-        pd.DataFrame(trials).to_csv(TRIALS, index=False, encoding="utf-8", lineterminator="\n")
+        log = TrialsCsv(TRIALS)
+        for tr in trials:
+            log.append(tr)
         print(json.dumps(doc["gates"], indent=1))
         print(f"wrote {OUT.name} and {TRIALS.name} ({len(trials)} trials) in {(time.time() - t0) / 60:.1f} min")
         return 0

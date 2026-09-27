@@ -612,9 +612,10 @@ def programme_trial_count(
     and `rule`. All four counts are dimensionless counts of TRIALS.
 
     The deposit's own definition (§13A.8(3), §12A(3)) is *"a programme trial counter sums
-    the rows of every doc's trials.csv"* — that is `trials_csv_rows`, and today it is
-    **zero, because no `trials.csv` exists anywhere in this repository and no futures
-    runner logs a trial to any registry**. The other two terms are this repository's
+    the rows of every doc's trials.csv"* — that is `trials_csv_rows`. It was zero until
+    2026-09-27, when the LETF close-flow run (D640) logged the first 71 rows to
+    `data/letf/trials.csv`; `tests/unit/test_programme.py` pins the files and their counts.
+    The other two terms are this repository's
     prior multiplicity, which the deposit's counter does not see and which a DSR computed
     on a shared fixture ought to: D90's whole argument is that a trial count cannot be
     reconstructed retroactively, so the counts that WERE captured live are carried.

@@ -401,3 +401,17 @@ coarseness moved underneath a fixed assumption.
 would avoid the worst quote. That is a **different construction**, and this entry is admitted and
 frozen — it would need its own pre-registration, not a quiet edit to a component already in the
 ledger.
+
+## SCORED, NOT ENTERED — the LETF close-flow cells, 2026-09-27 ([D640](decisions/D640-RESULT-letf-close-flow-killed-by-its-own-11am-placebo.md))
+
+Component lines as D639 §10 requires, whatever the verdict: 1 micro, D639's cost (MNQ $4.07, MES $4.42 a round trip),
+daily net Sharpe over all calendar days, **2016-01-04 → 2025-02-28** (a longer window than this ledger's 2016–2023
+standard; the 2024+ part is the line's own unread slice, not another line's). Correlations are with D466's committed
+series over 2016–2023.
+
+| construction | record | net Sharpe (all days) | why not |
+|---|---|---|---|
+| LETF flow, NQ, enter 14:30 → exit 16:00 on active days (I ≥ 3× cost), 1 MNQ | D640 | +0.49; per-trade Sharpe 0.49 net / 0.74 gross; 944 trades | **killed at Gate 1**: its 11:00 placebo is significant (t 2.08); 2024+ −0.2 bp (t −0.07); ρ K2 +0.52 |
+| the same at 15:00 | D640 | +0.73; per-trade 0.73 net / 1.04 gross; 961 trades | killed at Gate 1 as above; 2024+ +0.9 bp (t 0.33); **ρ K2 +0.59, K3 +0.53**: largely the last-hour momentum K2 already scores |
+| the same at 15:30 | D640 | −0.08 | **ρ K2 +0.83: the same construction as K2** (D639 §10's 0.7 bar), not a new component; below the model's own claim (LETF-A7) |
+| LETF flow, ES, 14:30 / 15:00 / 15:30, 1 MES | D640 | +0.50 / +0.52 / +0.23 on 60 / 69 / 68 trades | H1 fails in all three; no activation after 2023; overnight give-back −35 to −51 bp (H5) |

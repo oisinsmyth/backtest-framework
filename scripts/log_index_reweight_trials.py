@@ -6,36 +6,40 @@ file, and editing them would break the freeze. So this script, OUTSIDE the freez
 from each runner's JSON output (outputs are not hashed): every block that carries a trade count and a mean is one
 configuration evaluated.
 
-    uv run python scripts/log_index_reweight_trials.py              # after each R-stage run; rebuilds the whole log
+    uv run python scripts/log_index_reweight_trials.py              # after each R-stage run
     uv run python scripts/log_index_reweight_trials.py --selftest
 
--> data/index_reweight/trials.csv (D592's translation of D636's `results/index_reweight/trials.csv`).
+-> data/index_reweight/trials.csv, in D592's union schema through `validation.programme.TrialsCsv` (append-only; the
+programme counter pools it with every other document's). `doc` = INDEX_REWEIGHT_FLOW_PREREG.md; `family` = the
+registered family of the stage (R1 -> "index H-R1", R2 -> "index H-R2", R3 -> "index H-R3(b)"). Columns used: stage,
+construction (the block's path in the output), n_obs, mean_gross, mean_net, p_boot (the block's p), notes (Holm p,
+pass, mean cost or mean, and the output file's sha256). **When rows are first appended, amend
+`tests/unit/test_programme.py`'s TRIALS_CSV_FILES in the same commit.**
 
 A block is a CONFIGURATION if it carries `n` and at least one of `mean_gross`, `mean_net` or `mean`. Blocks under
-`groups`, `component_line`, `audits`, `reads`, `kappa`, `power` and `snr_by_year` describe a configuration already
-counted (its four groups, its component line) or are inputs, and are not counted again. The log is rebuilt from
-scratch on every call, and a stage's rows are never dropped once its output exists: a stage file that disappears
-raises.
+`groups`, `component_line`, `audits`, `reads`, `kappa`, `power`, `snr_by_year` and `deviations` describe a
+configuration already counted or are inputs, and are not counted again. Only configurations not yet logged are
+appended; a stage already logged whose output has since vanished raises.
 """
 from __future__ import annotations
 
 import argparse
-import csv
-import datetime as dt
 import hashlib
 import json
 import sys
 from pathlib import Path
 from typing import Any
 
+from backtest_framework.validation.programme import TrialsCsv
+
 REPO = Path(__file__).resolve().parents[1]
 IR = REPO / "data" / "index_reweight"
 STAGES = {"R1": IR / "stage_r1.json", "R2": IR / "stage_r2.json", "R3": IR / "stage_r3.json"}
+FAMILY = {"R1": "index H-R1", "R2": "index H-R2", "R3": "index H-R3(b)"}
+DOC = "INDEX_REWEIGHT_FLOW_PREREG.md"
 OUT = IR / "trials.csv"
 SKIP = {"groups", "component_line", "audits", "reads", "kappa", "power", "snr_by_year", "deviations"}
 MEANS = ("mean_gross", "mean_net", "mean")
-COLS = ["trial_id", "stage", "role", "path", "n", "mean_gross", "mean_cost", "mean_net", "mean", "p", "p_holm",
-        "pass", "source", "source_sha256", "logged_utc"]
 
 
 def configurations(doc: Any, path: tuple[str, ...] = ()) -> list[tuple[tuple[str, ...], dict]]:
@@ -53,45 +57,42 @@ def configurations(doc: Any, path: tuple[str, ...] = ()) -> list[tuple[tuple[str
     return out
 
 
-def rows_for(stage: str, p: Path, now: str) -> list[dict]:
+def rows_for(stage: str, p: Path) -> list[dict]:
     raw = p.read_bytes()
     doc = json.loads(raw.decode("utf-8"))
     sha = hashlib.sha256(raw).hexdigest()
-    rows = []
+    out = []
     for path, d in configurations(doc):
-        rows.append({"trial_id": f"{stage}:{'/'.join(path) or '.'}", "stage": stage, "role": path[0] if path else "",
-                     "path": "/".join(path), "n": d.get("n"), "mean_gross": d.get("mean_gross"),
-                     "mean_cost": d.get("mean_cost"), "mean_net": d.get("mean_net"), "mean": d.get("mean"),
-                     "p": d.get("p"), "p_holm": d.get("p_holm"), "pass": d.get("pass"),
-                     "source": str(p.relative_to(REPO)).replace("\\", "/"), "source_sha256": sha, "logged_utc": now})
-    return rows
+        extra = {k: d.get(k) for k in ("p_holm", "pass", "mean_cost", "mean") if d.get(k) is not None}
+        out.append({"trial_id": f"index:{stage}:{'/'.join(path) or '.'}", "doc": DOC, "family": FAMILY[stage],
+                    "stage": stage, "construction": "/".join(path), "n_obs": d.get("n"),
+                    "mean_gross": d.get("mean_gross"), "mean_net": d.get("mean_net"), "p_boot": d.get("p"),
+                    "notes": "; ".join(f"{k}={v}" for k, v in extra.items()) + f"; source_sha256={sha}"})
+    return out
 
 
 def build(stages: dict[str, Path] = STAGES, out: Path = OUT) -> int:
-    now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    logged_before: set[str] = set()
-    if out.exists():
-        with out.open(encoding="utf-8", newline="") as f:
-            logged_before = {r["stage"] for r in csv.DictReader(f)}
-    rows: list[dict] = []
-    present = set()
-    for stage, p in stages.items():
-        if p.exists():
-            present.add(stage)
-            rows += rows_for(stage, p, now)
-    gone = logged_before - present
+    log = TrialsCsv(out)
+    logged = log.rows()
+    logged_stages = {r["stage"] for r in logged}
+    gone = sorted(s for s in logged_stages if not stages[s].exists())
     if gone:
-        raise SystemExit(f"REFUSING: stage(s) {sorted(gone)} were logged before and their output is now missing")
-    ids = [r["trial_id"] for r in rows]
-    if len(ids) != len(set(ids)):
-        raise SystemExit("two configurations share a trial_id")
-    out.parent.mkdir(parents=True, exist_ok=True)
-    with out.open("w", encoding="utf-8", newline="\n") as f:
-        w = csv.DictWriter(f, fieldnames=COLS, lineterminator="\n")
-        w.writeheader()
-        w.writerows(rows)
-    per = {s: sum(1 for r in rows if r["stage"] == s) for s in sorted(present)}
-    print(f"wrote {out.relative_to(REPO)}: {len(rows)} configurations {per}; total for the DSR = {len(rows)}")
+        raise SystemExit(f"REFUSING: stage(s) {gone} were logged before and their output is now missing")
+    have = {r["trial_id"] for r in logged}
+    added = 0
+    for stage, p in stages.items():
+        if not p.exists():
+            continue
+        rows = rows_for(stage, p)
+        ids = [r["trial_id"] for r in rows]
+        if len(ids) != len(set(ids)):
+            raise SystemExit(f"{stage}: two configurations share a trial_id")
+        for r in rows:
+            if r["trial_id"] not in have:
+                log.append(r)
+                added += 1
+    total = log.count() if out.exists() else 0
+    print(f"{out.name}: {added} configurations appended, {total} logged in all (the DSR's count for this document)")
     return 0
 
 
@@ -108,22 +109,19 @@ def selftest() -> int:
         p1 = td / "stage_r1.json"
         p1.write_text(json.dumps(doc), encoding="utf-8")
         out = td / "trials.csv"
-        global REPO
-        repo0, REPO = REPO, td
+        st = {"R1": p1, "R2": td / "absent.json", "R3": td / "absent3.json"}
+        build(st, out)
+        ids = sorted(r["trial_id"] for r in TrialsCsv(out).rows())
+        assert ids == ["index:R1:A", "index:R1:B", "index:R1:robustness/B_k2", "index:R1:robustness/cost_x2"], ids
+        build(st, out)
+        assert TrialsCsv(out).count() == 4, "a second call must append nothing"
+        p1.unlink()
         try:
-            build({"R1": p1, "R2": td / "absent.json"}, out)
-            with out.open(encoding="utf-8") as f:
-                ids = sorted(r["trial_id"] for r in csv.DictReader(f))
-            assert ids == ["R1:A", "R1:B", "R1:robustness/B_k2", "R1:robustness/cost_x2"], ids
-            p1.unlink()
-            try:
-                build({"R1": p1}, out)
-                raise AssertionError("a logged stage whose output vanished must raise")
-            except SystemExit as e:
-                assert "REFUSING" in str(e)
-        finally:
-            REPO = repo0
-    print("selftest: 3 checks fire as they must (configurations found, described blocks skipped, a vanished stage raises)")
+            build(st, out)
+            raise AssertionError("a logged stage whose output vanished must raise")
+        except SystemExit as e:
+            assert "REFUSING" in str(e)
+    print("selftest: 4 checks fire as they must (found, described blocks skipped, idempotent, a vanished stage raises)")
     return 0
 
 
