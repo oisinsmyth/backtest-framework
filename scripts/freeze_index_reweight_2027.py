@@ -1,6 +1,7 @@
 """Freeze, and verify, the index-reweight model for the January 2027 forward event (IR-A10; deposit s.11 / R-D8).
 
-The freeze is written by `scripts/freeze.py` to results/index_reweight/FROZEN_2027.json. It hashes the code (text,
+The freeze is written by `scripts/freeze.py` to data/index_reweight/FROZEN_2027.json (IR-A16: this repository has no
+root `results/`; the first freeze, written there, is kept as FROZEN_2027_superseded_4945c1f.json). It hashes the code (text,
 LF-pinned), the inputs (bytes) and the parameters (`data/index_reweight/frozen_2027_params.json`). After it, a code
 change is allowed only as a logged bug fix, versioned in INDEX_REWEIGHT_FLOW_AMENDMENTS.md, under a NEW frozen file.
 
@@ -19,7 +20,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-OUT_DIR = "results/index_reweight"
+OUT_DIR = "data/index_reweight"
 FROZEN = f"{OUT_DIR}/FROZEN_2027.json"
 PARAMS = "data/index_reweight/frozen_2027_params.json"
 CODE = [f"scripts/{n}.py" for n in (

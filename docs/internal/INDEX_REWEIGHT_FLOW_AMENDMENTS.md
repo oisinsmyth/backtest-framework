@@ -277,3 +277,25 @@ before the freeze and before any 2026-01-07 settlement is read.*
   settlements, it returns all 105 Sierra values bit-identically and records no revision.
 - **Daily recording:** a scheduled task runs `--settlements --refresh` each morning, and `--forecast` once the 2027
   targets are transcribed. It commits nothing.
+
+## IR-A16. A logged bug fix after the freeze: the frozen file moves to `data/`, and the model is re-frozen
+
+*Source: the principal, 2026-09-27 ("Move and re-freeze"), on the suite finding below. Written before the change.*
+
+- **The bug.** The IR-A10/IR-A15 freeze wrote `results/index_reweight/FROZEN_2027.json`. This repository has no root
+  `results/`: rendered pages live in `docs/results/` and machine-readable state in `data/` (D592). Two tests enforce
+  that (`tests/unit/test_crosswalk.py`, `tests/unit/test_programme.py`), and both went red at the freeze commit
+  (`dc4bf97`). The settlement ledger's frozen file already lives in `data/`.
+- **The fix, one line of one frozen file:** `scripts/freeze_index_reweight_2027.py`'s `OUT_DIR` changes from
+  `results/index_reweight` to `data/index_reweight`, and its docstring follows. No other code, input or parameter
+  changes.
+  - The first freeze (content_sha256 `11c54c31…`, spec `4945c1f`) is kept, renamed, at
+    `data/index_reweight/FROZEN_2027_superseded_4945c1f.json`.
+  - The new freeze is `data/index_reweight/FROZEN_2027.json`. Its hashes must equal the first freeze's on every file
+    except the wrapper, and that is checked before the new file is committed.
+- **Nothing was run between the two freezes:** no C0, no R-stage run, and no 2027 publication was read. The daily
+  recorder is not a model run.
+- **Found at the same time, not changed here:** D636 promises that every R-stage configuration is logged in
+  `results/index_reweight/trials.csv` (read `data/index_reweight/trials.csv`, D592's translation), but the frozen
+  runners write no trials file. The log is to be derived from each runner's own JSON output after its run, by a
+  script outside the freeze, since outputs are not hashed. That is proposed, not yet ruled.
