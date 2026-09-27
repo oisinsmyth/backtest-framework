@@ -1,0 +1,36 @@
+{
+ "builder": "scripts/build_fut_premarket_1m.py",
+ "built_utc": "2026-09-27T22:37:53Z",
+ "roots": [
+  "GC",
+  "SI",
+  "6E",
+  "ZN"
+ ],
+ "rows": 1671558,
+ "front_rows": 996426,
+ "span": [
+  "2010-06-07",
+  "2026-09-09"
+ ],
+ "front_rule": "fut_day1m's contract for the (root, day)",
+ "front_bars_per_session": {
+  "GC": {
+   "mean": 59.98169997592102,
+   "p10": 60.0
+  },
+  "SI": {
+   "mean": 59.836783822821374,
+   "p10": 60.0
+  },
+  "6E": {
+   "mean": 59.977633477633475,
+   "p10": 60.0
+  },
+  "ZN": {
+   "mean": 59.81602302710482,
+   "p10": 60.0
+  }
+ },
+ "holdout": "every archive session; readers cut at their own seal"
+}
