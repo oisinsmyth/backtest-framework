@@ -8,7 +8,7 @@ Five of the pre-registration documents deposited in `docs/internal/User-Doc-Depo
 
 **A percentage below is a COUNT, not a verdict.** "claimed" means one repository test names that number in its function name, a section banner, or a docstring or assertion message. It does not say the test is right, that the claimed items are the important ones, or that the unclaimed ones are not. Nothing here has been run against a market.
 
-**The three spellings, and why a grep misses half.** A claim is made in one of three conventions -- a function name (`def test_ledger_51_...`), a section banner (`# ===== ledger test 66`), or a docstring or assertion message (`Ledger unit test 11 and shock unit test 9, long side.`). Of the 88 claims here, **68 use the function name, 15 a docstring or message and 5 a banner**; at the 28 claims D607 opened with, `grep 'def test_ledger'` found six. **Going forward (D607): a test that discharges a numbered deposit item names the number in its FUNCTION NAME** -- `test_<doc>_<number>_<what>` -- because that is the spelling `pytest -k`, a traceback, a test id and a grep all see. The other two conventions stay valid for the tests that already use them, `scripts/deposit_test_map.py --scan` reads all three, and one function name can only carry ONE number -- an item discharged by a test named for a different document still needs the docstring spelling.
+**The three spellings, and why a grep misses half.** A claim is made in one of three conventions -- a function name (`def test_ledger_51_...`), a section banner (`# ===== ledger test 66`), or a docstring or assertion message (`Ledger unit test 11 and shock unit test 9, long side.`). Of the 99 claims here, **79 use the function name, 15 a docstring or message and 5 a banner**; at the 28 claims D607 opened with, `grep 'def test_ledger'` found six. **Going forward (D607): a test that discharges a numbered deposit item names the number in its FUNCTION NAME** -- `test_<doc>_<number>_<what>` -- because that is the spelling `pytest -k`, a traceback, a test id and a grep all see. The other two conventions stay valid for the tests that already use them, `scripts/deposit_test_map.py --scan` reads all three, and one function name can only carry ONE number -- an item discharged by a test named for a different document still needs the docstring spelling.
 
 ---
 
@@ -19,9 +19,9 @@ Five of the pre-registration documents deposited in `docs/internal/User-Doc-Depo
 | Settlement flow ledger (`SETTLEMENT_FLOW_LEDGER_PREREG.md`) | 12. Required unit tests (line 705) | 71 | 65 | 0 | 5 | 1 | 91.5% |
 | Index reweight flow (`INDEX_REWEIGHT_FLOW_PREREG.md`) | 13. Required unit tests (line 347) | 28 | 6 | 0 | 0 | 22 | 21.4% |
 | Opening agent state (`OPENING_AGENT_STATE_PREREG.md`) | 15. Required unit tests (line 334) | 25 | 6 | 4 | 0 | 15 | 24.0% |
-| Shock classifier (`SHOCK_CLASSIFIER_PREREG.md`) | 9. Required unit tests (line 293) | 13 | 2 | 0 | 0 | 11 | 15.4% |
+| Shock classifier (`SHOCK_CLASSIFIER_PREREG.md`) | 9. Required unit tests (line 293) | 13 | 13 | 0 | 0 | 0 | 100.0% |
 | LETF close flow (`LETF_CLOSE_FLOW_PREREG.md`) | 8. Required unit tests (line 242) | 9 | 9 | 0 | 0 | 0 | 100.0% |
-| **All five** | | **146** | **88** | **4** | **5** | **49** | **60.3%** |
+| **All five** | | **146** | **99** | **4** | **5** | **38** | **67.8%** |
 
 **By class**, over all 146 items: arithmetic 40, data_guard 25, execution 16, leak 31, rendering 3, statistical 31.
 
@@ -178,23 +178,23 @@ Section 15. Required unit tests, heading at line 334, items at lines 336–360. 
 
 ### Shock classifier — `SHOCK_CLASSIFIER_PREREG.md`
 
-Section 9. Required unit tests, heading at line 293, items at lines 295–307. **2 of 13 claimed (15.4%).**
+Section 9. Required unit tests, heading at line 293, items at lines 295–307. **13 of 13 claimed (100.0%).**
 
 | # | Line | Class | Status | Claim | Item |
 |---:|---:|---|---|---|---|
-| 1 | 295 | leak | **unclaimed** | — | `σ_tod` on day t uses only days t−60 … t−1 (look-ahead test).<br>*Time-of-day sigma uses only the prior sixty days* |
-| 2 | 296 | leak | **unclaimed** | — | Peer β and ρ on day t use only days t−60 … t−1.<br>*Peer beta and correlation use only the prior sixty days* |
-| 3 | 297 | arithmetic | **unclaimed** | — | Shock detection: a synthetic 5σ one-minute jump triggers; a 3σ jump doesn't at z = 4.<br>*A five-sigma jump triggers; a three-sigma jump does not* |
-| 4 | 298 | execution | **unclaimed** | — | Cooldown: a second jump 30 min after the first is ignored; one at 61 min is detected.<br>*A second jump inside the cooldown is ignored, outside it detected* |
-| 5 | 299 | arithmetic | **unclaimed** | — | Confirmation ratio: a peer with β = 0.5 moving exactly 0.5 × own gives C_j = 1. A negatively correlated peer (β = −0.3) moving −0.3 × own also gives C_j = 1.<br>*Confirmation ratio is one for positively and negatively loaded peers* |
-| 6 | 300 | data_guard | **unclaimed** | — | A peer with \|ρ\| < 0.3 is excluded; fewer than 2 valid peers gives class NONE.<br>*Weak peers are dropped and too few peers give class NONE* |
-| 7 | 301 | arithmetic | **unclaimed** | — | Classification truth table, including the event override (event and C = 0.35 gives INFO; event and C = 0.1 gives NONE).<br>*The classification truth table including the event override* |
-| 8 | 302 | execution | **unclaimed** | — | Trade direction: INFO follows d; LIQ opposes d.<br>*INFO trades with the move; LIQ trades against it* |
+| 1 | 295 | leak | claimed | `tests/unit/test_shock_model.py:37` `test_shock_01_sigma_tod_on_day_t_uses_only_days_t_minus_60_to_t_minus_1` | `σ_tod` on day t uses only days t−60 … t−1 (look-ahead test).<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 2 | 296 | leak | claimed | `tests/unit/test_shock_model.py:51` `test_shock_02_peer_beta_and_rho_on_day_t_use_only_days_t_minus_60_to_t_minus_1` | Peer β and ρ on day t use only days t−60 … t−1.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 3 | 297 | arithmetic | claimed | `tests/unit/test_shock_model.py:74` `test_shock_03_a_5_sigma_jump_triggers_and_a_3_sigma_jump_does_not_at_z4` | Shock detection: a synthetic 5σ one-minute jump triggers; a 3σ jump doesn't at z = 4.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 4 | 298 | execution | claimed | `tests/unit/test_shock_model.py:82` `test_shock_04_cooldown_ignores_a_jump_30_min_later_and_detects_one_at_61` | Cooldown: a second jump 30 min after the first is ignored; one at 61 min is detected.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 5 | 299 | arithmetic | claimed | `tests/unit/test_shock_model.py:89` `test_shock_05_confirmation_is_one_for_peers_moving_exactly_their_beta` | Confirmation ratio: a peer with β = 0.5 moving exactly 0.5 × own gives C_j = 1. A negatively correlated peer (β = −0.3) moving −0.3 × own also gives C_j = 1.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 6 | 300 | data_guard | claimed | `tests/unit/test_shock_model.py:94` `test_shock_06_a_peer_below_rho_0_3_is_excluded_and_under_two_valid_peers_is_none` | A peer with \|ρ\| < 0.3 is excluded; fewer than 2 valid peers gives class NONE.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 7 | 301 | arithmetic | claimed | `tests/unit/test_shock_model.py:100` `test_shock_07_classification_truth_table_with_the_event_override` | Classification truth table, including the event override (event and C = 0.35 gives INFO; event and C = 0.1 gives NONE).<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 8 | 302 | execution | claimed | `tests/unit/test_shock_model.py:108` `test_shock_08_info_follows_the_shock_and_liq_opposes_it` | Trade direction: INFO follows d; LIQ opposes d.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
 | 9 | 303 | execution | claimed | `tests/golden/test_futures_fills_ledger.py:99` | Intra-bar pessimism: a bar spanning both the stop and target records the stop.<br>**Note:** D587. One docstring claims ledger 11 and shock 9 together. |
 | 10 | 304 | execution | claimed | `tests/golden/test_futures_fills_ledger.py:80` | Stress fill picks the worst close among t0+1 … t0+5 for the trade direction.<br>**Note:** D587. The docstring of test_stress_fill_picks_the_worst_close_for_the_direction. |
-| 11 | 305 | data_guard | **unclaimed** | — | Session windows: shocks outside Section 3.3 windows and on roll days are excluded.<br>*Shocks outside the session windows and on roll days are excluded* |
-| 12 | 306 | execution | **unclaimed** | — | DST: window boundaries map correctly to UTC in both transition weeks.<br>*Window boundaries map to UTC in both DST transition weeks* |
-| 13 | 307 | data_guard | **unclaimed** | — | Event window: a shock at release + 5 min is flagged; one at release + 6 min is not.<br>*A shock inside the event window is flagged; just outside is not* |
+| 11 | 305 | data_guard | claimed | `tests/unit/test_shock_model.py:128` `test_shock_11_shocks_outside_the_windows_and_on_roll_days_are_excluded` | Session windows: shocks outside Section 3.3 windows and on roll days are excluded.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 12 | 306 | execution | claimed | `tests/unit/test_shock_model.py:138` `test_shock_12_window_boundaries_map_to_utc_in_both_transition_weeks` | DST: window boundaries map correctly to UTC in both transition weeks.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
+| 13 | 307 | data_guard | claimed | `tests/unit/test_shock_model.py:145` `test_shock_13_a_shock_at_release_plus_5_is_flagged_and_at_plus_6_is_not` | Event window: a shock at release + 5 min is flagged; one at release + 6 min is not.<br>**Note:** Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py. |
 
 ### LETF close flow — `LETF_CLOSE_FLOW_PREREG.md`
 

@@ -1961,10 +1961,15 @@
       "text": "`\u03c3_tod` on day t uses only days t\u221260 \u2026 t\u22121 (look-ahead test).",
       "paraphrase": "Time-of-day sigma uses only the prior sixty days",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 37,
+        "symbol": "test_shock_01_sigma_tod_on_day_t_uses_only_days_t_minus_60_to_t_minus_1"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -1973,10 +1978,15 @@
       "text": "Peer \u03b2 and \u03c1 on day t use only days t\u221260 \u2026 t\u22121.",
       "paraphrase": "Peer beta and correlation use only the prior sixty days",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 51,
+        "symbol": "test_shock_02_peer_beta_and_rho_on_day_t_use_only_days_t_minus_60_to_t_minus_1"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -1985,10 +1995,15 @@
       "text": "Shock detection: a synthetic 5\u03c3 one-minute jump triggers; a 3\u03c3 jump doesn't at z = 4.",
       "paraphrase": "A five-sigma jump triggers; a three-sigma jump does not",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 74,
+        "symbol": "test_shock_03_a_5_sigma_jump_triggers_and_a_3_sigma_jump_does_not_at_z4"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -1997,10 +2012,15 @@
       "text": "Cooldown: a second jump 30 min after the first is ignored; one at 61 min is detected.",
       "paraphrase": "A second jump inside the cooldown is ignored, outside it detected",
       "cls": "execution",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 82,
+        "symbol": "test_shock_04_cooldown_ignores_a_jump_30_min_later_and_detects_one_at_61"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2009,10 +2029,15 @@
       "text": "Confirmation ratio: a peer with \u03b2 = 0.5 moving exactly 0.5 \u00d7 own gives C_j = 1. A negatively correlated peer (\u03b2 = \u22120.3) moving \u22120.3 \u00d7 own also gives C_j = 1.",
       "paraphrase": "Confirmation ratio is one for positively and negatively loaded peers",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 89,
+        "symbol": "test_shock_05_confirmation_is_one_for_peers_moving_exactly_their_beta"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2021,10 +2046,15 @@
       "text": "A peer with |\u03c1| < 0.3 is excluded; fewer than 2 valid peers gives class NONE.",
       "paraphrase": "Weak peers are dropped and too few peers give class NONE",
       "cls": "data_guard",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 94,
+        "symbol": "test_shock_06_a_peer_below_rho_0_3_is_excluded_and_under_two_valid_peers_is_none"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2033,10 +2063,15 @@
       "text": "Classification truth table, including the event override (event and C = 0.35 gives INFO; event and C = 0.1 gives NONE).",
       "paraphrase": "The classification truth table including the event override",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 100,
+        "symbol": "test_shock_07_classification_truth_table_with_the_event_override"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2045,10 +2080,15 @@
       "text": "Trade direction: INFO follows d; LIQ opposes d.",
       "paraphrase": "INFO trades with the move; LIQ trades against it",
       "cls": "execution",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 108,
+        "symbol": "test_shock_08_info_follows_the_shock_and_liq_opposes_it"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2091,10 +2131,15 @@
       "text": "Session windows: shocks outside Section 3.3 windows and on roll days are excluded.",
       "paraphrase": "Shocks outside the session windows and on roll days are excluded",
       "cls": "data_guard",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 128,
+        "symbol": "test_shock_11_shocks_outside_the_windows_and_on_roll_days_are_excluded"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2103,10 +2148,15 @@
       "text": "DST: window boundaries map correctly to UTC in both transition weeks.",
       "paraphrase": "Window boundaries map to UTC in both DST transition weeks",
       "cls": "execution",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 138,
+        "symbol": "test_shock_12_window_boundaries_map_to_utc_in_both_transition_weeks"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "shock",
@@ -2115,10 +2165,15 @@
       "text": "Event window: a shock at release + 5 min is flagged; one at release + 6 min is not.",
       "paraphrase": "A shock inside the event window is flagged; just outside is not",
       "cls": "data_guard",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_shock_model.py",
+        "line": 145,
+        "symbol": "test_shock_13_a_shock_at_release_plus_5_is_flagged_and_at_plus_6_is_not"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Shock classifier Phase 2 (D641): src/backtest_framework/shock/model.py."
     },
     {
       "doc": "letf",

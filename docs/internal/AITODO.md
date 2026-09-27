@@ -224,8 +224,14 @@
   - traded markets 99.99–100%; peers priced within 5 minutes on ≥ 99.99% of minutes (BZ literal 96.3%, reported);
   - calendar complete; roll days listed;
   - outage days 2020-02-27, 2020-02-28 and 2020-06-30 excluded.
-- **Next: Phase 2**: σ_tod, the detector, betas, C, the classifier and the deposit's 13 unit tests. It reports shock
-  counts per class, instrument and year, before any return is read.
+- **Phase 2 DONE (D641):**
+  - built: `src/backtest_framework/shock/model.py` and the 13 deposit tests (all pass; crosswalk shock 13/13);
+  - counts: `scripts/build_shock_phase2.py` → `data/shock/phase2_shocks.csv.gz` and `phase2_counts.json` (4.4 min);
+  - **almost every z = 4 shock is INFO** (C median ≈ 1). **LIQ: NQ 85, ES 51, CL 40, GC 304 over nine years**,
+    against ~1,800 planned. 317–387 shocks a year per market (planned ~150).
+  - SC-A7 (NGSR diagnostic; unscheduled FOMC counts) and SC-A8 (a zero σ_tod cannot detect) are PROPOSED.
+- **Next: Phase 3 POWER** (§7A, before Gate 1). Expect CL/ES/NQ underpowered on the LIQ side; GC is the one market
+  with two populated classes.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 

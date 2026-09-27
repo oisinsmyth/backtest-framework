@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 380 of these records carry neither field —
+**No Status or Category column, deliberately.** 381 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -713,6 +713,7 @@ would look like data. The tokens are what is shown.
 | D638 | LETF close-flow Phase 2, NQ: bars, calendar, event flags and the data QA. Every bar the model reads is present | [record](D638-letf-phase-2-nq-bars-calendar-flags-qa.md) |
 | D639 | PRE-REG: the LETF close-flow model, H1–H5 on NQ and ES (deposit Phases 4–7) | [PRE-REG](D639-PRE-REG-letf-close-flow-h1-h5-on-nq-and-es.md) |
 | D640 | RESULT: the LETF close-flow model is KILLED at Gate 1. NQ passes H1 at 14:30 and 15:00, but its own 11:00 placebo is si… | [RESULT](D640-RESULT-letf-close-flow-killed-by-its-own-11am-placebo.md) |
+| D641 | shock classifier Phase 2: the machinery is built and tested, and at z = 4 almost every one-minute shock moves its whole… | [record](D641-shock-classifier-phase-2-almost-every-shock-is-info.md) |
 
 <!-- REGISTER:END -->
 

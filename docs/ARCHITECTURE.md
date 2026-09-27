@@ -8,8 +8,8 @@ five-bullet version of this page for anyone who wants thirty seconds instead of 
 > signal layer earns once costed honestly. Its "layers" are signal, construction, width, exit,
 > overlay. No overlap with anything below.
 
-The instrument is **76 modules across 13 packages** (`research/` is one more, excluded).
-`src/` holds 116 tracked `.py` files, but 15 are `__init__.py` and 25 more are
+The instrument is **77 modules across 14 packages** (`research/` is one more, excluded).
+`src/` holds 118 tracked `.py` files, but 16 are `__init__.py` and 25 more are
 [`research/`](../src/backtest_framework/research/__init__.py), which that package calls explicitly
 *not framework surface* — study code, versioned per study. Quoting 85 overstates the thing being
 claimed.

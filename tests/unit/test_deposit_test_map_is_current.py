@@ -110,12 +110,14 @@ def test_every_row_carries_its_verbatim_text_so_the_page_renders_without_the_dep
 #: (D608-D606) were staged and recorded: 28 -> 43, and again 2026-09-22 when round 4's ledger
 #: tests (D610 seventeen, D611 thirteen, D612 five, D619 one) were staged: 43 -> 79, ledger
 #: 29 -> 65; and 2026-09-27 when the LETF close-flow model's Phase 3 claimed all nine of its
-#: tests (`tests/unit/test_letf_model.py`): letf 0 -> 9, 79 -> 88. The tracker
+#: tests (`tests/unit/test_letf_model.py`): letf 0 -> 9, 79 -> 88; and 2026-09-28 when the shock
+#: classifier's Phase 2 (D641) claimed its other eleven (`tests/unit/test_shock_model.py`): shock
+#: 2 -> 13, 88 -> 99. The tracker
 #: (`docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md`) carries the running figure. **Editing these
 #: numbers is the point.** They are pinned so that a claim added without amending the record turns
 #: this red; the fix is to update both together, never to loosen the assertion into `>=`.
-CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 6, "shock": 2, "letf": 9}
-CLAIMED_TOTAL = 88
+CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 6, "shock": 13, "letf": 9}
+CLAIMED_TOTAL = 99
 
 
 def test_the_claimed_counts_are_the_ones_the_record_quotes():
