@@ -1,0 +1,126 @@
+trade_date,component,contract,settle,source,recorded_utc,kind
+2026-09-21,Brent Crude Oil,2026-11,100.34,Sierra Chart daily BRNX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-21,Brent Crude Oil,2027-01,93.4,Sierra Chart daily BRNF27-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-22,Brent Crude Oil,2026-11,99.25,Sierra Chart daily BRNX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-22,Brent Crude Oil,2027-01,92.74,Sierra Chart daily BRNF27-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-23,Brent Crude Oil,2026-11,103.08,Sierra Chart daily BRNX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-23,Brent Crude Oil,2027-01,95.03,Sierra Chart daily BRNF27-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-24,Brent Crude Oil,2026-11,106.6,Sierra Chart daily BRNX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-24,Brent Crude Oil,2027-01,96.42,Sierra Chart daily BRNF27-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-25,Brent Crude Oil,2026-11,104.32,Sierra Chart daily BRNX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-25,Brent Crude Oil,2027-01,94.11,Sierra Chart daily BRNF27-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-21,Low Sulphur Gas Oil,2026-11,1375.25,Sierra Chart daily GASX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-22,Low Sulphur Gas Oil,2026-11,1374.25,Sierra Chart daily GASX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-23,Low Sulphur Gas Oil,2026-11,1417.25,Sierra Chart daily GASX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-24,Low Sulphur Gas Oil,2026-11,1456.0,Sierra Chart daily GASX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-25,Low Sulphur Gas Oil,2026-11,1407.5,Sierra Chart daily GASX26-ICEEU,2026-09-27T17:37:25Z,first
+2026-09-21,Corn,2026-12,543.0,Sierra Chart daily ZCZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-22,Corn,2026-12,536.75,Sierra Chart daily ZCZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-23,Corn,2026-12,529.0,Sierra Chart daily ZCZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-24,Corn,2026-12,527.5,Sierra Chart daily ZCZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-25,Corn,2026-12,528.25,Sierra Chart daily ZCZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-21,Soybeans,2026-11,1328.0,Sierra Chart daily ZSX26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-22,Soybeans,2026-11,1325.5,Sierra Chart daily ZSX26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-23,Soybeans,2026-11,1318.0,Sierra Chart daily ZSX26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-24,Soybeans,2026-11,1317.5,Sierra Chart daily ZSX26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-25,Soybeans,2026-11,1319.0,Sierra Chart daily ZSX26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-21,Soybean Meal,2026-12,368.4,Sierra Chart daily ZMZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-22,Soybean Meal,2026-12,370.7,Sierra Chart daily ZMZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-23,Soybean Meal,2026-12,370.6,Sierra Chart daily ZMZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-24,Soybean Meal,2026-12,372.4,Sierra Chart daily ZMZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-25,Soybean Meal,2026-12,371.0,Sierra Chart daily ZMZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-21,Soybean Oil,2026-12,68.85,Sierra Chart daily ZLZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-22,Soybean Oil,2026-12,67.92,Sierra Chart daily ZLZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-23,Soybean Oil,2026-12,67.81,Sierra Chart daily ZLZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-24,Soybean Oil,2026-12,67.55,Sierra Chart daily ZLZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-25,Soybean Oil,2026-12,67.84,Sierra Chart daily ZLZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-21,Wheat,2026-12,726.75,Sierra Chart daily ZWZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-22,Wheat,2026-12,717.25,Sierra Chart daily ZWZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-23,Wheat,2026-12,708.5,Sierra Chart daily ZWZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-24,Wheat,2026-12,707.0,Sierra Chart daily ZWZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-25,Wheat,2026-12,703.25,Sierra Chart daily ZWZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-21,HRW Wheat,2026-12,794.5,Sierra Chart daily KEZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-22,HRW Wheat,2026-12,781.25,Sierra Chart daily KEZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-23,HRW Wheat,2026-12,771.75,Sierra Chart daily KEZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-24,HRW Wheat,2026-12,767.0,Sierra Chart daily KEZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-25,HRW Wheat,2026-12,762.0,Sierra Chart daily KEZ26-CBOT,2026-09-27T17:37:25Z,first
+2026-09-21,Copper,2026-12,6.7625,Sierra Chart daily HGZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-22,Copper,2026-12,6.836,Sierra Chart daily HGZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-23,Copper,2026-12,6.7535,Sierra Chart daily HGZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-24,Copper,2026-12,6.79,Sierra Chart daily HGZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-25,Copper,2026-12,6.766,Sierra Chart daily HGZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-21,Aluminum,2026-11,3269.192307692308,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-22,Aluminum,2026-11,3255.78021978022,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-23,Aluminum,2026-11,3252.3076923076924,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-24,Aluminum,2026-11,3242.8076923076924,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-25,Aluminum,2026-11,3261.714285714286,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-21,Zinc,2026-11,3962.5494505494503,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-22,Zinc,2026-11,3963.4065934065934,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-23,Zinc,2026-11,3914.538461538461,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-24,Zinc,2026-11,3941.412087912088,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-25,Zinc,2026-11,3995.912087912088,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-21,Nickel,2026-11,16214.23076923077,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-22,Nickel,2026-11,16491.428571428572,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-23,Nickel,2026-11,16534.615384615383,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-24,Nickel,2026-11,16413.68131868132,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-25,Nickel,2026-11,16156.813186813188,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-21,Lead,2026-11,1914.21978021978,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-22,Lead,2026-11,1925.598901098901,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-23,Lead,2026-11,1911.6538461538464,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-24,Lead,2026-11,1915.10989010989,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-25,Lead,2026-11,1918.2252747252744,Westmetall LME cash/3M interpolated to the prompt,2026-09-27T17:37:25Z,first
+2026-09-21,Gold,2026-12,4383.9,Sierra Chart daily GCZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-22,Gold,2026-12,4376.4,Sierra Chart daily GCZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-23,Gold,2026-12,4318.4,Sierra Chart daily GCZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-24,Gold,2026-12,4298.0,Sierra Chart daily GCZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-25,Gold,2026-12,4321.2,Sierra Chart daily GCZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-21,Silver,2026-12,66.415,Sierra Chart daily SIZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-22,Silver,2026-12,66.53,Sierra Chart daily SIZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-23,Silver,2026-12,64.964,Sierra Chart daily SIZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-24,Silver,2026-12,64.002,Sierra Chart daily SIZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-25,Silver,2026-12,64.801,Sierra Chart daily SIZ26-COMEX,2026-09-27T17:37:25Z,first
+2026-09-21,Sugar,2027-03,18.39,Sierra Chart daily SBH27-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-21,Sugar,2026-10,17.48,Sierra Chart daily SBV26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-22,Sugar,2027-03,18.56,Sierra Chart daily SBH27-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-22,Sugar,2026-10,17.59,Sierra Chart daily SBV26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-23,Sugar,2027-03,18.8,Sierra Chart daily SBH27-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-23,Sugar,2026-10,17.75,Sierra Chart daily SBV26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-24,Sugar,2027-03,18.61,Sierra Chart daily SBH27-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-24,Sugar,2026-10,17.58,Sierra Chart daily SBV26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-25,Sugar,2027-03,18.5,Sierra Chart daily SBH27-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-25,Sugar,2026-10,17.5,Sierra Chart daily SBV26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-21,Coffee,2026-12,276.4,Sierra Chart daily KCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-22,Coffee,2026-12,272.3,Sierra Chart daily KCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-23,Coffee,2026-12,275.9,Sierra Chart daily KCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-24,Coffee,2026-12,275.35,Sierra Chart daily KCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-25,Coffee,2026-12,278.6,Sierra Chart daily KCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-21,Cocoa,2026-12,5351.0,Sierra Chart daily CCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-22,Cocoa,2026-12,5402.0,Sierra Chart daily CCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-23,Cocoa,2026-12,5528.0,Sierra Chart daily CCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-24,Cocoa,2026-12,5590.0,Sierra Chart daily CCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-25,Cocoa,2026-12,5619.0,Sierra Chart daily CCZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-21,Cotton,2026-12,83.42,Sierra Chart daily CTZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-22,Cotton,2026-12,82.87,Sierra Chart daily CTZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-23,Cotton,2026-12,82.89,Sierra Chart daily CTZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-24,Cotton,2026-12,83.31,Sierra Chart daily CTZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-25,Cotton,2026-12,82.71,Sierra Chart daily CTZ26-ICEUS,2026-09-27T17:37:25Z,first
+2026-09-21,Live Cattle,2026-12,222.0,Sierra Chart daily LEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-21,Live Cattle,2026-10,220.95,Sierra Chart daily LEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-22,Live Cattle,2026-12,219.45,Sierra Chart daily LEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-22,Live Cattle,2026-10,218.775,Sierra Chart daily LEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-23,Live Cattle,2026-12,222.35,Sierra Chart daily LEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-23,Live Cattle,2026-10,220.925,Sierra Chart daily LEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-24,Live Cattle,2026-12,221.1,Sierra Chart daily LEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-24,Live Cattle,2026-10,219.075,Sierra Chart daily LEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-25,Live Cattle,2026-12,222.15,Sierra Chart daily LEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-25,Live Cattle,2026-10,218.875,Sierra Chart daily LEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-21,Lean Hogs,2026-12,69.8,Sierra Chart daily HEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-21,Lean Hogs,2026-10,78.15,Sierra Chart daily HEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-22,Lean Hogs,2026-12,71.0,Sierra Chart daily HEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-22,Lean Hogs,2026-10,79.275,Sierra Chart daily HEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-23,Lean Hogs,2026-12,70.325,Sierra Chart daily HEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-23,Lean Hogs,2026-10,79.875,Sierra Chart daily HEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-24,Lean Hogs,2026-12,69.475,Sierra Chart daily HEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-24,Lean Hogs,2026-10,79.2,Sierra Chart daily HEV26-CME,2026-09-27T17:37:25Z,first
+2026-09-25,Lean Hogs,2026-12,69.025,Sierra Chart daily HEZ26-CME,2026-09-27T17:37:25Z,first
+2026-09-25,Lean Hogs,2026-10,78.225,Sierra Chart daily HEV26-CME,2026-09-27T17:37:25Z,first
