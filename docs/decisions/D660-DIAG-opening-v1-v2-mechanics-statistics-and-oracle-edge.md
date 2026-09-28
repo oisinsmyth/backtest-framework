@@ -139,3 +139,20 @@ How to read the oracle:
    - V2-C's long-only drift.
    Both were found by looking at this in-sample, which is spent for them. Either would need its own pre-registration
    and a sample it has not been chosen on. The futures 2024+ slice is spent for trend, so only the vault remains.
+
+## Correction (2026-09-28, same day): failed fades losing is optional stopping, not continuation
+
+§1 M6 and What-it-means 3 read the timed-out fades' loss as "the move carries on after the fade fails". It is
+not. Over every eligible V2-F fade (3,439 rows) the gross is **+0.17 bp (t 0.24)**: the fade universe is a
+martingale. When a quarter of fades (26.8%) are cut off at the target for +30.0 bp, the rest MUST average
+−(0.268 × 30.0) / 0.732 = **−10.97 bp**, and they average −10.74. OA-A11's random-walk form (a = 0, β = −1)
+says exactly this per row. The fitted a_T of −7.1 and β of −0.30 are what the same identity looks like when the
+regressor carries a noisy p (errors-in-variables pulls β towards 0 and a absorbs the mean). So:
+
+- **V2-F's timed-out losses are not evidence of a continuation or a stop cascade.** They are the price of cutting
+  the winners at the target.
+- The EV over-confidence (slope 0.36) stands as measured, but its cause is the noise in p, not a missing
+  continuation term.
+- M2's one-minute move against the fades (−1.07 bp) is unaffected.
+
+Check: `scripts/diag_opening_v2_fade_martingale.py` (the runner's cell_rows and outcomes, every non-cancelled row).
