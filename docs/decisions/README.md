@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 404 of these records carry neither field —
+**No Status or Category column, deliberately.** 405 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -730,6 +730,7 @@ would look like data. The tokens are what is shown.
 | D655 | there is no reverting roll premium in the gold and silver spreads: the trade earns +0.44 bp gross against a placement m… | [PRE-REG](D655-PRE-REG-selling-the-metals-roll-after-first-notice.md) · [RESULT](D655-RESULT-no-roll-premium-the-control-earns-more.md) |
 | D656 | D656 STAGE 0 RESULT — the soybean crush carries no processors' premium, and its near-versus-next-year gap genuinely rev… | [record](D656-STAGE-0-DESIGN-the-soybean-crush-premium-and-reversion.md) · [RESULT](D656-STAGE-0-RESULT-no-premium-a-real-reversion-no-trade.md) |
 | D657 | D657 STAGE 0 RESULT — a CME margin increase forces positions out and is followed by two weeks of volatility nobody fore… | [record](D657-STAGE-0-DESIGN-margin-hikes-forced-exit-and-reversion.md) · [RESULT](D657-STAGE-0-RESULT-exits-and-volatility-no-trade.md) |
+| D664 | the spark spread cannot be tested or traded on CME: all 121 CME electricity futures carry zero open interest and zero v… | [record](D664-PROBE-the-spark-spread-is-not-on-cme.md) |
 
 <!-- REGISTER:END -->
 
