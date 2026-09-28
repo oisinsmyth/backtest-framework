@@ -419,13 +419,7 @@ def build(dry: bool = False) -> tuple[dict[str, Any], list[dict]]:
             final = si
     for st in evaluated:
         doc["stages"].append(strip(st))
-        for t0 in R.TRADE_T0:
-            o = st["H_O2"][t0]
-            trials.append({"trial_id": f"{st['stage']}_H-O2_{t0}", "doc": "OPENING_AGENT_STATE_PREREG.md",
-                           "family": "opening H-O2", "stage": st["stage"], "t0": t0,
-                           "construction": f"state policy vs best baseline ({o['best_baseline']}); features {'+'.join(st['features'])}",
-                           "n_obs": o["n_sessions"], "mean_net": round(o["diff_mean_bp"], 6), "t_hac": round(o["t_hac"], 6),
-                           "notes": f"policy_net={o['policy_mean_net_bp']:.6f}; reads_2024_plus={o['reads_2024_plus']}"})
+        trials += stage_trials(st)
     doc["retained"] = [s["stage"] for s in retained]
     doc["final_stage"] = final["stage"]
     # the final stage's tests
@@ -462,6 +456,19 @@ def build(dry: bool = False) -> tuple[dict[str, Any], list[dict]]:
 
 def strip(st: dict) -> dict:
     return {k: v for k, v in st.items() if not k.startswith("_")}
+
+
+def stage_trials(st: dict) -> list[dict]:
+    """A stage's H-O2 trial rows; reads only what strip() keeps, so the written phase45.json rebuilds them."""
+    out = []
+    for t0 in R.TRADE_T0:
+        o = st["H_O2"][t0]
+        out.append({"trial_id": f"{st['stage']}_H-O2_{t0}", "doc": "OPENING_AGENT_STATE_PREREG.md",
+                    "family": "opening H-O2", "stage": st["stage"], "t0": t0,
+                    "construction": f"state policy vs best baseline ({o['best_baseline']}); features {'+'.join(st['features'])}",
+                    "n_obs": o["n_sessions"], "mean_net": round(o["diff_mean_bp"], 6), "t_hac": round(o["t_hac"], 6),
+                    "notes": f"policy_net={o['policy_mean_net_bp']:.6f}; reads_2024_plus={o['reads_2024_plus']}"})
+    return out
 
 
 def o0h_status(od) -> dict[str, Any]:
