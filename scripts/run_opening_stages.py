@@ -6,9 +6,9 @@
     uv run python scripts/run_opening_stages.py --run --phase 3     # ONCE: S-A -> data/opening/phase3_S-A.json + trials
     uv run python scripts/run_opening_stages.py --check --phase 3   # the rebuild equals the committed output
 
-PHASE 3 (this file's run now): stage S-A (the five observables + the market dummy) through the walk-forward. It gives
+PHASE 3: stage S-A (the five observables + the market dummy) through the walk-forward. It gives
 H-O1 at 10:00, H-O3 at every checkpoint, and S-A's H-O2 statistic at both t0 (the retention rule's reference).
-Phases 4-5 (the agent stages, H-O4 .. H-O6, Gate O1) run after A7 is resolved (D645 s.2) and are not in this file yet.
+PHASES 4-5 (--phase 4-5): scripts/opening_phase45.py, after A7 is resolved (D645 s.2), with OA-A8's diagnostics.
 
 Readings fixed here, before the run (D645 leaves them to the code):
 - Feature 4 is r(09:30 -> t) x d0 / sigma. At t = t0 that is |r| / sigma, as D645 s.2 writes it. At a later
@@ -70,6 +70,9 @@ NW_LAG = 5
 USD_PER_POINT = {"ES": 5.0, "NQ": 2.0}
 COST_USD = {"ES": 3.0 + 1.1345 * 1.25 + 1.25, "NQ": 3.0 + 2.1342 * 0.5 + 0.5}  # D508 + $3 + one tick (OA-A5)
 S_A = ("gap_atr", "loc_with", "loc_against", "r_sigma", "vol_z")
+#: the (checkpoint, label t0) models every stage needs: H-O1/H-O3 at t = t0, and the state-flip exits' later checkpoints
+PAIRS45 = tuple(sorted({(t, t) for t in CHECKPOINTS} | {("10:00", "09:45"), ("10:30", "09:45"), ("10:30", "10:00"),
+                                                         ("11:00", "10:00")}))
 
 
 class OpeningRunError(RuntimeError):
@@ -678,6 +681,42 @@ def windows_broken() -> None:
         raise OpeningRunError("walk-forward: a training session is also a test session")
 
 
+def phase45(a: argparse.Namespace) -> int:
+    """Phases 4-5 (scripts/opening_phase45.py), under D645 and OA-A8."""
+    s = importlib.util.spec_from_file_location("opening_phase45", REPO / "scripts" / "opening_phase45.py")
+    assert s is not None and s.loader is not None
+    P45 = importlib.util.module_from_spec(s)
+    sys.modules["opening_phase45"] = P45
+    s.loader.exec_module(P45)
+    P45.R = sys.modules[__name__]
+    out = OD / "phase45.json"
+    if a.dry_run:
+        doc, trials = P45.build(dry=True)
+        dump(doc)
+        print(f"DRY RUN phase 4-5 (synthetic bars and agents): every path ran; {len(trials)} trials; retained "
+              f"{doc['retained']}; final {doc['final_stage']}; gate O1 {doc['gate_O1']}; {doc['runtime_min']} min; "
+              "nothing written")
+        return 0
+    if a.run:
+        if out.exists():
+            raise SystemExit("phases 4-5 run once (D645): phase45.json exists")
+        doc, trials = P45.build()
+        out.write_text(dump(doc), encoding="utf-8", newline="\n")
+        log = TrialsCsv(OD / "trials.csv")
+        for t in trials:
+            log.append(t)
+        print(f"wrote {out.name} and {len(trials)} trials in {doc['runtime_min']} min; final {doc['final_stage']}; "
+              f"gate O1 {doc['gate_O1']}; v2 trigger {doc['v2_trigger']['fires']}")
+        return 0
+    doc, _ = P45.build()
+    old = json.loads(out.read_text(encoding="utf-8"))
+    doc["runtime_min"] = old["runtime_min"]
+    if dump(doc) != out.read_text(encoding="utf-8"):
+        raise SystemExit("CHECK FAILED: the phase 4-5 rebuild differs from the committed output")
+    print("CHECK: the phase 4-5 rebuild equals the committed output")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     g = ap.add_mutually_exclusive_group(required=True)
@@ -693,8 +732,10 @@ def main() -> int:
     DATA_ROOT = a.data_root
     if a.selftest:
         return selftest()
+    if a.phase == "4-5":
+        return phase45(a)
     if a.phase != "3":
-        raise SystemExit("only phase 3 is built; phases 4-5 wait for A7 (D645 s.2)")
+        raise SystemExit("--phase is 3 or 4-5")
     out = OD / "phase3_S-A.json"
     trials_path = OD / "trials.csv"
     if a.dry_run:
