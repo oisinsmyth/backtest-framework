@@ -1,0 +1,91 @@
+{
+ "decision": "D653",
+ "built_by": "python scripts/build_fut_oi_expiry.py --build",
+ "reads_no_price": true,
+ "span": [
+  "2016-01-04",
+  "2023-12-29"
+ ],
+ "roots": [
+  "CL",
+  "HO",
+  "RB",
+  "NG",
+  "6E",
+  "6J",
+  "6B",
+  "6A",
+  "6C",
+  "6S",
+  "GC",
+  "SI",
+  "HG",
+  "PL",
+  "PA",
+  "ZN",
+  "ZB",
+  "ZF",
+  "ZT",
+  "UB",
+  "TN",
+  "ZC",
+  "ZS",
+  "ZW",
+  "ZL",
+  "ZM"
+ ],
+ "rows": 850320,
+ "files": [
+  {
+   "file": "glbx-mdp3-20160101-20161231.statistics.dbn.zst",
+   "rows_in": 28233139,
+   "rows_kept": 629016,
+   "secs": 12.2
+  },
+  {
+   "file": "glbx-mdp3-20170101-20171231.statistics.dbn.zst",
+   "rows_in": 35799069,
+   "rows_kept": 595888,
+   "secs": 13.0
+  },
+  {
+   "file": "glbx-mdp3-20180101-20181231.statistics.dbn.zst",
+   "rows_in": 44500449,
+   "rows_kept": 409630,
+   "secs": 12.5
+  },
+  {
+   "file": "glbx-mdp3-20190101-20191231.statistics.dbn.zst",
+   "rows_in": 46824168,
+   "rows_kept": 416098,
+   "secs": 12.6
+  },
+  {
+   "file": "glbx-mdp3-20200101-20201231.statistics.dbn.zst",
+   "rows_in": 54840862,
+   "rows_kept": 456024,
+   "secs": 14.0
+  },
+  {
+   "file": "glbx-mdp3-20210101-20211231.statistics.dbn.zst",
+   "rows_in": 56358701,
+   "rows_kept": 445660,
+   "secs": 14.1
+  },
+  {
+   "file": "glbx-mdp3-20220101-20221231.statistics.dbn.zst",
+   "rows_in": 63993510,
+   "rows_kept": 423578,
+   "secs": 14.8
+  },
+  {
+   "file": "glbx-mdp3-20230101-20231231.statistics.dbn.zst",
+   "rows_in": 59739301,
+   "rows_kept": 449978,
+   "secs": 17.2
+  }
+ ],
+ "wall_min": 0.32,
+ "speed_ratio": 5.76,
+ "conventions": "stat 9 open interest and 6 cleared volume from `quantity`; reference date = ts_ref (session start, ET) + 12 h; the last publication per (contract, stat, reference date); windowed ids"
+}
