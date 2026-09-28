@@ -1,10 +1,10 @@
-"""D653 Stage 0 -- when does open interest leave the expiring contract, and could anyone trade it without holding it?
+"""D654 Stage 0 -- when does open interest leave the expiring contract, and could anyone trade it without holding it?
 
     python scripts/build_fut_oi_expiry.py --selftest
     python scripts/build_fut_oi_expiry.py --build [--workers 8]     # system interpreter (databento)
-    python scripts/build_fut_oi_expiry.py --report                  # fixture -> data/stage0_d653_oi_expiry.json
+    python scripts/build_fut_oi_expiry.py --report                  # fixture -> data/stage0_d654_oi_expiry.json
 
-DESIGN: docs/decisions/D653-STAGE-0-DESIGN-when-open-interest-leaves-the-expiring-month.md (c651f6b), committed before
+DESIGN: docs/decisions/D654-STAGE-0-DESIGN-when-open-interest-leaves-the-expiring-month.md (c651f6b), committed before
 this file existed.
 
 OPEN INTEREST AND CLEARED VOLUME ONLY. No price is read: the extractor keeps `stat_type` 9 and 6, whose value is in
@@ -50,7 +50,7 @@ GSCI = REPO / "data" / "index_reweight" / "gsci_schedule.csv"
 D497 = MAIN / "data" / "fixtures" / "fut_open_interest_daily.csv.gz"
 FIX = REPO / "data" / "fixtures" / "fut_oi_expiry_cycles.csv.gz"
 META = REPO / "data" / "fixtures" / "fut_oi_expiry_cycles.meta.json"
-OUT = REPO / "data" / "stage0_d653_oi_expiry.json"
+OUT = REPO / "data" / "stage0_d654_oi_expiry.json"
 
 SPAN = ("2016-01-04", "2023-12-29")
 RESERVED_FROM = "2024-01-01"
@@ -142,7 +142,7 @@ def build(workers: int) -> int:
     from backtest_framework.validation.frozen import assert_none_at_or_after, filter_before
 
     files = _files()
-    P(f"D653 build -- {len(files)} statistics files, {sum(f.stat().st_size for f in files) / 2**30:.2f} GiB, "
+    P(f"D654 build -- {len(files)} statistics files, {sum(f.stat().st_size for f in files) / 2**30:.2f} GiB, "
       f"{len(ROOTS)} roots, {workers} processes")
     t0 = time.time()
     parts, stats = [], []
@@ -168,7 +168,7 @@ def build(workers: int) -> int:
     t = t[["root", "contract", "ref", "oi", "cv"]].sort_values(["root", "contract", "ref"], kind="mergesort")
     FIX.parent.mkdir(parents=True, exist_ok=True)
     t.to_csv(FIX, index=False, compression="gzip", encoding="utf-8")
-    meta = {"decision": "D653", "built_by": "python scripts/build_fut_oi_expiry.py --build", "reads_no_price": True,
+    meta = {"decision": "D654", "built_by": "python scripts/build_fut_oi_expiry.py --build", "reads_no_price": True,
             "span": list(SPAN), "roots": list(ROOTS), "rows": int(len(t)), "files": stats,
             "wall_min": round(wall / 60, 2), "speed_ratio": round(busy / wall, 2),
             "conventions": "stat 9 open interest and 6 cleared volume from `quantity`; reference date = ts_ref (session "
@@ -338,7 +338,7 @@ def report() -> int:
     fl = pd.read_csv(FLAGS, encoding="utf-8")
     fund = {r: set(pd.to_datetime(fl[(fl["root"] == r) & (fl["fund_roll"] == 1)]["date"])) for r in ("CL", "NG")}
     flags_from = pd.Timestamp(fl["date"].min())
-    out = {"decision_record": "D653", "stage": "0", "reads_no_price": True, "span": list(SPAN),
+    out = {"decision_record": "D654", "stage": "0", "reads_no_price": True, "span": list(SPAN),
            "index_roots": sorted(idx_roots), "roots": {}}
     for root in ROOTS:
         use_ltd = root in LTD_ROOTS

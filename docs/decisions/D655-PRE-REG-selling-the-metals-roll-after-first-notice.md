@@ -1,4 +1,6 @@
-# D654 PRE-REGISTRATION — sell the receiving month against the month after it at the end of the gold and silver roll, and buy it back after first notice: does the forced roll leave a premium that reverts, and does an expected-profit filter make it pay?
+# D655 PRE-REGISTRATION — sell the receiving month against the month after it at the end of the gold and silver roll, and buy it back after first notice: does the forced roll leave a premium that reverts, and does an expected-profit filter make it pay?
+
+*Renumbered 2026-09-28 from D654: the opening model's v2 pre-registration took D652 on main while this study sat on an unmerged branch, and the three studies of that branch (the crack spread, the open-interest Stage 0, the metals roll) each moved up one. Commits before the merge cite the old number.*
 
 *Drafted 2026-09-28 on the principal's word ("Add the addendum and write the pre-registration"; and, while it was
 being drafted, "I would also like a expectant profit filter as well, I think all our strategies should have one if
@@ -7,7 +9,7 @@ read.** Personal book only.*
 
 ## 0. Where this comes from
 
-[D653](D653-STAGE-0-RESULT-the-metals-roll-late-and-outside-the-index.md) measured, on open interest alone, that the
+[D654](D654-STAGE-0-RESULT-the-metals-roll-late-and-outside-the-index.md) measured, on open interest alone, that the
 expiring gold and silver contracts empty in the last week before first notice (half gone at d = −5 and −6). About
 three quarters of that drain falls outside the index roll window (0.74, 0.72), and 85 % of it reappears in the
 receiving month. On its heaviest five outside-window days the roll is a quarter of the receiving contract's volume
@@ -23,7 +25,7 @@ holds the expiring month (the principal's standing rule), and neither R nor H is
 (asserted, §1).
 
 **Read before this record, all disclosed:**
-- D653 in full: open interest and cleared volume, 2016–2023.
+- D654 in full: open interest and cleared volume, 2016–2023.
 - D651's quoted spreads at each root's settlement bucket, the cost below.
 - The settlement strip's coverage for GC, SI, HG and 6C (2010-06-04 → 2026-09-10).
 - **Other lines have read these roots' prices, this construction never:** the trend and carry lines (D555, D556,
@@ -34,7 +36,7 @@ holds the expiring month (the principal's standing rule), and neither R nor H is
 
 ## 1. The construction
 
-**Cycles:** exactly D653's as run, for each root:
+**Cycles:** exactly D654's as run, for each root:
 - the expiring contract is the root's largest by open interest at d = −30;
 - **R** is the later delivery with the largest open interest at d = −20;
 - **H** is the delivery after R with the largest open interest at d = −20;
@@ -74,7 +76,7 @@ before 2024-01-01 at the loader and asserted after (`frozen.filter_before`, `ass
 
 **The size predictor, known before entry:** `x = (the expiring month's open-interest decline from d = −30 to
 d = −2) × (R's gain over the same days ÷ that decline, clipped to [0, 1]) ÷ R's summed cleared volume over d = −6 …
-−2`. This is the cycle's own roll flow as a share of the receiving contract's trade, D653's quantity through the
+−2`. This is the cycle's own roll flow as a share of the receiving contract's trade, D654's quantity through the
 last figure published before entry (d = −2's open interest is published the evening of d = −2).
 
 **The pass-through, from earlier cycles only:** `b` = the no-intercept least-squares slope of gross bp on x, over
@@ -164,9 +166,9 @@ GC and six SI cycles, and about fifteen more with the vault. It gates nothing.
 
 ## 7. Files
 
-`scripts/run_d654_metals_roll.py` (`--selftest`, `--power`, `--run`) → `data/d654_metals_roll.json`. The selftest
+`scripts/run_d655_metals_roll.py` (`--selftest`, `--power`, `--run`) → `data/d655_metals_roll.json`. The selftest
 must show:
-- the cycle selection reproduces D653's cycle count and its R and H for GC and SI;
+- the cycle selection reproduces D654's cycle count and its R and H for GC and SI;
 - the P&L sign is right in money: R falling against H pays the short-R, long-H position;
 - the no-delivery assertion raises when R's deadline is inside the window;
 - the filter's b uses only earlier cycles (a future cycle injected into the fit raises);

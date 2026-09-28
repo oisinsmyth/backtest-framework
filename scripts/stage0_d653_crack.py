@@ -1,9 +1,9 @@
-"""D652 Stage 0 -- does the 3-2-1 crack spread revert to its own seasonal norm?
+"""D653 Stage 0 -- does the 3-2-1 crack spread revert to its own seasonal norm?
 
-    uv run python scripts/stage0_d652_crack.py --selftest
-    uv run python scripts/stage0_d652_crack.py --run          # -> data/stage0_d652_crack.json
+    uv run python scripts/stage0_d653_crack.py --selftest
+    uv run python scripts/stage0_d653_crack.py --run          # -> data/stage0_d653_crack.json
 
-DESIGN: docs/decisions/D652-STAGE-0-DESIGN-does-the-crack-spread-revert-to-its-norm.md (a4ddf4f),
+DESIGN: docs/decisions/D653-STAGE-0-DESIGN-does-the-crack-spread-revert-to-its-norm.md (a4ddf4f),
 committed before this file existed.
 
 NOTHING AT OR AFTER 2024-01-01 IS READ. The strip is filtered at the loader (frozen.filter_before) and asserted
@@ -50,13 +50,13 @@ def _resolve(rel: str) -> Path:
 
 STRIP = _resolve("data/fixtures/fut_settle_strip.csv.gz")
 EXPIRIES = REPO / "data" / "fut_expiries_from_definition.json"
-OUT = REPO / "data" / "stage0_d652_crack.json"
+OUT = REPO / "data" / "stage0_d653_crack.json"
 
 RESERVED_FROM = "2024-01-01"
 LAST_TARGET = "2023-12-29"
 ULSD_FIRST = 2013 * 12 + 5                 # the first ULSD HO delivery, May 2013, as year*12 + month
 BBL = 42.0
-ROUND_TRIP_PER_BBL = 180.59 / 3000.0       # D652 s.5, from D651's map and D591's commission
+ROUND_TRIP_PER_BBL = 180.59 / 3000.0       # D653 s.5, from D651's map and D591's commission
 HORIZONS = (2, 4, 8, 13)
 PRIMARY_H = 4
 NORM_YEARS = 3
@@ -317,7 +317,7 @@ def run() -> int:
     settle, cl_exp = wide_table(strip, exp)
     weeks = weekly_sessions(settle)
     P(f"strip CL/HO/RB {len(strip):,} rows to {strip['ref'].max()}; {len(weeks)} weekly sessions")
-    out = {"decision_record": "D652", "stage": "0", "reserved_from": RESERVED_FROM, "last_target": LAST_TARGET,
+    out = {"decision_record": "D653", "stage": "0", "reserved_from": RESERVED_FROM, "last_target": LAST_TARGET,
            "strip_last_session_read": str(strip["ref"].max()), "objects": {}}
     for kind in ("321", "gas", "dist"):
         cbar = build_norm_inputs(settle, weeks, cl_exp, kind)

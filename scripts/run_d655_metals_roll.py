@@ -1,13 +1,13 @@
-"""D654 -- sell the receiving month against the month after it at the end of the gold and silver roll.
+"""D655 -- sell the receiving month against the month after it at the end of the gold and silver roll.
 
-    uv run python scripts/run_d654_metals_roll.py --selftest
-    uv run python scripts/run_d654_metals_roll.py --power     # placements only, never the event window -> d654_power.json
-    uv run python scripts/run_d654_metals_roll.py --run       # the one run -> data/d654_metals_roll.json
+    uv run python scripts/run_d655_metals_roll.py --selftest
+    uv run python scripts/run_d655_metals_roll.py --power     # placements only, never the event window -> d655_power.json
+    uv run python scripts/run_d655_metals_roll.py --run       # the one run -> data/d655_metals_roll.json
 
-PRE-REGISTRATION: docs/decisions/D654-PRE-REG-selling-the-metals-roll-after-first-notice.md (b0d456b), committed before
+PRE-REGISTRATION: docs/decisions/D655-PRE-REG-selling-the-metals-roll-after-first-notice.md (b0d456b), committed before
 this file existed.
 
-Cycles are D653's, by importing its own `cycles()`; R and H are therefore identical by construction. Prices are the
+Cycles are D654's, by importing its own `cycles()`; R and H are therefore identical by construction. Prices are the
 settlement strip, filtered before 2024-01-01 and asserted. The trade never holds the expiring month, and every
 cycle asserts that R's and H's own deadlines are at least ten business days after the exit.
 """
@@ -27,21 +27,21 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "src"))
 
-import build_fut_oi_expiry as d653  # noqa: E402
+import build_fut_oi_expiry as d654  # noqa: E402
 from backtest_framework.validation import component_series as cs  # noqa: E402
 from backtest_framework.validation.frozen import assert_none_at_or_after, filter_before  # noqa: E402
 
-STRIP = d653._main_checkout(REPO) / "data" / "fixtures" / "fut_settle_strip.csv.gz"
+STRIP = d654._main_checkout(REPO) / "data" / "fixtures" / "fut_settle_strip.csv.gz"
 if (REPO / "data" / "fixtures" / "fut_settle_strip.csv.gz").exists():
     STRIP = REPO / "data" / "fixtures" / "fut_settle_strip.csv.gz"
-OUT = REPO / "data" / "d654_metals_roll.json"
-POWER_OUT = REPO / "data" / "d654_power.json"
+OUT = REPO / "data" / "d655_metals_roll.json"
+POWER_OUT = REPO / "data" / "d655_power.json"
 
 RESERVED_FROM, LAST = "2024-01-01", "2023-12-29"
 PRIMARY, SECONDARY = ("GC", "SI"), ("HG", "6C")
 ROOTS = PRIMARY + SECONDARY
 MULT = {"GC": 100.0, "SI": 5000.0, "HG": 25000.0, "6C": 100000.0}
-COST = {"GC": 82.77, "SI": 189.50, "HG": 64.02, "6C": 23.40}             # D654 s.1, base
+COST = {"GC": 82.77, "SI": 189.50, "HG": 64.02, "6C": 23.40}             # D655 s.1, base
 COST_STRESS = {"GC": 153.53, "SI": 366.99, "HG": 116.04, "6C": 34.80}
 SERIAL = {"GC": set("FHKNUX"), "SI": set("FGJMQVX"), "HG": set("FGJMQVX"), "6C": set("FGJKNQVX")}
 ENTRY, EXIT = -1, 5
@@ -61,7 +61,7 @@ class GateError(AssertionError):
 
 # ------------------------------------------------------------------ data
 def load_oi() -> pd.DataFrame:
-    t = pd.read_csv(d653.FIX, dtype={"root": str, "contract": str, "ref": str}, encoding="utf-8")
+    t = pd.read_csv(d654.FIX, dtype={"root": str, "contract": str, "ref": str}, encoding="utf-8")
     t = t[t["root"].isin(ROOTS)]
     assert_none_at_or_after(t, "ref", RESERVED_FROM)
     return t
@@ -73,10 +73,10 @@ def resolve_rows(g: pd.DataFrame, exp) -> pd.Series:
     once from its first appearance files the later decade's settlements under the old delivery."""
     out = pd.Series(np.nan, index=g.index)
     for code, idx in g.groupby("contract").groups.items():
-        m = d653.RE_C.match(code)
+        m = d654.RE_C.match(code)
         if not m or code not in exp:
             continue
-        mon = d653.MONTH[m.group(2)]
+        mon = d654.MONTH[m.group(2)]
         es = np.array(exp[code], dtype="datetime64[ns]")
         refs = g.loc[idx, "ref_ts"].to_numpy("datetime64[ns]")
         j = np.searchsorted(es, refs, side="left")
@@ -109,7 +109,7 @@ def load_settles(exp) -> dict:
 def root_panels(t: pd.DataFrame, root: str, exp):
     g = t[t["root"] == root].copy()
     g["ref_ts"] = pd.to_datetime(g["ref"])
-    res = {c: d653.resolve(c, g.loc[g["contract"] == c, "ref_ts"].iloc[0], exp) for c in g["contract"].unique()}
+    res = {c: d654.resolve(c, g.loc[g["contract"] == c, "ref_ts"].iloc[0], exp) for c in g["contract"].unique()}
     g = g[g["contract"].map(lambda c: res.get(c) is not None)].copy()
     g["dlv"] = g["contract"].map(lambda c: res[c][1])
     sessions = np.array(sorted(g["ref_ts"].unique()))
@@ -119,7 +119,7 @@ def root_panels(t: pd.DataFrame, root: str, exp):
 
 
 def deadline_of(root: str, dlv: int, sessions: np.ndarray, exp_by_dlv: dict) -> pd.Timestamp | None:
-    if root in d653.LTD_ROOTS:
+    if root in d654.LTD_ROOTS:
         return exp_by_dlv.get(dlv)
     y, m = divmod(dlv - 1, 12)
     m += 1
@@ -135,9 +135,9 @@ def deadline_of(root: str, dlv: int, sessions: np.ndarray, exp_by_dlv: dict) -> 
 def expiry_by_dlv(root: str, exp) -> dict:
     out = {}
     for code, es in exp.items():
-        if not code.startswith(root) or not d653.RE_C.match(code) or d653.RE_C.match(code).group(1) != root:
+        if not code.startswith(root) or not d654.RE_C.match(code) or d654.RE_C.match(code).group(1) != root:
             continue
-        mon = d653.MONTH[d653.RE_C.match(code).group(2)]
+        mon = d654.MONTH[d654.RE_C.match(code).group(2)]
         for e in es:
             y = e.year if mon >= e.month else e.year + 1
             out[y * 12 + mon] = e
@@ -161,7 +161,7 @@ def far_from_delivery(dl_R, dl_H, t_exit) -> bool:
 
 
 def pressure_x(oi, cv, sessions, i, dlv, R) -> float:
-    """D654 s.2: (expiring decline d=-30..-2) x (roll share, clipped) / R's cleared volume over d=-6..-2."""
+    """D655 s.2: (expiring decline d=-30..-2) x (roll share, clipped) / R's cleared volume over d=-6..-2."""
     e30, e2 = oi.iloc[i - 30][dlv], oi.iloc[i - 2][dlv]
     r30, r2 = oi.iloc[i - 30][R], oi.iloc[i - 2][R]
     vols = cv.iloc[i - 6:i - 1][R].fillna(0).to_numpy(float)
@@ -178,7 +178,7 @@ def build_cycles(root, t, exp, settles, control: bool = False) -> pd.DataFrame:
     ebd = expiry_by_dlv(root, exp)
     settle = settles[root]
     if not control:
-        cy = d653.cycles(t, root, exp, root in d653.LTD_ROOTS, set(), root in d653.index_roots())
+        cy = d654.cycles(t, root, exp, root in d654.LTD_ROOTS, set(), root in d654.index_roots())
         base = [(int(r.dlv), pd.Timestamp(r.deadline), int(r.recv), None if pd.isna(r.hedge) else int(r.hedge))
                 for r in cy.itertuples()]
     else:
@@ -188,7 +188,7 @@ def build_cycles(root, t, exp, settles, control: bool = False) -> pd.DataFrame:
                 if letter not in SERIAL[root]:
                     continue
                 dlv = y * 12 + mi + 1
-                if root in d653.LTD_ROOTS:                        # 6C: two business days before the 3rd Wednesday
+                if root in d654.LTD_ROOTS:                        # 6C: two business days before the 3rd Wednesday
                     first = pd.Timestamp(y, mi + 1, 1)
                     wed = pd.date_range(first, first + pd.Timedelta(days=27), freq="W-WED")[2]
                     prior = sessions[sessions < wed]
@@ -329,7 +329,7 @@ def perf(pnl: pd.Series) -> dict:
 
 # ------------------------------------------------------------------ modes
 def assemble():
-    exp = d653.load_expiries()
+    exp = d654.load_expiries()
     t = load_oi()
     settles = load_settles(exp)
     return exp, t, settles
@@ -352,20 +352,20 @@ def power() -> int:
     res["pooled"] = {"cycles": n, "sd_bp": sd, "mde_t2_bp": 2 * sd / math.sqrt(n), "mean_base_cost_bp": cost_bp}
     fw = {"2024-01..2025-02": 13, "with the vault to 2026-09": 13 + 16}
     res["forward"] = {name: {"cycles": m, "mde_t2_bp": 2 * sd / math.sqrt(m),
-                             "power_if_gross_equals_cost": d653_norm(cost_bp / (sd / math.sqrt(m)) - 2.0)}
+                             "power_if_gross_equals_cost": d654_norm(cost_bp / (sd / math.sqrt(m)) - 2.0)}
                       for name, m in fw.items()}
     POWER_OUT.write_text(json.dumps(res, indent=1) + "\n", encoding="utf-8", newline="\n")
     P(json.dumps(res, indent=1))
     return 0
 
 
-def d653_norm(z: float) -> float:
+def d654_norm(z: float) -> float:
     return 0.5 * (1 + math.erf(z / math.sqrt(2)))
 
 
 def run() -> int:
     exp, t, settles = assemble()
-    cys, ctl, nulls, out = {}, {}, {}, {"decision_record": "D654", "last_session": LAST, "cells": {}}
+    cys, ctl, nulls, out = {}, {}, {}, {"decision_record": "D655", "last_session": LAST, "cells": {}}
     for root in ROOTS:
         cy, sessions, ebd = build_cycles(root, t, exp, settles)
         cy = filter_rule(cy)
@@ -452,10 +452,10 @@ def run() -> int:
     gross_book = daily_book([cys[r] for r in PRIMARY], settles, None)
     net_book = daily_book([cys[r] for r in PRIMARY], settles, "net")
     out["book_GC_SI_one_spread"] = {"gross": perf(gross_book), "net": perf(net_book)}
-    series = cs.DailyPnL(name="d654_metals_roll_GC_SI", dates=tuple(d.strftime("%Y-%m-%d") for d in net_book.index),
+    series = cs.DailyPnL(name="d655_metals_roll_GC_SI", dates=tuple(d.strftime("%Y-%m-%d") for d in net_book.index),
                          usd=tuple(float(v) for v in net_book.to_numpy()), size_label="one GC and one SI calendar spread",
                          cost_line_usd_rt=float(np.mean([COST[r] for r in PRIMARY])),
-                         window=(str(net_book.index[0].date()), LAST), spec="D654",
+                         window=(str(net_book.index[0].date()), LAST), spec="D655",
                          source_sha256=cs.sha256_of(STRIP))
     line = cs.component_line(series)
     out["component_line"] = {k: line[k] for k in ("net_sharpe", "net_sortino", "exposure", "hit_active", "skew",
@@ -505,12 +505,12 @@ def selftest() -> int:
             return
         raise AssertionError(f"did NOT raise: {label}")
 
-    exp = d653.load_expiries()
+    exp = d654.load_expiries()
     t = load_oi()
-    d = json.loads(d653.OUT.read_text(encoding="utf-8"))["roots"]
+    d = json.loads(d654.OUT.read_text(encoding="utf-8"))["roots"]
     for root in PRIMARY:
-        cy = d653.cycles(t, root, exp, False, set(), True)
-        check(f"{root}: D653's cycles() gives D653's count ({len(cy)})", len(cy) == d[root]["summary"]["cycles"])
+        cy = d654.cycles(t, root, exp, False, set(), True)
+        check(f"{root}: D654's cycles() gives D654's count ({len(cy)})", len(cy) == d[root]["summary"]["cycles"])
 
     settle = pd.DataFrame({1: [100.0, 99.0], 2: [101.0, 101.0]}, index=pd.to_datetime(["2019-01-02", "2019-01-09"]))
     usd, bp, _ = gross_bp(settle, 1, 2, settle.index[0], settle.index[1], 100.0)

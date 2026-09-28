@@ -111,7 +111,7 @@ def test_the_seven_panels_without_a_blob_are_the_ones_named():
     panel, Robinhood holders and GDELT hourly sample seventeen (the same day), and the concurrent
     branch's D613 ES option volume panel and D617 signed flow census nineteen (merged the same day),
     and the opening model's Globex-session bars (D644) twenty (2026-09-28), and its NQ option
-    end-of-day panel twenty-one (the same day), and D651's time-of-day liquidity map twenty-two (the same day), and D653's open-interest expiry cycles twenty-three.
+    end-of-day panel twenty-one (the same day), and D651's time-of-day liquidity map twenty-two (the same day), and D654's open-interest expiry cycles twenty-three.
     """
     prose = PAGE.read_text(encoding="utf-8")
     without = sorted(f["path"] for f in _manifest() if not f.get("git_blob"))

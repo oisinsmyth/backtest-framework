@@ -105,7 +105,7 @@ D613 built on 2026-09-21, `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz`, and
 flow census D617 built on 2026-09-22, `data/fixtures/fut_es_0dte_signed_flow.csv.gz`, and the opening
 model's ES/NQ Globex-session bars D644 built on 2026-09-28, `data/fixtures/fut_opening_globex_1m.csv.gz`, and the
 NQ option end-of-day panel built the same day for its dealer-gamma agent, `data/fixtures/fut_nq_options_eod.csv.gz`, and D651's time-of-day liquidity map built the same day,
-`data/fixtures/fut_liquidity_15m.csv.gz`, and D653's open-interest expiry cycles, `data/fixtures/fut_oi_expiry_cycles.csv.gz` — were never
+`data/fixtures/fut_liquidity_15m.csv.gz`, and D654's open-interest expiry cycles, `data/fixtures/fut_oi_expiry_cycles.csv.gz` — were never
 tracked in the first place, so
 the checksum is all the manifest can offer for them.
 

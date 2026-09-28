@@ -1,9 +1,11 @@
-# D654 RESULT — there is no reverting roll premium in the gold and silver spreads: the trade earns +0.44 bp gross against a placement median of +0.80, the same trade at month-ends with no roll earns more, the receiving month cheapens during the drain rather than richening, and the expected-profit filter never trades
+# D655 RESULT — there is no reverting roll premium in the gold and silver spreads: the trade earns +0.44 bp gross against a placement median of +0.80, the same trade at month-ends with no roll earns more, the receiving month cheapens during the drain rather than richening, and the expected-profit filter never trades
 
-*Pre-registration [D654](D654-PRE-REG-selling-the-metals-roll-after-first-notice.md) (`b0d456b`), committed alone
+*Renumbered 2026-09-28 from D654: the opening model's v2 pre-registration took D652 on main while this study sat on an unmerged branch, and the three studies of that branch (the crack spread, the open-interest Stage 0, the metals roll) each moved up one. Commits before the merge cite the old number.*
+
+*Pre-registration [D655](D655-PRE-REG-selling-the-metals-roll-after-first-notice.md) (`b0d456b`), committed alone
 before the runner existed; runner and POWER `f4b784c`, committed before the run. Runner
-`scripts/run_d654_metals_roll.py`; numbers [`data/d654_metals_roll.json`](../../data/d654_metals_roll.json) and
-[`data/d654_power.json`](../../data/d654_power.json). In-sample cycles only, last settlement 2023-12-29; the 2024+ slice
+`scripts/run_d655_metals_roll.py`; numbers [`data/d655_metals_roll.json`](../../data/d655_metals_roll.json) and
+[`data/d655_power.json`](../../data/d655_power.json). In-sample cycles only, last settlement 2023-12-29; the 2024+ slice
 is unread for this line. **Disclosed:** the first `--run` invocation crashed constructing the component line
 (`DailyPnL` needs `source_sha256`) after the statistics were computed and **before anything was printed or
 written**; the argument was added and the run repeated, identical by construction (a deterministic computation on
@@ -99,13 +101,13 @@ Neither could pass anything without the primary. Both say the same thing.
 
 ## 7. What this closes, and what it does not
 
-D653 showed that forced roll flow in gold and silver is **large** (a quarter of the receiving contract's volume),
-**late**, **outside the index window** and **mostly a roll**. D654 shows that it **leaves no price footprint** a
+D654 showed that forced roll flow in gold and silver is **large** (a quarter of the receiving contract's volume),
+**late**, **outside the index window** and **mostly a roll**. D655 shows that it **leaves no price footprint** a
 no-expiring-leg spread can collect: not during the drain, not after it, not at five, one, three or ten sessions.
 The month's curve moves the same with or without the roll.
 
 **Recommended:** close the delivery-period line (the principal's word, R15). The Stage 0 fixture and the per-row
-contract resolver stay as instruments. The resolver fixes a defect that D653's builder shares on far-dated recycled
+contract resolver stay as instruments. The resolver fixes a defect that D654's builder shares on far-dated recycled
 codes: 729, 378 and 669 rows of GC, SI and HG, none of them a cycle's expiring, receiving or hedge month.
 
 ## 8. CLOSED by the principal, 2026-09-28
@@ -113,5 +115,5 @@ codes: 729, 378 and 669 rows of GC, SI and HG, none of them a cycle's expiring, 
 "Close it and merge into main." The delivery-period line — the forced exit and roll of holders who cannot take
 delivery, reopened from `ALPHA_PROGRAMME.md` roadmap item 12 — is closed under R15: no new pre-registration of a
 construction on the expiry drain (any root, any leg, any timing, filtered or not) on these fixtures without a new
-deposit or a new fixture a record names. The 2024+ slice was never read for it. D653's fixture, its measurements and
+deposit or a new fixture a record names. The 2024+ slice was never read for it. D654's fixture, its measurements and
 the per-row contract resolver stay as instruments.

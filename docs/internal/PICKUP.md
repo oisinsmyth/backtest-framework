@@ -2,6 +2,103 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## WHERE WE ARE, 2026-09-28 EVENING (written at the principal's request: "record where we were at")
+
+**Branch `wt/after-d650`, worktree `.claude/worktrees/after-d650`. Committed, NOT pushed, NOT on main.**
+
+**The thread we were on: the opening model's v2 as a separate model (D652).**
+1. **External research first.** Three agents researched the seven improvement ideas (the target, the decision rule,
+   the exits and entry clocks, liquidity-scaled agents, the 2022 0DTE break). Their reports are kept verbatim in
+   `docs/research/opening-v2-external-evidence.md`. The citations are unchecked.
+2. **The principal's decisions:**
+   - "make those changes and test them as a separate model";
+   - the vault after an in-sample test;
+   - the inputs are the observables plus A4 rescaled.
+3. **The commits:**
+   - `e80012c` D652 PRE-REG (alone);
+   - `38664ca` OA-A10 (overrides OA-A8.3's trigger for D652 only) and the research file;
+   - `3824637` OA-A11 = D652-A1 (the principal: "Amend: both fixes"). The dry run on synthetic bars showed the
+     registered EV rule trading 27–28% of rows on no information, so the payoffs are now scaled per row (V2-F's
+     timeout payoff anchored so that a random walk gives EV = −cost) and a trade must clear one round-trip cost;
+   - `35cdfe1` the runner, `scripts/run_opening_v2.py`: 16 audits fire. Its dry run after the amendment gives V2-F
+     3.4% of rows at −0.09 bp and V2-C 14.5% at +0.09. V2-C's residual noise trading is expected (its payoffs span
+     ~70 bp), and the null and the kill carry it.
+4. **D652 in one line.** Two cells, each a model of its own trade's outcome, traded on expected value:
+   - **V2-F:** fade the gap at 09:45, with the target at the prior close, no stop and a 60-minute time stop;
+   - **V2-C:** follow d0 from 10:30 and hold to the close, with a stop at 1.5 σ_h.
+
+**What happens next, in order:**
+1. **The post-download chain** is running in `after-d643`: the Sierra pull finished 74/74, none cut short. Then
+   come the Z15 warm-up, the live Z26, A7's selftest and build, and A7's exchange-flag check (r ≥ 0.8). It stops
+   before Phase 4. Its log is the scratchpad `chain.log`.
+2. **D645 Phase 4, once:** `run_opening_stages.py --run --phase 4-5` in `after-d643`, after the A7 and flag review.
+   Then its RESULT record, the trials pin and the counts.
+3. **Merge `after-d643` (Phase 4) and `after-d650` (D652).** v2's `--run` refuses until `data/opening/phase45.json`
+   exists.
+4. **D652's in-sample run, once.** `uv run python scripts/run_opening_v2.py --run --data-root "<main checkout>/data"`
+   from a checkout that has `phase45.json`. It can only KILL: a cell is carried only with policy > 0 and policy −
+   always > 0. Then its RESULT record.
+5. **If a cell is carried:**
+   - `--power` (the vault's 390 sessions);
+   - `--freeze`, with slot 9 registered in the freeze's commit;
+   - the vault-input path (the bars and G with the cut moved, proved on the in-sample);
+   - `--vault` only in the joint run, on the principal's word.
+
+**Housekeeping to know:**
+- **Local `main` and `origin/main` have DIVERGED.** Another session committed D651 (the liquidity map, `3bbf879`,
+  `a362470`) to local main. `origin/main` has `2a1a10f` (FINDINGS §83–87). Both sit on `7b3ad26`. Merge them before
+  anyone pushes.
+- **Decision numbers:** D651 is the other session's; D652 is ours; the next free decision number is **653**.
+
+## STATE AT 2026-09-28 (end of the D644–D650 day): what is running, what is frozen, what waits
+
+**Merged:** branch `wt/after-d643` fast-forwarded `main` to `7b3ad26` (PR #1, all CI green). Findings are in
+`docs/FINDINGS.md` §83–§87.
+
+**Gitignored data built in the `.claude/worktrees/after-d643` worktree, COPIED to the main checkout's `data/` on
+2026-09-28** (the two fixtures match their manifest hashes; the CL bars and the trades job are byte-identical to the
+worktree's). A fresh clone still has to rebuild or copy them:
+- `data/fixtures/fut_opening_globex_1m.csv.gz` (D644);
+- `data/fixtures/fut_nq_options_eod.csv.gz` (A4, S-H);
+- `data/cl_minute_bars.csv.gz` (D648);
+- the post-vault trades job under `data/raw/databento/GLBX-20260928-KBKEVKNW4J/` (A7's flag check).
+
+**Running (in `after-d643`):**
+- **The Sierra ES/NQ tick pull** (`sierra_index_tick_download.py`): 74 contracts, compressed in place.
+- **The chain after it** (scratchpad `post_pull_chain.py`, log `chain.log`), in order:
+  1. ESZ15/NQZ15 (warm-up, non-fatal);
+  2. the live ESZ26/NQZ26;
+  3. A7's selftest and build;
+  4. A7's exchange-flag check (D645 §2: day-level r ≥ 0.8).
+
+  It **stops before Phase 4**.
+
+**The opening model, next:**
+- Review A7 and the flag result, then **one `run_opening_stages.py --run --phase 4-5`** (runner `f09d5bc`, with the
+  O0-H reader `240980d`, OA-A9's z5 clip `13cdd86` and Phase 0b's loader seal `12cc39b`).
+- Then its RESULT record, the trials pin and the counts.
+- **Already fixed before the run:**
+  - OA-A8: the same diagnostics at every stage, and v2 parked behind a trigger;
+  - OA-A9: z5 clipped to ±5;
+  - NQ's O0-H at 99.69% (ES's denominator), so S-H runs.
+
+**Frozen, waiting for the joint vault run (A10), on the principal's word:**
+- NG Stage A (D630): `data/FROZEN_ledger_stage_a_ng.json`.
+- D649's projected-profit line: `data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8.
+- The joint reading of the two lines is fixed by D650.
+- **D630 §8's vault-input path is not built yet.** It is the same code with the cut moved, for NG 2025-03 → 2026-09.
+  Build it and prove it reproduces the frozen in-sample inputs before the joint run.
+
+**Dated, scheduled:**
+- 10-05: C0 sign check, non-energy roots.
+- 10-09: Databento top-up (needs ≥ 90 GB free; 120 GB free on 2026-09-28).
+- 10-10:
+  - D626's one read;
+  - the D624 top-up;
+  - the CL/NG Sierra sign check, which keeps or voids D629's provisional H1 (D629 §6).
+- 10-11: C0 sign check, energy roots.
+- After that, the index line's C0 runs once, on the principal's word.
+
 ## SETTLEMENT LEDGER, ITEMS 1 AND 2: DAILY HOLDINGS HISTORY, GATE 0b AND THE SEAL, CLOSED 2026-09-24
 
 **Item 2, the seal (principal, 2026-09-24): the deposit's vault (amendment A6).**

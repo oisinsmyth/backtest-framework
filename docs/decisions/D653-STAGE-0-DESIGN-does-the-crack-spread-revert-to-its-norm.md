@@ -1,4 +1,6 @@
-# D652 STAGE 0 DESIGN — does the 3-2-1 crack spread revert to its own seasonal norm, at a horizon and size a trade could use?
+# D653 STAGE 0 DESIGN — does the 3-2-1 crack spread revert to its own seasonal norm, at a horizon and size a trade could use?
+
+*Renumbered 2026-09-28 from D652: the opening model's v2 pre-registration took D652 on main while this study sat on an unmerged branch, and the three studies of that branch (the crack spread, the open-interest Stage 0, the metals roll) each moved up one. Commits before the merge cite the old number.*
 
 *Drafted 2026-09-28 on the principal's word ("The crack spread Stage 0"), after the recommendation that named
 processing spreads as the one untested thread from the 2026-09-19 deposit with an unread forward slice. Committed
@@ -135,7 +137,7 @@ same plus the vault, read only in the joint run). It reads no forward data to do
 
 ## 7. Files
 
-`scripts/stage0_d652_crack.py` (`--selftest`, `--run`; seconds, one process) → `data/stage0_d652_crack.json`.
+`scripts/stage0_d653_crack.py` (`--selftest`, `--run`; seconds, one process) → `data/stage0_d653_crack.json`.
 The selftest must show: the contract resolver picks the right decade on a recycled code; `m*` never selects a
 contract that expires inside the horizon; the norm refuses a year it would need from the future and a pre-ULSD HO
 delivery; the leg decomposition sums to β to 1e-9; the rotation excludes the purged offsets; and the holdout guard

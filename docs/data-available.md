@@ -718,7 +718,7 @@ refuses any other column); *(iii)* level-1 depth on a one-tick-pinned book grows
 mixes calm with liquidity; *(iv)* the 17:00 bucket holds a few stray halt-edge minutes on most dates; read
 it as the halt, not as a thin market.
 
-**Open interest and cleared volume per contract for 26 physically delivered roots ([D653](decisions/D653-STAGE-0-RESULT-the-metals-roll-late-and-outside-the-index.md), 2026-09-28).**
+**Open interest and cleared volume per contract for 26 physically delivered roots ([D654](decisions/D654-STAGE-0-RESULT-the-metals-roll-late-and-outside-the-index.md), 2026-09-28).**
 **`fut_oi_expiry_cycles.csv.gz`** + [`meta`](../data/fixtures/fut_oi_expiry_cycles.meta.json) — one row per
 (root, contract, reference session) with `oi` (`stat_type` 9) and `cv` (6) for CL HO RB NG, the six currencies,
 GC SI HG PL PA, the six Treasury roots and ZC ZS ZW ZL ZM; 850,320 rows, reference sessions 2016-01-04 →
@@ -729,7 +729,7 @@ the manifest. **What bites:** *(i)* CME publishes a day's figure more than once 
 on only ~70 % of sessions (within 0.1 % on 79–90 %) — use D497 when the question is what was known by the next
 open; *(ii)* the reference date is `ts_ref` (the session start, ET) plus 12 hours; *(iii)* "the largest later
 contract" is not the receiving month on CL and NG, whose December contracts carry more open interest than the next
-month — D653 §3.
+month — D654 §3.
 
 **The order-book depth fixture and the impact parameters ([D604](decisions/D604-futures-sqrt-impact-depth-scaling-and-the-book-depth-fixture.md), 2026-09-21).**
 **`fut_book_depth_1m.csv.gz`** + [`meta`](../data/fixtures/fut_book_depth_1m.meta.json) — the first

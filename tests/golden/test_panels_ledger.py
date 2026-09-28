@@ -209,7 +209,7 @@ def test_the_catalogues_counts_are_the_hand_files_counts():
     # both csv keyed on session, built on the other clone and absent from this disk.
     # 136 on 2026-09-28: the opening model's Globex-session bars (D644) and its NQ option end-of-day panel, both
     # csv keyed on the iso_day session. 137 the same day: D651's time-of-day liquidity map, csv keyed on the iso_day
-    # session day. 138 the same day: D653's open-interest expiry cycles, csv keyed on the iso_day reference session.
+    # session day. 138 the same day: D654's open-interest expiry cycles, csv keyed on the iso_day reference session.
     assert len(SPECS) == 138
     assert Counter(s.date_format for s in SPECS) == {
         "iso_day": 85, "iso_ts": 32, "none": 19, "date32": 1, "year_prefix": 1

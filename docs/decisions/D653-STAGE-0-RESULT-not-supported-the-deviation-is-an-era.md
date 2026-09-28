@@ -1,8 +1,10 @@
-# D652 STAGE 0 RESULT — NOT SUPPORTED: the crack's deviation from its seasonal norm predicts nothing at 2–13 weeks, because the deviation is an era label, not a state; and the design's year count (B3) was a check that could not fail
+# D653 STAGE 0 RESULT — NOT SUPPORTED: the crack's deviation from its seasonal norm predicts nothing at 2–13 weeks, because the deviation is an era label, not a state; and the design's year count (B3) was a check that could not fail
 
-*Design: [D652](D652-STAGE-0-DESIGN-does-the-crack-spread-revert-to-its-norm.md) (`a4ddf4f`), committed
-alone before the runner existed (R8). Runner `scripts/stage0_d652_crack.py` (one run of `--run`, seconds); numbers
-[`data/stage0_d652_crack.json`](../../data/stage0_d652_crack.json). **The last settlement read is 2023-12-29**; the
+*Renumbered 2026-09-28 from D652: the opening model's v2 pre-registration took D652 on main while this study sat on an unmerged branch, and the three studies of that branch (the crack spread, the open-interest Stage 0, the metals roll) each moved up one. Commits before the merge cite the old number.*
+
+*Design: [D653](D653-STAGE-0-DESIGN-does-the-crack-spread-revert-to-its-norm.md) (`a4ddf4f`), committed
+alone before the runner existed (R8). Runner `scripts/stage0_d653_crack.py` (one run of `--run`, seconds); numbers
+[`data/stage0_d653_crack.json`](../../data/stage0_d653_crack.json). **The last settlement read is 2023-12-29**; the
 2024+ slice is unread for this line and stays so. No construction was built, so there is no book and no component
 line: this record tests a premise.*
 

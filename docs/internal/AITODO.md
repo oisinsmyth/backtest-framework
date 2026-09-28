@@ -17,6 +17,18 @@
   NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
   move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's
   word). D649 needs D630's vault inputs built first (D630 §8).
+- **PARKED (the principal, 2026-09-28): D630 §8's vault-input path.** The plan, inventoried 2026-09-28 from metadata only:
+  - a wrapper (`scripts/build_ledger_vault_inputs.py`, not yet written) loads each frozen builder unchanged and moves
+    only its cut and output paths;
+  - proved first with the cut left at 2025-03-01 by reproducing the frozen in-sample inputs byte for byte;
+  - switched to the vault only at the joint run.
+
+  On disk for 2025-03 → 2026-09:
+  - the NG/CL one-second files (to 2026-09-19) and `fund_nav_daily` (to 2026-09-18);
+  - the fund filings in `fund_holdings_quarterly`.
+
+  **Short:** the settlement strip ends 2026-09-10, six sessions early; the 10-09 top-up plus a strip rebuild covers it.
+  The event calendar is to be checked. Build it before the principal calls the joint run.
 
 ## Index reweight flow — opened 2026-09-27 (the principal: "start the index-reweight pre-registration")
 

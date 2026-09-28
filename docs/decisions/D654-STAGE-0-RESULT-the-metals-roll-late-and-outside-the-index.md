@@ -1,10 +1,12 @@
-# D653 STAGE 0 RESULT — eight roots qualify as run, but the robust core is two: gold and silver drain late, outside the index window, mostly as a roll, at a quarter of the receiving contract's volume, with a hedge leg that trades; the energies were mis-measured by my own contract rules
+# D654 STAGE 0 RESULT — eight roots qualify as run, but the robust core is two: gold and silver drain late, outside the index window, mostly as a roll, at a quarter of the receiving contract's volume, with a hedge leg that trades; the energies were mis-measured by my own contract rules
 
-*Design: [D653](D653-STAGE-0-DESIGN-when-open-interest-leaves-the-expiring-month.md) (`c651f6b`), committed alone
+*Renumbered 2026-09-28 from D653: the opening model's v2 pre-registration took D652 on main while this study sat on an unmerged branch, and the three studies of that branch (the crack spread, the open-interest Stage 0, the metals roll) each moved up one. Commits before the merge cite the old number.*
+
+*Design: [D654](D654-STAGE-0-DESIGN-when-open-interest-leaves-the-expiring-month.md) (`c651f6b`), committed alone
 before the builder existed (R8). Builder and report: `scripts/build_fut_oi_expiry.py`; fixture
 `data/fixtures/fut_oi_expiry_cycles.csv.gz` (gitignored, manifest by hash) and its meta; numbers
-[`data/stage0_d653_oi_expiry.json`](../../data/stage0_d653_oi_expiry.json) and the disclosed diagnostic
-[`data/stage0_d653_oi_expiry_diag_dcarry10.json`](../../data/stage0_d653_oi_expiry_diag_dcarry10.json). **Open
+[`data/stage0_d654_oi_expiry.json`](../../data/stage0_d654_oi_expiry.json) and the disclosed diagnostic
+[`data/stage0_d654_oi_expiry_diag_dcarry10.json`](../../data/stage0_d654_oi_expiry_diag_dcarry10.json). **Open
 interest and cleared volume only; no price was read; the 2024+ files were never opened.***
 
 ## The answer in one line
@@ -128,4 +130,4 @@ fair comparison is the as-run numbers with the size test year by year:
 
 §6's recommendation is widened accordingly, and fixed here before any price is read: **GC and SI are the primary**,
 **HG and 6C are declared secondary cells**, and the grains are excluded on their size record. The pre-registration
-is [D654](D654-PRE-REG-selling-the-metals-roll-after-first-notice.md).
+is [D655](D655-PRE-REG-selling-the-metals-roll-after-first-notice.md).

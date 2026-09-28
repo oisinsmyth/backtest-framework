@@ -1,5 +1,5 @@
 {
- "decision": "D653",
+ "decision": "D654",
  "built_by": "python scripts/build_fut_oi_expiry.py --build",
  "reads_no_price": true,
  "span": [

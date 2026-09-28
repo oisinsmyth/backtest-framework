@@ -1,4 +1,6 @@
-# D653 STAGE 0 DESIGN — when does open interest leave the expiring contract, how much of it leaves outside the index roll windows, and could anyone trade it without holding the expiring month?
+# D654 STAGE 0 DESIGN — when does open interest leave the expiring contract, how much of it leaves outside the index roll windows, and could anyone trade it without holding the expiring month?
+
+*Renumbered 2026-09-28 from D653: the opening model's v2 pre-registration took D652 on main while this study sat on an unmerged branch, and the three studies of that branch (the crack spread, the open-interest Stage 0, the metals roll) each moved up one. Commits before the merge cite the old number.*
 
 *Drafted 2026-09-28 on the principal's word ("Write Stage 0"). Committed alone, before its builder exists (R8).
 **It reads open interest and cleared volume only: no price, no return, no position.***
@@ -127,7 +129,7 @@ principal's rule, and the recommendation is to close it.
 ## 6. Files and cost
 
 `scripts/build_fut_oi_expiry.py` (`--selftest`, `--build`, `--report`), system interpreter for the Databento read,
-strided worker processes over the pull's files; the fixture and its meta; `data/stage0_d653_oi_expiry.json`. Probed
+strided worker processes over the pull's files; the fixture and its meta; `data/stage0_d654_oi_expiry.json`. Probed
 on one file before the full build. The selftest must show: the windowed mapping refuses a reissued id; the
 reference-session label is the trade date; the extraction refuses a 2024 session; the first-notice rule lands on the
 right day across a month-end holiday; the receiving and hedge contracts are chosen on d = −20 open interest and never
