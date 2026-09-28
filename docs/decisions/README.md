@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 389 of these records carry neither field —
+**No Status or Category column, deliberately.** 391 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -721,6 +721,8 @@ would look like data. The tokens are what is shown.
 | D646 | RESULT: stage S-A of the opening model passes H-O1 by the letter, on log loss and a 0.1-point accuracy edge; its decisi… | [RESULT](D646-RESULT-opening-stage-S-A-log-loss-not-accuracy.md) |
 | D647 | POST HOC: why stage S-A failed. The pre-registered trade makes money on the true labels; the observables cannot see tre… | [record](D647-POST-HOC-opening-S-A-cannot-see-trend-days.md) |
 | D648 | CL: the move into the settlement misses T1's bar by 0.01 of a t, T2 names inventory risk (σ²·Q) over square-root impact… | [PRE-REG](D648-PRE-REG-cl-inventory-risk-or-square-root-impact.md) · [RESULT](D648-RESULT-cl-t1-misses-by-0.01-t2-names-inventory-risk.md) |
+| D649 | REGISTRATION — the NG projected-profit line for the joint vault run: trade one MNG only when the projected move clears… | [PRE-REG](D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md) |
+| D650 | REGISTRATION (addendum) — how the two NG vault lines are read together: the mechanism and the trade are separate verdic… | [PRE-REG](D650-PRE-REG-joint-reading-of-the-two-ng-vault-lines.md) |
 
 <!-- REGISTER:END -->
 
