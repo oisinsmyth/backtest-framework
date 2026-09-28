@@ -2,6 +2,54 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## STATE AT 2026-09-28 (end of the D644–D650 day): what is running, what is frozen, what waits
+
+**Merged:** branch `wt/after-d643` fast-forwarded `main` to `7b3ad26` (PR #1, all CI green). Findings are in
+`docs/FINDINGS.md` §83–§87.
+
+**Gitignored data that exists only in the `.claude/worktrees/after-d643` worktree.** Copy it into the main checkout's
+`data/` before anything there reads it; the manifest holds each hash:
+- `data/fixtures/fut_opening_globex_1m.csv.gz` (D644);
+- `data/fixtures/fut_nq_options_eod.csv.gz` (A4, S-H);
+- `data/cl_minute_bars.csv.gz` (D648);
+- the post-vault trades job under `data/raw/databento/GLBX-20260928-KBKEVKNW4J/` (A7's flag check).
+
+**Running (in `after-d643`):**
+- **The Sierra ES/NQ tick pull** (`sierra_index_tick_download.py`): 74 contracts, compressed in place.
+- **The chain after it** (scratchpad `post_pull_chain.py`, log `chain.log`), in order:
+  1. ESZ15/NQZ15 (warm-up, non-fatal);
+  2. the live ESZ26/NQZ26;
+  3. A7's selftest and build;
+  4. A7's exchange-flag check (D645 §2: day-level r ≥ 0.8).
+
+  It **stops before Phase 4**.
+
+**The opening model, next:**
+- Review A7 and the flag result, then **one `run_opening_stages.py --run --phase 4-5`** (runner `f09d5bc`, with the
+  O0-H reader `240980d`, OA-A9's z5 clip `13cdd86` and Phase 0b's loader seal `12cc39b`).
+- Then its RESULT record, the trials pin and the counts.
+- **Already fixed before the run:**
+  - OA-A8: the same diagnostics at every stage, and v2 parked behind a trigger;
+  - OA-A9: z5 clipped to ±5;
+  - NQ's O0-H at 99.69% (ES's denominator), so S-H runs.
+
+**Frozen, waiting for the joint vault run (A10), on the principal's word:**
+- NG Stage A (D630): `data/FROZEN_ledger_stage_a_ng.json`.
+- D649's projected-profit line: `data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8.
+- The joint reading of the two lines is fixed by D650.
+- **D630 §8's vault-input path is not built yet.** It is the same code with the cut moved, for NG 2025-03 → 2026-09.
+  Build it and prove it reproduces the frozen in-sample inputs before the joint run.
+
+**Dated, scheduled:**
+- 10-05: C0 sign check, non-energy roots.
+- 10-09: Databento top-up (needs ≥ 90 GB free; 120 GB free on 2026-09-28).
+- 10-10:
+  - D626's one read;
+  - the D624 top-up;
+  - the CL/NG Sierra sign check, which keeps or voids D629's provisional H1 (D629 §6).
+- 10-11: C0 sign check, energy roots.
+- After that, the index line's C0 runs once, on the principal's word.
+
 ## SETTLEMENT LEDGER, ITEMS 1 AND 2: DAILY HOLDINGS HISTORY, GATE 0b AND THE SEAL, CLOSED 2026-09-24
 
 **Item 2, the seal (principal, 2026-09-24): the deposit's vault (amendment A6).**
