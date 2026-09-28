@@ -2,6 +2,54 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## WHERE WE ARE, 2026-09-28 EVENING (written at the principal's request: "record where we were at")
+
+**Branch `wt/after-d650`, worktree `.claude/worktrees/after-d650`. Committed, NOT pushed, NOT on main.**
+
+**The thread we were on: the opening model's v2 as a separate model (D652).**
+1. **External research first.** Three agents researched the seven improvement ideas (the target, the decision rule,
+   the exits and entry clocks, liquidity-scaled agents, the 2022 0DTE break). Their reports are kept verbatim in
+   `docs/research/opening-v2-external-evidence.md`. The citations are unchecked.
+2. **The principal's decisions:**
+   - "make those changes and test them as a separate model";
+   - the vault after an in-sample test;
+   - the inputs are the observables plus A4 rescaled.
+3. **The commits:**
+   - `e80012c` D652 PRE-REG (alone);
+   - `38664ca` OA-A10 (overrides OA-A8.3's trigger for D652 only) and the research file;
+   - `3824637` OA-A11 = D652-A1 (the principal: "Amend: both fixes"). The dry run on synthetic bars showed the
+     registered EV rule trading 27–28% of rows on no information, so the payoffs are now scaled per row (V2-F's
+     timeout payoff anchored so that a random walk gives EV = −cost) and a trade must clear one round-trip cost;
+   - `35cdfe1` the runner, `scripts/run_opening_v2.py`: 16 audits fire. Its dry run after the amendment gives V2-F
+     3.4% of rows at −0.09 bp and V2-C 14.5% at +0.09. V2-C's residual noise trading is expected (its payoffs span
+     ~70 bp), and the null and the kill carry it.
+4. **D652 in one line.** Two cells, each a model of its own trade's outcome, traded on expected value:
+   - **V2-F:** fade the gap at 09:45, with the target at the prior close, no stop and a 60-minute time stop;
+   - **V2-C:** follow d0 from 10:30 and hold to the close, with a stop at 1.5 σ_h.
+
+**What happens next, in order:**
+1. **The post-download chain** is running in `after-d643`: the Sierra pull finished 74/74, none cut short. Then
+   come the Z15 warm-up, the live Z26, A7's selftest and build, and A7's exchange-flag check (r ≥ 0.8). It stops
+   before Phase 4. Its log is the scratchpad `chain.log`.
+2. **D645 Phase 4, once:** `run_opening_stages.py --run --phase 4-5` in `after-d643`, after the A7 and flag review.
+   Then its RESULT record, the trials pin and the counts.
+3. **Merge `after-d643` (Phase 4) and `after-d650` (D652).** v2's `--run` refuses until `data/opening/phase45.json`
+   exists.
+4. **D652's in-sample run, once.** `uv run python scripts/run_opening_v2.py --run --data-root "<main checkout>/data"`
+   from a checkout that has `phase45.json`. It can only KILL: a cell is carried only with policy > 0 and policy −
+   always > 0. Then its RESULT record.
+5. **If a cell is carried:**
+   - `--power` (the vault's 390 sessions);
+   - `--freeze`, with slot 9 registered in the freeze's commit;
+   - the vault-input path (the bars and G with the cut moved, proved on the in-sample);
+   - `--vault` only in the joint run, on the principal's word.
+
+**Housekeeping to know:**
+- **Local `main` and `origin/main` have DIVERGED.** Another session committed D651 (the liquidity map, `3bbf879`,
+  `a362470`) to local main. `origin/main` has `2a1a10f` (FINDINGS §83–87). Both sit on `7b3ad26`. Merge them before
+  anyone pushes.
+- **Decision numbers:** D651 is the other session's; D652 is ours; the next free number is **D653**.
+
 ## STATE AT 2026-09-28 (end of the D644–D650 day): what is running, what is frozen, what waits
 
 **Merged:** branch `wt/after-d643` fast-forwarded `main` to `7b3ad26` (PR #1, all CI green). Findings are in
