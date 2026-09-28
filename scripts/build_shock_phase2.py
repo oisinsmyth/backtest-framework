@@ -76,11 +76,9 @@ def grids(roots: list[str], days: list[str]) -> dict[str, pd.DataFrame]:
     return out
 
 
-def main() -> int:
-    t0 = time.time()
-    days = usable_sessions()
-    roots = sorted(set(PEERS) | {p for v in PEERS.values() for p in v})
-    G = grids(roots, days)
+def detect_all(days: list[str], G: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, dict[str, int]]:
+    """Every shock at every z in ZS, classified under every C pair (the loop D641 ran). Returns the frame and SC-A8's
+    zero-sigma minute count per root. The D642 runner re-detects through this function (its lag audit)."""
     R1 = {r: g / g.shift(1, axis=1) - 1 for r, g in G.items()}  # within-session 1-minute returns
     g0 = json.loads((SH / "gate0.json").read_text(encoding="utf-8"))
     rolls = {r: set(v["days"]) for r, v in g0["G3_roll_days"].items()}
@@ -142,7 +140,15 @@ def main() -> int:
                     for kk, (chi, clo) in C_PAIRS.items():
                         row[f"class_{kk}"] = M.classify(C, evf, chi, clo)
                     rows.append(row)
-    df = pd.DataFrame(rows)
+    return pd.DataFrame(rows), skipped_zero_sigma
+
+
+def main() -> int:
+    t0 = time.time()
+    days = usable_sessions()
+    roots = sorted(set(PEERS) | {p for v in PEERS.values() for p in v})
+    G = grids(roots, days)
+    df, skipped_zero_sigma = detect_all(days, G)
     df.to_csv(SH / "phase2_shocks.csv.gz", index=False, encoding="utf-8", lineterminator="\n")
     prim = df[df["z"] == 4.0]
     yrs = prim["day"].str[:4]
