@@ -136,13 +136,6 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
-## Crush spread (D656, 2026-09-28)
-
-- [ ] **D656 recommends CLOSING the crush line** (principal, R15). S1 (the processors' premium) fails every bar:
-  +0.51 ¢/bu per four weeks, t 0.36. S2 (the gap to next year's margin) genuinely reverts (β −0.157; rotation rank
-  0.00; post hoc rank 0.0018 against a random walk), but the year-ahead legs trade ~0.5 % of the near legs' volume
-  and the move is 2 ¢ against a 6 ¢ bar: no construction. The 2024+ slice is unread for the line.
-
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,

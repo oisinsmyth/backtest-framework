@@ -86,3 +86,9 @@ proposed.
 The runner's crush builder (the 10 : 11 : 9 unit, the X/Z pairing, the first-notice guard) and the fact, parked
 and not claimed: **the soybean crush's gap to next year's margin reverts with a half-life of about eight weeks, and
 beats a random-walk null at rank 0.002.** A future deposit with a liquid expression of it would start there.
+
+## 7. CLOSED by the principal, 2026-09-28
+
+"Close it and merge into main." **The crush line is closed under R15**: S1 (the processors' premium) and S2 (the
+reversion towards next year's margin), with no construction built on either. The 2024+ slice was never read for
+this line. The parked fact in §6 stays a fact, not a lead.
