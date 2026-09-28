@@ -135,9 +135,23 @@ def test_the_header_check_can_fail_and_did_not_pass_vacuously():
     """Two halves. A column that is NOT in a panel must be reported absent by each of the three
     readers — otherwise the parametrised test above is 126 green assertions of nothing. And the
     csv majority must actually be on disk here, which is what makes a skip a statement about a
-    clone rather than about this run."""
+    clone rather than about this run.
+
+    THE SECOND HALF CANNOT BE ASSERTED WHERE THE PANELS ARE NOT. This read `assert len(csvs) >= 100`
+    until 2026-09-28 and therefore failed on every GitHub Actions run and in every fresh clone,
+    where D536 leaves zero csv panels on disk — the run it was written to describe. A guard that
+    can only be satisfied on one machine is a red suite everywhere else, which is how a real
+    failure goes unread. It skips on a clone and keeps its full strength where the data lives; the
+    floor stays at 100 rather than being lowered to something a clone could meet, because lowering
+    it is what would actually hollow the check out.
+    """
     csvs = [s for s in SPECS if s.reader == "csv" and (REPO / s.path).exists()]
-    assert len(csvs) >= 100, f"only {len(csvs)} csv panels on disk; the header check is hollow"
+    if len(csvs) < 100:
+        pytest.skip(
+            f"only {len(csvs)} of {sum(s.reader == 'csv' for s in SPECS)} csv panels are on disk, so "
+            "this cannot prove the header check bites; the bulk panels left the index in D536 and "
+            "data/data_manifest.json carries each sha256 and git blob id"
+        )
     assert not _has_column(REPO / csvs[0].path, "csv", "no_such_column_anywhere")
     for reader in ("parquet", "npz"):
         present = [s for s in SPECS if s.reader == reader and (REPO / s.path).exists()]
