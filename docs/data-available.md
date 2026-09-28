@@ -701,6 +701,23 @@ is not being invoked writes nothing at all, which only the host can notice. What
 deposit's "CME settlement" job is settlement PRICES, D586's pages are settlement TIMES — two jobs,
 one `ready`, one `needs_source`; and `www.cmegroup.com` returns 403 from this machine.
 
+**The time-of-day liquidity map ([D651](decisions/D651-RESULT-no-handoff-trough-the-night-is-one-ramp-from-the-reopen.md), 2026-09-28).**
+**`fut_liquidity_15m.csv.gz`** + [`meta`](../data/fixtures/fut_liquidity_15m.meta.json) — the quoted spread
+in ticks and the touch depth (bid + ask size at level 1) of the **front contract of all 41 `bbo-1m` roots, in
+15-minute ET buckets, around the clock**. One row per (root, session day, bucket, spread in ticks) with `n`
+minutes, `q_lots` and `q_orders` summed. 2,424,214 rows, 327 session days 2025-09-11 → 2026-09-10,
+13,526,478 quoted minutes; built in 0.8 min by `scripts/build_fut_liquidity_map.py --build` (system
+interpreter). Summed to the hour it equals D507's `fut_spread_all_1m` on every one of 888,238 cells.
+Gitignored by suffix, hashed in the manifest. The per-root 96-bucket profile (median depth, mean spread,
+dates quoted) is committed in [`data/d651_liquidity_map.json`](../data/d651_liquidity_map.json) and
+rendered at [`docs/results/LIQUIDITY_MAP.md`](results/LIQUIDITY_MAP.md). **What bites:** *(i)* the session
+day rolls at 18:00 ET, so the evening reopen belongs to the NEXT day's rows; pair an evening's close with its
+reopen by ET calendar date (the session day less one for buckets ≥ 18:00), as the report does; *(ii)* the
+whole year is inside the programme vault, and the fixture is quotes only by construction (the builder
+refuses any other column); *(iii)* level-1 depth on a one-tick-pinned book grows as volatility falls, so it
+mixes calm with liquidity; *(iv)* the 17:00 bucket holds a few stray halt-edge minutes on most dates; read
+it as the halt, not as a thin market.
+
 **The order-book depth fixture and the impact parameters ([D604](decisions/D604-futures-sqrt-impact-depth-scaling-and-the-book-depth-fixture.md), 2026-09-21).**
 **`fut_book_depth_1m.csv.gz`** + [`meta`](../data/fixtures/fut_book_depth_1m.meta.json) — the first
 order-book depth fixture, and the first thing in this repository to read the MBO schema. **65,688
