@@ -615,7 +615,8 @@ def programme_trial_count(
     the rows of every doc's trials.csv"* — that is `trials_csv_rows`. It was zero until
     2026-09-27, when the LETF close-flow run (D640) logged the first 71 rows to
     `data/letf/trials.csv`, and the shock classifier's signal frame (D643) added 96 to
-    `data/shock/trials.csv` on 2026-09-28; `tests/unit/test_programme.py` pins the files and their counts.
+    `data/shock/trials.csv` on 2026-09-28, and the opening model's Phase 3 (D646) 3 to `data/opening/trials.csv`
+    the same day; `tests/unit/test_programme.py` pins the files and their counts.
     The other two terms are this repository's
     prior multiplicity, which the deposit's counter does not see and which a DSR computed
     on a shared fixture ought to: D90's whole argument is that a trial count cannot be

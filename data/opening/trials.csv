@@ -1,0 +1,4 @@
+trial_id,doc,family,timestamp,tau,instrument,k,hold,cost_mult,event_filter,n_trades,mean_gross,mean_net,t_hac,sharpe_net,class,z,w,c_hi,c_lo,s,f,exit_type,fill_model,t_clustered,stage,construction,year_set,t0_offset,gsci_stack,n_obs,p_boot,timing_rule,t0,flag_filter,sizing,flow_corr_oos,notes
+S-A_H-O2_09:45,OPENING_AGENT_STATE_PREREG.md,opening H-O2,2026-09-28T09:58:01Z,,,,,,,,,1.745298,2.70811,,,,,,,,,,,,S-A,state policy vs best baseline (B1),,,,2030,,,09:45,,,,reads_2024_plus=True
+S-A_H-O2_10:00,OPENING_AGENT_STATE_PREREG.md,opening H-O2,2026-09-28T09:58:01Z,,,,,,,,,1.989587,2.744112,,,,,,,,,,,,S-A,state policy vs best baseline (B1),,,,2030,,,10:00,,,,reads_2024_plus=True
+S-A_H-O1_10:00,OPENING_AGENT_STATE_PREREG.md,opening H-O2,2026-09-28T09:58:01Z,,,,,,,,,,,,,,,,,,,,,,S-A,H-O1 classification lift,,,,4032,,,10:00,,,,accuracy=0.618056; base=0.617063; logloss=0.907004; base_logloss=0.933445; perm_p=0.0

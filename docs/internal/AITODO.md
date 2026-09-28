@@ -294,7 +294,7 @@
   - **Per traded day (35% confident): MDE 3.10 bp at t = 2 against the 2.79 bp cost: UNDERPOWERED.** A policy
     whose edge only covers the cost cannot be told from zero.
 - **Next:**
-  - **D645 PRE-REG committed (`17c2b05`)**: Phases 3–5, H-O2 tested at t ≥ 2 with POWER's labels travelling (the principal). Next: the runner (`--selftest`, `--dry-run`), then `--run --phase 3` (S-A); Phase 4–5 after A7.
+  - **D645 PRE-REG (`17c2b05`); runner `7339bfe`; PHASE 3 RUN (D646):** S-A passes H-O1 by the letter (log loss −2.8% vs base, 9× noise; accuracy +0.1 pt, 1/19 of the MDE; the permutation passes any base-rate matcher) and fails H-O2 within the doc (policy net −0.05 to −0.13 bp/day; the +1.75/+1.99 bp paired difference, t 2.7, is the baselines' cost). Retention reference: S-A's H-O2 t 2.74 at 10:00. Phase 4 after A7.
   - A7 comes after the Sierra pull and its check against the exchange flag.
   - The NQ options fixture (O0-H, S-H).
   - Phase 0b: the vault guard over the new inputs (test 18).

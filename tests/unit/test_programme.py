@@ -304,7 +304,7 @@ def test_67_the_counter_reads_the_census_and_not_a_registry():
 #: together with the record that adds rows: the first is the LETF close-flow run of 2026-09-27
 #: (D640, 71 configurations). **Editing this is the point**: a trials.csv that appears or grows
 #: without a record turns this red.
-TRIALS_CSV_FILES = {"data/letf/trials.csv": 71, "data/shock/trials.csv": 96}
+TRIALS_CSV_FILES = {"data/letf/trials.csv": 71, "data/opening/trials.csv": 3, "data/shock/trials.csv": 96}
 
 
 def test_67_the_trials_csv_files_are_the_ones_recorded():
