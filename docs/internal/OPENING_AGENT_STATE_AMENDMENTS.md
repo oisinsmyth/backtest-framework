@@ -132,6 +132,45 @@ separately pre-registered binary question, not a fourth class here.
    - ρ_t is the median of ES/SPY at the 15:59 bar over the prior 20 sessions;
    - ATR20_SPY is OA-A6's ATR20 on SPY's RTH bars.
 
+## OA-A8 (RULED 2026-09-28, the principal, before any Phase 4 code). The same diagnostics at every stage, and the v2 list parked behind a fixed trigger
+
+*Source: the principal, after D646 and D647: "Run Phase 4 as registered … Before Phase 4, pre-register the
+diagnostics above to be reported at every stage … Park the three redesigns as a v2 list. Pre-register one only if
+Phase 4 shows real trend-day discrimination that the trade still can't use." Additive to D645. No Phase 4 stage has
+run, and no agent pressure has been compared with a label.*
+
+**1. At every stage (S-A re-reported, then S-B … S-I in the order run), at t0 = 10:00 and 09:45, on the stage's OOS
+rows, the runner reports:**
+- **(a) The perfect-foresight ceiling, and the policy's capture of it.**
+  - The ceiling: the TRUE label traded with D645's exits (CONT → d0, FADE → −sign(gap)): net per trade, t, median,
+    win rate and stop share. It depends only on the labels and exits, so it is the same at every stage; it is
+    computed once and printed with each stage.
+  - Beside it, the stage policy's net per traded row for each state, and its share of that state's ceiling.
+- **(b) Discrimination:** the one-vs-rest AUC for CONT, FADE and RANGE, with a day-block-bootstrap 95% interval
+  (2,000 resamples of sessions, seed 645).
+- **(c) The probability-decile pattern:** for CONT and FADE, the 60-minute trade's gross and net mean by decile of
+  that state's OOS probability, and the Spearman correlation of the decile's mean probability with its gross mean.
+
+These are **reported, never gating**. The retention rule, the gates and every test stay exactly as D645 fixes them.
+No stage, threshold or feature is chosen from them.
+
+**2. The v2 list, parked** (the hypotheses D647 suggests, not tested on this in-sample):
+- **V2-1:** a horizon-matched target: a 60-minute label, or a hold to the close for the day-type trades.
+- **V2-2:** a cost-aware decision rule in place of argmax + θ over a 62% base class.
+- **V2-3:** a wider stop than 0.5 × the opening range.
+
+**3. The trigger (fixed now).** One v2 item may be pre-registered only if **all three** hold at the **final retained
+stage** (never a stage chosen for its AUC):
+- CONT's one-vs-rest AUC ≥ 0.55;
+- its bootstrap 95% interval lies above 0.5;
+- Gate O1 fails on H-O2: the policy's own net ≤ 0, or H-O2 fails within the document.
+
+Otherwise the v2 list stays parked. **If the trigger fires:**
+- the principal chooses one item;
+- it is pre-registered as a new construction;
+- it is confirmed only on data it has not seen: the vault, in the programme's joint run (A10), or forward-recorded
+  sessions. This in-sample has now been read for these designs.
+
 ## Opening facts (2026-09-28, before any rule is applied or any price read for this model)
 
 ### The data the deposit names, against what is on disk
