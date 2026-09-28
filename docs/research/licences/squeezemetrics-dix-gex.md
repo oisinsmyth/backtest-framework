@@ -25,12 +25,20 @@ correspondence, so they are not tracked.
 | as is | no warranty. It is a vendor series with a naive sign convention (dealers long calls, short puts), D661 C1 |
 | anything else (commercial use, a product or service, the firm's own use) is not covered | ask SqueezeMetrics first |
 
-## The public cut
+## The public cut: the principal's ruling (2026-09-28)
 
-`scripts/build_public_cut.py` ships **every tracked file**: "nothing is redacted and nothing is excluded". A tracked
-script or model that consumes DIX/GEX would therefore be published, which shares it with the firm and everyone else.
-Until the principal decides how to handle this, **DIX/GEX-consuming code and its outputs are not committed**. Only
-records carrying findings and summary statistics are.
+`scripts/build_public_cut.py` ships **every tracked file**: "nothing is redacted and nothing is excluded".
+
+**The principal's ruling:** "so long as we are not publishing the data, we are only publishing the results of our
+tests, that is very different". Code that reads DIX/GEX contains no data, and test results are findings, which the
+first reply explicitly allows. So:
+- **Tracked and published (allowed):** scripts that read DIX/GEX, and outputs holding coefficients, statistics and
+  verdicts, with SqueezeMetrics credited.
+- **Never tracked:** `DIX.csv`, and any per-date series derived from it (a dataset, a fixture, an output with a dated
+  gamma column), because those are the data or "lightly transformed versions". The `.gitignore` guards stay, and
+  runners write per-date intermediates only to gitignored paths.
+
+This supersedes the interim rule of commit `2c1d5b3`, that DIX/GEX-consuming code was not to be committed.
 
 **What the data is:** GEX is SqueezeMetrics' dealer gamma exposure for the SPX complex. It is the series Baltussen et
 al. (JFE 2021) used after 2017. D661's source report C1 characterises it: median +$3.2bn per 1%, negative on about 10%
