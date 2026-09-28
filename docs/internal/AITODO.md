@@ -139,6 +139,10 @@
 - **The principal approved all four (2026-09-27).**
   - NQ and CL/NG options: SUBMITTED 2026-09-27 by `scripts/fetch_prelapse_options.py` (7 batch jobs, each re-quoted
     at USD 0.00 just before submission; records `data/prelapse_options_pull_jobs_{nq,energy}.json`); downloading.
+- [ ] **Crack spread line: D652 recommends CLOSING it** (principal, R15). The Stage 0 premise failed B1 and B2
+  (β −0.007 at four weeks, t −0.10, rotation rank 0.66); the deviation from the seasonal norm is an era label. The
+  2024+ slice is unread for the line and stays so. Parked, not claimed: the always-on crack rose +$0.66/bbl per four
+  weeks (t 2.0), curve roll-down.
 - [ ] **Session-handoff pre-vault pull: D651 recommends NONE** (principal to rule before 2026-10-09). The liquidity
   map found one handoff trough in 105 scored cells (6J W3, MARGINAL on cost), so there is no window worth a
   pre-vault `tbbo` + `bbo-1m` pull for the deposit's kill 2 (realised spread). Nothing was quoted. If the principal

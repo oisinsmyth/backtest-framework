@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 392 of these records carry neither field —
+**No Status or Category column, deliberately.** 395 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -723,7 +723,8 @@ would look like data. The tokens are what is shown.
 | D648 | CL: the move into the settlement misses T1's bar by 0.01 of a t, T2 names inventory risk (σ²·Q) over square-root impact… | [PRE-REG](D648-PRE-REG-cl-inventory-risk-or-square-root-impact.md) · [RESULT](D648-RESULT-cl-t1-misses-by-0.01-t2-names-inventory-risk.md) |
 | D649 | REGISTRATION — the NG projected-profit line for the joint vault run: trade one MNG only when the projected move clears… | [PRE-REG](D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md) |
 | D650 | REGISTRATION (addendum) — how the two NG vault lines are read together: the mechanism and the trade are separate verdic… | [PRE-REG](D650-PRE-REG-joint-reading-of-the-two-ng-vault-lines.md) |
-| D651 | REGISTRATION — the time-of-day liquidity map on bbo-1m (41 roots, 15-minute ET buckets), the session-handoff study's ki… | [PRE-REG](D651-PRE-REG-the-time-of-day-liquidity-map-and-the-handoff-kill-1.md) |
+| D651 | there is no handoff trough: the night is one ramp, thinnest at the 18:00 reopen and deepest into the cash close; kill 1… | [PRE-REG](D651-PRE-REG-the-time-of-day-liquidity-map-and-the-handoff-kill-1.md) · [RESULT](D651-RESULT-no-handoff-trough-the-night-is-one-ramp-from-the-reopen.md) |
+| D652 | D652 STAGE 0 RESULT — NOT SUPPORTED: the crack's deviation from its seasonal norm predicts nothing at 2–13 weeks, becau… | [record](D652-STAGE-0-DESIGN-does-the-crack-spread-revert-to-its-norm.md) · [RESULT](D652-STAGE-0-RESULT-not-supported-the-deviation-is-an-era.md) |
 
 <!-- REGISTER:END -->
 
