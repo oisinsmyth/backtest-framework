@@ -207,21 +207,24 @@ def test_the_catalogues_counts_are_the_hand_files_counts():
     # GDELT hourly sample (the same day) -- four csv, two iso_day, two iso_ts.
     # 134 after the merge with origin (2026-09-22): the concurrent branch's two ES 0DTE panels,
     # both csv keyed on session, built on the other clone and absent from this disk.
-    assert len(SPECS) == 134
+    # 136 on 2026-09-28: the opening model's Globex-session bars (D644) and its NQ option end-of-day panel, both
+    # csv keyed on the iso_day session.
+    assert len(SPECS) == 136
     assert Counter(s.date_format for s in SPECS) == {
-        "iso_day": 81, "iso_ts": 32, "none": 19, "date32": 1, "year_prefix": 1
+        "iso_day": 83, "iso_ts": 32, "none": 19, "date32": 1, "year_prefix": 1
     }
-    assert Counter(s.reader for s in SPECS) == {"csv": 111, "npz": 16, "parquet": 7}
-    assert sum(1 for s in SPECS if s.date_col) == 115
+    assert Counter(s.reader for s in SPECS) == {"csv": 113, "npz": 16, "parquet": 7}
+    assert sum(1 for s in SPECS if s.date_col) == 117
     assert Counter(s.date_col for s in SPECS if s.date_col) == {
-        "day": 59, "timestamp": 29, "session": 7, "filing": 3, "ref": 3, "date": 4,
+        "day": 59, "timestamp": 29, "session": 9, "filing": 3, "ref": 3, "date": 4,
         "avail_date": 2, "report_date": 1, "date_entry": 1, "filed": 1, "period": 1,
         "observed_at_utc": 1, "filed_date": 1, "hour_utc": 1, "ts_utc": 1,
     }
-    assert sum(1 for s in SPECS if s.wrong_cuts) == 25
+    assert sum(1 for s in SPECS if s.wrong_cuts) == 27
     assert sorted({c for s in SPECS for c in s.wrong_cuts}) == [
-        "anchor_filed_date", "anchor_period_end", "available_at_utc", "bucket_start", "date_g", "delist_date", "expiry_date",
-        "fetched_at", "fiscal_date", "last_live_date", "oi_pub_et", "period_end", "prev_day",
+        "anchor_filed_date", "anchor_period_end", "available_at_utc", "bucket_start", "date_g", "delist_date", "et",
+        "expiry_date", "fetched_at", "fiscal_date", "last_live_date", "oi_pub_et", "oi_ref_session", "period_end",
+        "prev_day",
         "published_at_et", "published_et", "ref_session", "release_date_nominal", "report",
         "trans", "trans_max", "trans_min", "ts_utc",
     ]

@@ -491,7 +491,7 @@ def cmd_selftest():
     rev = t[(t["session"] == "2023-03-02") & (t["raw_symbol"] == "QN1H3 P11800")].iloc[0]; assert rev["oi"] == 11 and rev["oi_ref_session"] == "2023-02-28"
     # the write keeps an NQ-sized settle exactly (ES's %.6g would give 12345.8)
     import io
-    buf = io.StringIO(); t[COLS].assign(strike=t["strike"].round(4), settle=t["settle"].round(6)).to_csv(buf, index=False, float_format="%.10g"); back = pd.read_csv(io.StringIO(buf.getvalue()))
+    buf = io.StringIO(); t[COLS].assign(strike=t["strike"].round(4), settle=t["settle"].round(6)).to_csv(buf, index=False, float_format="%.10g", encoding="utf-8"); back = pd.read_csv(io.StringIO(buf.getvalue()), encoding="utf-8")
     assert (back["settle"].dropna() == 12345.75).all() and len(back["settle"].dropna()) == 1, back["settle"].tolist()
     assert f"{12345.75:.6g}" == "12345.8", "the ES write format would lose this settle -- the reason for %.10g"
     # ---- the vault: layer 2 drops a later session; layer 3 RAISES on one ----

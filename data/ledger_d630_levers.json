@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "negative",
+    "note": "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive fraction; research/terrain_strategies negates it once at the emit boundary (D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "spec": "POST HOC, on D630's spent in-sample: can the NG settlement trade earn more per trade? Four levers singled out, then\nstacked in a declared order (the principal, 2026-09-28: \"explore 1-5, parse out the results, then combine their\neffects\"). Exploratory: every threshold here is chosen by the author after D630 and the year breakdown were read, so\nnothing here is a result; a lever worth keeping must be pre-registered and read in the joint vault run.",
  "diagnostics": {
   "limit_fill_rate": 0.7898832684824902,
