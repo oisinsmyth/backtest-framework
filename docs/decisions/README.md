@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 402 of these records carry neither field —
+**No Status or Category column, deliberately.** 403 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -730,6 +730,7 @@ would look like data. The tokens are what is shown.
 | D655 | there is no reverting roll premium in the gold and silver spreads: the trade earns +0.44 bp gross against a placement m… | [PRE-REG](D655-PRE-REG-selling-the-metals-roll-after-first-notice.md) · [RESULT](D655-RESULT-no-roll-premium-the-control-earns-more.md) |
 | D658 | RESULT: no agent adds information to the opening model, its final stage is S-A, and Gate O1 fails on H-O2; the trade ru… | [RESULT](D658-RESULT-opening-phase-4-no-agent-retained-gate-O1-fails.md) |
 | D659 | RESULT: both opening-v2 cells pass D652's kill, and the vault cannot confirm either: power at the full in-sample edge i… | [RESULT](D659-RESULT-opening-v2-both-cells-carried-power-5-percent.md) |
+| D660 | DIAG: the opening models' mechanics are exact, their results are noise around zero, and the oracle edge is real but nee… | [record](D660-DIAG-opening-v1-v2-mechanics-statistics-and-oracle-edge.md) |
 
 <!-- REGISTER:END -->
 
