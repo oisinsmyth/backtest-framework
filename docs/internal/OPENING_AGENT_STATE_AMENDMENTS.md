@@ -171,6 +171,22 @@ Otherwise the v2 list stays parked. **If the trigger fires:**
 - it is confirmed only on data it has not seen: the vault, in the programme's joint run (A10), or forward-recorded
   sessions. This in-sample has now been read for these designs.
 
+## OA-A9 (RULED 2026-09-28, the principal, before any Phase 4 stage has run). z5 is capped at ±5
+
+*Source: the principal, "On the z5 Outliers go with your lean" (the lean: cap at ±5, committed before any Phase 4
+result). No Phase 4 stage has run; no agent pressure has been compared with a label or a return.*
+
+- **The problem, a feature-side fact:** A5's pressure is standardised twice (§4, then OA-A7.5's standardisation over
+  up to 250 prior sessions), which gives |z5| up to **45.9** on release days. From 2016-01-04, |z5| > 5 on **90 of
+  4,714** market-sessions. One such day can dominate S-F's L2-regularised logistic fit.
+- **The rule:** before stage S-F (and every later stage that carries z5, including S-I), **z5 is clipped to [−5, +5]**,
+  then multiplied by d0 as D645 s.2 says. Nothing else changes.
+- **The other pressures are left as written**, and their extremes are recorded here so the choice is visible: |z|
+  max z1 9.75, z2 10.51, z3 14.82, z4 14.84, z6 7.73 (99.9th percentiles 6.2–10.8). They were not part of the
+  principal's ruling.
+- The clip is applied in `scripts/opening_phase45.py` (`load_agents`), committed after this amendment and before the
+  one Phase 4 run.
+
 ## Opening facts (2026-09-28, before any rule is applied or any price read for this model)
 
 ### The data the deposit names, against what is on disk
