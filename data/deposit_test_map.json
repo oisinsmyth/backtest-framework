@@ -1172,7 +1172,7 @@
       "claim": {
         "kind": "banner",
         "file": "tests/unit/test_programme.py",
-        "line": 203,
+        "line": 212,
         "symbol": null
       },
       "covered_via": null,
@@ -1189,7 +1189,7 @@
       "claim": {
         "kind": "banner",
         "file": "tests/unit/test_programme.py",
-        "line": 384,
+        "line": 393,
         "symbol": null
       },
       "covered_via": null,
@@ -1890,13 +1890,13 @@
       "cls": "data_guard",
       "status": "claimed",
       "claim": {
-        "kind": "banner",
-        "file": "tests/unit/test_frozen.py",
-        "line": 397,
-        "symbol": null
+        "kind": "function",
+        "file": "tests/unit/test_opening_vault_guard.py",
+        "line": 84,
+        "symbol": "test_opening_18_the_vault_guard_covers_every_opening_input"
       },
       "covered_via": null,
-      "note": "D594. A section banner whose parenthesis carries opening 18 and 20; the function names below it spell the ledger numbers only."
+      "note": "Phase 0b (2026-09-28): every opening loader (ES/NQ bars, SPY/QQQ, ES options via A4, the NQ options fixture, A7 from Sierra ticks, the Phase 4 agents/a7 loader) drops a synthetic vault session, and each broken filter leaves the assert layer to raise. Was the D594 banner in tests/unit/test_frozen.py."
     },
     {
       "doc": "opening",

@@ -394,7 +394,7 @@ def test_non_iso_day_values_are_refused():
         filter_before(DAYS, None, "2002/01/01")
 
 
-# ------------------------------- ledger unit tests 64 / 65 (and opening 18 / 20)
+# ------------------------------- ledger unit tests 64 / 65 (and opening 20)
 def test_ut64_opening_without_a_frozen_model_is_refused(tmp_path):
     with pytest.raises(VaultGuardError, match="no frozen model at"):
         open_once(tmp_path / "openings.jsonl", window=SYNTHETIC, model="m1",

@@ -40,12 +40,14 @@ from sklearn.metrics import roc_auc_score
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 from backtest_framework.opening.labels import atr_prior
+from backtest_framework.validation.frozen import assert_none_at_or_after, filter_before
 
 R: Any = None  # the runner module (run_opening_stages), injected by it
 AGENT_STAGES = (("S-B", "a7"), ("S-C", "z1"), ("S-D", "z2"), ("S-E", "z3"), ("S-F", "z5"), ("S-G", "z6"),
                 ("S-H", "z4"))
 PRESSURES = ("z1", "z2", "z3", "z4", "z5", "z6")
 Z5_CAP = 5.0  # OA-A9: z5 clipped to [-5, +5] before it is multiplied by d0
+RESERVED_FROM = "2025-03-01"  # A10: the vault
 RETAIN_LL = 0.02
 S_I_TOL = 0.01
 N_BOOT_AUC = 2000
@@ -54,9 +56,17 @@ V2_AUC = 0.55
 
 
 # =============================================================================================== inputs
+def _sealed(df: pd.DataFrame) -> pd.DataFrame:
+    """Phase 0b (deposit test 18): a loader never hands the model a vault session, even from a derived file."""
+    df = filter_before(df, "session", RESERVED_FROM)
+    assert_none_at_or_after(df, "session", RESERVED_FROM)
+    return df
+
+
 def load_agents(od) -> dict[str, pd.DataFrame]:
-    a = pd.read_csv(od / "agents.csv", encoding="utf-8", dtype={"session": str})
-    a7 = pd.read_csv(od / "a7.csv", encoding="utf-8", dtype={"session": str}) if (od / "a7.csv").exists() else None
+    a = _sealed(pd.read_csv(od / "agents.csv", encoding="utf-8", dtype={"session": str}))
+    a7 = (_sealed(pd.read_csv(od / "a7.csv", encoding="utf-8", dtype={"session": str}))
+          if (od / "a7.csv").exists() else None)
     out = {}
     for r in R.ROOTS:
         x = a[a["root"] == r].set_index("session")[list(PRESSURES)].copy()
