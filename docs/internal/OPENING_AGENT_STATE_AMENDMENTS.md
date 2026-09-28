@@ -187,6 +187,23 @@ result). No Phase 4 stage has run; no agent pressure has been compared with a la
 - The clip is applied in `scripts/opening_phase45.py` (`load_agents`), committed after this amendment and before the
   one Phase 4 run.
 
+## OA-A10 (RULED 2026-09-28, the principal, before any Phase 4 stage has run). v2 is run now, as a separate construction (D652)
+
+*Source: the principal, after the external-evidence round (`docs/research/opening-v2-external-evidence.md`): "lets
+make those changes and test them as a separate model"; the test data "should join the vault after an in sample
+test"; the inputs "Observables + A4 rescaled".*
+
+- **This overrides OA-A8.3's trigger for one construction, D652.** v2 no longer waits for Phase 4, and it combines
+  V2-1, V2-2 and V2-3 with the research round's entry clocks, the liquidity-scaled A4 and a declared 0DTE break.
+- **Nothing else in OA-A8 changes:** the diagnostics are reported at every Phase 4 stage, and D645 runs exactly as
+  registered.
+- **D652 sits outside D645's family:**
+  - its own programme slot (9), taken only if its in-sample run carries a cell;
+  - its own trials rows;
+  - its in-sample run comes after Phase 4's one run.
+- If OA-A8's trigger fires after Phase 4, the items it names are already registered in D652. A further v2 item then
+  needs a new record.
+
 ## Opening facts (2026-09-28, before any rule is applied or any price read for this model)
 
 ### The data the deposit names, against what is on disk
