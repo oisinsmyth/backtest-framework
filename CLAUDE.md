@@ -36,10 +36,23 @@ available at the sixth item. **Threads are right only while the work releases th
 GIL; that is a property of the workload, not of the choice.** Under the floor, go
 to processes over `items[i::N]`.
 
-**Before launching anything projected over ~10 min: state the projected wall time,
-do one optimisation pass, and say what you did.** `run_in_background` exists so the
-agent does not block — not so the number stops mattering. It is the principal's
-machine and iteration loop.
+**Design for speed when the runner is written, not when it is launched** (the
+principal, 2026-09-28). A new runner fans its independent units out from the start
+(walk-forward windows, checkpoint pairs, cells, bootstrap blocks: processes for
+GIL-bound fits, threads for numpy), hoists what the units share, and proves chunk ==
+whole bit-identically in its self-test — so the speed is paid for once, inside the
+work that has to be done anyway, and verified with the rest of the runner.
+
+**Optimise an existing runner only when it saves time OVERALL.** Before launching
+anything projected over ~10 min, state the projected wall time and compare it with
+the optimisation's full cost — profile, rewrite, equality proof, re-run — against
+the time it saves summed over every run it will get. A run-once job (a registered
+phase, an in-sample run) whose serial time is under that cost launches as it stands;
+say so and give the number. A runner that will be re-run (nulls, sweeps, `--check`,
+repeated studies) gets the pass. D645 Phase 4 (2026-09-28): a 13-minute run-once
+job, against a ~30-minute profile-and-parallelise pass: launched as it stands.
+`run_in_background` exists so the agent does not block — not so the number stops
+mattering. It is the principal's machine and iteration loop.
 
 ## Reporting a result
 
