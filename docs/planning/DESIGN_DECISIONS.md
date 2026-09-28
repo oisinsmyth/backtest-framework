@@ -2,8 +2,8 @@
 
 > **Superseded 2026-07-13.** This file is a frozen historical snapshot (D1–D49, written before
 > implementation started). It is kept for reference but is no longer updated. New decisions are
-> individual files under [`docs/decisions/`](docs/decisions/README.md) (D50 onward); the standing
-> rules R1–R4 have moved to [`docs/RULES.md`](docs/RULES.md). See [`README.md`](README.md) for
+> individual files under [`docs/decisions/`](../decisions/README.md) (D50 onward); the standing
+> rules R1–R4 have moved to [`docs/RULES.md`](../RULES.md). See [`README.md`](../../README.md) for
 > the full doc suite map.
 
 Format: **Decision — because rationale.** Status: ✅ committed · 🔜 deferred (with written rationale) · 📌 rule.

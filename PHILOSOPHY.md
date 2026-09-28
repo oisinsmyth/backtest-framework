@@ -93,7 +93,7 @@ can be wrong in a stable, self-confirming way forever.
   IBKR schedules, risk metrics against `quantstats`, DSR against the original paper's
   worked example
   ([D41](docs/decisions/D41-cross-engine-validation-run-one-identical.md), the X-tests
-  throughout [`VERIFICATION_SCHEME.md`](VERIFICATION_SCHEME.md)).
+  throughout [`VERIFICATION_SCHEME.md`](docs/planning/VERIFICATION_SCHEME.md)).
 - **Prove the strategy isn't fooling you with a test where it's *supposed* to fail.**
   Synthetic cointegrated pairs with zero true edge should earn ~nothing — if they
   "profit," that falsifies the whole pipeline, not just one test
@@ -146,17 +146,17 @@ it's finite time. Protect the second thing from the first.
   [`docs/RULES.md`](docs/RULES.md)).
 - **A step is done when its verification gate passes, not when the code exists.** This
   is the single load-bearing definition of "done" for the whole project — see
-  [`VERIFICATION_SCHEME.md`](VERIFICATION_SCHEME.md).
+  [`VERIFICATION_SCHEME.md`](docs/planning/VERIFICATION_SCHEME.md).
 - **Timebox the satisfying work on purpose, because it will expand to fill all available
   time otherwise.** The CostStack/Instrument refactor gets a hard ~2-week budget with a
   pre-written slip rule for what to cut if it overruns (R2 in
   [`docs/RULES.md`](docs/RULES.md), Phase B slip rule in
-  [`DEVELOPMENT_TIMETABLE.md`](DEVELOPMENT_TIMETABLE.md)).
+  [`DEVELOPMENT_TIMETABLE.md`](docs/planning/DEVELOPMENT_TIMETABLE.md)).
 - **Pre-commit rules and kill criteria in writing, while calm, specifically so
   future-you can't renegotiate them under pressure or fatigue.** The kill criteria in
   the timetable exist because a deadline under stress is exactly when scope discipline
   erodes — the decision gets made once, in advance, by the version of you with the most
-  perspective ([`DEVELOPMENT_TIMETABLE.md`](DEVELOPMENT_TIMETABLE.md) kill criteria, R2).
+  perspective ([`DEVELOPMENT_TIMETABLE.md`](docs/planning/DEVELOPMENT_TIMETABLE.md) kill criteria, R2).
 - **The human system is engineered with the same honesty as the code.** The timetable
   budgets an explicit illness/life buffer, names the morning habit — not the code — as
   the actual critical path, and states plainly that a slipped week is absorbed, not

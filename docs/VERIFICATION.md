@@ -12,7 +12,7 @@ Three neighbours, so you can tell them apart:
 
 | | |
 |---|---|
-| [`VERIFICATION_SCHEME.md`](../VERIFICATION_SCHEME.md) | the **frozen** 2026-07 plan: one gate per build step, written before the code. History. |
+| [`VERIFICATION_SCHEME.md`](planning/VERIFICATION_SCHEME.md) | the **frozen** 2026-07 plan: one gate per build step, written before the code. History. |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md) | which tier a **new** test belongs in, and how to write it. For contributors. |
 | **this page** | what the suite, as it stands, actually establishes. For a reader deciding whether to believe it. |
 

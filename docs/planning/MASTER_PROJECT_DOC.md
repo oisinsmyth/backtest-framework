@@ -1,7 +1,7 @@
 # Quant Backtesting Framework — Master Project Document
 
 > **Frozen snapshot.** Collated once, 2026-07-13, as a single-file archive of the pre-implementation
-> planning docs. Not updated going forward — see [`README.md`](README.md) for the live doc suite
+> planning docs. Not updated going forward — see [`README.md`](../../README.md) for the live doc suite
 > (decision records, changelog, current AI todo) added the same day, just before implementation began.
 
 Collated: 2026-07-13. Contains all project documents to date, in order:

@@ -5,7 +5,7 @@ This project's claim is that **trust is enforced by structure, not convention**
 including its author: the order of work is not "write the code, then test it."
 
 > **A step is done when its gate passes, not when the code exists.**
-> — [`VERIFICATION_SCHEME.md`](VERIFICATION_SCHEME.md)
+> — [`VERIFICATION_SCHEME.md`](docs/planning/VERIFICATION_SCHEME.md)
 
 [`docs/TUTORIAL.md`](docs/TUTORIAL.md) is how to *use* the framework — writing a strategy (§4),
 composing a cost stack (§3), and the gotchas that bite (§11). This file is how to *change* it.

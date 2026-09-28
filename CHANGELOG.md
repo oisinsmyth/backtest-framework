@@ -6,7 +6,7 @@ the *why* behind each change belongs in [`docs/decisions/`](docs/decisions/READM
 
 No tagged releases yet. Entries accumulate under **Unreleased** until the first tagged
 version (likely at the Phase C "first real number" milestone, see
-[`DEVELOPMENT_TIMETABLE.md`](DEVELOPMENT_TIMETABLE.md)).
+[`DEVELOPMENT_TIMETABLE.md`](docs/planning/DEVELOPMENT_TIMETABLE.md)).
 
 ## [Unreleased]
 

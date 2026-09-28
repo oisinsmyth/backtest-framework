@@ -56,10 +56,11 @@ FROZEN = {
     "docs/verification/": "a dated measurement, pinned by tests/unit/test_writeup.py",
     "docs/internal/": "working logs: PICKUP.md is a journal, AITODO.md is the live task list",
     "CHANGELOG.md": "Keep a Changelog: every entry is a statement about a past release",
-    "MASTER_PROJECT_DOC.md": "frozen pre-implementation snapshot, 2026-07-13",
-    "DESIGN_DECISIONS.md": "frozen pre-implementation snapshot, 2026-07-13",
-    "VERIFICATION_SCHEME.md": "frozen pre-implementation snapshot, 2026-07-13",
-    "DEVELOPMENT_TIMETABLE.md": "frozen pre-implementation snapshot, 2026-07-13",
+    # The four pre-implementation planning snapshots of 2026-07-13, moved out of the repository
+    # root into one directory. They were four separate root-level entries here until the move;
+    # one prefix now covers them, and the gate below that requires every prefix to match
+    # something tracked is what would have caught the stale spelling.
+    "docs/planning/": "frozen pre-implementation snapshots, 2026-07-13",
 }
 
 TIERS = ("golden", "property", "integration", "unit")
