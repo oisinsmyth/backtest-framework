@@ -52,7 +52,7 @@ before any price is read.*
 - **RTY is a peer from 2017-07-10**, when the fixture begins it. Before that NQ and ES have three peers, above the
   deposit's minimum of two.
 
-## SC-A7 (PROPOSED, 2026-09-28; the principal may overrule before Phase 3). Two readings of §3.4 that Phase 2 needed
+## SC-A7 (RULED 2026-09-28: the principal, "confirm SC-A7 and SC-A8"). Two readings of §3.4 that Phase 2 needed
 
 - **EIA natural-gas storage is a diagnostic flag on CL, not part of the classifying event flag.** §3.4 marks it "CL
   (weak), diagnostic". Each CL shock carries `event_ngsr_diag` beside the event flag and it is reported, but it
@@ -60,7 +60,7 @@ before any price is read.*
 - **The Fed's unscheduled FOMC statements count as FOMC statements** (7 in 2019–2025 in D585's calendar), for all
   four markets.
 
-## SC-A8 (PROPOSED, 2026-09-28). A zero time-of-day scale cannot detect
+## SC-A8 (RULED 2026-09-28, with SC-A7). A zero time-of-day scale cannot detect
 
 - **The defect.** §4.1's σ_tod is 1.4826 × the median of |r_1m| over 60 prior sessions. In a quiet regime more than
   half of those sessions can show no change at a given minute, so the median is 0 and §4.2's threshold is 0. Any
