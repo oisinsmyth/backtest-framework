@@ -93,8 +93,9 @@ select = ["E4", "E7", "E9", "F"]
 # inferred from a passing run.
 files = ["src"]
 
-# Scoped rather than a global ignore_missing_imports, so the config names exactly which two
-# third-party packages ship no type information instead of silencing the whole class.
+# Scoped rather than a global ignore_missing_imports, so the config names exactly which three
+# third-party packages ship no type information instead of silencing the whole class. scipy (a
+# statsmodels dependency) entered `src` with the opening model's agents (`opening/agents.py`, ndtr).
 [[tool.mypy.overrides]]
-module = ["yfinance.*", "pandas.*"]
+module = ["yfinance.*", "pandas.*", "scipy.*"]
 ignore_missing_imports = true
