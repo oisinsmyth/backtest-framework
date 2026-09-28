@@ -68,6 +68,15 @@
    "alpha": 0.005,
    "amendment": null,
    "note": "Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (\u00a77 H-O2; Holm across t0 in {09:45, 10:00})"
+  },
+  {
+   "name": "ledger H2 projected-profit (NG)",
+   "doc": "D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md",
+   "registered_utc": "2026-09-28",
+   "slot": 8,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line on D630's trade: one MNG when b_t x |I_t| projects >= 2 x $5 (b_t from earlier traded days); PASS with >= 15 trades, one-sided t >= 1.2816 on the MNG gross and a positive MNG net"
   }
  ]
 }

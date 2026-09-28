@@ -153,15 +153,20 @@ def test_66_family_guards():
 def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     """`data/programme_registry.json` as rendered, against the two docs' own list:
     LETF close flow H1; shock classifier H1; ledger H2; index H-R1, H-R2, H-R3(b);
-    opening H-O2. Seven slots used, three reserved."""
+    opening H-O2 -- slots 1-7, registered at the seal. Since 2026-09-28 one reserved slot is allocated: slot 8, D649's
+    NG projected-profit vault line (a reserved slot, so no amendment). Two remain."""
     registry = Registry(path=DEFAULT_REGISTRY_PATH)
-    assert [f.name for f in registry] == [name for name, _, _ in SEED_FAMILIES]
-    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7]
-    assert registry.free_slots() == (8, 9, 10)
-    assert all(f.registered_utc == SEALED_DATE for f in registry)
+    seeded = [f for f in registry if f.slot <= 7]
+    assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES]
+    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8]
+    assert registry.free_slots() == (9, 10)
+    assert all(f.registered_utc == SEALED_DATE for f in seeded)
+    eighth = registry.get("ledger H2 projected-profit (NG)")
+    assert (eighth.slot, eighth.registered_utc, eighth.amendment) == (8, "2026-09-28", None)
+    assert (REPO / "docs" / "decisions" / eighth.doc).exists()
     assert all(f.alpha == SLOT_ALPHA for f in registry)
-    assert registry.alpha_total() == pytest.approx(0.035)
-    docs = {f.doc for f in registry}
+    assert registry.alpha_total() == pytest.approx(0.040)
+    docs = {f.doc for f in seeded}
     assert docs == {
         "LETF_CLOSE_FLOW_PREREG.md",
         "SHOCK_CLASSIFIER_PREREG.md",
@@ -188,12 +193,16 @@ def test_the_rendered_page_exists_and_says_where_the_deposits_path_maps_to():
     assert "data/programme_registry.json" in page
     for name, _, _ in SEED_FAMILIES:
         assert f"`{name}`" in page
-    assert page.count("*(reserved)*") == 3
+    assert page.count("*(reserved)*") == 2  # slot 8 allocated to D649 on 2026-09-28
+    assert "`ledger H2 projected-profit (NG)`" in page
     assert not (REPO / "results").exists(), "the mapping exists because this path does not"
 
 
 def test_render_md_is_deterministic_for_a_pinned_date(tmp_path):
     registry = seed_registry(tmp_path / "r.json")
+    for f in Registry(path=DEFAULT_REGISTRY_PATH):  # the families registered after the seal, the way they were
+        if f.slot > len(SEED_FAMILIES):
+            registry.register(f.name, f.doc, registered_utc=f.registered_utc, note=f.note)
     a = registry.render_md(tmp_path / "a.md", date=SEALED_DATE).read_text(encoding="utf-8")
     b = registry.render_md(tmp_path / "b.md", date=SEALED_DATE).read_text(encoding="utf-8")
     assert a == b

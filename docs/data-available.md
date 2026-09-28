@@ -672,7 +672,8 @@ in D527's and D465's tick counts. ZN's published `21.63` is a rounding tie on 21
 state and [`docs/results/PROGRAMME_REGISTRY.md`](results/PROGRAMME_REGISTRY.md) is rendered from
 it — the deposit's `results/` root does not exist here, so its `results/PROGRAMME_REGISTRY.md`
 maps to `docs/results/`. α = 0.05 in **ten slots of 0.005**; seven families seeded in slots 1–7
-(dated 2026-09-21), slots 8–10 reserved, 0.035 allocated. `validation.programme.Registry.register`
+(dated 2026-09-21); slot 8 allocated 2026-09-28 to D649's NG projected-profit vault line; slots 9–10 reserved,
+0.040 allocated. `validation.programme.Registry.register`
 **refuses an eleventh family without an amendment flag**; a markdown table cannot, which is why the
 page is never the source of truth. The programme trial count the DSR reads is **83,074** under a
 two-clause rule (distinct de-duplicated sqlite configs from `data/trial_registries.json`, plus rows

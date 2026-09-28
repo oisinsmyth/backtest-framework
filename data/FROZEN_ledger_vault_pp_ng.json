@@ -1,0 +1,23 @@
+{
+ "spec": "D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md",
+ "prereg_sha256": "a7e09424e19ed4a28aa0a65b3efdcef38a577990becca7f4261a683ee6d51ead",
+ "runner": "scripts/ledger_vault_pp_ng.py",
+ "runner_sha256": "c7b0309c4beb10689872fda71887182de1380f661beced45f732ea61c68f58d9",
+ "params": {
+  "k": 2.0,
+  "mng_cost": 5.0,
+  "mng_ratio": 0.1,
+  "threshold_full_usd": 100.0,
+  "t_vault": 1.2816,
+  "min_vault_trades": 15,
+  "min_prior": 100,
+  "form": "x_SR (D630's |I|)"
+ },
+ "vault": [
+  "2025-03-01",
+  "2026-09-18"
+ ],
+ "programme_slot": 8,
+ "frozen_date": "2026-09-28",
+ "instruction": "the principal, 2026-09-28: \"We need to add this to the vault then - 'projected MNG >= 2 x $5'\""
+}

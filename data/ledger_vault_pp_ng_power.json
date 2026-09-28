@@ -1,0 +1,54 @@
+{
+ "known_answer_in_sample": {
+  "trades": 270,
+  "mng_gross_per_trade": 20.42592592592593,
+  "mng_net_per_trade": 15.425925925925931,
+  "t_gross": 5.216755839744132,
+  "full_gross_per_trade": 204.2592592592593,
+  "full_net_per_trade": 178.2592592592593,
+  "verdict": "PASS"
+ },
+ "b_in_sample": 0.3139838376589203,
+ "n_vault_days": 390,
+ "reps": 2000,
+ "edge_scale=1": {
+  "PASS": 0.7395,
+  "FAIL": 0.2255,
+  "UNRESOLVED": 0.035,
+  "trades_median": 52.0,
+  "trades_p10_p90": [
+   24.0,
+   87.0
+  ]
+ },
+ "edge_scale=0.5": {
+  "PASS": 0.41,
+  "FAIL": 0.558,
+  "UNRESOLVED": 0.032,
+  "trades_median": 49.0,
+  "trades_p10_p90": [
+   24.0,
+   79.0
+  ]
+ },
+ "edge_scale=0.25": {
+  "PASS": 0.238,
+  "FAIL": 0.729,
+  "UNRESOLVED": 0.033,
+  "trades_median": 49.0,
+  "trades_p10_p90": [
+   23.0,
+   78.0
+  ]
+ },
+ "edge_scale=0": {
+  "PASS": 0.0925,
+  "FAIL": 0.869,
+  "UNRESOLVED": 0.0385,
+  "trades_median": 47.0,
+  "trades_p10_p90": [
+   24.0,
+   75.0
+  ]
+ }
+}

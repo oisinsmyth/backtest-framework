@@ -4,7 +4,7 @@
 
 The deposit's programme-level false-positive controls name this page `results/PROGRAMME_REGISTRY.md` ([`SETTLEMENT_FLOW_LEDGER_PREREG.md`](../internal/User-Doc-Deposit/SETTLEMENT_FLOW_LEDGER_PREREG.md) §13A.8(2), [`OPENING_AGENT_STATE_PREREG.md`](../internal/User-Doc-Deposit/OPENING_AGENT_STATE_PREREG.md) §12A(2)). **This repository has no root `results/`**: the rendered page lives here in `docs/results/` with the other prose-results pages, and the state it is rendered from lives in `data/` with the other artefacts (D592).
 
-**Programme-wide α = 0.05, split into 10 equal slots of 0.005.** Sealed 2026-09-21. **7 of 10 slots allocated; 3 reserved for future models.**
+**Programme-wide α = 0.05, split into 10 equal slots of 0.005.** Sealed 2026-09-21. **8 of 10 slots allocated; 2 reserved for future models.**
 
 A family may only be registered into a free slot. When all ten are used, an eleventh requires a doc amendment that re-allocates α — never retroactively for families already evaluated. **Promotion requires the family's within-doc adjusted p-value ≤ 0.005 (roughly t ≥ 2.8), in addition to every within-doc criterion, and a programme-level DSR ≥ 0.95.** A row below is a registration, not a result.
 
@@ -17,11 +17,11 @@ A family may only be registered into a free slot. When all ten are used, an elev
 | 5 | `index H-R2` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Reversal: signed return in the reversal direction over 1/3/5 days (§6 H-R2; Holm across 3 holds x 2 constructions) |
 | 6 | `index H-R3(b)` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (§6 H-R3(b); H-R3(a) is descriptive and is not a decision family) |
 | 7 | `opening H-O2` | 0.005 | `OPENING_AGENT_STATE_PREREG.md` | 2026-09-21 | Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (§7 H-O2; Holm across t0 in {09:45, 10:00}) |
-| 8 | *(reserved)* | 0.005 | — | — | — |
+| 8 | `ledger H2 projected-profit (NG)` | 0.005 | `D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md` | 2026-09-28 | Vault line on D630's trade: one MNG when b_t x |I_t| projects >= 2 x $5 (b_t from earlier traded days); PASS with >= 15 trades, one-sided t >= 1.2816 on the MNG gross and a positive MNG net |
 | 9 | *(reserved)* | 0.005 | — | — | — |
 | 10 | *(reserved)* | 0.005 | — | — | — |
 
-**α allocated: 0.035 of 0.05.**
+**α allocated: 0.040 of 0.05.**
 
 ---
 
