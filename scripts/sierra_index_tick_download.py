@@ -58,6 +58,7 @@ QUARTERS = "HMUZ"
 LETTER = "FGHJKMNQUVXZ"
 REC_SIZE, HDR = 40, 56
 STABLE_S, POLL_S, CAP_S = 90, 10, 90 * 60  # a quiet gap that ends a wait early is caught by the cut-short check
+LIVE_LAG_MIN = 20  # a live contract is complete once its last tick is this close to now (the feed is 10 min delayed)
 RETRIES, CUT_TOL_BDAYS = 2, 1
 MIN_FREE_GB = 95.0
 
@@ -131,8 +132,17 @@ def free_gb() -> float:
     return shutil.disk_usage("C:\\").free / 1e9
 
 
-def request_and_wait(sym: str) -> None:
-    """Open the chart (queues or resumes the download), wait until the file has been still for STABLE_S, close it."""
+def caught_up(sym: str) -> bool:
+    """A live contract's file never goes still while the market is open (the delayed feed keeps appending), so the
+    stillness rule would run it to CAP_S. It is complete once its last tick is within LIVE_LAG_MIN of now."""
+    last = file_span(sym).get("last_utc")
+    return last is not None and pd.Timestamp(last, tz="UTC") >= pd.Timestamp.now("UTC") - pd.Timedelta(
+        minutes=LIVE_LAG_MIN)
+
+
+def request_and_wait(sym: str, live: bool = False) -> None:
+    """Open the chart (queues or resumes the download), wait until the file has been still for STABLE_S (or, for a
+    live contract, until it has caught up to now), close it."""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.sendto(f"{sym}-CME.scid".encode(), UDP)
     t0, last, changed = time.time(), size(sym), time.time()
@@ -142,6 +152,8 @@ def request_and_wait(sym: str) -> None:
         if cur != last:
             last, changed = cur, time.time()
         if cur > HDR and time.time() - changed >= STABLE_S:
+            break
+        if live and cur > HDR and time.time() - t0 >= STABLE_S and caught_up(sym):
             break
     U.cmd_close("^" + re.escape(sym) + "-CME")
 
@@ -176,7 +188,7 @@ def main(argv: list[str] | None = None) -> int:
         t0 = time.time()
         span: dict[str, Any] = {}
         for attempt in range(1 + RETRIES):
-            request_and_wait(x)
+            request_and_wait(x, live=a.live)
             span = file_span(x)
             if a.live or not is_cut_short(span, x):
                 break
