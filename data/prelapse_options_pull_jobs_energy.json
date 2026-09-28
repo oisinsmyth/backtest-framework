@@ -60,13 +60,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:03:13.053827000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 14,
+    "verified": 14,
+    "bytes": 14316560629,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T03:32:22Z"
+   },
+   "downloaded_utc": "2026-09-28T03:32:22Z",
+   "files": 14,
+   "bytes": 14316560629
   },
   {
    "schema": "statistics",
@@ -109,13 +119,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:03:27.966788000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 14,
+    "verified": 14,
+    "bytes": 3323620845,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T04:09:14Z"
+   },
+   "downloaded_utc": "2026-09-28T04:09:14Z",
+   "files": 14,
+   "bytes": 3323620845
   },
   {
    "schema": "definition",
@@ -164,13 +184,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:03:38.793436000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 14,
+    "verified": 14,
+    "bytes": 2806836236,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T04:41:21Z"
+   },
+   "downloaded_utc": "2026-09-28T04:41:21Z",
+   "files": 14,
+   "bytes": 2806836236
   }
  ]
 }

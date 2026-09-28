@@ -65,13 +65,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:01:49.702445000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 14,
+    "verified": 14,
+    "bytes": 27932635786,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T05:18:55Z"
+   },
+   "downloaded_utc": "2026-09-28T05:18:55Z",
+   "files": 14,
+   "bytes": 27932635786
   },
   {
    "schema": "statistics",
@@ -111,13 +121,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:02:05.077321000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 9,
+    "verified": 9,
+    "bytes": 5531557179,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T05:49:51Z"
+   },
+   "downloaded_utc": "2026-09-28T05:49:51Z",
+   "files": 9,
+   "bytes": 5531557179
   },
   {
    "schema": "statistics",
@@ -159,13 +179,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:02:23.555407000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 9,
+    "verified": 9,
+    "bytes": 8028628294,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T06:33:56Z"
+   },
+   "downloaded_utc": "2026-09-28T06:33:56Z",
+   "files": 9,
+   "bytes": 8028628294
   },
   {
    "schema": "definition",
@@ -219,13 +249,23 @@
     "billed_size": null,
     "actual_size": null,
     "package_size": null,
-    "state": "processing",
+    "state": "done",
     "ts_received": "2026-09-27T18:02:36.425376000Z",
     "ts_queued": null,
     "ts_process_start": null,
     "ts_process_done": null,
     "ts_expiration": null
-   }
+   },
+   "download": {
+    "files": 14,
+    "verified": 14,
+    "bytes": 1229663374,
+    "incomplete": [],
+    "finished_utc": "2026-09-28T06:40:59Z"
+   },
+   "downloaded_utc": "2026-09-28T06:40:59Z",
+   "files": 14,
+   "bytes": 1229663374
   }
  ]
 }
