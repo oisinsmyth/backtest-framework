@@ -1,0 +1,270 @@
+{
+ "spec": "post hoc, after D660; in-sample only",
+ "hours_in_fixture": [
+  "00:00",
+  "23:59"
+ ],
+ "market": {
+  "ES": {
+   "all": {
+    "sessions": 2285,
+    "dollar_volume_median_bn": 198.717449875,
+    "share_0930_1000": 0.14472955767004006,
+    "share_1000_1100": 0.19697988673448655,
+    "sigma_daily_bp": 114.30972180583844,
+    "sigma_1000_1100_bp": 36.214844723563964,
+    "sigma_1030_close_bp": 73.7328103264161,
+    "cost_micro_rt_bp": 3.4093984962406014
+   },
+   "recent": {
+    "sessions": 497,
+    "dollar_volume_median_bn": 283.5181891,
+    "share_0930_1000": 0.13536666787924662,
+    "share_1000_1100": 0.2002264561001918,
+    "sigma_daily_bp": 81.5144391135093,
+    "sigma_1000_1100_bp": 30.290521310310282,
+    "sigma_1030_close_bp": 56.051753837664684,
+    "cost_micro_rt_bp": 2.239922940130409
+   }
+  },
+  "NQ": {
+   "all": {
+    "sessions": 2285,
+    "dollar_volume_median_bn": 81.967204385,
+    "share_0930_1000": 0.16818373853228719,
+    "share_1000_1100": 0.21230601038655506,
+    "sigma_daily_bp": 140.9946791415939,
+    "sigma_1000_1100_bp": 48.11572444912724,
+    "sigma_1030_close_bp": 92.18195253956138,
+    "cost_micro_rt_bp": 2.111563179065144
+   },
+   "recent": {
+    "sessions": 497,
+    "dollar_volume_median_bn": 160.08040448,
+    "share_0930_1000": 0.15990816602664593,
+    "share_1000_1100": 0.2137569891193007,
+    "sigma_daily_bp": 113.54451741937311,
+    "sigma_1000_1100_bp": 42.91320479689366,
+    "sigma_1030_close_bp": 72.10682655622051,
+    "cost_micro_rt_bp": 1.2836685076661467
+   }
+  }
+ },
+ "bar": {
+  "ES": {
+   "break_even_s_bp": 2.7999036751630113,
+   "daily_60min": {
+    "sigma_hold_bp": 30.290521310310282,
+    "n": 390,
+    "mde_net_bp": 4.2971275782292135,
+    "s_needed_bp": 8.171313147949528,
+    "flow_share_Y0.5": 0.04019523856199469,
+    "flow_share_Y1.0": 0.010048809640498672,
+    "flow_bn_Y0.5": 11.396081247539222,
+    "flow_bn_Y1.0": 2.8490203118848054
+   },
+   "daily_to_close": {
+    "sigma_hold_bp": 56.051753837664684,
+    "n": 390,
+    "mde_net_bp": 7.951713169821203,
+    "s_needed_bp": 12.739545137439515,
+    "flow_share_Y0.5": 0.09770094084460323,
+    "flow_share_Y1.0": 0.02442523521115081,
+    "flow_bn_Y0.5": 27.69999382162813,
+    "flow_bn_Y1.0": 6.9249984554070325
+   },
+   "event_40_60min": {
+    "sigma_hold_bp": 30.290521310310282,
+    "n": 40,
+    "mde_net_bp": 13.417776562451996,
+    "s_needed_bp": 19.572124378228004,
+    "flow_share_Y0.5": 0.23060399995546377,
+    "flow_share_Y1.0": 0.05765099998886594,
+    "flow_bn_Y0.5": 65.38042846658956,
+    "flow_bn_Y1.0": 16.34510711664739
+   },
+   "flow_bn_for_break_even_Y1": 0.3345014604794388
+  },
+  "NQ": {
+   "break_even_s_bp": 1.6045856345826832,
+   "daily_60min": {
+    "sigma_hold_bp": 42.91320479689366,
+    "n": 390,
+    "mde_net_bp": 6.087829057605644,
+    "s_needed_bp": 9.214371956589739,
+    "flow_share_Y0.5": 0.026342630035160144,
+    "flow_share_Y1.0": 0.006585657508790036,
+    "flow_bn_Y0.5": 4.216938871095432,
+    "flow_bn_Y1.0": 1.054234717773858
+   },
+   "daily_to_close": {
+    "sigma_hold_bp": 72.10682655622051,
+    "n": 390,
+    "mde_net_bp": 10.229346329138888,
+    "s_needed_bp": 14.391268546006293,
+    "flow_share_Y0.5": 0.0642577934691686,
+    "flow_share_Y1.0": 0.01606444836729215,
+    "flow_bn_Y0.5": 10.286413569536812,
+    "flow_bn_Y1.0": 2.571603392384203
+   },
+   "event_40_60min": {
+    "sigma_hold_bp": 42.91320479689366,
+    "n": 40,
+    "mde_net_bp": 19.009240139669426,
+    "s_needed_bp": 25.366135809169464,
+    "flow_share_Y0.5": 0.19963481437230393,
+    "flow_share_Y1.0": 0.04990870359307598,
+    "flow_bn_Y0.5": 31.95762183300813,
+    "flow_bn_Y1.0": 7.989405458252032
+   },
+   "flow_bn_for_break_even_Y1": 0.03196919015446894
+  }
+ },
+ "size_oracle": {
+  "rows": 4570,
+  "orb_all": {
+   "trades": 4256,
+   "net_per_trade": -3.1523618817475105,
+   "gross_per_trade": -0.09379501527092225
+  },
+  "deciles": [
+   {
+    "q": 0,
+    "expansion": 1.0286,
+    "traded": 0.7549,
+    "net_per_trade": -9.779,
+    "gross_per_trade": -6.8437,
+    "n": 457,
+    "net_per_session_row": -7.3824
+   },
+   {
+    "q": 1,
+    "expansion": 1.3275,
+    "traded": 0.8818,
+    "net_per_trade": -8.3411,
+    "gross_per_trade": -5.2963,
+    "n": 457,
+    "net_per_session_row": -7.3555
+   },
+   {
+    "q": 2,
+    "expansion": 1.5789,
+    "traded": 0.9015,
+    "net_per_trade": -10.1032,
+    "gross_per_trade": -7.1524,
+    "n": 457,
+    "net_per_session_row": -9.1084
+   },
+   {
+    "q": 3,
+    "expansion": 1.7898,
+    "traded": 0.9365,
+    "net_per_trade": -4.328,
+    "gross_per_trade": -1.2084,
+    "n": 457,
+    "net_per_session_row": -4.0534
+   },
+   {
+    "q": 4,
+    "expansion": 2.0,
+    "traded": 0.9584,
+    "net_per_trade": -4.1194,
+    "gross_per_trade": -1.022,
+    "n": 457,
+    "net_per_session_row": -3.9481
+   },
+   {
+    "q": 5,
+    "expansion": 2.2548,
+    "traded": 0.965,
+    "net_per_trade": -5.3251,
+    "gross_per_trade": -2.1557,
+    "n": 457,
+    "net_per_session_row": -5.1387
+   },
+   {
+    "q": 6,
+    "expansion": 2.5455,
+    "traded": 0.9716,
+    "net_per_trade": -0.1872,
+    "gross_per_trade": 2.8396,
+    "n": 457,
+    "net_per_session_row": -0.1819
+   },
+   {
+    "q": 7,
+    "expansion": 2.92,
+    "traded": 0.9825,
+    "net_per_trade": -1.3336,
+    "gross_per_trade": 1.7689,
+    "n": 457,
+    "net_per_session_row": -1.3103
+   },
+   {
+    "q": 8,
+    "expansion": 3.5652,
+    "traded": 0.9737,
+    "net_per_trade": 2.844,
+    "gross_per_trade": 5.9303,
+    "n": 457,
+    "net_per_session_row": 2.7693
+   },
+   {
+    "q": 9,
+    "expansion": 5.0,
+    "traded": 0.9869,
+    "net_per_trade": 6.4362,
+    "gross_per_trade": 9.4558,
+    "n": 457,
+    "net_per_session_row": 6.3517
+   }
+  ],
+  "top": {
+   "top_10pct": {
+    "rows": 457,
+    "trades": 451,
+    "net_per_trade": 6.43616336453939,
+    "sd_per_trade": 37.53897987224953,
+    "t": 3.641102153066238,
+    "net_per_row_all_sessions": 0.6351662313801456,
+    "vault_trades": 76.97592997811816,
+    "vault_mde80_per_trade": 11.986952866564266,
+    "vault_power_normal": 0.32430037326202865
+   },
+   "top_20pct": {
+    "rows": 914,
+    "trades": 896,
+    "net_per_trade": 4.652087971652327,
+    "sd_per_trade": 37.07677706695349,
+    "t": 3.7557782957504258,
+    "net_per_row_all_sessions": 0.9120942719038261,
+    "vault_trades": 152.92778993435448,
+    "vault_mde80_per_trade": 8.399676747091256,
+    "vault_power_normal": 0.34151552728283263
+   },
+   "top_30pct": {
+    "rows": 1371,
+    "trades": 1345,
+    "net_per_trade": 2.653891332140241,
+    "sd_per_trade": 35.445043016095234,
+    "t": 2.745925628070256,
+    "net_per_row_all_sessions": 0.7810686743388673,
+    "vault_trades": 229.56236323851203,
+    "vault_mde80_per_trade": 6.554038191363231,
+    "vault_power_normal": 0.2045344432471019
+   },
+   "top_50pct": {
+    "rows": 2285,
+    "trades": 2230,
+    "net_per_trade": 0.5103086478724678,
+    "sd_per_trade": 34.93290596428033,
+    "t": 0.6898436084633843,
+    "net_per_row_all_sessions": 0.24901275377584312,
+    "vault_trades": 380.61269146608316,
+    "vault_mde80_per_trade": 5.016454592053935,
+    "vault_power_normal": 0.046970324797415364
+   }
+  },
+  "note": "ex-post expansion = (10:00-16:00 high - low) / (09:30-10:00 range); an oracle, not a signal"
+ }
+}
