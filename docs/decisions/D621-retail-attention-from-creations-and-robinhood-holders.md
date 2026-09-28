@@ -16,7 +16,7 @@ what the erratum led to), [D619](D619-the-fund-panel-the-fund-facts-and-the-cme-
 (`fund_nav_daily`, the four ProShares funds' daily NAV, shares and AUM),
 [D609](D609-the-panel-loader-chokepoint-and-the-seven-root-multiplier-fix.md) (`load_panel`, the
 seal on every bulk read), [D608](D608-the-forward-data-recorder.md) (`Recorder`, through which
-every network read goes) and [D485](D485-micro-contracts-are-not-a-retail-identifier.md) (which
+every network read goes) and [D485](D485-RESULT-the-micro-crowd-is-only-half-distinct-trades-no-smaller.md) (which
 first used the Robintrack archive here). Governed by
 [D48](D48-no-false-affordances-enum-values-and.md) (raise loudly),
 [D78](D78-property-test-conventions.md) as amended by
@@ -571,4 +571,4 @@ generates**, and it already has an implementation to point at.
 
 ### 7f. Decision-register row
 
-> | [D621](decisions/D621-retail-attention-from-creations-and-robinhood-holders.md) | 2026-09-22 | Data | Retail attention from creations and Robinhood holders; the deposit's hourly-Wikipedia row amended, GDELT hourly deferred on a 429 |
+> | [D621](D621-retail-attention-from-creations-and-robinhood-holders.md) | 2026-09-22 | Data | Retail attention from creations and Robinhood holders; the deposit's hourly-Wikipedia row amended, GDELT hourly deferred on a 429 |
