@@ -162,7 +162,7 @@ def load_real(days: list[str]) -> tuple[pd.DataFrame, dict[str, np.ndarray], dic
         # back from it differs from the in-memory rebuild in the last digit; the first --run tripped on that)
         with gzip.open(f, "rt", encoding="utf-8", newline="") as h:
             disk = h.read()
-        if shocks.to_csv(index=False, lineterminator="\n") != disk:
+        if shocks.to_csv(index=False, lineterminator="\n", encoding="utf-8") != disk:
             raise ShockRunError("lag audit: the re-detected shocks differ from D641's phase2_shocks.csv.gz")
         note["equals_phase2_file_bytes"] = True
     GA = {r: G[r].to_numpy(float) for r in TRADED}

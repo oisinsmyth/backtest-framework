@@ -1,0 +1,362 @@
+{
+ "ledger": "D466 build_series, 2016-01-04 -> 2023-12-29",
+ "ledger_desc": {
+  "K1": "C1: ES 18:00->16:00 hold, every same-contract night, 1 MES",
+  "K2": "last-30-min momentum, NQ, 1 MNQ",
+  "K3": "last-30-min momentum, ES, 1 MES",
+  "K4": "last-30-min momentum, YM, 1 MYM",
+  "K5": "C1 on S1 nights (SPY gate), 1 MES -- a gated subset of K1",
+  "K6": "C1 on S2 exposure nights (SPY gate), 1 MES -- a gated subset of K1"
+ },
+ "lines": {
+  "CL_INFO": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": -0.0068
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": -0.0161
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": -0.009
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": -0.0497
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": -0.0244
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": -0.0123
+    }
+   },
+   "gross_sharpe_2016_2023": -0.04492676950014169,
+   "gross_sharpe_full": 0.06886189606626886,
+   "gross_sortino_full": 0.09572730904855342,
+   "hit_net": 0.394878280113816,
+   "mean_gross_usd": 0.14448308567813584,
+   "mean_net_usd": -5.886716914321863,
+   "net_sharpe_2016_2023": -2.9146243850532922,
+   "net_sharpe_ex_2020": -2.7281776774102706,
+   "net_sharpe_full": -2.7767156073778536,
+   "net_sortino_2016_2023": -3.444843317709066,
+   "net_sortino_full": -3.323364703533028,
+   "skew_per_trade_usd": 0.02727115013368176,
+   "trades": 3163,
+   "trades_per_year": 349.3
+  },
+  "CL_LIQ": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": 0.0185
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": -0.0604
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": -0.0366
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": -0.0336
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": 0.0308
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": -0.0001
+    }
+   },
+   "gross_sharpe_2016_2023": 0.4575933157555152,
+   "gross_sharpe_full": 0.42773559981331616,
+   "gross_sortino_full": 0.8076130093549826,
+   "hit_net": 0.475,
+   "mean_gross_usd": 6.549999999999869,
+   "mean_net_usd": 0.5187999999998716,
+   "net_sharpe_2016_2023": 0.03665375146436745,
+   "net_sharpe_ex_2020": -0.03103242547321807,
+   "net_sharpe_full": 0.03426389982997738,
+   "net_sortino_2016_2023": 0.0560722336309823,
+   "net_sortino_full": 0.05241464074669452,
+   "skew_per_trade_usd": 0.4978647736955291,
+   "trades": 40,
+   "trades_per_year": 4.4
+  },
+  "ES_INFO": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": 0.0673
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": 0.0564
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": 0.0625
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": 0.0325
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": 0.0497
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": -0.0311
+    }
+   },
+   "gross_sharpe_2016_2023": -0.2503997046828073,
+   "gross_sharpe_full": 0.06669632917444122,
+   "gross_sortino_full": 0.09311276323523034,
+   "hit_net": 0.43474452554744525,
+   "mean_gross_usd": 0.18503649635037492,
+   "mean_net_usd": -5.4830885036496255,
+   "net_sharpe_2016_2023": -2.2785712273332273,
+   "net_sharpe_ex_2020": -1.8770746309975457,
+   "net_sharpe_full": -1.959184317633036,
+   "net_sortino_2016_2023": -2.751328959449027,
+   "net_sortino_full": -2.4183580184645117,
+   "skew_per_trade_usd": -0.18439903033392605,
+   "trades": 3425,
+   "trades_per_year": 378.2
+  },
+  "ES_LIQ": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": 0.1406
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": -0.0106
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": -0.0132
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": -0.0599
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": -0.0007
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": 0.0242
+    }
+   },
+   "gross_sharpe_2016_2023": -0.4721427623037055,
+   "gross_sharpe_full": -0.40878470993638283,
+   "gross_sortino_full": -0.4528207941986482,
+   "hit_net": 0.37254901960784315,
+   "mean_gross_usd": -18.308823529411683,
+   "mean_net_usd": -23.976948529411686,
+   "net_sharpe_2016_2023": -0.5926709872344732,
+   "net_sharpe_ex_2020": -0.46592782257810855,
+   "net_sharpe_full": -0.5244429584670925,
+   "net_sortino_2016_2023": -0.6425461482827008,
+   "net_sortino_full": -0.5706133114313962,
+   "skew_per_trade_usd": -3.293800205464402,
+   "trades": 51,
+   "trades_per_year": 5.6
+  },
+  "GC_INFO": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": 0.0367
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": -0.0153
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": 0.0385
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": 0.02
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": 0.0539
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": 0.0149
+    }
+   },
+   "gross_sharpe_2016_2023": 0.26919645626080013,
+   "gross_sharpe_full": 0.2640467310537622,
+   "gross_sortino_full": 0.398959099223174,
+   "hit_net": 0.36953316953316956,
+   "mean_gross_usd": 0.7420147420147712,
+   "mean_net_usd": -6.19148525798523,
+   "net_sharpe_2016_2023": -2.424572995519828,
+   "net_sharpe_ex_2020": -2.204363967834029,
+   "net_sharpe_full": -2.175218488407251,
+   "net_sortino_2016_2023": -3.0647922821885256,
+   "net_sortino_full": -2.7983646218813307,
+   "skew_per_trade_usd": 0.5536077549814462,
+   "trades": 2035,
+   "trades_per_year": 224.7
+  },
+  "GC_LIQ": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": -0.0722
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": -0.0662
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": -0.0742
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": 0.031
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": -0.002
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": -0.0292
+    }
+   },
+   "gross_sharpe_2016_2023": -0.09367142982101634,
+   "gross_sharpe_full": 0.03739961683915305,
+   "gross_sortino_full": 0.05126889831270933,
+   "hit_net": 0.39473684210526316,
+   "mean_gross_usd": 0.26644736842113115,
+   "mean_net_usd": -6.667052631578869,
+   "net_sharpe_2016_2023": -1.1573399388143195,
+   "net_sharpe_ex_2020": -0.9006863577698635,
+   "net_sharpe_full": -0.9144591631823984,
+   "net_sortino_2016_2023": -1.3364252093963485,
+   "net_sortino_full": -1.1314065603712784,
+   "skew_per_trade_usd": 0.012319487171037901,
+   "trades": 304,
+   "trades_per_year": 33.6
+  },
+  "NQ_INFO": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": 0.0824
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": 0.085
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": 0.1052
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": 0.1291
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": 0.0282
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": -0.0372
+    }
+   },
+   "gross_sharpe_2016_2023": -0.18646883527660083,
+   "gross_sharpe_full": 0.03993230382584956,
+   "gross_sortino_full": 0.05692875375490491,
+   "hit_net": 0.453740157480315,
+   "mean_gross_usd": 0.17962598425196424,
+   "mean_net_usd": -4.387474015748036,
+   "net_sharpe_2016_2023": -1.2351577325068142,
+   "net_sharpe_ex_2020": -0.6871928562866289,
+   "net_sharpe_full": -0.9721990156766416,
+   "net_sortino_2016_2023": -1.5988609137825789,
+   "net_sortino_full": -1.2966970757031229,
+   "skew_per_trade_usd": 0.11402591807886762,
+   "trades": 3048,
+   "trades_per_year": 336.6
+  },
+  "NQ_LIQ": {
+   "correlation": {
+    "K1": {
+     "n_days": 1980,
+     "rho": 0.0005
+    },
+    "K2": {
+     "n_days": 1980,
+     "rho": -0.0301
+    },
+    "K3": {
+     "n_days": 1980,
+     "rho": -0.0354
+    },
+    "K4": {
+     "n_days": 1980,
+     "rho": -0.0428
+    },
+    "K5": {
+     "n_days": 1980,
+     "rho": -0.0006
+    },
+    "K6": {
+     "n_days": 1980,
+     "rho": -0.0108
+    }
+   },
+   "gross_sharpe_2016_2023": 0.08652124628673317,
+   "gross_sharpe_full": 0.07293941003114247,
+   "gross_sortino_full": 0.10200681669996946,
+   "hit_net": 0.4823529411764706,
+   "mean_gross_usd": 3.3294117647058408,
+   "mean_net_usd": -1.2376882352941592,
+   "net_sharpe_2016_2023": -0.024968494313773487,
+   "net_sharpe_ex_2020": 0.09422048717196717,
+   "net_sharpe_full": -0.027114592067573898,
+   "net_sortino_2016_2023": -0.03559586910882953,
+   "net_sortino_full": -0.03717478957042789,
+   "skew_per_trade_usd": -0.2530323473527911,
+   "trades": 85,
+   "trades_per_year": 9.4
+  }
+ },
+ "rt_cost_usd": {
+  "CL": 6.0312,
+  "ES": 5.668125,
+  "GC": 6.9335,
+  "NQ": 4.5671
+ },
+ "sessions": [
+  "2016-01-04",
+  "2025-02-28",
+  2282
+ ],
+ "size": "1 micro (MNQ, MES, MCL, MGC)",
+ "spec": "CLAUDE.md component line for D643; trades as D642's runner (t0+1 fill, 30-min exit)"
+}

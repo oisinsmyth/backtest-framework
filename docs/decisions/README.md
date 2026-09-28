@@ -715,6 +715,7 @@ would look like data. The tokens are what is shown.
 | D640 | RESULT: the LETF close-flow model is KILLED at Gate 1. NQ passes H1 at 14:30 and 15:00, but its own 11:00 placebo is si… | [RESULT](D640-RESULT-letf-close-flow-killed-by-its-own-11am-placebo.md) |
 | D641 | shock classifier Phase 2: the machinery is built and tested, and at z = 4 almost every one-minute shock moves its whole… | [record](D641-shock-classifier-phase-2-almost-every-shock-is-info.md) |
 | D642 | PRE-REG: the shock classifier's signal frame, Phases 3–4 (event-study curves, H1–H4, robustness) | [PRE-REG](D642-PRE-REG-shock-classifier-signal-frame-h1-h4.md) |
+| D643 | RESULT: the shock classifier fails Gate 1 on all four instruments. GC, the one powered cell, is a clean null, and on… | [RESULT](D643-RESULT-shock-classifier-fails-gate-1-on-all-four.md) |
 
 <!-- REGISTER:END -->
 

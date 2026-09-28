@@ -44,7 +44,7 @@ def event(kind: str, **kw: Any) -> None:
 
 def sha256_of(p: Path) -> str:
     h = hashlib.sha256()
-    with p.open("rb") as f:
+    with p.open(mode="rb") as f:
         while b := f.read(32 * 1024 * 1024):
             h.update(b)
     return h.hexdigest()
@@ -82,7 +82,7 @@ def fetch_file(key: str, job_id: str, name: str, url: str, size: int, digest: st
                     r.raise_for_status()
                     if have and r.status_code != 206:
                         raise RuntimeError(f"server ignored the Range request (HTTP {r.status_code})")
-                    with out.open("ab" if have else "wb") as f:
+                    with out.open(mode="ab") as f:  # have == 0 means empty or absent: append == write
                         for chunk in r.iter_content(chunk_size=CHUNK):
                             f.write(chunk)
             except (requests.exceptions.Timeout, requests.exceptions.ConnectionError,

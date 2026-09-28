@@ -415,3 +415,17 @@ series over 2016–2023.
 | the same at 15:00 | D640 | +0.73; per-trade 0.73 net / 1.04 gross; 961 trades | killed at Gate 1 as above; 2024+ +0.9 bp (t 0.33); **ρ K2 +0.59, K3 +0.53**: largely the last-hour momentum K2 already scores |
 | the same at 15:30 | D640 | −0.08 | **ρ K2 +0.83: the same construction as K2** (D639 §10's 0.7 bar), not a new component; below the model's own claim (LETF-A7) |
 | LETF flow, ES, 14:30 / 15:00 / 15:30, 1 MES | D640 | +0.50 / +0.52 / +0.23 on 60 / 69 / 68 trades | H1 fails in all three; no activation after 2023; overnight give-back −35 to −51 bp (H5) |
+
+## SCORED, NOT ENTERED — the shock classifier's classes, 2026-09-28 ([D643](decisions/D643-RESULT-shock-classifier-fails-gate-1-on-all-four.md))
+
+Component lines as CLAUDE.md requires, whatever the verdict (`scripts/shock_component_line.py` →
+`data/shock/phase3_component_lines.json`; descriptive, not a D642 test). Each z = 4 shock is traded exactly as D642's
+runner scored it: the t0+1 fill, a 30-minute time exit, 1 micro, and s.5.1's cost in dollars (MNQ $4.57, MES $5.67,
+MCL $6.03, MGC $6.93 a round trip). Every trade is kept (path-invariant; the slot-limited book was Phase 5's, which
+Gate 1 stopped). Daily net Sharpe over every usable session on the ledger's 2016–2023 window (√252). Correlations are
+with D466's committed series over 2016–2023.
+
+| construction | record | net Sharpe 2016–23 (Sortino); gross | why not |
+|---|---|---|---|
+| shock INFO (follow), NQ / ES / CL / GC, 1 micro | D643 | −1.24 (−1.60) / −2.28 (−2.75) / −2.91 (−3.44) / −2.42 (−3.06); gross −0.19 / −0.25 / −0.04 / +0.27 | Gate 1 failed; gross $0.14–$0.74 a trade against a $4.57–$6.93 round trip; 225–378 trades a year; \|ρ\| with K1–K6 ≤ 0.13 |
+| shock LIQ (fade), NQ / ES / CL / GC, 1 micro | D643 | −0.02 (−0.04) / −0.59 (−0.64) / +0.04 (+0.06) / −1.16 (−1.34); gross +0.09 / −0.47 / +0.46 / −0.09 | Gate 1 failed; NQ/ES/CL on 9 / 6 / 4 trades a year, carried by the 2020 crash (CL −0.03 ex-2020); GC's 34 a year are a clean null; \|ρ\| ≤ 0.14 |

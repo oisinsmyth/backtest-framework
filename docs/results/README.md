@@ -163,6 +163,7 @@ repository root a round longer than the rest.
 |---|---|
 | [`PROGRAMME_REGISTRY.md`](PROGRAMME_REGISTRY.md) | D592 — the deposit's α registry (0.05 in ten slots of 0.005), rendered from `data/programme_registry.json`; the JSON is the source of truth, this page never is |
 | [`DEPOSIT_TEST_MAP.md`](DEPOSIT_TEST_MAP.md) | D607 — the five deposit pre-registrations' 146 numbered unit tests crosswalked to the repository tests that claim them, rendered from `data/deposit_test_map.json`; a coverage count, not a verdict |
+| [`SHOCK_CLASSIFIER_REPORT.md`](SHOCK_CLASSIFIER_REPORT.md) | D643 — the shock classifier's write-up (deposit §11): GATE 1 FAILED on all four; GC, the powered cell, a clean null; LIQ on NQ/ES/CL a 2016–2020 label carried by the 2020 crash |
 | [`SHOCK_CLASSIFIER_POWER.md`](SHOCK_CLASSIFIER_POWER.md) | the shock classifier's power step before Gate 1 (§7A): per instrument, the INFO-vs-LIQ divergence's n_eff and MDE against the micro round-trip cost; rendered from `data/shock/power.json`, no mean read |
 | [`LETF_CLOSE_FLOW_REPORT.md`](LETF_CLOSE_FLOW_REPORT.md) | D640 — the LETF close-flow model's write-up (deposit §11): KILLED at Gate 1, NQ's H1 pass matched by its own 11:00 placebo and flat on 2024+ |
 | [`LETF_CLOSE_FLOW_POWER.md`](LETF_CLOSE_FLOW_POWER.md) | D639 §9 — the LETF close-flow model's power step before any runner: active days, n_eff and MDE per primary cell, against the cost and the model's own predicted impact; rendered from `data/letf/power.json`, no return read |

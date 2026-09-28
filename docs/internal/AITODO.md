@@ -236,8 +236,15 @@
     85 / 51 / 40). An H1 null there is inconclusive (§7A).
   - **GC is powered at t = 2** (MDE 2.9 bp against a 4.5 bp cost; LIQ n 304), but not quite at Holm 80% (4.9 bp).
   - Pooled MDE 0.094σ against the plan's 0.06σ.
-- **Next:** the Phase 3 pre-registration (the definitions the deposit leaves open, before any runner), then the runner.
-  Open for the principal: SC-A7, SC-A8.
+- SC-A7 and SC-A8 RULED (`31e2af6`). **D642 PRE-REG** (`0768da5`), runner `scripts/run_shock_signal.py` (`906c501`,
+  audit fix `8c2a67f`).
+- **CLOSED at GATE 1, 2026-09-28 (D643):** H1 passes nowhere.
+  - GC (powered) is a clean null: Δ +0.28 bp, t 0.21, 95% interval −2.4 to +3.0 against a 4.5 bp cost.
+  - NQ/ES/CL are inconclusive as POWER said, and their LIQ class is a 2016–2020 label carried by the 2020 crash.
+  - Neither class differs from the unconditional shock; H3 and H4 fail everywhere.
+  - Component lines are all negative or empty (COMPONENTS_PROP.md). 96 trials in `data/shock/trials.csv`.
+  - Report: `docs/results/SHOCK_CLASSIFIER_REPORT.md`.
+- Not answered: a flow-signed classifier (aggressor data never in-sample, SC-A3). Nothing here argues for buying it.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
