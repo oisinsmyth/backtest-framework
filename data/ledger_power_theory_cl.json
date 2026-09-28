@@ -1,0 +1,162 @@
+{
+ "betas": [
+  0.0,
+  0.1,
+  0.2,
+  0.31,
+  0.5
+ ],
+ "cost_usd_full_cl": 31.46,
+ "plausible_effect": "beta = 0.31, NG's measured pass-through of |I| (spent sample, D630's trades)",
+ "pre_sample": {
+  "days": 463,
+  "first": "2015-07-02",
+  "last": "2017-05-19",
+  "u_kurtosis": {
+   "13:50": 4.997571640043635,
+   "14:00": 3.6146882513836096,
+   "14:10": 1.5581529262786664
+  },
+  "u_sd": {
+   "13:50": 1.1320524300689812,
+   "14:00": 1.1083361506400016,
+   "14:10": 1.1065381291345286
+  }
+ },
+ "seed": 20260928,
+ "sim": {
+  "beta=0 truth=null": {
+   "T1_power": 0.015,
+   "T1_t_median": 0.18705773271205245,
+   "T2": {
+    "BOTH": 0.0,
+    "GM": 0.062,
+    "NEITHER": 0.888,
+    "SR": 0.05
+   },
+   "mean_effect_all_days_usd": 0.0,
+   "mean_effect_traded_usd": 0.0,
+   "net_mean_median_usd": -28.63353133336099,
+   "reps": 1000
+  },
+  "beta=0.1 truth=GM": {
+   "T1_power": 0.1875,
+   "T1_t_median": 1.4303078647488467,
+   "T2": {
+    "BOTH": 0.0,
+    "GM": 0.29,
+    "NEITHER": 0.67,
+    "SR": 0.04
+   },
+   "mean_effect_all_days_usd": 7.31677161386187,
+   "mean_effect_traded_usd": 16.933158354675,
+   "net_mean_median_usd": -10.703873425295651,
+   "reps": 400
+  },
+  "beta=0.1 truth=SR": {
+   "T1_power": 0.1325,
+   "T1_t_median": 1.1276358063320207,
+   "T2": {
+    "BOTH": 0.0,
+    "GM": 0.055,
+    "NEITHER": 0.8675,
+    "SR": 0.0775
+   },
+   "mean_effect_all_days_usd": 7.316771613861867,
+   "mean_effect_traded_usd": 13.678630503824904,
+   "net_mean_median_usd": -14.774166465126417,
+   "reps": 400
+  },
+  "beta=0.2 truth=GM": {
+   "T1_power": 0.5825,
+   "T1_t_median": 2.4748199812031535,
+   "T2": {
+    "BOTH": 0.005,
+    "GM": 0.52,
+    "NEITHER": 0.4375,
+    "SR": 0.0375
+   },
+   "mean_effect_all_days_usd": 14.63354322772374,
+   "mean_effect_traded_usd": 33.86631670935,
+   "net_mean_median_usd": 5.994014019027986,
+   "reps": 400
+  },
+  "beta=0.2 truth=SR": {
+   "T1_power": 0.4275,
+   "T1_t_median": 2.032868261671453,
+   "T2": {
+    "BOTH": 0.0,
+    "GM": 0.0675,
+    "NEITHER": 0.7975,
+    "SR": 0.135
+   },
+   "mean_effect_all_days_usd": 14.633543227723735,
+   "mean_effect_traded_usd": 27.357261007649807,
+   "net_mean_median_usd": -1.3800584410353363,
+   "reps": 400
+  },
+  "beta=0.31 truth=GM": {
+   "T1_power": 0.9325,
+   "T1_t_median": 3.7169111121825886,
+   "T2": {
+    "BOTH": 0.02,
+    "GM": 0.77,
+    "NEITHER": 0.1775,
+    "SR": 0.0325
+   },
+   "mean_effect_all_days_usd": 22.681992002971793,
+   "mean_effect_traded_usd": 52.492790899492505,
+   "net_mean_median_usd": 24.42042934428306,
+   "reps": 400
+  },
+  "beta=0.31 truth=SR": {
+   "T1_power": 0.8125,
+   "T1_t_median": 3.1667644936396693,
+   "T2": {
+    "BOTH": 0.0,
+    "GM": 0.0825,
+    "NEITHER": 0.59,
+    "SR": 0.3275
+   },
+   "mean_effect_all_days_usd": 22.68199200297179,
+   "mean_effect_traded_usd": 42.4037545618572,
+   "net_mean_median_usd": 15.50370743367515,
+   "reps": 400
+  },
+  "beta=0.5 truth=GM": {
+   "T1_power": 1.0,
+   "T1_t_median": 5.577818712321108,
+   "T2": {
+    "BOTH": 0.025,
+    "GM": 0.9425,
+    "NEITHER": 0.0225,
+    "SR": 0.01
+   },
+   "mean_effect_all_days_usd": 36.58385806930936,
+   "mean_effect_traded_usd": 84.665791773375,
+   "net_mean_median_usd": 56.77465898628738,
+   "reps": 400
+  },
+  "beta=0.5 truth=SR": {
+   "T1_power": 0.995,
+   "T1_t_median": 4.841103065734302,
+   "T2": {
+    "BOTH": 0.0125,
+    "GM": 0.0425,
+    "NEITHER": 0.315,
+    "SR": 0.63
+   },
+   "mean_effect_all_days_usd": 36.58385806930934,
+   "mean_effect_traded_usd": 68.39315251912451,
+   "net_mean_median_usd": 41.6916015900976,
+   "reps": 400
+  },
+  "corr_x_gm_mom": 0.26230839541184436,
+  "corr_x_gm_x_sr": 0.769999749971993,
+  "corr_x_sr_mom": 0.29137845555832564,
+  "n_days": 1819,
+  "n_traded": 739
+ },
+ "t_form": 2.0,
+ "t_holm": 2.2414
+}
