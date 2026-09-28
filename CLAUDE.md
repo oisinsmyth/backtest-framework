@@ -170,7 +170,7 @@ before fetching anything — the answer is often already on disk.
 
 | | tracked | contract |
 |---|---|---|
-| `working/` | yes | in use; losing it costs work now |
+| `working/` | **only what is cited** | in use; losing it costs work now, and a push no longer backs it up |
 | `data/raw/` | no | **gitignored CACHE, not disposable** — re-fetchable, but losing it costs money or hours |
 | `temp/` | no | **deletable any time, unasked, unread** |
 
