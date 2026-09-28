@@ -189,3 +189,28 @@ reported, and a margin within 2 SE is UNRESOLVED** (D373).
 - the HAR forecast uses no session on or after N−1 (a planted future spike leaves it unchanged);
 - the M2 regression recovers a planted β = −0.3 and returns ≈ 0 on a random walk;
 - the holdout guard raises on a 2024 settlement.
+
+## 8. Amendment A1, 2026-09-28: the source, before any margin file was downloaded
+
+The principal approved fetching both sources from 2010 at no cost ("fetch both, 2010 onwards spend no money"). **Fetching
+from cmegroup.com through a scripted browser session is not used**: CME refuses automated clients, and routing around
+that is evading its bot protection. **The files come from the Internet Archive instead** (`web.archive.org`, whose
+CDX index and `id_` raw captures exist for programmatic use), and they are CME's own files. The index was read for
+metadata only (file names, capture dates, sizes); no content was opened.
+
+- **Source (B) becomes CME's earlier per-product histories as archived:** `{code}_2008_to_present.pdf` (latest
+  captures 2015-05 to 2017-03, so running to about then), `{code}_2009_to_2013.zip`, `{code}_2014_to_present.zip`
+  (captured 2017-11), `{code}_2019-to-present.pdf` (captured 2024-07, the rates products) and the 2020-to-present
+  files (captured 2025–2026). **121 files, about 126 MB**, the latest capture of each, for the 33 roots.
+- **The index shows a hole for most roots, from roughly late 2015/2017 to 2019/2020**, where no archived history
+  covers the dates. It is reported per root, and no event is inferred inside it.
+- **The clearing advisories are kept for notice dates only:** 1,841 archived `Chadv{10–16}-{nnn}.pdf` (about 75 MB,
+  roughly 55–65 % of each year's numbers; none after 2016 under that path). Where an advisory covers an event, N is its
+  notice date. Elsewhere N is the business day before E, and the share of events whose N was checked is reported.
+- **G0-c is replaced.** Where two archived files cover the same dates for the same product (the 2008 file against the
+  2009–2013 zip, the 2019 file against the 2020 file, and so on), **≥ 95 % of the increases in the overlap must agree on
+  effective date and new amount**, or the later file is used alone and the disagreement is reported. G0-a, G0-b
+  (now on four roots: GC, CL, ZC and one pre-2014 file) and G0-d stand.
+- The fetch is `scripts/fetch_cme_margin_archive.py`: sequential, at least 1.5 s between requests, backing off on 503,
+  into the main checkout's gitignored `data/raw/cme_margins/`, every file logged with its capture timestamp, URL and
+  sha256.
