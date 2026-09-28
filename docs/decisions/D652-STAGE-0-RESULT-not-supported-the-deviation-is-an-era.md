@@ -94,3 +94,11 @@ little to find.
 
 **What stays:** the runner's contract resolver (recycled one-digit codes against the definition expiries), its
 same-delivery-month crack builder with the ULSD cut, and the real-time norm with its assertion.
+
+## 7. CLOSED by the principal, 2026-09-28
+
+The principal, after this record and the explanation of the two speeds (a spike's catalyst-driven collapse against
+a regime's slow or permanent shift, and the curve pricing the expected closing): **"Ok close it."** The crack
+line is closed under R15: no new pre-registration of a crack-spread construction (reversion, the parked roll-down
+premium, or any other variant) on these fixtures without a new deposit or a new fixture that a record names. The
+2024+ slice was never read for it. The parked fact in §6 stays a fact, not a component.
