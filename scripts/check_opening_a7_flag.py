@@ -109,7 +109,7 @@ def main() -> int:
            "day_level_r_large": r_large, "day_level_r_all": r_all,
            "minute_level_r_all": float(np.corrcoef(mm["ex"], mm["sc"])[0, 1]),
            "minute_sign_agreement": float((np.sign(mm["ex"]) == np.sign(mm["sc"])).mean()), "minutes": int(len(mm)),
-           "volume_ratio_sc_over_ex": (j["vol_sc"] / j["vol_ex"]).round(4).to_dict(),
+           "volume_ratio_sc_over_ex": {f"{r} {d}": v for (r, d), v in (j["vol_sc"] / j["vol_ex"]).round(4).items()},
            "sierra_side_share": float(sc["sided"].sum() / sc["size"].sum()),
            "table": j.reset_index().to_dict("records"), "pass": bool(r_large >= 0.8)}
     OUT.write_text(json.dumps(out, indent=1, default=str) + "\n", encoding="utf-8", newline="\n")
