@@ -4901,3 +4901,20 @@ D622 established that something is specific to ES 14:00 → 15:00 → 16:00 and 
 **Stage S-A** ([D646](decisions/D646-RESULT-opening-stage-S-A-log-loss-not-accuracy.md)) passes H-O1 **by the letter and not in substance**: log loss 0.907 against the base rate's 0.933 (−2.8%, against −0.3% on noise), but accuracy **+0.1 point — four days of 4,032**, because the model predicts RANGE 97% of the time; its permutation null sits *below* the base rate. H-O2 is not a pass: the policy nets −0.13 / −0.05 bp a day, and its +1.75 / +1.99 bp paired margin over the baselines is the baselines' cost.
 
 **Why it fails** ([D647](decisions/D647-POST-HOC-opening-S-A-cannot-see-trend-days.md), post hoc): **the pre-registered trade makes money on the TRUE labels** — CONT +12.6 bp net a trade (t 8.6), FADE +6.4 (t 4.1) — so the trade is not the bottleneck. **The observables cannot see trend days**: one-vs-rest AUC CONT **0.506**, FADE 0.655, RANGE 0.593; the log-loss gain is the prior-day location, volatility and the gap. Phase 4's agents (A1–A7, dealer gamma, large-lot flow) are the registered route to that information; the same diagnostics are fixed at every stage and a v2 redesign is parked behind a fixed trigger (OA-A8). **General lesson: a classifier can pass a log-loss bar while adding nothing a trade can use — report accuracy against the base rate, per-class AUC and the perfect-foresight ceiling beside it.**
+
+## 88. Margin increases (D657): CME's hikes force positions out and precede two weeks of volatility no model forecast, but move no price that comes back — an input for strategies, not a trade
+
+**511 front-month margin increases of 5 % or more on 32 CME roots, 2010–2023**, parsed from CME's own archived
+margin histories (built and gated in [D657](decisions/D657-STAGE-0-RESULT-exits-and-volatility-no-trade.md); a hole
+from late 2015/2017 to mid-2020 for most roots). Against same-root control days matched on volatility quintile and
+trend sign: **open interest falls 1.5 % more than the control over the notice to five sessions after (t −3.0)**, in
+every year and every class except rates and livestock; **realised variance over the ten sessions after the change
+runs 29 % above a HAR forecast made before the notice (t 4.8)**, in every year and every class, largest in rates
+(+0.43 log points) and grains (+0.33). **The move during the forced-exit window does not revert** (β −0.0003,
+t −0.48, at its control's median; 4.9 bp of expected move against an 8.1 bp bar). This is Hedegaard (2014) on a wider
+sample: both sides exit, so the forced flow nets to no price. **The principal closed the line and recorded it as an
+input**: a hike is a public, dated warning of higher variance and higher trading cost on its root, usable as a
+size-down or cost filter by any strategy trading that root. **General lessons from the build:** CME's definitions
+expiry map lacks whole contract-years (a quarter of Treasury contracts in many years), so anything resolved through
+it can vanish silently; the `statistics` open interest before 2016 carries no reference session, and from 2016 each
+session is published twice, a day apart.

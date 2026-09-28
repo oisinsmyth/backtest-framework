@@ -136,13 +136,6 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
-## Margin deleveraging (D657, 2026-09-28)
-
-- [ ] **D657 Stage 0 design committed; the margin data needs the principal's approval to fetch.** CME's per-product
-  margin histories (2020 →, about 40 PDFs, ~1.5 MB each) and, for 2010–2019, the numbered clearing advisories
-  (`Chadv{yy}-{nnn}.pdf`, ~500 a year at ~40 KB, most not about margins). CME refuses a script, so the files come
-  through a browser session. Then `build_cme_margin_events.py` (parse + gate G0) and `stage0_d657_margin.py`.
-
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,

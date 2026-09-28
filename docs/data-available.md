@@ -556,6 +556,7 @@ date month/day/year and the builder normalises and checks it against the report 
 | `data/raw/binance` | 279 | 486 MB | crypto |
 | `data/raw/cftc` | 84 | 21 MB | COT |
 | `data/raw/databento` | 129 | 111 GB | **the futures, above** |
+| `data/raw/cme_margins` | 1,899 | 461 MB | **CME's margin histories and clearing advisories, from the Internet Archive** (D657): 127 per-product history files (124 for the 33 roots; 3 feeder-cattle files fetched by a code-list slip, unused) (2008 → 2015–17, 2019/2020 → 2025–26; a hole between for most roots) and 1,772 advisories 2010–2016, each logged with its capture timestamp and sha256 in `fetch_log.jsonl`. cmegroup.com refuses scripted clients; `scripts/fetch_cme_margin_archive.py` never touches it. **What bites:** the archived corn `C_2008_to_present.pdf` is soybeans' file; change-log blocks list only the tiers that changed; the index change logs quote the big contract and the daily tables the E-mini |
 | `data/raw/robintrack` | 8,597 + archive | 4.0 GB | **Robinhood holder counts, hourly, 8,597 tickers, 2018-05-02 → 2020-08-13** (the Barber–Huang–Odean–Schwarz data); two ~10-day site outages ending 2019-01-30 and 2020-01-16; 959 / 512 / 341 names overlap the three daily fixtures; the 504 MB `.tar.gz` from robintrack-data.ameo.design is kept beside the extraction. Re-fetchable while the mirror lives; treat as not |
 
 ---
