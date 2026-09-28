@@ -404,7 +404,21 @@ def test_guard_c2_d503s_stored_dicts_reproduce_from_their_stored_summaries():
             want["P4_expected_profit_usd"] = ep
             want["P4_expected_life_days"] = el
         for k, v in want.items():
-            assert hp[k] == v, f"{arm}.{k}: published {hp[k]!r}, recomputed {v!r}"
+            # A PUBLISHED float is not reproducible bit-for-bit on another platform. The committed
+            # figures were computed on Windows; ubuntu-latest recomputes
+            # P4_expected_profit_usd as 182.13756716297692 against the published
+            # 182.13756716297726 -- 1.9e-15 relative, two ULPs, from a different reduction order
+            # inside the same formula. This is D550's lesson ("the author's OS is not the
+            # runner's") in arithmetic rather than in bytes, and there is no exact fix: pinning the
+            # number to one platform simply moves the failure to the other.
+            #
+            # This still gates what it was built to gate -- that every published hurdle-P figure is
+            # RE-DERIVABLE from the recorded inputs. A transcription slip, a changed input or a
+            # wrong formula all move a figure far more than 1e-9, which is six orders of magnitude
+            # above the platform noise and tighter than D47's published 1e-6.
+            assert hp[k] == pytest.approx(v, rel=1e-9), (
+                f"{arm}.{k}: published {hp[k]!r}, recomputed {v!r}"
+            )
             checked += 1
     assert checked == 28
 

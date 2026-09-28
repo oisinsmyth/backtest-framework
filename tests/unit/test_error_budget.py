@@ -176,7 +176,17 @@ def test_oos_error_pools_rather_than_averaging_fold_means() -> None:
     out = oos_error(folds, X, y, fit_fn, predict_fn, ("flow_forecast", "impact"))
     assert out.n == sum(f.n for f in out.per_fold) == 660
     total_sse = sum(f.sse for f in out.per_fold)
-    assert out.mse == total_sse / out.n
+    # `oos_error` pools the squared residuals over the concatenated predictions; this line re-adds
+    # the per-fold SSEs in Python. Two different summation ORDERS of the same quantity, so they
+    # agree to within a rounding step and not bit-for-bit -- measured 1.7e-16 relative (one ULP) on
+    # ubuntu-latest, where `==` held on the author's Windows machine. That is a property of the
+    # platform's reduction, not of the code under test.
+    #
+    # The tolerance does not weaken what this test detects. It exists to catch pooling being
+    # replaced by an AVERAGE OF FOLD MEANS, which on unequal folds is a percent-scale error; 1e-9
+    # is seven orders of magnitude above the noise and still 1000x tighter than D47's published
+    # 1e-6 (tests/integration/test_cross_engine.py).
+    assert out.mse == pytest.approx(total_sse / out.n, rel=1e-9)
     assert [f.label for f in out.per_fold] == [f.label for f in folds]
 
 
