@@ -248,6 +248,21 @@ trading to 17% on both cells, and adding the one-cost margin cut it to 3.4% (V2-
   the decision code;
 - the scramble audit requires them unchanged when test-period outcomes move.
 
+## OA-A12 = D652-A2 (RULED 2026-09-28, the principal, before any real-data v2 run). The 0DTE break moves to 2022-05-16
+
+*Source: the principal, "Yes" to the citation check's correction (`docs/research/opening-v2-external-evidence.md`,
+its citation table). No v2 code has read a real price.*
+
+- **The fix.** D652 §2 states its rule as "the first session on which every weekday carries an SPX expiry". It gave
+  2022-05-11, which is the date Cboe first **listed** Thursday options. The first Thursday **expiry** was
+  2022-05-19, so the first session from which every session carries a same-day SPX expiry is **2022-05-16**, the
+  Monday of that week. Tuesday expiries run from 2022-04-26.
+- **The change.** The break is 2022-05-16 wherever D652 says 2022-05-11:
+  - `z4s_post`;
+  - the pre/post split;
+  - the ±63-session robustness, which now moves around 2022-05-16.
+- The rule itself, and everything else, is unchanged. The shift is 3 sessions.
+
 ## Opening facts (2026-09-28, before any rule is applied or any price read for this model)
 
 ### The data the deposit names, against what is on disk

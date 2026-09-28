@@ -48,7 +48,12 @@
 - **Local `main` and `origin/main` have DIVERGED.** Another session committed D651 (the liquidity map, `3bbf879`,
   `a362470`) to local main. `origin/main` has `2a1a10f` (FINDINGS §83–87). Both sit on `7b3ad26`. Merge them before
   anyone pushes.
-- **Decision numbers:** D651 is the other session's; D652 is ours; the next free decision number is **653**.
+- **Decision numbers:**
+  - D651 is the liquidity-map session's.
+  - D652 is ours (the opening v2).
+  - D653–D655 are the other session's (crack spread, delivery period, metals roll). It renumbered its own work
+    around ours on 2026-09-28; our brief renumber to 655 was reverted.
+  - The next free decision number is **656**.
 
 ## STATE AT 2026-09-28 (end of the D644–D650 day): what is running, what is frozen, what waits
 

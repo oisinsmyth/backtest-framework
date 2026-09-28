@@ -110,8 +110,18 @@ one-tick-pinned book the queue at the touch grows as volatility falls, so touch 
 One year, all of it inside the vault window. Quoted spread is a floor on what an aggressor pays. Commission is
 declared, never measured (D591).
 
-## 6. The principal's ruling, 2026-09-28
+## 6. RULED by the principal, 2026-09-28: no pull, and the line is CLOSED
 
-"No pull for the handoff." Branch (c) is taken as recommended: no pre-vault `tbbo` or `bbo-1m` pull is quoted or
-submitted for the session-handoff study, so its kill 2 (realised spread against normal hours) stays unscored and
-`SESSION_HANDOFF_LIQUIDITY.md` ends here on its measured premise. The map stays as cost infrastructure.
+"Yes to all three": no pre-vault `tbbo` + `bbo-1m` pull for kill 2, and the session-handoff line closed under R15.
+
+- **What closes:** `SESSION_HANDOFF_LIQUIDITY.md` as a strategy, which was two-sided passive quoting in the three
+  handoff windows, for the personal book. There is no new pre-registration of a handoff-window quoting construction on
+  these fixtures without a new deposit or a new fixture a record names.
+- **Why:** its premise, that liquidity thins at the handoffs, is absent in 104 of 105 cells. Its intended size (micros)
+  fails kill 1 on commission, and the full-size contracts that pass kill 1 have no thin window to quote into.
+- **What stays:** the liquidity map, as cost infrastructure for every study (the night quotes about 10% wider on ES
+  and about 50% wider on NQ than the core).
+- **What stays open:** the 18:00 reopen is the thinnest period of the day. It is a session boundary, not a staffing
+  handoff, and any study of it is a new pre-registration.
+
+The same ruling reached this study's other session the same day, in its own words: "No pull for the handoff" (`aa1f577`).

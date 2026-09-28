@@ -153,6 +153,8 @@
     at USD 0.00 just before submission; records `data/prelapse_options_pull_jobs_{nq,energy}.json`); downloading.
   - Top-ups including MBO: SCHEDULED for Fri 2026-10-09 07:30, task `prelapse-databento-topup`
     (`scripts/fetch_prelapse_topup.py`; checks ≥ 90 GB free first, refuses any job no longer at USD 0.00).
+- **Session-handoff pre-vault pull: RULED NONE** (the principal, 2026-09-28, on D651's recommendation). The
+  session-handoff line is closed (D651 §6); nothing is pulled for its kill 2.
 
 ## LETF close-flow — opened 2026-09-27 (the principal: "then open LETF close-flow")
 

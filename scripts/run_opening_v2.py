@@ -78,7 +78,7 @@ RESERVED_FROM = "2025-03-01"
 FIRST_ROW = "2016-01-04"
 ROOTS = R.ROOTS
 CELLS = {"V2-F": "09:45", "V2-C": "10:30"}
-BREAK = "2022-05-11"
+BREAK = "2022-05-16"  # OA-A12: every session carries a same-day SPX expiry from here
 EDGE_K = 2.0  # V2-F: the prior close must lie >= 2 x the round-trip cost ahead
 STOP_K = 1.5  # V2-C: the stop at 1.5 x sigma_h
 DV_N, DV_MIN = 20, 15
