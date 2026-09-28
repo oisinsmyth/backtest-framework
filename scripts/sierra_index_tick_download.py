@@ -154,6 +154,9 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default=None)
     ap.add_argument("--dry-run", action="store_true", help="print the plan and the file states; request nothing")
+    ap.add_argument("--live", action="store_true",
+                    help="unexpired contracts (ESZ26, NQZ26 for A7's exchange-flag check): no cut-short retry, "
+                         "recorded as live; the check reads their post-vault sessions only")
     a = ap.parse_args(argv)
     syms = contracts() if a.only is None else a.only.split(",")
     rec: dict[str, Any] = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"contracts": {}}
@@ -175,12 +178,13 @@ def main(argv: list[str] | None = None) -> int:
         for attempt in range(1 + RETRIES):
             request_and_wait(x)
             span = file_span(x)
-            if not is_cut_short(span, x):
+            if a.live or not is_cut_short(span, x):
                 break
             print(f"  {x}: cut short at {span.get('last_utc')} (attempt {attempt + 1}); re-requesting", flush=True)
         p = path(x)
         r: dict[str, Any] = {"bytes": size(x), **span, "expected_last_day": str(expected_last_day(x).date()),
-                             "cut_short": is_cut_short(span, x), "minutes": round((time.time() - t0) / 60, 1)}
+                             "cut_short": (None if a.live else is_cut_short(span, x)), "live": a.live,
+                             "minutes": round((time.time() - t0) / 60, 1)}
         if span.get("records", 0) > 0:
             h1 = sha256(p)
             compress(p)

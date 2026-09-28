@@ -1,0 +1,55 @@
+{
+ "submitted_utc": "2026-09-28T10:10:52Z",
+ "quote": {
+  "symbols": [
+   "ES.FUT",
+   "NQ.FUT"
+  ],
+  "schema": "trades",
+  "start": "2026-09-19",
+  "end": "2026-09-28",
+  "billable_gb": 0.191,
+  "usd": 0.0
+ },
+ "job": {
+  "id": "GLBX-20260928-KBKEVKNW4J",
+  "user_id": "QWGCG4GQ",
+  "bill_id": null,
+  "cost_usd": 0.0,
+  "dataset": "GLBX.MDP3",
+  "symbols": "ES.FUT,NQ.FUT",
+  "stype_in": "parent",
+  "stype_out": "instrument_id",
+  "schema": "trades",
+  "start": "2026-09-19T00:00:00.000000000Z",
+  "end": "2026-09-28T00:00:00.000000000Z",
+  "limit": null,
+  "encoding": "dbn",
+  "compression": "zstd",
+  "pretty_px": false,
+  "pretty_ts": false,
+  "map_symbols": false,
+  "split_symbols": false,
+  "split_duration": "day",
+  "split_size": null,
+  "packaging": null,
+  "delivery": "download",
+  "record_count": null,
+  "billed_size": null,
+  "actual_size": null,
+  "package_size": null,
+  "state": "queued",
+  "ts_received": "2026-09-28T10:10:45.847871000Z",
+  "ts_queued": null,
+  "ts_process_start": null,
+  "ts_process_done": null,
+  "ts_expiration": null
+ },
+ "download": {
+  "files": 10,
+  "verified": 10,
+  "bytes": 67330815,
+  "incomplete": [],
+  "finished_utc": "2026-09-28T10:13:01Z"
+ }
+}
