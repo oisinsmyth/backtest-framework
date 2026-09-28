@@ -11,8 +11,8 @@ Every value at session t uses information available by 09:29 ET on t (A6: 09:31)
   - `fixtures/fut_settle_strip.csv.gz` + `fixtures/fut_index_sessions.csv.gz`: A2/A3's front settlement, ratio
     back-adjusted at D462's rolls (OA-A7.1);
   - `raw/alphavantage/1min/{SPY,QQQ}`: A6;
-  - `fixtures/fut_es_options_eod.csv.gz` + `fixtures/cme_session_calendar.csv.gz`: A4 on ES (NQ has no options fixture
-    yet, so its A4 is NaN and S-H waits for it);
+  - `fixtures/fut_es_options_eod.csv.gz` + `fixtures/cme_session_calendar.csv.gz`: A4 on ES; NQ's A4 reads this
+    checkout's `fixtures/fut_nq_options_eod.csv.gz` (built 2026-09-28) and is NaN while it is absent;
 - `data/calendar/events.csv` (D585): CPI and EMPSIT days for A5.
 Nothing on or after 2025-03-01 is read (A10): every frame is cut by `filter_before` and checked by
 `assert_none_at_or_after`. Output rows run 2015-09-01 -> 2025-02-28; the z-scores need 60 prior sessions (OA-A7.3).
@@ -100,13 +100,21 @@ def etf_frame(sym: str, data_root: Path, months: list[str]) -> pd.DataFrame:
     return d
 
 
-def dealer_gamma_es(data_root: Path, sessions: list[str]) -> pd.Series:
-    """G per ES session (s.4 A4 under OA-A7.4): OI as of the prior close, vol implied from the prior settlement,
-    gamma at the underlying's prior settlement, over options expiring after 09:30 on the session."""
+def options_fixture(root: str, data_root: Path) -> Path:
+    """ES's fixture lives with the other gitignored inputs; NQ's was built in this checkout (2026-09-28)."""
+    if root == "ES":
+        return data_root / "fixtures" / "fut_es_options_eod.csv.gz"
+    return REPO / "data" / "fixtures" / "fut_nq_options_eod.csv.gz"
+
+
+def dealer_gamma(root: str, data_root: Path, sessions: list[str]) -> pd.Series:
+    """G per session (s.4 A4 under OA-A7.4): OI as of the prior close, vol implied from the prior settlement,
+    gamma at the underlying's prior settlement, over options expiring after 09:30 on the session. ES and NQ run the
+    same code on their own fixture, calendar and settlement strip."""
     cols = ["session", "right", "strike", "expiry_date", "expiry_hhmm", "underlying", "oi", "settle"]
     want = set(sessions)
     parts = []
-    for ch in pd.read_csv(data_root / "fixtures" / "fut_es_options_eod.csv.gz", encoding="utf-8", usecols=cols,
+    for ch in pd.read_csv(options_fixture(root, data_root), encoding="utf-8", usecols=cols,
                           chunksize=CHUNK, dtype={"session": str, "expiry_date": str, "expiry_hhmm": str,
                                                   "underlying": str, "right": str}):
         ch = cut(ch, "session")
@@ -114,7 +122,7 @@ def dealer_gamma_es(data_root: Path, sessions: list[str]) -> pd.Series:
     o = pd.concat(parts, ignore_index=True)
     cal = pd.read_csv(data_root / "fixtures" / "cme_session_calendar.csv.gz", encoding="utf-8", dtype={"day": str},
                       usecols=["root", "day", "is_trading"])
-    tdays = np.array(sorted(cal.loc[(cal["root"] == "ES") & cal["is_trading"].astype(bool), "day"]))
+    tdays = np.array(sorted(cal.loc[(cal["root"] == root) & cal["is_trading"].astype(bool), "day"]))
     pos = {d: i for i, d in enumerate(tdays)}
     last = tdays[-1]
 
@@ -129,7 +137,7 @@ def dealer_gamma_es(data_root: Path, sessions: list[str]) -> pd.Series:
     prev = {d: tdays[pos[d] - 1] for d in sessions if d in pos and pos[d] > 0}
     st = pd.read_csv(data_root / "fixtures" / "fut_settle_strip.csv.gz", encoding="utf-8", dtype={"ref": str},
                      usecols=["root", "contract", "ref", "settle"])
-    st = cut(st[(st["root"] == "ES") & (st["settle"] != 0)], "ref")
+    st = cut(st[(st["root"] == root) & (st["settle"] != 0)], "ref")
     o["prev"] = o["session"].map(prev)
     o = o.merge(st.rename(columns={"ref": "prev", "contract": "underlying", "settle": "F"})[["prev", "underlying", "F"]],
                 on=["prev", "underlying"], how="inner")
@@ -170,9 +178,9 @@ def build(data_root: Path) -> pd.DataFrame:
         z2_all, z3_all = A.on_finite(A.standardise, p2_all)[0], A.on_finite(A.standardise, p3_all)[0]
         m2 = pd.DataFrame({"P2": p2_all, "P3": p3_all, "z2": z2_all, "z3": z3_all}, index=sser.index)
         m2 = m2.reindex(sessions)
-        # A4 (ES only)
-        if r == "ES":
-            G = dealer_gamma_es(data_root, sessions).to_numpy(float)
+        # A4 (NQ's waits for its fixture; S-H runs only when O0-H passes for both)
+        if options_fixture(r, data_root).exists():
+            G = dealer_gamma(r, data_root, sessions).to_numpy(float)
         else:
             G = np.full(len(sessions), np.nan)
         p4 = A.a4_pressure(G, d["open"], d["prior_close"])
@@ -185,7 +193,7 @@ def build(data_root: Path) -> pd.DataFrame:
         rho = A.fair_ratio_prior((piv["15:59"] / e["c1559"]).to_numpy(float))
         p6 = A.a6_basis(piv["09:30"].to_numpy(float), e["c0930"].to_numpy(float), rho, e["atr20"].to_numpy(float))
         f = pd.DataFrame({"root": r, "session": sessions, "P1": p1, "P2": m2["P2"].to_numpy(), "P3": m2["P3"].to_numpy(),
-                          "P4": p4, "P5": p5, "P6": p6, "G_es": G, "release": [s in rel_days for s in sessions]})
+                          "P4": p4, "P5": p5, "P6": p6, "G": G, "release": [s in rel_days for s in sessions]})
         f["z1"] = A.standardise(f["P1"].to_numpy())
         f["z2"], f["z3"] = m2["z2"].to_numpy(), m2["z3"].to_numpy()
         for k in ("4", "5", "6"):

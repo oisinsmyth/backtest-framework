@@ -451,13 +451,16 @@ def strip(st: dict) -> dict:
 
 
 def o0h_status(od) -> dict[str, Any]:
+    """Gate O0-H on the SAME denominator for both markets: ES's (gate0.json) is the share of the opening model's usable
+    sessions, so NQ's is the builder's `O0_H_alt.opening_model_usable_sessions` (its headline `O0_H` counts every
+    fut_index_sessions NQ day). Fixed 2026-09-28 before the NQ gates were computed. A missing key is None, never a pass."""
     g = json.loads((od / "gate0.json").read_text(encoding="utf-8"))
     es = bool(g["O0_H"]["ES"]["pass"])
     meta = R.REPO / "data" / "fixtures" / "fut_nq_options_eod.meta.json"
-    nq = None
+    nq, share = None, None
     if meta.exists():
         m = json.loads(meta.read_text(encoding="utf-8"))
-        gates = m.get("gates") or {}
-        o = gates.get("O0_H") or gates.get("o0h") or {}
-        nq = bool(o.get("pass")) if o else None
-    return {"ES": es, "NQ": nq, "both_pass": bool(es and nq)}
+        o = ((m.get("gates") or {}).get("O0_H_alt") or {}).get("opening_model_usable_sessions") or {}
+        if "passes" in o:
+            nq, share = bool(o["passes"]), o.get("share")
+    return {"ES": es, "NQ": nq, "NQ_share_of_usable_sessions": share, "both_pass": bool(es and nq)}
