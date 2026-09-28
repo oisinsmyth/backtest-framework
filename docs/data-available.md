@@ -556,6 +556,7 @@ date month/day/year and the builder normalises and checks it against the report 
 | `data/raw/binance` | 279 | 486 MB | crypto |
 | `data/raw/cftc` | 84 | 21 MB | COT |
 | `data/raw/databento` | 129 | 111 GB | **the futures, above** |
+| `data/raw/squeezemetrics` | 3 | 0.2 MB | **SqueezeMetrics DIX/GEX daily** (SPX-complex dealer gamma, naive sign; the dark-pool index), 2011-05-02 → 2026-09-28, 3,875 rows, sha256 `0dee331a…`, downloaded 2026-09-28 with provenance in `DIX.meta.json`. **Licensed, and never tracked** ([licence note](research/licences/squeezemetrics-dix-gex.md)): the data and any per-date series from it stay in gitignored paths; code and results may be tracked. Credit SqueezeMetrics. Runners read dates before 2025-03-01 only |
 | `data/raw/robintrack` | 8,597 + archive | 4.0 GB | **Robinhood holder counts, hourly, 8,597 tickers, 2018-05-02 → 2020-08-13** (the Barber–Huang–Odean–Schwarz data); two ~10-day site outages ending 2019-01-30 and 2020-01-16; 959 / 512 / 341 names overlap the three daily fixtures; the 504 MB `.tar.gz` from robintrack-data.ameo.design is kept beside the extraction. Re-fetchable while the mirror lives; treat as not |
 
 ---
