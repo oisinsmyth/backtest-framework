@@ -22,6 +22,13 @@ htmlcov/
 # cache contract. `/data/raw/*` + a negation, because a directory rule cannot be re-included.
 /data/raw/*
 !/data/raw/README.md
+# SqueezeMetrics DIX/GEX (docs/research/licences/squeezemetrics-dix-gex.md): no redistribution, including in public
+# repositories, of the data or lightly transformed versions; the public cut ships every tracked file, so no
+# DIX/GEX-derived per-date file may ever be tracked.
+**/*dix*.csv*
+**/*gex*.csv*
+**/*dix*.parquet
+**/*gex*.parquet
 *.sqlite
 *.sqlite3
 trial_registry.csv
