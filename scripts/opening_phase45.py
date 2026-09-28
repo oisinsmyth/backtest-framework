@@ -45,6 +45,7 @@ R: Any = None  # the runner module (run_opening_stages), injected by it
 AGENT_STAGES = (("S-B", "a7"), ("S-C", "z1"), ("S-D", "z2"), ("S-E", "z3"), ("S-F", "z5"), ("S-G", "z6"),
                 ("S-H", "z4"))
 PRESSURES = ("z1", "z2", "z3", "z4", "z5", "z6")
+Z5_CAP = 5.0  # OA-A9: z5 clipped to [-5, +5] before it is multiplied by d0
 RETAIN_LL = 0.02
 S_I_TOL = 0.01
 N_BOOT_AUC = 2000
@@ -58,7 +59,10 @@ def load_agents(od) -> dict[str, pd.DataFrame]:
     a7 = pd.read_csv(od / "a7.csv", encoding="utf-8", dtype={"session": str}) if (od / "a7.csv").exists() else None
     out = {}
     for r in R.ROOTS:
-        x = a[a["root"] == r].set_index("session")[list(PRESSURES)]
+        x = a[a["root"] == r].set_index("session")[list(PRESSURES)].copy()
+        x["z5"] = x["z5"].clip(-Z5_CAP, Z5_CAP)  # OA-A9 (NaN stays NaN)
+        if (x["z5"].abs() > Z5_CAP).any():
+            raise RuntimeError("OA-A9: z5 beyond its cap after the clip")
         if a7 is not None:
             y = a7[a7["root"] == r].set_index("session")[[f"a7_{t}" for t in R.CHECKPOINTS]]
             x = x.join(y, how="left")
