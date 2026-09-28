@@ -1,0 +1,66 @@
+{
+ "series": "per-session policy net, bp (v2_sessions.csv)",
+ "ledger_root": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework",
+ "V2-C": {
+  "missing": [
+   "prop entry #2 (MACD day-session arm): its daily P&L is not on disk"
+  ],
+  "K1": {
+   "rho": 0.0615,
+   "n_days": 1627
+  },
+  "K2": {
+   "rho": 0.1008,
+   "n_days": 1627
+  },
+  "K3": {
+   "rho": 0.077,
+   "n_days": 1627
+  },
+  "K4": {
+   "rho": 0.0982,
+   "n_days": 1627
+  },
+  "K5": {
+   "rho": 0.0496,
+   "n_days": 1627
+  },
+  "K6": {
+   "rho": 0.0084,
+   "n_days": 1627
+  }
+ },
+ "V2-F": {
+  "missing": [
+   "prop entry #2 (MACD day-session arm): its daily P&L is not on disk"
+  ],
+  "K1": {
+   "rho": -0.0374,
+   "n_days": 1439
+  },
+  "K2": {
+   "rho": 0.0555,
+   "n_days": 1439
+  },
+  "K3": {
+   "rho": 0.0561,
+   "n_days": 1439
+  },
+  "K4": {
+   "rho": 0.0157,
+   "n_days": 1439
+  },
+  "K5": {
+   "rho": -0.0459,
+   "n_days": 1439
+  },
+  "K6": {
+   "rho": -0.0068,
+   "n_days": 1439
+  }
+ },
+ "V2-F_vs_V2-C": {
+  "rho": -0.1078,
+  "n_days": 1704
+ }
+}
