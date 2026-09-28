@@ -246,6 +246,31 @@
   - Report: `docs/results/SHOCK_CLASSIFIER_REPORT.md`.
 - Not answered: a flow-signed classifier (aggressor data never in-sample, SC-A3). Nothing here argues for buying it.
 
+## Opening agent-state model — opened 2026-09-28 (the principal: "Open it")
+
+- **Spec:** `docs/internal/User-Doc-Deposit/OPENING_AGENT_STATE_PREREG.md` v1.1 (read-only; untracked in the main
+  checkout).
+- **Amendments:** `docs/internal/OPENING_AGENT_STATE_AMENDMENTS.md`:
+  - OA-A1: the A10 split and D592's paths; H-O2 already holds registry slot 7.
+  - The opening facts.
+  - **OA-A2–A5 ruled 2026-09-28:**
+    - prior reads run as written, disclosed;
+    - A7 from Sierra Chart tick data, one contract at a time;
+    - A6 from Alpha Vantage 1-minute SPY/QQQ;
+    - costs: D508 + one tick, checked forward.
+- **Work is in the worktree `.claude/worktrees/after-d643` (branch `wt/after-d643`)** while another agent works in
+  main.
+- **In progress:**
+  - SPY/QQQ fetch (`scripts/fetch_opening_etf_1min.py`, into the main checkout's `data/raw/alphavantage/1min/`);
+  - one Sierra ES contract (ESH19) downloaded to size the A7 pull against 139 GB free.
+- **Next:**
+  - Phase 0b: the vault guard over the new inputs (test 18).
+  - Phase 1 / Gate O0:
+    - ES/NQ 08:00–16:00 plus overnight bars from the raw `ohlcv-1m`;
+    - labels and the label-frequency report;
+    - SPY alignment;
+    - O0-H on the ES fixture and a new NQ options fixture.
+
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
 **The standard, the principal's, 2026-09-24:**
