@@ -103,7 +103,7 @@ def main():
                 crow.append({"year": r["year"], "nss_formation": float(c0.iloc[-1]["nss"]), "nss_end": float(c1.iloc[-1]["nss"]), "ret": wins.get(r["year"])})
         rho_f, p_f, _ = R68.perm_p([q["nss_formation"] for q in crow], [q["ret"] for q in crow]); rho_c, p_c, _ = R68.perm_p([q["nss_end"] - q["nss_formation"] for q in crow], [q["ret"] for q in crow], seed=1)
         cot_diag = {"rows": crow, "spearman_formation_vs_ret": rho_f, "p": p_f, "spearman_change_vs_ret": rho_c, "p_change": p_c, "mean_change": float(np.mean([q["nss_end"] - q["nss_formation"] for q in crow])) if crow else None}
-        declared = {"placement": m_dec, "months": prof[m_dec]["months"], "pair_first_window": prof[m_dec]["pair_first_window"], "usd_per_point": upp, "tick_usd": tick_usd,
+        declared = {"placement": m_dec, "pair_first_window": prof[m_dec]["pair_first_window"], "usd_per_point": upp, "tick_usd": tick_usd,
                     "gross": R55.stats_block(x[wP], dP_days, f"{root} m{m_dec}"), "net": R55.stats_block(xn[wP], dP_days, f"{root} m{m_dec} net"), "gross_long": R55.stats_block(x[wL], dL_days, f"{root} m{m_dec} 2011-23"),
                     "months": {"n": int(len(mret)), "mean": float(mret.mean()), "median": float(mret.median()), "hit": float((mret > 0).mean()), "worst": float(mret.min()), "best": float(mret.max())} if len(mret) else None,
                     "months_long": {"n": int(len(mretL)), "mean": float(mretL.mean()), "median": float(mretL.median()), "hit": float((mretL > 0).mean()), "worst": float(mretL.min())} if len(mretL) else None,

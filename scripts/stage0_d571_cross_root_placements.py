@@ -126,7 +126,7 @@ def main():
         R61._expect_raise(lambda: R65.audit_sign_in_money(np.roll(pnl, 1), dP1, dP2, mask, upp), "sign audit on a mislagged grid"); audits["sign_raises"] = True
         audits["right_quantity_changes"] = R68.audit_right_quantity(mask, days)
         R61._expect_raise(lambda: R68.audit_right_quantity(np.arange(T) % 2 == 0, days), "right-quantity on a daily grid"); audits["right_quantity_raises"] = True
-        declared = {"placement": m_dec, "months": prof[m_dec]["months"], "pair_first_window": prof[m_dec]["pair_first_window"], "usd_per_point": upp, "tick_usd": tick_usd,
+        declared = {"placement": m_dec, "pair_first_window": prof[m_dec]["pair_first_window"], "usd_per_point": upp, "tick_usd": tick_usd,
                     "gross": R55.stats_block(x[wP], dP_days, f"{root} m{m_dec}"), "net": R55.stats_block(xn[wP], dP_days, f"{root} m{m_dec} net"), "gross_long": R55.stats_block(x[wL], dL_days, f"{root} m{m_dec} 2011-23"),
                     "months": {"n": int(len(mret)), "mean": float(mret.mean()), "median": float(mret.median()), "hit": float((mret > 0).mean()), "worst": float(mret.min()), "best": float(mret.max())} if len(mret) else None,
                     "months_long": {"n": int(len(mretL)), "mean": float(mretL.mean()), "median": float(mretL.median()), "hit": float((mretL > 0).mean()), "worst": float(mretL.min())} if len(mretL) else None,

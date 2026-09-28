@@ -120,3 +120,35 @@ data/d382_scores.npz
 # number, in writing, like every other decision here.
 /working/PORTFOLIO_PLAN.md
 /working/REVIEW_REMEDIATION_PLAN.md
+
+# working/ SCRATCH LEAVES THE INDEX (2026-09-28). working/README.md's own rule is that a file
+# here moves on "when it stops being needed -- it does not linger", and 137 tracked files say
+# that did not happen. A clone was receiving 87 one-off diagnostics, drafts, CSVs, logs and
+# PNGs, which is noise in the one directory a reader is least able to interpret.
+#
+# THE SPLIT IS NOT "ALL OF working/", and the reason is mechanical rather than aesthetic: 31
+# markdown links in tracked documents point in here -- six decision records, PICKUP.md and four
+# pages under docs/research/. Dropping their targets would redden check_doc_links.py, and the
+# alternative, editing six decision records to remove citations, is the one thing this
+# repository does not do to a dated record. So everything cited stays, and so does the leads*/
+# research corpus those pages are built on (43 documents, an argued body of work rather than
+# scratch). What leaves is what nothing references.
+#
+# Nothing is deleted: every file stays on disk, and the history keeps every version committed
+# up to here. The cost is that FUTURE edits to the untracked ones are no longer backed up by a
+# push, which is the trade working/README.md's "losing in-flight work is expensive" was pointing
+# at -- so finished work should now actually move to temp/ rather than sit here.
+/working/*
+!/working/README.md
+!/working/leads/
+!/working/leads2/
+!/working/leads3/
+!/working/leads4/
+!/working/leads5/
+!/working/leads6/
+!/working/AUDIT-flat-id-map-exposure.md
+!/working/avenue3_leveraged_etf_reset.py
+!/working/avenue3_window_check.py
+!/working/orb_premise_checks.py
+!/working/orb_check2_diagnostics.py
+!/working/orb_drift_control.py

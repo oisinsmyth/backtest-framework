@@ -1,7 +1,7 @@
 # Design Decision Records
 
 One record per design call. D1–D49 were migrated from the original running log in
-[`DESIGN_DECISIONS.md`](../../DESIGN_DECISIONS.md) (kept as a historical snapshot); everything
+[`DESIGN_DECISIONS.md`](../planning/DESIGN_DECISIONS.md) (kept as a historical snapshot); everything
 since was written here.
 
 > **This index is complete, and a test says so.** It has two halves, because they do different

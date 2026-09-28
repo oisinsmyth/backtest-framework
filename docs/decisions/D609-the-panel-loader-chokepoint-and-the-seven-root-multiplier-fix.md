@@ -381,11 +381,11 @@ fixture, not a property of the file, so the two counts are NOT asserted equal.
 
 ## Draft `docs/data-available.md` paragraph (for the integrator)
 
-> **The definition snapshot's scaling, corrected ([D609](decisions/D609-the-panel-loader-chokepoint-and-the-seven-root-multiplier-fix.md), 2026-09-22).**
-> [`fut_specs_from_definition.json`](../data/fut_specs_from_definition.json) now carries
+> **The definition snapshot's scaling, corrected ([D609](D609-the-panel-loader-chokepoint-and-the-seven-root-multiplier-fix.md), 2026-09-22).**
+> [`fut_specs_from_definition.json`](../../data/fut_specs_from_definition.json) now carries
 > `tick_usd_raw_formula`, `scaling_divisor`, `scaling_reason` and **`tick_usd_full_contract`**
 > per root, the divisor decided by the same NOTIONAL test
-> [`build_fut_breadth_hourly.py`](../scripts/build_fut_breadth_hourly.py) has used since D519.
+> [`build_fut_breadth_hourly.py`](../../scripts/build_fut_breadth_hourly.py) has used since D519.
 > **Read `tick_usd_full_contract`, never `tick_usd`:** the original field divides by 100 on
 > `unit_of_measure == "USD"` alone and is 100x high on ZC, ZS, ZW, ZL, LE, HE (cents per bushel
 > or per pound) and 100x low on SR3, all seven of them with `known_tick_usd: null`. It is kept

@@ -75,8 +75,9 @@ SAME_LINE_ONLY = True
 #: it, and `docs/internal/AUDIT_REPORT.md` alone holds 64 citations.
 FROZEN = (
     "docs/internal/",
-    "VERIFICATION_SCHEME.md",
-    "DESIGN_DECISIONS.md",
+    # the pre-implementation planning snapshots, which moved out of the repository root into one
+    # directory; this matched them by bare filename before the move
+    "docs/planning/",
     "CHANGELOG.md",
     "working/",  # scaffolding for the repack, not part of the record it plans
     # DECISION RECORDS ARE DATED STATEMENTS, and there are two reasons this gate must not touch

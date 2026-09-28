@@ -2,7 +2,7 @@
 
 Unlike [decisions](decisions/README.md), these aren't one-time calls — they're constraints
 that apply continuously across the project's life. Originally logged as R1–R4 in
-[`DESIGN_DECISIONS.md`](../DESIGN_DECISIONS.md). Add new rules here as R5, R6, ...
+[`DESIGN_DECISIONS.md`](planning/DESIGN_DECISIONS.md). Add new rules here as R5, R6, ...
 
 These are specific and binding. For the underlying values that generated them — useful when
 a new situation isn't covered by an existing rule — see [`../PHILOSOPHY.md`](../PHILOSOPHY.md).

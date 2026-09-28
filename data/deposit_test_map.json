@@ -1505,7 +1505,7 @@
       "claim": {
         "kind": "function",
         "file": "tests/unit/test_error_budget.py",
-        "line": 444,
+        "line": 454,
         "symbol": "test_index_20_stage_reordering_requires_a_matching_decision_log_entry"
       },
       "covered_via": null,

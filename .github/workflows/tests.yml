@@ -4,13 +4,18 @@
 # (PHILOSOPHY.md), and a suite that only ever runs on the author's laptop is convention. This
 # workflow is the structure.
 #
-# WHAT A RUNNER DOES NOT HAVE: most of the bulk data panels. D536 dropped 115 of them (844 MB)
-# from the index; D538 brought the two smallest back (6.9 MB, already in history, so no extra
-# clone bytes), which took the skips from 136 to 49. 53 skip here (2026-09-17) for
-# want of a panel, named individually by the skip reason and
-# recoverable from data/data_manifest.json. Every golden master, every property test and the
-# vectorbt cross-engine reconciliation run on a clone, because they use synthetic bars or a small
-# tracked .csv.
+# WHAT A RUNNER DOES NOT HAVE: ANY of the bulk data panels. Measured in a fresh clone on
+# 2026-09-28, not assumed: of the 134 panels data/data_manifest.json lists, a clone receives
+# ZERO -- 0 csv.gz, 0 parquet, 0 npz. This comment used to say "D538 brought the two smallest
+# back" and "53 skip here (2026-09-17)"; both were stale. .gitignore's only negations are two
+# README files, so no panel is tracked at all, and the real figure is 337 skips.
+#
+# That is why two gates are written to SKIP rather than assert when the panels are absent
+# (tests/unit/test_panels.py's hollow-header meta-test is the one that failed here for months
+# because it was written the other way round). Every golden master, every property test and the
+# vectorbt cross-engine reconciliation still run on a clone, because they use synthetic bars.
+# Panel-dependent tests name the missing file in their skip reason and data/data_manifest.json
+# carries its sha256 and git blob id, so a skip is recoverable rather than silent.
 #
 # NETWORK: none. The 5 tests marked `live_fetch` are excluded by the `addopts` in pyproject.toml,
 # which is D24's cross-cutting gate ("CI runs offline"), not a decision taken here.

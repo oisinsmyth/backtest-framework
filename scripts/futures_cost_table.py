@@ -42,6 +42,10 @@ from pathlib import Path
 from typing import Any
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO / "src"))
+
+from backtest_framework.validation.frozen import sha256_file  # noqa: E402
+
 OUT = REPO / "data" / "futures_costs.json"
 
 
@@ -80,9 +84,17 @@ SCRIPTS = {
 
 
 def sha256(path: Path) -> str:
-    h = hashlib.sha256()
-    h.update(path.read_bytes())
-    return h.hexdigest()
+    """LF-pinned, so a source's digest is a fact about its CONTENT and not about the checkout.
+
+    This hashed `path.read_bytes()` raw until 2026-09-28, which made the committed table a
+    statement about the author's newline policy. Two of the six cited sources
+    (`run_d533_story_conditions.py`, `run_d555_tsmom_replication.py`) sit in the index with LF and
+    land on this Windows worktree as CRLF, so the table built here disagreed with the table built
+    from any LF checkout -- every GitHub Actions run and every fresh clone. That is exactly the
+    defect D550/D551 named, and `frozen.sha256_file(text_normalise=True)` is the fix the repository
+    already owns; rolling a second hasher here is what routed around it.
+    """
+    return sha256_file(path, text_normalise=True)
 
 
 class Sources:
