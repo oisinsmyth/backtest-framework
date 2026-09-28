@@ -7,8 +7,9 @@
 **Merged:** branch `wt/after-d643` fast-forwarded `main` to `7b3ad26` (PR #1, all CI green). Findings are in
 `docs/FINDINGS.md` §83–§87.
 
-**Gitignored data that exists only in the `.claude/worktrees/after-d643` worktree.** Copy it into the main checkout's
-`data/` before anything there reads it; the manifest holds each hash:
+**Gitignored data built in the `.claude/worktrees/after-d643` worktree, COPIED to the main checkout's `data/` on
+2026-09-28** (the two fixtures match their manifest hashes; the CL bars and the trades job are byte-identical to the
+worktree's). A fresh clone still has to rebuild or copy them:
 - `data/fixtures/fut_opening_globex_1m.csv.gz` (D644);
 - `data/fixtures/fut_nq_options_eod.csv.gz` (A4, S-H);
 - `data/cl_minute_bars.csv.gz` (D648);
