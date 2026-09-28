@@ -109,3 +109,9 @@ that the study was not dead on commission. Its kill 2 was always the test that w
 one-tick-pinned book the queue at the touch grows as volatility falls, so touch depth mixes calm with liquidity.
 One year, all of it inside the vault window. Quoted spread is a floor on what an aggressor pays. Commission is
 declared, never measured (D591).
+
+## 6. The principal's ruling, 2026-09-28
+
+"No pull for the handoff." Branch (c) is taken as recommended: no pre-vault `tbbo` or `bbo-1m` pull is quoted or
+submitted for the session-handoff study, so its kill 2 (realised spread against normal hours) stays unscored and
+`SESSION_HANDOFF_LIQUIDITY.md` ends here on its measured premise. The map stays as cost infrastructure.
