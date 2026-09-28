@@ -294,7 +294,7 @@
   - **Per traded day (35% confident): MDE 3.10 bp at t = 2 against the 2.79 bp cost: UNDERPOWERED.** A policy
     whose edge only covers the cost cannot be told from zero.
 - **Next:**
-  - The stage pre-registration (S-A → S-I, H-O1/H-O3 first), carrying POWER's labels.
+  - **D645 PRE-REG committed (`17c2b05`)**: Phases 3–5, H-O2 tested at t ≥ 2 with POWER's labels travelling (the principal). Next: the runner (`--selftest`, `--dry-run`), then `--run --phase 3` (S-A); Phase 4–5 after A7.
   - A7 comes after the Sierra pull and its check against the exchange flag.
   - The NQ options fixture (O0-H, S-H).
   - Phase 0b: the vault guard over the new inputs (test 18).
