@@ -107,3 +107,25 @@ the grains excluded, and to write it before any price is read: short the receivi
 contract into the outside-window drain of the last week before first notice, flat before the expiring month's first
 notice day, personal book, price nulls on the construction's own placements, costs from D651's map, forward power
 stated. The principal decides whether it is written.
+
+## 7. ADDENDUM 2026-09-28 — the diagnostic is not evidence against the early drainers; the ranking the pre-registration uses
+
+Laid out root by root for the principal, §3's diagnostic (the cycle test at d = −10) turns out to reject by
+construction any root that is already half drained by then — copper and every grain hold only 43–60 % of their
+d = −30 open interest at d = −10 (§2's profiles) — so their 0–7 cycles under it say nothing about their flow. The
+fair comparison is the as-run numbers with the size test year by year:
+
+| root | M5 median | years below 0.10 of 8 | roll share | reading |
+|---|---:|---:|---:|---|
+| GC | 0.247 | 0 (0.18–0.37) | 0.86 | core |
+| SI | 0.231 | 0 (0.17–0.28) | 0.85 | core |
+| HG | 0.126 | 0 (0.11–0.20) | 0.68 | candidate: clean, half gold's size |
+| 6C | 0.387 | 0 (0.29–0.48) | 1.13 | marginal: hedge leg 0.065 against 0.05; 30 % held to delivery |
+| ZC | 0.133 | 1 | 0.55 | outer: excluded from the pre-registration |
+| ZS | 0.123 | 2 | 0.54 | excluded |
+| ZW, ZM | 0.106, 0.102 | 3, 3 | 0.61, 0.54 | excluded |
+| ZL, HO, RB | 0.096, 0.080, 0.078 | 6, 7, 8 | — | fail Q4 |
+
+§6's recommendation is widened accordingly, and fixed here before any price is read: **GC and SI are the primary**,
+**HG and 6C are declared secondary cells**, and the grains are excluded on their size record. The pre-registration
+is [D654](D654-PRE-REG-selling-the-metals-roll-after-first-notice.md).
