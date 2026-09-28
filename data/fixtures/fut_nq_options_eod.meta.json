@@ -1,0 +1,1190 @@
+{
+ "spec": "NQ mirror of D581/D616 for the opening model's A4 (S-H) and Gate O0-H",
+ "builder": "scripts/build_fut_nq_options_eod.py",
+ "built_utc": "2026-09-28T10:44:55Z",
+ "rows": 5299503,
+ "sessions": 2278,
+ "first": "2016-01-04",
+ "last": "2025-02-28",
+ "columns": [
+  "session",
+  "raw_symbol",
+  "family",
+  "right",
+  "strike",
+  "expiry_date",
+  "expiry_hhmm",
+  "underlying",
+  "oi",
+  "settle",
+  "oi_pub_et",
+  "oi_ref_session"
+ ],
+ "families": {
+  "NQ": 1497493,
+  "QNE": 1075704,
+  "QN3": 1017149,
+  "QN1": 398593,
+  "QN4": 393819,
+  "QN2": 357092,
+  "Q3C": 63553,
+  "Q2C": 63116,
+  "Q4C": 62478,
+  "Q2A": 60951,
+  "Q1C": 58914,
+  "Q3A": 54203,
+  "Q3D": 27144,
+  "Q2D": 26683,
+  "Q3B": 25807,
+  "Q2B": 24939,
+  "Q1D": 24079,
+  "Q1B": 23760,
+  "Q4B": 23336,
+  "Q4D": 20690
+ },
+ "family_resolution": {
+  "NQ": {
+   "options": 62468,
+   "expiry_hhmm": {
+    "09:30": 58988,
+    "17:00": 3480
+   },
+   "expiry_weekday": {
+    "Fri": 62468
+   },
+   "first_expiry": "2016-01-15",
+   "last_expiry_defined": "2029-12-21",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q1B": {
+   "options": 21298,
+   "expiry_hhmm": {
+    "16:00": 21298
+   },
+   "expiry_weekday": {
+    "Tue": 21298
+   },
+   "first_expiry": "2022-10-04",
+   "last_expiry_defined": "2025-03-04",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q1C": {
+   "options": 40004,
+   "expiry_hhmm": {
+    "16:00": 39266,
+    "13:00": 738
+   },
+   "expiry_weekday": {
+    "Wed": 40004
+   },
+   "first_expiry": "2021-05-05",
+   "last_expiry_defined": "2025-03-05",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q1D": {
+   "options": 21544,
+   "expiry_hhmm": {
+    "16:00": 21544
+   },
+   "expiry_weekday": {
+    "Thu": 21544
+   },
+   "first_expiry": "2022-10-06",
+   "last_expiry_defined": "2025-03-06",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q2A": {
+   "options": 40414,
+   "expiry_hhmm": {
+    "16:00": 40414
+   },
+   "expiry_weekday": {
+    "Mon": 40414
+   },
+   "first_expiry": "2021-05-10",
+   "last_expiry_defined": "2025-03-10",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q2B": {
+   "options": 21346,
+   "expiry_hhmm": {
+    "16:00": 21346
+   },
+   "expiry_weekday": {
+    "Tue": 21346
+   },
+   "first_expiry": "2022-10-11",
+   "last_expiry_defined": "2025-03-11",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q2C": {
+   "options": 41142,
+   "expiry_hhmm": {
+    "16:00": 41142
+   },
+   "expiry_weekday": {
+    "Wed": 41142
+   },
+   "first_expiry": "2021-04-14",
+   "last_expiry_defined": "2025-03-12",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q2D": {
+   "options": 21812,
+   "expiry_hhmm": {
+    "16:00": 21812
+   },
+   "expiry_weekday": {
+    "Thu": 20928,
+    "Wed": 884
+   },
+   "first_expiry": "2022-10-13",
+   "last_expiry_defined": "2025-03-13",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q3A": {
+   "options": 35144,
+   "expiry_hhmm": {
+    "16:00": 35144
+   },
+   "expiry_weekday": {
+    "Mon": 30862,
+    "Tue": 4282
+   },
+   "first_expiry": "2021-04-19",
+   "last_expiry_defined": "2025-03-17",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q3B": {
+   "options": 21538,
+   "expiry_hhmm": {
+    "16:00": 21538
+   },
+   "expiry_weekday": {
+    "Tue": 21538
+   },
+   "first_expiry": "2022-10-18",
+   "last_expiry_defined": "2025-02-18",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q3C": {
+   "options": 39344,
+   "expiry_hhmm": {
+    "16:00": 39344
+   },
+   "expiry_weekday": {
+    "Wed": 39344
+   },
+   "first_expiry": "2021-04-21",
+   "last_expiry_defined": "2025-02-19",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q3D": {
+   "options": 21100,
+   "expiry_hhmm": {
+    "16:00": 21100
+   },
+   "expiry_weekday": {
+    "Thu": 21100
+   },
+   "first_expiry": "2022-10-20",
+   "last_expiry_defined": "2025-02-20",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q4B": {
+   "options": 20388,
+   "expiry_hhmm": {
+    "16:00": 19702,
+    "13:00": 686
+   },
+   "expiry_weekday": {
+    "Tue": 20388
+   },
+   "first_expiry": "2022-10-25",
+   "last_expiry_defined": "2025-02-25",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q4C": {
+   "options": 39138,
+   "expiry_hhmm": {
+    "16:00": 39138
+   },
+   "expiry_weekday": {
+    "Wed": 39138
+   },
+   "first_expiry": "2021-04-28",
+   "last_expiry_defined": "2025-02-26",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "Q4D": {
+   "options": 18160,
+   "expiry_hhmm": {
+    "16:00": 18160
+   },
+   "expiry_weekday": {
+    "Thu": 18160
+   },
+   "first_expiry": "2022-10-27",
+   "last_expiry_defined": "2025-02-27",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "QN1": {
+   "options": 101600,
+   "expiry_hhmm": {
+    "16:00": 101600
+   },
+   "expiry_weekday": {
+    "Fri": 98780,
+    "Thu": 2820
+   },
+   "first_expiry": "2016-02-05",
+   "last_expiry_defined": "2025-04-04",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "QN2": {
+   "options": 97568,
+   "expiry_hhmm": {
+    "16:00": 97568
+   },
+   "expiry_weekday": {
+    "Fri": 95982,
+    "Thu": 1586
+   },
+   "first_expiry": "2016-01-08",
+   "last_expiry_defined": "2025-03-14",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "QN3": {
+   "options": 91098,
+   "expiry_hhmm": {
+    "16:00": 91098
+   },
+   "expiry_weekday": {
+    "Fri": 89306,
+    "Thu": 1792
+   },
+   "first_expiry": "2016-08-19",
+   "last_expiry_defined": "2025-06-20",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "QN4": {
+   "options": 89510,
+   "expiry_hhmm": {
+    "16:00": 82436,
+    "13:00": 7074
+   },
+   "expiry_weekday": {
+    "Fri": 87172,
+    "Thu": 2338
+   },
+   "first_expiry": "2016-01-22",
+   "last_expiry_defined": "2025-03-28",
+   "underlying_roots": [
+    "NQ"
+   ]
+  },
+  "QNE": {
+   "options": 128776,
+   "expiry_hhmm": {
+    "16:00": 127312,
+    "13:00": 1464
+   },
+   "expiry_weekday": {
+    "Fri": 50006,
+    "Thu": 23456,
+    "Tue": 19972,
+    "Mon": 18400,
+    "Wed": 16942
+   },
+   "first_expiry": "2015-12-31",
+   "last_expiry_defined": "2025-12-31",
+   "underlying_roots": [
+    "NQ"
+   ]
+  }
+ },
+ "inputs": {
+  "jobs": "data\\prelapse_options_pull_jobs_nq.json",
+  "raw_dir": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\raw\\databento",
+  "statistics": [
+   "GLBX-20260927-DRL6KF4Y4P",
+   "GLBX-20260927-HWHPE3JVVE",
+   "GLBX-20260927-M4EHPBJFS9"
+  ],
+  "definition": [
+   "GLBX-20260927-YBS8DQGJWJ"
+  ],
+  "files_read": {
+   "defs": [
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20160101-20161231.definition.dbn.zst",
+     "rows_in": 3011560,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20170101-20171231.definition.dbn.zst",
+     "rows_in": 3560310,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20180101-20181231.definition.dbn.zst",
+     "rows_in": 5076480,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20190101-20191231.definition.dbn.zst",
+     "rows_in": 2887242,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20200101-20201231.definition.dbn.zst",
+     "rows_in": 3831225,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20210101-20211231.definition.dbn.zst",
+     "rows_in": 6460778,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20220101-20221231.definition.dbn.zst",
+     "rows_in": 5651264,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20230101-20231231.definition.dbn.zst",
+     "rows_in": 4733741,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20240101-20241231.definition.dbn.zst",
+     "rows_in": 5963239,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-YBS8DQGJWJ",
+     "file": "glbx-mdp3-20250101-20251231.definition.dbn.zst",
+     "rows_in": 2000000,
+     "monotone": true,
+     "stopped_at_cutoff": true
+    }
+   ],
+   "stats": [
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20160101-20161231.statistics.dbn.zst",
+     "rows_in": 125160092,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20170101-20171231.statistics.dbn.zst",
+     "rows_in": 90703660,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20180101-20181231.statistics.dbn.zst",
+     "rows_in": 180877141,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20190101-20191231.statistics.dbn.zst",
+     "rows_in": 133160450,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20200101-20201231.statistics.dbn.zst",
+     "rows_in": 312907328,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20210101-20211231.statistics.dbn.zst",
+     "rows_in": 402477568,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-HWHPE3JVVE",
+     "file": "glbx-mdp3-20210101-20211231.statistics.dbn.zst",
+     "rows_in": 31288529,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-M4EHPBJFS9",
+     "file": "glbx-mdp3-20210101-20211231.statistics.dbn.zst",
+     "rows_in": 64201007,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20220101-20221231.statistics.dbn.zst",
+     "rows_in": 302917042,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-HWHPE3JVVE",
+     "file": "glbx-mdp3-20220101-20221231.statistics.dbn.zst",
+     "rows_in": 55818949,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-M4EHPBJFS9",
+     "file": "glbx-mdp3-20220101-20221231.statistics.dbn.zst",
+     "rows_in": 101898318,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20230101-20231231.statistics.dbn.zst",
+     "rows_in": 155346866,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-HWHPE3JVVE",
+     "file": "glbx-mdp3-20230101-20231231.statistics.dbn.zst",
+     "rows_in": 51118008,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-M4EHPBJFS9",
+     "file": "glbx-mdp3-20230101-20231231.statistics.dbn.zst",
+     "rows_in": 73743274,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20240101-20241231.statistics.dbn.zst",
+     "rows_in": 196069838,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-HWHPE3JVVE",
+     "file": "glbx-mdp3-20240101-20241231.statistics.dbn.zst",
+     "rows_in": 71138988,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-M4EHPBJFS9",
+     "file": "glbx-mdp3-20240101-20241231.statistics.dbn.zst",
+     "rows_in": 102302833,
+     "monotone": true,
+     "stopped_at_cutoff": false
+    },
+    {
+     "job": "GLBX-20260927-DRL6KF4Y4P",
+     "file": "glbx-mdp3-20250101-20251231.statistics.dbn.zst",
+     "rows_in": 40000000,
+     "monotone": true,
+     "stopped_at_cutoff": true
+    },
+    {
+     "job": "GLBX-20260927-HWHPE3JVVE",
+     "file": "glbx-mdp3-20250101-20251231.statistics.dbn.zst",
+     "rows_in": 20000000,
+     "monotone": true,
+     "stopped_at_cutoff": true
+    },
+    {
+     "job": "GLBX-20260927-M4EHPBJFS9",
+     "file": "glbx-mdp3-20250101-20251231.statistics.dbn.zst",
+     "rows_in": 20000000,
+     "monotone": true,
+     "stopped_at_cutoff": true
+    }
+   ]
+  }
+ },
+ "calendar": "fut_index_sessions.csv.gz, root NQ, bars >= 380 (as ES's builder uses ES's), 2016-01-04 -> 2025-02-28",
+ "usable_rule": "a publication is usable on the first NQ session whose 10:00 ET entry is strictly after its ts_event (D497/D521)",
+ "stat_types": {
+  "open_interest": 9,
+  "settlement": 3
+ },
+ "sentinels": "UNDEF on both; settlement == 0.0 dropped (D526)",
+ "vol_to_1530": "NOT BUILT: the NQ pull (statistics + definition) has no option bars, and A4 does not need it",
+ "oi_ref_session": "D616: the NQ session the open interest DESCRIBES, from the kept publication's ts_ref (midnight UTC on the business date). The kept publication is the last by ts_event.",
+ "not_pulled": "Q1A, Q4A and every Q5x family were not in the pull: Mondays of weeks 1, 4, 5 carry no same-day NQ expiry in this fixture (ES has E1A-E4A).",
+ "write": "strike rounded to 4 dp, settle to 6 dp, written at %.10g (ES wrote %.6g, which would round a deep-ITM NQ settle); gzip mtime pinned",
+ "vault": {
+  "last_session": "2025-02-28",
+  "last_oi_pub_et": "2025-02-28T09:57",
+  "reserved_from": "2025-03-01",
+  "passes": true
+ },
+ "gates": {
+  "VAULT": {
+   "last_session": "2025-02-28",
+   "last_oi_pub_et": "2025-02-28T09:57",
+   "reserved_from": "2025-03-01",
+   "passes": true
+  },
+  "G1": {
+   "negative_oi": 0,
+   "zero_or_negative_settle": 0,
+   "settle_missing": 11430,
+   "share_settle_missing": 0.0021568060250178175,
+   "passes": true
+  },
+  "G2": {
+   "rows": 5299503,
+   "published_before_entry": 1.0,
+   "passes": true
+  },
+  "G3": {
+   "first_expiry_by_family": {
+    "NQ": "2016-01-15",
+    "Q1B": "2022-11-01",
+    "Q1C": "2021-05-05",
+    "Q1D": "2022-10-06",
+    "Q2A": "2021-05-10",
+    "Q2B": "2022-10-11",
+    "Q2C": "2021-04-14",
+    "Q2D": "2022-10-13",
+    "Q3A": "2021-04-19",
+    "Q3B": "2022-10-18",
+    "Q3C": "2021-04-21",
+    "Q3D": "2022-10-20",
+    "Q4B": "2022-10-25",
+    "Q4C": "2021-04-28",
+    "Q4D": "2022-10-27",
+    "QN1": "2016-02-05",
+    "QN2": "2016-01-08",
+    "QN3": "2016-08-19",
+    "QN4": "2016-01-22",
+    "QNE": "2016-01-29"
+   },
+   "share_sessions_with_pm_0dte_by_weekday": {
+    "0": 0.22911694510739858,
+    "1": 0.2802547770700637,
+    "2": 0.4230769230769231,
+    "3": 0.2952586206896552,
+    "4": 0.9473684210526315
+   },
+   "share_by_weekday_since_2023": {
+    "0": 0.47959183673469385,
+    "1": 0.954954954954955,
+    "2": 0.944954128440367,
+    "3": 0.9541284403669725,
+    "4": 1.0
+   },
+   "share_fridays_with_0dte": 0.9473684210526315,
+   "fridays_without_pm_0dte": [
+    "2016-03-18",
+    "2016-06-17",
+    "2016-09-16",
+    "2016-12-16",
+    "2017-03-17",
+    "2017-06-16",
+    "2017-09-15",
+    "2017-12-15",
+    "2018-03-16",
+    "2018-06-15",
+    "2018-09-21",
+    "2018-12-21",
+    "2019-03-15",
+    "2019-06-21",
+    "2019-09-20",
+    "2019-12-20",
+    "2020-03-20",
+    "2020-06-19",
+    "2020-09-18",
+    "2020-12-18",
+    "2021-03-19",
+    "2021-06-18",
+    "2021-09-17",
+    "2021-12-17"
+   ],
+   "es_definition_any_same_day_expiry_fridays": 1.0,
+   "passes": false
+  },
+  "G4": {
+   "median_strikes_with_oi": 373.0,
+   "sessions_under_20": [],
+   "n_under_20": 0,
+   "passes": true
+  },
+  "G5": {
+   "sessions": [
+    {
+     "session": "2016-04-28",
+     "agree": true
+    },
+    {
+     "session": "2016-09-13",
+     "agree": true
+    },
+    {
+     "session": "2017-06-12",
+     "agree": true
+    },
+    {
+     "session": "2017-08-23",
+     "agree": true
+    },
+    {
+     "session": "2018-10-22",
+     "agree": true
+    },
+    {
+     "session": "2020-08-11",
+     "agree": true
+    },
+    {
+     "session": "2021-02-25",
+     "agree": true
+    },
+    {
+     "session": "2021-07-21",
+     "agree": true
+    },
+    {
+     "session": "2022-02-17",
+     "agree": true
+    },
+    {
+     "session": "2022-05-04",
+     "agree": true
+    }
+   ],
+   "passes": true
+  },
+  "G6": {
+   "near_money_rows_tried": 2881,
+   "share_inverting": 1.0,
+   "passes": true
+  },
+  "G7": {
+   "rows": 5299503,
+   "share_reference_is_an_nq_session": 0.9866519558532187,
+   "gap_sessions_histogram": {
+    "0": 3515,
+    "1": 5219759,
+    "2": 5491
+   },
+   "share_gap_exactly_one": 0.9982776047498788,
+   "share_reference_at_or_after_session": 0.0006632697443514986,
+   "adjacent_pairs": 4953496,
+   "share_pair_reference_span_one": 0.9715921845904387,
+   "share_pair_reference_span_zero_a_revision": 0.0018132648133762498,
+   "by_year": {
+    "2016": {
+     "rows": 288958,
+     "share_gap_one": 0.9995712896513504,
+     "share_unrecoverable": 0.00709791734438915
+    },
+    "2017": {
+     "rows": 316517,
+     "share_gap_one": 0.9998207592765076,
+     "share_unrecoverable": 0.012915577994230957
+    },
+    "2018": {
+     "rows": 440253,
+     "share_gap_one": 0.9955927411509041,
+     "share_unrecoverable": 0.031082127776528495
+    },
+    "2019": {
+     "rows": 468397,
+     "share_gap_one": 0.9964690180630782,
+     "share_unrecoverable": 0.011428339634967774
+    },
+    "2020": {
+     "rows": 714596,
+     "share_gap_one": 0.9950603020577032,
+     "share_unrecoverable": 0.028581184333525515
+    },
+    "2021": {
+     "rows": 914147,
+     "share_gap_one": 0.9999856726577,
+     "share_unrecoverable": 0.0074287833357217165
+    },
+    "2022": {
+     "rows": 886634,
+     "share_gap_one": 0.9999615661999598,
+     "share_unrecoverable": 0.002251210758892621
+    },
+    "2023": {
+     "rows": 587477,
+     "share_gap_one": 0.996884086646823,
+     "share_unrecoverable": 0.010667651669767497
+    },
+    "2024": {
+     "rows": 597335,
+     "share_gap_one": 0.9999575826163382,
+     "share_unrecoverable": 0.01331581106079503
+    },
+    "2025": {
+     "rows": 85189,
+     "share_gap_one": 1.0,
+     "share_unrecoverable": 0.025003228116306096
+    }
+   },
+   "passes": true
+  },
+  "O0_H": {
+   "denominator": "fut_index_sessions NQ days, all, 2016-01-04 -> 2025-02-28 (the brief's denominator)",
+   "sessions": 2362,
+   "with_oi_and_settle": 2278,
+   "share": 0.9644369178662151,
+   "per_year": {
+    "2016": {
+     "sessions": 258,
+     "share": 0.9728682170542635
+    },
+    "2017": {
+     "sessions": 257,
+     "share": 0.9649805447470817
+    },
+    "2018": {
+     "sessions": 257,
+     "share": 0.9610894941634242
+    },
+    "2019": {
+     "sessions": 258,
+     "share": 0.9651162790697675
+    },
+    "2020": {
+     "sessions": 259,
+     "share": 0.9498069498069498
+    },
+    "2021": {
+     "sessions": 258,
+     "share": 0.9728682170542635
+    },
+    "2022": {
+     "sessions": 258,
+     "share": 0.9689922480620154
+    },
+    "2023": {
+     "sessions": 257,
+     "share": 0.9649805447470817
+    },
+    "2024": {
+     "sessions": 259,
+     "share": 0.9613899613899614
+    },
+    "2025": {
+     "sessions": 41,
+     "share": 0.9512195121951219
+    }
+   },
+   "n_missing": 84,
+   "missing_first_40": [
+    "2016-01-18",
+    "2016-02-15",
+    "2016-05-30",
+    "2016-07-04",
+    "2016-09-05",
+    "2016-11-24",
+    "2016-11-25",
+    "2017-01-16",
+    "2017-02-20",
+    "2017-04-24",
+    "2017-05-29",
+    "2017-07-03",
+    "2017-07-04",
+    "2017-09-04",
+    "2017-11-23",
+    "2017-11-24",
+    "2018-01-15",
+    "2018-02-19",
+    "2018-02-26",
+    "2018-05-28",
+    "2018-07-03",
+    "2018-07-04",
+    "2018-09-03",
+    "2018-11-22",
+    "2018-11-23",
+    "2018-12-24",
+    "2019-01-21",
+    "2019-02-18",
+    "2019-05-27",
+    "2019-07-03",
+    "2019-07-04",
+    "2019-09-02",
+    "2019-11-28",
+    "2019-11-29",
+    "2019-12-24",
+    "2020-01-20",
+    "2020-02-17",
+    "2020-03-09",
+    "2020-03-12",
+    "2020-03-16"
+   ],
+   "bar": 0.9,
+   "passes": true
+  },
+  "O0_H_alt": {
+   "nq_calendar_bars_ge_380": {
+    "denominator": "NQ days with >= 380 bars (the build calendar)",
+    "sessions": 2281,
+    "with_oi_and_settle": 2278,
+    "share": 0.9986847873739588,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share": 1.0
+     },
+     "2017": {
+      "sessions": 249,
+      "share": 0.9959839357429718
+     },
+     "2018": {
+      "sessions": 248,
+      "share": 0.9959677419354839
+     },
+     "2019": {
+      "sessions": 249,
+      "share": 1.0
+     },
+     "2020": {
+      "sessions": 247,
+      "share": 0.9959514170040485
+     },
+     "2021": {
+      "sessions": 251,
+      "share": 1.0
+     },
+     "2022": {
+      "sessions": 250,
+      "share": 1.0
+     },
+     "2023": {
+      "sessions": 248,
+      "share": 1.0
+     },
+     "2024": {
+      "sessions": 249,
+      "share": 1.0
+     },
+     "2025": {
+      "sessions": 39,
+      "share": 1.0
+     }
+    },
+    "n_missing": 3,
+    "missing_first_40": [
+     "2017-04-24",
+     "2018-02-26",
+     "2020-09-21"
+    ],
+    "bar": 0.9,
+    "passes": true
+   },
+   "opening_model_usable_sessions": {
+    "denominator": "opening_gate0.usable_sessions: NYSE days minus ES half days (ES's 99.7 % denominator)",
+    "sessions": 2285,
+    "with_oi_and_settle": 2278,
+    "share": 0.9969365426695842,
+    "per_year": {
+     "2016": {
+      "sessions": 251,
+      "share": 1.0
+     },
+     "2017": {
+      "sessions": 249,
+      "share": 0.9959839357429718
+     },
+     "2018": {
+      "sessions": 248,
+      "share": 0.9959677419354839
+     },
+     "2019": {
+      "sessions": 249,
+      "share": 1.0
+     },
+     "2020": {
+      "sessions": 251,
+      "share": 0.9800796812749004
+     },
+     "2021": {
+      "sessions": 251,
+      "share": 1.0
+     },
+     "2022": {
+      "sessions": 250,
+      "share": 1.0
+     },
+     "2023": {
+      "sessions": 248,
+      "share": 1.0
+     },
+     "2024": {
+      "sessions": 249,
+      "share": 1.0
+     },
+     "2025": {
+      "sessions": 39,
+      "share": 1.0
+     }
+    },
+    "n_missing": 7,
+    "missing_first_40": [
+     "2017-04-24",
+     "2018-02-26",
+     "2020-03-09",
+     "2020-03-12",
+     "2020-03-16",
+     "2020-03-18",
+     "2020-09-21"
+    ],
+    "bar": 0.9,
+    "passes": true
+   }
+  },
+  "reports": {
+   "rows": 5299503,
+   "sessions": 2278,
+   "families_by_year": {
+    "2016": [
+     "NQ",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2017": [
+     "NQ",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2018": [
+     "NQ",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2019": [
+     "NQ",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2020": [
+     "NQ",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2021": [
+     "NQ",
+     "Q1C",
+     "Q2A",
+     "Q2C",
+     "Q3A",
+     "Q3C",
+     "Q4C",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2022": [
+     "NQ",
+     "Q1B",
+     "Q1C",
+     "Q1D",
+     "Q2A",
+     "Q2B",
+     "Q2C",
+     "Q2D",
+     "Q3A",
+     "Q3B",
+     "Q3C",
+     "Q3D",
+     "Q4B",
+     "Q4C",
+     "Q4D",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2023": [
+     "NQ",
+     "Q1B",
+     "Q1C",
+     "Q1D",
+     "Q2A",
+     "Q2B",
+     "Q2C",
+     "Q2D",
+     "Q3A",
+     "Q3B",
+     "Q3C",
+     "Q3D",
+     "Q4B",
+     "Q4C",
+     "Q4D",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2024": [
+     "NQ",
+     "Q1B",
+     "Q1C",
+     "Q1D",
+     "Q2A",
+     "Q2B",
+     "Q2C",
+     "Q2D",
+     "Q3A",
+     "Q3B",
+     "Q3C",
+     "Q3D",
+     "Q4B",
+     "Q4C",
+     "Q4D",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ],
+    "2025": [
+     "NQ",
+     "Q1B",
+     "Q1C",
+     "Q1D",
+     "Q2A",
+     "Q2B",
+     "Q2C",
+     "Q2D",
+     "Q3B",
+     "Q3C",
+     "Q3D",
+     "Q4B",
+     "Q4C",
+     "Q4D",
+     "QN1",
+     "QN2",
+     "QN3",
+     "QN4",
+     "QNE"
+    ]
+   },
+   "share_rows_settle_missing": 0.0021568060250178175,
+   "spot_check_vs_es": [
+    {
+     "session": "2018-06-14",
+     "nq_total_oi": 92353,
+     "es_total_oi": 4316913,
+     "ratio_nq_over_es": 0.021393296552420678,
+     "nq_quarterly_oi": 72908,
+     "es_quarterly_oi": 2578768,
+     "nq_rows": 1774,
+     "es_rows": 5220
+    },
+    {
+     "session": "2021-11-10",
+     "nq_total_oi": 207844,
+     "es_total_oi": 4388961,
+     "ratio_nq_over_es": 0.0473560826810719,
+     "nq_quarterly_oi": 102770,
+     "es_quarterly_oi": 1576582,
+     "nq_rows": 4582,
+     "es_rows": 8050
+    },
+    {
+     "session": "2024-05-15",
+     "nq_total_oi": 231200,
+     "es_total_oi": 6789956,
+     "ratio_nq_over_es": 0.034050294287621304,
+     "nq_quarterly_oi": 106687,
+     "es_quarterly_oi": 1862484,
+     "nq_rows": 2449,
+     "es_rows": 10428
+    }
+   ]
+  }
+ },
+ "all_gates_pass": false,
+ "gates_runtime_min": 13.77
+}

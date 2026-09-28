@@ -824,6 +824,15 @@
    "sidecars": []
   },
   {
+   "path": "data/fixtures/fut_nq_options_eod.csv.gz",
+   "bytes": 53002188,
+   "sha256": "748c0b209347e6a54554eaa81f25e9db6dd826e11bef75b2ef0cba7bd7751d61",
+   "git_blob": null,
+   "sidecars": [
+    "data/fixtures/fut_nq_options_eod.meta.json"
+   ]
+  },
+  {
    "path": "data/fixtures/fut_open_interest_daily.csv.gz",
    "bytes": 347338,
    "sha256": "b92f0068656bd05b70ab50fc8e6f250160d27a46aa8b2c12afb41c6a7842bb36",

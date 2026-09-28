@@ -58,7 +58,7 @@ def _longest_tracked_path() -> int:
 
 # (label, the literal as the prose spells it, what recomputes it)
 ANCHORS: list[tuple[str, str, Callable[[], int]]] = [
-    ("panels in the manifest", "135", _panels),
+    ("panels in the manifest", "136", _panels),
     ("panels carrying a git blob id", "115", _panels_with_a_blob),
     ("longest tracked path", "85", _longest_tracked_path),
 ]
@@ -110,7 +110,8 @@ def test_the_seven_panels_without_a_blob_are_the_ones_named():
     leveraged-ETF NAV panel thirteen (2026-09-22), round 4b's quarterly holdings, projected UNG/USO
     panel, Robinhood holders and GDELT hourly sample seventeen (the same day), and the concurrent
     branch's D613 ES option volume panel and D617 signed flow census nineteen (merged the same day),
-    and the opening model's Globex-session bars (D644) twenty (2026-09-28).
+    and the opening model's Globex-session bars (D644) twenty (2026-09-28), and its NQ option
+    end-of-day panel twenty-one (the same day).
     """
     prose = PAGE.read_text(encoding="utf-8")
     without = sorted(f["path"] for f in _manifest() if not f.get("git_blob"))
@@ -119,7 +120,7 @@ def test_the_seven_panels_without_a_blob_are_the_ones_named():
         f"these panels have no git blob id and docs/RUNNING.md does not name them: {missing}. "
         f"The page tells a reader which artifacts are unrecoverable; that list is the point."
     )
-    assert len(without) == 20, (
-        f"{len(without)} panels now have no blob id, and the page's prose says twenty. The count "
+    assert len(without) == 21, (
+        f"{len(without)} panels now have no blob id, and the page's prose says twenty-one. The count "
         f"and the names have to move together."
     )

@@ -408,6 +408,21 @@ reserved `tbbo` year is the worst year for any Δ-OI construction. *(viii)* **sa
 positioning never appears at all**: a contract opened and expiring on one session never reaches a
 close, so it is in no open-interest print, and Δ-OI therefore measures the **prior** session's build.
 
+**`fut_nq_options_eod.csv.gz` + `fut_nq_options_eod.meta.json` (2026-09-28, for the opening model's A4 / stage S-H;
+panel gitignored by pattern, in the manifest by hash):** the NQ mirror of the ES panel above, same columns less
+`vol_to_1530` (the NQ pull has no option bars). **5,299,503 rows over 2,278 sessions 2016-01-04 → 2025-02-28** (the
+A10 vault cut; the 2026 files were never opened, the 2025 files stopped at the first chunk wholly past 2025-03-01).
+Built by `scripts/build_fut_nq_options_eod.py` (system interpreter) from the NQ-family pull of 2026-09-27
+(`data/prelapse_options_pull_jobs_nq.json`). Gate O0-H **99.69 %** of the opening model's usable sessions (ES 99.7 %).
+**What bites:** *(i)* **`NQ.OPT` also carried the SERIAL months in 2016** (Jan, Feb, Apr, May, Jul; 17:00 ET), and
+the third Fridays move to QN3 from 2016-08-19; *(ii)* **Q1A, Q4A and every Q5x family were not pulled**, so Mondays of
+weeks 1, 4 and 5 have no same-day NQ expiry here (ES has E1A–E4A); the Monday and Wednesday dailies start 2021-04/05,
+Tuesdays and Thursdays 2022-10/11; *(iii)* its G3 (a Friday with an AFTERNOON same-day expiry, stricter than ES's)
+FAILS at 0.947 — the quarterly Fridays 2016-03 → 2021-12 have only the 09:30 quarterly — so the meta's
+`all_gates_pass` is false while O0-H passes; *(iv)* strike and settle are written at `%.10g` (ES's `%.6g` would round a
+deep in-the-money NQ settle); *(v)* NQ option OI is 2–5 % of ES's by contracts. The ES caveats (ii)–(viii) above
+apply unchanged.
+
 **`fut_es_0dte_volume_cutoffs.csv.gz` + `.meta.json` ([D613](decisions/D613-FIXTURE-the-ES-option-volume-panel-in-ET-clock-buckets.md), 2026-09-21; panel gitignored by pattern, in the manifest by hash):**
 one row per (ES-family option, session) that **traded**, with volume split into five ET clock
 buckets — `v_0000_1200`, `v_1200_1530`, `v_1530_1600`, `v_1600_1800`, `v_1800_2400` — so a

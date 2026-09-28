@@ -100,7 +100,14 @@ def session_rows(m: np.ndarray, day: str) -> dict:
     return out
 
 
-def build(data_root: Path) -> pd.DataFrame:
+def finished_contracts() -> set[str]:
+    """Contracts the Sierra downloader has recorded as complete and compressed: a --trial never opens a file Sierra
+    may still be writing."""
+    rec = json.loads((REPO / "data" / "opening" / "sierra_index_tick_record.json").read_text(encoding="utf-8"))
+    return {k for k, v in rec["contracts"].items() if v.get("compressed") and v.get("cut_short") is False}
+
+
+def build(data_root: Path, only: set[str] | None = None) -> pd.DataFrame:
     ses = pd.read_csv(data_root / "fixtures" / "fut_index_sessions.csv.gz", encoding="utf-8", dtype={"day": str})
     ses = ses[ses["root"].isin(ROOTS) & (ses["day"] >= FIRST) & (ses["day"] < RESERVED_FROM)]
     rows, meta = [], {"contracts": {}}
@@ -110,6 +117,9 @@ def build(data_root: Path) -> pd.DataFrame:
         per = {}
         for sym, g in s.groupby("sym", sort=False):
             p = SC_DATA / f"{sym}-CME.scid"
+            if only is not None and sym not in only:
+                meta["contracts"][sym] = "NOT IN TRIAL"
+                continue
             if not p.exists():
                 meta["contracts"][sym] = "MISSING"
                 continue
@@ -136,7 +146,8 @@ def build(data_root: Path) -> pd.DataFrame:
     res = pd.DataFrame(rows)
     if (res["session"] >= RESERVED_FROM).any():
         raise SystemExit("a vault session reached A7")
-    META.write_text(json.dumps(meta, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+    if only is None:
+        META.write_text(json.dumps(meta, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return res
 
 
@@ -158,16 +169,19 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--build", action="store_true")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--trial", action="store_true", help="only the contracts the downloader has finished; writes to "
+                    "temp/ (a runtime projection and a check on real files before the full build)")
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
     a = ap.parse_args()
     if a.selftest:
         return selftest()
-    if a.build:
+    if a.build or a.trial:
         t = time.time()
-        res = build(a.data_root)
-        OUT.parent.mkdir(parents=True, exist_ok=True)
-        res.to_csv(OUT, index=False, encoding="utf-8", lineterminator="\n", float_format="%.8g")
-        print(f"wrote {OUT.name}: {len(res):,} rows in {(time.time() - t) / 60:.1f} min")
+        res = build(a.data_root, finished_contracts() if a.trial else None)
+        out = REPO / "temp" / "a7_trial.csv" if a.trial else OUT
+        out.parent.mkdir(parents=True, exist_ok=True)
+        res.to_csv(out, index=False, encoding="utf-8", lineterminator="\n", float_format="%.8g")
+        print(f"wrote {out}: {len(res):,} rows in {(time.time() - t) / 60:.1f} min")
         print(res.groupby("root")[["n_trades", "side_share", "thr", "a7_10:00"]].describe().T.round(4).to_string())
         return 0
     ap.print_help()

@@ -718,8 +718,8 @@ would look like data. The tokens are what is shown.
 | D643 | RESULT: the shock classifier fails Gate 1 on all four instruments. GC, the one powered cell, is a clean null, and on… | [RESULT](D643-RESULT-shock-classifier-fails-gate-1-on-all-four.md) |
 | D644 | the opening agent-state model's Gate O0 passes, and REV is below 8% in both markets, so it merges into RANGE by the… | [record](D644-opening-model-gate-O0-passes-and-REV-merges-into-RANGE.md) |
 | D645 | PRE-REG: the opening agent-state model's stages and tests, Phases 3–5 (S-A → S-I, H-O1 … H-O6, Gate O1) | [PRE-REG](D645-PRE-REG-opening-model-stages-and-tests-phases-3-5.md) |
-| D646 | RESULT: stage S-A of the opening model passes H-O1 by the letter, on log loss and a 0.1-point accuracy edge; its… | [RESULT](D646-RESULT-opening-stage-S-A-classifies-by-log-loss-not-by-accuracy.md) |
-| D647 | POST HOC: why stage S-A failed. The pre-registered trade makes money on the true labels; the observables cannot see… | [record](D647-POST-HOC-opening-S-A-diagnosis-the-trade-works-the-classifier-cannot-see-trend-days.md) |
+| D646 | RESULT: stage S-A of the opening model passes H-O1 by the letter, on log loss and a 0.1-point accuracy edge; its… | [RESULT](D646-RESULT-opening-stage-S-A-log-loss-not-accuracy.md) |
+| D647 | POST HOC: why stage S-A failed. The pre-registered trade makes money on the true labels; the observables cannot see… | [record](D647-POST-HOC-opening-S-A-cannot-see-trend-days.md) |
 
 <!-- REGISTER:END -->
 
