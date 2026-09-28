@@ -91,6 +91,47 @@ before the Phase 1 labels are computed. Each follows an existing repository conv
     - Alpha Vantage's clock is US/Eastern: the median correlation of 1-minute returns with ES (SPY) and NQ (QQQ),
       09:31–15:59, is ≥ 0.9 at lag 0 and higher than at ±1 minute.
 
+## Ruling 2026-09-28: O-D4 stands (no amendment)
+
+*The principal, after D644's label frequencies ("Keep your rule").* REV (6.4% ES, 5.6% NQ at 10:00) merges into
+RANGE as O-D4 says, and the classifier has three states. The reversal idea is still tested through B2 (§6.4) and
+H-O6's A1 signature ("early continuation then reversal"). If H-O6 supports it, a reversal detector is a separate,
+separately pre-registered binary question, not a fourth class here.
+
+## OA-A7 (RULED 2026-09-28: the principal, "Confirm OA-A7", before any agent pressure was computed). The readings Phase 2 needs
+
+1. **A2 and A3 read CME settlements, not the 16:00 close.**
+   - The series is the front contract's daily settlement from `fut_settle_strip` (D556, 2010-06 →), switching at
+     D462's roll days and **ratio back-adjusted** at each roll (the new contract's settlement over the old one's on
+     the roll day), so no L-day return spans a contract change.
+   - Why: a daily trend or vol-target model marks at the settlement. The strip has no gaps back to 2010, so L = 120
+     and σ20 exist from the first in-sample day. The RTH bars cover 2015 at 89% only (D462 G5).
+   - OA-A6's RTH close stays the price for the gap, A1 and the labels.
+2. **σ20 (A2's scale, A3's exposure)** is the standard deviation of the 20 daily log returns to t−1, annualised by
+   √252 for A3. A2's target change is `target[t] − target[t−1]`, both computed from closes to t−1 and t−2.
+3. **Standardisation (§4, "prior 250 sessions"):**
+   - `z_i = P_i / std(P_i over the sessions before t)`, over the prior 250 where they exist;
+   - where fewer exist, over all prior sessions with **at least 60**, and NaN below that;
+   - the minimum sits below the window (memory: min_periods must be below the window on a sparse series).
+   - A1, A5 and A6 start from the bar fixture's 2015-09 warm-up, so they reach 60 sessions by December 2015 and 250
+     in late 2016. The walk-forward's first 252-session training window ends in early 2017 either way.
+4. **A4 (dealer gamma), D581's audited convention:**
+   - gamma is Black-76 at rate 0, with the vol implied from the option's prior settlement and F the underlying
+     future's prior settlement;
+   - summed over every option with OI as of the prior close that expires after 09:30 on t (which drops the AM
+     quarterly on its expiry day);
+   - `G = Σ_calls OI·γ − Σ_puts OI·γ` (dealers long calls, short puts: §4's positioning assumption);
+   - `P4 = −G × (open − prior close)`. ES from `fut_es_options_eod`; NQ once its fixture exists.
+5. **A5:**
+   - `r = price(09:25)/price(08:29) − 1`, the closes of the 09:24 and 08:28 bars;
+   - σ is the standard deviation of that same return over the prior 250 sessions (all days, as in 3);
+   - `P5 = r/σ` on CPI and payrolls days, 0 otherwise. It is then standardised like every agent (3).
+6. **A6:**
+   - the prints are the closes of the 09:30 bar of ES and SPY (NQ and QQQ), both at 09:31, the "first SPY print
+     after 09:30";
+   - ρ_t is the median of ES/SPY at the 15:59 bar over the prior 20 sessions;
+   - ATR20_SPY is OA-A6's ATR20 on SPY's RTH bars.
+
 ## Opening facts (2026-09-28, before any rule is applied or any price read for this model)
 
 ### The data the deposit names, against what is on disk

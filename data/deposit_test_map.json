@@ -1670,10 +1670,15 @@
       "text": "A1: open above the prior high gives positive pressure scaled by ATR; inside the range gives 0.",
       "paraphrase": "Gap pressure scales with ATR and is zero inside the range",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 37,
+        "symbol": "test_opening_04_a1_is_positive_above_the_prior_high_scaled_by_atr_and_zero_inside"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1682,10 +1687,15 @@
       "text": "A2: a known price path gives the hand-calculated target change across L \u2208 {20, 60, 120}.",
       "paraphrase": "Trend-follower target change hand-calculated at three lookbacks",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 43,
+        "symbol": "test_opening_05_a2_target_change_matches_a_hand_calculation"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1694,10 +1704,15 @@
       "text": "A3: exposure capped at 2; rising \u03c320 gives negative pressure.",
       "paraphrase": "Volatility-target exposure is capped and falls as sigma rises",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 66,
+        "symbol": "test_opening_06_a3_exposure_is_capped_at_two_and_rising_sigma_gives_negative_pressure"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1706,10 +1721,15 @@
       "text": "A4: dealer gamma sign follows the pre-registered positioning assumption; zero overnight move gives zero pressure.",
       "paraphrase": "Dealer gamma sign follows positioning; zero move gives zero",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 77,
+        "symbol": "test_opening_07_a4_dealer_gamma_follows_the_positioning_and_zero_move_gives_zero_pressure"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1718,10 +1738,15 @@
       "text": "A5: zero on non-release days; uses only data to 09:25.",
       "paraphrase": "Macro pressure is zero off release days and reads only to 09:25",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 90,
+        "symbol": "test_opening_08_a5_is_zero_off_release_days_and_reads_only_to_0925"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1730,10 +1755,15 @@
       "text": "A6: fair ratio uses prior days' 15:59 values only; computed no earlier than the first SPY print after 09:30.",
       "paraphrase": "The index-arbitrage fair ratio uses prior closes and the first print",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 103,
+        "symbol": "test_opening_09_a6_fair_ratio_uses_prior_days_only_and_the_0931_print"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1742,10 +1772,15 @@
       "text": "A7: large-lot threshold uses prior 20 days only.",
       "paraphrase": "The large-lot threshold uses the prior twenty days only",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 120,
+        "symbol": "test_opening_10_a7_large_lot_threshold_uses_the_prior_20_sessions_only"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",
@@ -1754,10 +1789,15 @@
       "text": "Standardisation uses the prior 250 sessions only.",
       "paraphrase": "Standardisation uses the prior two hundred and fifty sessions",
       "cls": "leak",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_agents.py",
+        "line": 130,
+        "symbol": "test_opening_11_standardisation_uses_the_prior_250_sessions_only"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7)."
     },
     {
       "doc": "opening",

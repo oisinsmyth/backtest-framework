@@ -8,7 +8,7 @@ Five of the pre-registration documents deposited in `docs/internal/User-Doc-Depo
 
 **A percentage below is a COUNT, not a verdict.** "claimed" means one repository test names that number in its function name, a section banner, or a docstring or assertion message. It does not say the test is right, that the claimed items are the important ones, or that the unclaimed ones are not. Nothing here has been run against a market.
 
-**The three spellings, and why a grep misses half.** A claim is made in one of three conventions -- a function name (`def test_ledger_51_...`), a section banner (`# ===== ledger test 66`), or a docstring or assertion message (`Ledger unit test 11 and shock unit test 9, long side.`). Of the 102 claims here, **82 use the function name, 15 a docstring or message and 5 a banner**; at the 28 claims D607 opened with, `grep 'def test_ledger'` found six. **Going forward (D607): a test that discharges a numbered deposit item names the number in its FUNCTION NAME** -- `test_<doc>_<number>_<what>` -- because that is the spelling `pytest -k`, a traceback, a test id and a grep all see. The other two conventions stay valid for the tests that already use them, `scripts/deposit_test_map.py --scan` reads all three, and one function name can only carry ONE number -- an item discharged by a test named for a different document still needs the docstring spelling.
+**The three spellings, and why a grep misses half.** A claim is made in one of three conventions -- a function name (`def test_ledger_51_...`), a section banner (`# ===== ledger test 66`), or a docstring or assertion message (`Ledger unit test 11 and shock unit test 9, long side.`). Of the 110 claims here, **90 use the function name, 15 a docstring or message and 5 a banner**; at the 28 claims D607 opened with, `grep 'def test_ledger'` found six. **Going forward (D607): a test that discharges a numbered deposit item names the number in its FUNCTION NAME** -- `test_<doc>_<number>_<what>` -- because that is the spelling `pytest -k`, a traceback, a test id and a grep all see. The other two conventions stay valid for the tests that already use them, `scripts/deposit_test_map.py --scan` reads all three, and one function name can only carry ONE number -- an item discharged by a test named for a different document still needs the docstring spelling.
 
 ---
 
@@ -18,10 +18,10 @@ Five of the pre-registration documents deposited in `docs/internal/User-Doc-Depo
 |---|---|---:|---:|---:|---:|---:|---:|
 | Settlement flow ledger (`SETTLEMENT_FLOW_LEDGER_PREREG.md`) | 12. Required unit tests (line 705) | 71 | 65 | 0 | 5 | 1 | 91.5% |
 | Index reweight flow (`INDEX_REWEIGHT_FLOW_PREREG.md`) | 13. Required unit tests (line 347) | 28 | 6 | 0 | 0 | 22 | 21.4% |
-| Opening agent state (`OPENING_AGENT_STATE_PREREG.md`) | 15. Required unit tests (line 334) | 25 | 9 | 4 | 0 | 12 | 36.0% |
+| Opening agent state (`OPENING_AGENT_STATE_PREREG.md`) | 15. Required unit tests (line 334) | 25 | 17 | 4 | 0 | 4 | 68.0% |
 | Shock classifier (`SHOCK_CLASSIFIER_PREREG.md`) | 9. Required unit tests (line 293) | 13 | 13 | 0 | 0 | 0 | 100.0% |
 | LETF close flow (`LETF_CLOSE_FLOW_PREREG.md`) | 8. Required unit tests (line 242) | 9 | 9 | 0 | 0 | 0 | 100.0% |
-| **All five** | | **146** | **102** | **4** | **5** | **35** | **69.9%** |
+| **All five** | | **146** | **110** | **4** | **5** | **27** | **75.3%** |
 
 **By class**, over all 146 items: arithmetic 40, data_guard 25, execution 16, leak 31, rendering 3, statistical 31.
 
@@ -146,21 +146,21 @@ Section 13. Required unit tests, heading at line 347, items at lines 349–376. 
 
 ### Opening agent state — `OPENING_AGENT_STATE_PREREG.md`
 
-Section 15. Required unit tests, heading at line 334, items at lines 336–360. **9 of 25 claimed (36.0%).**
+Section 15. Required unit tests, heading at line 334, items at lines 336–360. **17 of 25 claimed (68.0%).**
 
 | # | Line | Class | Status | Claim | Item |
 |---:|---:|---|---|---|---|
 | 1 | 336 | arithmetic | claimed | `tests/unit/test_opening_labels.py:19` `test_opening_01_labels_reproduce_each_rule_in_order` | Labels: synthetic sessions reproduce each rule in order (CONT/REV before FADE before RANGE).<br>**Note:** Opening model Phase 1 (D644): src/backtest_framework/opening/labels.py. |
 | 2 | 337 | leak | claimed | `tests/unit/test_lookahead.py:500` | Labels never enter features (static check on the feature pipeline).<br>**Note:** D593. One docstring claims opening 2 and 19 together. |
 | 3 | 338 | data_guard | claimed | `tests/unit/test_opening_labels.py:36` `test_opening_03_d0_zero_is_unclassified_and_untraded` | d0 = 0 gives an unclassified, untraded day.<br>**Note:** Opening model Phase 1 (D644): src/backtest_framework/opening/labels.py. |
-| 4 | 339 | arithmetic | **unclaimed** | — | A1: open above the prior high gives positive pressure scaled by ATR; inside the range gives 0.<br>*Gap pressure scales with ATR and is zero inside the range* |
-| 5 | 340 | arithmetic | **unclaimed** | — | A2: a known price path gives the hand-calculated target change across L ∈ {20, 60, 120}.<br>*Trend-follower target change hand-calculated at three lookbacks* |
-| 6 | 341 | arithmetic | **unclaimed** | — | A3: exposure capped at 2; rising σ20 gives negative pressure.<br>*Volatility-target exposure is capped and falls as sigma rises* |
-| 7 | 342 | arithmetic | **unclaimed** | — | A4: dealer gamma sign follows the pre-registered positioning assumption; zero overnight move gives zero pressure.<br>*Dealer gamma sign follows positioning; zero move gives zero* |
-| 8 | 343 | leak | **unclaimed** | — | A5: zero on non-release days; uses only data to 09:25.<br>*Macro pressure is zero off release days and reads only to 09:25* |
-| 9 | 344 | leak | **unclaimed** | — | A6: fair ratio uses prior days' 15:59 values only; computed no earlier than the first SPY print after 09:30.<br>*The index-arbitrage fair ratio uses prior closes and the first print* |
-| 10 | 345 | leak | **unclaimed** | — | A7: large-lot threshold uses prior 20 days only.<br>*The large-lot threshold uses the prior twenty days only* |
-| 11 | 346 | leak | **unclaimed** | — | Standardisation uses the prior 250 sessions only.<br>*Standardisation uses the prior two hundred and fifty sessions* |
+| 4 | 339 | arithmetic | claimed | `tests/unit/test_opening_agents.py:37` `test_opening_04_a1_is_positive_above_the_prior_high_scaled_by_atr_and_zero_inside` | A1: open above the prior high gives positive pressure scaled by ATR; inside the range gives 0.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 5 | 340 | arithmetic | claimed | `tests/unit/test_opening_agents.py:43` `test_opening_05_a2_target_change_matches_a_hand_calculation` | A2: a known price path gives the hand-calculated target change across L ∈ {20, 60, 120}.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 6 | 341 | arithmetic | claimed | `tests/unit/test_opening_agents.py:66` `test_opening_06_a3_exposure_is_capped_at_two_and_rising_sigma_gives_negative_pressure` | A3: exposure capped at 2; rising σ20 gives negative pressure.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 7 | 342 | arithmetic | claimed | `tests/unit/test_opening_agents.py:77` `test_opening_07_a4_dealer_gamma_follows_the_positioning_and_zero_move_gives_zero_pressure` | A4: dealer gamma sign follows the pre-registered positioning assumption; zero overnight move gives zero pressure.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 8 | 343 | leak | claimed | `tests/unit/test_opening_agents.py:90` `test_opening_08_a5_is_zero_off_release_days_and_reads_only_to_0925` | A5: zero on non-release days; uses only data to 09:25.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 9 | 344 | leak | claimed | `tests/unit/test_opening_agents.py:103` `test_opening_09_a6_fair_ratio_uses_prior_days_only_and_the_0931_print` | A6: fair ratio uses prior days' 15:59 values only; computed no earlier than the first SPY print after 09:30.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 10 | 345 | leak | claimed | `tests/unit/test_opening_agents.py:120` `test_opening_10_a7_large_lot_threshold_uses_the_prior_20_sessions_only` | A7: large-lot threshold uses prior 20 days only.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
+| 11 | 346 | leak | claimed | `tests/unit/test_opening_agents.py:130` `test_opening_11_standardisation_uses_the_prior_250_sessions_only` | Standardisation uses the prior 250 sessions only.<br>**Note:** Opening model Phase 2: src/backtest_framework/opening/agents.py (OA-A7). |
 | 12 | 347 | arithmetic | claimed | `tests/unit/test_opening_labels.py:42` `test_opening_12_a_mirror_image_day_keeps_its_label` | Direction-relative transformation: flipping all prices (a mirror-image day) leaves direction-relative features and labels unchanged.<br>**Note:** Opening model Phase 1 (D644): src/backtest_framework/opening/labels.py. |
 | 13 | 348 | data_guard | claimed | `tests/golden/test_error_budget_ledger.py:230` `test_opening_13_parameter_budget_refuses_twelve_features` | Parameter budget: the pipeline refuses to fit a stage exceeding 11 features.<br>**Note:** D606. The parameter-budget refusal, proved on a twelfth feature. |
 | 14 | 349 | execution | **unclaimed** | — | Policy: argmax RANGE or max(p) < θ produces no trade; FADE trades towards the prior close.<br>*RANGE or a low maximum probability stands aside; FADE trades homeward* |

@@ -273,9 +273,20 @@
 - **Running:** the Sierra ES/NQ tick pull (`scripts/sierra_index_tick_download.py`), one contract at a time, each
   compressed in place (NTFS LZX, hash-checked). Log:
   `scratchpad/sierra_index.log`; record `data/opening/sierra_index_tick_record.json`.
+- **The principal kept O-D4** (REV stays merged).
+- **OA-A7 ruled.**
+- **Phase 2 pressures A1–A6 BUILT:**
+  - `src/backtest_framework/opening/agents.py`, with deposit tests 4–11 (crosswalk 110/146);
+  - `scripts/build_opening_agents.py` → `data/opening/agents.csv`, 2.2 min.
+  - On usable sessions: z1–z3 100%, z5 99.8%, z6 98.9%, ES z4 95%; NQ z4 waits for the NQ options fixture.
+  - A series with a hole (a CME-only holiday session) is computed over its finite sessions, so one hole does not
+    blank 20.
+  - **Flag for the stage runs:** z5's double standardisation (§4 plus OA-A7.5) gives extremes to −45.9 on release
+    days. It is as written; the classifier's inner CV has to live with it, or it needs an amendment before S-F.
 - **Next:**
-  - Phase 2: the agent pressures A1–A6 with deposit tests 4–11, then POWER. A7 comes after the Sierra pull and its
-    check against the exchange flag.
+  - POWER (`docs/results/OPENING_AGENT_STATE_POWER.md`) before any stage runs.
+  - Then the stage pre-registration (S-A → S-I, H-O1/H-O3 first).
+  - A7 comes after the Sierra pull and its check against the exchange flag.
   - The NQ options fixture (O0-H, S-H).
   - Phase 0b: the vault guard over the new inputs (test 18).
 
