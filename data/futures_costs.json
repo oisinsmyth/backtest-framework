@@ -8,28 +8,28 @@
   "computes_no_return": true,
   "artefacts": {
    "data/futures_contract_specs.json": {
-    "sha256": "126d8e50c869a390d3fa02f32533e170e6d1c5efec8fe9fe1fc5161ac2ed864b"
+    "sha256": "e932fd10725bc4da926ea336457a6249f337b46baa21464c3be32852696f9921"
    },
    "data/d465_es_spread_and_mae_bias.json": {
-    "sha256": "3f1eee6f7f6865580f53fca1cf3f375da4f92c786b97b8ea0d526910027fdd81"
+    "sha256": "54d1f81dc3d2440707594d5b05045dbe0fe82795c331e78f1cbc1c4dcc185b94"
    },
    "data/d469_scalping_feasibility.json": {
-    "sha256": "07bf44da6b257829f150ed40a40bf8be7caebd497859a6d64a2652b9838d5cc1"
+    "sha256": "f4d8d2f69ef2398e6cd661a4bf5e920b5bf74f0efb7caef05ee0cc1dd8ebecda"
    },
    "data/d507_spread_all_roots.json": {
-    "sha256": "e4017a49ce5950e4fe528b4d6f05907d97ee99cfd4973c1e43506899fc960304"
+    "sha256": "b3dde823f9d12ed194a2cfb7a6a44b95b73d8b5cd0c1fa3ad0c7efe29bf3227a"
    },
    "data/d508_micro_crossing_tbbo.json": {
-    "sha256": "33f37bcd17af9897ec749c3735204d359c65b8f3f46467af6f776f69916d9314"
+    "sha256": "57ae114e8c64f3ac7bc0b4b8f59e47a4333494613b5b6e47e98f0dc18d3d0990"
    },
    "data/d510_spread_census.json": {
-    "sha256": "6398dfeb7cb4a29dcc5e5cd671eac398e19fd19b7bde3c09dc62feddcbc788a4"
+    "sha256": "cc671b4fad8e8efda72d70d47e81d4d6a5f52a5d4b97aa5c6ebf4b27f38dd6af"
    },
    "data/d527_arm_crossing_cost.json": {
-    "sha256": "e7822a30f626ac7805a20bc63c7c510583cac15f6b3765e50d7f3e7cb22bd8a0"
+    "sha256": "f4f503d4f7214fa81ef31819e2e5b42d189c5b9c885ff6aa122fadada3d6679c"
    },
    "data/d556_carry_timing.json": {
-    "sha256": "0f8770ac6f65dbe68493cf07b2d13b552e2cd88c2b5493f6a57b12a5791035b9"
+    "sha256": "025fd31fa80f8f05ba5d5abd15c39f9f149dbfc2ec8f5fa6164c6657fcff32ed"
    },
    "data/fut_specs_from_definition.json": {
     "sha256": "994d87d59b09aee3d194f49a8019d975471abf77d75e98b6d4275721f42d55be"
@@ -46,13 +46,13 @@
     "sha256": "dac0efed4ff3f85b94d1685edc2cdcf559d3884b83e8599d77446184ef4c62a1"
    },
    "scripts/run_d533_story_conditions.py": {
-    "sha256": "4ccfa03e2d106714c825d0d94ce0eaeced33e0982062f89853f2e0ff4e4fc98b"
+    "sha256": "d508dcc73ef9bfeadd9133ed59d76da729ea5643980f97ee8d1c290146f20451"
    },
    "scripts/run_d535_illiq_ranked.py": {
     "sha256": "c418e67fa3f626568dcf706c47bcfcb477bc9d8ba7655b4717ad9b09197cd00d"
    },
    "scripts/run_d555_tsmom_replication.py": {
-    "sha256": "f388acb2e3c51a3ed839fd2d15559525426a1c290e881442bc3f4a6862ca00dd"
+    "sha256": "aa4f620a6ed49cc0fcdfee8fc9d719b1031509da2011c3378285bf8ccbf1628a"
    }
   }
  },
