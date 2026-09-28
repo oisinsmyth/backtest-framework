@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 402 of these records carry neither field —
+**No Status or Category column, deliberately.** 403 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -729,6 +729,7 @@ would look like data. The tokens are what is shown.
 | D654 | D654 STAGE 0 RESULT — eight roots qualify as run, but the robust core is two: gold and silver drain late, outside the i… | [record](D654-STAGE-0-DESIGN-when-open-interest-leaves-the-expiring-month.md) · [RESULT](D654-STAGE-0-RESULT-the-metals-roll-late-and-outside-the-index.md) |
 | D655 | there is no reverting roll premium in the gold and silver spreads: the trade earns +0.44 bp gross against a placement m… | [PRE-REG](D655-PRE-REG-selling-the-metals-roll-after-first-notice.md) · [RESULT](D655-RESULT-no-roll-premium-the-control-earns-more.md) |
 | D656 | D656 STAGE 0 RESULT — the soybean crush carries no processors' premium, and its near-versus-next-year gap genuinely rev… | [record](D656-STAGE-0-DESIGN-the-soybean-crush-premium-and-reversion.md) · [RESULT](D656-STAGE-0-RESULT-no-premium-a-real-reversion-no-trade.md) |
+| D657 | D657 STAGE 0 DESIGN — margin-driven deleveraging: does a CME margin increase force positions out, does the price it mov… | [record](D657-STAGE-0-DESIGN-margin-hikes-forced-exit-and-reversion.md) |
 
 <!-- REGISTER:END -->
 
