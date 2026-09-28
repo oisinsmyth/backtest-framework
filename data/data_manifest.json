@@ -7,8 +7,8 @@
   ".npz",
   ".zip"
  ],
- "total_bytes": 1833273834,
- "count": 134,
+ "total_bytes": 1920089839,
+ "count": 135,
  "files": [
   {
    "path": "data/D2_US_factors_SAS.parquet",
@@ -830,6 +830,15 @@
    "git_blob": "1950958f958cc22de19ecfbeeb95505723495805",
    "sidecars": [
     "data/fixtures/fut_open_interest_daily.meta.json"
+   ]
+  },
+  {
+   "path": "data/fixtures/fut_opening_globex_1m.csv.gz",
+   "bytes": 86816005,
+   "sha256": "509eb0a585905cbc8dd203a3a5cdf0de83743d5234ef1bbd3e7b01160014e71b",
+   "git_blob": null,
+   "sidecars": [
+    "data/fixtures/fut_opening_globex_1m.meta.json"
    ]
   },
   {

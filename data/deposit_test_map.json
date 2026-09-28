@@ -1619,10 +1619,15 @@
       "text": "Labels: synthetic sessions reproduce each rule in order (CONT/REV before FADE before RANGE).",
       "paraphrase": "Synthetic sessions reproduce every labelling rule in its order",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_labels.py",
+        "line": 19,
+        "symbol": "test_opening_01_labels_reproduce_each_rule_in_order"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 1 (D644): src/backtest_framework/opening/labels.py."
     },
     {
       "doc": "opening",
@@ -1648,10 +1653,15 @@
       "text": "d0 = 0 gives an unclassified, untraded day.",
       "paraphrase": "A zero opening displacement gives an unclassified, untraded day",
       "cls": "data_guard",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_labels.py",
+        "line": 36,
+        "symbol": "test_opening_03_d0_zero_is_unclassified_and_untraded"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 1 (D644): src/backtest_framework/opening/labels.py."
     },
     {
       "doc": "opening",
@@ -1756,10 +1766,15 @@
       "text": "Direction-relative transformation: flipping all prices (a mirror-image day) leaves direction-relative features and labels unchanged.",
       "paraphrase": "A mirrored day leaves direction-relative features and labels unchanged",
       "cls": "arithmetic",
-      "status": "missing",
-      "claim": null,
+      "status": "claimed",
+      "claim": {
+        "kind": "function",
+        "file": "tests/unit/test_opening_labels.py",
+        "line": 42,
+        "symbol": "test_opening_12_a_mirror_image_day_keeps_its_label"
+      },
       "covered_via": null,
-      "note": ""
+      "note": "Opening model Phase 1 (D644): src/backtest_framework/opening/labels.py."
     },
     {
       "doc": "opening",

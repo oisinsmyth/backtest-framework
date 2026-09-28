@@ -116,8 +116,8 @@ def test_every_row_carries_its_verbatim_text_so_the_page_renders_without_the_dep
 #: (`docs/internal/DEPOSIT_INFRASTRUCTURE_TRACKER.md`) carries the running figure. **Editing these
 #: numbers is the point.** They are pinned so that a claim added without amending the record turns
 #: this red; the fix is to update both together, never to loosen the assertion into `>=`.
-CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 6, "shock": 13, "letf": 9}
-CLAIMED_TOTAL = 99
+CLAIMED_PER_DOC = {"ledger": 65, "index": 6, "opening": 9, "shock": 13, "letf": 9}
+CLAIMED_TOTAL = 102
 
 
 def test_the_claimed_counts_are_the_ones_the_record_quotes():

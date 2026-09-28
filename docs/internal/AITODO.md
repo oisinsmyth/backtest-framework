@@ -260,16 +260,24 @@
     - costs: D508 + one tick, checked forward.
 - **Work is in the worktree `.claude/worktrees/after-d643` (branch `wt/after-d643`)** while another agent works in
   main.
-- **In progress:**
-  - SPY/QQQ fetch (`scripts/fetch_opening_etf_1min.py`, into the main checkout's `data/raw/alphavantage/1min/`);
-  - one Sierra ES contract (ESH19) downloaded to size the A7 pull against 139 GB free.
+- **Done:**
+  - SPY/QQQ 1-minute, 264 slices (OA-A4).
+  - OA-A6 RULED.
+  - **Gate O0 PASSED (D644):**
+    - coverage 99.98% (ES) and 99.97% (NQ);
+    - SPY/QQQ aligned (lag-0 correlation 0.985 and 0.992);
+    - ES O0-H 99.7%.
+  - **REV < 8% in both markets → merged into RANGE (O-D4).** The model has three states.
+  - The fixture is `fut_opening_globex_1m.csv.gz`: gitignored, in the worktree, and in the manifest by hash. **It
+    must be copied to the main checkout when the branch merges.**
+- **Running:** the Sierra ES/NQ tick pull (`scripts/sierra_index_tick_download.py`), one contract at a time, each
+  compressed in place (NTFS LZX, hash-checked). Log:
+  `scratchpad/sierra_index.log`; record `data/opening/sierra_index_tick_record.json`.
 - **Next:**
+  - Phase 2: the agent pressures A1–A6 with deposit tests 4–11, then POWER. A7 comes after the Sierra pull and its
+    check against the exchange flag.
+  - The NQ options fixture (O0-H, S-H).
   - Phase 0b: the vault guard over the new inputs (test 18).
-  - Phase 1 / Gate O0:
-    - ES/NQ 08:00–16:00 plus overnight bars from the raw `ohlcv-1m`;
-    - labels and the label-frequency report;
-    - SPY alignment;
-    - O0-H on the ES fixture and a new NQ options fixture.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 

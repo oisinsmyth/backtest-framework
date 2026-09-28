@@ -52,6 +52,45 @@ source. Opened 2026-09-28 on the principal's word ("Open it").*
   (MES, MNQ; $3 commission), with the deposit's 2× cost robustness. The 09:30 → 10:05 spread is measured on
   post-vault sessions (free `trades`/`tbbo` from 2026-09-19) before any book result is trusted.
 
+## OA-A6 (RULED 2026-09-28: the principal, "Confirm OA-A6", before any label was computed). The readings §5 and Gate O0 need
+
+*The deposit fixes the label rules (§5.3) but not the prices they are read from. These are the readings, written
+before the Phase 1 labels are computed. Each follows an existing repository convention where one exists.*
+
+1. **Prices.**
+   - **RTH open** is the open of the 09:30 bar.
+   - **Close** is the close of the 15:59 bar (the 16:00 print, D462).
+   - **Prior close** is the prior session's 15:59 close, *not* the CME settlement: the settlement differs from the
+     16:00 close on most days (memory: CME index settlement is not the 16:00 close), and §4 A1 says "prior RTH
+     high/low/close".
+   - `gap = open − prior close`.
+2. **ATR20.**
+   - True range is taken on RTH daily bars: RTH high and low, and the prior RTH close.
+   - It is the simple mean over the **20 sessions before** the current one, so it is known at the open. The same
+     ATR20 serves the gap feature, A1 and the FADE label.
+3. **IB** is the high − low of the 09:30–10:29 bars. **R** is the RTH (09:30–15:59) high − low.
+4. **Price at t0** is the close of the bar ending at t0 (the 09:44 bar for t0 = 09:45).
+5. **FADE's "trades through ≥ 75% of the gap towards the prior close by 16:00"**:
+   - for gap > 0, the RTH low ≤ open − 0.75 × gap;
+   - for gap < 0, the RTH high ≥ open + 0.75 × |gap|;
+   - read over all RTH bars.
+6. **Labels are per (session, t0),** because d0 depends on t0. CONT and REV can differ between 09:45 and 10:00 on a
+   day whose opening direction flips. The label-frequency report is given at both, and 10:00 is H-O1's.
+7. **The 8% merge rule (O-D4):**
+   - frequencies are pooled over the in-sample per market;
+   - a class below 8% in **either** market is merged into RANGE for **both**, because the classifier's
+     coefficients are shared (§7.1).
+8. **Exclusions** (logged):
+   - D589's early-close sessions;
+   - sessions whose 09:30 bar is missing, or with fewer than 90% of their 09:30 → t0 bars (the three March 2020
+     circuit-breaker opens, D462).
+9. **Gate O0's coverage** is ≥ 99% of the 480 expected minutes 08:00–15:59 ET, per market, on usable sessions (as
+   SC-A6: NYSE trading days that are not half days). Its literal minute count is reported beside it.
+10. **"SPY alignment verified"** means:
+    - SPY's and QQQ's 09:30 and 15:59 bars are present on ≥ 99% of usable sessions;
+    - Alpha Vantage's clock is US/Eastern: the median correlation of 1-minute returns with ES (SPY) and NQ (QQQ),
+      09:31–15:59, is ≥ 0.9 at lag 0 and higher than at ±1 minute.
+
 ## Opening facts (2026-09-28, before any rule is applied or any price read for this model)
 
 ### The data the deposit names, against what is on disk
