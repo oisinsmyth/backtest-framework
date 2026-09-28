@@ -7,8 +7,8 @@
   ".npz",
   ".zip"
  ],
- "total_bytes": 1986557289,
- "count": 137,
+ "total_bytes": 1991506896,
+ "count": 138,
  "files": [
   {
    "path": "data/D2_US_factors_SAS.parquet",
@@ -839,6 +839,15 @@
    "git_blob": null,
    "sidecars": [
     "data/fixtures/fut_nq_options_eod.meta.json"
+   ]
+  },
+  {
+   "path": "data/fixtures/fut_oi_expiry_cycles.csv.gz",
+   "bytes": 4949607,
+   "sha256": "4576027cbcc73c5bca3282971c827fd175c2fb74485228ab411f1852ecbea51a",
+   "git_blob": null,
+   "sidecars": [
+    "data/fixtures/fut_oi_expiry_cycles.meta.json"
    ]
   },
   {

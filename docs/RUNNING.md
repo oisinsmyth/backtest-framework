@@ -84,8 +84,8 @@ a **checkout** no longer carries; they remain in the history, so a `git clone` i
 which 969 MB is `.git`. Two of the smallest came back into the index in
 [D538](decisions/D538-two-small-panels-return-to-the-index.md) for 6.9 MB and, because their
 blobs were already in history, no extra bytes at all — which is what took the skips from 136 to 49
-(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 137
-panels and the git blob id of **115** of them. The twenty-two without one —
+(2026-09-16). [`data/data_manifest.json`](../data/data_manifest.json) carries the sha256 of all 138
+panels and the git blob id of **115** of them. The twenty-three without one —
 `data/d377_ensemble.npz`, `data/d382_scores.npz`, `data/fixtures/fut_day1m.parquet`, the two
 settlement panels D556 built on 2026-09-19, `data/fixtures/fut_settle_strip.csv.gz` and
 `data/fixtures/fut_curve_front_next.csv.gz`, the one-minute bitcoin panel D580 built on
@@ -105,7 +105,7 @@ D613 built on 2026-09-21, `data/fixtures/fut_es_0dte_volume_cutoffs.csv.gz`, and
 flow census D617 built on 2026-09-22, `data/fixtures/fut_es_0dte_signed_flow.csv.gz`, and the opening
 model's ES/NQ Globex-session bars D644 built on 2026-09-28, `data/fixtures/fut_opening_globex_1m.csv.gz`, and the
 NQ option end-of-day panel built the same day for its dealer-gamma agent, `data/fixtures/fut_nq_options_eod.csv.gz`, and D651's time-of-day liquidity map built the same day,
-`data/fixtures/fut_liquidity_15m.csv.gz` — were never
+`data/fixtures/fut_liquidity_15m.csv.gz`, and D654's open-interest expiry cycles, `data/fixtures/fut_oi_expiry_cycles.csv.gz` — were never
 tracked in the first place, so
 the checksum is all the manifest can offer for them.
 

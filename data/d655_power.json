@@ -1,0 +1,31 @@
+{
+ "reads": "placement offsets |k| > 10 only; the event window's P&L is never computed here",
+ "GC": {
+  "cycles": 39,
+  "placement_obs": 2677,
+  "sd_bp": 4.950951082758283
+ },
+ "SI": {
+  "cycles": 40,
+  "placement_obs": 2854,
+  "sd_bp": 9.035564763422968
+ },
+ "pooled": {
+  "cycles": 79,
+  "sd_bp": 7.347200597034206,
+  "mde_t2_bp": 1.6532492994799288,
+  "mean_base_cost_bp": 12.259225524878211
+ },
+ "forward": {
+  "2024-01..2025-02": {
+   "cycles": 13,
+   "mde_t2_bp": 4.075493612880995,
+   "power_if_gross_equals_cost": 0.9999704115399866
+  },
+  "with the vault to 2026-09": {
+   "cycles": 29,
+   "mde_t2_bp": 2.7286817990418086,
+   "power_if_gross_equals_cost": 0.9999999999985804
+  }
+ }
+}
