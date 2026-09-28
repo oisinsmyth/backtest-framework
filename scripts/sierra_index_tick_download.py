@@ -197,7 +197,9 @@ def main(argv: list[str] | None = None) -> int:
         r: dict[str, Any] = {"bytes": size(x), **span, "expected_last_day": str(expected_last_day(x).date()),
                              "cut_short": (None if a.live else is_cut_short(span, x)), "live": a.live,
                              "minutes": round((time.time() - t0) / 60, 1)}
-        if span.get("records", 0) > 0:
+        if a.live:  # Sierra keeps an unexpired contract's file open and appending: no stable hash, and compact fails
+            r.update({"compressed": False, "note": "live: neither hashed nor compressed; the flag check reads the span"})
+        elif span.get("records", 0) > 0:
             h1 = sha256(p)
             compress(p)
             h2 = sha256(p)
