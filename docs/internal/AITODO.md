@@ -13,7 +13,10 @@
 - Each model is scored on its own pre-registered vault criteria, and the assembled book is scored on the same
   period.
 - α stays in fixed slots of 0.005 per family, so a joint run changes no bar.
-- **Frozen and waiting:** the settlement ledger's NG Stage A (`data/FROZEN_ledger_stage_a_ng.json`).
+- **Frozen and waiting:** the settlement ledger's NG Stage A (`data/FROZEN_ledger_stage_a_ng.json`), and **D649's
+  NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
+  move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's
+  word). D649 needs D630's vault inputs built first (D630 §8).
 
 ## Index reweight flow — opened 2026-09-27 (the principal: "start the index-reweight pre-registration")
 
