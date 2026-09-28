@@ -230,8 +230,14 @@
   - **almost every z = 4 shock is INFO** (C median ≈ 1). **LIQ: NQ 85, ES 51, CL 40, GC 304 over nine years**,
     against ~1,800 planned. 317–387 shocks a year per market (planned ~150).
   - SC-A7 (NGSR diagnostic; unscheduled FOMC counts) and SC-A8 (a zero σ_tod cannot detect) are PROPOSED.
-- **Next: Phase 3 POWER** (§7A, before Gate 1). Expect CL/ES/NQ underpowered on the LIQ side; GC is the one market
-  with two populated classes.
+- **POWER DONE** (`scripts/power_shock.py` → `data/shock/power.json`, `docs/results/SHOCK_CLASSIFIER_POWER.md`), H1's
+  INFO-vs-LIQ divergence at the 30-minute exit against the micro round-trip cost:
+  - **NQ, ES and CL are UNDERPOWERED** (MDE at t = 2: 8.9 / 9.0 / 25.4 bp against costs of 2.4 / 3.3 / 10.7 bp; LIQ n
+    85 / 51 / 40). An H1 null there is inconclusive (§7A).
+  - **GC is powered at t = 2** (MDE 2.9 bp against a 4.5 bp cost; LIQ n 304), but not quite at Holm 80% (4.9 bp).
+  - Pooled MDE 0.094σ against the plan's 0.06σ.
+- **Next:** the Phase 3 pre-registration (the definitions the deposit leaves open, before any runner), then the runner.
+  Open for the principal: SC-A7, SC-A8.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
