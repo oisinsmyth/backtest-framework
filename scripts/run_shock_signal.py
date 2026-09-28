@@ -20,6 +20,7 @@ Conventions fixed here, before the run (D642 leaves them open):
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import importlib.util
 import json
@@ -157,9 +158,13 @@ def load_real(days: list[str]) -> tuple[pd.DataFrame, dict[str, np.ndarray], dic
     check_counts(shocks, committed_counts())
     f = SH / "phase2_shocks.csv.gz"
     if f.exists():
-        disk = pd.read_csv(f, encoding="utf-8", dtype={"day": str})
-        pd.testing.assert_frame_equal(shocks.reset_index(drop=True), disk, check_dtype=False, check_exact=True)
-        note["equals_phase2_file"] = True
+        # byte for byte, serialised exactly as D641 wrote it (its CSV carries ~16 significant digits, so a frame read
+        # back from it differs from the in-memory rebuild in the last digit; the first --run tripped on that)
+        with gzip.open(f, "rt", encoding="utf-8", newline="") as h:
+            disk = h.read()
+        if shocks.to_csv(index=False, lineterminator="\n") != disk:
+            raise ShockRunError("lag audit: the re-detected shocks differ from D641's phase2_shocks.csv.gz")
+        note["equals_phase2_file_bytes"] = True
     GA = {r: G[r].to_numpy(float) for r in TRADED}
     return shocks, GA, volume_grids(days), note
 
