@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 382 of these records carry neither field —
+**No Status or Category column, deliberately.** 389 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -715,11 +715,12 @@ would look like data. The tokens are what is shown.
 | D640 | RESULT: the LETF close-flow model is KILLED at Gate 1. NQ passes H1 at 14:30 and 15:00, but its own 11:00 placebo is si… | [RESULT](D640-RESULT-letf-close-flow-killed-by-its-own-11am-placebo.md) |
 | D641 | shock classifier Phase 2: the machinery is built and tested, and at z = 4 almost every one-minute shock moves its whole… | [record](D641-shock-classifier-phase-2-almost-every-shock-is-info.md) |
 | D642 | PRE-REG: the shock classifier's signal frame, Phases 3–4 (event-study curves, H1–H4, robustness) | [PRE-REG](D642-PRE-REG-shock-classifier-signal-frame-h1-h4.md) |
-| D643 | RESULT: the shock classifier fails Gate 1 on all four instruments. GC, the one powered cell, is a clean null, and on… | [RESULT](D643-RESULT-shock-classifier-fails-gate-1-on-all-four.md) |
-| D644 | the opening agent-state model's Gate O0 passes, and REV is below 8% in both markets, so it merges into RANGE by the… | [record](D644-opening-model-gate-O0-passes-and-REV-merges-into-RANGE.md) |
+| D643 | RESULT: the shock classifier fails Gate 1 on all four instruments. GC, the one powered cell, is a clean null, and on th… | [RESULT](D643-RESULT-shock-classifier-fails-gate-1-on-all-four.md) |
+| D644 | the opening agent-state model's Gate O0 passes, and REV is below 8% in both markets, so it merges into RANGE by the dep… | [record](D644-opening-model-gate-O0-passes-and-REV-merges-into-RANGE.md) |
 | D645 | PRE-REG: the opening agent-state model's stages and tests, Phases 3–5 (S-A → S-I, H-O1 … H-O6, Gate O1) | [PRE-REG](D645-PRE-REG-opening-model-stages-and-tests-phases-3-5.md) |
-| D646 | RESULT: stage S-A of the opening model passes H-O1 by the letter, on log loss and a 0.1-point accuracy edge; its… | [RESULT](D646-RESULT-opening-stage-S-A-log-loss-not-accuracy.md) |
-| D647 | POST HOC: why stage S-A failed. The pre-registered trade makes money on the true labels; the observables cannot see… | [record](D647-POST-HOC-opening-S-A-cannot-see-trend-days.md) |
+| D646 | RESULT: stage S-A of the opening model passes H-O1 by the letter, on log loss and a 0.1-point accuracy edge; its decisi… | [RESULT](D646-RESULT-opening-stage-S-A-log-loss-not-accuracy.md) |
+| D647 | POST HOC: why stage S-A failed. The pre-registered trade makes money on the true labels; the observables cannot see tre… | [record](D647-POST-HOC-opening-S-A-cannot-see-trend-days.md) |
+| D648 | CL: the move into the settlement misses T1's bar by 0.01 of a t, T2 names inventory risk (σ²·Q) over square-root impact… | [PRE-REG](D648-PRE-REG-cl-inventory-risk-or-square-root-impact.md) · [RESULT](D648-RESULT-cl-t1-misses-by-0.01-t2-names-inventory-risk.md) |
 
 <!-- REGISTER:END -->
 
