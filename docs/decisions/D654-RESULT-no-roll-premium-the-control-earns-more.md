@@ -107,3 +107,11 @@ The month's curve moves the same with or without the roll.
 **Recommended:** close the delivery-period line (the principal's word, R15). The Stage 0 fixture and the per-row
 contract resolver stay as instruments. The resolver fixes a defect that D653's builder shares on far-dated recycled
 codes: 729, 378 and 669 rows of GC, SI and HG, none of them a cycle's expiring, receiving or hedge month.
+
+## 8. CLOSED by the principal, 2026-09-28
+
+"Close it and merge into main." The delivery-period line — the forced exit and roll of holders who cannot take
+delivery, reopened from `ALPHA_PROGRAMME.md` roadmap item 12 — is closed under R15: no new pre-registration of a
+construction on the expiry drain (any root, any leg, any timing, filtered or not) on these fixtures without a new
+deposit or a new fixture a record names. The 2024+ slice was never read for it. D653's fixture, its measurements and
+the per-row contract resolver stay as instruments.
