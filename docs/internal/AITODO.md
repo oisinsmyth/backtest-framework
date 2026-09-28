@@ -139,11 +139,10 @@
 - **The principal approved all four (2026-09-27).**
   - NQ and CL/NG options: SUBMITTED 2026-09-27 by `scripts/fetch_prelapse_options.py` (7 batch jobs, each re-quoted
     at USD 0.00 just before submission; records `data/prelapse_options_pull_jobs_{nq,energy}.json`); downloading.
-- [ ] **Delivery-period line: D653's Stage 0 routes to a pre-registration; recommended scope GC and SI** (principal
-  to decide whether it is written). Eight roots qualify as run, but only GC, SI and 6C under both cycle rules tried;
-  the monthly energies were mis-measured (the receiving rule picks December contracts). The construction would never
-  hold the expiring month (the principal's rule): short the receiving contract against the hedge contract into the
-  last-week drain before first notice, personal book. No price read yet; the 2024+ slice unread.
+- [ ] **Delivery-period line: D654 recommends CLOSING it** (principal, R15). The gold/silver roll is large (D653)
+  but leaves no price footprint: +0.44 bp gross per cycle, placement rank 0.37, the no-roll month-end control earns
+  more (+2.37 bp), R cheapens during the drain (−1.68 bp, opposite to the mechanism), the expected-profit filter
+  traded 0 cycles. HG and 6C the same. The 2024+ slice is unread for the line.
 - [ ] **Session-handoff pre-vault pull: D651 recommends NONE** (principal to rule before 2026-10-09). The liquidity
   map found one handoff trough in 105 scored cells (6J W3, MARGINAL on cost), so there is no window worth a
   pre-vault `tbbo` + `bbo-1m` pull for the deposit's kill 2 (realised spread). Nothing was quoted. If the principal

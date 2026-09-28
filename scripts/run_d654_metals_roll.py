@@ -455,7 +455,8 @@ def run() -> int:
     series = cs.DailyPnL(name="d654_metals_roll_GC_SI", dates=tuple(d.strftime("%Y-%m-%d") for d in net_book.index),
                          usd=tuple(float(v) for v in net_book.to_numpy()), size_label="one GC and one SI calendar spread",
                          cost_line_usd_rt=float(np.mean([COST[r] for r in PRIMARY])),
-                         window=(str(net_book.index[0].date()), LAST), spec="D654")
+                         window=(str(net_book.index[0].date()), LAST), spec="D654",
+                         source_sha256=cs.sha256_of(STRIP))
     line = cs.component_line(series)
     out["component_line"] = {k: line[k] for k in ("net_sharpe", "net_sortino", "exposure", "hit_active", "skew",
                                                   "mean_usd", "sd_usd", "worst_day_usd")}
