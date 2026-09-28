@@ -1,0 +1,72 @@
+{
+ "blocks_et": [
+  [
+   "11:30:00",
+   "12:20:00"
+  ],
+  [
+   "13:49:00",
+   "15:00:00"
+  ]
+ ],
+ "contracts": 125,
+ "cut": "2025-03-01",
+ "files": [
+  {
+   "bytes": 108725042,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20170521-20171231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 214996252,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20180101-20181231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 205221716,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20190101-20191231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 255001934,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20200101-20201231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 215188390,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20210101-20211231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 295010839,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20220101-20221231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 214097044,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20230101-20231231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 202854556,
+   "job": "GLBX-20260924-UMCCWJ39BQ",
+   "name": "glbx-mdp3-20240101-20241231.ohlcv-1s.dbn.zst"
+  },
+  {
+   "bytes": 68138087,
+   "job": "GLBX-20260925-3N5UWV7DRX",
+   "name": "glbx-mdp3-20250101-20250228.ohlcv-1s.dbn.zst"
+  }
+ ],
+ "first": "2017-05-22",
+ "known_answer": {
+  "pairs": 41401,
+  "placebo_volume_mismatches": 0,
+  "px_1350_mismatches": 0,
+  "px_1350_vs_1349_close_pairs": 14263,
+  "window_volume_mismatches": 0
+ },
+ "rows": 1824455,
+ "rows_sha256": "08712df1c13d0ee2fe3caf1ab8b9570e7384f642604d3c4a65009387fc490fd9",
+ "sessions": 2006
+}
