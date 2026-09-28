@@ -187,29 +187,29 @@ result). No Phase 4 stage has run; no agent pressure has been compared with a la
 - The clip is applied in `scripts/opening_phase45.py` (`load_agents`), committed after this amendment and before the
   one Phase 4 run.
 
-## OA-A10 (RULED 2026-09-28, the principal, before any Phase 4 stage has run). v2 is run now, as a separate construction (D655)
+## OA-A10 (RULED 2026-09-28, the principal, before any Phase 4 stage has run). v2 is run now, as a separate construction (D652)
 
 *Source: the principal, after the external-evidence round (`docs/research/opening-v2-external-evidence.md`): "lets
 make those changes and test them as a separate model"; the test data "should join the vault after an in sample
 test"; the inputs "Observables + A4 rescaled".*
 
-- **This overrides OA-A8.3's trigger for one construction, D655.** v2 no longer waits for Phase 4, and it combines
+- **This overrides OA-A8.3's trigger for one construction, D652.** v2 no longer waits for Phase 4, and it combines
   V2-1, V2-2 and V2-3 with the research round's entry clocks, the liquidity-scaled A4 and a declared 0DTE break.
 - **Nothing else in OA-A8 changes:** the diagnostics are reported at every Phase 4 stage, and D645 runs exactly as
   registered.
-- **D655 sits outside D645's family:**
+- **D652 sits outside D645's family:**
   - its own programme slot (9), taken only if its in-sample run carries a cell;
   - its own trials rows;
   - its in-sample run comes after Phase 4's one run.
-- If OA-A8's trigger fires after Phase 4, the items it names are already registered in D655. A further v2 item then
+- If OA-A8's trigger fires after Phase 4, the items it names are already registered in D652. A further v2 item then
   needs a new record.
 
-## OA-A11 = D655-A1 (RULED 2026-09-28, the principal, before any real-data v2 run). The expected value is scaled per row and must clear one cost
+## OA-A11 = D652-A1 (RULED 2026-09-28, the principal, before any real-data v2 run). The expected value is scaled per row and must clear one cost
 
 *Source: the principal, "Amend: both fixes". What prompted it is the runner's `--dry-run` alone: synthetic random-walk
 bars and a synthetic G on the real calendar. No real price, option or label has been scored by any v2 code.*
 
-**What the dry run showed.** On prices with no information, D655 §4's rule traded 27% of V2-F's rows and 28% of
+**What the dry run showed.** On prices with no information, D652 §4's rule traded 27% of V2-F's rows and 28% of
 V2-C's, and lost more per trade than the rows it skipped (−3.3 against −1.8 bp; −4.3 against −3.3). Two causes:
 - **Pooled payoffs.** V2-F's m_T averaged the timed-out trades over every gap size. A small gap that fails to fill
   loses far more relative to its target (−16.9 bp in the smallest quintile against +2.3 in the largest), so the
@@ -219,13 +219,13 @@ V2-C's, and lost more per trade than the rows it skipped (−3.3 against −1.8 
 **Tested on the same synthetic bars** (scratch scripts, nothing committed): scaling the payoffs cut the no-information
 trading to 17% on both cells, and adding the one-cost margin cut it to 3.4% (V2-F) and 7.8% (V2-C).
 
-**The amendment (replaces D655 §4; everything else in D655 stands):**
+**The amendment (replaces D652 §4; everything else in D652 stands):**
 1. **V2-F:** EV = p̂ × (dist_bp − cost_bp) + (1 − p̂) × (ĝ_T − cost_bp), with
    **ĝ_T = a + β × [p̂ / (1 − p̂)] × dist_bp**.
    - (a, β) are the OLS fit, on the training window's timed-out trades, of their gross bp on
      x = p_tr / (1 − p_tr) × dist_bp;
    - p_tr is that window's final model's own probability for the training row;
-   - dist_bp and cost_bp are in bp of the price at 09:45, as D655 §1.
+   - dist_bp and cost_bp are in bp of the price at 09:45, as D652 §1.
    - **Why this form:** under a random walk the expected gross is zero, which forces a = 0 and β = −1, and then
      EV = −cost for every row. The rule trades only where the fitted reversion beats a random walk's. The form is
      reasoned from the martingale, not fitted to any market.
@@ -240,7 +240,7 @@ trading to 17% on both cells, and adding the one-cost margin cut it to 3.4% (V2-
    margin, since one micro has no size to shrink).
 
 **Robustness:**
-- **EV > 0 (no margin)** replaces D655 §5's "δ = 1 bp";
+- **EV > 0 (no margin)** replaces D652 §5's "δ = 1 bp";
 - the rest of §5 is unchanged.
 
 **The audits cover the new quantities:**

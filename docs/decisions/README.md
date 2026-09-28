@@ -724,7 +724,7 @@ would look like data. The tokens are what is shown.
 | D649 | REGISTRATION — the NG projected-profit line for the joint vault run: trade one MNG only when the projected move clears… | [PRE-REG](D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md) |
 | D650 | REGISTRATION (addendum) — how the two NG vault lines are read together: the mechanism and the trade are separate verdic… | [PRE-REG](D650-PRE-REG-joint-reading-of-the-two-ng-vault-lines.md) |
 | D651 | there is no handoff trough: the night is one ramp, thinnest at the 18:00 reopen and deepest into the cash close; kill 1… | [PRE-REG](D651-PRE-REG-the-time-of-day-liquidity-map-and-the-handoff-kill-1.md) · [RESULT](D651-RESULT-no-handoff-trough-the-night-is-one-ramp-from-the-reopen.md) |
-| D655 | PRE-REG: the opening model's v2, a separate construction. A gap fade at 09:45 and a hold to the close from 10:30, each… | [PRE-REG](D655-PRE-REG-opening-v2-fade-and-hold-to-close-on-expected-value.md) |
+| D652 | PRE-REG: the opening model's v2, a separate construction. A gap fade at 09:45 and a hold to the close from 10:30, each… | [PRE-REG](D652-PRE-REG-opening-v2-fade-and-hold-to-close-on-expected-value.md) |
 
 <!-- REGISTER:END -->
 
