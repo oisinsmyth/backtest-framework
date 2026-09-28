@@ -20,6 +20,10 @@ import sys
 import time
 from pathlib import Path
 
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import databento_download as DL  # noqa: E402  (the hang-proof per-file downloader, 2026-09-28)
+
 REPO = Path(__file__).resolve().parents[1]
 RAW = REPO / "data" / "raw" / "databento"
 KEY_FILE = Path.home() / ".config" / "databento" / "key"
@@ -104,12 +108,16 @@ def download(wait: bool) -> int:
                 print(f"  {j['label']} job {jid}: {state}", flush=True)
                 pending += 1
                 continue
-            (RAW / jid).mkdir(parents=True, exist_ok=True)
-            paths = c.batch.download(job_id=jid, output_dir=RAW)
-            j["downloaded_utc"] = now()
-            j["files"] = len(paths)
-            j["bytes"] = int(sum(Path(p).stat().st_size for p in paths))
-            print(f"  {j['label']} job {jid}: downloaded {len(paths)} files, {j['bytes'] / 1e9:.2f} GB", flush=True)
+            summ = DL.download_job(c, api_key(), jid, RAW)
+            j["download"] = summ
+            if summ["verified"] == summ["files"]:
+                j["downloaded_utc"] = now()
+                j["files"], j["bytes"] = summ["files"], summ["bytes"]
+            else:
+                pending += 1  # an abandoned file: the next pass resumes it
+            print(f"  {j['label']} job {jid}: {summ['verified']}/{summ['files']} files verified, "
+                  f"{summ['bytes'] / 1e9:.2f} GB", flush=True)
+            JOBS.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8", newline="\n")
         JOBS.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8", newline="\n")
         if not pending or not wait:
             return 3 if pending else 0
