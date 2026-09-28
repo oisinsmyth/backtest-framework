@@ -8,8 +8,8 @@ instrument and data check is separately tested.
 
 Three results:
 
-- **It matches an independent engine to the penny.** Run against vectorbt, written by other
-  people, the equity curves agree.
+- **It agrees with a second engine to the penny.** Run against vectorbt, an independently written
+  open-source engine, the equity curves match.
 - **It caught a bug worth 93% of a result.** A second check of which positions were held each day
   disagreed with the first, and almost all of that study's apparent profit was the error.
 - **It raises the bar as the search grows.** Test enough strategies and a good one appears by luck,
