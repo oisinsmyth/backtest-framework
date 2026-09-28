@@ -1,0 +1,121 @@
+{
+  "decision": "D651",
+  "built_by": "python scripts/build_fut_liquidity_map.py --build",
+  "computes_no_return": true,
+  "columns": [
+    "root",
+    "day",
+    "bucket",
+    "spread_ticks",
+    "n",
+    "q_lots",
+    "q_orders"
+  ],
+  "session_days": [
+    "2025-09-11",
+    "2026-09-10"
+  ],
+  "inside_programme_vault": [
+    "2025-03-01",
+    "2026-09-18"
+  ],
+  "rows": 2424214,
+  "roots": 41,
+  "sessions": 327,
+  "quoted_minutes": 13526478,
+  "files": [
+    {
+      "file": "glbx-mdp3-20250911-20250930.bbo-1m.dbn.zst",
+      "rows": 19875026,
+      "kept_ids": 4813034,
+      "invalid": 65150,
+      "front_minutes": 735560
+    },
+    {
+      "file": "glbx-mdp3-20251001-20251031.bbo-1m.dbn.zst",
+      "rows": 35164121,
+      "kept_ids": 8149102,
+      "invalid": 133733,
+      "front_minutes": 1207007
+    },
+    {
+      "file": "glbx-mdp3-20251101-20251130.bbo-1m.dbn.zst",
+      "rows": 30031140,
+      "kept_ids": 6855679,
+      "invalid": 142477,
+      "front_minutes": 1014754
+    },
+    {
+      "file": "glbx-mdp3-20251201-20251231.bbo-1m.dbn.zst",
+      "rows": 33460677,
+      "kept_ids": 7680602,
+      "invalid": 139426,
+      "front_minutes": 1144695
+    },
+    {
+      "file": "glbx-mdp3-20260101-20260131.bbo-1m.dbn.zst",
+      "rows": 34416330,
+      "kept_ids": 7443476,
+      "invalid": 100664,
+      "front_minutes": 1094643
+    },
+    {
+      "file": "glbx-mdp3-20260201-20260228.bbo-1m.dbn.zst",
+      "rows": 33408052,
+      "kept_ids": 7112432,
+      "invalid": 77052,
+      "front_minutes": 1045118
+    },
+    {
+      "file": "glbx-mdp3-20260301-20260331.bbo-1m.dbn.zst",
+      "rows": 39414539,
+      "kept_ids": 8057623,
+      "invalid": 111474,
+      "front_minutes": 1167268
+    },
+    {
+      "file": "glbx-mdp3-20260401-20260430.bbo-1m.dbn.zst",
+      "rows": 33645205,
+      "kept_ids": 7195321,
+      "invalid": 88503,
+      "front_minutes": 1133119
+    },
+    {
+      "file": "glbx-mdp3-20260501-20260531.bbo-1m.dbn.zst",
+      "rows": 33381559,
+      "kept_ids": 7309206,
+      "invalid": 91155,
+      "front_minutes": 1103504
+    },
+    {
+      "file": "glbx-mdp3-20260601-20260630.bbo-1m.dbn.zst",
+      "rows": 33820232,
+      "kept_ids": 7450022,
+      "invalid": 91728,
+      "front_minutes": 1168766
+    },
+    {
+      "file": "glbx-mdp3-20260701-20260731.bbo-1m.dbn.zst",
+      "rows": 34048038,
+      "kept_ids": 7592703,
+      "invalid": 107300,
+      "front_minutes": 1216665
+    },
+    {
+      "file": "glbx-mdp3-20260801-20260831.bbo-1m.dbn.zst",
+      "rows": 32391171,
+      "kept_ids": 7304361,
+      "invalid": 99946,
+      "front_minutes": 1135436
+    },
+    {
+      "file": "glbx-mdp3-20260901-20260910.bbo-1m.dbn.zst",
+      "rows": 12249809,
+      "kept_ids": 2698088,
+      "invalid": 33387,
+      "front_minutes": 359943
+    }
+  ],
+  "clock": "ts_recv -> US/Eastern; session day rolls at 18:00 ET; bucket = 15-minute start, HH:MM",
+  "front_rule": "fut_breadth_hourly volume rule; micros inherit the parent's expiry (D507)"
+}

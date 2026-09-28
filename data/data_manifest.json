@@ -7,8 +7,8 @@
   ".npz",
   ".zip"
  ],
- "total_bytes": 1920089839,
- "count": 135,
+ "total_bytes": 1986557289,
+ "count": 137,
  "files": [
   {
    "path": "data/D2_US_factors_SAS.parquet",
@@ -806,6 +806,15 @@
    "sha256": "ee1e8415e35f395ef930f6f112530cbe7384eb09324fcf199513272048fc4299",
    "git_blob": "5a8c3da5cbc548a93d12d16efc307b0eae59b871",
    "sidecars": []
+  },
+  {
+   "path": "data/fixtures/fut_liquidity_15m.csv.gz",
+   "bytes": 13465262,
+   "sha256": "6be6cfc704d080502e60153e70cdc21e74793fc26f5e60c38939751881e4097b",
+   "git_blob": null,
+   "sidecars": [
+    "data/fixtures/fut_liquidity_15m.meta.json"
+   ]
   },
   {
    "path": "data/fixtures/fut_micro_flow_5m.csv.gz",
