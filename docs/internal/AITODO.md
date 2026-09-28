@@ -151,12 +151,10 @@
 - **The principal approved all four (2026-09-27).**
   - NQ and CL/NG options: SUBMITTED 2026-09-27 by `scripts/fetch_prelapse_options.py` (7 batch jobs, each re-quoted
     at USD 0.00 just before submission; records `data/prelapse_options_pull_jobs_{nq,energy}.json`); downloading.
-- [ ] **Session-handoff pre-vault pull: D651 recommends NONE** (principal to rule before 2026-10-09). The liquidity
-  map found one handoff trough in 105 scored cells (6J W3, MARGINAL on cost), so there is no window worth a
-  pre-vault `tbbo` + `bbo-1m` pull for the deposit's kill 2 (realised spread). Nothing was quoted. If the principal
-  wants the pull regardless, it is a quote by Claude and a word from the principal.
   - Top-ups including MBO: SCHEDULED for Fri 2026-10-09 07:30, task `prelapse-databento-topup`
     (`scripts/fetch_prelapse_topup.py`; checks ≥ 90 GB free first, refuses any job no longer at USD 0.00).
+- **Session-handoff pre-vault pull: RULED NONE** (the principal, 2026-09-28, on D651's recommendation). The
+  session-handoff line is closed (D651 §6); nothing is pulled for its kill 2.
 
 ## LETF close-flow — opened 2026-09-27 (the principal: "then open LETF close-flow")
 
