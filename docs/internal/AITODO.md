@@ -283,9 +283,18 @@
     blank 20.
   - **Flag for the stage runs:** z5's double standardisation (§4 plus OA-A7.5) gives extremes to −45.9 on release
     days. It is as written; the classifier's inner CV has to live with it, or it needs an amendment before S-F.
+- **POWER DONE** (`scripts/power_opening.py` → `data/opening/power.json`, `docs/results/OPENING_AGENT_STATE_POWER.md`;
+  t0 = 10:00, on 2,030 out-of-sample sessions):
+  - labels: ρ_same_day 0.42 → n_eff 2,831, as planned. H-O1's accuracy-lift MDE is 1.8 points at t = 2 over a
+    61.7% base rate.
+  - 60-minute moves: ρ 0.91 → n_eff 2,125, below the plan's 2,700–2,900. σ is 36 bp (ES) and 48 bp (NQ); the micro
+    round trip is 3.27 / 2.31 bp.
+  - H-O2 all days: MDE 0.043 σ = 1.84 bp at t = 2, testable against the 2.79 bp cost. At the programme's α 0.005
+    with 80% power it is 3.35 bp: **underpowered at the promotion bar**.
+  - **Per traded day (35% confident): MDE 3.10 bp at t = 2 against the 2.79 bp cost: UNDERPOWERED.** A policy
+    whose edge only covers the cost cannot be told from zero.
 - **Next:**
-  - POWER (`docs/results/OPENING_AGENT_STATE_POWER.md`) before any stage runs.
-  - Then the stage pre-registration (S-A → S-I, H-O1/H-O3 first).
+  - The stage pre-registration (S-A → S-I, H-O1/H-O3 first), carrying POWER's labels.
   - A7 comes after the Sierra pull and its check against the exchange flag.
   - The NQ options fixture (O0-H, S-H).
   - Phase 0b: the vault guard over the new inputs (test 18).
