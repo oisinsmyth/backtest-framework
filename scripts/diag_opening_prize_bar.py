@@ -62,10 +62,11 @@ def main() -> int:
         rd = np.log(close / close.shift(1)) * 1e4
         r60 = np.log(c["10:59"] / c["09:59"]) * 1e4
         rcl = np.log(close / c["10:29"]) * 1e4
+        r30 = np.log(close / c["15:29"]) * 1e4
         px10 = c["09:59"]
         cost = R.COST_USD[r] / (R.USD_PER_POINT[r] * px10) * 1e4
         d = pd.DataFrame({"dv": tot, "share_0930": first / tot, "share_1000": second / tot, "rd": rd, "r60": r60,
-                          "rcl": rcl, "cost": cost})
+                          "rcl": rcl, "r30": r30, "cost": cost})
         d = d[d.index >= "2016-01-04"]
         rows.append(d.assign(root=r))
         mk = {}
@@ -73,7 +74,7 @@ def main() -> int:
             mk[lab] = {"sessions": int(len(dd)), "dollar_volume_median_bn": float(dd["dv"].median() / 1e9),
                        "share_0930_1000": float(dd["share_0930"].median()), "share_1000_1100": float(dd["share_1000"].median()),
                        "sigma_daily_bp": float(dd["rd"].std()), "sigma_1000_1100_bp": float(dd["r60"].std()),
-                       "sigma_1030_close_bp": float(dd["rcl"].std()), "cost_micro_rt_bp": float(dd["cost"].median())}
+                       "sigma_1030_close_bp": float(dd["rcl"].std()), "sigma_1530_close_bp": float(dd["r30"].std()), "cost_micro_rt_bp": float(dd["cost"].median())}
         out["market"][r] = mk
     # 2. the bar, per market on the recent window
     for r in R.ROOTS:

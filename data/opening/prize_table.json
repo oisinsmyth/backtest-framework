@@ -1,0 +1,353 @@
+{
+ "pooled": {
+  "morning_60min": {
+   "sigma_hold_bp": 30.290521310310282,
+   "members": {
+    "6b": 10,
+    "6c": 2.5,
+    "9b": 10,
+    "12": 0.3
+   },
+   "freq_weighted_best_case_impact_bp": 9.1,
+   "no_overlap": {
+    "days_a_year": 22.8,
+    "vault_events": 35.3,
+    "push_needed_bp": 20.7,
+    "clears_at_best_case": false
+   },
+   "stress_days_shared": {
+    "days_a_year": 10,
+    "vault_events": 15.5,
+    "push_needed_bp": 29.8,
+    "clears_at_best_case": false
+   }
+  },
+  "close_30min": {
+   "sigma_hold_bp": 22.169707798849135,
+   "members": {
+    "6b": 10,
+    "6c": 2.5,
+    "10": 5,
+    "PEN": 12,
+    "LETF": 55
+   },
+   "freq_weighted_best_case_impact_bp": 10.8,
+   "no_overlap": {
+    "days_a_year": 84.5,
+    "vault_events": 130.8,
+    "push_needed_bp": 9.6,
+    "clears_at_best_case": true
+   },
+   "stress_days_shared": {
+    "days_a_year": 77,
+    "vault_events": 119.2,
+    "push_needed_bp": 9.9,
+    "clears_at_best_case": true
+   }
+  }
+ },
+ "inputs": {
+  "sigma_daily_bp": 81.5144391135093,
+  "V_es_bn": 283.5181891,
+  "V_complex_bn": 850.5545672999999,
+  "bar_break_even_bp": 2.7999036751630113,
+  "bar_daily_60min_bp": 8.171313147949528,
+  "bar_event_40_bp": 19.572124378228004
+ },
+ "rows": [
+  {
+   "id": "8",
+   "mechanism": "Opening-auction imbalance (whole NYSE+Nasdaq opening auction as the ceiling)",
+   "flow_bn": [
+    0.2,
+    4.4
+   ],
+   "days_a_year": 250,
+   "vault_events": 390.0,
+   "push_needed_bp": 8.2,
+   "impact_bp": [
+    0.6,
+    10.2
+   ],
+   "lands_after_10am": false,
+   "when": "09:30 auction (before a 10:00 entry)",
+   "anticipated": "yes: NYSE feed from 08:00, NOII from 09:28",
+   "direction": "yes",
+   "source": "C3",
+   "verdict": "FAILS timing: it lands before the entry or at the close"
+  },
+  {
+   "id": "6a",
+   "mechanism": "Dealer gamma, typical day (+$2-6bn per 1%; dampens)",
+   "flow_bn": [
+    0.5,
+    2.0
+   ],
+   "days_a_year": 225,
+   "vault_events": 390.0,
+   "push_needed_bp": 8.2,
+   "impact_bp": [
+    1.0,
+    6.8
+   ],
+   "lands_after_10am": true,
+   "when": "all day, strongest at the close",
+   "anticipated": "yes: carried OI",
+   "direction": "no: damps the move",
+   "source": "C1",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "6b",
+   "mechanism": "Dealer gamma, negative tail (p5-p1: -$0.8 to -$2.2bn per 1%, at a 1% move)",
+   "flow_bn": [
+    0.8,
+    2.2
+   ],
+   "days_a_year": 10,
+   "vault_events": 15.5,
+   "push_needed_bp": 29.8,
+   "impact_bp": [
+    1.2,
+    7.2
+   ],
+   "lands_after_10am": true,
+   "when": "all day; measured effect in the last 30 min",
+   "anticipated": "partly (naive-sign OI)",
+   "direction": "amplifies a move",
+   "source": "C1",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "6c",
+   "mechanism": "Dealer gamma, extreme (-$7.5bn per 1%, about 1% of days)",
+   "flow_bn": [
+    7.5,
+    7.5
+   ],
+   "days_a_year": 2.5,
+   "vault_events": 3.9,
+   "push_needed_bp": 56.7,
+   "impact_bp": [
+    3.8,
+    13.3
+   ],
+   "lands_after_10am": true,
+   "when": "all day",
+   "anticipated": "partly",
+   "direction": "amplifies a move",
+   "source": "C1",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "7",
+   "mechanism": "0DTE dealer hedging in the morning, amplifying side only (-$1.1bn IQR to -$5bn extreme per 1% at 15:30, /2.5 at 10:00; the long-gamma side damps)",
+   "flow_bn": [
+    0.44,
+    2.0
+   ],
+   "days_a_year": 250,
+   "vault_events": 390.0,
+   "push_needed_bp": 8.2,
+   "impact_bp": [
+    0.9,
+    6.8
+   ],
+   "lands_after_10am": true,
+   "when": "weakest after the open (gamma ~ 1/sqrt T)",
+   "anticipated": "no",
+   "direction": "amplifies a move",
+   "source": "C1",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "9a",
+   "mechanism": "CTAs, ordinary day (S&P share of $3-8bn a week)",
+   "flow_bn": [
+    0.2,
+    1.0
+   ],
+   "days_a_year": 250,
+   "vault_events": 390.0,
+   "push_needed_bp": 8.2,
+   "impact_bp": [
+    0.6,
+    4.8
+   ],
+   "lands_after_10am": null,
+   "when": "unestablished (claims of morning)",
+   "anticipated": "yes: weekly bank notes",
+   "direction": "yes",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "9b",
+   "mechanism": "CTAs, trigger day ($12.5-36bn over two weeks)",
+   "flow_bn": [
+    1.2,
+    3.6
+   ],
+   "days_a_year": 10,
+   "vault_events": 15.5,
+   "push_needed_bp": 29.8,
+   "impact_bp": [
+    1.5,
+    9.2
+   ],
+   "lands_after_10am": null,
+   "when": "unestablished",
+   "anticipated": "yes: trigger levels published",
+   "direction": "yes",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "10",
+   "mechanism": "Vol-control, stress ($37-57bn a day modelled 2015; $84bn over 2 weeks in Aug 2024)",
+   "flow_bn": [
+    8.0,
+    57.0
+   ],
+   "days_a_year": 5,
+   "vault_events": 7.7,
+   "push_needed_bp": 40.9,
+   "impact_bp": [
+    4.0,
+    36.5
+   ],
+   "lands_after_10am": false,
+   "when": "at or near the close, 1-2 day lag",
+   "anticipated": "yes: rule replicable, notes published",
+   "direction": "yes",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "LETF",
+   "mechanism": "Leveraged ETFs on a 1% day (NDX $1.9bn + SPX $0.8bn per 1%, up to 74% offset by fund flows)",
+   "flow_bn": [
+    0.7,
+    2.7
+   ],
+   "days_a_year": 250,
+   "vault_events": 390.0,
+   "push_needed_bp": 8.2,
+   "impact_bp": [
+    1.2,
+    8.0
+   ],
+   "lands_after_10am": false,
+   "when": "last 30-60 min",
+   "anticipated": "yes: deterministic",
+   "direction": "yes (with the day)",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "PEN",
+   "mechanism": "Pension quarter/month-end, US ($14-32bn over ~3-5 days)",
+   "flow_bn": [
+    3.0,
+    10.0
+   ],
+   "days_a_year": 12,
+   "vault_events": 18.6,
+   "push_needed_bp": 27.4,
+   "impact_bp": [
+    2.4,
+    15.3
+   ],
+   "lands_after_10am": false,
+   "when": "last week; T-3 morning; close via overlays",
+   "anticipated": "yes: published",
+   "direction": "yes",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "IDX",
+   "mechanism": "Index reconstitution (net index flow ~0)",
+   "flow_bn": [
+    0.0,
+    0.5
+   ],
+   "days_a_year": 4,
+   "vault_events": 6.2,
+   "push_needed_bp": 45.4,
+   "impact_bp": [
+    0.0,
+    3.4
+   ],
+   "lands_after_10am": false,
+   "when": "closing auction",
+   "anticipated": "yes: weeks ahead",
+   "direction": "no",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "BB",
+   "mechanism": "Buybacks ($4-6bn a day VWAP, no opening trade; one morning hour ~20%)",
+   "flow_bn": [
+    0.8,
+    1.2
+   ],
+   "days_a_year": 180,
+   "vault_events": 278.6,
+   "push_needed_bp": 9.2,
+   "impact_bp": [
+    1.2,
+    5.3
+   ],
+   "lands_after_10am": true,
+   "when": "through the day",
+   "anticipated": "yes: seasonality",
+   "direction": "yes (buying)",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "11",
+   "mechanism": "Executed stops (0.9% of ES volume, spread across the day; one cascade a fraction)",
+   "flow_bn": [
+    0.1,
+    0.5
+   ],
+   "days_a_year": 250,
+   "vault_events": 390.0,
+   "push_needed_bp": 8.2,
+   "impact_bp": [
+    0.4,
+    3.4
+   ],
+   "lands_after_10am": true,
+   "when": "intraday",
+   "anticipated": "levels known, sizes not",
+   "direction": "yes (through a level)",
+   "source": "C3",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  },
+  {
+   "id": "12",
+   "mechanism": "Forced deleveraging episode ($100-225bn over days)",
+   "flow_bn": [
+    20.0,
+    50.0
+   ],
+   "days_a_year": 0.3,
+   "vault_events": 0.5,
+   "push_needed_bp": 158.5,
+   "impact_bp": [
+    6.2,
+    34.2
+   ],
+   "lands_after_10am": true,
+   "when": "days; often the close",
+   "anticipated": "no (until under way)",
+   "direction": "yes",
+   "source": "C2",
+   "verdict": "FAILS size: its best case is below the bar for its frequency"
+  }
+ ]
+}
