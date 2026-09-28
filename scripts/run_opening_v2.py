@@ -1,20 +1,20 @@
-"""D652 runner: the opening model's v2, a separate construction (OA-A10). Written after D652 (e80012c) and committed
+"""D655 runner: the opening model's v2, a separate construction (OA-A10). Written after D655 (e80012c) and committed
 BEFORE its run.
 
     uv run python scripts/run_opening_v2.py --selftest     # every audit fires on a deliberately broken input
     uv run python scripts/run_opening_v2.py --dry-run      # synthetic bars and G on the real calendar; writes nothing
     uv run python scripts/run_opening_v2.py --run          # ONCE, after D645's Phase 4 run: the in-sample (kill only)
     uv run python scripts/run_opening_v2.py --check        # the rebuild equals the committed output
-    uv run python scripts/run_opening_v2.py --power        # D652 s.7, on the committed in-sample series
-    uv run python scripts/run_opening_v2.py --freeze       # D652 s.8's freeze, only with a carried cell
+    uv run python scripts/run_opening_v2.py --power        # D655 s.7, on the committed in-sample series
+    uv run python scripts/run_opening_v2.py --freeze       # D655 s.8's freeze, only with a carried cell
     uv run python scripts/run_opening_v2.py --vault        # refuses: the vault-input path is not built yet
 
-Two cells (D652 s.1): V2-F, the gap fade at 09:45 (target the prior close, 60-minute time stop, no price stop), and
+Two cells (D655 s.1): V2-F, the gap fade at 09:45 (target the prior close, 60-minute time stop, no price stop), and
 V2-C, the continuation from 10:30 held to the RTH close (stop at 1.5 x sigma_h). Each is a binary logistic model of
 its OWN trade's outcome, traded when the expected net, with payoffs fixed from the training window and scaled per row,
-clears one round-trip cost (OA-A11 = D652-A1, which replaces s.4).
+clears one round-trip cost (OA-A11 = D655-A1, which replaces s.4).
 
-Readings fixed here, before the run (D652 leaves them to the code):
+Readings fixed here, before the run (D655 leaves them to the code):
 - A V2-F trade cancelled at the entry (the entry price already at or beyond the prior close) has no outcome: y is NaN,
   it is left out of every fit and every m, and it scores 0. Cancellations are counted.
 - sigma_h's "20 prior eligible sessions" are the market's prior sessions that pass the base filter (usable, the
@@ -29,7 +29,7 @@ Readings fixed here, before the run (D652 leaves them to the code):
   carried").
 - fast_null.py's rotation machinery does not apply: the null here shuffles predictions over ~4,000 rows, a
   millisecond a draw. The label-equals-scorer audit is this study's assert_matches_scorer.
-Nothing on or after 2025-03-01 is read (A10); the vault mode refuses until D652 s.8's input path exists.
+Nothing on or after 2025-03-01 is read (A10); the vault mode refuses until D655 s.8's input path exists.
 """
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ R = _load("run_opening_stages")  # D645's runner: sessions, S-A features, cost l
 G0 = R.G0
 
 OD = REPO / "data" / "opening"
-SPEC = REPO / "docs" / "decisions" / "D652-PRE-REG-opening-v2-fade-and-hold-to-close-on-expected-value.md"
+SPEC = REPO / "docs" / "decisions" / "D655-PRE-REG-opening-v2-fade-and-hold-to-close-on-expected-value.md"
 OUT = OD / "v2_insample.json"
 SESS_CSV = OD / "v2_sessions.csv"
 POWER_OUT = OD / "v2_power.json"
@@ -140,7 +140,7 @@ def sigma_h(d: pd.DataFrame, c_entry: pd.Series, base: pd.Series) -> pd.Series:
 
 def cell_rows(cell: str, tab: dict[str, pd.DataFrame], b: pd.DataFrame, G: dict[str, pd.Series],
               brk: str = BREAK) -> pd.DataFrame:
-    """Every eligible (session, market) row of a cell with its features (D652 s.1-s.2). Signed features are x s,
+    """Every eligible (session, market) row of a cell with its features (D655 s.1-s.2). Signed features are x s,
     the cell's own trade direction; R.features_sa multiplies by whatever direction it is given."""
     t0 = CELLS[cell]
     need = 0.9 * (hm(t0) - hm("09:30"))
@@ -330,7 +330,7 @@ def train_m(trl: pd.DataFrame, cell: str, p_tr: np.ndarray) -> dict[str, float]:
 
 
 def walk(D: pd.DataFrame, cell: str, feats: tuple[str, ...], cal: list[str], max_windows: int | None = None) -> pd.DataFrame:
-    """OOS p for every test-window row (D652 s.3), the training window's base rate and m values, the chosen C."""
+    """OOS p for every test-window row (D655 s.3), the training window's base rate and m values, the chosen C."""
     R.check_budget(list(feats))
     out = []
     p_train: dict[int, tuple[np.ndarray, np.ndarray]] = {}
@@ -380,7 +380,7 @@ def walk(D: pd.DataFrame, cell: str, feats: tuple[str, ...], cal: list[str], max
 
 # =============================================================================================== decision
 def cost_bp_t0(P: pd.DataFrame) -> np.ndarray:
-    """The round-trip cost in bp of the price at t0 (D652 s.1, OA-A11), known at the decision."""
+    """The round-trip cost in bp of the price at t0 (D655 s.1, OA-A11), known at the decision."""
     return (P["root"].map(COST_PTS) / P["px"]).to_numpy(float) * 1e4
 
 
@@ -564,7 +564,7 @@ def null_shuffle(P: pd.DataFrame, cell: str, sessions: list[str], rng: np.random
 
 def score(P: pd.DataFrame, cell: str, sessions: list[str], trade: np.ndarray, net_col: str = "net",
           gross_col: str = "gross") -> dict[str, Any]:
-    """The per-session statistic (D652 s.5): policy, always and their paired difference, with the HAC t."""
+    """The per-session statistic (D655 s.5): policy, always and their paired difference, with the HAC t."""
     done = ~P["reason"].isin(["cancel", "missing"]).to_numpy()
     net = np.where(done, P[net_col].to_numpy(float), 0.0)
     gross = np.where(done, P[gross_col].to_numpy(float), 0.0)
@@ -651,7 +651,7 @@ def build(data_root: Path, dry: bool = False) -> tuple[dict[str, Any], list[dict
     bars = R.bar_arrays(b)
     rng = np.random.default_rng(SEED)
     leak_checks(b, use, G, rng)
-    doc: dict[str, Any] = {"spec": "D652 (e80012c); OA-A10; D645's walk-forward and cost line", "dry_run": dry,
+    doc: dict[str, Any] = {"spec": "D655 (e80012c); OA-A10; D645's walk-forward and cost line", "dry_run": dry,
                            "cells": {}, "reads": {}}
     trials: list[dict] = []
     sess_rows = []
@@ -703,7 +703,7 @@ def build(data_root: Path, dry: bool = False) -> tuple[dict[str, Any], list[dict
                                 "UNRESOLVED" if c["null"]["margin_vs_p95"] > -2 * nl["p95_se"] else "BELOW")
         c["carried_to_vault"] = bool(main["policy_mean_bp"] > 0 and main["diff_mean_bp"] > 0)
         doc["cells"][cell] = c
-        trials.append({"trial_id": f"D652_{cell}_insample", "doc": SPEC.name, "family": "opening V2 (D652)",
+        trials.append({"trial_id": f"D655_{cell}_insample", "doc": SPEC.name, "family": "opening V2 (D655)",
                        "stage": "in-sample (kill only)", "t0": CELLS[cell],
                        "construction": f"{cell}: EV rule on its own trade's outcome vs always",
                        "n_obs": main["n_sessions"], "mean_net": round(main["policy_mean_bp"], 6),
@@ -725,7 +725,7 @@ def build(data_root: Path, dry: bool = False) -> tuple[dict[str, Any], list[dict
 
 def robustness(D: pd.DataFrame, P: pd.DataFrame, cell: str, sessions: list[str], trade: np.ndarray, bars: dict,
                tab: dict, b: pd.DataFrame, G: dict) -> dict[str, Any]:
-    """Reported only (D652 s.5)."""
+    """Reported only (D655 s.5)."""
     out: dict[str, Any] = {}
     out["margin_0"] = score(P, cell, sessions, decide(P, cell, 0.0))  # OA-A11: EV > 0, no margin
     P2 = P.assign(net2=P["gross"] - 2 * P["cost_bp"])
@@ -790,7 +790,7 @@ def audit_right_quantity(P: pd.DataFrame, trade: np.ndarray, sessions: list[str]
 
 
 def audit_oracle(P: pd.DataFrame, cell: str, sessions: list[str]) -> dict[str, Any]:
-    """The positive control (D652 s.9.4): trading exactly the rows with y = 1 must make money."""
+    """The positive control (D655 s.9.4): trading exactly the rows with y = 1 must make money."""
     o = score(P, cell, sessions, (P["y"] == 1).to_numpy())
     if not o["policy_mean_bp"] > 0:
         raise V2Error(f"{cell}: the oracle (trade exactly y = 1) does not make money: the engine is broken")
@@ -976,11 +976,11 @@ def power() -> int:
     doc = json.loads(OUT.read_text(encoding="utf-8"))
     carried = doc["carried"]
     if not carried:
-        raise SystemExit("no cell was carried: v2 closes without the vault (D652 s.6); nothing to power")
+        raise SystemExit("no cell was carried: v2 closes without the vault (D655 s.6); nothing to power")
     S = pd.read_csv(SESS_CSV, encoding="utf-8", dtype={"session": str})
     rng = np.random.default_rng(SEED)
     alpha = 0.05 / len(carried)
-    res: dict[str, Any] = {"spec": "D652 s.7", "n_sessions": POWER_N, "block": POWER_BLOCK, "draws": POWER_DRAWS,
+    res: dict[str, Any] = {"spec": "D655 s.7", "n_sessions": POWER_N, "block": POWER_BLOCK, "draws": POWER_DRAWS,
                            "alpha_first_holm_step": alpha, "cells": {}}
     for cell in carried:
         x = S[S["cell"] == cell]
@@ -1012,7 +1012,7 @@ def power() -> int:
 def freeze() -> int:
     doc = json.loads(OUT.read_text(encoding="utf-8"))
     if not doc["carried"]:
-        raise SystemExit("no cell was carried: nothing to freeze (D652 s.6)")
+        raise SystemExit("no cell was carried: nothing to freeze (D655 s.6)")
     if FROZEN.exists():
         raise SystemExit("already frozen")
     f = {"spec": SPEC.name, "spec_sha256_lf": lf_sha(SPEC), "runner_sha256_lf": lf_sha(Path(__file__)),
@@ -1027,7 +1027,7 @@ def freeze() -> int:
 
 
 def vault(_: argparse.Namespace) -> int:
-    raise SystemExit("REFUSED: D652 s.8's vault-input path (the bars and G with the cut moved, proved on the "
+    raise SystemExit("REFUSED: D655 s.8's vault-input path (the bars and G with the cut moved, proved on the "
                      "in-sample first) is not built, and the vault is read only in the joint run on the principal's word")
 
 
@@ -1059,9 +1059,9 @@ def main() -> int:
         return 0
     if a.run:
         if OUT.exists() or SESS_CSV.exists():
-            raise SystemExit("the in-sample runs once (D652 s.6): its output already exists")
+            raise SystemExit("the in-sample runs once (D655 s.6): its output already exists")
         if not (OD / "phase45.json").exists():
-            raise SystemExit("REFUSED: D652 s.6 runs the in-sample after D645's Phase 4 run (phase45.json)")
+            raise SystemExit("REFUSED: D655 s.6 runs the in-sample after D645's Phase 4 run (phase45.json)")
         doc, trials, S = build(a.data_root)
         OUT.write_text(R.dump(doc), encoding="utf-8", newline="\n")
         S.to_csv(SESS_CSV, index=False, encoding="utf-8", lineterminator="\n", float_format="%.10g")

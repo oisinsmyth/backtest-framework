@@ -1,4 +1,9 @@
-# D652 — PRE-REG: the opening model's v2, a separate construction. A gap fade at 09:45 and a hold to the close from 10:30, each traded on expected value from a model of its own trade's outcome
+# D655 — PRE-REG: the opening model's v2, a separate construction. A gap fade at 09:45 and a hold to the close from 10:30, each traded on expected value from a model of its own trade's outcome
+
+*Renumbered from 652 on 2026-09-28 (the principal: "renumber to D655"). Another session had claimed 652 first, at
+16:25, for the crack-spread study, and went on to 653 and 654 (branch `worktree-next`). This record was committed as
+652 at 17:00 (`e80012c`), and the commits up to the renumber use that number. Nothing in it changed except the
+number.*
 
 *2026-09-28. The principal, after the external-evidence round
 ([`docs/research/opening-v2-external-evidence.md`](../research/opening-v2-external-evidence.md)): "lets make those
@@ -183,7 +188,7 @@ traded, scores 0.
     diff > 0;
   - **FAIL** otherwise.
 - **Programme level:**
-  - a new family, **slot 9** (α 0.005): "opening V2 (D652)";
+  - a new family, **slot 9** (α 0.005): "opening V2 (D655)";
   - the promotion check, Holm-adjusted one-sided p ≤ 0.005, is reported.
   - The slot is registered in the runner's commit (`data/programme_registry.json` and its test), only once a cell
     is carried.
@@ -227,7 +232,7 @@ traded, scores 0.
 - `--freeze`;
 - `--vault`.
 
-**Trials rows:** `data/opening/trials.csv`, family "opening V2 (D652)", one row per cell and run.
+**Trials rows:** `data/opening/trials.csv`, family "opening V2 (D655)", one row per cell and run.
 
 ## 10. What this does not touch
 

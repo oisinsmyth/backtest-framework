@@ -7,24 +7,24 @@ kept below **verbatim**. Written before Phase 4 has run, so no Phase 4 result sh
 so D646/D647's in-sample findings did.*
 
 **Status of what is below, and how to cite it:**
-- **The sources D652 leans on were checked on 2026-09-28 (the table below); the rest were not.** Several are practitioner or vendor pages, not
+- **The sources D655 leans on were checked on 2026-09-28 (the table below); the rest were not.** Several are practitioner or vendor pages, not
   peer-reviewed (dev.to/FirmTape, tradingstats.net, the mql5 replication, Volatility Box, SpotGamma, oxfordstrat).
   Two arXiv papers are dated 2026 (2605.04004, 2607.01550). A record that leans on any one of them checks it first
   (memory: verify the claims inside an option).
 - **Items the agents mark [reasoning] or *(reasoning)* are theirs, not a source's.** Numbers they derive from D647
   (the payoff matrix, the ~0.26 CONT breakeven, the ~0.2-0.4 bp/day ceiling) are in-sample and seen.
-- **What the programme did with it:** D652 pre-registers a separate construction built on these reports (the
+- **What the programme did with it:** D655 pre-registers a separate construction built on these reports (the
   principal, 2026-09-28: "lets make those changes and test them as a separate model"; the vault after an in-sample
   test; the observables plus A4 rescaled). OA-A10 records it beside OA-A8.
 
-## Citation check (2026-09-28, the principal: "do 1"), for the sources D652 leans on
+## Citation check (2026-09-28, the principal: "do 1"), for the sources D655 leans on
 
 Each was opened at its source. "Holds" means the report's claim matches the source; anything else is corrected here.
 
 | source | the report's claim | at the source | verdict |
 |---|---|---|---|
-| Cboe press release, 2022-04-13 ([link](https://ir.cboe.com/news/news-details/2022/Cboe-to-Add-Tuesday-and-Thursday-Expirations-for-SPX-Weeklys-Options-04-13-2022/default.aspx)) | Tuesday expiries 2022-04-18, Thursday 2022-05-11 | those are the **listing** dates. The first Tuesday **expiry** is 2022-04-26 and the first Thursday expiry is **2022-05-19** | **CORRECTED.** Every session carries a same-day SPX expiry from **2022-05-16** (the Monday of the week of the first Thursday expiry), not from 2022-05-11. D652 §2's date follows the listing date, so its stated rule and its date disagree by 3 sessions |
-| Barbon & Buraschi, *Gamma Fragility* ([SSRN 3725454](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3725454)) | $gamma imbalance ÷ ADV; momentum (reversal) from negative (positive) gamma × illiquidity | "dollar gamma imbalance … as a fraction of the average daily volume of the underlying"; the effect is stronger in less liquid names | **HOLDS.** D652's denominator is a **disclosed variant**: the 09:30 → t0 window's dollar volume over 20 sessions, not full-day ADV (window-matched, per report C) |
+| Cboe press release, 2022-04-13 ([link](https://ir.cboe.com/news/news-details/2022/Cboe-to-Add-Tuesday-and-Thursday-Expirations-for-SPX-Weeklys-Options-04-13-2022/default.aspx)) | Tuesday expiries 2022-04-18, Thursday 2022-05-11 | those are the **listing** dates. The first Tuesday **expiry** is 2022-04-26 and the first Thursday expiry is **2022-05-19** | **CORRECTED.** Every session carries a same-day SPX expiry from **2022-05-16** (the Monday of the week of the first Thursday expiry), not from 2022-05-11. D655 §2's date follows the listing date, so its stated rule and its date disagree by 3 sessions |
+| Barbon & Buraschi, *Gamma Fragility* ([SSRN 3725454](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3725454)) | $gamma imbalance ÷ ADV; momentum (reversal) from negative (positive) gamma × illiquidity | "dollar gamma imbalance … as a fraction of the average daily volume of the underlying"; the effect is stronger in less liquid names | **HOLDS.** D655's denominator is a **disclosed variant**: the 09:30 → t0 window's dollar volume over 20 sessions, not full-day ADV (window-matched, per report C) |
 | Mesfin, [arXiv 2605.04004](https://arxiv.org/abs/2605.04004) (v1 2026-05-05, v3 2026-09-15) | MNQ 2021–25; none of 14 OHLCV families pass | as stated: 947 days of 5-minute data, 14 families, none pass all five criteria. **Omitted by the report:** two control signals do pass (RTH confluence, OOS t 3.11; a London-session signal, t 4.30) | **HOLDS, with the omission noted.** A single-author preprint |
 | Kurth, Eisler, Rej & Bouchaud, [arXiv 2607.01550](https://arxiv.org/abs/2607.01550) (2026-07-02) | short-term trend died on small-tick contracts; intact on large-tick | as stated: since ~2009, trend P&L has collapsed on small-tick contracts and is "essentially intact" on large-tick ones, which the authors attribute to HFT liquidity withdrawal | **HOLDS.** A preprint (CFM authors) |
 | FirmTape on DEV ([link](https://dev.to/firmtape/intraday-momentum-is-dead-in-the-0dte-era-we-measured-it-on-1085-spx-sessions-43g0), 2026-08-27) | 1,085 SPX sessions; slope flat (t 0.6); +0.055 (t 3.1) on short-gamma days, ~15% | as stated (2022-04-14 → 2026-08-20; +0.006 ± 0.009). Gamma is the vendor's own "tape-signed 0DTE dealer book at 15:30" | **HOLDS as reported, WEAK as evidence:** a gamma-data vendor's blog, not reviewed, with a proprietary signed-gamma measure |
@@ -32,7 +32,7 @@ Each was opened at its source. "Holds" means the report's claim matches the sour
 Not re-opened, because they are well-established published papers cited for their central results: Gao, Han, Li &
 Zhou (JFE 2018); Baltussen, Da, Lammers & Martens (JFE 2021); Elkan (2001); Kaminski & Lo (2014); Dim, Eraker &
 Vilkov (0DTE gamma, SSRN 4692190); Brogaard, Han & Won (0DTE volatility). The practitioner pages (tradingstats,
-mql5, Volatility Box, SpotGamma, oxfordstrat) stay unchecked and carry no weight in D652.
+mql5, Volatility Box, SpotGamma, oxfordstrat) stay unchecked and carry no weight in D655.
 
 ## The combined reading (written by the session that commissioned them)
 
