@@ -152,10 +152,16 @@ The principal: "we now require a deterministic explanation of the underlying mec
 fires on a mechanism of the market we can make money off." Three stages: locate (Stage 1), design on the mechanism's
 own observable (Stage 2), confirm on an unread slice after a seal inventory and a power check (Stage 3).
 
-- [ ] **Stage 1, D675 DESIGN committed; the runner is next** (`scripts/d675_macd_kernel_decomposition.py`). It is an
-  exact decomposition of D484's B2 edge on 2016–2023: lag region (continuation 0–13 bars vs reversal 14+), clocks,
-  move size, volume, sign, vol state and ES gamma. Six mechanism fingerprints were declared before the run, and the
-  null is an exact session rotation.
+- [x] **Stage 1 DONE: D675 RESULT.** No declared mechanism fits any root. The MACD is a clock-blind blend of known
+  effects: recent moves revert overnight (D499's, under a tick); they continue into the US afternoon, strongest on NQ
+  (US_CLOSE at the 100th percentile, mechanism unidentified); and on NQ, yesterday's move reverts (D495/K8). Per root
+  the traded signal clears its own null only on NQ (0.976) and CL (0.997); 6E loses (0.024); on ES, YM and CL most of
+  it is 2020.
+- [ ] **The principal's calls (D675 §8):**
+  - close the log MACD as a signal line;
+  - whether Stage 2 designs on NQ's afternoon continuation (mechanism unidentified; gamma, LETF and Gao et al.'s
+    published form already measured; overlaps the other session's break studies);
+  - record in FINDINGS that D484's pooled pass rests on NQ and CL.
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 

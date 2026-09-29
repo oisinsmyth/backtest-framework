@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 415 of these records carry neither field —
+**No Status or Category column, deliberately.** 416 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -736,7 +736,7 @@ would look like data. The tokens are what is shown.
 | D670 | D670 STAGE 0 RESULT — the move since yesterday's close, taken at 10:00 and held to the close, carries nowhere: not on Y… | [record](D670-STAGE-0-DESIGN-carry-the-overnight-direction-from-ten.md) · [RESULT](D670-STAGE-0-RESULT-the-ten-oclock-direction-does-not-carry.md) |
 | D673 | D673 STAGE 0 RESULT — joining the day's move once it has formed carries nowhere: not on YM, RTY or ES, and not beyond i… | [record](D673-STAGE-0-DESIGN-join-the-formed-move-after-ten.md) · [RESULT](D673-STAGE-0-RESULT-the-formed-move-does-not-carry-either.md) |
 | D674 | the MACD arm resized: one MNQ stays the floor, so the account moves to MFFU Rapid 150k and the book's expectation moves… | [record](D674-the-macd-arm-resized-to-the-150k-account.md) |
-| D675 | D675 STAGE 1 DESIGN — D484's log MACD edge decomposed exactly: continuation or reversal, which clock, which moves, whic… | [record](D675-STAGE-1-DESIGN-the-log-macd-edge-decomposed-exactly.md) |
+| D675 | D675 STAGE 1 RESULT — the log MACD has no mechanism of its own: it is a clock-blind blend of effects the record already… | [record](D675-STAGE-1-DESIGN-the-log-macd-edge-decomposed-exactly.md) · [RESULT](D675-STAGE-1-RESULT-the-macd-is-a-clock-blind-blend.md) |
 
 <!-- REGISTER:END -->
 
