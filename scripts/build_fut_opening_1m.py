@@ -170,13 +170,15 @@ def cmd_build(workers: int, data_root: Path, through: str, roots: tuple[str, ...
     if (bars["session"] > through).any():
         raise SystemExit("a session past the cut reached the fixture")
     FIX.mkdir(parents=True, exist_ok=True)
-    bars.to_csv(OUT, index=False, compression={"method": "gzip", "mtime": 0}, float_format="%.2f", encoding="utf-8",
+    # D676: %.2f rounded NG (tick 0.001) and SI (0.005); caught by D676's identity gate. Index fixtures keep %.2f.
+    ffmt = "%.5f" if breadth else "%.2f"
+    bars.to_csv(OUT, index=False, compression={"method": "gzip", "mtime": 0}, float_format=ffmt, encoding="utf-8",
                 lineterminator="\n")
     meta = {"spec": "OPENING_AGENT_STATE_PREREG.md s.3 / Gate O0; OA-A1", "built_utc": time.strftime(
         "%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "sessions": [START, through], "roots": list(roots),
         "session_rule": "bar >= 18:00 ET -> next D462 session day; else its own day if a session day",
         "contract_rule": "the session's front per D462 fut_index_sessions (highest full-day volume)",
-        "rows": int(len(bars)), "duplicates_dropped": int(n0 - len(bars)),
+        "float_format": ffmt, "rows": int(len(bars)), "duplicates_dropped": int(n0 - len(bars)),
         "files": [{k: v for k, v in r.items() if k != "bars"} for r in res], "gates": None}
     META.write_text(json.dumps(meta, indent=1) + "\n", encoding="utf-8", newline="\n")
     for r in roots:
