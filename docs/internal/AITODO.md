@@ -136,6 +136,13 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
+## The MACD arm's mechanism (D669, 2026-09-29)
+
+- [ ] **D669 Stage 0 design committed; runner next.** Where the admitted arm's in-sample returns come from (the
+  principal: "investigate the MACD ... see if you can find the mechanism to its returns"): drift against timing and
+  its horizon, lookback momentum, trend days, price level, and a deflated Sharpe with the parameter neighbourhood.
+  Cannot admit or retire anything; 2016-2023 only.
+
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,
