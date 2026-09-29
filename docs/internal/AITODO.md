@@ -138,10 +138,11 @@
 
 ## The MACD arm's mechanism (D669, 2026-09-29)
 
-- [ ] **D669 Stage 0 design committed; runner next.** Where the admitted arm's in-sample returns come from (the
-  principal: "investigate the MACD ... see if you can find the mechanism to its returns"): drift against timing and
-  its horizon, lookback momentum, trend days, price level, and a deflated Sharpe with the parameter neighbourhood.
-  Cannot admit or retire anything; 2016-2023 only.
+- [ ] **D669 RESULT written; the principal's call on its two proposals.** The arm carries the move since yesterday's
+  close into days that trend (timing, not drift; not price level; efficiency, not volatility). Its 0.72 is the top of
+  its family: median neighbour 0.24, deflated Sharpe fails, a spike on impulse length and on M = 5's one 15:00 exit.
+  Proposals: (1) amend the arm's qualification in `BOOK_PROP.md`; (2) pre-register the RON-direction rule as a new
+  component on roots with checked unread slices. Nothing changed until the principal rules (R15).
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 

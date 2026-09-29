@@ -4918,3 +4918,25 @@ size-down or cost filter by any strategy trading that root. **General lessons fr
 expiry map lacks whole contract-years (a quarter of Treasury contracts in many years), so anything resolved through
 it can vanish silently; the `statistics` open interest before 2016 carries no reference session, and from 2016 each
 session is published twice, a day apart.
+
+## 89. The admitted MACD arm's mechanism (D669): it carries the move since yesterday's close into days that trend, and its Sharpe is the top of its family
+
+**In sample (2016–2023), the arm is a day-scale timer, not a drift harvester**
+([D669](decisions/D669-STAGE-0-RESULT-a-day-scale-timer-that-fails-its-search.md)).
+
+- **Timing, not drift.** Permuting its long/short labels among its own trades leaves the arm above every null, down to
+  within-week permutations (+52 to +115 SE). Drift carries −1 % of its $22,110 gross.
+- **Its direction is, three times in four, the sign of NQ's move since the prior 16:00 close.** That sign alone on the
+  arm's windows earns 92 % of the gross. Where the MACD departs from it, the MACD earns nothing measurable (t 0.23).
+- **It earns on days that trend efficiently from 10:00 to 16:00.** The top fifth of days by move carries 114 % of the
+  gross, with a hit rate of 64 % against 44 % in the bottom fifth; efficiency t 6.6, volatility t 0.6. Those days
+  cluster in volatile months: hence 2020 and 2022.
+- **The concentration is not the price level:** 68 % of the gross in bp, 72.5 % in dollars.
+- **The overfitting concern is located on the two choices the search made.**
+  - The MACD lengths are a plateau.
+  - The impulse length is a spike: 26 gives 0.17, 34 gives 0.72, 42 gives 0.37.
+  - So is the minimum hold. M = 5 buys one exit at 15:00, worth about 0.32 of Sharpe: the last hour it skips would have
+    lost $4,455 (t −2.1).
+  - The median of 485 neighbours is 0.24 net.
+  - The deflated Sharpe fails: 0.003 on D495's cells, and 0.28 even with pure-noise trial variance.
+- **No unread NQ slice remains to confirm any of it.**
