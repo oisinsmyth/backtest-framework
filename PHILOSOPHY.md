@@ -4,7 +4,7 @@ This is the generative layer above [`docs/RULES.md`](docs/RULES.md) and
 [`docs/decisions/`](docs/decisions/README.md). Rules are specific, binding constraints;
 decisions are specific, dated choices. This document is neither — it's the small set of
 values that, applied consistently, produced the first 49 decisions — and, unchanged, the
-620 numbered decisions the directory now holds (D1 through D674; a pre-registration and
+621 numbered decisions the directory now holds (D1 through D675; a pre-registration and
 its result share a number). When a new situation isn't covered by an existing rule or decision,
 this is what to reason from.
 

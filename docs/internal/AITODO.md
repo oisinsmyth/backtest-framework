@@ -146,6 +146,17 @@
   candidate exit. **Open at merge time:** `wt/after-d643` merges second, so it renumbers its D673 (the compression
   break's pre-registration) and its D667 (its diagnostic of its record 666; main's D667 is the margin-hike pause).
 
+## The log MACD's mechanism, mechanism first (D675, 2026-09-29)
+
+The principal: "we now require a deterministic explanation of the underlying mechanism ... we design a signal that
+fires on a mechanism of the market we can make money off." Three stages: locate (Stage 1), design on the mechanism's
+own observable (Stage 2), confirm on an unread slice after a seal inventory and a power check (Stage 3).
+
+- [ ] **Stage 1, D675 DESIGN committed; the runner is next** (`scripts/d675_macd_kernel_decomposition.py`). It is an
+  exact decomposition of D484's B2 edge on 2016–2023: lag region (continuation 0–13 bars vs reversal 14+), clocks,
+  move size, volume, sign, vol state and ES gamma. Six mechanism fingerprints were declared before the run, and the
+  null is an exact session rotation.
+
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,
