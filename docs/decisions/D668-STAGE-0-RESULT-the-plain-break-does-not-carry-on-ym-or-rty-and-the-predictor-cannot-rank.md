@@ -140,3 +140,16 @@ to 1e-9, then rescores. Per trade, bp (HAC t):
 - **NQ's in-sample net is +2.48 bp (t 2.06), not +1.69.** That is the figure a vault pre-registration starts from.
 - **ES's net is about zero, not −2.3.**
 - The correction is largest where the tick is large relative to the price (ES, RTY).
+
+## NQ's plain break CLOSED as a separate vault candidate, 2026-09-29
+
+**The principal:** "Ok close both of those" (the NQ plain break and opening v2).
+
+**The NQ plain break (in-sample +2.48 bp net with friction counted once, D668-A2) does not join the joint vault run
+as its own line.** The reasons:
+- D680's frozen compression break (programme slot 9) is its subset, on the same clock and signal.
+- It is weaker.
+- It would take the last free slot for a correlated bet.
+
+**What survives:** its vault result on the same days is reported beside D680's C1, as B0. It gates nothing and spends
+no slot.

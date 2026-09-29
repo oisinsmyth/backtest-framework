@@ -26,8 +26,9 @@
   **Prerequisite before the joint run (not built): the NQ vault-input path** -- D644's `fut_opening_globex_1m` built
   through 2026-09-18 into a separate file and G0's loader (`usable_sessions`, `load_bars`) with the cut moved, written
   out as `--vault-bars` / `--vault-use`; `--vault` re-proves the known answer on its in-sample part before scoring.
-- **Opening v2 (D652/D659): recommended NOT to join** (vault power 5-6.5%; V2-C adds nothing to the always-on hold;
-  V2-F's policy is +0.40 bp at t 0.78 and 2022-carried). Close without spending its look; waits for the principal.
+- **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
+  look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
+  stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**
 - **PARKED (the principal, 2026-09-28): D630 §8's vault-input path.** The plan, inventoried 2026-09-28 from metadata only:
   - a wrapper (`scripts/build_ledger_vault_inputs.py`, not yet written) loads each frozen builder unchanged and moves
     only its cut and output paths;

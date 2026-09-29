@@ -144,3 +144,18 @@ Output: `data/opening/v2_component_corr.json`.
 - **Not a construction here:** the always-on 10:30 → close continuation, +1.26 bp a row in-sample, is a separate
   question. It would need its own pre-registration on data it has not been chosen on. The 2024+ futures slice is
   spent for trend (memory), so the only fresh sample is the vault.
+
+## CLOSED by the principal, 2026-09-29, without spending its vault look
+
+**The principal:** "Ok close both of those" (opening v2 and the NQ plain break), on the recommendation that v2 not
+join the joint vault run.
+
+**Why:**
+- The vault's power to confirm either cell is 5–6.5%.
+- V2-C adds nothing to the always-on hold (diff +0.06, t 0.05).
+- V2-F's policy is +0.40 bp a session (t 0.78), and it is 2022-carried.
+
+**What that means:**
+- No `FROZEN_v2.json` is written, and no programme slot is taken. Slot 9 went to D680 and slot 10 stays free.
+- **The vault is not read for v2, and its look is not spent.**
+- v2 is not re-opened by re-tuning its cells on the in-sample.
