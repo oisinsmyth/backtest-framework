@@ -149,3 +149,19 @@ harder here than on NQ.**
 - **MECHANISM ONLY:** recorded, with the cost failure named. A cheaper execution route is the only lever.
 - **NOT SUPPORTED on all four:** the opening-break line closes on energy and metals as it did on the index roots
   (D668, D673).
+
+## Amendment D676-A1, before the run (2026-09-29): R2 counts business days
+
+§3 R2 states the principal's rule as "within 10 **business** days". For CL/NG it then names
+`cme_session_calendar.days_to_expiry` ≤ 10. That field counts **calendar** days: CLG9 reads 20 on 2019-01-02
+and expired on 2019-01-22.
+
+**R2 is therefore implemented as the rule states:**
+- **CL/NG:** the expiry date is the session plus `days_to_expiry` calendar days. The session is skipped when 10
+  weekdays or fewer remain to it.
+- **GC/SI:** the same count, to the first notice day.
+
+**Context:** the front election already rolls CL about 4 business days before expiry. So R2 skips about the last week
+of each CL/NG front.
+
+**Written after** the runner's selftest (4 canaries fire), and **before** its data gates or any outcome on these roots.
