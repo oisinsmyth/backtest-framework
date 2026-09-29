@@ -105,12 +105,13 @@ def synth(b: pd.DataFrame, level: dict[str, float], seed: int) -> pd.DataFrame:
     return b
 
 
-def load_bars(data_root: Path, dry: bool) -> tuple[pd.DataFrame, list[str], dict[str, pd.Series], Any]:
+def load_bars(data_root: Path, dry: bool, active: tuple[str, ...] = ROOTS
+              ) -> tuple[pd.DataFrame, list[str], dict[str, pd.Series], Any]:
     V = S.load_v2()
     R = V.R
     b, use, Gd = V.load_inputs(data_root, dry)
     parts = [b[["root", "session", "hhmm", "open", "high", "low", "close", "volume"]]]
-    for r in EVID:
+    for r in (x for x in EVID if x in active):
         x = pd.read_csv(data_root / "fixtures" / f"fut_{r}_rth_1m.csv.gz", encoding="utf-8", dtype={"day": str, "hhmm": str},
                         usecols=["day", "hhmm", "open", "high", "low", "close", "volume"]).rename(columns={"day": "session"})
         x = x[x["session"] >= WARM]
@@ -419,12 +420,12 @@ def ladder(tr: pd.DataFrame, gross: np.ndarray, cost: np.ndarray, tick: float, m
 
 
 # ================================================================================ build
-def build(data_root: Path, dry: bool) -> dict[str, Any]:
+def build(data_root: Path, dry: bool, active: tuple[str, ...] = ROOTS) -> dict[str, Any]:
     t_start = time.time()
     costs = micro_costs()
-    b, use, Gd, R = load_bars(data_root, dry)
+    b, use, Gd, R = load_bars(data_root, dry, active)
     T.MULT.update(MULT)
-    tabs = R.session_table(b, use, roots=ROOTS)
+    tabs = R.session_table(b, use, roots=active)
     bars = R.bar_arrays(b)
     rng = np.random.default_rng(SEED)
     if dry:
@@ -433,7 +434,7 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
         dix = pd.read_csv(data_root / "raw" / "squeezemetrics" / "DIX.csv", encoding="utf-8", dtype={"date": str})
         gex = dix[dix["date"] < RESERVED_FROM].set_index("date")["gex"].astype(float).sort_index()
     frames, short = {}, {}
-    for r in ROOTS:
+    for r in active:
         d = T.root_frame(b, tabs[r], r)
         d = d[np.isfinite(d[["prior_high", "prior_low", "atr20"]]).all(axis=1)].copy()
         d["gd_spx"] = T.gex_prior(gex, d.index)
@@ -443,13 +444,13 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
         if (d.index >= RESERVED_FROM).any():
             raise D668Error(f"seal: {r} holds a session on or after {RESERVED_FROM}")
     t0 = time.time()
-    jobs = [(r, frames[r], {s: bars[(r, s)] for s in frames[r].index if (r, s) in bars}, TICK_PTS[r], SEED + i)
-            for i, r in enumerate(ROOTS)]
+    jobs = [(r, frames[r], {s: bars[(r, s)] for s in frames[r].index if (r, s) in bars}, TICK_PTS[r], SEED + ROOTS.index(r))
+            for r in active]
     with ProcessPoolExecutor(max_workers=4) as pool:
         got = {o["root"]: o for o in pool.map(root_trades, jobs)}
     fan1 = time.time() - t0
     # N1 draws on every session: the pool must cover every session with bars (the canary restricts it)
-    for r in ROOTS:
+    for r in active:
         n_bars = sum(1 for s in frames[r].index if (r, s) in bars)
         if len(got[r]["pool_sessions"]) != n_bars:
             raise D668Error(f"N1: {r}'s pool covers {len(got[r]['pool_sessions'])} sessions, not all {n_bars}")
@@ -466,7 +467,7 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
     # features: TICK (Gate F), A7
     ex, gates = {}, {}
     if not dry:
-        syms = sorted({s for r in ROOTS for s in TICK_SYMS[r]})
+        syms = sorted({s for r in active for s in TICK_SYMS[r]})
         with ProcessPoolExecutor(max_workers=4) as pool:
             ex = dict(pool.map(T.extract_job, [(s, str(T.SC_DATA / f"{s}.scid")) for s in syms]))
         for s, e_ in ex.items():
@@ -477,7 +478,7 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
                         "_g": g}
     a7 = {}
     for roots_, pth in A7_FILES.items():
-        if dry:
+        if dry or not any(r in active for r in roots_):
             continue
         if not pth.exists():
             raise D668Error(f"A7 missing: {pth}")
@@ -487,7 +488,7 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
         for r in roots_:
             a7[r] = z[z["root"] == r]
     trades, Xs, tick_info = {}, {}, {}
-    for r in ROOTS:
+    for r in active:
         tr = pd.DataFrame(got[r]["rows"]).sort_values("session").reset_index(drop=True)
         if not tr["session"].is_monotonic_increasing or tr["session"].duplicated().any():
             raise D668Error(f"{r}: trades are not one a session in order")
@@ -509,11 +510,11 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
     # the predictor, per root
     t1 = time.time()
     mjobs = [(r, Xs[r][0], trades[r]["E4_gross"].to_numpy(float), trades[r]["cost_bp"].to_numpy(float),
-              trades[r]["session"].str[:4].to_numpy(), SEED + 10 + i, Xs[r][1]) for i, r in enumerate(ROOTS)]
+              trades[r]["session"].str[:4].to_numpy(), SEED + 10 + ROOTS.index(r), Xs[r][1]) for r in active]
     with ProcessPoolExecutor(max_workers=4) as pool:
         M = {o["root"]: o for o in pool.map(model_job, mjobs)}
     fan2 = time.time() - t1
-    for r in ROOTS:  # the lag audits on the real forecasts
+    for r in active:  # the lag audits on the real forecasts
         sess = trades[r]["session"].to_numpy()
         idx = list(range(BURN_MODEL, len(sess), max(1, (len(sess) - BURN_MODEL) // 12)))
         walk_audit(M[r]["yhat"], Xs[r][0], trades[r]["E4_gross"].to_numpy(float), sess, idx)
@@ -527,12 +528,12 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
                            "tick_gate_f": {s: {k: v for k, v in g.items() if k != "_g"} for s, g in gates.items()},
                            "roots": {}}
     unf_daily = {}
-    for r in ROOTS:
+    for r in active:
         tr = trades[r]
         unf_daily[r] = daily_usd(tr, (tr["E4_gross"] - tr["cost_bp"]).to_numpy(float), np.ones(len(tr)),
                                  frames[r].index, costs[r]["usd_per_point"])
     p1, p_unf = {}, {}
-    for r in ROOTS:
+    for r in active:
         tr, m_ = trades[r], M[r]
         g4 = tr["E4_gross"].to_numpy(float)
         cost = tr["cost_bp"].to_numpy(float)
@@ -605,6 +606,8 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
         if r in dev_pfade:
             out["roots"][r]["dev_variant_pfade"] = dev_pfade[r]
     # ---------------------------------------------------------------- verdicts on the evidence roots
+    if not all(r in active for r in EVID):
+        return dev_only_tail(out, active, t_start, fan1, fan2, rr_ref=ref)
     h1 = T.holm({r: p1[r] for r in EVID})
     passed1 = []
     for r in EVID:
@@ -653,6 +656,29 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
         "5_long_beats_short_every_root": all(rr[r]["splits"]["long_gross"] > rr[r]["splits"]["short_gross"] for r in ROOTS),
         "6_RTY_pass_rate_below_30pct": bool(rr["RTY"]["gate2"]["pass_rate"] < 0.30),
         "7_A7_negative_on_NQ_final_fit": bool(rr["NQ"]["gate2"]["final_coef_std"].get("a7", 0.0) < 0)}
+    out["speed"] = {"trades_fanout_s": round(fan1, 1), "model_fanout_s": round(fan2, 1)}
+    out["runtime_min"] = round((time.time() - t_start) / 60, 2)
+    T.licence_guard(out)
+    return out
+
+
+def dev_only_tail(out: dict[str, Any], active: tuple[str, ...], t_start: float, fan1: float, fan2: float,
+                  rr_ref: dict[str, Any]) -> dict[str, Any]:
+    """A development-only run (the principal, 2026-09-29: "run it on ES/NQ ... a baseline"): no verdict, and only the
+    predictions that concern the development roots."""
+    rr = out["roots"]
+    for r in active:
+        rr[r]["verdict"] = "DEVELOPMENT (no verdict)"
+    out["construction_verdict"] = "DEVELOPMENT ONLY: no evidence root was run"
+    out["predictions_dev_part"] = {
+        "3_beta_disc_t_below_2_on_ES_and_NQ": all(not (rr[r]["gate2"]["beta_disc_t"] >= 2) for r in active),
+        "4_NQ_reproduces_and_filtered_within_1p5bp": bool(abs(rr["NQ"]["gate1"]["gross_mean"] - rr_ref["NQ_E4"]["mean"]) < 1e-9
+                                                          and np.isfinite(rr["NQ"]["gate2"]["filtered_net_mean"])
+                                                          and abs(rr["NQ"]["gate2"]["filtered_net_mean"]
+                                                                  - rr["NQ"]["gate2"]["unfiltered_net_live"]) <= 1.5),
+        "5_long_beats_short_on_ES_and_NQ": all(rr[r]["splits"]["long_gross"] > rr[r]["splits"]["short_gross"] for r in active),
+        "7_A7_negative_on_NQ_final_fit": bool(rr["NQ"]["gate2"]["final_coef_std"].get("a7", 0.0) < 0)}
+    out["predictions"] = out["predictions_dev_part"]
     out["speed"] = {"trades_fanout_s": round(fan1, 1), "model_fanout_s": round(fan2, 1)}
     out["runtime_min"] = round((time.time() - t_start) / 60, 2)
     T.licence_guard(out)
@@ -779,6 +805,7 @@ def main() -> int:
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--run", action="store_true")
+    ap.add_argument("--dev-only", action="store_true", help="ES and NQ only (DEVELOPMENT, no verdict)")
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
     a = ap.parse_args()
     if a.selftest:
@@ -786,8 +813,9 @@ def main() -> int:
     if not (a.dry_run or a.run):
         ap.print_help()
         return 1
-    out = build(a.data_root, dry=a.dry_run)
-    dest = REPO / "temp" / "stage0_d668_dry.json" if a.dry_run else OUT
+    out = build(a.data_root, dry=a.dry_run, active=DEV if a.dev_only else ROOTS)
+    dest = (REPO / "temp" / "stage0_d668_dry.json" if a.dry_run
+            else OUT.with_name("stage0_d668_dev_es_nq.json") if a.dev_only else OUT)
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, indent=1, default=float) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"verdict": out["construction_verdict"],
