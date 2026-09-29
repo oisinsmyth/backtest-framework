@@ -1,0 +1,79 @@
+{
+ "spec": "D698-A1 evidence (in-sample, the registered statistic under the null at the vault's size)",
+ "draws": 1500,
+ "n_vault_sessions": 385,
+ "block=1": {
+  "var_z_per_slice": {
+   "ES_E4": 1.08,
+   "NQ_E4": 1.072,
+   "ES_D663": 1.164,
+   "NQ_D663": 1.128
+  },
+  "corr_offdiag_min_max": [
+   -0.059,
+   0.022
+  ],
+  "sd_of_sum_of_z": 2.097,
+  "sd_the_registered_statistic_assumes": 1.989
+ },
+ "block=20": {
+  "var_z_per_slice": {
+   "ES_E4": 1.441,
+   "NQ_E4": 1.715,
+   "ES_D663": 1.21,
+   "NQ_D663": 1.085
+  },
+  "corr_offdiag_min_max": [
+   -0.05,
+   0.035
+  ],
+  "sd_of_sum_of_z": 2.329,
+  "sd_the_registered_statistic_assumes": 1.999
+ },
+ "block=60": {
+  "var_z_per_slice": {
+   "ES_E4": 1.618,
+   "NQ_E4": 1.835,
+   "ES_D663": 1.207,
+   "NQ_D663": 0.893
+  },
+  "corr_offdiag_min_max": [
+   -0.046,
+   0.014
+  ],
+  "sd_of_sum_of_z": 2.316,
+  "sd_the_registered_statistic_assumes": 1.964
+ },
+ "block=120": {
+  "var_z_per_slice": {
+   "ES_E4": 1.641,
+   "NQ_E4": 1.811,
+   "ES_D663": 1.273,
+   "NQ_D663": 0.749
+  },
+  "corr_offdiag_min_max": [
+   -0.046,
+   0.013
+  ],
+  "sd_of_sum_of_z": 2.281,
+  "sd_the_registered_statistic_assumes": 1.953
+ },
+ "persistence": {
+  "ES_E4": {
+   "share_x": 0.076,
+   "p_x_given_previous_break_x": 0.2
+  },
+  "NQ_E4": {
+   "share_x": 0.089,
+   "p_x_given_previous_break_x": 0.323
+  },
+  "ES_D663": {
+   "share_x": 0.086,
+   "p_x_given_previous_break_x": 0.308
+  },
+  "NQ_D663": {
+   "share_x": 0.099,
+   "p_x_given_previous_break_x": 0.348
+  }
+ }
+}
