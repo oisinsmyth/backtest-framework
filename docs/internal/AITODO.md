@@ -183,7 +183,15 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     negative (Spearman −0.25). The flow was anticipated or offset, not diluted.
   - **Number note:** the other session committed its own D677 in the same minute (13:40), so whichever branch merges
     second renumbers.
-- [ ] **The principal's calls (D678 §6):**
+- [x] **D680 DIAG: why the mechanism fails.** The flow did not shrink, move earlier or get offset.
+  - **Its price response per unit collapsed after 2018:** −15.8 / −19.7 → −5.9 bp per 0.01 of drift. This happened
+    while |drift| grew and the square-root law predicted more impact.
+  - **The timing part of the sign book went from +13/+16 to +0.2.**
+  - **The bond leg was real in duration and faded with it:** ZB +8.6 (t 2.09) in 2010–15; ES−ZB pooled −18.0
+    (t −3.27).
+  - **The residual in 2019–23 sits at quarter-ends:** −14.1, t −1.54.
+  - **The reading:** predictable flow is now absorbed without a price concession.
+- [ ] **The principal's calls (D678 §6, D680 §4):**
   - close the month-end line as a strategy (D677 + D678, no slice spent);
   - SCORED, NOT ENTERED in COMPONENTS_PROP;
   - an anticipation study (days 10–6 before month-end) only as a new line, and its prior is low.
