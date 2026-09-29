@@ -167,12 +167,19 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
 
 ## Month-end rebalancing flow (D677, 2026-09-29; the principal: "Write, build then run it please")
 
-- [ ] **D677 PRE-REG committed; runner next** (`scripts/stage0_d677_month_end_rebalancing.py`). The source is
-  Harvey–Mazzoleni–Melone's calendar signal, a 60/40 portfolio's month-to-date drift, lagged one settlement for
-  execution. The outcome is ES over the last five trading days of each month, 2010-07 → 2023-12.
-  - Gate 1 (gross): B1 NW slope, B2 month-rotation null, B3 against a mid-month placebo.
-  - Gate 2 (net): the expected-profit-filtered MES book.
-  - Confirmation, declared: 2024-01 → 2025-02 plus the joint-run vault (expected t 2.0 at the published effect).
+- [x] **D677 RESULT: MECHANISM ONLY.**
+  - **Gate 1 passes:** −14.06 bp per 1-SD, NW t −3.22; the sign book is at the 99.4th percentile of its month-rotation
+    null and beats the mid-month placebo (97.5th).
+  - **Gate 2 fails:** the filtered MES book nets $4.06 per active day at t 1.04. That is noise and fade, not cost
+    ($4.42 a round trip against a $93 average move).
+  - **Against the mechanism:** the sign book lost money in each of 2019–2022; ZN's β is −0.01 (no bond leg); the next
+    10 days continue (−49, t −1.97) rather than revert.
+  - **Component line:** unfiltered MES net Sharpe 0.26, Sortino 0.39, ρ −0.04 with the MACD arm.
+- [ ] **The principal's calls (D677 §7):**
+  - record MECHANISM ONLY and do not spend 2024-01 → 2025-02 (expected t ≈ 1.1 at the measured effect; 1.65 with
+    the vault);
+  - enter it in COMPONENTS_PROP as SCORED, NOT ENTERED;
+  - any successor explains the flat bond leg and the continuation first.
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
