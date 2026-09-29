@@ -211,6 +211,15 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - **Regimes:** short gamma +0.55 (t 1.3); long gamma 0.00.
   - **Gate 2 fails:** 235 trades, net t 0.30; one day (2020-03-13) is 134% of the net.
   - **The confirmation is not triggered,** because the unread slices are long gamma. No 2024+ data was read.
+  - **D683 DIAG** ([record](../decisions/D683-DIAG-the-hedging-happens-along-the-path-not-at-the-close.md)): it was not
+    too little impact.
+    - The flow is 8.6% of ES's closing half-hour volume at the median, and the expected NW t at Y = 0.5 was 5.0.
+    - The hedging lands along the path: long gamma deepens 5-minute mean reversion (below every rotation) and halves
+      realised variance (t 12.8).
+    - The close slope is the Feb–Apr 2020 crash (+0.04 without it).
+    - Both books carry real information.
+    - **Open idea, the principal's call:** gamma-gated intraday mean reversion on a slower bar (check the volatility
+      confound first).
 - [x] **D681 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
   the principal:
   - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.
