@@ -1,0 +1,93 @@
+{
+ "spec": "conditioner-only count before the D694 pre-registration",
+ "ES": {
+  "window_sessions": 1774,
+  "c1_sessions": 587,
+  "corr_ctier_p_ivrv": 0.5151075451959479,
+  "p_ivrv_quantiles_in_C1": [
+   0.028,
+   0.092,
+   0.264,
+   0.498,
+   0.704
+  ],
+  "p_ivrv_quantiles_all": [
+   0.085,
+   0.24,
+   0.492,
+   0.752,
+   0.9
+  ],
+  "share_C1_with_p_ivrv_ge_half": 0.2504258943781942,
+  "share_C1_with_p_ivrv_ge_2of3": 0.12947189097103917,
+  "grid_sessions_ctier_x_ivrv_half": {
+   "c1": [
+    440,
+    147
+   ],
+   "c2": [
+    300,
+    296
+   ],
+   "c3": [
+    151,
+    429
+   ]
+  },
+  "sessions_by_year_C1_high_half": {
+   "2018": 17,
+   "2019": 25,
+   "2020": 17,
+   "2021": 17,
+   "2022": 14,
+   "2023": 30,
+   "2024": 26,
+   "2025": 1
+  }
+ },
+ "NQ": {
+  "window_sessions": 1745,
+  "c1_sessions": 587,
+  "corr_ctier_p_ivrv": 0.4708844897819973,
+  "p_ivrv_quantiles_in_C1": [
+   0.032,
+   0.112,
+   0.288,
+   0.536,
+   0.731
+  ],
+  "p_ivrv_quantiles_all": [
+   0.092,
+   0.248,
+   0.488,
+   0.74,
+   0.908
+  ],
+  "share_C1_with_p_ivrv_ge_half": 0.29471890971039183,
+  "share_C1_with_p_ivrv_ge_2of3": 0.14991482112436116,
+  "grid_sessions_ctier_x_ivrv_half": {
+   "c1": [
+    414,
+    173
+   ],
+   "c2": [
+    297,
+    266
+   ],
+   "c3": [
+    173,
+    410
+   ]
+  },
+  "sessions_by_year_C1_high_half": {
+   "2018": 17,
+   "2019": 33,
+   "2020": 21,
+   "2021": 20,
+   "2022": 17,
+   "2023": 35,
+   "2024": 29,
+   "2025": 1
+  }
+ }
+}

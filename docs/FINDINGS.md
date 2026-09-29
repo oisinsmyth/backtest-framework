@@ -5160,7 +5160,7 @@ so the account moves to MFFU Rapid 150k. The book's expectation is Sharpe 0.24, 
 - CLOSED under R15. The clock map is kept as market structure.
 - *The correction of D484's pooled reading (it rests on NQ and CL) waits for the principal's word.*
 
-## 99. Implied volatility carries size information beyond realised volatility and dealer gamma, but only relative to realised (D691)
+## 99. Implied volatility carries size information beyond realised volatility and dealer gamma, but only relative to realised, and it does not select the break's trades (D691, D694)
 
 **The rule: the options market's forecast of the day's size is worth using as a ratio to realised volatility, never as
 a level.**
@@ -5179,3 +5179,15 @@ a level.**
 - The gain roughly halves after 2022-05-16 and stays positive.
 - **Status:** a premise, not a trade. Stage 1 (the break split by the "coiled" label) needs its own pre-registration on
   the principal's word, and carries the RV20-only control.
+
+**Stage 1: it does not select the break's trades**
+([D694](decisions/D694-STAGE-1-RESULT-not-supported-iv-adds-nothing-to-the-break.md), NOT SUPPORTED on both roots).
+- **The object:** the plain break on "coiled" days, D672's C1 with the IV/RV percentile ≥ 1/2: 120 ES and 127 NQ
+  trades.
+- **The label does pick bigger days,** but not better breaks.
+- **ES:** coiled trades earn +8.3 bp against the quiet ones' +3.9. A count-matched label with IV's own information
+  scrambled earns +6.6 at the median (rank 0.77). The lift is the label's realised part.
+- **NQ:** coiled trades earn +7.0 against +10.1 (rank 0.30).
+- **The line is CLOSED for the break on ES and NQ.**
+- *A lead, untested and unregistered:* the worst cell of the grid on both roots is busy realised range with low IV/RV
+  (ES −7.4 bp, NQ −14.7).
