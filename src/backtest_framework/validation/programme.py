@@ -209,12 +209,16 @@ class Registry:
 
     path: Path = DEFAULT_REGISTRY_PATH
     families: list[Family] = field(default_factory=list)
+    # Families whose slot the principal released after closing them (2026-09-29, slot 7). Each row is the family's
+    # own record plus `released_utc` and `reason`; kept for audit, never counted as allocated.
+    released: list[dict[str, Any]] = field(default_factory=list)
 
     def __post_init__(self) -> None:
         self.path = Path(self.path)
         if self.path.exists():
             payload = json.loads(self.path.read_text(encoding="utf-8"))
             self.families = [Family.from_json(row) for row in payload["families"]]
+            self.released = [dict(row) for row in payload.get("released", [])]
             self._check_slots()
 
     # -- state -------------------------------------------------------------------------
@@ -276,6 +280,10 @@ class Registry:
         """
         if not name.strip():
             raise ValueError("a family needs a name")
+        if any(r["name"] == name for r in self.released):
+            raise ValueError(
+                f"family {name!r} was released; its alpha is not re-allocated to the same family"
+            )
         if any(f.name == name for f in self.families):
             raise ValueError(
                 f"family {name!r} is already registered in slot {self.get(name).slot}; "
@@ -314,10 +322,33 @@ class Registry:
         self.save()
         return family
 
+    def release(self, name: str, *, released_utc: str, reason: str) -> dict[str, Any]:
+        """Free a closed family's slot, on the principal's ruling, and keep the record.
+
+        The deposit's default is that α is "never re-allocated retroactively for families
+        already evaluated". A release overrides that default for ONE named family: the
+        family leaves `families` (so its slot counts as free again) and joins `released`
+        with its original fields plus `released_utc` and `reason`, which must name the
+        ruling. It refuses an unknown family, a second release and an empty reason, and
+        `register` refuses to give the released name a slot again.
+        """
+        if any(r["name"] == name for r in self.released):
+            raise ValueError(f"family {name!r} has already been released")
+        if not reason.strip():
+            raise ValueError(f"releasing {name!r} needs a reason naming the principal's ruling")
+        if not released_utc.strip():
+            raise ValueError(f"releasing {name!r} needs its date")
+        family = self.get(name)  # KeyError for an unknown family
+        record = {**family.to_json(), "released_utc": released_utc, "reason": reason}
+        self.families = [f for f in self.families if f.name != name]
+        self.released.append(record)
+        self.save()
+        return record
+
     def save(self) -> Path:
         """Write `data/programme_registry.json`. Returns the path written."""
         self.path.parent.mkdir(parents=True, exist_ok=True)
-        payload = {
+        payload: dict[str, Any] = {
             "spec": "D592",
             "source": (
                 "SETTLEMENT_FLOW_LEDGER_PREREG.md 13A.8(2) and "
@@ -329,6 +360,8 @@ class Registry:
             "sealed": SEALED_DATE,
             "families": [f.to_json() for f in self],
         }
+        if self.released:
+            payload["released"] = list(self.released)
         self.path.write_text(json.dumps(payload, indent=1) + "\n", encoding="utf-8")
         return self.path
 
@@ -402,12 +435,30 @@ class Registry:
                 f"| {family.slot} | `{family.name}` | {family.alpha} | "
                 f"`{family.doc}` | {family.registered_utc} | {note} |"
             )
+        released_slots = {int(r["slot"]) for r in self.released}
         for slot in self.free_slots():
-            lines.append(f"| {slot} | *(reserved)* | {SLOT_ALPHA} | — | — | — |")
+            label = "*(released)*" if slot in released_slots else "*(reserved)*"
+            lines.append(f"| {slot} | {label} | {SLOT_ALPHA} | — | — | — |")
         lines += [
             "",
             f"**α allocated: {self.alpha_total():.3f} of {PROGRAMME_ALPHA}.**",
         ]
+        if self.released:
+            lines += [
+                "",
+                "**Released slots.** The deposit's default is that α is never re-allocated "
+                "retroactively for a family already evaluated; each row below is the principal's "
+                "recorded override for one closed family. Its slot is free again; the family "
+                "itself can never be registered again.",
+                "",
+                "| Slot | Family | Doc | Registered | Released | Reason |",
+                "|---|---|---|---|---|---|",
+            ]
+            for r in sorted(self.released, key=lambda x: int(x["slot"])):
+                lines.append(
+                    f"| {r['slot']} | `{r['name']}` | `{r['doc']}` | {r['registered_utc']} | "
+                    f"{r['released_utc']} | {r['reason']} |"
+                )
         if over:
             lines.append(
                 f"**{len(over)} family(ies) sit beyond slot {N_SLOTS} under a doc "

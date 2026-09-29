@@ -109,3 +109,27 @@ The v2 trigger (OA-A8.3: CONT AUC ≥ 0.55 with a CI above 0.5) does not fire. O
 
 - D652's in-sample run, once (launched after this run's commit).
 - Slot 7 (H-O2) leaves the joint vault run's list unless the principal rules otherwise.
+
+## CLOSED by the principal, 2026-09-29, and programme slot 7 released
+
+**The principal:**
+- "close opening model v1";
+- on the slot: "Release it".
+
+**Why:**
+- Gate O1 failed as D645 registered it (above): no agent was retained, and H-O2's policy is net-negative at both t0
+  (−0.135 and −0.051 bp a day).
+- Its successor, v2 (D652/D659), was closed the same day without spending its vault look.
+
+**What that means:**
+- **H-O2 never goes to the joint vault run, and its vault look is not spent.**
+- The agent-state model is not re-opened by re-tuning its agents or stages on the in-sample.
+- **Programme slot 7 is released:**
+  - `data/programme_registry.json` moves "opening H-O2" to its `released` list, with this ruling as the reason;
+  - `Registry.release`, in `validation/programme.py`, records it and refuses a second release or a re-registration
+    of the same family;
+  - slots 7 and 10 are now free, and 0.040 of the programme α is allocated.
+- **This is the principal's override** of the deposit's default that α is "never re-allocated retroactively for
+  families already evaluated". It applies to this family only. LETF H1 (slot 1) and shock H1 (slot 2), also closed,
+  keep their slots.
+- **Superseded:** the "Next" line above ("D652's in-sample run, once") ran as D659, and v2 is closed.

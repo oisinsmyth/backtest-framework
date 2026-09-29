@@ -155,12 +155,16 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     LETF close flow H1; shock classifier H1; ledger H2; index H-R1, H-R2, H-R3(b);
     opening H-O2 -- slots 1-7, registered at the seal. Since 2026-09-28 one reserved slot is allocated: slot 8, D649's
     NG projected-profit vault line (a reserved slot, so no amendment); since 2026-09-29 a second: slot 9, D680's NQ
-    compression-break vault line. One remains."""
+    compression-break vault line. On 2026-09-29 the principal closed the opening model v1 and RELEASED slot 7 (D658's
+    closure): 'opening H-O2' moved to `released`, so slots 7 and 10 are free."""
     registry = Registry(path=DEFAULT_REGISTRY_PATH)
     seeded = [f for f in registry if f.slot <= 7]
-    assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES]
-    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    assert registry.free_slots() == (10,)
+    assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES if name != "opening H-O2"]
+    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 8, 9]
+    assert registry.free_slots() == (7, 10)
+    assert [(r["name"], r["slot"], r["doc"], r["released_utc"]) for r in registry.released] == [
+        ("opening H-O2", 7, "OPENING_AGENT_STATE_PREREG.md", "2026-09-29")]
+    assert "D658" in registry.released[0]["reason"] and "principal" in registry.released[0]["reason"]
     assert all(f.registered_utc == SEALED_DATE for f in seeded)
     eighth = registry.get("ledger H2 projected-profit (NG)")
     assert (eighth.slot, eighth.registered_utc, eighth.amendment) == (8, "2026-09-28", None)
@@ -169,8 +173,8 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     assert (ninth.slot, ninth.registered_utc, ninth.amendment) == (9, "2026-09-29", None)
     assert (REPO / "docs" / "decisions" / ninth.doc).exists()
     assert all(f.alpha == SLOT_ALPHA for f in registry)
-    assert registry.alpha_total() == pytest.approx(0.045)
-    docs = {f.doc for f in seeded}
+    assert registry.alpha_total() == pytest.approx(0.040)
+    docs = {f.doc for f in seeded} | {r["doc"] for r in registry.released}
     assert docs == {
         "LETF_CLOSE_FLOW_PREREG.md",
         "SHOCK_CLASSIFIER_PREREG.md",
@@ -198,6 +202,8 @@ def test_the_rendered_page_exists_and_says_where_the_deposits_path_maps_to():
     for name, _, _ in SEED_FAMILIES:
         assert f"`{name}`" in page
     assert page.count("*(reserved)*") == 1  # slot 8 allocated to D649 on 2026-09-28, slot 9 to D680 on 2026-09-29
+    assert page.count("*(released)*") == 1  # slot 7, the opening model v1's H-O2, released 2026-09-29
+    assert "**Released slots.**" in page
     assert "`ledger H2 projected-profit (NG)`" in page
     assert "`opening compression break (NQ)`" in page
     assert not (REPO / "results").exists(), "the mapping exists because this path does not"
@@ -205,13 +211,43 @@ def test_the_rendered_page_exists_and_says_where_the_deposits_path_maps_to():
 
 def test_render_md_is_deterministic_for_a_pinned_date(tmp_path):
     registry = seed_registry(tmp_path / "r.json")
-    for f in Registry(path=DEFAULT_REGISTRY_PATH):  # the families registered after the seal, the way they were
+    committed = Registry(path=DEFAULT_REGISTRY_PATH)
+    for f in committed:  # the families registered after the seal, the way they were
         if f.slot > len(SEED_FAMILIES):
             registry.register(f.name, f.doc, registered_utc=f.registered_utc, note=f.note)
+    for r in committed.released:  # then the releases, in order
+        registry.release(r["name"], released_utc=r["released_utc"], reason=r["reason"])
     a = registry.render_md(tmp_path / "a.md", date=SEALED_DATE).read_text(encoding="utf-8")
     b = registry.render_md(tmp_path / "b.md", date=SEALED_DATE).read_text(encoding="utf-8")
     assert a == b
     assert a == DEFAULT_PAGE_PATH.read_text(encoding="utf-8")
+
+
+def test_a_release_frees_the_slot_keeps_the_record_and_round_trips(tmp_path):
+    registry = seed_registry(tmp_path / "r.json")
+    rec = registry.release("opening H-O2", released_utc="2026-09-29", reason="the principal's ruling (test)")
+    assert (rec["slot"], rec["released_utc"]) == (7, "2026-09-29")
+    assert 7 in registry.free_slots()
+    assert registry.alpha_total() == pytest.approx(6 * SLOT_ALPHA)
+    reloaded = Registry(path=tmp_path / "r.json")
+    assert reloaded.released == registry.released
+    assert reloaded.free_slots() == registry.free_slots()
+    assert reloaded.register("a new family", "NEW.md").slot == 7  # the lowest free slot is the released one
+
+
+def test_every_release_guard_raises(tmp_path):
+    registry = seed_registry(tmp_path / "r.json")
+    with pytest.raises(KeyError):
+        registry.release("no such family", released_utc="2026-09-29", reason="r")
+    with pytest.raises(ValueError, match="needs a reason"):
+        registry.release("opening H-O2", released_utc="2026-09-29", reason="  ")
+    with pytest.raises(ValueError, match="needs its date"):
+        registry.release("opening H-O2", released_utc="", reason="r")
+    registry.release("opening H-O2", released_utc="2026-09-29", reason="r")
+    with pytest.raises(ValueError, match="already been released"):
+        registry.release("opening H-O2", released_utc="2026-09-29", reason="r")
+    with pytest.raises(ValueError, match="was released"):
+        registry.register("opening H-O2", "OPENING_AGENT_STATE_PREREG.md")
 
 
 # ==================================================================== ledger test 67
