@@ -201,6 +201,19 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - enter it in COMPONENTS_PROP as SCORED, NOT ENTERED;
   - any successor explains the flat bond leg and the continuation first.
 
+## The dealer-gamma close (D681, 2026-09-29; reopens D581's line under D582's new-fixture clause)
+
+- [ ] **D681 PRE-REG committed; runner next** (`scripts/stage0_d681_gamma_close.py`). The formation decisions F1–F10
+  were settled with the principal:
+  - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.
+  - **Construction:** continuous; hedge flow Q = −G·r from the prior settlement to 15:30, in square-root form; the
+    outcome 15:30 → 16:00.
+  - **Controls and placebo:** the day's move, the LETF flow and σ; the placebo at 11:00 → 11:30 plus a clock profile.
+  - **Gates:** Gate 1 (NW t ≥ 2 and above an enumerated day-rotation null; beats the placebo); Gate 2 (an
+    expected-profit-filtered MES book with regime-split pass-through).
+  - **Scope and evidence:** ES only; 2016–23 is a test.
+  - **Step 0:** the white paper confirms the convention; the units are inferred as $ per 1%.
+
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,
