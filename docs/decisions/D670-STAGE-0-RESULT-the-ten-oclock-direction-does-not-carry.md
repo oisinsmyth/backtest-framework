@@ -220,3 +220,10 @@ move since yesterday's close") is recorded as not transferring.** It does not st
 **Disclosed, not claimed:** fading the 10:00 direction on YM would have earned +4.45 bp gross against a 2.8 bp cost.
 It is found here, on YM's in-sample, and has no mechanism of its own beyond D487's reversal of the opening into the
 close.
+
+## 9. CLOSED by the principal, 2026-09-29
+
+"Close and merge then remove the worktree." **The reshaping line is closed under R15, together with D673.** The 10:00
+direction held to the close carries on no root. D673's pre-registered follow-up (join the formed move after 10:00) did
+not carry either. The correction to D669's mechanism stands as recorded here and in D674's amendment of the arm. The
+15:00 last-hour cut remains a candidate exit for a future pre-registration; the YM fade stays disclosed and unclaimed.

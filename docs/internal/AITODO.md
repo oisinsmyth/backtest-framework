@@ -141,19 +141,10 @@
 - [x] **The MACD arm RESIZED and AMENDED (D674, 2026-09-29, the principal: "resize it, then amend", "MFFU Rapid
   150k").** One MNQ unchanged; account MFFU Rapid 150k (P3a 1.90 -> 0/yr); expectation Sharpe 0.24. BOOK_PROP and
   COMPONENTS_PROP amended. D669's second proposal was withdrawn by D670.
-- [ ] **Still the principal's call:** close the reshaping line (D670, D673); the D673 number clash with the other
-  session's compression-break pre-registration is left for merge time (the principal's choice).
-- [ ] **D670 RESULT written: NOT SUPPORTED on YM and RTY; the principal's call on its proposals.** The 10:00
-  direction held to the close carries nowhere (YM -4.45 bp, t -2.76; NQ +1.26 below its null's median); no 10:00
-  forecast discriminates. Post hoc: the arm's gross sits in its later entries (23% of sessions, t 3.7), not at
-  10:00. D669's second proposal withdrawn. Proposals: record the correction in the arm's qualification; test "join
-  the formed move after 10:00" on YM/RTY/ES with its own pre-registration or close the line; the 15:00 last-hour cut
-  as an exit ingredient.
-- [ ] **D673 RESULT written: NOT SUPPORTED on YM, RTY and ES; the principal's call on its proposals.** Joining the
-  formed move after 10:00 earns YM -1.30, RTY -0.21, ES +0.05 bp gross, and NQ +1.85 at its null's median; the EP
-  filter never switches on. With D669/D670: no portable mechanism; the arm's returns rest on its NQ-specific timing.
-  Proposals: close the reshaping line (D670, D673); amend the arm's qualification in BOOK_PROP (keep/resize/retire is
-  the principal's decision); the 15:00 last-hour cut as a candidate exit.
+- [x] **The reshaping line CLOSED (D670, D673; the principal, 2026-09-29: "Close and merge then remove the
+  worktree").** No plain form of the arm's behaviour carries on YM, RTY or ES. The 15:00 last-hour cut stays a
+  candidate exit. **Open at merge time:** `wt/after-d643` merges second, so it renumbers its D673 (the compression
+  break's pre-registration) and its D667 (its diagnostic of its record 666; main's D667 is the margin-hike pause).
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 

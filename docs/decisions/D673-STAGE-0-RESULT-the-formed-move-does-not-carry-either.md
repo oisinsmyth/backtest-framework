@@ -149,3 +149,10 @@ both D670 and D673, by 0.2–1.5 bp. It is too small to carry a book. It is an e
    written there, not made here.
 3. **Keep the 15:00 last-hour cut as a candidate exit** for any intraday book's pre-registration, where its small,
    repeated effect can be measured on unread data.
+
+## 8. CLOSED by the principal, 2026-09-29
+
+"Close and merge then remove the worktree." **The reshaping line (D670 and D673) is closed under R15:** no plain form
+of the MACD arm's behaviour carries on YM, RTY or ES, and the arm's returns rest on its NQ-specific timing. Proposal 2
+was carried out by D674 (the arm resized to MFFU Rapid 150k, expectation Sharpe 0.24). The 15:00 last-hour cut
+remains a candidate exit, to be measured on unread data where a pre-registration uses it.

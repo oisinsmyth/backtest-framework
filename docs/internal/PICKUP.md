@@ -4,9 +4,12 @@
 
 ## WHERE WE ARE, 2026-09-29 AFTERNOON — the MACD-arm session (written at the principal's request before a context wipe)
 
-**Branch `worktree-next`, worktree `.claude/worktrees/fresh`. Committed; NOT merged to main; NOT pushed.**
-- Main is at `de257e6` (D667 CLOSED).
-- `worktree-next` is main plus seven commits:
+**UPDATE, same day: the reshaping line is CLOSED and `worktree-next` is merged into main (fast-forward); the worktree
+`.claude/worktrees/fresh` is removed. NOT pushed.** (The principal: "Close and merge then remove the worktree.")
+
+**Branch `worktree-next`, worktree `.claude/worktrees/fresh`, as it stood before the merge:**
+- Main was at `de257e6` (D667 CLOSED).
+- `worktree-next` was main plus seven commits:
 
 | commit | what |
 |---|---|
@@ -48,20 +51,22 @@ overfitted" / "investigate the MACD" / "resize it, then amend".
    - V per $463 evaluation: +$86 ± 24 at 0.24, +$1,231 at 0.72, −$171 at 0;
    - `BOOK_PROP.md` and `COMPONENTS_PROP.md` #2 are amended. The arm's spec is unchanged.
 
-**OPEN, the principal's calls:**
-1. **Close the reshaping line (D670 + D673)?** Proposed, not yet ruled.
-2. **Merge `worktree-next` into main.** From the main folder:
-   `cd "C:/Users/O/Desktop/Projects/Backtest Framework" && git merge --ff-only worktree-next`. It should fast-forward;
-   check first that main has not moved.
-3. **THE D673 NUMBER CLASH.**
-   - The other session's branch `wt/after-d643` holds its own `D673-PRE-REG-the-compression-break-on-ym-and-rty.md`
-     (`fb8c4c5`, 10:58).
-   - Mine is `d6aade7`, committed at 10:35, first.
-   - **The principal chose "leave it for merge"**: whichever branch merges second must renumber its D673.
-   - The other branch also holds D665–D668, D671 and D672. **Always check `git ls-tree -r --name-only wt/after-d643
-     docs/decisions` before claiming a number.**
-4. **Before buying the 150k evaluation,** check MFFU's current terms. D674 used D386's recorded plan figures:
+**Resolved:**
+1. **The reshaping line (D670 + D673) is CLOSED** by the principal, 2026-09-29 (§9 of D670, §8 of D673).
+2. **`worktree-next` is merged into main** (fast-forward) and its worktree removed.
+
+**OPEN:**
+1. **TWO NUMBER CLASHES with `wt/after-d643`, which now merges second and must renumber both:**
+   - **D673:** its `D673-PRE-REG-the-compression-break-on-ym-and-rty.md` (`fb8c4c5`, 10:58) against main's D673
+     (`d6aade7`, 10:35). The principal chose "leave it for merge".
+   - **D667:** its diagnostic of its own record 666 (`af05100`, 08:59) against main's D667 margin-hike pause
+     (pre-reg `161f553`, 08:40). Not noticed until after the context wipe.
+   - The branch also holds records numbered 665, 666, 668, 671 and 672 (not on main, so not cited as D-numbers here).
+     **The next free number across all branches is 675.**
+     **Always check `git ls-tree -r --name-only wt/after-d643 docs/decisions` before claiming a number.**
+2. **Before buying the 150k evaluation,** check MFFU's current terms. D674 used D386's recorded plan figures:
    $463 fee, $4,500 intraday-trailed funded drawdown, and the 2 % daily line.
+3. **Push:** main is ahead of `origin/main` and has not been pushed.
 
 **Working notes for whoever resumes:**
 - **Tests.** The full suite passes 4,200 when run with `PYTHONPATH=<worktree>/src`: the worktree's `.venv` is a junction
