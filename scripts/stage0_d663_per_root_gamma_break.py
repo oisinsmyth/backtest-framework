@@ -449,7 +449,11 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
             cal = list(d.index)
             jobs.append(("h1", f"{r}_{lab}_H1", rows, primary_g, primary_gd, None, cal, d[primary_g]))
             jobs.append(("h2", f"{r}_{lab}_H2", rows, primary_g, primary_gd, "s_tick", cal, d[primary_g]))
-            if lab == "morning":
+            # D663 s.2 Gate F: a shock whose meaning is not established is dropped before any outcome is read.
+            # (2026-09-29: UVOL/DVOL are advancing/declining-ISSUE volume, a state that moves as stocks cross
+            # unchanged, not a cumulative flow; the first run scheduled this job anyway and crashed on its empty
+            # column before any statistic was returned.)
+            if lab == "morning" and g_tick["up"]["usable"] and g_tick["dn"]["usable"]:
                 jobs.append(("h2", f"{r}_{lab}_H2_vol", rows, primary_g, primary_gd, "s_vol", cal, d[primary_g]))
                 if r == "NQ":
                     jobs.append(("h1", f"{r}_{lab}_H1_spx", rows, "g_spx", "gd_spx", None, cal, d["g_spx"]))
@@ -486,6 +490,7 @@ def build(data_root: Path, dry: bool) -> dict[str, Any]:
                                                      if verdict[r][h]["verdict"] == "SUPPORTED")}
     doc = {"spec": "D663 (b4d0d3d)", "dry_run": dry, "credit": "dealer gamma (GEX): SqueezeMetrics",
            "gates": doc_gates, "sessions_in_frame": sessions_in, "F_morning": F_dist, "shock_coverage": shock_cov,
+           "dropped_by_gate_f": sorted(s for s, gt in gates.items() if not gt["usable"]),
            "results": {k: {"res": v["res"], "claim": v["claim"]} for k, v in res.items()},
            "verdict": verdict, "predictions": pred,
            "speed": {"jobs": len(jobs), "fanout_wall_s": round(fan_s, 2)},
