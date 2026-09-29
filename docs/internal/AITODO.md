@@ -269,6 +269,17 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
       - an always-long control (about half the per-trade profit looks like up-drift);
       - the effect on ES-book-only short days (the confirmation population).
     - **Then:** a joint-vault pre-registration (power about 1.7, estimated) or park it.
+  - [x] **D690: the oracle filter and the accuracy assessment**
+    ([design](../decisions/D690-DESIGN-the-oracle-filter-and-the-accuracy-assessment.md),
+    [DIAG](../decisions/D690-DIAG-accuracy-needed-is-small-and-the-regime-gate-is-best.md)).
+    - **The library:** `validation/filter_oracle.py` (tested), covering the oracle, partial oracles, confusion, AUC,
+      capture and calibration.
+    - **On this trade:** a Spearman of about 0.01 breaks even at full ES and about 0.03 reaches Sharpe 0.5; real
+      filters reach 0.04–0.06.
+    - **The regime gate is still the best** (+0.54; no model filter beats it). A size-only oracle is worth almost
+      nothing, and D689's π·|m| was anti-calibrated (slope −1.7).
+    - **Proposed house practice:** no filter is traded without a positive calibration slope. The next gain needs a new
+      directional input.
 - [x] **D688 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
   the principal:
   - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.
