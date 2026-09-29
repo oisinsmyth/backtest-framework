@@ -54,6 +54,8 @@ SC_DATA = Path(r"C:\SierraChart\Data")
 OUT = REPO / "data" / "opening" / "sierra_index_tick_record.json"
 UDP = ("127.0.0.1", 22903)
 ROOTS = ("ES", "NQ")
+EXCH = {"ES": "CME", "NQ": "CME", "RTY": "CME", "YM": "CBOT"}  # D668: YM trades on CBOT
+FIRST = {"RTY": (17, "U")}  # RTY moved to CME in July 2017 (D462: RTY 2017-07-10 ->)
 QUARTERS = "HMUZ"
 LETTER = "FGHJKMNQUVXZ"
 REC_SIZE, HDR = 40, 56
@@ -63,19 +65,30 @@ RETRIES, CUT_TOL_BDAYS = 2, 1
 MIN_FREE_GB = 95.0
 
 
-def contracts() -> list[str]:
+def contracts(roots: tuple[str, ...] = ROOTS) -> list[str]:
     out = []
     for yy in range(16, 26):
         for q in QUARTERS:
             if yy == 25 and q != "H":
                 continue
-            for r in ROOTS:
+            for r in roots:
+                fy, fq = FIRST.get(r, (16, "H"))
+                if (yy, QUARTERS.index(q)) < (fy, QUARTERS.index(fq)):
+                    continue
                 out.append(f"{r}{q}{yy:02d}")
-    return sorted(out, key=lambda s: (s[3:5], QUARTERS.index(s[2]), s[:2]))
+    return sorted(out, key=lambda s: (s[-2:], QUARTERS.index(s[-3]), s[:-3]))
+
+
+def root_of(sym: str) -> str:
+    return sym[:-3]
+
+
+def full(sym: str) -> str:
+    return f"{sym}-{EXCH[root_of(sym)]}"
 
 
 def path(sym: str) -> Path:
-    return SC_DATA / f"{sym}-CME.scid"
+    return SC_DATA / f"{full(sym)}.scid"
 
 
 def size(sym: str) -> int:
@@ -108,7 +121,7 @@ def file_span(sym: str) -> dict[str, Any]:
 def expected_last_day(sym: str) -> pd.Timestamp:
     """The equity index quarterly's last trading day: the third Friday of the expiry month (trading ends 09:30 ET).
     A holiday moves it earlier, never later."""
-    month, yy = LETTER.index(sym[2]) + 1, 2000 + int(sym[3:5])
+    month, yy = LETTER.index(sym[-3]) + 1, 2000 + int(sym[-2:])
     first = pd.Timestamp(year=yy, month=month, day=1)
     first_friday = first + pd.Timedelta(days=(4 - first.weekday()) % 7)
     return first_friday + pd.Timedelta(days=14)
@@ -144,7 +157,7 @@ def request_and_wait(sym: str, live: bool = False) -> None:
     """Open the chart (queues or resumes the download), wait until the file has been still for STABLE_S (or, for a
     live contract, until it has caught up to now), close it."""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.sendto(f"{sym}-CME.scid".encode(), UDP)
+    s.sendto(f"{full(sym)}.scid".encode(), UDP)
     t0, last, changed = time.time(), size(sym), time.time()
     while time.time() - t0 < CAP_S:
         time.sleep(POLL_S)
@@ -155,7 +168,7 @@ def request_and_wait(sym: str, live: bool = False) -> None:
             break
         if live and cur > HDR and time.time() - t0 >= STABLE_S and caught_up(sym):
             break
-    U.cmd_close("^" + re.escape(sym) + "-CME")
+    U.cmd_close("^" + re.escape(full(sym)))
 
 
 def compress(p: Path) -> None:
@@ -163,14 +176,19 @@ def compress(p: Path) -> None:
 
 
 def main(argv: list[str] | None = None) -> int:
+    global STABLE_S
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default=None)
+    ap.add_argument("--roots", default=",".join(ROOTS), help="D668: YM,RTY")
+    ap.add_argument("--stable", type=int, default=STABLE_S,
+                    help="seconds of stillness that end a wait; one ended too early is caught by the cut-short check")
     ap.add_argument("--dry-run", action="store_true", help="print the plan and the file states; request nothing")
     ap.add_argument("--live", action="store_true",
                     help="unexpired contracts (ESZ26, NQZ26 for A7's exchange-flag check): no cut-short retry, "
                          "recorded as live; the check reads their post-vault sessions only")
     a = ap.parse_args(argv)
-    syms = contracts() if a.only is None else a.only.split(",")
+    STABLE_S = a.stable
+    syms = contracts(tuple(a.roots.split(","))) if a.only is None else a.only.split(",")
     rec: dict[str, Any] = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"contracts": {}}
     done = {x for x, r in rec["contracts"].items() if r.get("compressed") and not r.get("cut_short")}
     todo = [x for x in syms if x not in done]
