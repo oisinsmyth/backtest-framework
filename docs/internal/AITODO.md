@@ -149,6 +149,9 @@
   10:00. D669's second proposal withdrawn. Proposals: record the correction in the arm's qualification; test "join
   the formed move after 10:00" on YM/RTY/ES with its own pre-registration or close the line; the 15:00 last-hour cut
   as an exit ingredient.
+- [ ] **D673 Stage 0 design committed; runner next** (the principal: "Yes run the test on the other roots"). Join the
+  formed move: first hourly close 10:59-13:59 where price is beyond both yesterday's close and today's open, enter,
+  hold to the close. Evidence YM, RTY, ES (Holm at family alpha 0.025, the family's second attempt); NQ development.
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
