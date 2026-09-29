@@ -136,6 +136,12 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
+## Margin-hike pause on the MACD arm (D667, 2026-09-29)
+
+- [ ] **D667 pre-registration committed; runner next.** A disclosed measurement on the admitted arm (the principal
+  reopened the closed conditioner line for this one overlay: "Run it as an overlay anyway, I think the MACD arm has a
+  high chance of being overfitted"). Cannot admit anything; 2016-2023 only.
+
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,
