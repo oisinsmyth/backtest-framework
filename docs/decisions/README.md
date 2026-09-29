@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 457 of these records carry neither field —
+**No Status or Category column, deliberately.** 458 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -764,6 +764,7 @@ would look like data. The tokens are what is shown.
 | D689 | D689 STAGE 0 — short-gamma continuation on ES survives the volatility control (98.5th percentile), holds in all eight y… | [record](D689-STAGE-0-short-gamma-continuation-is-real-but-unconfirmable.md) |
 | D690 | the oracle filter and the accuracy assessment: a yardstick for every expected-profit filter, first applied to D689's ca… | [record](D690-DESIGN-the-oracle-filter-and-the-accuracy-assessment.md) · [record](D690-DIAG-accuracy-needed-is-small-and-the-regime-gate-is-best.md) |
 | D691 | STAGE 0 DESIGN: does implied volatility tell us how far ES and NQ will move, beyond what realised volatility and dealer… | [record](D691-STAGE-0-DESIGN-implied-vs-realised-vol-as-a-size-predictor.md) |
+| D692 | the oracle profile at MES: where the winners of the hourly continuation sit, shown before any filter is designed | [record](D692-DESIGN-the-oracle-profile-at-mes.md) |
 
 <!-- REGISTER:END -->
 
