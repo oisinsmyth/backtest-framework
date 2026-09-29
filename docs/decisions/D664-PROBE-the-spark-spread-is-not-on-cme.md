@@ -36,3 +36,9 @@ definitions under them in the feed in any window.
 would need a different data subscription and a venue the prop book's accounts do not offer. Recommended: close the
 spark spread with the other two, which leaves `ALPHA_PROGRAMME.md` §3.2's processing-spread list fully closed.
 Closure is the principal's word (R15).
+
+## CLOSED by the principal, 2026-09-29
+
+"Close and merge to main." **The spark spread is closed under R15**: no CME expression exists. With the crack (D653)
+and the crush (D656), `ALPHA_PROGRAMME.md` §3.2's processing spreads are all closed. Reopening needs an ICE data
+source and venue, which a new deposit would have to bring.
