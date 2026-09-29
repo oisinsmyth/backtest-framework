@@ -4940,3 +4940,33 @@ session is published twice, a day apart.
   - The median of 485 neighbours is 0.24 net.
   - The deflated Sharpe fails: 0.003 on D495's cells, and 0.28 even with pure-noise trial variance.
 - **No unread NQ slice remains to confirm any of it.**
+- **Corrected by §90:** the direction is the sign since the prior close measured at each trade's own entry, and the arm
+  earns on its later entries, not at 10:00.
+
+## 90. The 10:00 direction does not carry (D670): the arm's mechanism, built plainly, fails everywhere, and the arm's money is in its later entries
+
+**The rule:** take the sign of the move since yesterday's 16:00 close at 10:00, hold it to the close, one micro
+([D670](decisions/D670-STAGE-0-RESULT-the-ten-oclock-direction-does-not-carry.md), in sample to 2025-02). **It fails on
+every root.**
+- **YM, never having seen it:** −4.45 bp gross a trade, t −2.76. The direction reverses there.
+- **RTY:** −0.18 bp.
+- **ES:** −0.59 bp.
+- **NQ, where it was found:** +1.26 bp, below the median of its own within-week direction permutation.
+
+**The trend days that carried the arm do not carry this direction.** On the top two-fifths of days by move, it loses
+on three of four roots.
+
+**Nothing known at 10:00 forecasts its profit:** the first half hour's size, agreement, range and efficiency, dealer
+gamma (SqueezeMetrics) and trailing volatility. β_disc t runs from −0.89 to +0.58.
+
+**On NQ 2016–2023, the arm's own sessions split sharply** (post hoc):
+- its 10:00 entries, two-thirds of sessions, earn $9,830 gross (t 1.4);
+- **its later entries, 23 % of sessions, earn $12,281 (t 3.7, hit 61 %).** These come after the two MACDs agree on a
+  move that formed after 10:00;
+- the days it never trades would have cost the plain rule $69 a session.
+
+**So the arm joins formed moves and sits out days that never form one.** Its entry timing rests on the two
+parameters D669 found to be a spike, and that idea is untested outside NQ.
+
+**One ingredient does hold out of NQ:** exiting at 15:00 when the last hour went against the position adds 0.2–1.5 bp
+on all four roots (YM t 2.8), as the close continues its prior hour.

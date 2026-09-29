@@ -143,11 +143,12 @@
   its family: median neighbour 0.24, deflated Sharpe fails, a spike on impulse length and on M = 5's one 15:00 exit.
   Proposals: (1) amend the arm's qualification in `BOOK_PROP.md`; (2) pre-register the RON-direction rule as a new
   component on roots with checked unread slices. Nothing changed until the principal rules (R15).
-- [ ] **D670 Stage 0 design committed; runner next** (the principal: "Can we reshape it to aim at exactly the
-  underlying mechanism?"). The move since yesterday's close carried from 10:00 to 16:00 (P1), a walk-forward
-  expected-profit forecast at 10:00 with k = 2 x cost (P2), a 15:00 exit when the last hour went against (P3).
-  Evidence YM and RTY in sample to 2025-02-28; ES and NQ development. Overlaps the other session's plain-break
-  design on the same roots (a separate line).
+- [ ] **D670 RESULT written: NOT SUPPORTED on YM and RTY; the principal's call on its proposals.** The 10:00
+  direction held to the close carries nowhere (YM -4.45 bp, t -2.76; NQ +1.26 below its null's median); no 10:00
+  forecast discriminates. Post hoc: the arm's gross sits in its later entries (23% of sessions, t 3.7), not at
+  10:00. D669's second proposal withdrawn. Proposals: record the correction in the arm's qualification; test "join
+  the formed move after 10:00" on YM/RTY/ES with its own pre-registration or close the line; the 15:00 last-hour cut
+  as an exit ingredient.
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
