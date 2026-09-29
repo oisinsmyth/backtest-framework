@@ -73,10 +73,11 @@ def session_of(day: np.ndarray, hhmm: np.ndarray, sessions: np.ndarray) -> np.nd
     return out
 
 
-def process_chunk(arr: np.ndarray, w: pd.DataFrame | None, sessions: np.ndarray, front: pd.DataFrame) -> pd.DataFrame | None:
+def process_chunk(arr: np.ndarray, w: pd.DataFrame | None, sessions: np.ndarray, front: pd.DataFrame,
+                  roots: tuple[str, ...] = ROOTS) -> pd.DataFrame | None:
     if w is None or len(w) == 0:
         return None
-    w = w[w["root"].isin(ROOTS)]
+    w = w[w["root"].isin(roots)]
     if len(w) == 0:
         return None
     j = D462.label_rows(arr, w).sort_values("_i")
@@ -101,8 +102,8 @@ def process_chunk(arr: np.ndarray, w: pd.DataFrame | None, sessions: np.ndarray,
 _CTX: dict = {}
 
 
-def _init(sessions: np.ndarray, front: pd.DataFrame) -> None:
-    _CTX["sessions"], _CTX["front"] = sessions, front
+def _init(sessions: np.ndarray, front: pd.DataFrame, roots: tuple[str, ...] = ROOTS) -> None:
+    _CTX["sessions"], _CTX["front"], _CTX["roots"] = sessions, front, roots
 
 
 def worker(path: str) -> dict:
@@ -113,7 +114,7 @@ def worker(path: str) -> dict:
     parts, n_in = [], 0
     for arr in store.to_ndarray(count=CHUNK):
         n_in += len(arr)
-        b = process_chunk(arr, w, _CTX["sessions"], _CTX["front"])
+        b = process_chunk(arr, w, _CTX["sessions"], _CTX["front"], _CTX.get("roots", ROOTS))
         if b is not None:
             parts.append(b)
     bars = pd.concat(parts, ignore_index=True) if parts else None
@@ -121,9 +122,9 @@ def worker(path: str) -> dict:
             "secs": round(time.time() - t0, 1), "bars": bars}
 
 
-def load_front(data_root: Path, through: str) -> tuple[np.ndarray, pd.DataFrame]:
+def load_front(data_root: Path, through: str, roots: tuple[str, ...] = ROOTS) -> tuple[np.ndarray, pd.DataFrame]:
     s = pd.read_csv(data_root / "fixtures" / "fut_index_sessions.csv.gz", encoding="utf-8", dtype={"day": str})
-    s = s[s["root"].isin(ROOTS) & (s["day"] >= START) & (s["day"] <= through)]
+    s = s[s["root"].isin(roots) & (s["day"] >= START) & (s["day"] <= through)]
     sessions = np.array(sorted(s["day"].unique()), dtype=object)
     front = s[["root", "day", "contract"]].rename(columns={"day": "session", "contract": "front"})
     if front.duplicated(["root", "session"]).any():
@@ -131,16 +132,20 @@ def load_front(data_root: Path, through: str) -> tuple[np.ndarray, pd.DataFrame]
     return sessions, front.reset_index(drop=True)
 
 
-def cmd_build(workers: int, data_root: Path, through: str) -> int:
+def cmd_build(workers: int, data_root: Path, through: str, roots: tuple[str, ...] = ROOTS) -> int:
+    global OUT, META
+    if roots != ROOTS:  # D673: YM/RTY go to their own fixture; ES/NQ's is untouched
+        tag = "_".join(r.lower() for r in roots)
+        OUT, META = FIX / f"fut_opening_globex_1m_{tag}.csv.gz", FIX / f"fut_opening_globex_1m_{tag}.meta.json"
     t0 = time.time()
     files = sorted((data_root / "raw" / "databento").glob("*/*.ohlcv-1m.dbn.zst"), key=lambda p: p.name)
     assert files, "no ohlcv-1m files"
-    sessions, front = load_front(data_root, through)
+    sessions, front = load_front(data_root, through, roots)
     print(f"{len(files)} ohlcv-1m files, {len(sessions)} sessions {sessions[0]} .. {sessions[-1]}, {workers} workers",
           flush=True)
     order = {f.name: i for i, f in enumerate(files)}
     from multiprocessing import Pool
-    with Pool(workers, initializer=_init, initargs=(sessions, front)) as pool:
+    with Pool(workers, initializer=_init, initargs=(sessions, front, roots)) as pool:
         res = pool.map(worker, [str(f) for f in sorted(files, key=lambda p: -p.stat().st_size)], chunksize=1)
     res.sort(key=lambda r: order[r["file"]])
     sec = sum(r["secs"] for r in res)
@@ -156,13 +161,13 @@ def cmd_build(workers: int, data_root: Path, through: str) -> int:
     bars.to_csv(OUT, index=False, compression={"method": "gzip", "mtime": 0}, float_format="%.2f", encoding="utf-8",
                 lineterminator="\n")
     meta = {"spec": "OPENING_AGENT_STATE_PREREG.md s.3 / Gate O0; OA-A1", "built_utc": time.strftime(
-        "%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "sessions": [START, through], "roots": list(ROOTS),
+        "%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "sessions": [START, through], "roots": list(roots),
         "session_rule": "bar >= 18:00 ET -> next D462 session day; else its own day if a session day",
         "contract_rule": "the session's front per D462 fut_index_sessions (highest full-day volume)",
         "rows": int(len(bars)), "duplicates_dropped": int(n0 - len(bars)),
         "files": [{k: v for k, v in r.items() if k != "bars"} for r in res], "gates": None}
     META.write_text(json.dumps(meta, indent=1) + "\n", encoding="utf-8", newline="\n")
-    for r in ROOTS:
+    for r in roots:
         b = bars[bars["root"] == r]
         print(f"  {r}: {len(b):,} bars over {b['session'].nunique():,} sessions", flush=True)
     print(f"wrote {OUT.name} in {(time.time() - t0) / 60:.1f} min", flush=True)
@@ -188,11 +193,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
     ap.add_argument("--through", default=THROUGH, help="last session written (the vault only in the joint run)")
+    ap.add_argument("--roots", default=",".join(ROOTS), help="D673: YM,RTY (written to their own fixture)")
     a = ap.parse_args(argv)
     if a.selftest:
         return selftest()
     if a.build:
-        return cmd_build(a.workers, a.data_root, a.through)
+        return cmd_build(a.workers, a.data_root, a.through, tuple(a.roots.split(",")))
     ap.print_help()
     return 1
 
