@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 455 of these records carry neither field —
+**No Status or Category column, deliberately.** 456 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -763,6 +763,7 @@ would look like data. The tokens are what is shown.
 | D688 | NOT SUPPORTED: the dealer hedge flow predicts the close with the right sign but at about a quarter of the square-root l… | [PRE-REG](D688-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md) · [RESULT](D688-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md) |
 | D689 | D689 STAGE 0 — short-gamma continuation on ES survives the volatility control (98.5th percentile), holds in all eight y… | [record](D689-STAGE-0-short-gamma-continuation-is-real-but-unconfirmable.md) |
 | D690 | the oracle filter and the accuracy assessment: a yardstick for every expected-profit filter, first applied to D689's ca… | [record](D690-DESIGN-the-oracle-filter-and-the-accuracy-assessment.md) |
+| D691 | STAGE 0 DESIGN: does implied volatility tell us how far ES and NQ will move, beyond what realised volatility and dealer… | [record](D691-STAGE-0-DESIGN-implied-vs-realised-vol-as-a-size-predictor.md) |
 
 <!-- REGISTER:END -->
 

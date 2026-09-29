@@ -13,7 +13,9 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 692.** D689 is the short-gamma continuation stage 0; D690 the oracle filter and accuracy assessment (this line); 691 is the other session's (implied vs realised vol as a size predictor). Check every branch before claiming one.
+- **Next free number: 692.** D689 is the short-gamma continuation stage 0; D690 the oracle filter and accuracy
+  assessment (`wt/after-d674`, record committed); D691 the implied-vs-realised volatility premise check.
+  **Check every branch, and the commit messages, before claiming a number.**
 
 ## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)
 
