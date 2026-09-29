@@ -529,3 +529,19 @@ come from post-hoc scripts rather than the runners:
 | compression tier C1, nine roots: HO / RB / BZ / HG / PL / CL / NG / GC / SI | D679 | +0.21 / +0.05 / +0.03 / −0.92 / −1.18 / −0.01 / +0.15 / −0.16 / −0.87; gross +0.73 / +0.44 / +0.51 / −0.28 / +0.18 / +0.22 / +0.40 / +0.42 / +0.42 | 2017-10 → 2025-02 · once · **full** | NO MECHANISM by the declared bar; net at most +0.21; \|ρ\| K8 ≤ 0.04 |
 | 10:00 direction held to the close: YM / RTY / ES / NQ | D670 | −1.64 (−2.08) / −0.76 (−1.00) / −0.73 (−0.95) / −0.11 (−0.16); gross −1.07 / −0.13 / −0.24 / +0.16 | 2016 (RTY 2017-07) → 2025-02 · `d508_exec` · micro | fails on every root; **ρ with the arm 0.19 / 0.24 / 0.35 / 0.37**; line CLOSED (R15) |
 | join the formed move: YM / RTY / ES / NQ | D673 | −1.07 (−1.39) / −0.82 (−1.04) / −0.60 (−0.78) / +0.04 (+0.06); gross −0.43 / −0.08 / −0.05 / +0.36 | 2016 (RTY 2017-07) → 2025-02 · `d508_exec` · micro | NOT SUPPORTED; **ρ with the arm 0.21 / 0.17 / 0.26 / 0.35**; line CLOSED (R15) |
+
+## SCORED, NOT ENTERED — short-gamma continuation on ES, 2026-09-29 ([D689](decisions/D689-STAGE-0-short-gamma-continuation-is-real-but-unconfirmable.md))
+
+Component lines from the runner's own output (`data/d689_short_gamma_continuation.json`).
+- **The construction:** on days with G_SUM < 0, follow the last hour for the next hour, at 10:30–14:30.
+- **The score:** daily net Sharpe over every session of 2016–2023 (√252).
+- **Correlations** are with the admitted MACD arm's daily net.
+
+**Status: in-sample development (a stage 0), UNCONFIRMABLE ON THE CLEAN SLICE.** Not a candidate until a
+pre-registered test on unseen data.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| short-gamma 60-min continuation, unfiltered, 1 full ES ($19.24) | D689 | +0.51 (+0.75); gross +1.04 (+1.59) | in-sample only; 379 trades a year, mean ≈ median +$18; 2022–23 are 81% of the net; about half is up-drift on short-gamma days; max drawdown $15.4k per contract; ρ −0.046 |
+| the same, 1 MES ($4.42) | D689 | −0.18 (−0.25); gross +1.04 (+1.59) | $3.77 gross against a $4.42 round trip; ρ −0.048 |
+| the same, expected-profit filtered (π·\|m\|), full ES | D689 | −0.39 (−0.49) | the \|m\|-scaled projection selects moves that do not continue; 10 a year |

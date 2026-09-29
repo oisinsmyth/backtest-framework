@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 689.** Check every branch before claiming one.
+- **Next free number: 690** (D689 is the short-gamma continuation stage 0). Check every branch before claiming one.
 
 ## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)
 
@@ -252,10 +252,21 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     - The long-gamma fade makes $0.2–0.3 gross a trade against an $8.84 bar, at 5–60 minutes.
     - D683's 5-minute gradient disappears under a same-day volatility control (addendum on D683).
     - Gamma's role now: the size term of the expected-profit filter.
-  - [ ] **NOW IN PROGRESS (the principal: "go after short-gamma days with volatility controlled"):** short-gamma continuation at 60 minutes.
-    - It makes +$3.77 a MES trade gross (t 2.9, 379 a year), or about +$18.5 net on full ES.
-    - **Before any pre-registration:** (a) by year and without Feb–Apr 2020; (b) the short-gamma count of G_SUM in
-      2024-01 → 2025-02 and the vault (ES options OI only, no returns).
+  - [ ] **D689 STAGE 0: UNCONFIRMABLE ON THE CLEAN SLICE; the principal's call**
+    ([record](../decisions/D689-STAGE-0-short-gamma-continuation-is-real-but-unconfirmable.md)).
+    - **Survives, in-sample:**
+      - the volatility control: short − long +1.48 bp within same-day RV deciles, the 98.5th percentile of the
+        enumerated rotation null;
+      - the crash: +$4.06 a MES trade without it (t 3.24);
+      - 8 of 8 years with positive gross.
+    - **The books:** full ES net Sharpe +0.51 (Sortino +0.75), ρ −0.05; MES −0.18. The |m|-scaled expected-profit
+      filter fails.
+    - **The premise:** 66 short-gamma sessions in 2024-01 → 2025-02 (SPX 1, ES book 101), so the expected t is 1.12,
+      under 1.5.
+    - **Open checks (§5):**
+      - an always-long control (about half the per-trade profit looks like up-drift);
+      - the effect on ES-book-only short days (the confirmation population).
+    - **Then:** a joint-vault pre-registration (power about 1.7, estimated) or park it.
 - [x] **D688 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
   the principal:
   - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.

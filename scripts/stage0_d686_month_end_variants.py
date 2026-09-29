@@ -181,7 +181,7 @@ def build(data_root: Path) -> dict:
         sig20[t] = float(np.std(r_es0[t - SIG_N + 1:t + 1], ddof=1))
     fx = data_root / "fixtures"
     vc = [f"h{h:02d}_v" for h in range(9, 17)]
-    bh = pd.read_csv(fx / "fut_breadth_hourly.csv.gz", usecols=["root", "day"] + vc)
+    bh = pd.read_csv(fx / "fut_breadth_hourly.csv.gz", usecols=["root", "day"] + vc, encoding="utf-8")
     bh = bh[(bh.root == "ES") & (bh.day < B.CUTOFF)]
     B.guard_window(bh["day"])
     vol = bh.set_index("day")[vc].apply(pd.to_numeric, errors="coerce").sum(axis=1, min_count=1)
@@ -192,14 +192,14 @@ def build(data_root: Path) -> dict:
         w = vol[t - DV_N + 1:t + 1]
         if np.isfinite(w).sum() >= DV_MIN:
             dv60[t] = float(np.nanmedian(w))
-    cal = pd.read_csv(fx / "cme_session_calendar.csv.gz", usecols=["root", "day", "fomc", "cpi", "empsit"])
+    cal = pd.read_csv(fx / "cme_session_calendar.csv.gz", usecols=["root", "day", "fomc", "cpi", "empsit"], encoding="utf-8")
     cal = cal[(cal.root == "ES") & (cal.day < B.CUTOFF)].set_index("day")
     B.guard_window(cal.index)
     macro = np.zeros(n, bool)
     cc = cal.reindex(days)
     for c in ("fomc", "cpi", "empsit"):
         macro |= cc[c].map(lambda v: str(v).lower() in ("true", "1", "1.0")).to_numpy(bool)
-    gex = pd.read_csv(data_root / "raw" / "squeezemetrics" / "DIX.csv", usecols=["date", "gex"]).sort_values("date")
+    gex = pd.read_csv(data_root / "raw" / "squeezemetrics" / "DIX.csv", usecols=["date", "gex"], encoding="utf-8").sort_values("date")
     gex = gex[gex.date < B.CUTOFF]
     gd, gv = gex["date"].to_numpy(), gex["gex"].to_numpy(float)
 
@@ -227,11 +227,11 @@ def build(data_root: Path) -> dict:
         sigbar[t] = float(np.nanmedian(sig20[t - SIGBAR_N:t]))
     ctx["sigbar_2"] = sigbar[t2]
     # L1: ES through 15:45 on o-1 (the held contract's settlement at o-2 as the base), ZN through its o-1 settlement
-    l1 = pd.read_csv(ES1545)
+    l1 = pd.read_csv(ES1545, encoding="utf-8")
     B.guard_window(l1["day"])
     audit_l1_bars(l1["bar"].to_numpy())
     ctx["es1545_sha256"] = hashlib.sha256(ES1545.read_bytes()).hexdigest()
-    strip = pd.read_csv(fx / "fut_settle_strip.csv.gz")
+    strip = pd.read_csv(fx / "fut_settle_strip.csv.gz", encoding="utf-8")
     strip = strip[(strip.root == "ES") & (strip.ref < B.CUTOFF)]
     B.guard_window(strip["ref"])
     Sx = strip.set_index(["contract", "ref"])["settle"]

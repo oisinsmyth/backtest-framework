@@ -216,9 +216,9 @@ def load(data_root: Path) -> dict:
     import pandas as pd
     fx = data_root / "fixtures"
     roots = ("ES", "ZN") + OTHER_ROOTS
-    cur = pd.read_csv(fx / "fut_curve_front_next.csv.gz", usecols=["root", "ref", "front", "front_settle"])
+    cur = pd.read_csv(fx / "fut_curve_front_next.csv.gz", usecols=["root", "ref", "front", "front_settle"], encoding="utf-8")
     cur = cur[cur["root"].isin(roots) & (cur["ref"] < CUTOFF)].dropna(subset=["front_settle"])
-    strip = pd.read_csv(fx / "fut_settle_strip.csv.gz")
+    strip = pd.read_csv(fx / "fut_settle_strip.csv.gz", encoding="utf-8")
     strip = strip[strip["root"].isin(roots) & (strip["ref"] < CUTOFF)]
     guard_window(cur["ref"])
     guard_window(strip["ref"])

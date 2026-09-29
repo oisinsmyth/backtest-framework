@@ -38,7 +38,7 @@ def main() -> int:
     if (t["bar"] > BAR_1545).any():
         raise SystemExit("[CAUSALITY] a bar at or after 15:45 survived the filter")
     t = t.sort_values(["day", "bar"]).groupby("day", as_index=False).last()
-    t.to_csv(OUT, index=False, compression="gzip")
+    t.to_csv(OUT, index=False, compression="gzip", encoding="utf-8")
     h = hashlib.sha256(OUT.read_bytes()).hexdigest()
     print(f"{len(t)} sessions {t['day'].min()} -> {t['day'].max()}; bar 404 on {int((t['bar'] == BAR_1545).sum())}, "
           f"earlier bar on {int((t['bar'] < BAR_1545).sum())}; wrote {OUT.relative_to(REPO)} sha256 {h}")
