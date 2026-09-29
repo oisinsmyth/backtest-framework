@@ -13,8 +13,9 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 698** (D697 is the other session's). D695 is the short-gamma continuation's directional inputs; D696 is
-  D694's busy / low-IV/RV cell (below).
+- **Next free number: 700.** D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
+  MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
+  long. D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
   - D691 is the implied-vs-realised volatility premise check (RESULT: SIZE INFORMATION CONFIRMED on ES and NQ).

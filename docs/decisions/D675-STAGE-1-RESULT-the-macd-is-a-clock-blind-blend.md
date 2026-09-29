@@ -245,3 +245,12 @@ No unread slice was spent.
 - **The admitted arm** in `BOOK_PROP.md`, as D674 left it.
 - **The FINDINGS correction** (§8, proposal 3: D484's pooled pass rests on NQ and CL). It waits for the principal's
   word.
+
+## 11. REOPENED by the principal for one use, 2026-09-30
+
+"Reopen it." The principal reopened the MACD for a **gamma-gated** use only: the 15-minute log MACD on ES on
+short-gamma days, in three variants. See
+[D699](D699-STAGE-0-DESIGN-the-gamma-gated-15-minute-log-macd-long.md).
+- **Why it is new:** the dealer-gamma gate, which D675 never conditioned on. The overnight gap is also spliced out,
+  which removes §3's overnight reversal.
+- **Still closed:** D484's signal as a line, and any Stage 2 on a §3 clock cell.
