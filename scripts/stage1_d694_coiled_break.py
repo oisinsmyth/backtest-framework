@@ -432,8 +432,8 @@ def root_study(r: str, bd: dict[str, Any], arm: pd.Series | None, workers: int) 
     sess_all = lab.index.to_numpy(str)
     lab_ok = (np.isfinite(lab[["t671", "ctier", "p_iv", "f1"]].to_numpy(float)).all(axis=1))
     win_sessions = sess_all[lab_ok]
-    if win_sessions.min() < WINDOW_FROM:
-        raise D694Error(f"{r}: the window starts at {win_sessions.min()}, before {WINDOW_FROM}")
+    if min(win_sessions) < WINDOW_FROM:
+        raise D694Error(f"{r}: the window starts at {min(win_sessions)}, before {WINDOW_FROM}")
     ts = tr["session"].to_numpy(str)
     win = np.isfinite(tr[["t671", "ctier", "p_iv", "f1"]].to_numpy(float)).all(axis=1)
     ct, piv = tr["ctier"].to_numpy(float), tr["p_iv"].to_numpy(float)
@@ -450,7 +450,7 @@ def root_study(r: str, bd: dict[str, Any], arm: pd.Series | None, workers: int) 
     c1_idx = np.flatnonzero(c1)
     pos = spos.reindex(ts[c1_idx]).to_numpy(int)
     gc1 = g[c1_idx]
-    fit_mask = (sess_all >= win_sessions.min()) & (sess_all <= win_sessions.max())
+    fit_mask = (sess_all >= min(win_sessions)) & (sess_all <= max(win_sessions))
     u, F, beta = residual(lab, fit_mask)
     ivrv = lab["ivrv"].to_numpy(float)
     obs = float(g[coiled].mean())
@@ -518,7 +518,7 @@ def root_study(r: str, bd: dict[str, Any], arm: pd.Series | None, workers: int) 
                                       "n": [int(lco.sum()), int(lqu.sum())]},
         "drift_control_always_long_bp": {"coiled_sessions": float(along[lco].mean()), "quiet_sessions": float(along[lqu].mean())},
         "bounds": upper, "power": {"se_coiled_bp": se_a, "mde80_one_sided_5pct_bp": 2.486845 * se_a},
-        "window": [str(win_sessions.min()), str(win_sessions.max())], "window_sessions": int(len(win_sessions)),
+        "window": [str(min(win_sessions)), str(max(win_sessions))], "window_sessions": int(len(win_sessions)),
         "costs_usd": {"single": cl["cost_single_usd"], "prereg_double": cl["cost_prereg_usd"]}}
     return {"counts": {"B0": int(win.sum()), "C1": int(c1.sum()), "COILED": n_co, "QUIET": int(quiet.sum())},
             "gate1": gate1, "gate2": gate2, "books": books, "reported": reported}
