@@ -120,6 +120,9 @@ of D639 §4's H3 formula to what the deposit's H3 means.*
 
 *Source: proposed, 2026-09-27; the deposit asks for them before Phase 6.*
 
+*Status (2026-09-29): never ruled, and **moot**. D640's one run killed the line at Gate 1 on 2026-09-27, so Phase 6
+never ran; D639 §11 had already fixed Q2.*
+
 - **Q1 (costs):** the existing CostStack for MNQ/MES at the close, stated explicitly in the report; the ledger's
   dollar-at-micro-size standard (CLAUDE.md) applies to the component line.
 - **Q2 (prop constraints):** the account parameters already used by the prop lifecycle runner and `BOOK_PROP.md`.

@@ -5,6 +5,18 @@
 > stale. The build-phase list this file held until 2026-09-01 is in git history at `f78786e`
 > (`git show f78786e:docs/internal/AITODO.md`).
 
+## Decision numbers across branches (2026-09-29)
+
+- Main holds D676–D682 (this line, merged first).
+- **The unmerged branch `wt/after-d674` (another session) holds its own numbers 677, 678, 680 (DIAG), 681, 683 and 684.** Those
+  are month-end rebalancing, MECHANISM ONLY; the dealer-gamma close on ES, NOT SUPPORTED; its DIAG (683); and a
+  long-gamma fade sizing, NO-GO (684).
+- **Four of its numbers clash with main's:** D677, D678, D680 and D681. Main's D680 is frozen (its sha256 is pinned in
+  `data/FROZEN_vault_d680_nq_compression.json`), so it cannot move. **That branch renumbers when it merges**, as
+  `wt/after-d643` did (`cbc04c24`).
+- **Next free number across branches: 685** (confirmed by that session, 2026-09-29; it will take 685 onward for its
+  renumbered records when it merges, after checking main). Check every branch before claiming one.
+
 ## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)
 
 - No model opens the vault (2025-03-01 → 2026-09-18) by itself.
@@ -159,8 +171,8 @@
   COMPONENTS_PROP amended. D669's second proposal was withdrawn by D670.
 - [x] **The reshaping line CLOSED (D670, D673; the principal, 2026-09-29: "Close and merge then remove the
   worktree").** No plain form of the arm's behaviour carries on YM, RTY or ES. The 15:00 last-hour cut stays a
-  candidate exit. **Open at merge time:** `wt/after-d643` merges second, so it renumbers its D673 (the compression
-  break's pre-registration) and its D667 (its diagnostic of its record 666; main's D667 is the margin-hike pause).
+  candidate exit. **Done at the merge (2026-09-29):** `wt/after-d643` merged second and renumbered its D667 → D681
+  (the diagnostic of D666) and its D673 → D682 (the compression break on YM/RTY).
 
 ## The log MACD's mechanism, mechanism first (D675, 2026-09-29)
 
@@ -176,7 +188,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
 - [x] **Seal inventory and power DONE (D675 §9).** No clock cell can be confirmed: 0 of 105 reach t 1.5 on the one
   clean slice (ZN/ZB/6E 2024-01 → 2025-02) even at full effect. The best is ZN's overnight reversal (t 1.37), which
   is D499's effect and has no money in it. NQ has no unread slice. CL and GC 2024-01 → 2025-02 are about to be read by
-  the other session's root-aware break (its number 676). The next free number is 677.
+  the other session's root-aware break (D676, since run: NOT SUPPORTED). The next free number is now **685** (see the
+  numbering note at the top).
 - [x] **The log MACD line CLOSED (D675 §10; the principal, 2026-09-29: "Ok close it").** It includes any MACD variant
   and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
 - [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
@@ -226,7 +239,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
 - **Rulings taken 2026-09-27** (`docs/internal/LETF_CLOSE_FLOW_AMENDMENTS.md`): LETF-A1 run the deposit as
   written, D530/D463/D487 disclosed in every result; LETF-A2 in-sample 2016-01 → 2025-02-28 (A10); LETF-A3 Direxion
   from N-PORT (2019-Q3 on: quarter-end net assets plus monthly flows and returns, CIK 1424958), band measured on the
-  ProShares funds, else the principal sources it; LETF-A4 Q1/Q2 defaults (proposed).
+  ProShares funds, else the principal sources it; LETF-A4 Q1/Q2 defaults (proposed, never ruled; **moot**: Gate 1
+  killed the line before Phase 6, and D639 §11 had already fixed Q2).
 - **Phase 1 / Gate 0 DONE (D637, 2026-09-27):** `scripts/build_letf_aum.py` → `data/letf/letf_aum_daily.csv.gz`,
   `gate0.json`. **NQ set PASSES** (four ProShares funds, 2016-01 → 2025-02, 22 N-PORT spot checks each within
   0.011%). **ES set:** ProShares four PASS; Direxion (39% of the S&P flow) estimated from N-PORT 2019-10 → 2025-02
@@ -261,8 +275,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - `--selftest` shows 7 checks firing (on synthetic prices).
   - `--dry-run` substitutes synthetic prices and reads only the bars' calendar. Every path ran (6 cells, 71 trials,
     5.2 min).
-  - **Its one `--run` waits for the principal.** It writes `data/letf/letf_close_flow_signal.json` and
-    `data/letf/trials.csv`. Phases 6–7 run only if Gates 1–2 pass.
+  - **It ran once on 2026-09-27 (D640, above)** and wrote `data/letf/letf_close_flow_signal.json` and
+    `data/letf/trials.csv`. Phases 6–7 did not run.
 
 ## Shock classifier — opened 2026-09-27 (the principal: "open the shock classifier")
 
@@ -320,46 +334,17 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     - A7 from Sierra Chart tick data, one contract at a time;
     - A6 from Alpha Vantage 1-minute SPY/QQQ;
     - costs: D508 + one tick, checked forward.
-- **Work is in the worktree `.claude/worktrees/after-d643` (branch `wt/after-d643`)** while another agent works in
-  main.
-- **Done:**
-  - SPY/QQQ 1-minute, 264 slices (OA-A4).
-  - OA-A6 RULED.
-  - **Gate O0 PASSED (D644):**
-    - coverage 99.98% (ES) and 99.97% (NQ);
-    - SPY/QQQ aligned (lag-0 correlation 0.985 and 0.992);
-    - ES O0-H 99.7%.
-  - **REV < 8% in both markets → merged into RANGE (O-D4).** The model has three states.
-  - The fixture is `fut_opening_globex_1m.csv.gz`: gitignored, in the worktree, and in the manifest by hash. **It
-    must be copied to the main checkout when the branch merges.**
-- **Running:** the Sierra ES/NQ tick pull (`scripts/sierra_index_tick_download.py`), one contract at a time, each
-  compressed in place (NTFS LZX, hash-checked). Log:
-  `scratchpad/sierra_index.log`; record `data/opening/sierra_index_tick_record.json`.
-- **The principal kept O-D4** (REV stays merged).
-- **OA-A7 ruled.**
-- **Phase 2 pressures A1–A6 BUILT:**
-  - `src/backtest_framework/opening/agents.py`, with deposit tests 4–11 (crosswalk 110/146);
-  - `scripts/build_opening_agents.py` → `data/opening/agents.csv`, 2.2 min.
-  - On usable sessions: z1–z3 100%, z5 99.8%, z6 98.9%, ES z4 95%; NQ z4 waits for the NQ options fixture.
-  - A series with a hole (a CME-only holiday session) is computed over its finite sessions, so one hole does not
-    blank 20.
-  - **Flag for the stage runs:** z5's double standardisation (§4 plus OA-A7.5) gives extremes to −45.9 on release
-    days. It is as written; the classifier's inner CV has to live with it, or it needs an amendment before S-F.
-- **POWER DONE** (`scripts/power_opening.py` → `data/opening/power.json`, `docs/results/OPENING_AGENT_STATE_POWER.md`;
-  t0 = 10:00, on 2,030 out-of-sample sessions):
-  - labels: ρ_same_day 0.42 → n_eff 2,831, as planned. H-O1's accuracy-lift MDE is 1.8 points at t = 2 over a
-    61.7% base rate.
-  - 60-minute moves: ρ 0.91 → n_eff 2,125, below the plan's 2,700–2,900. σ is 36 bp (ES) and 48 bp (NQ); the micro
-    round trip is 3.27 / 2.31 bp.
-  - H-O2 all days: MDE 0.043 σ = 1.84 bp at t = 2, testable against the 2.79 bp cost. At the programme's α 0.005
-    with 80% power it is 3.35 bp: **underpowered at the promotion bar**.
-  - **Per traded day (35% confident): MDE 3.10 bp at t = 2 against the 2.79 bp cost: UNDERPOWERED.** A policy
-    whose edge only covers the cost cannot be told from zero.
-- **Next:**
-  - **D645 PRE-REG (`17c2b05`); runner `7339bfe`; PHASE 3 RUN (D646):** S-A passes H-O1 by the letter (log loss −2.8% vs base, 9× noise; accuracy +0.1 pt, 1/19 of the MDE; the permutation passes any base-rate matcher) and fails H-O2 within the doc (policy net −0.05 to −0.13 bp/day; the +1.75/+1.99 bp paired difference, t 2.7, is the baselines' cost). Retention reference: S-A's H-O2 t 2.74 at 10:00. Phase 4 after A7.
-  - A7 comes after the Sierra pull and its check against the exchange flag.
-  - The NQ options fixture (O0-H, S-H).
-  - Phase 0b: the vault guard over the new inputs (test 18).
+- **CLOSED 2026-09-29 by the principal.** What ran:
+  - Gate O0 passed (D644);
+  - stage S-A (D646) passed H-O1 by the letter and failed H-O2;
+  - Phases 4–5 (D658) retained no agent, and Gate O1 failed;
+  - v2 (D652/D659) passed its own kill, but its vault power was 5–6.5 %.
+  - **v2 was closed without its vault look ("Ok close both of those"). v1 was closed with programme slot 7 released
+    ("close opening model v1"; "Release it").** The line has no vault look left.
+  - Diagnostics: D647, D660, D661. Findings: FINDINGS §87 and §92. Component lines: COMPONENTS_PROP (scored, not
+    entered).
+- The branch `wt/after-d643` was merged to main and pushed (`6506cc26`), and the worktree was removed. Its
+  gitignored fixtures, `fut_opening_globex_1m*.csv.gz`, are in the main checkout.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 

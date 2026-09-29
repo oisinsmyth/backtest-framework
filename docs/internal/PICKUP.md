@@ -12,7 +12,11 @@ same records: B658 = D658, B676 = D676, and so on.
 - our D673 (the compression break on YM/RTY) → **D682**.
 
 **Not edited, and still citing the old numbers:** commits before the merge, recorded run outputs, the frozen D680
-pre-registration, and the modules its runner imports. **Next free number: 683.**
+pre-registration, and the modules its runner imports.
+
+**Next free number across branches: 685.** The unmerged `wt/after-d674` (another session) already holds its own numbers 677, 678,
+680 (DIAG), 681, 683 and 684. Four of those clash with main's: D677, D678, D680 and D681. Main's D680 is frozen and cannot
+move, so **that branch renumbers when it merges** (AITODO, numbering note).
 
 **The opening-break line, in one place:**
 
@@ -39,14 +43,18 @@ crossing. The old stack double-counted.
 
 **Closed 2026-09-29:**
 - opening v2 (D652/D659), without spending its look;
-- D668's NQ plain break as a separate vault line (reported beside D680 as B0).
-- **Registry:** slots 1–9 allocated; slot 10 free.
+- D668's NQ plain break as a separate vault line (reported beside D680 as B0);
+- **opening v1 (D658, H-O2), with programme slot 7 RELEASED** (`Registry.release`; the principal's override).
+- **Registry:** slots 1–6, 8 and 9 allocated (0.040); **slots 7 and 10 free.**
 
-**Still open:**
-- FINDINGS sections for D666–D682 are not written;
-- the opening model's H-O2 (slot 7, D658) waits for a closing word;
-- Sierra's Maximum Historical Intraday Days to Download goes back to 186;
-- the worktree `after-d643` can be removed after the push, on the principal's word.
+**Done later on 2026-09-29 (the owed bookkeeping):**
+- FINDINGS §92–§98 cover D658–D682;
+- COMPONENTS_PROP has a "scored, not entered" section for the opening model, the break line and D670/D673;
+- `check_sierra_aggressor.py` has the CL/NG extension D629 §6 needs (it runs after D626's read; see AITODO);
+- the worktree `after-d643` is removed (after its data was copied to main);
+- CLAUDE.md: read-heavy work goes to Sonnet 5.5.
+
+**Still open:** Sierra's Maximum Historical Intraday Days to Download goes back to 186.
 
 
 ## THE DEPOSIT SWEEP, 2026-09-29 EVENING: what is still open in `User-Doc-Deposit/` (read this before re-auditing)
@@ -60,9 +68,9 @@ PickUp so other agent don't have to do the same work".
   AITODO, PICKUP and the tracker.
 - The top "untouched" claims were re-checked by grep in the main session.
 - No data was read and nothing was run.
-- **Numbers written `B6xx`** (B658, B659, B661, B662, B663, B665, B668, B672, B676) are records that exist only on the
-  unmerged branch `wt/after-d643`. Read them with `git show wt/after-d643:docs/decisions/<file>`. They become D-numbers
-  on main when that branch merges, but its D667 and D673 clash with main's and must be renumbered.
+- **Numbers written `B6xx`** (B658, B659, B661, B662, B663, B665, B668, B672, B676) were records on `wt/after-d643`.
+  **That branch is now merged (2026-09-29), so each is the D-number on main:** B658 = D658, and so on. Its D667 and
+  D673 were renumbered to D681 and D682.
 
 **The rules that set most statuses.**
 - **D582 §1 closed the first deposit's list** "in any variant" on the fixtures on disk. The principal has since
@@ -84,7 +92,7 @@ PickUp so other agent don't have to do the same work".
 
 | idea | source | data | the catch |
 |---|---|---|---|
-| **Month-end / quarter-end rebalancing flow.** Balanced and pension funds rebalance to fixed weights, so the month's equity-minus-bond return predicts the flow's sign and size into the close or the next session. **The principal was offered this first**; next steps: power and seal check, then a Stage 0. | FEATURE §9.2 | ES/NQ/ZN/ZB 1-minute bars 2010+; month- and quarter-end flags (D589) | 12 events a year, so power first. Verified untested: no record studies it. B661 (on `wt/after-d643`) cites Harvey–Mazzoleni–Melone (about −16/−17 bp next day) and sized pension flow for the opening window only. |
+| **Month-end / quarter-end rebalancing flow.** Balanced and pension funds rebalance to fixed weights, so the month's equity-minus-bond return predicts the flow's sign and size into the close or the next session. **DONE on the other session's unmerged branch `wt/after-d674`:** its D677/D678 (MECHANISM ONLY; 13 variants, no rescue) and D680 DIAG ("the month-end flow stopped moving prices"); those numbers will change when it merges. | FEATURE §9.2 | ES/NQ/ZN/ZB 1-minute bars 2010+; month- and quarter-end flags (D589) | 12 events a year, so power first. Verified untested: no record studies it. B661 (on `wt/after-d643`) cites Harvey–Mazzoleni–Melone (about −16/−17 bp next day) and sized pension flow for the opening window only. |
 | **Implied vs realised volatility spread** | FEATURE §9.2 | ES option end-of-day fixture 2016–2026 (D581); CL/NG option raw pulled, not built | A conditioner for size, not direction (memory: confluences predict size). Verified untested; D404 "does not reach implied volatility". |
 | **Lead-lag between related instruments** | FEATURE §9.2; D473:112 "untested here" | 41 roots, 1-minute bars 2010+ | FEATURE §10's timezone and settlement-alignment trap. D504 is the only instance (Asian chips into US semis). |
 | **Global vs per-root parameters, out of sample** | FEATURE §7.1 | any | A method check; it would test the principal's root-aware ruling. D141 adopted one global setting without the comparison. |
@@ -138,19 +146,20 @@ PickUp so other agent don't have to do the same work".
   - D626's one read is on 10-10. The CL/NG Sierra-sign check against true trades follows it; **its script extension
     is not written.** A correlation r < 0.8 voids that root (D629 §6).
   - The D630 §8 vault-input wrapper is PARKED. NG Stage A and D649 are frozen for the joint run.
-- **The opening line (evidence on `wt/after-d643`).**
-  - **v1 (B658, slot 7) has no closure record.**
-  - **v2 (B659) is unruled:** freeze it for the vault at 5–6.5% power, or close it.
-  - **The component lines of V2-F (net Sharpe 0.22) and V2-C (0.62) are not in `COMPONENTS_PROP.md`**, which CLAUDE.md
-    requires.
+- **The opening line: RESOLVED 2026-09-29.**
+  - v1 (D658) is CLOSED, with slot 7 released.
+  - v2 (D659) is CLOSED without its vault look.
+  - V2-F's and V2-C's component lines are in `COMPONENTS_PROP.md` (scored, not entered).
   - Also untested: O-Q5, the 09:30–10:05 spread measurement promised by OA-A5, and the OA-A2 list of prior vault
     exposure. Both are needed only if a vault look happens.
-- **The other session's line:** B676 (root-aware break on CL/NG/GC/SI) is registered, with its runner committed and
-  not yet run. B672 (NQ compression break) waits for the vault at about 30% power.
+- **The other session's line: RESOLVED.**
+  - D676 ran: NOT SUPPORTED.
+  - The NQ compression break (D672) is frozen as D680 in programme slot 9, with PASS power 0.66 at the full edge.
 - **Stale bookkeeping:**
-  - AITODO still says LETF's "one `--run` waits for the principal", and LETF-A4 is still labelled "proposed";
-  - releasing the LETF H1 and shock H1 slots in `data/programme_registry.json` is unverified;
-  - FINDINGS §87 predates B658.
+  - **RESOLVED 2026-09-29:** AITODO's LETF run line (it ran, D640) and LETF-A4 (moot) are corrected.
+  - LETF H1 and shock H1 keep slots 1 and 2: they were never released, and closed families keep their slot unless the
+    principal rules otherwise, as for slot 7.
+  - FINDINGS §87 carries a pointer to §92.
 
 ### E. Blocked on data, a purchase or a decision
 
@@ -218,7 +227,8 @@ overfitted" / "investigate the MACD" / "resize it, then amend".
 2. **`worktree-next` is merged into main** (fast-forward) and its worktree removed.
 
 **OPEN:**
-1. **TWO NUMBER CLASHES with `wt/after-d643`, which now merges second and must renumber both:**
+1. **RESOLVED at the merge (2026-09-29): `wt/after-d643` renumbered its D667 → D681 and its D673 → D682. The clash
+   that remains is with `wt/after-d674` (see the top section). What follows is the history:**
    - **D673:** its `D673-PRE-REG-the-compression-break-on-ym-and-rty.md` (`fb8c4c5`, 10:58) against main's D673
      (`d6aade7`, 10:35). The principal chose "leave it for merge".
    - **D667:** its diagnostic of its own record 666 (`af05100`, 08:59) against main's D667 margin-hike pause
