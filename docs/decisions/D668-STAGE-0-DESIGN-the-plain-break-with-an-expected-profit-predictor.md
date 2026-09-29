@@ -240,3 +240,53 @@ session. N1's 1,000 draws and N2's 200 run on precomputed per-session paths.
 - a RESULT record crediting SqueezeMetrics, with the component line.
 
 No trials rows are written.
+
+## Amendment D668-A1, before the run (2026-09-29): costs, ticks, missing features and the nulls' mechanics
+
+Written after the runner's selftest (7 canaries fire) and its dry run on synthetic prices (1.8 min). **No real outcome
+has been read.** Gate F was checked on the TICK files; it reads coverage only.
+
+1. **Costs.** §2 quoted the D507 *quoted* spreads (MES 1.112, MNQ 2.270, MYM 2.268, M2K 1.934 ticks). That was an
+   error. §2's operative rule is "from `data/futures_costs.json`", whose default line is **`d508_exec`**, the effective
+   crossing:
+   - MES 1.135, MNQ 2.134, MYM 1.594, M2K 1.514 ticks;
+   - the same line D666 charged ES and NQ.
+
+   So MYM costs $4.30 a round trip and M2K $4.26. That is about 2.2–4.3 bp on MYM and 4.3–6.1 bp on M2K over the
+   sample's prices.
+2. **Each root's own tick.** YM's is 1.0 point and RTY's 0.1. D666's `plain_break` and `exit_trade` read a module
+   tick of 0.25, so the runner sets each root's tick inside that root's process. A selftest canary raises when YM's
+   fill carries the wrong tick.
+3. **TICK (f6):**
+   - D663's extraction keeps 09:20–13:59, so an entry at or after 14:00 has no TICK value. Neither does a session with
+     fewer than 21 prior sessions or below 90% coverage. **A missing value is set to 0 (neutral)**, and the share is
+     reported per root.
+   - **Gate F passes** a series at a median 09:30–11:29 coverage ≥ 0.90. TICK-SP, TICK-NQ and TICK-NYSE pass
+     (2,344 sessions, median 1.00).
+   - **TICK-NASDAQ has no in-sample data on disk:** Sierra's file holds only its recent months. It is re-downloaded
+     before the run with `scripts/sierra_redownload_stats.py`, as the other statistics were on 2026-09-28 (the
+     principal's approval).
+   - **§3's drop rule is restated:** f6 is the mean z of the root's series that pass Gate F, and is dropped for the
+     root only if none pass. So if TICK-NASDAQ still fails, RTY's f6 is TICK-NYSE alone.
+4. **A7 (f5):**
+   - A missing value is set to 0, as before 09:45.
+   - YM and RTY's A7 is written to `data/opening/a7_ym_rty.csv` by `build_opening_a7.py --build --d668`, with the
+     definition unchanged.
+   - Its meta reports, per contract, the RTH records carrying more than one trade. ES carries one trade per record;
+     if YM or RTY bundle trades, A7's sizes are bundle sizes, and the RESULT says so.
+5. **N1's mechanics:**
+   - Each session carries a pool of 32 random entries, each with a minute drawn from the root's break-entry minutes
+     and a side drawn at the break's long share.
+   - Each is entered at the close of the first bar at or after the minute, plus one tick.
+   - A null book of n trades samples n sessions uniformly with replacement, and one pooled entry from each.
+   - The runner asserts that the pool covers every session with bars.
+6. **N2** is compared on β_disc's **t-statistic** (scale-free). N2's filtered net is reported beside it.
+7. **The ES/NQ p_FADE variant's feature** is p_FADE × 1[the fade opposes the trade]. It is D666's veto condition as
+   a number.
+8. **K8** is rebuilt from the NQ session table on 2016-01-04 → 2025-02-28 (the ledger's window was 2016–2023):
+   (close − (open + 0.25)) × $2 − $3 on sessions after a day session that closed below its open. ρ is also reported
+   against each other root's unfiltered book.
+9. **BREAK ONLY's unfiltered-net test** is Holm across the roots that passed Gate 1.
+10. **The reproduction check:** the runner stops unless ES and NQ's plain-break E4 and E2 gross means equal D667's
+    recorded values to 1e-9. The bars come from the same fixture; the RTH fixture was shown identical to the opening
+    fixture's RTH bars on ES and NQ in-sample, bar for bar.
