@@ -242,3 +242,20 @@ setup scan is one pass per session.
 - a RESULT record, crediting SqueezeMetrics.
 
 No trials rows are written.
+
+## Amendment D666-A1, before the run (2026-09-29): the random-entry null must not condition on the re-break
+
+§6 C2 drew its random entries "within the setup's own hour" on the sessions where a re-break filled. The runner's
+dry run on synthetic bars (no real data read) showed why that is wrong: its p95 came out at +17 to +25 bp against
+trade means of about 0. The re-break sessions are known to rise through the stop level later in that hour, so a
+random earlier entry at a better price is handed the future.
+
+**C2 is therefore drawn on EVERY session's first retest** (the first pullback touch of the day, either side), whether
+or not it re-broke:
+- a uniform minute in (τ, τ + 60] and at or before 15:29;
+- entered at that bar's close + 1 tick, on the setup's own side;
+- the stop 0.25 A + 1 tick away;
+- the same projection and exits.
+
+That compares "enter on the re-break" with "enter anywhere in the hour after the retest", with no knowledge of
+whether the retest succeeds. Nothing else changes.
