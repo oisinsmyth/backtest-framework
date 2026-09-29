@@ -1,0 +1,413 @@
+{
+ "contracts": {
+  "RTYH18": {
+   "multi_trade_records": 0,
+   "rth_records": 4695014,
+   "secs": 1.1,
+   "sessions": 63
+  },
+  "RTYH19": {
+   "multi_trade_records": 0,
+   "rth_records": 5025882,
+   "secs": 1.3,
+   "sessions": 58
+  },
+  "RTYH20": {
+   "multi_trade_records": 0,
+   "rth_records": 6745337,
+   "secs": 1.6,
+   "sessions": 64
+  },
+  "RTYH21": {
+   "multi_trade_records": 0,
+   "rth_records": 7250648,
+   "secs": 1.8,
+   "sessions": 62
+  },
+  "RTYH22": {
+   "multi_trade_records": 0,
+   "rth_records": 10173957,
+   "secs": 3.0,
+   "sessions": 64
+  },
+  "RTYH23": {
+   "multi_trade_records": 0,
+   "rth_records": 7098646,
+   "secs": 2.2,
+   "sessions": 63
+  },
+  "RTYH24": {
+   "multi_trade_records": 0,
+   "rth_records": 8072490,
+   "secs": 1.8,
+   "sessions": 63
+  },
+  "RTYH25": {
+   "multi_trade_records": 0,
+   "rth_records": 5189548,
+   "secs": 1.5,
+   "sessions": 52
+  },
+  "RTYM18": {
+   "multi_trade_records": 0,
+   "rth_records": 4658587,
+   "secs": 1.1,
+   "sessions": 64
+  },
+  "RTYM19": {
+   "multi_trade_records": 0,
+   "rth_records": 5778536,
+   "secs": 1.4,
+   "sessions": 69
+  },
+  "RTYM20": {
+   "multi_trade_records": 0,
+   "rth_records": 7662897,
+   "secs": 1.8,
+   "sessions": 63
+  },
+  "RTYM21": {
+   "multi_trade_records": 0,
+   "rth_records": 7185448,
+   "secs": 1.7,
+   "sessions": 64
+  },
+  "RTYM22": {
+   "multi_trade_records": 0,
+   "rth_records": 8550755,
+   "secs": 2.6,
+   "sessions": 64
+  },
+  "RTYM23": {
+   "multi_trade_records": 0,
+   "rth_records": 8399224,
+   "secs": 2.1,
+   "sessions": 64
+  },
+  "RTYM24": {
+   "multi_trade_records": 0,
+   "rth_records": 7437579,
+   "secs": 1.7,
+   "sessions": 69
+  },
+  "RTYU17": {
+   "multi_trade_records": 0,
+   "rth_records": 440583,
+   "secs": 0.2,
+   "sessions": 44
+  },
+  "RTYU18": {
+   "multi_trade_records": 0,
+   "rth_records": 4908010,
+   "secs": 1.2,
+   "sessions": 70
+  },
+  "RTYU19": {
+   "multi_trade_records": 0,
+   "rth_records": 5117938,
+   "secs": 1.1,
+   "sessions": 65
+  },
+  "RTYU20": {
+   "multi_trade_records": 0,
+   "rth_records": 6811078,
+   "secs": 1.6,
+   "sessions": 65
+  },
+  "RTYU21": {
+   "multi_trade_records": 0,
+   "rth_records": 6570327,
+   "secs": 1.6,
+   "sessions": 66
+  },
+  "RTYU22": {
+   "multi_trade_records": 0,
+   "rth_records": 7826466,
+   "secs": 2.0,
+   "sessions": 65
+  },
+  "RTYU23": {
+   "multi_trade_records": 0,
+   "rth_records": 6782836,
+   "secs": 1.7,
+   "sessions": 65
+  },
+  "RTYU24": {
+   "multi_trade_records": 0,
+   "rth_records": 7683534,
+   "secs": 1.6,
+   "sessions": 65
+  },
+  "RTYZ17": {
+   "multi_trade_records": 0,
+   "rth_records": 3430243,
+   "secs": 1.0,
+   "sessions": 65
+  },
+  "RTYZ18": {
+   "multi_trade_records": 0,
+   "rth_records": 6594672,
+   "secs": 1.4,
+   "sessions": 64
+  },
+  "RTYZ19": {
+   "multi_trade_records": 0,
+   "rth_records": 4563706,
+   "secs": 1.1,
+   "sessions": 65
+  },
+  "RTYZ20": {
+   "multi_trade_records": 0,
+   "rth_records": 6653766,
+   "secs": 1.8,
+   "sessions": 66
+  },
+  "RTYZ21": {
+   "multi_trade_records": 0,
+   "rth_records": 8156709,
+   "secs": 2.0,
+   "sessions": 64
+  },
+  "RTYZ22": {
+   "multi_trade_records": 0,
+   "rth_records": 8819778,
+   "secs": 2.0,
+   "sessions": 66
+  },
+  "RTYZ23": {
+   "multi_trade_records": 0,
+   "rth_records": 8189882,
+   "secs": 2.1,
+   "sessions": 65
+  },
+  "RTYZ24": {
+   "multi_trade_records": 0,
+   "rth_records": 6112655,
+   "secs": 1.7,
+   "sessions": 65
+  },
+  "YMH16": {
+   "multi_trade_records": 0,
+   "rth_records": 6731542,
+   "secs": 1.6,
+   "sessions": 63
+  },
+  "YMH17": {
+   "multi_trade_records": 0,
+   "rth_records": 4051754,
+   "secs": 1.1,
+   "sessions": 63
+  },
+  "YMH18": {
+   "multi_trade_records": 0,
+   "rth_records": 7938041,
+   "secs": 1.7,
+   "sessions": 63
+  },
+  "YMH19": {
+   "multi_trade_records": 0,
+   "rth_records": 8300304,
+   "secs": 1.7,
+   "sessions": 58
+  },
+  "YMH20": {
+   "multi_trade_records": 0,
+   "rth_records": 9680667,
+   "secs": 2.1,
+   "sessions": 63
+  },
+  "YMH21": {
+   "multi_trade_records": 0,
+   "rth_records": 6996614,
+   "secs": 1.6,
+   "sessions": 63
+  },
+  "YMH22": {
+   "multi_trade_records": 0,
+   "rth_records": 8785075,
+   "secs": 2.6,
+   "sessions": 63
+  },
+  "YMH23": {
+   "multi_trade_records": 0,
+   "rth_records": 7273186,
+   "secs": 1.7,
+   "sessions": 63
+  },
+  "YMH24": {
+   "multi_trade_records": 0,
+   "rth_records": 5242864,
+   "secs": 1.5,
+   "sessions": 63
+  },
+  "YMH25": {
+   "multi_trade_records": 0,
+   "rth_records": 3730612,
+   "secs": 0.3,
+   "sessions": 52
+  },
+  "YMM16": {
+   "multi_trade_records": 0,
+   "rth_records": 4986662,
+   "secs": 1.5,
+   "sessions": 64
+  },
+  "YMM17": {
+   "multi_trade_records": 0,
+   "rth_records": 4546717,
+   "secs": 1.2,
+   "sessions": 64
+  },
+  "YMM18": {
+   "multi_trade_records": 0,
+   "rth_records": 9830055,
+   "secs": 2.0,
+   "sessions": 64
+  },
+  "YMM19": {
+   "multi_trade_records": 0,
+   "rth_records": 8758659,
+   "secs": 1.8,
+   "sessions": 69
+  },
+  "YMM20": {
+   "multi_trade_records": 0,
+   "rth_records": 8259422,
+   "secs": 1.8,
+   "sessions": 65
+  },
+  "YMM21": {
+   "multi_trade_records": 0,
+   "rth_records": 6211346,
+   "secs": 1.6,
+   "sessions": 64
+  },
+  "YMM22": {
+   "multi_trade_records": 0,
+   "rth_records": 7418886,
+   "secs": 2.1,
+   "sessions": 64
+  },
+  "YMM23": {
+   "multi_trade_records": 0,
+   "rth_records": 7003546,
+   "secs": 1.6,
+   "sessions": 64
+  },
+  "YMM24": {
+   "multi_trade_records": 0,
+   "rth_records": 6585030,
+   "secs": 1.6,
+   "sessions": 69
+  },
+  "YMU16": {
+   "multi_trade_records": 0,
+   "rth_records": 4865696,
+   "secs": 1.5,
+   "sessions": 65
+  },
+  "YMU17": {
+   "multi_trade_records": 0,
+   "rth_records": 4283775,
+   "secs": 1.2,
+   "sessions": 65
+  },
+  "YMU18": {
+   "multi_trade_records": 0,
+   "rth_records": 6667717,
+   "secs": 1.4,
+   "sessions": 70
+  },
+  "YMU19": {
+   "multi_trade_records": 0,
+   "rth_records": 7440558,
+   "secs": 1.5,
+   "sessions": 66
+  },
+  "YMU20": {
+   "multi_trade_records": 0,
+   "rth_records": 7623589,
+   "secs": 1.5,
+   "sessions": 64
+  },
+  "YMU21": {
+   "multi_trade_records": 0,
+   "rth_records": 5553023,
+   "secs": 1.3,
+   "sessions": 65
+  },
+  "YMU22": {
+   "multi_trade_records": 0,
+   "rth_records": 6962121,
+   "secs": 1.6,
+   "sessions": 66
+  },
+  "YMU23": {
+   "multi_trade_records": 0,
+   "rth_records": 5958569,
+   "secs": 1.5,
+   "sessions": 65
+  },
+  "YMU24": {
+   "multi_trade_records": 0,
+   "rth_records": 6155827,
+   "secs": 1.7,
+   "sessions": 65
+  },
+  "YMZ15": "MISSING",
+  "YMZ16": {
+   "multi_trade_records": 0,
+   "rth_records": 5987053,
+   "secs": 1.6,
+   "sessions": 65
+  },
+  "YMZ17": {
+   "multi_trade_records": 0,
+   "rth_records": 3937964,
+   "secs": 1.0,
+   "sessions": 65
+  },
+  "YMZ18": {
+   "multi_trade_records": 0,
+   "rth_records": 10399578,
+   "secs": 2.1,
+   "sessions": 64
+  },
+  "YMZ19": {
+   "multi_trade_records": 0,
+   "rth_records": 5644764,
+   "secs": 1.3,
+   "sessions": 64
+  },
+  "YMZ20": {
+   "multi_trade_records": 0,
+   "rth_records": 7351245,
+   "secs": 1.8,
+   "sessions": 65
+  },
+  "YMZ21": {
+   "multi_trade_records": 0,
+   "rth_records": 7333428,
+   "secs": 1.7,
+   "sessions": 66
+  },
+  "YMZ22": {
+   "multi_trade_records": 0,
+   "rth_records": 8277707,
+   "secs": 2.5,
+   "sessions": 65
+  },
+  "YMZ23": {
+   "multi_trade_records": 0,
+   "rth_records": 7177256,
+   "secs": 2.1,
+   "sessions": 65
+  },
+  "YMZ24": {
+   "multi_trade_records": 0,
+   "rth_records": 4765168,
+   "secs": 0.3,
+   "sessions": 65
+  }
+ }
+}
