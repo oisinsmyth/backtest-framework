@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 469 of these records carry neither field —
+**No Status or Category column, deliberately.** 470 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -768,7 +768,7 @@ would look like data. The tokens are what is shown.
 | D693 | D693 STAGE 0 RESULT — the principal's per-cell filter fails at MES: anti-calibrated (slope −2.2), worse than the gate a… | [record](D693-STAGE-0-DESIGN-the-short-gamma-long-filter-at-mes.md) · [RESULT](D693-STAGE-0-RESULT-the-cell-filter-is-anti-calibrated-at-mes.md) |
 | D694 | D694 STAGE 1 RESULT — NOT SUPPORTED on ES and NQ: coiled days are bigger, but the options market's own information does… | [record](D694-STAGE-1-DESIGN-the-break-on-coiled-days.md) · [RESULT](D694-STAGE-1-RESULT-not-supported-iv-adds-nothing-to-the-break.md) |
 | D695 | D695 STAGE 0 RESULT — none of the three inputs carries direction for the short-gamma long continuation: order flow and… | [record](D695-STAGE-0-DESIGN-three-directional-inputs-ranked-at-mes.md) · [RESULT](D695-STAGE-0-RESULT-no-input-carries-direction.md) |
-| D696 | STAGE 0 DESIGN: is D694's worst cell (busy realised range, low implied-to-realised) real, or the worst of six by chance… | [record](D696-STAGE-0-DESIGN-the-busy-low-iv-cell.md) |
+| D696 | D696 STAGE 0 RESULT — LEAD SURVIVES: busy realised range that the options market does not price forward is the worst ce… | [record](D696-STAGE-0-DESIGN-the-busy-low-iv-cell.md) · [RESULT](D696-STAGE-0-RESULT-lead-survives-the-busy-low-iv-cell.md) |
 | D697 | D697 STAGE 0 RESULT — the move-triggered short-gamma long loses: fast rises on short-gamma days fade into the close (−$… | [record](D697-STAGE-0-DESIGN-the-short-gamma-burst-long-to-the-close.md) · [RESULT](D697-STAGE-0-RESULT-fast-rises-fade-and-the-drift-does-the-work.md) |
 
 <!-- REGISTER:END -->
