@@ -467,3 +467,20 @@ Component lines as CLAUDE.md requires, taken from the runners' own output (`data
 −5.9 bp per 0.01 of drift. That happened in both legs (the long bond had responded, ZB t 2.09, in 2010–15), while the
 flows grew and the square-root law predicted more impact. The effect was not front-run earlier into the month. The
 residual sits at quarter-ends only.
+
+## SCORED, NOT ENTERED — the dealer-gamma close, 2026-09-29 ([D681](decisions/D681-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md))
+
+Component lines as CLAUDE.md requires, from the runner's own output (`data/d681_gamma_close.json`).
+- **The construction:** SPX GEX plus the ES options book at the prior settlement, and the hedge flow −G·r in
+  square-root form; ES traded 15:30 → 16:00 in the sign of the push.
+- **Size and cost:** 1 MES at $4.42 a round trip, unless noted.
+- **The score:** daily net Sharpe over every session of 2016–2023 (√252).
+- **Correlations** are with the admitted MACD arm's daily net, 2016–2023.
+
+**Status: NOT SUPPORTED, awaiting the principal's ruling.** No unread slice was spent.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| gamma push, expected-profit filtered (regime-split π), 1 MES | D681 | +0.10 (+0.15); gross +0.33 (+0.53) | Gate 1 failed (β +0.12, t 1.23, 91st percentile); 30 trades a year, all short-gamma days; net t 0.30; mean $1.91 against a median of −$1.92; 2020-03-13 is 134% of the net; ρ +0.156 |
+| gamma push, unfiltered sign(Z), 1 MES | D681 | −1.16 (−1.65); gross +0.20 (+0.31) | $0.66 gross a trade against a $4.42 round trip; lost money in every year; ρ +0.058 |
+| gamma push, filtered, 1 full ES ($19.24) | D681 | +0.14 (+0.21); gross +0.30 (+0.46) | 50 a year; net t 0.45; the same single-day dependence; ρ +0.133 |

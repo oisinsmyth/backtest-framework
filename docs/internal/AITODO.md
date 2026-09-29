@@ -203,8 +203,16 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
 
 ## The dealer-gamma close (D681, 2026-09-29; reopens D581's line under D582's new-fixture clause)
 
-- [ ] **D681 PRE-REG committed; runner next** (`scripts/stage0_d681_gamma_close.py`). The formation decisions F1–F10
-  were settled with the principal:
+- [ ] **D681 RESULT: NOT SUPPORTED; awaiting the principal's ruling (R15).**
+  [Record](../decisions/D681-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md).
+  - **The run:** one run, 118 s; D581 reproduced exactly.
+  - **Gate 1 fails:** β_G is +0.12 (t 1.23, the 91st percentile of the rotation null), about a quarter of the
+    square-root law's size, with Y ≥ 0.5 rejected at 3.8 SE.
+  - **Regimes:** short gamma +0.55 (t 1.3); long gamma 0.00.
+  - **Gate 2 fails:** 235 trades, net t 0.30; one day (2020-03-13) is 134% of the net.
+  - **The confirmation is not triggered,** because the unread slices are long gamma. No 2024+ data was read.
+- [x] **D681 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
+  the principal:
   - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.
   - **Construction:** continuous; hedge flow Q = −G·r from the prior settlement to 15:30, in square-root form; the
     outcome 15:30 → 16:00.

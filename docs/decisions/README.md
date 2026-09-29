@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 422 of these records carry neither field —
+**No Status or Category column, deliberately.** 423 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -740,7 +740,7 @@ would look like data. The tokens are what is shown.
 | D677 | MECHANISM ONLY: the month-end rebalancing signal replicates on ES futures (−14 bp per 1-SD, t −3.2, above its null and… | [PRE-REG](D677-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md) · [RESULT](D677-RESULT-mechanism-only-the-month-end-flow-replicates-and-fades.md) |
 | D678 | D678 RESULT (DEVELOPMENT) — no projection, overlay or lag rescues the month-end mechanism: none reaches NW t 2, the bes… | [PRE-REG](D678-PRE-REG-thirteen-projections-overlays-and-lags-for-d677.md) · [RESULT](D678-RESULT-no-variant-rescues-it-and-the-fade-is-not-liquidity.md) |
 | D680 | why the month-end mechanism fails: the flow did not shrink, move earlier or get offset. Its price impact per unit colla… | [record](D680-DIAG-the-month-end-flow-stopped-moving-prices.md) |
-| D681 | REGISTRATION — the dealer-gamma close on ES: does the hedge flow implied by the SPX + ES option books (−Γ × the day's m… | [PRE-REG](D681-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md) |
+| D681 | NOT SUPPORTED: the dealer hedge flow predicts the close with the right sign but at about a quarter of the square-root l… | [PRE-REG](D681-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md) · [RESULT](D681-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md) |
 
 <!-- REGISTER:END -->
 
