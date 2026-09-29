@@ -1,0 +1,177 @@
+{
+ "spec": "the principal's re-break setup, 2026-09-29; counts only, no price after an entry read",
+ "roots": {
+  "ES_window_none": {
+   "sessions": 2285,
+   "entries": 114,
+   "share_of_sessions": 0.04989059080962801,
+   "per_year": 12.572428884026257,
+   "by_year": {
+    "2016": 9,
+    "2017": 15,
+    "2018": 17,
+    "2019": 10,
+    "2020": 11,
+    "2021": 15,
+    "2022": 11,
+    "2023": 11,
+    "2024": 12,
+    "2025": 3
+   },
+   "long": 42,
+   "short": 72,
+   "entry_clock_median": "14:02",
+   "entries_after_1500": 33,
+   "vault_events_expected": 19.457330415754925,
+   "push_needed_bp_60min_hold": 26.84790223690618
+  },
+  "ES_window_30": {
+   "sessions": 2285,
+   "entries": 7,
+   "share_of_sessions": 0.003063457330415755,
+   "per_year": 0.7719912472647702,
+   "by_year": {
+    "2016": 1,
+    "2017": 1,
+    "2019": 2,
+    "2020": 1,
+    "2021": 2
+   },
+   "long": 0,
+   "short": 7,
+   "entry_clock_median": "11:10",
+   "entries_after_1500": 1,
+   "vault_events_expected": 1.1947483588621444,
+   "push_needed_bp_60min_hold": 99.8469546866025
+  },
+  "ES_window_45": {
+   "sessions": 2285,
+   "entries": 14,
+   "share_of_sessions": 0.00612691466083151,
+   "per_year": 1.5439824945295404,
+   "by_year": {
+    "2016": 1,
+    "2017": 2,
+    "2018": 1,
+    "2019": 3,
+    "2020": 2,
+    "2021": 4,
+    "2023": 1
+   },
+   "long": 0,
+   "short": 14,
+   "entry_clock_median": "12:03",
+   "entries_after_1500": 3,
+   "vault_events_expected": 2.3894967177242887,
+   "push_needed_bp_60min_hold": 71.42253153950865
+  },
+  "ES_window_60": {
+   "sessions": 2285,
+   "entries": 19,
+   "share_of_sessions": 0.008315098468271335,
+   "per_year": 2.095404814004376,
+   "by_year": {
+    "2016": 1,
+    "2017": 4,
+    "2018": 2,
+    "2019": 3,
+    "2020": 3,
+    "2021": 4,
+    "2023": 1,
+    "2025": 1
+   },
+   "long": 1,
+   "short": 18,
+   "entry_clock_median": "11:44",
+   "entries_after_1500": 4,
+   "vault_events_expected": 3.2428884026258205,
+   "push_needed_bp_60min_hold": 61.70522948661752
+  },
+  "NQ_window_none": {
+   "sessions": 2285,
+   "entries": 119,
+   "share_of_sessions": 0.052078774617067836,
+   "per_year": 13.123851203501093,
+   "by_year": {
+    "2016": 9,
+    "2017": 13,
+    "2018": 22,
+    "2019": 10,
+    "2020": 14,
+    "2021": 10,
+    "2022": 12,
+    "2023": 13,
+    "2024": 14,
+    "2025": 2
+   },
+   "long": 45,
+   "short": 74,
+   "entry_clock_median": "14:01",
+   "entries_after_1500": 32,
+   "vault_events_expected": 20.310722100656456,
+   "push_needed_bp_60min_hold": 34.950458015337134
+  },
+  "NQ_window_30": {
+   "sessions": 2285,
+   "entries": 5,
+   "share_of_sessions": 0.002188183807439825,
+   "per_year": 0.5514223194748359,
+   "by_year": {
+    "2016": 1,
+    "2017": 1,
+    "2019": 2,
+    "2023": 1
+   },
+   "long": 2,
+   "short": 3,
+   "entry_clock_median": "11:29",
+   "entries_after_1500": 0,
+   "vault_events_expected": 0.8533916849015317,
+   "push_needed_bp_60min_hold": 164.28323658497254
+  },
+  "NQ_window_45": {
+   "sessions": 2285,
+   "entries": 13,
+   "share_of_sessions": 0.0056892778993435445,
+   "per_year": 1.4336980306345732,
+   "by_year": {
+    "2016": 1,
+    "2017": 3,
+    "2018": 1,
+    "2019": 3,
+    "2020": 3,
+    "2022": 1,
+    "2024": 1
+   },
+   "long": 1,
+   "short": 12,
+   "entry_clock_median": "11:29",
+   "entries_after_1500": 2,
+   "vault_events_expected": 2.2188183807439823,
+   "push_needed_bp_60min_hold": 102.49360210439315
+  },
+  "NQ_window_60": {
+   "sessions": 2285,
+   "entries": 21,
+   "share_of_sessions": 0.009190371991247264,
+   "per_year": 2.3159737417943105,
+   "by_year": {
+    "2016": 1,
+    "2017": 3,
+    "2018": 3,
+    "2019": 3,
+    "2020": 3,
+    "2021": 3,
+    "2022": 1,
+    "2023": 2,
+    "2024": 2
+   },
+   "long": 4,
+   "short": 17,
+   "entry_clock_median": "11:47",
+   "entries_after_1500": 0,
+   "vault_events_expected": 3.584245076586433,
+   "push_needed_bp_60min_hold": 80.9836392994099
+  }
+ }
+}
