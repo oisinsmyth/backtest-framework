@@ -13,7 +13,8 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 695.**
+- **Next free number: 698** (D697 is the other session's). D695 is the short-gamma continuation's directional inputs; D696 is
+  D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
   - D691 is the implied-vs-realised volatility premise check (RESULT: SIZE INFORMATION CONFIRMED on ES and NQ).
@@ -22,8 +23,13 @@
 - **D694 (D691's Stage 1) is NOT SUPPORTED on ES and NQ, and the implied-volatility line is CLOSED for the break.**
   - Coiled days are bigger, but IV's own information picks no better breaks: ES rank 0.77, NQ 0.30 against the
     count-matched ingredient null.
-  - **Open lead, on the principal's word only:** the busy-realised / low-IV/RV cell (ES −7.4 bp, NQ −14.7). It needs
-    its own pre-registration on a slice that has not seen D694's grid.
+  - **D696: the busy-realised / low-IV/RV cell SURVIVES in-sample** (ES −7.4 bp, NQ −14.7 on the plain break).
+    - It is beyond the six-cell search (0 of 2,182 rotations), beyond the IV ingredient null (2.3 %, thin), and the
+      worst cell of D663's break too (0.7 %).
+    - **Next, on the principal's word:** a pre-registration for unseen data. The vault holds about 18 (E4) or 33
+      (D663) X breaks a root, so it needs a pooled design or forward recording.
+    - The object is still to be chosen: a veto of the plain break, the NQ fade (NQ reads REVERSAL), or the cell's
+      rank.
   - D691 §8's "ES has no unread index slice" was unsupported. ES's vault window is sealed and unread for break
     constructions (D694 §0).
   **Check every branch, and the commit messages, before claiming a number.**

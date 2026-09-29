@@ -167,3 +167,15 @@ and it has not faced a null.
 - **`COMPONENTS_PROP.md`:** a scored-not-entered row.
 - **D680 is untouched.** It stays frozen in slot 9, and D694 gives no reason to refine it.
 - **The ctier-3 / low-IV/RV veto in §4 is open, untested, and needs its own pre-registration on the principal's word.**
+
+## Appended 2026-09-29, after D696: two corrections
+
+1. **§4 overstated the window's state.** It said the in-sample window "is now spent for any IV split of the break". It
+   is spent for *confirming* one, and it was still open for *investigating* one. The principal asked why, and
+   [D696](D696-STAGE-0-RESULT-lead-survives-the-busy-low-iv-cell.md) then investigated the §4 cell in-sample. The cell
+   survived:
+   - a search-adjusted null (0 of 2,182 rotations);
+   - an ingredient null, thinly (2.3 %);
+   - a prediction on D663's break, which no grid had split (0.7 %).
+2. **§2's grid dropped sessions with ctier = 1.0 from its top band** (`ct < 1`). That is 5 (ES) and 3 (NQ) trades,
+   all in the tercile-3 / high-IV/RV cell. No verdict and no figure outside that cell changes.

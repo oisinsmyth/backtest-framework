@@ -5188,6 +5188,19 @@ a level.**
 - **ES:** coiled trades earn +8.3 bp against the quiet ones' +3.9. A count-matched label with IV's own information
   scrambled earns +6.6 at the median (rank 0.77). The lift is the label's realised part.
 - **NQ:** coiled trades earn +7.0 against +10.1 (rank 0.30).
-- **The line is CLOSED for the break on ES and NQ.**
-- *A lead, untested and unregistered:* the worst cell of the grid on both roots is busy realised range with low IV/RV
-  (ES −7.4 bp, NQ −14.7).
+- **The line is CLOSED for the break on ES and NQ,** as the coiled label.
+
+**The other side of the grid survives in-sample: busy realised range that the options market does not price forward**
+([D696](decisions/D696-STAGE-0-RESULT-lead-survives-the-busy-low-iv-cell.md), LEAD SURVIVES; in-sample only).
+- **The cell:** compression tercile 3 with IV/RV below its median. It is the plain break's worst cell on both roots:
+  ES −7.4 bp (85 trades), NQ −14.7 (99).
+- **It holds beyond the six-cell search:** 0 of 2,182 rotations of the IV label reach it.
+- **Most of it is realised information,** but IV's own part is beyond its ingredient null (2.3 %, thin).
+- **The same pre-named cell is the worst for D663's opening-range break,** which no grid had split: ES −4.2, NQ −5.0 bp
+  F, 0.7 % of rotations.
+- **The mechanism:**
+  - NQ: a false break, down 23 bp by the close;
+  - ES: a small day that goes nowhere;
+  - both roots: late breaks after about half the day's range is already made.
+- **Unseen data holds only about 18 (E4) or 33 (D663) such breaks a root in the vault.** Confirmation needs a pooled
+  design or forward data, on the principal's word.
