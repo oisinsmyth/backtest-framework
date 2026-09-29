@@ -2,6 +2,51 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## WHERE WE ARE, 2026-09-29 MORNING (saved before a /compact)
+
+**Branch `wt/after-d643`, worktree `.claude/worktrees/after-d643`. Committed through `f93a23c`, NOT pushed.**
+
+**The line, in order:**
+1. The opening model's Phase 4 (D658): no agent retained; Gate O1 fails.
+2. v2 (D659): both cells carried, but vault power is 5–6.5%.
+3. D660: a diagnostic of both.
+4. D661: sizing the prize. No known flow can carry a confirmable morning trade.
+5. D662, D663: shock × gamma, and break × gamma per root. Both NOT SUPPORTED. D665: gamma predicts SIZE, not carry.
+6. **D666, the principal's re-break of yesterday's range**:
+   - the setup: 0.25 × daily ATR beyond the level, 60 minutes after the touch;
+   - four exits, the confluences and the fade veto;
+   - the gates: gross for the mechanism, net after the expected-profit filter for tradeability;
+   - verdict: NOT SUPPORTED. It is worse than the plain break in every cell.
+7. **D666's diagnostic** (`data/diag_d666.json`, `scripts/diag_d666.py`) is committed. **Its DIAG record is NOT yet
+   written.** The next number is **D667**; D664 belongs to the other session's worktree-next.
+
+**THE THREAD found for the principal ("find a thread we can pull on"): NQ's PLAIN break with a trailing stop.**
+- **The whole construction:** a stop 0.25 × ATR beyond yesterday's RTH high or low, live from 09:30, no pullback, a
+  0.25 ATR trailing stop.
+  - 1,435 trades, **+4.29 bp gross, HAC t 3.57, 8 of 10 years positive, net +1.69** at micro cost.
+  - The same on ES: +1.20 (t 1.31).
+- **Long side alone:** +5.71 gross (t 3.94, 9 of 10 years, net +3.10). Also strong: gap aligned +5.31, short gamma
+  +6.37, count = 2 +6.85.
+- **Caveats:**
+  - it was D666's CONTROL, so it is post hoc;
+  - 472 subsets were scanned, with 21.5 expected past t 2 by chance and 23 observed, so the subsets are mostly chance.
+    The whole-construction t of 3.57 is not a subset;
+  - 29% of plain-break fills gap through the stop at the open, 12–14 bp beyond it. That makes it largely a
+    gap-beyond-yesterday continuation trade, and it overlaps with NQ intraday momentum (D640, D463) and the index's
+    long drift (D659, D660);
+  - rough vault power is 30–37%.
+- **Next, if the principal agrees:**
+  - write the D667 DIAG record;
+  - a prize-sizing and a pre-registration of the NQ gap-and-break continuation (per root; ES as the control root);
+  - confirmation only in the vault.
+
+**Also open:**
+- close the opening line (D658 H-O2 slot 7; D652 without its vault look);
+- push to main;
+- Sierra's Maximum Historical Intraday Days to Download back to 186;
+- the SqueezeMetrics licence (`docs/research/licences/squeezemetrics-dix-gex.md`): code and results may be tracked;
+  the data and per-date series never.
+
 ## WHERE WE ARE, 2026-09-28 EVENING (written at the principal's request: "record where we were at")
 
 **Branch `wt/after-d650`, worktree `.claude/worktrees/after-d650`. Committed, NOT pushed, NOT on main.**
