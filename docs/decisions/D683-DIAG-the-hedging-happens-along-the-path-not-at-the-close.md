@@ -1,15 +1,15 @@
-# D683 DIAG — why D681's dealer-gamma close failed: not too little impact. The flow is large and the test had power, but the hedging happens along the day's path (long gamma damps and mean-reverts it), not at the close; the close's pooled slope is the February–April 2020 crash
+# D683 DIAG — why D688's dealer-gamma close failed: not too little impact. The flow is large and the test had power, but the hedging happens along the day's path (long gamma damps and mean-reverts it), not at the close; the close's pooled slope is the February–April 2020 crash
 
-*2026-09-29. Post hoc, on D681's own in-sample (1,989 sessions, 2016-01-05 → 2023-12-29). No verdict, and no slice
+*2026-09-29. Post hoc, on D688's own in-sample (1,989 sessions, 2016-01-05 → 2023-12-29). No verdict, and no slice
 spent. It answers the principal: "Do a full diagnostic, why did the mechanism fail? Did it not have enough impact?"*
 - **The script** `scripts/diag_d683_gamma_close_mechanism.py` was committed before its run (`5fa84897`), with seven
   candidate explanations and their fingerprints in its docstring. It ran once, in 119 s. Output:
   `data/d683_gamma_close_diag.json` (statistics only, no per-date GEX).
-- **D681's β_G reproduced exactly:** 0.12248493139982482.
+- **D688's β_G reproduced exactly:** 0.12248493139982482.
 
 ## The answer in one line
 
-**No, it did not lack impact. The hedge flow D681 computes is large, and the test could have seen the law's size several
+**No, it did not lack impact. The hedge flow D688 computes is large, and the test could have seen the law's size several
 times over. The price simply does not respond at the close.**
 - **The mechanism is real, on the wrong clock.** Dealer gamma visibly shapes the intraday path:
   - on long-gamma days the day's 5-minute returns mean-revert more, monotonically in gamma (beyond every one of 1,970
@@ -17,7 +17,7 @@ times over. The price simply does not respond at the close.**
   - realised variance is about half the short-gamma days'.
 - **So the hedging is done continuously, as the price moves.** By 15:30 there is no stored imbalance left for the close
   to release.
-- **What D681's pooled slope was:** the February–April 2020 crash. Without it the close slope is +0.04 (t 0.65).
+- **What D688's pooled slope was:** the February–April 2020 crash. Without it the close slope is +0.04 (t 0.65).
 
 ## 1. A — too little impact? No
 
@@ -29,12 +29,12 @@ times over. The price simply does not respond at the close.**
 | % of ES daily dollar volume | 1.2% | 4.8% | 11.1% |
 | **% of ES's 15:30 → 16:00 dollar volume** | **8.6%** | **34.7%** | **79.2%** |
 
-The closing half-hour carries 13.8% of the day's ES volume. If dealers traded D681's flow there, it would be a
+The closing half-hour carries 13.8% of the day's ES volume. If dealers traded D688's flow there, it would be a
 substantial share of the half-hour's volume on a typical day and a third of it on one day in ten.
 
 **The test had power.**
 - The push's variance survives the controls: 95% of Z's variance is left after r, Z_L and σ_d are partialled out.
-- **The expected t at each impact size Y,** against D681's own Newey–West standard error (0.0995, which is
+- **The expected t at each impact size Y,** against D688's own Newey–West standard error (0.0995, which is
   β / t = 0.1225 / 1.231):
 
 | Y | 1.0 | 0.5 | 0.25 | **observed 0.12** |
@@ -61,7 +61,7 @@ substantial share of the half-hour's volume on a typical day and a third of it o
 ## 2. B — continuous hedging along the path: yes, strongly
 
 The first-order autocorrelation of the day's 5-minute returns (09:30 → 15:30), and the day's realised variance, by
-gamma. σ_d is a control throughout, and each null is D681's enumerated day rotation of G (1,970 offsets, p95 SE 0).
+gamma. σ_d is a control throughout, and each null is D688's enumerated day rotation of G (1,970 offsets, p95 SE 0).
 
 | G_SUM quintile (0 = most short) | 0 | 1 | 2 | 3 | 4 |
 |---|---:|---:|---:|---:|---:|
@@ -80,7 +80,7 @@ gamma. σ_d is a control throughout, and each null is D681's enumerated day rota
   monotone gradient) and the day is calmer (realised variance ×0.48, controlling trailing σ).
 - **Short gamma** removes the damping.
 
-**The flow D681 aggregated into one 15:30 imbalance is executed bar by bar during the day.** What remains at the close
+**The flow D688 aggregated into one 15:30 imbalance is executed bar by bar during the day.** What remains at the close
 is noise.
 
 **Caveats.**
@@ -96,7 +96,7 @@ is noise.
 If dealers rehedge through the day, the imbalance at 15:30 should be the recent move. Z rebuilt on shorter lookbacks
 (same regression and rotation):
 
-| move since | prior settle (D681) | 09:30 | 12:00 | 14:30 | 15:00 | 15:15 |
+| move since | prior settle (D688) | 09:30 | 12:00 | 14:30 | 15:00 | 15:15 |
 |---|---:|---:|---:|---:|---:|---:|
 | β_G | +0.122 | +0.025 | +0.038 | +0.125 | +0.220 | +0.204 |
 | NW t | 1.23 | 0.28 | 0.31 | 0.87 | 1.20 | 0.85 |
@@ -127,20 +127,20 @@ front-running to find, because there is no close effect to front-run.**
 
 - **Both books order variance independently.** Jointly, SPX +0.71 (t 9.2) and ES +0.48 (t 9.7).
 - **The ES book's sign carries the path's autocorrelation better than SPX's.** Its 43% short share is not convention
-  noise, and it answers D681's open premise question in the book's favour.
+  noise, and it answers D688's open premise question in the book's favour.
 - **The close slope** is +0.17 (t 1.6, n 1,380) where the books agree, and −0.15 (t −0.6, n 609) where they disagree.
 - **On SPX's long-gamma days (87%) the close slope has the wrong sign:** −0.45 (t −1.9). The predicted reversal is
   absent, and it leans the other way.
 
 ## 6. F — the controls absorb it? No
 
-| controls | none | r | Z_L | σ_d | r + σ_d | all three (D681) |
+| controls | none | r | Z_L | σ_d | r + σ_d | all three (D688) |
 |---|---:|---:|---:|---:|---:|---:|
 | β_G | +0.127 | +0.109 | +0.113 | +0.125 | +0.108 | +0.122 |
 | NW t | 1.12 | 1.08 | 1.11 | 1.13 | 1.08 | 1.23 |
 
 - Pooled, corr(Z, r) is +0.18 and corr(Z, Z_L) is +0.10.
-- **Within each regime, however, Z and the LETF push are ±0.91 correlated,** since both scale with √|r|. **D681's
+- **Within each regime, however, Z and the LETF push are ±0.91 correlated,** since both scale with √|r|. **D688's
   within-regime slopes (+0.55 short, −0.01 long) are therefore poorly identified against the LETF control,** and should
   not be read as a clean regime contrast.
 
@@ -148,14 +148,14 @@ front-running to find, because there is no close effect to front-run.**
 
 | sample | β_G | NW t | n |
 |---|---:|---:|---:|
-| all (D681) | +0.122 | 1.23 | 1,989 |
+| all (D688) | +0.122 | 1.23 | 1,989 |
 | **without 2020** | **+0.033** | **0.52** | 1,743 |
 | **without 2020-02-20 → 04-30** | **+0.038** | **0.65** | 1,943 |
 | without the top 1% of \|R2\| | +0.022 | 0.44 | 1,969 |
 | **short gamma, without 2020-02-20 → 04-30** | **+0.059** | **0.24** | 577 |
 | \|Z\| tercile low / mid / high | +0.278 / +0.013 / +0.136 | 1.24 / 0.09 / 1.25 | 663 each |
 
-**D681's one surviving hint, the short-gamma continuation (+0.55), falls to +0.06 without the crash window** (46
+**D688's one surviving hint, the short-gamma continuation (+0.55), falls to +0.06 without the crash window** (46
 sessions, 26 of them short-gamma). Outside that window the close slope is about a thirteenth of Y = 0.5.
 
 ## 8. What the diagnostic says
@@ -173,7 +173,7 @@ sessions, 26 of them short-gamma). Outside that window the close slope is about 
 | G | concentration | β moves by more than one SE without the crash | **Supported:** +0.12 → +0.04 |
 
 **The principal's question.** The mechanism did not fail for lack of force. Dealers' gamma demonstrably moves the path:
-it halves the day's variance and deepens its mean reversion when they are long gamma. **What failed is D681's timing
+it halves the day's variance and deepens its mean reversion when they are long gamma. **What failed is D688's timing
 assumption:** that the day's hedging accumulates and lands in the last half-hour. The data say it lands as the price
 moves.
 
@@ -182,7 +182,7 @@ a mechanism: **the hedge flow is a damper applied continuously, so it shows up a
 along the path, not as a directional push at any fixed clock.**
 
 **What this suggests, for the principal (nothing is tested here, and every in-sample fact above is spent for selection).**
-- **Close D681's construction:** the close, and any fixed clock.
+- **Close D688's construction:** the close, and any fixed clock.
 - **Gamma is a path-state variable.** Its natural uses are the ones the memory already lists (size, stops, the
   expected-profit filter's magnitude term), plus one new one: **the strength of intraday mean reversion.**
   - A reversion or fade construction on a slower bar, gated to long-gamma days, is the mechanism's own direction.
@@ -199,3 +199,7 @@ volatility control.
   deepens the path's mean reversion" is therefore mostly the volatility level.
 - **Unchanged:** §1 (not too little impact), the realised-variance result, and §7 (the crash concentration).
 - **What gamma adds beyond volatility, at 30–60 minutes,** is short-gamma continuation (D684 §2 and §4).
+
+## CLOSED by the principal, 2026-09-29
+
+"Close them, renumber and merge…". The diagnostic stands as narrowed by its D684 addendum. No slice was spent.

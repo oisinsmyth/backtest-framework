@@ -1,8 +1,10 @@
-# D677 RESULT — MECHANISM ONLY: the month-end rebalancing signal replicates on ES futures (−14 bp per 1-SD, t −3.2, above its null and its placebo), but it fades after 2018, the bond leg does not move, it does not reverse, and no book clears net
+# D685 RESULT — MECHANISM ONLY: the month-end rebalancing signal replicates on ES futures (−14 bp per 1-SD, t −3.2, above its null and its placebo), but it fades after 2018, the bond leg does not move, it does not reverse, and no book clears net
 
-*2026-09-29. One run of `scripts/stage0_d677_month_end_rebalancing.py` (`64fdede9`) under
-[D677's pre-registration](D677-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md) (`6306644c`), 3 s. Output
-`data/d677_month_end_rebalancing.json`. Window: 162 months, 2010-07 → 2023-12, 810 active days. No settlement dated
+*Renumbered from D677 to D685 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D677. Commit messages and the recorded outputs in `data/` keep the old number.*
+
+*2026-09-29. One run of `scripts/stage0_d685_month_end_rebalancing.py` (`64fdede9`) under
+[D685's pre-registration](D685-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md) (`6306644c`), 3 s. Output
+`data/d685_month_end_rebalancing.json`. Window: 162 months, 2010-07 → 2023-12, 810 active days. No settlement dated
 on or after 2024-01-01 was read.*
 
 ## The answer in one line
@@ -147,7 +149,7 @@ index roots.
 
 ## 8. CLOSED by the principal, 2026-09-29
 
-"Ok close no need for 2024+ data." **The line is closed under R15 with D678 and D680;** see D680 §5.
-- **The bond-leg question of proposal 3 is answered by D680:** the leg is in the long bond (ZB +8.6, t 2.09 in
+"Ok close no need for 2024+ data." **The line is closed under R15 with D686 and D687;** see D687 §5.
+- **The bond-leg question of proposal 3 is answered by D687:** the leg is in the long bond (ZB +8.6, t 2.09 in
   2010–15), not ZN.
 - **The continuation is weak in every era.**

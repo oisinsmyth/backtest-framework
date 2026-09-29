@@ -1,9 +1,9 @@
-"""D680 DIAG -- why D677's month-end rebalancing mechanism fails (the principal: "Can you do a diagnostic on why the
-underlying mechanism fails?"). Post hoc, in-sample only (2010-07 -> 2023-12, as D677 read it), no verdict.
+"""D687 DIAG -- why D685's month-end rebalancing mechanism fails (the principal: "Can you do a diagnostic on why the
+underlying mechanism fails?"). Post hoc, in-sample only (2010-07 -> 2023-12, as D685 read it), no verdict.
 
-    uv run python scripts/diag_d680_month_end_mechanism.py --data-root "<main checkout>/data"
+    uv run python scripts/diag_d687_month_end_mechanism.py --data-root "<main checkout>/data"
 
-Three facts from D677/D678 to explain: the edge FADES after 2018 (the sign book lost money in each of 2019-2022), the
+Three facts from D685/D686 to explain: the edge FADES after 2018 (the sign book lost money in each of 2019-2022), the
 BOND leg is flat (ZN beta -0.01), and the month-end move CONTINUES into the next month instead of reverting.
 
 Candidate explanations and what each predicts (declared in this docstring before the run):
@@ -19,7 +19,7 @@ Candidate explanations and what each predicts (declared in this docstring before
   E bonds elsewhere: ZB (the long bond) responds where ZN does not (beta > 0: rebalancers buy duration).
   (not testable here: execution moving to cash equities / ETFs / swaps -- needs cash-index or ETF data.)
 
-Eras (post hoc, from D677's per-year table): 2010-07..2015 (early), 2016..2018 (mid), 2019..2023 (late; the fade
+Eras (post hoc, from D685's per-year table): 2010-07..2015 (early), 2016..2018 (mid), 2019..2023 (late; the fade
 years 2019-2022 plus 2023).
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ from pathlib import Path
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "d680_month_end_diag.json"
+OUT = REPO / "data" / "d687_month_end_diag.json"
 ERAS = (("early 2010-15", 2010, 2015), ("mid 2016-18", 2016, 2018), ("late 2019-23", 2019, 2023))
 R_LO, R_HI = -15, 10
 
@@ -47,7 +47,7 @@ def _load(name, file):
     return m
 
 
-B = _load("d677c", "stage0_d677_month_end_rebalancing.py")
+B = _load("d685c", "stage0_d685_month_end_rebalancing.py")
 
 
 def P(*a, **k):
@@ -58,7 +58,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
     a = ap.parse_args()
-    B.OTHER_ROOTS = ("ZB",)                                        # D677's loader, with ZB as the extra root
+    B.OTHER_ROOTS = ("ZB",)                                        # D685's loader, with ZB as the extra root
     D = B.load(a.data_root)
     days = D["days"]
     r = {k: D["R"][k][0] for k in ("ES", "ZN", "ZB")}
@@ -68,12 +68,12 @@ def main() -> int:
     s = B.drift_signal(r_es0, r_zn0, blocks_all)
     bi = [i for i, b in enumerate(blocks_all) if B.FIRST_MONTH <= days[b[0]][:7] <= B.LAST_MONTH]
 
-    # reproduction: D677's B1 and B2 from the same arrays
+    # reproduction: D685's B1 and B2 from the same arrays
     T5 = np.array([blocks_all[i][len(blocks_all[i]) - 5:] for i in bi])
-    d677 = json.loads((REPO / "data" / "d677_month_end_rebalancing.json").read_text(encoding="utf-8"))
+    d685 = json.loads((REPO / "data" / "d685_month_end_rebalancing.json").read_text(encoding="utf-8"))
     b2 = float(np.mean(-np.sign(s[T5 - B.LAG]) * r["ES"][T5] * 1e4))
-    if b2 != d677["B2"]["value"]:
-        raise SystemExit(f"[REPRO] B2 {b2!r} != D677's {d677['B2']['value']!r}")
+    if b2 != d685["B2"]["value"]:
+        raise SystemExit(f"[REPRO] B2 {b2!r} != D685's {d685['B2']['value']!r}")
     sd_s = float(np.std(s[T5 - B.LAG].ravel(), ddof=1))           # one global scale for bp per 1-SD, post hoc
 
     # event-time panel: relative day rr = -15..+10 around each month's last trading day T (rr = 0)
@@ -108,7 +108,7 @@ def main() -> int:
         return B.nw_slope(xs, y[m])
 
     out = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-           "post_hoc_in_sample": True, "reproduced_D677_B2": b2, "sd_s_global": sd_s, "eras": [e[0] for e in ERAS]}
+           "post_hoc_in_sample": True, "reproduced_D685_B2": b2, "sd_s_global": sd_s, "eras": [e[0] for e in ERAS]}
 
     # A / D: the event-time profile of beta by era (bp per 1-SD of drift)
     prof = {}
@@ -152,7 +152,7 @@ def main() -> int:
     out["B_decomposition"] = dec
     out["B_turn_of_month_unconditional"] = tom
 
-    # C: flow size -- |drift|, response per unit RAW drift, stock-bond correlation, and D678's impact factor by era
+    # C: flow size -- |drift|, response per unit RAW drift, stock-bond correlation, and D686's impact factor by era
     flow = {}
     for e, (name, a_, b_) in enumerate(ERAS):
         w = (era_of == e) & (rel >= -4) & (rel <= 0)
@@ -163,8 +163,8 @@ def main() -> int:
         flow[name] = {"mean_abs_drift": float(np.mean(np.abs(sig[w]))),
                       "beta_bp_per_0.01_raw_drift": None if raw is None else raw["beta"],
                       "t_raw": None if raw is None else raw["t"], "es_zn_daily_corr": corr}
-    d678 = json.loads((REPO / "data" / "d678_month_end_variants.json").read_text(encoding="utf-8"))
-    F = {int(k): v for k, v in d678["fade"]["F_by_year"].items()}
+    d686 = json.loads((REPO / "data" / "d686_month_end_variants.json").read_text(encoding="utf-8"))
+    F = {int(k): v for k, v in d686["fade"]["F_by_year"].items()}
     for name, a_, b_ in ERAS:
         vals = [F[y] for y in F if a_ <= y <= b_]
         flow[name]["sqrt_law_impact_factor_mean"] = float(np.mean(vals)) if vals else None
@@ -191,7 +191,7 @@ def main() -> int:
     out["quarter_end_by_era"] = qe_tab
 
     # report
-    P(f"reproduced D677 B2 {b2:+.4f}; global sd of the lagged drift {sd_s:.4f}; panel rows {len(A)}")
+    P(f"reproduced D685 B2 {b2:+.4f}; global sd of the lagged drift {sd_s:.4f}; panel rows {len(A)}")
     P("\n=== A/D: slope of ES on the drift, by block of relative days (bp per 1-SD; t) ===")
     for name, d_ in pooled.items():
         P(f"  {name:<14} " + "  ".join(f"{bn}: {v['beta']:+6.2f} ({v['t']:+.2f})" if v else f"{bn}: -" for bn, v in d_.items()))

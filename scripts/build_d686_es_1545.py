@@ -1,11 +1,11 @@
-"""D678 L1 input: ES's price at 15:45 ET per session, 2016-01-04 -> 2023-12-29 (design: D678 s.2, L1).
+"""D686 L1 input: ES's price at 15:45 ET per session, 2016-01-04 -> 2023-12-29 (design: D686 s.2, L1).
 
-    python scripts/build_d678_es_1545.py --data-root "<main checkout>/data"      # SYSTEM python (needs pyarrow)
+    python scripts/build_d686_es_1545.py --data-root "<main checkout>/data"      # SYSTEM python (needs pyarrow)
 
 `fut_day1m.parquet` bars count minutes from 09:00 ET (`day_session_et_minutes` [540, 959]), so bar 404 is
 15:44-15:45 and its close is the last trade before 15:45:00. ES settles at 16:00 ET, so the price is strictly before
 the settlement. If bar 404 printed nothing, the last bar at or before it is used, and its index is recorded.
-Writes the gitignored `data/d678_es_1545.csv.gz` (day, contract, bar, close) and prints its SHA-256.
+Writes the gitignored `data/d686_es_1545.csv.gz` (day, contract, bar, close) and prints its SHA-256.
 """
 from __future__ import annotations
 
@@ -15,7 +15,7 @@ import json
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "d678_es_1545.csv.gz"
+OUT = REPO / "data" / "d686_es_1545.csv.gz"
 BAR_1545 = 404                       # minute 540 + 404 = 944 -> 15:44-15:45; its close is before 15:45:00
 FIRST, CUTOFF = "2016-01-04", "2024-01-01"
 

@@ -1,22 +1,22 @@
-"""D683 DIAG -- why did D681's dealer-gamma close fail? Post hoc, on D681's own in-sample (2016-01-05 -> 2023-12-29), no
+"""D683 DIAG -- why did D688's dealer-gamma close fail? Post hoc, on D688's own in-sample (2016-01-05 -> 2023-12-29), no
 verdict (the principal: "Do a full diagnostic, why did the mechanism fail? Did it not have enough impact?").
 
     uv run python scripts/diag_d683_gamma_close_mechanism.py --run --data-root "<main checkout>/data"
 
-It rebuilds D681's panel with D681's own functions and reproduces its beta_G (+0.12248...) exactly before anything else.
+It rebuilds D688's panel with D688's own functions and reproduces its beta_G (+0.12248...) exactly before anything else.
 Then it reads seven candidate explanations, each with the fingerprint that would support it, DECLARED HERE BEFORE THE
 RUN:
 
 A  TOO LITTLE IMPACT (underpowered). The square-root push is small against the half-hour's noise, so even the law's size
    could not show. Fingerprint: the t this sample would give at Y = 0.5 (from the actual Z, after the controls, against
-   D681's residual) is below 2. If it is well above 2, the impact is missing rather than unmeasurable. Also reported:
+   D688's residual) is below 2. If it is well above 2, the impact is missing rather than unmeasurable. Also reported:
    the hedge flow |Q| against ES's daily and closing-half-hour dollar volume, and sign(Z)*R2 against |Z| by decile.
 B  CONTINUOUS HEDGING (the flow lands along the path, not at the close). Fingerprint: the first-order autocorrelation of
    the day's 5-minute returns (09:30 -> 15:30) is lower on long-gamma days and higher on short-gamma days (slope on the
    regime sign < 0), above the p95 of the enumerated day-rotation null; the day's realised variance falls with gamma.
 C  THE WRONG MOVE TO HEDGE. Dealers rehedge through the day, so the imbalance at 15:30 is the RECENT move, not the move
    since the prior settlement. Fingerprint: Z built on a shorter lookback (since 09:30 / 12:00 / 14:30 / 15:00 / 15:15)
-   predicts R2 better than D681's.
+   predicts R2 better than D688's.
 D  ANTICIPATED OR TEMPORARY. Fingerprint: the push shows up before 15:30 (14:30 -> 15:30 on Z built at 14:30), or the
    close's move reverses overnight (next 09:30 open against the 16:00 close) or in the next session's first half-hour.
 E  A NOISY MEASURE (the ES book's convention). The ES book is short gamma on 43 % of days against SPX's 12.5 %.
@@ -27,7 +27,7 @@ F  THE CONTROLS ABSORB IT. r, Z_L and Z are all functions of the day's move. Fin
 G  CONCENTRATION. Fingerprint: beta_G moves by more than one SE without 2020, without the top 1 % of |R2|, or across
    |Z| terciles.
 
-Reads nothing dated 2024-01-01 or later (D681's loaders and guards). Output data/d683_gamma_close_diag.json: statistics
+Reads nothing dated 2024-01-01 or later (D688's loaders and guards). Output data/d683_gamma_close_diag.json: statistics
 only, no per-date GEX (SqueezeMetrics, under the permission of 2026-09-28).
 """
 from __future__ import annotations
@@ -44,11 +44,11 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import stage0_d681_gamma_close as S  # noqa: E402  (D681's committed runner; importing it defines, never runs)
+import stage0_d688_gamma_close as S  # noqa: E402  (D688's committed runner; importing it defines, never runs)
 
 REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "data" / "d683_gamma_close_diag.json"
-D681_JSON = REPO / "data" / "d681_gamma_close.json"
+D688_JSON = REPO / "data" / "d688_gamma_close.json"
 LOOKBACKS = ["prior_settle", "09:30", "12:00", "14:30", "15:00", "15:15"]
 
 
@@ -109,7 +109,7 @@ def run(data_root: Path, log=P) -> int:
     X["P1000_next"] = Dfull["P1000"].reindex(nxt).to_numpy()
     X["same_contract_next"] = (Dfull["contract"].reindex(nxt).to_numpy() == Dfull["contract"].to_numpy())
 
-    # ---- D681's panel, exactly as the runner filters it ----
+    # ---- D688's panel, exactly as the runner filters it ----
     D = Dfull.join(prior[["G_ES"]], how="left")
     D = D[D.index >= S.IN_FROM]
     D["G_SUM"] = D["G_SPX"] + D["G_ES"]
@@ -126,13 +126,13 @@ def run(data_root: Path, log=P) -> int:
     G = pr("G_SUM"); GS = pr("G_SPX"); GE = pr("G_ES")
     r = 100 * np.log(pr("P1530") / Sp); R2 = 1e4 * np.log(pr("P1600") / pr("P1530"))
     f681, _ = S.gamma_regression(R2, G, r, sig, V, A_L, null=False)
-    ref = json.loads(D681_JSON.read_text(encoding="utf-8"))["gate1"]["G1"]["beta_G"]
+    ref = json.loads(D688_JSON.read_text(encoding="utf-8"))["gate1"]["G1"]["beta_G"]
     if f681["beta_G"] != ref:
-        raise S.GateError(f"[REPRO] beta_G {f681['beta_G']!r} vs D681's {ref!r}")
-    log(f"  D681 REPRODUCED: beta_G {f681['beta_G']!r} (t {f681['t_G']:+.2f}), n {n}")
+        raise S.GateError(f"[REPRO] beta_G {f681['beta_G']!r} vs D688's {ref!r}")
+    log(f"  D688 REPRODUCED: beta_G {f681['beta_G']!r} (t {f681['t_G']:+.2f}), n {n}")
     Z = S.zpush(G, r, sig, V); ZL = S.zletf(A_L, r, sig, V)
     C = [r, ZL, sig]
-    res = {"spec": "D683 DIAG of D681 (post hoc, in-sample, no verdict)", "reproduction": {"beta_G": f681["beta_G"], "t_G": f681["t_G"], "n": n, "exact": True}}
+    res = {"spec": "D683 DIAG of D688 (post hoc, in-sample, no verdict)", "reproduction": {"beta_G": f681["beta_G"], "t_G": f681["t_G"], "n": n, "exact": True}}
 
     # ---- A: too little impact? ----
     Xc = np.column_stack([np.ones(n)] + C)

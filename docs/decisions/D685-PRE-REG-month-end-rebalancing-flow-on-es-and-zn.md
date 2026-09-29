@@ -1,4 +1,6 @@
-# D677 PRE-REGISTRATION — month-end rebalancing flow: does a 60/40 portfolio's month-to-date drift predict ES over the last five trading days of the month?
+# D685 PRE-REGISTRATION — month-end rebalancing flow: does a 60/40 portfolio's month-to-date drift predict ES over the last five trading days of the month?
+
+*Renumbered from D677 to D685 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D677. Commit messages and the recorded outputs in `data/` keep the old number.*
 
 *Drafted 2026-09-29 on the principal's word ("Write, build then run it please"). Committed alone, before its runner
 exists (R8). **No return of ES, ZN or any root has been read for this construction.** For the power check, and
@@ -186,5 +188,5 @@ For the unfiltered and filtered books, at **MES and at full ES**:
 
 **Each audit must be able to fail:** the self-test feeds each a broken input and asserts that it raises.
 
-**Output:** `data/d677_month_end_rebalancing.json`, from `scripts/stage0_d677_month_end_rebalancing.py`.
+**Output:** `data/d685_month_end_rebalancing.json`, from `scripts/stage0_d685_month_end_rebalancing.py`.
 **Projected wall time:** under a minute.

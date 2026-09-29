@@ -1,12 +1,12 @@
-"""D677 Stage 0 -- month-end rebalancing flow on ES and ZN (pre-registration:
-docs/decisions/D677-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md).
+"""D685 Stage 0 -- month-end rebalancing flow on ES and ZN (pre-registration:
+docs/decisions/D685-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md).
 
-    uv run python scripts/stage0_d677_month_end_rebalancing.py --selftest
-    uv run python scripts/stage0_d677_month_end_rebalancing.py --run --data-root "<main checkout>/data"
+    uv run python scripts/stage0_d685_month_end_rebalancing.py --selftest
+    uv run python scripts/stage0_d685_month_end_rebalancing.py --run --data-root "<main checkout>/data"
 
 A 60/40 portfolio rebalanced at each month-end drifts over the month; s(t) = w(t) - 0.6 on the month-to-date ES and ZN
 returns. The position for outcome day o (the last five trading days) is -sign(s(o-2)): the drift through the
-settlement BEFORE the entry settlement (the execution lag, D677 s.2). Returns are same-contract settlement returns on
+settlement BEFORE the entry settlement (the execution lag, D685 s.2). Returns are same-contract settlement returns on
 the contract held overnight. Reads 2010-06 -> 2023-12-29 only.
 """
 from __future__ import annotations
@@ -23,7 +23,7 @@ from pathlib import Path
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "d677_month_end_rebalancing.json"
+OUT = REPO / "data" / "d685_month_end_rebalancing.json"
 COSTS = REPO / "data" / "futures_costs.json"
 FIRST_MONTH, LAST_MONTH = "2010-07", "2023-12"
 CUTOFF = "2024-01-01"                       # nothing on or after this date may survive (s.1, s.7)
@@ -581,11 +581,11 @@ def do_run(data_root: Path) -> int:
     P("  by year (B1 beta / sign-book bp): " + "  ".join(
         f"{y}:{(v['B1']['beta'] if v['B1'] else float('nan')):+.1f}/{v['sign_book_gross_bp']:+.1f}"
         for y, v in R["beside"]["by_year"].items()))
-    P("\n=== Predictions (D677 s.6) ===")
+    P("\n=== Predictions (D685 s.6) ===")
     for k, v in R["predictions"].items():
         P(f"  {k:<36} {'HELD' if v else 'BROKEN'}")
     out = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-           "pre_registration": "docs/decisions/D677-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md",
+           "pre_registration": "docs/decisions/D685-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md",
            "window": [FIRST_MONTH, LAST_MONTH], "cutoff_exclusive": CUTOFF, **R,
            "wall_seconds": time.perf_counter() - t0}
     OUT.write_text(json.dumps(out, indent=1, default=float) + "\n", encoding="utf-8")

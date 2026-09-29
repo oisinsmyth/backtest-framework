@@ -1,9 +1,11 @@
-# D678 RESULT (DEVELOPMENT) — no projection, overlay or lag rescues the month-end mechanism: none reaches NW t 2, the best (O2) sits at the 75th percentile of the best-of-13 null, and the fade is not liquidity, because the square-root law predicted MORE impact after 2018, not less
+# D686 RESULT (DEVELOPMENT) — no projection, overlay or lag rescues the month-end mechanism: none reaches NW t 2, the best (O2) sits at the 75th percentile of the best-of-13 null, and the fade is not liquidity, because the square-root law predicted MORE impact after 2018, not less
 
-*2026-09-29. One run of `scripts/stage0_d678_month_end_variants.py` (`3c670661`) under
-[D678's pre-registration](D678-PRE-REG-thirteen-projections-overlays-and-lags-for-d677.md) (`79051a41`), 8 s. L1's
-input is `data/d678_es_1545.csv.gz` (sha256 1bff347d…, `scripts/build_d678_es_1545.py`). Output
-`data/d678_month_end_variants.json`. **Development:** D677 had already read this window. Nothing on or after
+*Renumbered from D678 to D686 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D678. Commit messages and the recorded outputs in `data/` keep the old number.*
+
+*2026-09-29. One run of `scripts/stage0_d686_month_end_variants.py` (`3c670661`) under
+[D686's pre-registration](D686-PRE-REG-thirteen-projections-overlays-and-lags-for-d685.md) (`79051a41`), 8 s. L1's
+input is `data/d686_es_1545.csv.gz` (sha256 1bff347d…, `scripts/build_d686_es_1545.py`). Output
+`data/d686_month_end_variants.json`. **Development:** D685 had already read this window. Nothing on or after
 2024-01-01 was read.*
 
 ## The answer in one line
@@ -19,7 +21,7 @@ input is `data/d678_es_1545.csv.gz` (sha256 1bff347d…, `scripts/build_d678_es_
 
 ## 1. The mechanics held
 
-- **D677 reproduced bit for bit:** base gross +7.1732 bp per active day, B1 −14.0594.
+- **D685 reproduced bit for bit:** base gross +7.1732 bp per active day, B1 −14.0594.
 - **The prior-only audit passed** on the real data. In the self-test it fired on a pass-through that includes its own
   month.
 - **The other audits** (book cost identity, sign in money, window guard, L1 causality) all fired on broken inputs in
@@ -35,7 +37,7 @@ input is `data/d678_es_1545.csv.gz` (sha256 1bff347d…, `scripts/build_d678_es_
 
 ## 2. The thirteen variants (MES; daily net Sharpe on every trading day; own null of 159 offsets)
 
-**The base** (D677, unfiltered): Sharpe +0.261, t +1.09. On L1's 2016–2023 window it is +0.130.
+**The base** (D685, unfiltered): Sharpe +0.261, t +1.09. On L1's 2016–2023 window it is +0.130.
 
 | v | Sharpe | null p50 | null p95 | pct | NW t | traded | net $ | own p95? | expected t 2024-25 / + vault | full-ES Sharpe |
 |---|---:|---:|---:|---:|---:|---:|---:|---|---|---:|
@@ -62,7 +64,7 @@ input is `data/d678_es_1545.csv.gz` (sha256 1bff347d…, `scripts/build_d678_es_
 - **The overlays:**
   - O2's lift (+0.261 → +0.331) comes from standing aside on 20 macro days. That is a small, post-hoc-looking
     improvement on a thin base.
-  - O3's hold adds 1,610 days of exposure and lowers the Sharpe (+0.251). So D677's continuation (t −1.97) does not
+  - O3's hold adds 1,610 days of exposure and lowers the Sharpe (+0.251). So D685's continuation (t −1.97) does not
     pay as a hold.
   - O1's volatility sizing is the worst of the three (+0.164). That is consistent with the edge sitting partly on
     high-volatility days, which O1 scales down; it was not measured directly.
@@ -124,8 +126,8 @@ The top 1% of days again carries almost all of the mean; the symmetric trim keep
 ## 6. What this decides
 
 **The month-end rebalancing line has no tradeable form here.**
-- D677 established the mechanism, in-sample, at about 80% of its published size.
-- D678 tried 13 ways to concentrate it, time it or size it, declared in advance and scored as one family. None reaches
+- D685 established the mechanism, in-sample, at about 80% of its published size.
+- D686 tried 13 ways to concentrate it, time it or size it, declared in advance and scored as one family. None reaches
   t 2.
 - The best is inside the family's null. None could be confirmed on the unread slice even if it were real (expected
   t ≤ 0.64 with the vault).
@@ -136,18 +138,18 @@ The top 1% of days again carries almost all of the mean; the symmetric trim keep
 filter the last five days.
 
 **Proposals, each the principal's (R15):**
-1. **Close the month-end rebalancing line as a strategy** (D677 and D678), with no unread slice spent. Keep the fact:
+1. **Close the month-end rebalancing line as a strategy** (D685 and D686), with no unread slice spent. Keep the fact:
    the equity month-end flow was real through 2018 at about −14 bp per 1-SD, and faded while its predicted impact
    rose.
 2. **Enter it in `COMPONENTS_PROP.md` as SCORED, NOT ENTERED.**
-   - D677's unfiltered MES: net Sharpe 0.26, ρ −0.04 with the arm.
-   - D678's best, O2: 0.33, ρ −0.03, inside its family null.
+   - D685's unfiltered MES: net Sharpe 0.26, ρ −0.04 with the arm.
+   - D686's best, O2: 0.33, ρ −0.03, inside its family null.
 3. **If the anticipation reading is to be tested, it is a new line with a new window.** The drift signal would be
    scored over trading days 10–6 before month-end, and on the early days of the month (the flow from those who
-   rebalance late). It would need its own pre-registration and power, and **by D678's evidence its prior is low**.
+   rebalance late). It would need its own pre-registration and power, and **by D686's evidence its prior is low**.
 
 ## 7. CLOSED by the principal, 2026-09-29
 
-"Ok close no need for 2024+ data." **The line is closed under R15 with D677 and D680;** see D680 §5. D680 also answers
+"Ok close no need for 2024+ data." **The line is closed under R15 with D685 and D687;** see D687 §5. D687 also answers
 proposal 3: the impact did not move earlier (days 10–6 before month-end: −2.0, t −0.12), so the anticipation line is
 not taken up.

@@ -165,9 +165,9 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
 - [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
 
-## Month-end rebalancing flow (D677, 2026-09-29; the principal: "Write, build then run it please")
+## Month-end rebalancing flow (D685, 2026-09-29; the principal: "Write, build then run it please")
 
-- [x] **D677 RESULT: MECHANISM ONLY.**
+- [x] **D685 RESULT: MECHANISM ONLY.**
   - **Gate 1 passes:** −14.06 bp per 1-SD, NW t −3.22; the sign book is at the 99.4th percentile of its month-rotation
     null and beats the mid-month placebo (97.5th).
   - **Gate 2 fails:** the filtered MES book nets $4.06 per active day at t 1.04. That is noise and fade, not cost
@@ -175,15 +175,15 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - **Against the mechanism:** the sign book lost money in each of 2019–2022; ZN's β is −0.01 (no bond leg); the next
     10 days continue (−49, t −1.97) rather than revert.
   - **Component line:** unfiltered MES net Sharpe 0.26, Sortino 0.39, ρ −0.04 with the MACD arm.
-- [x] **D678 RESULT (development): no variant rescues it.** 13 projections, overlays and lags.
+- [x] **D686 RESULT (development): no variant rescues it.** 13 projections, overlays and lags.
   - **None reaches NW t 2.** The best, O2 (the macro-day stand-aside), has a Sharpe of 0.331 at the 75.5th percentile
     of the best-of-13 null.
   - **Nothing is confirmable:** the expected t is at most 0.64 even with the vault.
   - **The fade is not liquidity:** the square-root impact factor doubled from 2013–15 to 2020–23 while the edge turned
     negative (Spearman −0.25). The flow was anticipated or offset, not diluted.
-  - **Number note:** the other session committed its own D677 in the same minute (13:40), so whichever branch merges
+  - **Number note:** the other session committed its own D685 in the same minute (13:40), so whichever branch merges
     second renumbers.
-- [x] **D680 DIAG: why the mechanism fails.** The flow did not shrink, move earlier or get offset.
+- [x] **D687 DIAG: why the mechanism fails.** The flow did not shrink, move earlier or get offset.
   - **Its price response per unit collapsed after 2018:** −15.8 / −19.7 → −5.9 bp per 0.01 of drift. This happened
     while |drift| grew and the square-root law predicted more impact.
   - **The timing part of the sign book went from +13/+16 to +0.2.**
@@ -192,19 +192,19 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - **The residual in 2019–23 sits at quarter-ends:** −14.1, t −1.54.
   - **The reading:** predictable flow is now absorbed without a price concession.
 - [x] **The month-end line CLOSED** (the principal, 2026-09-29: "Ok close no need for 2024+ data").
-  - D677, D678 and D680 carry closure sections; no slice was spent.
+  - D685, D686 and D687 carry closure sections; no slice was spent.
   - SCORED, NOT ENTERED in COMPONENTS_PROP.
   - Neither the anticipation line nor the forward-only quarter-end book is taken up.
-- [x] **Superseded by the closure above:** the principal's calls (D677 §7):
+- [x] **Superseded by the closure above:** the principal's calls (D685 §7):
   - record MECHANISM ONLY and do not spend 2024-01 → 2025-02 (expected t ≈ 1.1 at the measured effect; 1.65 with
     the vault);
   - enter it in COMPONENTS_PROP as SCORED, NOT ENTERED;
   - any successor explains the flat bond leg and the continuation first.
 
-## The dealer-gamma close (D681, 2026-09-29; reopens D581's line under D582's new-fixture clause)
+## The dealer-gamma close (D688, 2026-09-29; reopens D581's line under D582's new-fixture clause)
 
-- [ ] **D681 RESULT: NOT SUPPORTED; awaiting the principal's ruling (R15).**
-  [Record](../decisions/D681-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md).
+- [x] **D688 (formerly D681) RESULT: NOT SUPPORTED. CLOSED by the principal, 2026-09-29, with D683 and D684.**
+  [Record](../decisions/D688-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md).
   - **The run:** one run, 118 s; D581 reproduced exactly.
   - **Gate 1 fails:** β_G is +0.12 (t 1.23, the 91st percentile of the rotation null), about a quarter of the
     square-root law's size, with Y ≥ 0.5 rejected at 3.8 SE.
@@ -225,11 +225,11 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     - The long-gamma fade makes $0.2–0.3 gross a trade against an $8.84 bar, at 5–60 minutes.
     - D683's 5-minute gradient disappears under a same-day volatility control (addendum on D683).
     - Gamma's role now: the size term of the expected-profit filter.
-  - [ ] **Post-hoc lead, the principal's call:** short-gamma continuation at 60 minutes.
+  - [ ] **NOW IN PROGRESS (the principal: "go after short-gamma days with volatility controlled"):** short-gamma continuation at 60 minutes.
     - It makes +$3.77 a MES trade gross (t 2.9, 379 a year), or about +$18.5 net on full ES.
     - **Before any pre-registration:** (a) by year and without Feb–Apr 2020; (b) the short-gamma count of G_SUM in
       2024-01 → 2025-02 and the vault (ES options OI only, no returns).
-- [x] **D681 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
+- [x] **D688 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
   the principal:
   - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.
   - **Construction:** continuous; hedge flow Q = −G·r from the prior settlement to 15:30, in square-root form; the

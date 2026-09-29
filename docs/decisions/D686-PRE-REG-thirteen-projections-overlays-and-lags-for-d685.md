@@ -1,17 +1,19 @@
-# D678 PRE-REGISTRATION (DEVELOPMENT) — thirteen profit projections, overlays and lags on D677's month-end mechanism, scored as one family against a best-of-13 null
+# D686 PRE-REGISTRATION (DEVELOPMENT) — thirteen profit projections, overlays and lags on D685's month-end mechanism, scored as one family against a best-of-13 null
+
+*Renumbered from D678 to D686 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D678. Commit messages and the recorded outputs in `data/` keep the old number.*
 
 *Drafted 2026-09-29 on the principal's word. The principal asked "I think we can examine some other profit projection
 mechanisms for this and test on in-sample?", then asked for combinations of the projections ("I meant a combination of
 the P's but maybe those are good too?"), then said "Ok now lets write, build and run those 13". Committed alone,
 before its runner exists (R8).*
 
-**DEVELOPMENT, NOT EVIDENCE.** D677 has already read this window, so any variant chosen here is a hypothesis until it
+**DEVELOPMENT, NOT EVIDENCE.** D685 has already read this window, so any variant chosen here is a hypothesis until it
 is confirmed on unread data. The family null guards the selection inside this record. It cannot stand in for data this
 record has not read.
 
 ## 0. What it asks
 
-**D677's verdict was MECHANISM ONLY.**
+**D685's verdict was MECHANISM ONLY.**
 - **Gate 1 passed:** the lagged 60/40 drift predicts ES over the last five trading days at −14.06 bp per 1-SD,
   NW t −3.22.
 - **Gate 2 failed:** the expected-profit-filtered MES book netted $4.06 per active day at t 1.04.
@@ -23,10 +25,10 @@ record has not read.
 2. **Does the square-root impact law explain the fade?** If ES liquidity grew faster than the rebalancing flow, the law
    predicts smaller impact after 2018.
 
-## 1. The base, imported unchanged from D677
+## 1. The base, imported unchanged from D685
 
-The runner imports D677's `load`, `drift_signal`, `month_blocks`, `outcome_days`, `cost_spec` and statistics from
-`scripts/stage0_d677_month_end_rebalancing.py`:
+The runner imports D685's `load`, `drift_signal`, `month_blocks`, `outcome_days`, `cost_spec` and statistics from
+`scripts/stage0_d685_month_end_rebalancing.py`:
 - same-contract ES and ZN settlement returns on the common grid;
 - the within-month 60/40 drift s;
 - the lagged position −sign(s(o−2)) over the last five trading days;
@@ -53,7 +55,7 @@ Each builds a size predictor X ≥ 0 known at entry (the settlement of o−1), a
 
 | # | X, and the pass-through | the mechanism |
 |---|---|---|
-| **P0** | \|z\|; one π | D677's own projection, in this uniform through-origin form (D677's slope-on-z form is reported beside) |
+| **P0** | \|z\|; one π | D685's own projection, in this uniform through-origin form (D685's slope-on-z form is reported beside) |
 | **P1** | **σ20 · √(\|s\| · S / DV60)**; one π | **The square-root law.** Impact ∝ σ√(Q/V). The flow Q ∝ \|drift\| × the equity value that rebalances (∝ the index level S), against the liquidity V it lands in. |
 | **P2** | \|z\|; π by {quarter-end month, other} | Quarterly rebalancers add to the monthly ones. |
 | **P3** | \|z\| · 1[\|s\| ≥ 0.01]; one π, fitted on the threshold days | Threshold rebalancers trade only once drift passes a band (the paper's 0–2%, midpoint 1%). |
@@ -77,7 +79,7 @@ Each builds a size predictor X ≥ 0 known at entry (the settlement of o−1), a
 |---|---|---|
 | **O1** | **Volatility-scaled size:** position −sign(s) × min(3, σ̄/σ20). σ̄ is the median of σ20 over the prior 252 trading days. Contracts are continuous (the large-account approximation); cost is proportional to the change in position. | Standard risk control on a book whose noise swings with regime. |
 | **O2** | **Stand aside** on outcome days that are FOMC, CPI or Employment Situation release days (the D585 calendar via `cme_session_calendar`'s flags). The calendar exists only from 2016, so before 2016 the overlay changes nothing (disclosed). | The flow is the same size on those days, and the noise is larger. |
-| **O3** | **Hold into the next month:** keep the month's last position over the first 10 trading days of the next month. | **Post hoc.** It comes from D677's in-sample continuation (−49 bp, t −1.97). Development only. |
+| **O3** | **Hold into the next month:** keep the month's last position over the first 10 trading days of the next month. | **Post hoc.** It comes from D685's in-sample continuation (−49 bp, t −1.97). Development only. |
 
 ### Lags (L1–L2)
 
@@ -86,8 +88,8 @@ Each builds a size predictor X ≥ 0 known at entry (the settlement of o−1), a
 | **L1** | **The near-close signal.** The position for o is −sign(s′(o−1)). s′ takes ES's month-to-date return through **15:45 ET on o−1** (the close of `fut_day1m` bar 404 on the contract held, relative to that contract's settlement at o−2) and ZN's through its 15:00 settlement on o−1. Entry is at the settlement of o−1. **2016-01 → 2023-12 only:** ES's first clean 1-minute year is 2016. | The paper's unlagged form was stronger (−15.4 against −14.1), and this version stays executable. |
 | **L2** | **The longer window:** outcome days are the last 10 trading days, with the lag-2 signal. | Front-runners may act earlier. |
 
-**L1's 15:45 prices** come from `scripts/build_d678_es_1545.py`, run under the system Python, which has pyarrow; the
-runner's venv does not. It writes a gitignored `data/d678_es_1545.csv.gz`, and its SHA-256 is recorded in the output.
+**L1's 15:45 prices** come from `scripts/build_d686_es_1545.py`, run under the system Python, which has pyarrow; the
+runner's venv does not. It writes a gitignored `data/d686_es_1545.csv.gz`, and its SHA-256 is recorded in the output.
 For comparison, the base is also scored on L1's 2016–2023 window.
 
 ## 3. Statistics, nulls and the development gate
@@ -130,7 +132,7 @@ null but not the family's is noted as selection-exposed.**
 
 - **The four CLAUDE.md groups:** for the best variant, and for every D-PASS variant.
 - **Correlation with the MACD arm:** daily net, 2016–2023.
-- **The base:** D677's unfiltered and filtered books, recomputed as the reference.
+- **The base:** D685's unfiltered and filtered books, recomputed as the reference.
 - **Per-year net** for every variant.
 
 ## 5. Predictions (mine, before the run)
@@ -146,17 +148,17 @@ null but not the family's is noted as selection-exposed.**
 
 ## 6. Runner assertions and self-test
 
-1. **Base reproduction:** the unfiltered book's gross per active day equals D677's (+7.17 bp) exactly. The B1 slope
+1. **Base reproduction:** the unfiltered book's gross per active day equals D685's (+7.17 bp) exactly. The B1 slope
    reproduces −14.06.
 2. **Prior-only audit:** every π and m used in month m is recomputed by an explicit loop over months strictly before m.
    It must agree to 1e-12. The self-test shows it fires on a π that includes month m.
 3. **Rotation identity:** k = 0 reproduces every variant's observed A_v bit for bit.
 4. **Window guard:** nothing on or after 2024-01-01, including in the 15:45 extract.
-5. **The sign audit in money,** inherited from D677.
+5. **The sign audit in money,** inherited from D685.
 6. **L1 causality:** the 15:45 price is strictly before the settlement. The self-test shows it fires on bar 405 or
    later.
 
 **Each audit is shown to fire on a broken input.**
 
-**Output:** `data/d678_month_end_variants.json`, from `scripts/stage0_d678_month_end_variants.py`. **Projected wall
+**Output:** `data/d686_month_end_variants.json`, from `scripts/stage0_d686_month_end_variants.py`. **Projected wall
 time:** a few minutes (13 variants × about 160 rotations with prior-only refits, vectorised over months).

@@ -1,9 +1,9 @@
-"""D681 STAGE 0 -- the dealer-gamma close on ES: does the hedge flow implied by the SPX + ES option books predict the
-last half-hour? Pre-registration: docs/decisions/D681-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md
+"""D688 STAGE 0 -- the dealer-gamma close on ES: does the hedge flow implied by the SPX + ES option books predict the
+last half-hour? Pre-registration: docs/decisions/D688-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md
 (committed alone, before this file: de4a4f7e).
 
-    uv run python scripts/stage0_d681_gamma_close.py --selftest
-    uv run python scripts/stage0_d681_gamma_close.py --run --data-root "<main checkout>/data"
+    uv run python scripts/stage0_d688_gamma_close.py --selftest
+    uv run python scripts/stage0_d688_gamma_close.py --run --data-root "<main checkout>/data"
 
 For session d:
   G      SPX GEX (SqueezeMetrics, the last row dated strictly before d) + the ES options book at the PRIOR settlement,
@@ -41,8 +41,8 @@ import pandas as pd
 import statsmodels.api as sm
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "d681_gamma_close.json"
-SPEC = "D681 (de4a4f7e)"
+OUT = REPO / "data" / "d688_gamma_close.json"
+SPEC = "D688 (de4a4f7e)"
 CUTOFF = "2024-01-01"; IN_FROM = "2016-01-04"; WARM_FROM = "2015-10-01"
 MULT = 50.0; HOURS = 6.5; YEAR_HOURS = 252 * HOURS; MONEYNESS_MAX = 0.30; T_ENTRY = "15:30"
 NW_LAG = 5; SHIFT_MIN = 10; TRAIL = 20; BURN = 250; MIN_REG = 60; K_EP = 2.0; MIN_TRADES = 60
@@ -83,8 +83,8 @@ def d581(fx: Path | None = None):
     return m
 
 
-def d677():
-    return _mod("d677", "stage0_d677_month_end_rebalancing.py")
+def d685():
+    return _mod("d685", "stage0_d685_month_end_rebalancing.py")
 
 
 def expect_raise(fn, what, log=P) -> bool:
@@ -459,7 +459,7 @@ def guard_outputs(res: dict) -> None:
 
 # ------------------------------------------------------------------ books and the four groups
 def book_report(gross, net, trade, sign, days, arm, cost_rt) -> dict:
-    E = d677()
+    E = d685()
     n = len(net); nt = int(trade.sum()); yrs = n / 252.0
     tn, tg = net[trade], gross[trade]
     tpy = nt / yrs if yrs > 0 else float("nan")
@@ -508,7 +508,7 @@ def book_report(gross, net, trade, sign, days, arm, cost_rt) -> dict:
 def run(data_root: Path, log=P) -> int:
     t0 = time.time()
     rng = np.random.default_rng(SEED)
-    log(f"D681 STAGE 0 -- the dealer-gamma close on ES; spec {SPEC}; nothing dated {CUTOFF} or later is read (the session calendar aside)")
+    log(f"D688 STAGE 0 -- the dealer-gamma close on ES; spec {SPEC}; nothing dated {CUTOFF} or later is read (the session calendar aside)")
     m = d581(data_root / "fixtures")
     audits = {}
     m.audit_gamma(); m.audit_iv_roundtrip(); audits["d581_gamma_and_iv_audits"] = True
@@ -641,7 +641,7 @@ def run(data_root: Path, log=P) -> int:
         f"p95 {g2['rotation_null']['p95']:+.4f} pct {g2['rotation_null']['pct_rank']:.3f} -> {'PASS' if G2_pass else 'FAIL'}")
 
     # ---- Gate 2 (and its rotation null) ----
-    E = d677()
+    E = d685()
     mes, esf = E.cost_spec("ES", "micro"), E.cost_spec("ES", "full")
     P1530 = pr("15:30"); dpts = pr("16:00") - P1530
     Gm = rotate(G_SUM, ks)

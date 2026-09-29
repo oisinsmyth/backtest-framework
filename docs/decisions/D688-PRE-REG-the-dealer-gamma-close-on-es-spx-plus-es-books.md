@@ -1,4 +1,6 @@
-# D681 PRE-REGISTRATION — the dealer-gamma close on ES: does the hedge flow implied by the SPX + ES option books (−Γ × the day's move, square-root scaled) predict the last half-hour?
+# D688 PRE-REGISTRATION — the dealer-gamma close on ES: does the hedge flow implied by the SPX + ES option books (−Γ × the day's move, square-root scaled) predict the last half-hour?
+
+*Renumbered from D681 to D688 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D681. Commit messages and the recorded outputs in `data/` keep the old number.*
 
 *Drafted 2026-09-29, after a formation discussion with the principal (§1). Committed alone, before its runner exists
 (R8). **This record reopens the gamma-conditioned close,** which D582 closed "in any variant". The reopen falls under
@@ -191,6 +193,6 @@ is declared now: the frozen rule on 2024-01 → 2025-02 plus the vault, in the j
 
 **Every audit is shown to fire on a broken input.**
 
-**Output:** `data/d681_gamma_close.json`: statistics only, no per-date GEX. Runner:
-`scripts/stage0_d681_gamma_close.py`. **Projected wall time:** about 8 minutes, dominated by the ES-book rebuild, as in
+**Output:** `data/d688_gamma_close.json`: statistics only, no per-date GEX. Runner:
+`scripts/stage0_d688_gamma_close.py`. **Projected wall time:** about 8 minutes, dominated by the ES-book rebuild, as in
 D581.

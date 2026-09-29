@@ -1,8 +1,10 @@
-# D681 RESULT — NOT SUPPORTED: the dealer hedge flow predicts the close with the right sign but at about a quarter of the square-root law's size (β 0.12, t 1.2, 91st percentile of its rotation null); the long-gamma half is absent, and no book clears net
+# D688 RESULT — NOT SUPPORTED: the dealer hedge flow predicts the close with the right sign but at about a quarter of the square-root law's size (β 0.12, t 1.2, 91st percentile of its rotation null); the long-gamma half is absent, and no book clears net
 
-*2026-09-29. One run of `scripts/stage0_d681_gamma_close.py` (`7be544a3`), 118 s, under
-[D681's pre-registration](D681-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md) (`de4a4f7e`). Output
-`data/d681_gamma_close.json` (statistics only; no per-date GEX). Window: 1,989 sessions, 2016-01-05 → 2023-12-29.
+*Renumbered from D681 to D688 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D681. Commit messages and the recorded outputs in `data/` keep the old number.*
+
+*2026-09-29. One run of `scripts/stage0_d688_gamma_close.py` (`7be544a3`), 118 s, under
+[D688's pre-registration](D688-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md) (`de4a4f7e`). Output
+`data/d688_gamma_close.json` (statistics only; no per-date GEX). Window: 1,989 sessions, 2016-01-05 → 2023-12-29.
 No price, option, GEX or AUM row dated on or after 2024-01-01 was read. SqueezeMetrics GEX used under the permission of
 2026-09-28 (credit: SqueezeMetrics).*
 
@@ -196,3 +198,11 @@ long-gamma days, the reversal half, it is zero: Y = 0.5 is 2.7 SE away. **This d
     to extract direction.
 
 **Status: NOT SUPPORTED, awaiting the principal's ruling (R15).** No 2024+ slice has been read or spent.
+
+## CLOSED by the principal, 2026-09-29
+
+"Close them, renumber and merge, then go after short-gamma days with volatility is controlled."
+- **The line is closed under R15:** the gamma push at the close, and at any fixed clock.
+- **No 2024+ slice was read or spent.**
+- **Diagnosed in D683 and sized in D684.** The short-gamma continuation that D684 found post hoc is pursued as its own
+  line, which does not reopen this construction.

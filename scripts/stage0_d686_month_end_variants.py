@@ -1,9 +1,9 @@
-"""D678 (development) -- thirteen profit projections, overlays and lags on D677's month-end mechanism
-(pre-registration: docs/decisions/D678-PRE-REG-thirteen-projections-overlays-and-lags-for-d677.md).
+"""D686 (development) -- thirteen profit projections, overlays and lags on D685's month-end mechanism
+(pre-registration: docs/decisions/D686-PRE-REG-thirteen-projections-overlays-and-lags-for-d685.md).
 
-    python scripts/build_d678_es_1545.py --data-root "<main>/data"                  # system python, L1's input
-    uv run python scripts/stage0_d678_month_end_variants.py --selftest
-    uv run python scripts/stage0_d678_month_end_variants.py --run --data-root "<main checkout>/data"
+    python scripts/build_d686_es_1545.py --data-root "<main>/data"                  # system python, L1's input
+    uv run python scripts/stage0_d686_month_end_variants.py --selftest
+    uv run python scripts/stage0_d686_month_end_variants.py --run --data-root "<main checkout>/data"
 
 Every variant is a (M x W) position matrix on month windows. The null rotates the SIGNAL side (the lagged drift and
 everything computed from it) by k months against the TIME side (returns, sigma, volume, GEX, calendar, quarter-end,
@@ -25,9 +25,9 @@ from pathlib import Path
 import numpy as np
 
 REPO = Path(__file__).resolve().parents[1]
-OUT = REPO / "data" / "d678_month_end_variants.json"
-ES1545 = REPO / "data" / "d678_es_1545.csv.gz"
-D677_JSON = REPO / "data" / "d677_month_end_rebalancing.json"
+OUT = REPO / "data" / "d686_month_end_variants.json"
+ES1545 = REPO / "data" / "d686_es_1545.csv.gz"
+D685_JSON = REPO / "data" / "d685_month_end_rebalancing.json"
 
 
 def _load(name, file):
@@ -38,7 +38,7 @@ def _load(name, file):
     return m
 
 
-B = _load("d677b", "stage0_d677_month_end_rebalancing.py")        # D677's base, imported unchanged
+B = _load("d685b", "stage0_d685_month_end_rebalancing.py")        # D685's base, imported unchanged
 
 LAG = B.LAG
 BURN_IN = 24
@@ -63,7 +63,7 @@ def P(*a, **k):
 
 # ------------------------------------------------------------------ prior-only estimation
 def sigma_prior(sl: np.ndarray) -> np.ndarray:
-    """sigma_s per month from the prior 36 months' lagged window signals (at least 12), as D677."""
+    """sigma_s per month from the prior 36 months' lagged window signals (at least 12), as D685."""
     M = sl.shape[0]
     out = np.full(M, np.nan)
     for m in range(M):
@@ -387,7 +387,7 @@ def do_self_test() -> int:
         raise SystemExit(f"book cost wrong: {b['gross_sum'] - b['net_sum']} vs {exp_cost}")
     P("  book charges half a round trip per contract changed, exits included")
     B.audit_sign(B.book_position)
-    P("  sign audit (D677's) holds")
+    P("  sign audit (D685's) holds")
     B.guard_window(["2023-12-29"])
     try:
         B.guard_window(["2024-01-02"])
@@ -420,18 +420,18 @@ def do_run(data_root: Path) -> int:
     sig = signal_side(ctx)
     obs = run_all(ctx, sig, mes["cost_rt_usd"], mes["usd_per_point"], keep=True)
 
-    # reproduction of D677 and the prior-only audit on the real data
-    d677 = json.loads(D677_JSON.read_text(encoding="utf-8"))
+    # reproduction of D685 and the prior-only audit on the real data
+    d685 = json.loads(D685_JSON.read_text(encoding="utf-8"))
     aux = obs["_aux"]
     base_gross_bp = float(np.mean(aux["g"]))
-    if base_gross_bp != d677["B2"]["value"]:
-        raise GateError(f"[REPRO] base gross {base_gross_bp!r} != D677's {d677['B2']['value']!r}")
+    if base_gross_bp != d685["B2"]["value"]:
+        raise GateError(f"[REPRO] base gross {base_gross_bp!r} != D685's {d685['B2']['value']!r}")
     hz = np.isfinite(aux["sig_s"])
     b1 = B.nw_slope(aux["z"][hz].ravel(), ctx["y5"][hz].ravel())
-    if b1["beta"] != d677["B1"]["beta"]:
-        raise GateError(f"[REPRO] B1 {b1['beta']!r} != D677's {d677['B1']['beta']!r}")
+    if b1["beta"] != d685["B1"]["beta"]:
+        raise GateError(f"[REPRO] B1 {b1['beta']!r} != D685's {d685['B1']['beta']!r}")
     audit_prior_only(aux["pi0"], aux["g"], aux["az"], (30, 80, M - 1))
-    P(f"reproduced D677: base gross {base_gross_bp:+.4f} bp, B1 {b1['beta']:+.4f}; prior-only audit passes")
+    P(f"reproduced D685: base gross {base_gross_bp:+.4f} bp, B1 {b1['beta']:+.4f}; prior-only audit passes")
 
     ks = [0] + list(range(2, M - 1))
     draws = {v: [] for v in VARIANTS}
@@ -553,11 +553,11 @@ def do_run(data_root: Path) -> int:
           f"median {n_['median']:+.2f} win {n_['win_rate']:.3f} ex-top {n_['mean_ex_top_1pc']:+.2f} "
           f"ex-bottom {n_['mean_ex_bottom_1pc']:+.2f} trimmed {n_['mean_trimmed_1pc_both']:+.2f}")
         P("     per year: " + " ".join(f"{y}:{val:+.0f}" for y, val in gdat["per_year_net"].items()))
-    P("\n=== Predictions (D678 s.5) ===")
+    P("\n=== Predictions (D686 s.5) ===")
     for k_, v_ in pr.items():
         P(f"  {k_:<38} {'HELD' if v_ else 'BROKEN'}")
     out = {"generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-           "pre_registration": "docs/decisions/D678-PRE-REG-thirteen-projections-overlays-and-lags-for-d677.md",
+           "pre_registration": "docs/decisions/D686-PRE-REG-thirteen-projections-overlays-and-lags-for-d685.md",
            "development_not_evidence": True, "es1545_sha256": ctx["es1545_sha256"],
            "l1_early_close_bars": ctx["l1_early_close_bars"], "es_day_volume_days_by_year": ctx["vol_cov"],
            "costs": {"MES": mes, "ES": es}, "base": base, "variants": table, "best": best, "family_null": fam_band,

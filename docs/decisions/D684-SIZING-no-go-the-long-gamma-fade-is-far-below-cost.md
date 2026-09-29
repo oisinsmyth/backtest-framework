@@ -1,12 +1,12 @@
 # D684 SIZING — NO-GO: the long-gamma fade earns $0.2–0.3 a trade against an $8.84 bar at every horizon; D683's 5-minute gradient does not survive a same-day volatility control; the only effect with money in it is the mirror image, short-gamma continuation at 60 minutes (post hoc)
 
-*2026-09-29. In-sample on D681's panel (1,989 sessions, 2016-01-05 → 2023-12-29). A go/no-go for a
+*2026-09-29. In-sample on D688's panel (1,989 sessions, 2016-01-05 → 2023-12-29). A go/no-go for a
 pre-registration, not a verdict; no slice spent. The principal: "I'll go with your recommendation", which was to size
 the long-gamma reversion before pre-registering it.*
 - **The script** `scripts/size_d684_gamma_reversion.py` was committed before its run (`5a6e3ba2`), with its statistics
   and the GO rule in its docstring. It ran once, in 115 s. Output: `data/d684_gamma_reversion_sizing.json`
   (statistics only, no per-date GEX).
-- **D681's β_G reproduced exactly.**
+- **D688's β_G reproduced exactly.**
 
 ## The answer in one line
 
@@ -128,3 +128,10 @@ much the day moves, and on short-gamma days, whether the last hour keeps going.*
    - **(b) The confirmation premise:** the short-gamma count of G_SUM in 2024-01 → 2025-02 and the vault. That means
      reading the ES options book's OI for those dates, no returns. If there are too few short-gamma days to power a
      test, the lead is unconfirmable, whatever (a) shows.
+
+## CLOSED by the principal, 2026-09-29
+
+"Close them, renumber and merge, then go after short-gamma days with volatility is controlled."
+- **The long-gamma fade is closed.**
+- **The short-gamma lead of §4 is taken up next** under its own number, starting with §6's two checks, with
+  volatility controlled.

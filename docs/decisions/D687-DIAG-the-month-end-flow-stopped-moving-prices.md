@@ -1,10 +1,12 @@
-# D680 DIAG — why the month-end mechanism fails: the flow did not shrink, move earlier or get offset. Its price impact per unit collapsed in BOTH legs after 2018, while the flows grew
+# D687 DIAG — why the month-end mechanism fails: the flow did not shrink, move earlier or get offset. Its price impact per unit collapsed in BOTH legs after 2018, while the flows grew
+
+*Renumbered from D680 to D687 on 2026-09-29 before this branch (`wt/after-d674`) merged main, which holds a different D680. Commit messages and the recorded outputs in `data/` keep the old number.*
 
 *2026-09-29, on the principal's word: "Can you do a diagnostic on why the underlying mechanism fails?" One run of
-`scripts/diag_d680_month_end_mechanism.py`, committed before its run (`dbd85855`) with five hypotheses and their
-fingerprints in its docstring. Output `data/d680_month_end_diag.json`. **Post hoc, on D677's in-sample (2010-07 →
-2023-12), no verdict.** The eras are post hoc, taken from D677's per-year table: 2010–15, 2016–18 and 2019–23. D677's
-B2 (+7.1732 bp) reproduces exactly. Numbered D680 because the other session holds number 679.*
+`scripts/diag_d687_month_end_mechanism.py`, committed before its run (`dbd85855`) with five hypotheses and their
+fingerprints in its docstring. Output `data/d687_month_end_diag.json`. **Post hoc, on D685's in-sample (2010-07 →
+2023-12), no verdict.** The eras are post hoc, taken from D685's per-year table: 2010–15, 2016–18 and 2019–23. D685's
+B2 (+7.1732 bp) reproduces exactly. Numbered D687 because the other session holds number 679.*
 
 ## The answer in one line
 
@@ -42,7 +44,7 @@ B2 (+7.1732 bp) reproduces exactly. Numbered D680 because the other session hold
    - equities fell (−18 to −22 bp per 1-SD) in the last five days when they were overweight;
    - in 2010–15 the long bond rose (+8.6, t 2.09);
    - ZN barely moved. Pensions buy duration, not the 10-year.
-   - **D677's "no bond leg" was a ZN artefact plus the fade.**
+   - **D685's "no bond leg" was a ZN artefact plus the fade.**
 2. **After 2018 the price concession per unit of flow fell by 63–70%** (from −15.8 or −19.7 to −5.9 bp per 0.01 of
    drift), in both legs.
    - This happened while the flow grew: larger average drifts.
@@ -66,7 +68,7 @@ estimates of month-end flow (widely circulated before the paper) coincide with t
 
 ## 3. Caveats
 
-- **The eras were chosen after D677's per-year table**, so the late era's weakness is partly defined by selection.
+- **The eras were chosen after D685's per-year table**, so the late era's weakness is partly defined by selection.
   But the decomposition (B) and the response per unit (C) are new measurements, not a re-reading of that table.
 - **Per-era and per-day cells are small:** 60–330 days, and every per-day profile value is noise. The block and era
   figures are the evidence; the 26-day profile in the JSON is not.
@@ -76,7 +78,7 @@ estimates of month-end flow (widely circulated before the paper) coincide with t
 ## 4. What this decides
 
 **The fade is the mechanism's own erosion, not a construction error that a better filter could fix.** That agrees
-with D678: no projection could rescue a price response that disappeared. Two things are worth keeping:
+with D686: no projection could rescue a price response that disappeared. Two things are worth keeping:
 1. **The mechanism was two-legged and duration-specific:** ES−ZB −18.0, t −3.27, pooled. Any future flow study should
    pair equities with the long bond, not ZN.
 2. **The residual is at quarter-ends.** If a successor is wanted, it is the **quarter-end-only** book on ES−ZB, with
@@ -88,14 +90,14 @@ with D678: no projection could rescue a price response that disappeared. Two thi
    - So it is a forward-accrual question, not an in-sample one.
 
 **Proposal (R15, the principal's):**
-- close the month-end line as a strategy (D677, D678 and D680);
+- close the month-end line as a strategy (D685, D686 and D687);
 - record these facts: the two-legged mechanism, and its post-2018 absorption;
 - optionally, pre-register the quarter-end ES−ZB book **forward only**: it would accrue from the next quarter-end,
   with no historical slice spent.
 
 ## 5. CLOSED by the principal, 2026-09-29
 
-"Ok close no need for 2024+ data." **The month-end rebalancing line (D677, D678, D680) is closed under R15 as a
+"Ok close no need for 2024+ data." **The month-end rebalancing line (D685, D686, D687) is closed under R15 as a
 strategy.** No unread slice was spent, and none will be.
 - **The component lines** are entered in `COMPONENTS_PROP.md` as SCORED, NOT ENTERED.
 - **The forward-only quarter-end book is not taken up.**

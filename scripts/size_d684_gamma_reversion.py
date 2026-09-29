@@ -1,5 +1,5 @@
 """D684 SIZING -- does the long-gamma intraday reversion D683 found grow large enough, on a slower bar, to pay for a
-trade? In-sample (D681's panel, 2016-01-05 -> 2023-12-29), a go/no-go for a pre-registration, not a verdict (the
+trade? In-sample (D688's panel, 2016-01-05 -> 2023-12-29), a go/no-go for a pre-registration, not a verdict (the
 principal: "I'll go with your recommendation", the recommendation being to size the prize first).
 
     uv run python scripts/size_d684_gamma_reversion.py --run --data-root "<main checkout>/data"
@@ -7,8 +7,8 @@ principal: "I'll go with your recommendation", the recommendation being to size 
 The object, for horizon h in {5, 15, 30, 60} minutes, at every decision time t = 09:30 + j*h with t + h <= 16:00:
   m = log P(t) - log P(t-h)          the move just made (bp)
   f = log P(t+h) - log P(t)          the next h minutes (bp)
-  LG = 1 if G_SUM >= 0 (dealers long gamma; D681's G, known before the open)
-  rv_t = the day's realised 5-minute variance from 09:30 to t (known at t); sigma_d = D681's trailing 20-session sigma
+  LG = 1 if G_SUM >= 0 (dealers long gamma; D688's G, known before the open)
+  rv_t = the day's realised 5-minute variance from 09:30 to t (known at t); sigma_d = D688's trailing 20-session sigma
 Statistics, DECLARED BEFORE THE RUN:
   S1  the reversion slope b of f on m, by G_SUM quintile, by regime, and on all days (day-clustered SEs)
   S2  the gamma gradient with the VOLATILITY CONFOUND controlled (the check D683 did not run):
@@ -27,7 +27,7 @@ GO / NO-GO for a pre-registration (declared here):
   cell and test it on data this record has not read (2024-01 onward). Otherwise NO-GO, and gamma goes only into the
   expected-profit filter's size term.
 
-Reads nothing dated 2024-01-01 or later (D681's loaders and guards). Output data/d684_gamma_reversion_sizing.json:
+Reads nothing dated 2024-01-01 or later (D688's loaders and guards). Output data/d684_gamma_reversion_sizing.json:
 statistics only, no per-date GEX (SqueezeMetrics, under the permission of 2026-09-28).
 """
 from __future__ import annotations
@@ -45,11 +45,11 @@ import pandas as pd
 import statsmodels.api as sm
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import stage0_d681_gamma_close as S  # noqa: E402  (D681's committed runner; importing it defines, never runs)
+import stage0_d688_gamma_close as S  # noqa: E402  (D688's committed runner; importing it defines, never runs)
 
 REPO = Path(__file__).resolve().parents[1]
 OUT = REPO / "data" / "d684_gamma_reversion_sizing.json"
-D681_JSON = REPO / "data" / "d681_gamma_close.json"
+D688_JSON = REPO / "data" / "d688_gamma_close.json"
 HORIZONS = (5, 15, 30, 60)
 KS = (0.0, 0.5, 1.0, 1.5, 2.0)
 GO_H = (15, 30, 60)
@@ -104,7 +104,7 @@ def run(data_root: Path, log=P) -> int:
     prior = pd.concat([o["prior"] for o in outs]).sort_index()
     log(f"  ES book rebuilt in {time.time() - t0:.0f} s")
 
-    # ---- D681's panel, exactly as its runner filters it; reproduce beta_G first ----
+    # ---- D688's panel, exactly as its runner filters it; reproduce beta_G first ----
     D = Dfull.join(prior[["G_ES"]], how="left")
     D = D[D.index >= S.IN_FROM]
     D["G_SUM"] = D["G_SPX"] + D["G_ES"]
@@ -116,10 +116,10 @@ def run(data_root: Path, log=P) -> int:
     sig = D["sig"].to_numpy(float); G = D["G_SUM"].to_numpy(float)
     r = 100 * np.log(D["P1530"].to_numpy(float) / D["S_prev"].to_numpy(float)); R2 = 1e4 * np.log(D["P1600"].to_numpy(float) / D["P1530"].to_numpy(float))
     f681, _ = S.gamma_regression(R2, G, r, sig, D["V"].to_numpy(float), D["A_L"].to_numpy(float), null=False)
-    ref = json.loads(D681_JSON.read_text(encoding="utf-8"))["gate1"]["G1"]["beta_G"]
+    ref = json.loads(D688_JSON.read_text(encoding="utf-8"))["gate1"]["G1"]["beta_G"]
     if f681["beta_G"] != ref:
-        raise S.GateError(f"[REPRO] beta_G {f681['beta_G']!r} vs D681's {ref!r}")
-    log(f"  D681 REPRODUCED: beta_G {f681['beta_G']!r} on {nd} sessions")
+        raise S.GateError(f"[REPRO] beta_G {f681['beta_G']!r} vs D688's {ref!r}")
+    log(f"  D688 REPRODUCED: beta_G {f681['beta_G']!r} on {nd} sessions")
 
     # ---- the 5-minute price grid (the price AT hh:mm = the close of the bar labelled a minute earlier; 09:30 = the open) ----
     b = I["bars"]
@@ -137,7 +137,7 @@ def run(data_root: Path, log=P) -> int:
     lsig2 = np.log(sig ** 2)
     LG = (G >= 0).astype(float)
     q5 = np.digitize(G, np.quantile(G, [0.2, 0.4, 0.6, 0.8]))
-    E = S.d677()
+    E = S.d685()
     mes, esf = E.cost_spec("ES", "micro"), E.cost_spec("ES", "full")
     ks_rot = S.rot_ks(nd)
     res = {"spec": "D684 SIZING (in-sample, go/no-go for a pre-registration, not a verdict)", "reproduction": {"beta_G": f681["beta_G"], "exact": True, "sessions": nd},
