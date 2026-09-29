@@ -106,3 +106,37 @@ Gate 2.
   - the spent-flow contraindication (§5);
   - the root-aware test on CL, NG, GC and SI (`docs/planning/ROOT_AWARE_BREAK_PLAN.md`), which uses roots none of
     these reads have touched.
+
+## Amendment D668-A2, after the result (2026-09-29): the friction was counted twice; the verdicts stand
+
+**The problem (found in D677 §1).** This runner charges friction twice:
+- it fills every stop one tick through **inside the gross** (entry at the stop + 1 tick; stop exits at the stop − 1
+  tick);
+- and the cost line then charges $3 + the measured crossing + **one more tick** (§A1.1).
+
+The one-tick fill already is the crossing.
+
+**Single count, declared for every break runner from here on, and for any NQ vault pre-registration:**
+- trades are scored **at the level**, with no fill ticks;
+- then charged **$3 + the measured crossing** (`d508_exec`), once.
+- The +1-tick slippage ladder stays as a sensitivity.
+
+`scripts/diag_d677_single_count_index.py` (`data/diag_d677_single_count_index.json`) reproduces this record's gross
+to 1e-9, then rescores. Per trade, bp (HAC t):
+
+| | ES | NQ | YM | RTY |
+|---|---|---|---|---|
+| gross as recorded | +1.20 (1.31) | +4.29 (3.57) | +1.10 (1.23) | −0.40 (−0.30) |
+| at the level, no fill ticks | +2.71 (2.95) | +4.80 (3.99) | +1.77 (1.98) | +0.64 (0.48) |
+| net as recorded | −2.31 (−2.49) | +1.69 (1.40) | −2.06 (−2.31) | −5.21 (−3.91) |
+| **net, single count** | **−0.03 (−0.03)** | **+2.48 (2.06)** | **−1.02 (−1.15)** | **−3.60 (−2.71)** |
+| correction | +2.28 | +0.79 | +1.04 | +1.61 |
+
+**No verdict changes.**
+- Gate 1 compared the gross with N1, whose random entries pay the same fill ticks.
+- YM and RTY fail Gate 1 either way.
+
+**What does change:**
+- **NQ's in-sample net is +2.48 bp (t 2.06), not +1.69.** That is the figure a vault pre-registration starts from.
+- **ES's net is about zero, not −2.3.**
+- The correction is largest where the tick is large relative to the price (ES, RTY).

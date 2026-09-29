@@ -94,3 +94,20 @@ t −2.7), where its breaks are noise.
 
 **Caveat, stated plainly.** The rule was found on NQ's in-sample data (D671's diagnostic, 127 cuts). Its passing its
 nulls here shows it is internally consistent, not that it is real. **YM, RTY and the vault are the test.**
+
+## Amendment D672-A1, after the result (2026-09-29): the friction was counted twice
+
+The trades and cost line are D668's, so the D668-A2 double count applies here: a one-tick fill inside the gross, then
+the crossing and another tick in the cost.
+
+`scripts/diag_d677_single_count_index.py` reproduces this record's C1 net to 1e-9, then rescores C1 at the level,
+charging $3 + the measured crossing once:
+
+| C1, compression third | NQ | ES |
+|---|---|---|
+| trades | 387 | 385 |
+| net as recorded | +6.93 (t 2.40) | +0.55 (t 0.25) |
+| **net, single count** | **+7.56 (t 2.62)** | **+2.78 (t 1.26)** |
+
+Nothing here was a verdict (development). **Any vault pre-registration of the NQ compression break starts from
++7.56 bp and declares its friction once.**
