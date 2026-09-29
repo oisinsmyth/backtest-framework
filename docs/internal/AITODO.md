@@ -149,9 +149,11 @@
   10:00. D669's second proposal withdrawn. Proposals: record the correction in the arm's qualification; test "join
   the formed move after 10:00" on YM/RTY/ES with its own pre-registration or close the line; the 15:00 last-hour cut
   as an exit ingredient.
-- [ ] **D673 Stage 0 design committed; runner next** (the principal: "Yes run the test on the other roots"). Join the
-  formed move: first hourly close 10:59-13:59 where price is beyond both yesterday's close and today's open, enter,
-  hold to the close. Evidence YM, RTY, ES (Holm at family alpha 0.025, the family's second attempt); NQ development.
+- [ ] **D673 RESULT written: NOT SUPPORTED on YM, RTY and ES; the principal's call on its proposals.** Joining the
+  formed move after 10:00 earns YM -1.30, RTY -0.21, ES +0.05 bp gross, and NQ +1.85 at its null's median; the EP
+  filter never switches on. With D669/D670: no portable mechanism; the arm's returns rest on its NQ-specific timing.
+  Proposals: close the reshaping line (D670, D673); amend the arm's qualification in BOOK_PROP (keep/resize/retire is
+  the principal's decision); the 15:00 last-hour cut as a candidate exit.
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 

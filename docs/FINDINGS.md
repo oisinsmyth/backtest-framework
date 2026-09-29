@@ -4970,3 +4970,23 @@ parameters D669 found to be a spike, and that idea is untested outside NQ.
 
 **One ingredient does hold out of NQ:** exiting at 15:00 when the last hour went against the position adds 0.2–1.5 bp
 on all four roots (YM t 2.8), as the close continues its prior hour.
+
+## 91. Joining the formed move does not carry either (D673): the MACD arm has no portable mechanism
+
+**The rule:** at the first hourly close after 10:00 where price is on the same side of yesterday's close and today's
+open, enter that way and hold to the close
+([D673](decisions/D673-STAGE-0-RESULT-the-formed-move-does-not-carry-either.md)). **It fails on YM, RTY and ES:**
+- YM −1.30 bp gross, RTY −0.21, ES +0.05, all inside a within-week direction permutation and a clock-matched random
+  entry;
+- **NQ, where the idea came from: +1.85 bp, at its null's median**, which is drift;
+- the rule trades on about 91 % of sessions; every root's mean sits below its median;
+- the expected-profit filter never switches on.
+
+**The arm-like subset** (no move formed by 09:59) is better on three roots but never reaches t 1.2. On NQ the arm's own
+later entries reached t 3.7 on the same kind of session. **The difference is the arm's two tuned indicators on NQ in
+sample.**
+
+**With D669 and D670:** the arm times direction, but no plain statement of that timing carries anywhere, NQ included.
+**What earns is its specific NQ timing,** set by the two parameters D669 found to be a spike.
+
+**The 15:00 last-hour cut repeats on all four roots** (+0.4 to +1.0 bp here). It is an exit, not an edge.
