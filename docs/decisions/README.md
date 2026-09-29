@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 460 of these records carry neither field —
+**No Status or Category column, deliberately.** 461 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -765,6 +765,7 @@ would look like data. The tokens are what is shown.
 | D690 | the oracle filter and the accuracy assessment: a yardstick for every expected-profit filter, first applied to D689's ca… | [record](D690-DESIGN-the-oracle-filter-and-the-accuracy-assessment.md) · [record](D690-DIAG-accuracy-needed-is-small-and-the-regime-gate-is-best.md) |
 | D691 | D691 STAGE 0 RESULT — SIZE INFORMATION CONFIRMED on ES and NQ: the prior close's implied-to-realised ratio cuts the out… | [record](D691-STAGE-0-DESIGN-implied-vs-realised-vol-as-a-size-predictor.md) · [RESULT](D691-STAGE-0-RESULT-implied-vol-adds-size-information-beyond-realised.md) |
 | D692 | the oracle profile at MES: where the winners of the hourly continuation sit, shown before any filter is designed | [record](D692-DESIGN-the-oracle-profile-at-mes.md) · [record](D692-DIAG-the-mes-oracle-profile.md) |
+| D693 | D693 STAGE 0 DESIGN — the principal's filter for the short-gamma continuation: long only, per-cell expected profit (ali… | [record](D693-STAGE-0-DESIGN-the-short-gamma-long-filter-at-mes.md) |
 
 <!-- REGISTER:END -->
 
