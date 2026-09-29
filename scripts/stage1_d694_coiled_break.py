@@ -235,7 +235,7 @@ def get_bundle() -> dict[str, Any]:
     mtimes and D691's IV cache keys."""
     key = bundle_key()
     if CACHE.exists():
-        with CACHE.open("rb") as fh:
+        with open(CACHE, "rb") as fh:
             got = pickle.load(fh)
         if got.get("key") == key:
             return got
@@ -249,7 +249,7 @@ def get_bundle() -> dict[str, Any]:
             tr[c] = lab[c].reindex(tr["session"]).to_numpy()
         out[r] = {"tr": tr, "lab": lab}
     CACHE.parent.mkdir(exist_ok=True)
-    with CACHE.open("wb") as fh:
+    with open(CACHE, "wb") as fh:
         pickle.dump(out, fh)
     return out
 

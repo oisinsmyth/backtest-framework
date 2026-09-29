@@ -545,3 +545,19 @@ pre-registered test on unseen data.
 | short-gamma 60-min continuation, unfiltered, 1 full ES ($19.24) | D689 | +0.51 (+0.75); gross +1.04 (+1.59) | in-sample only; 379 trades a year, mean ≈ median +$18; 2022–23 are 81% of the net; about half is up-drift on short-gamma days; max drawdown $15.4k per contract; ρ −0.046 |
 | the same, 1 MES ($4.42) | D689 | −0.18 (−0.25); gross +1.04 (+1.59) | $3.77 gross against a $4.42 round trip; ρ −0.048 |
 | the same, expected-profit filtered (π·\|m\|), full ES | D689 | −0.39 (−0.49) | the \|m\|-scaled projection selects moves that do not continue; 10 a year |
+
+## SCORED, NOT ENTERED — the break on "coiled" days, ES and NQ, 2026-09-29 ([D694](decisions/D694-STAGE-1-RESULT-not-supported-iv-adds-nothing-to-the-break.md))
+
+Component lines come from the runner's own output (`data/stage1_d694_coiled_break.json`).
+- **The construction:** D668's E4 plain break on D672's C1 days whose walk-forward IV/RV20 percentile is ≥ 1/2.
+- **Size and cost:** one micro, at the level, friction once.
+- **The score:** daily net Sharpe over every session of 2018-01-09 → 2025-02-28 (√252).
+- **Correlations** are with the admitted MACD arm's daily net, truncated below 2025-03-01.
+
+**Status: NOT SUPPORTED on both roots** (the IV ingredient fails its null). The line is closed.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| COILED, ES, 1 MES ($4.42) | D694 | +0.69 (+1.54); gross +0.94 (+2.33) | its lift over the quiet C1 trades is matched by a count-matched label with IV's own information scrambled (rank 0.765); 120 trades in 7 years; top 5 trades are 53% of gross; ρ +0.02 |
+| COILED, NQ, 1 MNQ ($4.07) | D694 | +0.55 (+1.19); gross +0.70 (+1.59) | earns less than the quiet C1 trades (−3.1 bp); rank 0.298; a subset of D680's C1 (ρ +0.46) that is worse than C1 itself (1.03); ρ +0.04 |
+| COILED, expected-profit filtered, ES / NQ | D694 | +0.20 (+0.38) / +0.54 (+1.15) | Gate 2 fails: 36 / 87 trades, net t 0.74 / 1.30 |

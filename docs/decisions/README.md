@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 463 of these records carry neither field —
+**No Status or Category column, deliberately.** 464 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -766,7 +766,7 @@ would look like data. The tokens are what is shown.
 | D691 | D691 STAGE 0 RESULT — SIZE INFORMATION CONFIRMED on ES and NQ: the prior close's implied-to-realised ratio cuts the out… | [record](D691-STAGE-0-DESIGN-implied-vs-realised-vol-as-a-size-predictor.md) · [RESULT](D691-STAGE-0-RESULT-implied-vol-adds-size-beyond-realised.md) |
 | D692 | the oracle profile at MES: where the winners of the hourly continuation sit, shown before any filter is designed | [record](D692-DESIGN-the-oracle-profile-at-mes.md) · [record](D692-DIAG-the-mes-oracle-profile.md) |
 | D693 | D693 STAGE 0 RESULT — the principal's per-cell filter fails at MES: anti-calibrated (slope −2.2), worse than the gate a… | [record](D693-STAGE-0-DESIGN-the-short-gamma-long-filter-at-mes.md) · [RESULT](D693-STAGE-0-RESULT-the-cell-filter-is-anti-calibrated-at-mes.md) |
-| D694 | STAGE 1 DESIGN: does the break of yesterday's range carry on "coiled" days, quiet in realised range but priced for a mo… | [record](D694-STAGE-1-DESIGN-the-break-on-coiled-days.md) |
+| D694 | D694 STAGE 1 RESULT — NOT SUPPORTED on ES and NQ: coiled days are bigger, but the options market's own information does… | [record](D694-STAGE-1-DESIGN-the-break-on-coiled-days.md) · [RESULT](D694-STAGE-1-RESULT-not-supported-iv-adds-nothing-to-the-break.md) |
 
 <!-- REGISTER:END -->
 
