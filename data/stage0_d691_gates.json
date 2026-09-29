@@ -1,0 +1,56 @@
+{
+ "ES": {
+  "G1_coverage_in_window": 1.0,
+  "G1_pass": true,
+  "missing_by_year": {},
+  "missing_reasons": {},
+  "G2_roundtrip_worst_rel": 3.870190220310333e-14,
+  "G3_lag_audit": "passed on 30 sessions",
+  "G4_seal": "held",
+  "G5_median_iv_by_year": {
+   "2016": 0.1118,
+   "2017": 0.0672,
+   "2018": 0.1151,
+   "2019": 0.1118,
+   "2020": 0.1984,
+   "2021": 0.1164,
+   "2022": 0.2267,
+   "2023": 0.1315,
+   "2024": 0.1078,
+   "2025": 0.1325
+  },
+  "sessions": 2278
+ },
+ "NQ": {
+  "G1_coverage_in_window": 0.9836527621195039,
+  "G1_pass": true,
+  "missing_by_year": {
+   "2018": 4,
+   "2020": 1,
+   "2021": 10,
+   "2022": 12,
+   "2023": 1,
+   "2024": 1
+  },
+  "missing_reasons": {
+   "no bracketing pair": 29
+  },
+  "G2_roundtrip_worst_rel": 2.458093788575482e-14,
+  "G3_lag_audit": "passed on 30 sessions",
+  "G4_seal": "held",
+  "G5_median_iv_by_year": {
+   "2016": 0.1366,
+   "2017": 0.1012,
+   "2018": 0.1639,
+   "2019": 0.153,
+   "2020": 0.2545,
+   "2021": 0.172,
+   "2022": 0.2925,
+   "2023": 0.1788,
+   "2024": 0.1564,
+   "2025": 0.1818
+  },
+  "sessions": 2278
+ },
+ "G3_canary": "fired: an IV built on the session's own settle is caught"
+}
