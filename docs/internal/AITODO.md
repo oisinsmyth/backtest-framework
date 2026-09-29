@@ -148,6 +148,35 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
+## The MACD arm's mechanism (D669, 2026-09-29)
+
+- [x] **The MACD arm RESIZED and AMENDED (D674, 2026-09-29, the principal: "resize it, then amend", "MFFU Rapid
+  150k").** One MNQ unchanged; account MFFU Rapid 150k (P3a 1.90 -> 0/yr); expectation Sharpe 0.24. BOOK_PROP and
+  COMPONENTS_PROP amended. D669's second proposal was withdrawn by D670.
+- [x] **The reshaping line CLOSED (D670, D673; the principal, 2026-09-29: "Close and merge then remove the
+  worktree").** No plain form of the arm's behaviour carries on YM, RTY or ES. The 15:00 last-hour cut stays a
+  candidate exit. **Open at merge time:** `wt/after-d643` merges second, so it renumbers its D673 (the compression
+  break's pre-registration) and its D667 (its diagnostic of its record 666; main's D667 is the margin-hike pause).
+
+## The log MACD's mechanism, mechanism first (D675, 2026-09-29)
+
+The principal: "we now require a deterministic explanation of the underlying mechanism ... we design a signal that
+fires on a mechanism of the market we can make money off." Three stages: locate (Stage 1), design on the mechanism's
+own observable (Stage 2), confirm on an unread slice after a seal inventory and a power check (Stage 3).
+
+- [x] **Stage 1 DONE: D675 RESULT.** No declared mechanism fits any root. The MACD is a clock-blind blend of known
+  effects: recent moves revert overnight (D499's, under a tick); they continue into the US afternoon, strongest on NQ
+  (US_CLOSE at the 100th percentile, mechanism unidentified); and on NQ, yesterday's move reverts (D495/K8). Per root
+  the traded signal clears its own null only on NQ (0.976) and CL (0.997); 6E loses (0.024); on ES, YM and CL most of
+  it is 2020.
+- [x] **Seal inventory and power DONE (D675 §9).** No clock cell can be confirmed: 0 of 105 reach t 1.5 on the one
+  clean slice (ZN/ZB/6E 2024-01 → 2025-02) even at full effect. The best is ZN's overnight reversal (t 1.37), which
+  is D499's effect and has no money in it. NQ has no unread slice. CL and GC 2024-01 → 2025-02 are about to be read by
+  the other session's root-aware break (its number 676). The next free number is 677.
+- [x] **The log MACD line CLOSED (D675 §10; the principal, 2026-09-29: "Ok close it").** It includes any MACD variant
+  and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
+- [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
+
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,

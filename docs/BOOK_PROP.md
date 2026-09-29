@@ -1076,3 +1076,45 @@ or MyFundedFutures — and on P3a (1.09 breaches a year at one pair, against the
 the binding constraint remains the vehicle (D503). What the read adds is a structural fact for
 the avatar programme: **any flat-by-default construction that holds a position overnight, however
 good its ledger line, is a vault or personal-book candidate, not a prop component.**
+
+---
+
+## AMENDMENT, 2026-09-29 — **the MACD arm is RESIZED to MFFU Rapid 150k, and its expectation is cut to Sharpe 0.24.** It stays in the book, unchanged in its spec
+
+> *"This tells me that the MACD arm is super overfitted"* ... *"resize it, then amend"* ... *"MFFU Rapid 150k"* — the
+> principal
+
+**What was found (D669, D670, D673), in sample 2016–2023 unless stated:**
+- **The arm is a timer, not a drift harvester.** Drift carries −1 % of its gross, and it beats a direction
+  permutation down to the week.
+- **Its Sharpe is the top of its family, not a property of it.**
+  - The median of 485 neighbouring settings is **0.24 net** against its 0.72, and it ranks 13th of 486.
+  - The spike sits on the two choices the search made: the impulse length (26: 0.17, 34: 0.72, 42: 0.37) and the
+    5-hour minimum hold, which buys one 15:00 exit worth about 0.32 of Sharpe.
+  - The deflated Sharpe fails: 0.003 against D495's cells, and 0.28 even with pure-noise trial variance.
+- **It has no portable mechanism.** Two plain statements of its behaviour fail on YM, RTY and ES, and do not clear
+  their nulls even on NQ:
+  - the move since yesterday's close taken at 10:00 (D670);
+  - joining the move once it has formed after 10:00 (D673).
+- **What earns is its NQ-specific timing.** More than half its gross comes from the 23 % of sessions it enters after
+  10:00, on the agreement of two tuned indicators.
+- **The forward read (D503) cannot rescue it.** Its +0.736 sat inside its own null (p95 +0.758, UNRESOLVED), with half
+  the P&L in three sessions and a mean trade of −$0.59 ex-top 1 %. No unread NQ slice remains.
+
+**The ruling:**
+1. **The arm stays in the book, one MNQ, spec unchanged.** No parameter, filter or conditioner is added.
+2. **Its account is MFFU Rapid 150k**, replacing the Rapid EOD 50k it was admitted under.
+   - One MNQ cannot be made smaller, so the account is the size lever. See
+     [D674](decisions/D674-the-macd-arm-resized-to-the-150k-account.md), whose rule was declared before its numbers.
+   - At the arm's 2025–2026 σ of $389, **P3a falls from 1.90 a year to 0**, and the drawdown moves from 5.1 σ away to
+     11.6 σ.
+   - **V per $463 evaluation is +$86 ± 24 at Sharpe 0.24, +$1,231 at 0.72 and −$171 at 0.** The larger account pays
+     for the edge and charges for its absence. The 50k paid +$20 at zero edge through its convexity alone.
+3. **The book's expectation for this arm is Sharpe 0.24, not 0.72.** Every downstream figure uses 0.24 from today:
+   layering arithmetic, V, P(paid), and any assembled book's target.
+   - At 0.24, **P(ever being paid) is about 10 % per evaluation.**
+4. **Qualification 3 of the admission is superseded** by the account change. **Qualifications 1, 2 and 4 stand**, and
+   are joined by a fifth: **its edge rests on NQ-specific tuned timing and cannot be confirmed out of sample on NQ.**
+
+**Carried forward:** the 15:00 last-hour cut (exit when the last hour went against the position) helped on all four
+index roots in D670 and D673. It is a candidate exit for a new component's pre-registration, not a change to this arm.

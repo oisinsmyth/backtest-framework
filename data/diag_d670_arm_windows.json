@@ -1,0 +1,60 @@
+{
+ "note": "POST HOC, disclosed; NQ 2016-2023 on D669's hourly fixture; gross dollars at one MNQ",
+ "plain_rule_all_sessions": {
+  "sessions": 1820,
+  "mean_usd": 3.1456043956045296,
+  "total_usd": 5725.000000000244,
+  "t": 0.6136019629999944,
+  "hit": 0.5065934065934066
+ },
+ "arm_enters_at_1000": {
+  "sessions": 1269,
+  "mean_usd": 5.4574468085106815,
+  "total_usd": 6925.500000000055,
+  "t": 0.931819952479685,
+  "hit": 0.5019700551615445
+ },
+ "arm_enters_at_1000_same_direction_as_RON": {
+  "sessions": 950,
+  "mean_usd": 5.031578947368578,
+  "total_usd": 4780.000000000149,
+  "t": 0.7266470765631907,
+  "hit": 0.5010526315789474
+ },
+ "arm_enters_at_1000_opposite_direction": {
+  "sessions": 319,
+  "mean_usd": 6.725705329153309,
+  "total_usd": 2145.4999999999054,
+  "t": 0.6192278438723041,
+  "hit": 0.5047021943573667
+ },
+ "arm_enters_later_or_not_at_all": {
+  "sessions": 551,
+  "mean_usd": -2.1787658802174423,
+  "total_usd": -1200.4999999998108,
+  "t": -0.21273693782411146,
+  "hit": 0.5172413793103449
+ },
+ "arm_no_trade": {
+  "sessions": 115,
+  "mean_usd": -68.80434782608562,
+  "total_usd": -7912.499999999845,
+  "t": -3.1892128021906636,
+  "hit": 0.34782608695652173
+ },
+ "arm_own_gross_on_1000_entry_sessions": {
+  "sessions": 1270,
+  "mean_usd": 7.739763779527937,
+  "total_usd": 9829.50000000048,
+  "t": 1.3955938381232547,
+  "hit": 0.494488188976378
+ },
+ "arm_own_gross_on_later_entry_sessions": {
+  "sessions": 438,
+  "mean_usd": 28.03767123287741,
+  "total_usd": 12280.500000000306,
+  "t": 3.688664318456579,
+  "hit": 0.6073059360730594
+ },
+ "share_of_sessions_arm_enters_at_1000": 0.6769722814498934
+}

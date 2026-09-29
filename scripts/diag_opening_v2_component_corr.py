@@ -37,7 +37,7 @@ def main() -> int:
         return m
 
     V._load = load_ledger
-    S = pd.read_csv(REPO / "data" / "opening" / "v2_sessions.csv", dtype={"session": str})
+    S = pd.read_csv(REPO / "data" / "opening" / "v2_sessions.csv", dtype={"session": str}, encoding="utf-8")
     out = {"series": "per-session policy net, bp (v2_sessions.csv)", "ledger_root": str(a.ledger_root)}
     for cell, g in S.groupby("cell"):
         out[cell] = V.component_corr(g.set_index("session")["policy"].astype(float))

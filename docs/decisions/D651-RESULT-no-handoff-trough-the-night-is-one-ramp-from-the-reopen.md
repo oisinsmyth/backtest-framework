@@ -123,3 +123,5 @@ declared, never measured (D591).
   and about 50% wider on NQ than the core).
 - **What stays open:** the 18:00 reopen is the thinnest period of the day. It is a session boundary, not a staffing
   handoff, and any study of it is a new pre-registration.
+
+The same ruling reached this study's other session the same day, in its own words: "No pull for the handoff" (`aa1f577`).

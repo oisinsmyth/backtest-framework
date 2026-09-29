@@ -4901,3 +4901,92 @@ D622 established that something is specific to ES 14:00 → 15:00 → 16:00 and 
 **Stage S-A** ([D646](decisions/D646-RESULT-opening-stage-S-A-log-loss-not-accuracy.md)) passes H-O1 **by the letter and not in substance**: log loss 0.907 against the base rate's 0.933 (−2.8%, against −0.3% on noise), but accuracy **+0.1 point — four days of 4,032**, because the model predicts RANGE 97% of the time; its permutation null sits *below* the base rate. H-O2 is not a pass: the policy nets −0.13 / −0.05 bp a day, and its +1.75 / +1.99 bp paired margin over the baselines is the baselines' cost.
 
 **Why it fails** ([D647](decisions/D647-POST-HOC-opening-S-A-cannot-see-trend-days.md), post hoc): **the pre-registered trade makes money on the TRUE labels** — CONT +12.6 bp net a trade (t 8.6), FADE +6.4 (t 4.1) — so the trade is not the bottleneck. **The observables cannot see trend days**: one-vs-rest AUC CONT **0.506**, FADE 0.655, RANGE 0.593; the log-loss gain is the prior-day location, volatility and the gap. Phase 4's agents (A1–A7, dealer gamma, large-lot flow) are the registered route to that information; the same diagnostics are fixed at every stage and a v2 redesign is parked behind a fixed trigger (OA-A8). **General lesson: a classifier can pass a log-loss bar while adding nothing a trade can use — report accuracy against the base rate, per-class AUC and the perfect-foresight ceiling beside it.**
+
+## 88. Margin increases (D657): CME's hikes force positions out and precede two weeks of volatility no model forecast, but move no price that comes back — an input for strategies, not a trade
+
+**511 front-month margin increases of 5 % or more on 32 CME roots, 2010–2023**, parsed from CME's own archived
+margin histories (built and gated in [D657](decisions/D657-STAGE-0-RESULT-exits-and-volatility-no-trade.md); a hole
+from late 2015/2017 to mid-2020 for most roots). Against same-root control days matched on volatility quintile and
+trend sign: **open interest falls 1.5 % more than the control over the notice to five sessions after (t −3.0)**, in
+every year and every class except rates and livestock; **realised variance over the ten sessions after the change
+runs 29 % above a HAR forecast made before the notice (t 4.8)**, in every year and every class, largest in rates
+(+0.43 log points) and grains (+0.33). **The move during the forced-exit window does not revert** (β −0.0003,
+t −0.48, at its control's median; 4.9 bp of expected move against an 8.1 bp bar). This is Hedegaard (2014) on a wider
+sample: both sides exit, so the forced flow nets to no price. **The principal closed the line and recorded it as an
+input**: a hike is a public, dated warning of higher variance and higher trading cost on its root, usable as a
+size-down or cost filter by any strategy trading that root. **General lessons from the build:** CME's definitions
+expiry map lacks whole contract-years (a quarter of Treasury contracts in many years), so anything resolved through
+it can vanish silently; the `statistics` open interest before 2016 carries no reference session, and from 2016 each
+session is published twice, a day apart.
+
+## 89. The admitted MACD arm's mechanism (D669): it carries the move since yesterday's close into days that trend, and its Sharpe is the top of its family
+
+**In sample (2016–2023), the arm is a day-scale timer, not a drift harvester**
+([D669](decisions/D669-STAGE-0-RESULT-a-day-scale-timer-that-fails-its-search.md)).
+
+- **Timing, not drift.** Permuting its long/short labels among its own trades leaves the arm above every null, down to
+  within-week permutations (+52 to +115 SE). Drift carries −1 % of its $22,110 gross.
+- **Its direction is, three times in four, the sign of NQ's move since the prior 16:00 close.** That sign alone on the
+  arm's windows earns 92 % of the gross. Where the MACD departs from it, the MACD earns nothing measurable (t 0.23).
+- **It earns on days that trend efficiently from 10:00 to 16:00.** The top fifth of days by move carries 114 % of the
+  gross, with a hit rate of 64 % against 44 % in the bottom fifth; efficiency t 6.6, volatility t 0.6. Those days
+  cluster in volatile months: hence 2020 and 2022.
+- **The concentration is not the price level:** 68 % of the gross in bp, 72.5 % in dollars.
+- **The overfitting concern is located on the two choices the search made.**
+  - The MACD lengths are a plateau.
+  - The impulse length is a spike: 26 gives 0.17, 34 gives 0.72, 42 gives 0.37.
+  - So is the minimum hold. M = 5 buys one exit at 15:00, worth about 0.32 of Sharpe: the last hour it skips would have
+    lost $4,455 (t −2.1).
+  - The median of 485 neighbours is 0.24 net.
+  - The deflated Sharpe fails: 0.003 on D495's cells, and 0.28 even with pure-noise trial variance.
+- **No unread NQ slice remains to confirm any of it.**
+- **Corrected by §90:** the direction is the sign since the prior close measured at each trade's own entry, and the arm
+  earns on its later entries, not at 10:00.
+
+## 90. The 10:00 direction does not carry (D670): the arm's mechanism, built plainly, fails everywhere, and the arm's money is in its later entries
+
+**The rule:** take the sign of the move since yesterday's 16:00 close at 10:00, hold it to the close, one micro
+([D670](decisions/D670-STAGE-0-RESULT-the-ten-oclock-direction-does-not-carry.md), in sample to 2025-02). **It fails on
+every root.**
+- **YM, never having seen it:** −4.45 bp gross a trade, t −2.76. The direction reverses there.
+- **RTY:** −0.18 bp.
+- **ES:** −0.59 bp.
+- **NQ, where it was found:** +1.26 bp, below the median of its own within-week direction permutation.
+
+**The trend days that carried the arm do not carry this direction.** On the top two-fifths of days by move, it loses
+on three of four roots.
+
+**Nothing known at 10:00 forecasts its profit:** the first half hour's size, agreement, range and efficiency, dealer
+gamma (SqueezeMetrics) and trailing volatility. β_disc t runs from −0.89 to +0.58.
+
+**On NQ 2016–2023, the arm's own sessions split sharply** (post hoc):
+- its 10:00 entries, two-thirds of sessions, earn $9,830 gross (t 1.4);
+- **its later entries, 23 % of sessions, earn $12,281 (t 3.7, hit 61 %).** These come after the two MACDs agree on a
+  move that formed after 10:00;
+- the days it never trades would have cost the plain rule $69 a session.
+
+**So the arm joins formed moves and sits out days that never form one.** Its entry timing rests on the two
+parameters D669 found to be a spike, and that idea is untested outside NQ.
+
+**One ingredient does hold out of NQ:** exiting at 15:00 when the last hour went against the position adds 0.2–1.5 bp
+on all four roots (YM t 2.8), as the close continues its prior hour.
+
+## 91. Joining the formed move does not carry either (D673): the MACD arm has no portable mechanism
+
+**The rule:** at the first hourly close after 10:00 where price is on the same side of yesterday's close and today's
+open, enter that way and hold to the close
+([D673](decisions/D673-STAGE-0-RESULT-the-formed-move-does-not-carry-either.md)). **It fails on YM, RTY and ES:**
+- YM −1.30 bp gross, RTY −0.21, ES +0.05, all inside a within-week direction permutation and a clock-matched random
+  entry;
+- **NQ, where the idea came from: +1.85 bp, at its null's median**, which is drift;
+- the rule trades on about 91 % of sessions; every root's mean sits below its median;
+- the expected-profit filter never switches on.
+
+**The arm-like subset** (no move formed by 09:59) is better on three roots but never reaches t 1.2. On NQ the arm's own
+later entries reached t 3.7 on the same kind of session. **The difference is the arm's two tuned indicators on NQ in
+sample.**
+
+**With D669 and D670:** the arm times direction, but no plain statement of that timing carries anywhere, NQ included.
+**What earns is its specific NQ timing,** set by the two parameters D669 found to be a spike.
+
+**The 15:00 last-hour cut repeats on all four roots** (+0.4 to +1.0 bp here). It is an exit, not an edge.

@@ -1,0 +1,14 @@
+{
+ "decision_record": "D656",
+ "post_hoc": true,
+ "disclosed_in": "D656 RESULT s.3",
+ "statistic": "pooled beta of the 4-week change of G on G",
+ "observed_beta": -0.157,
+ "null": "G simulated as a pure random walk with its own weekly volatility and length (674), 4,000 draws, seed 657",
+ "p50": -0.0259,
+ "p05": -0.0837,
+ "p01": -0.1184,
+ "rank_of_observed": 0.0018,
+ "weekly_ar1_of_G": 0.9144,
+ "half_life_weeks": 7.7
+}

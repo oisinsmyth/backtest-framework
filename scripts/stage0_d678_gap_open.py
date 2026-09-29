@@ -1,5 +1,5 @@
 """D678: going with the overnight gap through yesterday's day-session range at the open, on HO, RB, BZ, HG and PL.
-Spec: docs/decisions/D678-PRE-REG-the-overnight-gap-through-yesterdays-range-on-ho-rb-bz-hg-pl.md (7914bfde).
+Spec: docs/decisions/D678-PRE-REG-overnight-gap-on-ho-rb-bz-hg-pl.md (7914bfde).
 In-sample to 2025-02-28; the vault is never read; HO/RB after 2026-09-18 are D626's; CL/NG are not used.
 
     uv run --with pyarrow python scripts/stage0_d678_gap_open.py --selftest

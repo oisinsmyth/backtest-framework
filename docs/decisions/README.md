@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 411 of these records carry neither field —
+**No Status or Category column, deliberately.** 444 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -728,14 +728,33 @@ would look like data. The tokens are what is shown.
 | D653 | D653 STAGE 0 RESULT — NOT SUPPORTED: the crack's deviation from its seasonal norm predicts nothing at 2–13 weeks, becau… | [record](D653-STAGE-0-DESIGN-does-the-crack-spread-revert-to-its-norm.md) · [RESULT](D653-STAGE-0-RESULT-not-supported-the-deviation-is-an-era.md) |
 | D654 | D654 STAGE 0 RESULT — eight roots qualify as run, but the robust core is two: gold and silver drain late, outside the i… | [record](D654-STAGE-0-DESIGN-when-open-interest-leaves-the-expiring-month.md) · [RESULT](D654-STAGE-0-RESULT-the-metals-roll-late-and-outside-the-index.md) |
 | D655 | there is no reverting roll premium in the gold and silver spreads: the trade earns +0.44 bp gross against a placement m… | [PRE-REG](D655-PRE-REG-selling-the-metals-roll-after-first-notice.md) · [RESULT](D655-RESULT-no-roll-premium-the-control-earns-more.md) |
+| D656 | D656 STAGE 0 RESULT — the soybean crush carries no processors' premium, and its near-versus-next-year gap genuinely rev… | [record](D656-STAGE-0-DESIGN-the-soybean-crush-premium-and-reversion.md) · [RESULT](D656-STAGE-0-RESULT-no-premium-a-real-reversion-no-trade.md) |
+| D657 | D657 STAGE 0 RESULT — a CME margin increase forces positions out and is followed by two weeks of volatility nobody fore… | [record](D657-STAGE-0-DESIGN-margin-hikes-forced-exit-and-reversion.md) · [RESULT](D657-STAGE-0-RESULT-exits-and-volatility-no-trade.md) |
 | D658 | RESULT: no agent adds information to the opening model, its final stage is S-A, and Gate O1 fails on H-O2; the trade ru… | [RESULT](D658-RESULT-opening-phase-4-no-agent-retained-gate-O1-fails.md) |
 | D659 | RESULT: both opening-v2 cells pass D652's kill, and the vault cannot confirm either: power at the full in-sample edge i… | [RESULT](D659-RESULT-opening-v2-both-cells-carried-power-5-percent.md) |
 | D660 | DIAG: the opening models' mechanics are exact, their results are noise around zero, and the oracle edge is real but nee… | [record](D660-DIAG-opening-v1-v2-mechanics-statistics-and-oracle-edge.md) |
-| D661 | DIAG: sizing the prize — no known mechanism can carry a confirmable trade after the opening range, and the biggest flow… | [record](D661-DIAG-opening-prize-sizing-no-mechanism-can-carry-a-confirmable-trade.md) |
-| D662 | D662 STAGE 0 RESULT — NOT SUPPORTED: neither the gap nor the stop run is multiplied by dealer short gamma at the openin… | [record](D662-STAGE-0-DESIGN-does-dealer-short-gamma-multiply-the-opening-shock.md) · [RESULT](D662-STAGE-0-RESULT-shock-times-gamma-not-supported-short-gamma-breaks-carry-slightly.md) |
-| D663 | D663 STAGE 0 RESULT — NOT SUPPORTED on either root: measured on the SPX options book, ES breaks do not carry further wh… | [record](D663-STAGE-0-DESIGN-per-root-break-times-dealer-gamma-with-cash-flow-shocks.md) · [RESULT](D663-STAGE-0-RESULT-per-root-break-times-gamma-not-supported-on-either-root.md) |
+| D661 | DIAG: sizing the prize — no known mechanism can carry a confirmable trade after the opening range, and the biggest flow… | [record](D661-DIAG-opening-prize-sizing.md) |
+| D662 | D662 STAGE 0 RESULT — NOT SUPPORTED: neither the gap nor the stop run is multiplied by dealer short gamma at the openin… | [record](D662-STAGE-0-DESIGN-short-gamma-times-opening-shock.md) · [RESULT](D662-STAGE-0-RESULT-shock-times-gamma-not-supported.md) |
+| D663 | D663 STAGE 0 RESULT — NOT SUPPORTED on either root: measured on the SPX options book, ES breaks do not carry further wh… | [record](D663-STAGE-0-DESIGN-per-root-break-times-gamma.md) · [RESULT](D663-STAGE-0-RESULT-per-root-break-times-gamma-not-supported.md) |
+| D664 | the spark spread cannot be tested or traded on CME: all 121 CME electricity futures carry zero open interest and zero v… | [record](D664-PROBE-the-spark-spread-is-not-on-cme.md) |
 | D665 | DIAG of D663: the gamma measures work, and they predict how FAR the market moves after the break, not which way it carr… | [record](D665-DIAG-d663-gamma-predicts-size-not-carry.md) |
-| D666 | D666 STAGE 0 RESULT — NOT SUPPORTED at Gate 1 on both roots: the re-break of yesterday's range does not carry before co… | [record](D666-STAGE-0-DESIGN-the-rebreak-of-yesterdays-range.md) · [RESULT](D666-STAGE-0-RESULT-the-rebreak-does-not-carry-and-is-worse-than-a-plain-break.md) |
+| D666 | D666 STAGE 0 RESULT — NOT SUPPORTED at Gate 1 on both roots: the re-break of yesterday's range does not carry before co… | [record](D666-STAGE-0-DESIGN-the-rebreak-of-yesterdays-range.md) · [RESULT](D666-STAGE-0-RESULT-the-rebreak-does-not-carry.md) |
+| D667 | pausing the MACD arm after NQ margin increases lifts its net Sharpe by 0.04, inside both nulls: not supported, and the… | [PRE-REG](D667-PRE-REG-margin-hike-pause-on-the-macd-arm.md) · [RESULT](D667-RESULT-the-hike-pause-sits-inside-both-nulls.md) |
+| D668 | D668 STAGE 0 RESULT: NOT SUPPORTED on YM and on RTY. The plain break of yesterday's range does not beat its same-clock… | [record](D668-STAGE-0-DESIGN-plain-break-with-a-profit-predictor.md) · [RESULT](D668-STAGE-0-RESULT-plain-break-not-on-ym-or-rty.md) |
+| D669 | D669 STAGE 0 RESULT — the MACD arm earns by carrying the direction of the move since yesterday's close into days that t… | [record](D669-STAGE-0-DESIGN-where-the-macd-arms-returns-come-from.md) · [RESULT](D669-STAGE-0-RESULT-a-day-scale-timer-that-fails-its-search.md) |
+| D670 | D670 STAGE 0 RESULT — the move since yesterday's close, taken at 10:00 and held to the close, carries nowhere: not on Y… | [record](D670-STAGE-0-DESIGN-carry-the-overnight-direction-from-ten.md) · [RESULT](D670-STAGE-0-RESULT-the-ten-oclock-direction-does-not-carry.md) |
+| D671 | D671 STAGE 0 RESULT (development, ES and NQ): the day-size forecast predicts the day's range well, but NQ's breaks pay… | [record](D671-STAGE-0-DESIGN-break-with-a-day-size-forecast.md) · [RESULT](D671-STAGE-0-RESULT-size-forecast-points-the-wrong-way.md) |
+| D672 | D672 STAGE 0 RESULT (development, ES and NQ): the compression break makes +6.93 bp net on NQ (t 2.40, 55 trades a year,… | [record](D672-STAGE-0-DESIGN-the-compression-break.md) · [RESULT](D672-STAGE-0-RESULT-compression-break-carries-on-nq.md) |
+| D673 | D673 STAGE 0 RESULT — joining the day's move once it has formed carries nowhere: not on YM, RTY or ES, and not beyond i… | [record](D673-STAGE-0-DESIGN-join-the-formed-move-after-ten.md) · [RESULT](D673-STAGE-0-RESULT-the-formed-move-does-not-carry-either.md) |
+| D674 | the MACD arm resized: one MNQ stays the floor, so the account moves to MFFU Rapid 150k and the book's expectation moves… | [record](D674-the-macd-arm-resized-to-the-150k-account.md) |
+| D675 | D675 STAGE 1 RESULT — the log MACD has no mechanism of its own: it is a clock-blind blend of effects the record already… | [record](D675-STAGE-1-DESIGN-the-log-macd-edge-decomposed-exactly.md) · [RESULT](D675-STAGE-1-RESULT-the-macd-is-a-clock-blind-blend.md) |
+| D676 | D676 RESULT: NOT SUPPORTED on CL, NG, GC and SI. The root-aware break of yesterday's day-session range has no gross edg… | [PRE-REG](D676-PRE-REG-the-root-aware-break-on-cl-ng-gc-si.md) · [RESULT](D676-RESULT-the-root-aware-break-carries-on-none-of-cl-ng-gc-si.md) |
+| D677 | DIAG: why D676's root-aware break loses on CL, NG, GC and SI. The break carries a small, real piece of direction on all… | [record](D677-DIAG-why-the-break-fails-on-energy-and-metals.md) |
+| D678 | D678 RESULT: NO MECHANISM. Going with the overnight gap at the open carries no direction on HO, RB, BZ, HG or PL. The f… | [PRE-REG](D678-PRE-REG-overnight-gap-on-ho-rb-bz-hg-pl.md) · [RESULT](D678-RESULT-overnight-gap-carries-no-direction.md) |
+| D679 | D679 RESULT: NO MECHANISM by the declared bar, and a consistent lift. On all nine roots the compressed third's breaks b… | [PRE-REG](D679-PRE-REG-the-compression-break-mechanism-on-ho-rb-bz-hg-pl.md) · [RESULT](D679-RESULT-compression-tier-lifts-but-misses-its-bar.md) |
+| D680 | REGISTRATION: the NQ compression break for the joint vault run. One MNQ on D672's compressed-third break, friction coun… | [PRE-REG](D680-PRE-REG-the-nq-compression-break-for-the-joint-vault.md) |
+| D681 | DIAG of D666: the retest selects the failed breaks, which is why the re-break loses; the thread is NQ's plain break wit… | [record](D681-DIAG-the-retest-selects-the-failed-breaks.md) |
+| D682 | NOT SUPPORTED on YM and on RTY: the compression break does not transfer. On RTY the compressed third is the WORST of th… | [PRE-REG](D682-PRE-REG-the-compression-break-on-ym-and-rty.md) · [RESULT](D682-RESULT-the-compression-break-does-not-transfer-to-ym-or-rty.md) |
 
 <!-- REGISTER:END -->
 

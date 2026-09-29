@@ -1,0 +1,138 @@
+{
+ "decision_record": "docs/decisions/D664-PROBE-the-spark-spread-is-not-on-cme.md",
+ "reads_no_market_data": true,
+ "dataset": "GLBX.MDP3",
+ "windows": [
+  [
+   "2012-06-01",
+   "2012-06-08"
+  ],
+  [
+   "2016-06-01",
+   "2016-06-08"
+  ],
+  [
+   "2020-06-01",
+   "2020-06-08"
+  ],
+  [
+   "2024-06-03",
+   "2024-06-10"
+  ]
+ ],
+ "power_codes": {
+  "WRP": "PJM Western Hub Real-Time Peak Monthly 1 MW",
+  "WRO": "PJM Western Hub Real-Time Off-Peak Monthly 1 MW",
+  "WDP": "PJM Western Hub Day-Ahead Peak Monthly 1 MW",
+  "WDO": "PJM Western Hub Day-Ahead Off-Peak Monthly 1 MW",
+  "5ZP": "PJM Western Hub Real-Time Peak Monthly 50 MW",
+  "5ZO": "PJM Western Hub Real-Time Off-Peak Monthly 50 MW",
+  "SDP": "PJM Northern Illinois Hub Day-Ahead Peak Monthly 1 MW",
+  "IRP": "PJM Northern Illinois Hub Real-Time Peak Monthly 1 MW",
+  "NRK": "ERCOT North 345KV Real-Time Peak Monthly 1 MW",
+  "EN6": "ERCOT North 345KV Real-Time 2x16 Monthly 1 MW",
+  "DP8": "PJM Western Hub Day-Ahead Peak Daily 800 MWh",
+  "RP8": "PJM Western Hub Real-Time Peak Daily 800 MWh"
+ },
+ "resolution": {
+  "NG": {
+   "2012": 3299,
+   "2016": 1452,
+   "2020": 1927,
+   "2024": 1972
+  },
+  "CL": {
+   "2012": 72,
+   "2016": 1374,
+   "2020": 1623,
+   "2024": 1887
+  },
+  "WRP": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "WRO": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "WDP": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "WDO": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "5ZP": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "5ZO": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "SDP": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "IRP": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "NRK": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "EN6": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "DP8": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  },
+  "RP8": {
+   "2012": "absent",
+   "2016": "absent",
+   "2020": "absent",
+   "2024": "absent"
+  }
+ },
+ "controls_resolve": true,
+ "every_power_code_absent_in_every_window": true,
+ "cme_product_slate": {
+  "source": "https://www.cmegroup.com/CmeWS/mvc/ProductSlate/V2/List?group=7&subGroup=11&cleared=Futures (read in a browser, one request, 2026-09-28)",
+  "trade_date": "2026-09-25",
+  "report_type": "FINAL",
+  "electricity_futures_listed": 121,
+  "with_open_interest_above_zero": 0,
+  "with_volume_above_zero": 0,
+  "venues_listed": "Globex and ClearPort for every product",
+  "field_check": {
+   "NG open interest": 1794933,
+   "CL open interest": 1854775
+  }
+ }
+}

@@ -2,6 +2,247 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## WHERE WE ARE, 2026-09-29 NIGHT: `wt/after-d643` merged into main (the principal: "Ok Merge to main, then push")
+
+**The branch's records are on main under their own numbers.** The `B6xx` numbers in the deposit sweep below are the
+same records: B658 = D658, B676 = D676, and so on.
+
+**Renumbered at the merge:**
+- our D667 (the D666 diagnostic) → **D681**;
+- our D673 (the compression break on YM/RTY) → **D682**.
+
+**Not edited, and still citing the old numbers:** commits before the merge, recorded run outputs, the frozen D680
+pre-registration, and the modules its runner imports. **Next free number: 683.**
+
+**The opening-break line, in one place:**
+
+| record | result |
+|---|---|
+| D668 | the plain break carries only on NQ; the predictor ranks nothing |
+| D671 | a day-size forecast works but points the wrong way for the trade |
+| D672 | the compression break, NQ, development: C1 +7.56 bp net with friction counted once (D672-A1) |
+| D682 (ex-D673) | the compression break does not transfer to YM or RTY |
+| D676 | root-aware break on CL, NG, GC, SI: NOT SUPPORTED |
+| D677 (DIAG) | the break's direction is small everywhere; micro friction is 5–6% of ATR |
+| D678 | the overnight gap carries no direction (sign-flip null) |
+| D679 | the compression tier's sign holds on 9 of 9 energy/metals roots, below its declared bar |
+
+**Friction convention from now on: counted ONCE** (D668-A2 / D672-A1): at-level fills plus $3/$6 and the measured
+crossing. The old stack double-counted.
+
+**Frozen for the joint vault run: D680, the NQ compression break, programme slot 9.**
+- `data/FROZEN_vault_d680_nq_compression.json`; runner `scripts/vault_d680_nq_compression.py`.
+- Power: 0.66 / 0.30 / 0.10 at 100 / 50 / 0% of the in-sample edge, about 85 trades.
+- **Prerequisite, deferred by the principal ("start on the NQ Vault period data later"):** the NQ vault-input path.
+  That is D644's fixture built through 2026-09-18 and G0's loader with the cut moved. `--vault` re-proves the known
+  answer on it first.
+
+**Closed 2026-09-29:**
+- opening v2 (D652/D659), without spending its look;
+- D668's NQ plain break as a separate vault line (reported beside D680 as B0).
+- **Registry:** slots 1–9 allocated; slot 10 free.
+
+**Still open:**
+- FINDINGS sections for D666–D682 are not written;
+- the opening model's H-O2 (slot 7, D658) waits for a closing word;
+- Sierra's Maximum Historical Intraday Days to Download goes back to 186;
+- the worktree `after-d643` can be removed after the push, on the principal's word.
+
+
+## THE DEPOSIT SWEEP, 2026-09-29 EVENING: what is still open in `User-Doc-Deposit/` (read this before re-auditing)
+
+The principal: "Have another look though the user deposited files, find anything open", then "record the findings in
+PickUp so other agent don't have to do the same work".
+
+**How it was done.**
+- Five read-only agents read all 20 deposit files in full and classified every testable item as tested, closed
+  unrun, blocked, parked or untouched, with evidence. They searched `docs/decisions` (both branches), FINDINGS,
+  AITODO, PICKUP and the tracker.
+- The top "untouched" claims were re-checked by grep in the main session.
+- No data was read and nothing was run.
+- **Numbers written `B6xx`** (B658, B659, B661, B662, B663, B665, B668, B672, B676) are records that exist only on the
+  unmerged branch `wt/after-d643`. Read them with `git show wt/after-d643:docs/decisions/<file>`. They become D-numbers
+  on main when that branch merges, but its D667 and D673 clash with main's and must be renumbered.
+
+**The rules that set most statuses.**
+- **D582 §1 closed the first deposit's list** "in any variant" on the fixtures on disk. The principal has since
+  reopened single items: crack D653, crush D656, spark D664, delivery D654/D655, margin D657, handoff D651. All are
+  closed again.
+- **D582 §2 exempts `FEATURE_RESEARCH.md` and `READING_LIST.md`:** they "are method, not studies, and stay in force"
+  (checked, D582 line 63). An untested idea from those two needs no reopening.
+- **D563 closed trend and carry; D603 closed basis momentum** in every variant.
+- **D640 (LETF) and D643 (shock classifier)** stopped at their own pre-registered kills.
+- **The log MACD (D675)** is closed as of today.
+
+**Corrections to the agents' reports.**
+- One report said Sierra's aggressor-signed ticks exist "for CL/NG only". That is wrong: ES, NQ, YM and RTY tick files
+  were pulled pre-vault for the opening model's A7 (the other session, B658/B668 data commits). **Micros were not
+  pulled.**
+- Book and signed Databento data (`mbo`, `tbbo`, `bbo-1m`) exist only inside the vault.
+
+### A. Untested, data on disk, NOT under any closure (FEATURE_RESEARCH stays in force)
+
+| idea | source | data | the catch |
+|---|---|---|---|
+| **Month-end / quarter-end rebalancing flow.** Balanced and pension funds rebalance to fixed weights, so the month's equity-minus-bond return predicts the flow's sign and size into the close or the next session. **The principal was offered this first**; next steps: power and seal check, then a Stage 0. | FEATURE §9.2 | ES/NQ/ZN/ZB 1-minute bars 2010+; month- and quarter-end flags (D589) | 12 events a year, so power first. Verified untested: no record studies it. B661 (on `wt/after-d643`) cites Harvey–Mazzoleni–Melone (about −16/−17 bp next day) and sized pension flow for the opening window only. |
+| **Implied vs realised volatility spread** | FEATURE §9.2 | ES option end-of-day fixture 2016–2026 (D581); CL/NG option raw pulled, not built | A conditioner for size, not direction (memory: confluences predict size). Verified untested; D404 "does not reach implied volatility". |
+| **Lead-lag between related instruments** | FEATURE §9.2; D473:112 "untested here" | 41 roots, 1-minute bars 2010+ | FEATURE §10's timezone and settlement-alignment trap. D504 is the only instance (Asian chips into US semis). |
+| **Global vs per-root parameters, out of sample** | FEATURE §7.1 | any | A method check; it would test the principal's root-aware ruling. D141 adopted one global setting without the comparison. |
+| **CPCV + PBO, and PBO run retrospectively on past sweep families** | FEATURE §8, §12.5 | none needed | "Not built" (D600, D603) |
+| PEAD; gross profitability; Ken French library | FEATURE §9.2; READING_LIST | EDGAR raw (equities) | No consensus EPS. Equities only. |
+
+### B. Untested, but inside a closure: reopening needs the principal's word
+
+- **The gamma-conditioned close, re-run with SqueezeMetrics SPX GEX as the regime** (GAMMA_CONDITIONED_CLOSE).
+  - D581 used its own carried ES dealer book. SPX GEX calls short gamma on 11% of days against that book's 42%
+    (B665 A1, other branch), so the published regime was never tested at the close.
+  - GEX is a fixture newer than D582, which D582's reopen clause allows.
+  - The prior is weakened by the GEX results at the open (B662, B663: not supported) and by B665 (GEX predicts size,
+    not carry).
+  - Open Q2 (NQ's close on its own options book) and Q3 (an intraday crossing of the flip level) are also untested.
+- **The shock classifier with signed flow** on ES/NQ/YM/RTY (Sierra ticks). It is the one question D643 left
+  open. Headwinds: almost every shock is INFO, and LIQ has only 51–85 shocks.
+- **Commodity skewness and commodity value** (PUBLISHED_STRATEGIES §0, READING_LIST). D563 §3 says they were never
+  tested. They are 17-root cross-sectional books, and D557–D559's sorts all lost. Value's 5-year lookback leaves
+  only 2015 onward.
+- **Minor, each with a low prior:**
+  - a Kalman estimate of the transitory price state at the open, price-only (OVERNIGHT_IMBALANCE F4);
+  - the open's reaction to the overnight move, split by news and no-news nights (D585 calendar);
+  - the dispersion arm in its declared form;
+  - the CL "maintenance flow" clock: contracts entering hedgers' 12/24-month window (HEDGING_FLOW §4.1; D577
+    measured that flow at about 1/40 of the derivation);
+  - the decay of the index-roll disturbance (BASIS_MOMENTUM §4.4; overlaps the index-reweight line);
+  - MET/ETH funding;
+  - the managed-money change reversal (D263 closed weekly positioning for prop);
+  - the consumer-hedged sign flip (it rests on hedging pressure, which lost in D573).
+
+### C. Settlement ledger items never run (inputs on disk; low prior; NG's in-sample already read 7–8 times)
+
+- **Diagnostics:** H9 (stress × impact), H10 (crowding reversal), H13 (fund-roll flow vs calendar spread) and H8(a)
+  (ETF flow into futures flow).
+- **Stages:** I (the large-lot split, which must gate on the midday placebo, D631), F (the P8a/P8b fund-roll flows),
+  E and §8A.2 (worth anything only on CL, where Stage A is inconclusive), and C2 (D632 §5's question goes to the
+  principal first).
+- **Sizing and exits:** H7 (sizing) and the §7.4 flow-reversal exit.
+- **P11, the options pin-risk diagnostic,** once the CL/NG options panel is built.
+
+### D. Pending, scheduled, or waiting on a ruling
+
+- **Index reweight.**
+  - Frozen 2026-09-27, so the 10-16 deadline is met. What still binds is that no 2027 BCOM or GSCI publication may be
+    read.
+  - C0's sign checks run on 10-05 (non-energy) and 10-11 (energy). C0's one run is then on the principal's word,
+    followed by R1–R3.
+  - R-Q6 (which contracts the prop firm offers, and overnight holds) is open.
+- **Settlement ledger.**
+  - D626's one read is on 10-10. The CL/NG Sierra-sign check against true trades follows it; **its script extension
+    is not written.** A correlation r < 0.8 voids that root (D629 §6).
+  - The D630 §8 vault-input wrapper is PARKED. NG Stage A and D649 are frozen for the joint run.
+- **The opening line (evidence on `wt/after-d643`).**
+  - **v1 (B658, slot 7) has no closure record.**
+  - **v2 (B659) is unruled:** freeze it for the vault at 5–6.5% power, or close it.
+  - **The component lines of V2-F (net Sharpe 0.22) and V2-C (0.62) are not in `COMPONENTS_PROP.md`**, which CLAUDE.md
+    requires.
+  - Also untested: O-Q5, the 09:30–10:05 spread measurement promised by OA-A5, and the OA-A2 list of prior vault
+    exposure. Both are needed only if a vault look happens.
+- **The other session's line:** B676 (root-aware break on CL/NG/GC/SI) is registered, with its runner committed and
+  not yet run. B672 (NQ compression break) waits for the vault at about 30% power.
+- **Stale bookkeeping:**
+  - AITODO still says LETF's "one `--run` waits for the principal", and LETF-A4 is still labelled "proposed";
+  - releasing the LETF H1 and shock H1 slots in `data/programme_registry.json` is unverified;
+  - FINDINGS §87 predates B658.
+
+### E. Blocked on data, a purchase or a decision
+
+- **Needs a purchase:** order-book history (ledger Stage H and H14, index H-R4; about $916 windowed for CL/NG),
+  Norgate ($270, a deep-history holdout), Pinnacle/CSI.
+- **Free, but needs the principal's download approval:** DTCC swaps (H15, about 0.5 GB), the CFTC supplemental/CIT
+  and combined disaggregated reports (index §5A.2/§5A.3, grains index traders), the attention backfill (Stage C3;
+  multi-terabyte, plus a design decision on Q12).
+- **Not reachable:** FRED/ALFRED resets every connection from this machine.
+- **Other blockers:** hedge-ratio filings (HEDGING P4, P7, RBL covenant count), CL option implied volatility at 12–24
+  months (P5), 1-minute perp and spot klines (FUNDING F3), CIP / forward / OIS rates, and the recorder host (Q17), on
+  which Track 2/3 and every forward protocol wait.
+
+## WHERE WE ARE, 2026-09-29 AFTERNOON — the MACD-arm session (written at the principal's request before a context wipe)
+
+**UPDATE, same day: the reshaping line is CLOSED and `worktree-next` is merged into main (fast-forward); the worktree
+`.claude/worktrees/fresh` is removed. NOT pushed.** (The principal: "Close and merge then remove the worktree.")
+
+**Branch `worktree-next`, worktree `.claude/worktrees/fresh`, as it stood before the merge:**
+- Main was at `de257e6` (D667 CLOSED).
+- `worktree-next` was main plus seven commits:
+
+| commit | what |
+|---|---|
+| `39a25d3` / `1a91815` | D669 design / result: the MACD arm's mechanism |
+| `772ade0` / `d4c5811` | D670 design / result: the 10:00 direction rule, NOT SUPPORTED |
+| `d6aade7` / `d8228dd` | D673 design / result: join the formed move, NOT SUPPORTED |
+| `3268931` | D674: the arm resized to MFFU Rapid 150k, BOOK_PROP and COMPONENTS_PROP amended |
+
+**Done earlier today and already on main:**
+- D657 (margin hikes, recorded as a strategy input);
+- D664 (spark spread, CLOSED);
+- D667 (hike pause on the MACD arm, CLOSED).
+
+**The thread: is the admitted MACD arm overfitted?** The principal: "I think the MACD arm has a high chance of being
+overfitted" / "investigate the MACD" / "resize it, then amend".
+
+1. **D669** (NQ 2016–2023):
+   - **The arm is a timer, not drift.** Drift share is −1 %, and it beats a direction permutation down to the week.
+   - **It earns on efficient trend days**, not on volatility or the price level.
+   - **Its 0.72 is the top of its family.** The neighbourhood median is 0.24 net (rank 13 of 486). The spike is on the
+     impulse length and on M = 5, which buys one 15:00 exit. The deflated Sharpe fails (0.003; 0.28 with pure-noise
+     variance).
+2. **D670:** "the move since yesterday's close at 10:00, held to the close" is NOT SUPPORTED on YM and RTY.
+   - YM −4.45 bp (t −2.76), a reversal; RTY, ES and NQ flat.
+   - No 10:00 forecast discriminates, including SqueezeMetrics GEX.
+   - **Post hoc:** the arm's gross sits in its entries after 10:00 (23 % of sessions, t 3.7); its 10:00 entries are
+     noise.
+   - **Disclosed bug:** the first run's two trailing P2 features were blanked after holidays. It was fixed and rerun,
+     and no gate changed.
+3. **D673:** "join the formed move after 10:00" (price beyond both yesterday's close and today's open, held to the
+   close) is NOT SUPPORTED on YM, RTY and ES. NQ is +1.85 bp, at its null's median.
+   - **So the arm has no portable mechanism;** its returns rest on NQ-specific tuned timing.
+   - The 15:00 last-hour cut helps on all four roots (0.2–1.5 bp): a candidate exit, not an edge.
+4. **D503's forward read, restated for the principal.** Net Sharpe +0.736, but UNRESOLVED against its null (p95
+   +0.758). Three sessions made half the P&L, the mean trade ex-top 1 % is −$0.59, and 2024 was −$21.
+5. **D674, the principal's ruling:**
+   - one MNQ is the floor, so the account moved to **MFFU Rapid 150k**, and the expectation is **Sharpe 0.24**;
+   - P3a goes from 1.90 a year to 0, and the drawdown from 5.1 σ away to 11.6 σ;
+   - V per $463 evaluation: +$86 ± 24 at 0.24, +$1,231 at 0.72, −$171 at 0;
+   - `BOOK_PROP.md` and `COMPONENTS_PROP.md` #2 are amended. The arm's spec is unchanged.
+
+**Resolved:**
+1. **The reshaping line (D670 + D673) is CLOSED** by the principal, 2026-09-29 (§9 of D670, §8 of D673).
+2. **`worktree-next` is merged into main** (fast-forward) and its worktree removed.
+
+**OPEN:**
+1. **TWO NUMBER CLASHES with `wt/after-d643`, which now merges second and must renumber both:**
+   - **D673:** its `D673-PRE-REG-the-compression-break-on-ym-and-rty.md` (`fb8c4c5`, 10:58) against main's D673
+     (`d6aade7`, 10:35). The principal chose "leave it for merge".
+   - **D667:** its diagnostic of its own record 666 (`af05100`, 08:59) against main's D667 margin-hike pause
+     (pre-reg `161f553`, 08:40). Not noticed until after the context wipe.
+   - The branch also holds records numbered 665, 666, 668, 671 and 672 (not on main, so not cited as D-numbers here).
+     **The next free number across all branches is 675.**
+     **Always check `git ls-tree -r --name-only wt/after-d643 docs/decisions` before claiming a number.**
+2. **Before buying the 150k evaluation,** check MFFU's current terms. D674 used D386's recorded plan figures:
+   $463 fee, $4,500 intraday-trailed funded drawdown, and the 2 % daily line.
+3. **Push:** main is ahead of `origin/main` and has not been pushed.
+
+**Working notes for whoever resumes:**
+- **Tests.** The full suite passes 4,200 when run with `PYTHONPATH=<worktree>/src`: the worktree's `.venv` is a junction
+  to main's, so without it three tests fail on environment only. In PowerShell: `$env:PYTHONPATH = "$PWD\src";
+  .venv\Scripts\python.exe -m pytest -q -p no:cacheprovider tests`.
+- **Counts.** After any new record: stage it, run `scripts/build_decision_register.py --write` and
+  `scripts/build_readme_counts.py --build`, then hand-edit README lines 134/235, PHILOSOPHY line 7 and TUTORIAL
+  line 5.
+- **Paths.** A record must not cite a decision number that has no record on this branch
+  (`test_cited_decisions_exist`). Tracked paths must stay ≤ 85 characters.
+- **SqueezeMetrics** `DIX.csv` lives in the main checkout's `data/raw/squeezemetrics/`. D670's runner finds it
+  there.
+- **Memory** is updated: `macd-arm-mechanism-is-overnight-direction-on-trend-days.md`.
+
 ## WHERE WE ARE, 2026-09-29 MORNING (saved before a /compact)
 
 **Branch `wt/after-d643`, worktree `.claude/worktrees/after-d643`. Committed through `f93a23c`, NOT pushed.**

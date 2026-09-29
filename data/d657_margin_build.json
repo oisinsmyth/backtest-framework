@@ -1,0 +1,2236 @@
+{
+ "decision_record": "docs/decisions/D657-STAGE-0-DESIGN-margin-hikes-forced-exit-and-reversion.md",
+ "reads_no_price": true,
+ "files": 124,
+ "files_parsed": 109,
+ "files_not_parsed": [
+  {
+   "file": "11-2024-to-present__20260823084623.pdf",
+   "error": "ValueError: 11: layout D with no front (roll 1) rows under 11 or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "CL-2019-10-11-to-2023-10-19__20250211175325.pdf",
+   "error": "PdfStreamError: Stream has ended unexpectedly"
+  },
+  {
+   "file": "CL-2023-to-present__20260823084623.pdf",
+   "error": "ValueError: CL: layout D with no front (roll 1) rows under CL or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "HO-2023-10-20-to-present__20250211175905.pdf",
+   "error": "ValueError: HO: layout D with no front (roll 1) rows under HO or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "HO-2023-to-present__20250910103305.pdf",
+   "error": "ValueError: HO: layout D with no front (roll 1) rows under HO or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "ND-2024-to-present__20260908113030.pdf",
+   "error": "ValueError: ND: layout D with no front (roll 1) rows under ND or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "NG-2023-to-present__20260823084623.pdf",
+   "error": "ValueError: NG: layout D with no front (roll 1) rows under NG or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "NK-2024-to-present__20250910114102.pdf",
+   "error": "ValueError: NK: layout D with no front (roll 1) rows under NK or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "RB-2019-10-11-to-2023-10-19__20250211193331.pdf",
+   "error": "PdfStreamError: Stream has ended unexpectedly"
+  },
+  {
+   "file": "RB-2023-10-20-to-present__20250211184318.pdf",
+   "error": "ValueError: RB: layout D with no front (roll 1) rows under RB or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "RB-2023-to-present__20260823084623.pdf",
+   "error": "ValueError: RB: layout D with no front (roll 1) rows under RB or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "SP-2024-to-present__20260911154901.pdf",
+   "error": "ValueError: SP: layout D with no front (roll 1) rows under SP or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "SP_2020_to_present__20230101075930.pdf",
+   "error": "ValueError: SP: layout D with no front (roll 1) rows under SP or its root; roll-1 codes present: []"
+  },
+  {
+   "file": "sr3-2019-to-present__20240704023244.pdf",
+   "error": "ValueError: SR3: layout D with no front (roll 1) rows under SR3 or its root; roll-1 codes present: []"
+  }
+ ],
+ "codes": 33,
+ "G0a": {
+  "missing_codes": [],
+  "files_with_nonpositive_rows": [
+   "11_2014_to_present__20171129082259.zip",
+   "ND_2014_to_present__20171129074847.zip",
+   "NG_2009_to_2013__20171129084133.zip"
+  ],
+  "nonpositive_rows_are_holiday_placeholders_removed": true,
+  "pass": true
+ },
+ "removed_steps": [
+  {
+   "file": "11_2014_to_present__20171129082259.zip",
+   "date": "2014-05-26",
+   "maint": 0.0,
+   "why": "non-positive (holiday placeholder)"
+  },
+  {
+   "file": "25_2009_to_2013__20171129075844.zip",
+   "date": "2009-11-17",
+   "maint": 1000.0,
+   "why": "transient: 6500.0 -> 1000.0 -> 6500.0 by 2009-11-18"
+  },
+  {
+   "file": "BTC-2020-to-present__20260422043221.pdf",
+   "date": "2020-09-01",
+   "maint": 19924.0,
+   "why": "transient: 18891.0 -> 19924.0 -> 18909.0 by 2020-09-02"
+  },
+  {
+   "file": "BTC-2020-to-present__20260422043221.pdf",
+   "date": "2021-02-09",
+   "maint": 90754.0,
+   "why": "transient: 85035.0 -> 90754.0 -> 85339.0 by 2021-02-10"
+  },
+  {
+   "file": "BTC-2020-to-present__20260422043221.pdf",
+   "date": "2021-06-24",
+   "maint": 60909.0,
+   "why": "transient: 57575.0 -> 60909.0 -> 57889.0 by 2021-06-25"
+  },
+  {
+   "file": "C_2009_to_2013__20171129074758.zip",
+   "date": "2009-12-28",
+   "maint": 1000.0,
+   "why": "transient: 1100.0 -> 1000.0 -> 1100.0 by 2009-12-30"
+  },
+  {
+   "file": "C_2009_to_2013__20171129074758.zip",
+   "date": "2010-01-04",
+   "maint": 1100.0,
+   "why": "transient: 1000.0 -> 1100.0 -> 1000.0 by 2010-01-05"
+  },
+  {
+   "file": "ND_2014_to_present__20171129074847.zip",
+   "date": "2014-05-26",
+   "maint": 0.0,
+   "why": "non-positive (holiday placeholder)"
+  },
+  {
+   "file": "NG_2009_to_2013__20171129084133.zip",
+   "date": "2009-04-28",
+   "maint": 0.0,
+   "why": "non-positive (holiday placeholder)"
+  },
+  {
+   "file": "NG_2009_to_2013__20171129084133.zip",
+   "date": "2009-05-27",
+   "maint": 0.0,
+   "why": "non-positive (holiday placeholder)"
+  },
+  {
+   "file": "S-2020-to-present__20260728070947.pdf",
+   "date": "2023-01-11",
+   "maint": 3300.0,
+   "why": "transient: 3600.0 -> 3300.0 -> 3600.0 by 2023-01-13"
+  },
+  {
+   "file": "SR3-2020-to-present__20250910110149.pdf",
+   "date": "2021-06-23",
+   "maint": 190.0,
+   "why": "transient: 160.0 -> 190.0 -> 160.0 by 2021-06-24"
+  },
+  {
+   "file": "W_2008_to_present__20150528093455.pdf",
+   "date": "2010-09-23",
+   "maint": 12500.0,
+   "why": "transient: 2500.0 -> 12500.0 -> 2500.0 by 2010-09-24"
+  }
+ ],
+ "mislabeled_files_excluded": [
+  {
+   "excluded": "C_2008_to_present__20150528093444.pdf",
+   "duplicate_of": "S_2008_to_present__20150528075951.pdf",
+   "own_daily_agreement": {
+    "C_2008_to_present__20150528093444.pdf": 0.14285714285714285,
+    "S_2008_to_present__20150528075951.pdf": 1.0
+   },
+   "shared_steps": 29
+  }
+ ],
+ "spec_initial_over_maintenance": [
+  1.1,
+  1.35
+ ],
+ "G0c": {
+  "pairs": [
+   {
+    "a": "06_2008_to_present__20150528082925.pdf",
+    "b": "06_2009_to_2013__20171129082940.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 8,
+    "exact": 8,
+    "within_1d": 8,
+    "within_3d": 8,
+    "pct_same_day": 8,
+    "pct_within_1d": 8,
+    "products": [
+     "H",
+     "06"
+    ]
+   },
+   {
+    "a": "06_2009_to_2013__20171129082940.zip",
+    "b": "06_2008_to_present__20150528082925.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 9,
+    "exact": 8,
+    "within_1d": 8,
+    "within_3d": 8,
+    "pct_same_day": 8,
+    "pct_within_1d": 8,
+    "products": [
+     "06",
+     "H"
+    ]
+   },
+   {
+    "a": "07_2008_to_present__20150528073110.pdf",
+    "b": "07_2009_to_2013__20171129080844.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 6,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "H",
+     "07"
+    ]
+   },
+   {
+    "a": "07_2008_to_present__20150528073110.pdf",
+    "b": "07_2014_to_present__20171129080125.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "H",
+     "07"
+    ]
+   },
+   {
+    "a": "07_2009_to_2013__20171129080844.zip",
+    "b": "07_2008_to_present__20150528073110.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "07",
+     "H"
+    ]
+   },
+   {
+    "a": "07_2014_to_present__20171129080125.zip",
+    "b": "07_2008_to_present__20150528073110.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "07",
+     "H"
+    ]
+   },
+   {
+    "a": "11_2008_to_present__20150528073701.pdf",
+    "b": "11_2009_to_2013__20171129074404.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 2,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "H",
+     "YM"
+    ]
+   },
+   {
+    "a": "11_2008_to_present__20150528073701.pdf",
+    "b": "11_2014_to_present__20171129082259.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 3,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "YM"
+    ]
+   },
+   {
+    "a": "11_2009_to_2013__20171129074404.zip",
+    "b": "11_2008_to_present__20150528073701.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 2,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "YM",
+     "H"
+    ]
+   },
+   {
+    "a": "11_2014_to_present__20171129082259.zip",
+    "b": "11_2008_to_present__20150528073701.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 3,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "YM",
+     "H"
+    ]
+   },
+   {
+    "a": "17_2008_to_present__20150528074016.pdf",
+    "b": "17_2014_to_present__20171129085207.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "H",
+     "17"
+    ]
+   },
+   {
+    "a": "17_2014_to_present__20171129085207.zip",
+    "b": "17_2008_to_present__20150528074016.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "17",
+     "H"
+    ]
+   },
+   {
+    "a": "17-2019-to-present__20240704000318.pdf",
+    "b": "17-2020-to-present__20260823084623.pdf",
+    "overlap": [
+     "2020-06-30",
+     "2024-06-28"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "17",
+     "17"
+    ]
+   },
+   {
+    "a": "17-2020-to-present__20260823084623.pdf",
+    "b": "17-2019-to-present__20240704000318.pdf",
+    "overlap": [
+     "2020-06-30",
+     "2024-06-28"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "17",
+     "17"
+    ]
+   },
+   {
+    "a": "21_2008_to_present__20150528081416.pdf",
+    "b": "21_2014_to_present__20171129085339.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "H",
+     "21"
+    ]
+   },
+   {
+    "a": "21_2014_to_present__20171129085339.zip",
+    "b": "21_2008_to_present__20150528081416.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "21",
+     "H"
+    ]
+   },
+   {
+    "a": "21-2019-to-present__20240704030627.pdf",
+    "b": "21-2020-to-present__20250910111732.pdf",
+    "overlap": [
+     "2020-06-24",
+     "2024-06-28"
+    ],
+    "n": 10,
+    "exact": 10,
+    "within_1d": 10,
+    "within_3d": 10,
+    "pct_same_day": 10,
+    "pct_within_1d": 10,
+    "products": [
+     "21",
+     "21"
+    ]
+   },
+   {
+    "a": "21-2020-to-present__20250910111732.pdf",
+    "b": "21-2019-to-present__20240704030627.pdf",
+    "overlap": [
+     "2020-06-24",
+     "2024-06-28"
+    ],
+    "n": 10,
+    "exact": 10,
+    "within_1d": 10,
+    "within_3d": 10,
+    "pct_same_day": 10,
+    "pct_within_1d": 10,
+    "products": [
+     "21",
+     "21"
+    ]
+   },
+   {
+    "a": "25_2008_to_present__20150528093327.pdf",
+    "b": "25_2009_to_2013__20171129075844.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 6,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "H",
+     "25"
+    ]
+   },
+   {
+    "a": "25_2009_to_2013__20171129075844.zip",
+    "b": "25_2008_to_present__20150528093327.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "25",
+     "H"
+    ]
+   },
+   {
+    "a": "25-2019-to-present__20240705134824.pdf",
+    "b": "25-2020-to-present__20260823084623.pdf",
+    "overlap": [
+     "2020-06-30",
+     "2024-06-28"
+    ],
+    "n": 12,
+    "exact": 12,
+    "within_1d": 12,
+    "within_3d": 12,
+    "pct_same_day": 12,
+    "pct_within_1d": 12,
+    "products": [
+     "25",
+     "25"
+    ]
+   },
+   {
+    "a": "25-2020-to-present__20260823084623.pdf",
+    "b": "25-2019-to-present__20240705134824.pdf",
+    "overlap": [
+     "2020-06-30",
+     "2024-06-28"
+    ],
+    "n": 12,
+    "exact": 12,
+    "within_1d": 12,
+    "within_3d": 12,
+    "pct_same_day": 12,
+    "pct_within_1d": 12,
+    "products": [
+     "25",
+     "25"
+    ]
+   },
+   {
+    "a": "26-2019-to-present__20240704065522.pdf",
+    "b": "26-2020-to-present__20260823084623.pdf",
+    "overlap": [
+     "2020-06-30",
+     "2024-06-28"
+    ],
+    "n": 16,
+    "exact": 16,
+    "within_1d": 16,
+    "within_3d": 16,
+    "pct_same_day": 16,
+    "pct_within_1d": 16,
+    "products": [
+     "26",
+     "26"
+    ]
+   },
+   {
+    "a": "26-2020-to-present__20260823084623.pdf",
+    "b": "26-2019-to-present__20240704065522.pdf",
+    "overlap": [
+     "2020-06-30",
+     "2024-06-28"
+    ],
+    "n": 16,
+    "exact": 16,
+    "within_1d": 16,
+    "within_3d": 16,
+    "pct_same_day": 16,
+    "pct_within_1d": 16,
+    "products": [
+     "26",
+     "26"
+    ]
+   },
+   {
+    "a": "BP_2008_to_present__20161123052629.pdf",
+    "b": "BP_2009_to_2013__20171129085330.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "BP"
+    ]
+   },
+   {
+    "a": "BP_2008_to_present__20161123052629.pdf",
+    "b": "BP_2014_to_present__20171129085717.zip",
+    "overlap": [
+     "2014-01-02",
+     "2016-08-15"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "H",
+     "BP"
+    ]
+   },
+   {
+    "a": "BP_2009_to_2013__20171129085330.zip",
+    "b": "BP_2008_to_present__20161123052629.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "BP",
+     "H"
+    ]
+   },
+   {
+    "a": "BP_2014_to_present__20171129085717.zip",
+    "b": "BP_2008_to_present__20161123052629.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2016-08-15"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "BP",
+     "H"
+    ]
+   },
+   {
+    "a": "CD_2008_to_present__20150528080254.pdf",
+    "b": "CD_2014_to_present__20171129083025.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "H",
+     "C1"
+    ]
+   },
+   {
+    "a": "CD_2014_to_present__20171129083025.zip",
+    "b": "CD_2008_to_present__20150528080254.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "C1",
+     "H"
+    ]
+   },
+   {
+    "a": "CL_2008_to_present__20160221231035.pdf",
+    "b": "CL_2009_to_present__20140826230415.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "CL_2008_to_present__20160221231035.pdf",
+    "b": "CL_2014_to_present__20171129073711.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "CL"
+    ]
+   },
+   {
+    "a": "CL_2009_to_present__20140826230415.pdf",
+    "b": "CL_2008_to_present__20160221231035.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 5,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "CL_2014_to_present__20171129073711.zip",
+    "b": "CL_2008_to_present__20160221231035.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "CL",
+     "H"
+    ]
+   },
+   {
+    "a": "EC_2008_to_present__20161130152107.pdf",
+    "b": "EC_2009_to_2013__20171129080907.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "H",
+     "EC"
+    ]
+   },
+   {
+    "a": "EC_2009_to_2013__20171129080907.zip",
+    "b": "EC_2008_to_present__20161130152107.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "EC",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009_to_august_2011__20120627071902.pdf",
+    "b": "GC_2009_to_present__20140828163145.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2011-08-11"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009_to_august_2011__20120627071902.pdf",
+    "b": "GC_2008_to_present__20160909201258.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2011-08-11"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009_to_august_2011__20120627071902.pdf",
+    "b": "GC_2009-2011__20121109075714.pdf",
+    "overlap": [
+     "2009-06-20",
+     "2011-08-11"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009_to_present__20140828163145.pdf",
+    "b": "GC_2009_to_august_2011__20120627071902.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2011-08-11"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009_to_present__20140828163145.pdf",
+    "b": "GC_2008_to_present__20160909201258.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2014-06-30"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009_to_present__20140828163145.pdf",
+    "b": "GC_2009-2011__20121109075714.pdf",
+    "overlap": [
+     "2009-06-20",
+     "2012-08-06"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2008_to_present__20160909201258.pdf",
+    "b": "GC_2009_to_august_2011__20120627071902.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2011-08-11"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2008_to_present__20160909201258.pdf",
+    "b": "GC_2009_to_present__20140828163145.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2014-06-30"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2008_to_present__20160909201258.pdf",
+    "b": "GC_2009-2011__20121109075714.pdf",
+    "overlap": [
+     "2009-06-20",
+     "2012-08-06"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009-2011__20121109075714.pdf",
+    "b": "GC_2009_to_august_2011__20120627071902.pdf",
+    "overlap": [
+     "2009-06-20",
+     "2011-08-11"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009-2011__20121109075714.pdf",
+    "b": "GC_2009_to_present__20140828163145.pdf",
+    "overlap": [
+     "2009-06-20",
+     "2012-08-06"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "GC_2009-2011__20121109075714.pdf",
+    "b": "GC_2008_to_present__20160909201258.pdf",
+    "overlap": [
+     "2009-06-20",
+     "2012-08-06"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "HG_2009_to_present__20140826123833.pdf",
+    "b": "HG_2008_to_present__20170329060838.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2014-06-30"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "HG_2009_to_present__20140826123833.pdf",
+    "b": "HG_2009_to_2013__20171129085622.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "HG"
+    ]
+   },
+   {
+    "a": "HG_2008_to_present__20170329060838.pdf",
+    "b": "HG_2009_to_present__20140826123833.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2014-06-30"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "HG_2008_to_present__20170329060838.pdf",
+    "b": "HG_2009_to_2013__20171129085622.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "HG"
+    ]
+   },
+   {
+    "a": "HG_2009_to_2013__20171129085622.zip",
+    "b": "HG_2009_to_present__20140826123833.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "HG",
+     "H"
+    ]
+   },
+   {
+    "a": "HG_2009_to_2013__20171129085622.zip",
+    "b": "HG_2008_to_present__20170329060838.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "HG",
+     "H"
+    ]
+   },
+   {
+    "a": "HO_2008_to_present__20150906023721.pdf",
+    "b": "HO_2009_to_present__20140827001318.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 3,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "HO_2008_to_present__20150906023721.pdf",
+    "b": "HO_2014_to_present__20171129073603.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "HO"
+    ]
+   },
+   {
+    "a": "HO_2009_to_present__20140827001318.pdf",
+    "b": "HO_2008_to_present__20150906023721.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 6,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "HO_2009_to_present__20140827001318.pdf",
+    "b": "HO_2014_to_present__20171129073603.zip",
+    "overlap": [
+     "2014-01-02",
+     "2014-06-30"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "H",
+     "HO"
+    ]
+   },
+   {
+    "a": "HO_2014_to_present__20171129073603.zip",
+    "b": "HO_2008_to_present__20150906023721.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 4,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "HO",
+     "H"
+    ]
+   },
+   {
+    "a": "HO_2014_to_present__20171129073603.zip",
+    "b": "HO_2009_to_present__20140827001318.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2014-06-30"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "HO",
+     "H"
+    ]
+   },
+   {
+    "a": "JY_2008_to_present__20150528073736.pdf",
+    "b": "JY_2014_to_present__20171129082046.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 2,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "H",
+     "J1"
+    ]
+   },
+   {
+    "a": "JY_2014_to_present__20171129082046.zip",
+    "b": "JY_2008_to_present__20150528073736.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 2,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "J1",
+     "H"
+    ]
+   },
+   {
+    "a": "ND_2008_to_present__20150528092058.pdf",
+    "b": "ND_2009_to_2013__20171129085239.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 3,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "NQ"
+    ]
+   },
+   {
+    "a": "ND_2008_to_present__20150528092058.pdf",
+    "b": "ND_2014_to_present__20171129074847.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 3,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "NQ"
+    ]
+   },
+   {
+    "a": "ND_2009_to_2013__20171129085239.zip",
+    "b": "ND_2008_to_present__20150528092058.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 3,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "NQ",
+     "H"
+    ]
+   },
+   {
+    "a": "ND_2014_to_present__20171129074847.zip",
+    "b": "ND_2008_to_present__20150528092058.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 3,
+    "exact": 0,
+    "within_1d": 0,
+    "within_3d": 0,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "NQ",
+     "H"
+    ]
+   },
+   {
+    "a": "NG_2008_to_present__20150906023255.pdf",
+    "b": "NG_2009_to_present__20140826230338.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 11,
+    "exact": 11,
+    "within_1d": 11,
+    "within_3d": 11,
+    "pct_same_day": 10,
+    "pct_within_1d": 10,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "NG_2008_to_present__20150906023255.pdf",
+    "b": "NG_2009_to_2013__20171129084133.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "NG"
+    ]
+   },
+   {
+    "a": "NG_2008_to_present__20150906023255.pdf",
+    "b": "NG_2014_to_present__20171129074606.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 11,
+    "exact": 11,
+    "within_1d": 11,
+    "within_3d": 11,
+    "pct_same_day": 10,
+    "pct_within_1d": 10,
+    "products": [
+     "H",
+     "NG"
+    ]
+   },
+   {
+    "a": "NG_2009_to_present__20140826230338.pdf",
+    "b": "NG_2008_to_present__20150906023255.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 14,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 8,
+    "pct_within_1d": 8,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "NG_2009_to_present__20140826230338.pdf",
+    "b": "NG_2009_to_2013__20171129084133.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 6,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "H",
+     "NG"
+    ]
+   },
+   {
+    "a": "NG_2009_to_present__20140826230338.pdf",
+    "b": "NG_2014_to_present__20171129074606.zip",
+    "overlap": [
+     "2014-01-02",
+     "2014-06-30"
+    ],
+    "n": 8,
+    "exact": 8,
+    "within_1d": 8,
+    "within_3d": 8,
+    "pct_same_day": 8,
+    "pct_within_1d": 8,
+    "products": [
+     "H",
+     "NG"
+    ]
+   },
+   {
+    "a": "NG_2009_to_2013__20171129084133.zip",
+    "b": "NG_2008_to_present__20150906023255.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 4,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "NG",
+     "H"
+    ]
+   },
+   {
+    "a": "NG_2009_to_2013__20171129084133.zip",
+    "b": "NG_2009_to_present__20140826230338.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 4,
+    "exact": 4,
+    "within_1d": 4,
+    "within_3d": 4,
+    "pct_same_day": 4,
+    "pct_within_1d": 4,
+    "products": [
+     "NG",
+     "H"
+    ]
+   },
+   {
+    "a": "NG_2014_to_present__20171129074606.zip",
+    "b": "NG_2008_to_present__20150906023255.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 11,
+    "exact": 10,
+    "within_1d": 10,
+    "within_3d": 10,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "NG",
+     "H"
+    ]
+   },
+   {
+    "a": "NG_2014_to_present__20171129074606.zip",
+    "b": "NG_2009_to_present__20140826230338.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2014-06-30"
+    ],
+    "n": 8,
+    "exact": 8,
+    "within_1d": 8,
+    "within_3d": 8,
+    "pct_same_day": 8,
+    "pct_within_1d": 8,
+    "products": [
+     "NG",
+     "H"
+    ]
+   },
+   {
+    "a": "NK_2008_to_present__20150528092114.pdf",
+    "b": "NK_2009_to_2013__20171129075138.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 6,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "H",
+     "NK"
+    ]
+   },
+   {
+    "a": "NK_2009_to_2013__20171129075138.zip",
+    "b": "NK_2008_to_present__20150528092114.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 6,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "NK",
+     "H"
+    ]
+   },
+   {
+    "a": "PL_2008_to_present__20150528073428.pdf",
+    "b": "PL_2009_to_present__20140826230115.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "PL_2009_to_present__20140826230115.pdf",
+    "b": "PL_2008_to_present__20150528073428.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "RB_2008_to_present__20150906024125.pdf",
+    "b": "RB_2009_to_present__20140826230238.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 5,
+    "exact": 5,
+    "within_1d": 5,
+    "within_3d": 5,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "RB_2009_to_present__20140826230238.pdf",
+    "b": "RB_2008_to_present__20150906024125.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2014-06-30"
+    ],
+    "n": 8,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 5,
+    "pct_within_1d": 5,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "S_2008_to_present__20150528075951.pdf",
+    "b": "S_2009_to_2013__20171129082639.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "S"
+    ]
+   },
+   {
+    "a": "S_2008_to_present__20150528075951.pdf",
+    "b": "S_2014_to_present__20171129083126.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "H",
+     "S"
+    ]
+   },
+   {
+    "a": "S_2009_to_2013__20171129082639.zip",
+    "b": "S_2008_to_present__20150528075951.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "S",
+     "H"
+    ]
+   },
+   {
+    "a": "S_2014_to_present__20171129083126.zip",
+    "b": "S_2008_to_present__20150528075951.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "S",
+     "H"
+    ]
+   },
+   {
+    "a": "SF_2008_to_present__20150528080605.pdf",
+    "b": "SF_2009_to_2013__20171129085316.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "H",
+     "SF"
+    ]
+   },
+   {
+    "a": "SF_2008_to_present__20150528080605.pdf",
+    "b": "SF_2014_to_present__20171129082643.zip",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 6,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "H",
+     "SF"
+    ]
+   },
+   {
+    "a": "SF_2009_to_2013__20171129085316.zip",
+    "b": "SF_2008_to_present__20150528080605.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 10,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "SF",
+     "H"
+    ]
+   },
+   {
+    "a": "SF_2014_to_present__20171129082643.zip",
+    "b": "SF_2008_to_present__20150528080605.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2015-02-24"
+    ],
+    "n": 6,
+    "exact": 6,
+    "within_1d": 6,
+    "within_3d": 6,
+    "pct_same_day": 6,
+    "pct_within_1d": 6,
+    "products": [
+     "SF",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_december_2010__20110601081327.pdf",
+    "b": "SI_2009_to_may_2011__20120118205828.pdf",
+    "overlap": [
+     "2000-04-13",
+     "2010-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_december_2010__20110601081327.pdf",
+    "b": "SI_2009_to_present__20140826225903.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2010-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_december_2010__20110601081327.pdf",
+    "b": "SI_2008_to_present__20170329060901.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2010-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_may_2011__20120118205828.pdf",
+    "b": "SI_2009_to_december_2010__20110601081327.pdf",
+    "overlap": [
+     "2000-04-13",
+     "2010-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_may_2011__20120118205828.pdf",
+    "b": "SI_2009_to_present__20140826225903.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2011-05-13"
+    ],
+    "n": 14,
+    "exact": 14,
+    "within_1d": 14,
+    "within_3d": 14,
+    "pct_same_day": 14,
+    "pct_within_1d": 14,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_may_2011__20120118205828.pdf",
+    "b": "SI_2008_to_present__20170329060901.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2011-05-13"
+    ],
+    "n": 14,
+    "exact": 14,
+    "within_1d": 14,
+    "within_3d": 14,
+    "pct_same_day": 14,
+    "pct_within_1d": 14,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_present__20140826225903.pdf",
+    "b": "SI_2009_to_december_2010__20110601081327.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2010-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_present__20140826225903.pdf",
+    "b": "SI_2009_to_may_2011__20120118205828.pdf",
+    "overlap": [
+     "2008-01-01",
+     "2011-05-13"
+    ],
+    "n": 14,
+    "exact": 14,
+    "within_1d": 14,
+    "within_3d": 14,
+    "pct_same_day": 14,
+    "pct_within_1d": 14,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2009_to_present__20140826225903.pdf",
+    "b": "SI_2008_to_present__20170329060901.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2014-06-30"
+    ],
+    "n": 16,
+    "exact": 16,
+    "within_1d": 16,
+    "within_3d": 16,
+    "pct_same_day": 16,
+    "pct_within_1d": 16,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2008_to_present__20170329060901.pdf",
+    "b": "SI_2009_to_december_2010__20110601081327.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2010-12-31"
+    ],
+    "n": 7,
+    "exact": 7,
+    "within_1d": 7,
+    "within_3d": 7,
+    "pct_same_day": 7,
+    "pct_within_1d": 7,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2008_to_present__20170329060901.pdf",
+    "b": "SI_2009_to_may_2011__20120118205828.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2011-05-13"
+    ],
+    "n": 14,
+    "exact": 14,
+    "within_1d": 14,
+    "within_3d": 14,
+    "pct_same_day": 14,
+    "pct_within_1d": 14,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2008_to_present__20170329060901.pdf",
+    "b": "SI_2009_to_present__20140826225903.pdf",
+    "overlap": [
+     "2009-01-01",
+     "2014-06-30"
+    ],
+    "n": 16,
+    "exact": 16,
+    "within_1d": 16,
+    "within_3d": 16,
+    "pct_same_day": 16,
+    "pct_within_1d": 16,
+    "products": [
+     "H",
+     "H"
+    ]
+   },
+   {
+    "a": "SI_2008_to_present__20170329060901.pdf",
+    "b": "SI_2014_to_present__20171129082402.zip",
+    "overlap": [
+     "2014-01-02",
+     "2016-08-15"
+    ],
+    "n": 3,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "H",
+     "SI"
+    ]
+   },
+   {
+    "a": "SI_2014_to_present__20171129082402.zip",
+    "b": "SI_2008_to_present__20170329060901.pdf",
+    "overlap": [
+     "2014-01-02",
+     "2016-08-15"
+    ],
+    "n": 4,
+    "exact": 3,
+    "within_1d": 3,
+    "within_3d": 3,
+    "pct_same_day": 3,
+    "pct_within_1d": 3,
+    "products": [
+     "SI",
+     "H"
+    ]
+   },
+   {
+    "a": "SP_2008_to_present__20170329081955.pdf",
+    "b": "SP_2009_to_2013__20171129074526.zip",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 2,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "H",
+     "SP"
+    ]
+   },
+   {
+    "a": "SP_2009_to_2013__20171129074526.zip",
+    "b": "SP_2008_to_present__20170329081955.pdf",
+    "overlap": [
+     "2009-01-02",
+     "2013-12-31"
+    ],
+    "n": 2,
+    "exact": 2,
+    "within_1d": 2,
+    "within_3d": 2,
+    "pct_same_day": 2,
+    "pct_within_1d": 2,
+    "products": [
+     "SP",
+     "H"
+    ]
+   },
+   {
+    "a": "UBE_2008_to_present__20150528084013.pdf",
+    "b": "UBE_2009_to_2013__20171129085146.zip",
+    "overlap": [
+     "2010-01-08",
+     "2013-12-31"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "H",
+     "UBE"
+    ]
+   },
+   {
+    "a": "UBE_2009_to_2013__20171129085146.zip",
+    "b": "UBE_2008_to_present__20150528084013.pdf",
+    "overlap": [
+     "2010-01-08",
+     "2013-12-31"
+    ],
+    "n": 9,
+    "exact": 9,
+    "within_1d": 9,
+    "within_3d": 9,
+    "pct_same_day": 9,
+    "pct_within_1d": 9,
+    "products": [
+     "UBE",
+     "H"
+    ]
+   },
+   {
+    "a": "ube-2019-to-present__20240704030744.pdf",
+    "b": "UBE-2020-to-present__20250910102723.pdf",
+    "overlap": [
+     "2020-06-24",
+     "2024-06-28"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "UBE",
+     "UBE"
+    ]
+   },
+   {
+    "a": "UBE-2020-to-present__20250910102723.pdf",
+    "b": "ube-2019-to-present__20240704030744.pdf",
+    "overlap": [
+     "2020-06-24",
+     "2024-06-28"
+    ],
+    "n": 1,
+    "exact": 1,
+    "within_1d": 1,
+    "within_3d": 1,
+    "pct_same_day": 1,
+    "pct_within_1d": 1,
+    "products": [
+     "UBE",
+     "UBE"
+    ]
+   }
+  ],
+  "increases_compared": 685,
+  "pooled": {
+   "exact": 0.9328467153284672,
+   "within_1d": 0.9328467153284672,
+   "within_3d": 0.9328467153284672,
+   "pct_same_day": 0.9576642335766423,
+   "pct_within_1d": 0.9576642335766423
+  },
+  "same_contract": {
+   "increases": 663,
+   "exact": 0.9638009049773756
+  },
+  "cross_size": {
+   "increases": 22,
+   "pct_same_day": 1.0,
+   "why": "the index change logs quote the big contract, the daily tables the E-mini"
+  },
+  "pass": true
+ },
+ "span2_excluded_from": {
+  "CL": "2023-10-20",
+  "NG": "2023-10-20",
+  "RB": "2023-10-20",
+  "HO": "2023-10-20",
+  "ES": "2024-10-18",
+  "YM": "2024-10-18",
+  "NQ": "2024-10-18",
+  "NKD": "2024-10-18"
+ },
+ "in_sample_increases_unmerged": 882,
+ "per_root": {
+  "6A": 29,
+  "6B": 18,
+  "6C": 25,
+  "6E": 19,
+  "6J": 29,
+  "6S": 27,
+  "BTC": 77,
+  "CL": 22,
+  "ES": 8,
+  "GC": 25,
+  "HE": 9,
+  "HG": 23,
+  "HO": 25,
+  "LE": 12,
+  "NG": 62,
+  "NKD": 17,
+  "NQ": 22,
+  "PL": 18,
+  "RB": 21,
+  "SI": 27,
+  "SR3": 14,
+  "TN": 8,
+  "UB": 23,
+  "YM": 13,
+  "ZB": 34,
+  "ZC": 30,
+  "ZF": 29,
+  "ZL": 37,
+  "ZM": 34,
+  "ZN": 32,
+  "ZS": 43,
+  "ZT": 41,
+  "ZW": 29
+ },
+ "per_year": {
+  "2008": 68,
+  "2009": 7,
+  "2010": 57,
+  "2011": 65,
+  "2012": 13,
+  "2013": 40,
+  "2014": 68,
+  "2015": 53,
+  "2016": 46,
+  "2017": 11,
+  "2019": 13,
+  "2020": 75,
+  "2021": 138,
+  "2022": 160,
+  "2023": 68
+ },
+ "note": "increases are >= 5 % front maintenance steps before merging; the runner merges within 10 sessions"
+}

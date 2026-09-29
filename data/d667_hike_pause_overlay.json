@@ -1,0 +1,172 @@
+{
+ "decision_record": "docs/decisions/D667-PRE-REG-margin-hike-pause-on-the-macd-arm.md",
+ "prereg": "161f553",
+ "window": [
+  "2016-01-04",
+  "2023-12-29"
+ ],
+ "arm_sessions": 1876,
+ "arm_net_total": 15423.414000000772,
+ "events": [
+  "2016-01-27",
+  "2016-11-03",
+  "2017-02-10",
+  "2017-09-14",
+  "2020-08-07",
+  "2020-11-13",
+  "2021-08-18",
+  "2022-03-02",
+  "2022-11-16",
+  "2023-03-17",
+  "2023-12-20"
+ ],
+ "paused_sessions": 106,
+ "covered_sessions": 1263,
+ "delta_net_sharpe": 0.03955879773190796,
+ "removed_net_usd": -486.9905000000008,
+ "base": {
+  "net_sharpe": 0.723636932639082,
+  "net_sortino": 1.0686774472585405,
+  "gross_sharpe": 1.0390894805250173,
+  "gross_sortino": 1.5565305757475218,
+  "net_total": 15423.414000000772,
+  "max_dd": 7814.206499999728,
+  "worst_day": -1314.508999999949,
+  "round_trips": 1908.0,
+  "p3a_breaches_per_year": 0.26865671641791045,
+  "p3a_breaches": 2,
+  "p3b_life_cost": 0.2222222222222222
+ },
+ "paused": {
+  "net_sharpe": 0.76319573037099,
+  "net_sortino": 1.1240633405415013,
+  "gross_sharpe": 1.0673564784905345,
+  "gross_sortino": 1.594411677346089,
+  "net_total": 15910.404500000774,
+  "max_dd": 7312.156999999862,
+  "worst_day": -1314.508999999949,
+  "round_trips": 1799.0,
+  "p3a_breaches_per_year": 0.26865671641791045,
+  "p3a_breaches": 2,
+  "p3b_life_cost": 0.2222222222222222
+ },
+ "N1_rotation": {
+  "p05": -0.16420085249350488,
+  "p50": -0.01779090084364271,
+  "p95": 0.1368397463330381,
+  "offsets": 1262,
+  "rank_of_delta": 0.7274167987321711
+ },
+ "N2_vol_matched": {
+  "p05": -0.16928154289669142,
+  "p50": -0.05292884509513407,
+  "p95": 0.06036147411457822,
+  "p95_boot_se": 0.003265703135183849,
+  "draws": 2000,
+  "pool_sizes": [
+   40,
+   4,
+   137,
+   75,
+   110,
+   53,
+   137,
+   53,
+   11,
+   81,
+   97
+  ]
+ },
+ "bars": {
+  "B1": true,
+  "B2": false,
+  "B3": false,
+  "B3_unresolved": false,
+  "B4": true,
+  "pass": false
+ },
+ "diagnostics": {
+  "paused_sessions": {
+   "sessions": 106,
+   "mean": -4.594250000000008,
+   "sd": 158.2980993769462,
+   "sum": -486.9905000000008,
+   "traded_sessions": 100,
+   "hit_rate": 0.5
+  },
+  "elsewhere": {
+   "sessions": 1770,
+   "mean": 8.988929096045634,
+   "sd": 181.60147389681413,
+   "sum": 15910.404500000772,
+   "traded_sessions": 1608,
+   "hit_rate": 0.5068407960199005
+  },
+  "n2_windows_pooled": {
+   "sessions": 209048,
+   "mean": 15.057667868145021,
+   "sd": 186.17169870005876
+  },
+  "sd_ratio_paused_to_elsewhere": 0.8716784945638222,
+  "welch_t_paused_vs_elsewhere": -0.850559632107833,
+  "per_year": {
+   "2016": {
+    "paused_sessions": 20,
+    "delta": -0.2856023892036937,
+    "removed_net": 196.39650000002717
+   },
+   "2017": {
+    "paused_sessions": 20,
+    "delta": 0.09303510546077348,
+    "removed_net": -63.090000000016374
+   },
+   "2018": {
+    "paused_sessions": 0,
+    "delta": 0.0,
+    "removed_net": 0.0
+   },
+   "2019": {
+    "paused_sessions": 0,
+    "delta": 0.0,
+    "removed_net": 0.0
+   },
+   "2020": {
+    "paused_sessions": 20,
+    "delta": -0.18626238547794394,
+    "removed_net": 661.9144999999417
+   },
+   "2021": {
+    "paused_sessions": 10,
+    "delta": 0.18350367699553616,
+    "removed_net": -502.04949999987275
+   },
+   "2022": {
+    "paused_sessions": 20,
+    "delta": 0.10624988890725695,
+    "removed_net": -295.085500000062
+   },
+   "2023": {
+    "paused_sessions": 16,
+    "delta": 0.16134695636106944,
+    "removed_net": -485.0765000000183
+   }
+  },
+  "largest_paused_session": {
+   "day": "2022-11-30",
+   "net": 968.4954999999927
+  }
+ },
+ "predictions": {
+  "1_abs_delta_below_0.10": true,
+  "2_B2_fails": true,
+  "3_B3_fails": true,
+  "4_sd_ratio_at_least_1.2": false,
+  "5_mean_not_distinguishable": true
+ },
+ "max_drawdown_convention": {
+  "sign": "positive",
+  "note": "max_dd is a POSITIVE drawdown in US DOLLARS on the cumulative-sum daily P&L curve at one MNQ (peak minus trough), not a fraction of peak.",
+  "record": "D542"
+ },
+ "wall_min": 0.03
+}
