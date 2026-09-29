@@ -400,6 +400,14 @@ def build(data_root: Path, gates_only: bool = False) -> dict[str, Any]:
         g2["holm_p"] = h2.get(r)
         g2["pass"] = ok
         out["roots"][r]["verdict"] = "SUPPORTED" if ok else "MECHANISM ONLY" if g1["MECHANISM"] else "NOT SUPPORTED"
+    # D678-A1: the mechanism reading, on gross only, against each root's own sign-flip null
+    exc = {r: float(out["roots"][r]["gross_pct_A"]["mean"] - out["roots"][r]["null_pct_A"]["p50"]) for r in ROOTS}
+    k_pos = int(sum(v > 0 for v in exc.values()))
+    reading = ("CONFIRMED ACROSS ROOTS" if g1["MECHANISM"] and k_pos >= 4 else "FAMILY ONLY" if g1["MECHANISM"] else "NOT CONFIRMED")
+    out["mechanism_reading_A1"] = {"excess_over_own_null_p50_pct_A": exc,
+                                   "own_null_rank": {r: out["roots"][r]["null_pct_A"]["rank"] for r in ROOTS},
+                                   "roots_with_excess_positive": k_pos, "binomial_p_one_sided": float(stats.binom.sf(k_pos - 1, len(ROOTS), 0.5)),
+                                   "reading": reading}
     sec = [out["roots"][r]["secondary_gap_vs_fresh_pct_A"]["diff"] for r in ROOTS]
     out["predictions"] = {"1_family_passes_gate1": g1["MECHANISM"],
                           "2_no_root_passes_gate2": not any(out["roots"][r]["gate2"]["pass"] for r in ROOTS),
@@ -479,6 +487,7 @@ def main() -> int:
     out = build(a.data_root)
     OUT.write_text(json.dumps(out, indent=1, default=float) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps({"gate1_family": {k: out["gate1_family"][k] for k in ("statistic_pct_A", "t_hac", "MECHANISM")},
+                      "mechanism_reading_A1": out["mechanism_reading_A1"],
                       "verdicts": {r: v["verdict"] for r, v in out["roots"].items()}, "predictions": out["predictions"],
                       "runtime_min": out["runtime_min"]}, indent=1, default=float))
     return 0
