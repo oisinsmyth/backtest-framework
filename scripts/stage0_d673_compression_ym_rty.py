@@ -229,10 +229,11 @@ def build(data_root: Path, gates_only: bool = False) -> dict[str, Any]:
                                                       "d672_c1_net": ref[r]["books"]["C1_compression"]["net"]}
     k8 = M.k8_daily(tabs["NQ"], frames["NQ"].index)
     out["roots"] = {}
+    dailies = {o_: blocks[o_]["_daily"] for o_ in M.ROOTS}  # taken before any block is trimmed for output
     for r in EVID:
         blk = blocks[r]
         tr, c1, netv, ses, usd_pt = blk.pop("_c1")
-        others = {o_: blocks[o_]["_daily"] for o_ in M.ROOTS if o_ != r}
+        others = {o_: dailies[o_] for o_ in M.ROOTS if o_ != r}
         blk["component_C1"] = M.component(tr, netv, tr["E4_gross"].to_numpy(float), c1.astype(float), ses, usd_pt, k8, others)
         blk.pop("_daily")
         out["roots"][r] = blk
