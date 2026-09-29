@@ -137,3 +137,33 @@ refutation.**
   case gains support from outside its own sample.
 - **FAMILY ONLY:** recorded; the NQ result stays NQ-specific.
 - **NOT CONFIRMED:** the compression break stays an NQ-specific in-sample finding, as D673 left it.
+
+## Amendment D679-A1, before the run (2026-09-29): CL, NG, GC and SI added as a second family
+
+**The principal:** "In-sample re-reads are not a big deal, its insample for a reason."
+
+**Written before any data gate or outcome of this study.** The runner exists but has not been run.
+
+**What is added.** The same statistics on CL, NG, GC and SI:
+- D676's fixture (`fut_opening_globex_1m_cl_ng_gc_si`, gated in `0a6c033f`);
+- D676's sessions and its R2 (D676-A1: CL/NG business days to expiry, GC/SI to first notice);
+- full size, single count: $6 + the measured `d507_exec` crossing (CL 1.50, NG 1.26, GC 4.21, SI 4.30 ticks);
+- B0 armed at the open, no R3 or EIA rule, exactly as §2 defines it for the five.
+
+**Why they can count.** The compression break was found on NQ, not on these roots. D676 read only the overnight half of
+the tier on them, as its secondary, and not the full tier or the rv5 half.
+- **Family 2 is therefore evidence for the mechanism, but not clean evidence for the overnight input.** That is
+  disclosed beside it.
+- **Not added:** ES, NQ, YM and RTY. ES and NQ are where the idea came from, and YM and RTY are D673's evidence. Their
+  existing C1 − rest reads (D672, D673) are quoted in the result for completeness only.
+
+**How it enters:**
+
+| | what it gets |
+|---|---|
+| **Primary (unchanged)** | Gate 1 and the mechanism reading on HO, RB, BZ, HG and PL |
+| **Family 2** | its own Gate 1(a–c) in the same form: common-offset enumerated rotation over its four roots, and its own mechanism reading |
+| **All nine, reported** | the count of roots whose C1 − rest exceeds their own rotation's p50, with a one-sided binomial p at ½ (9 of 9: 0.002; 8: 0.020; 7: 0.090) |
+
+- Gate 2 on family 2 is reported, with Holm within the family. It is not a verdict.
+- The four predictions (§5) stay on the primary five.
