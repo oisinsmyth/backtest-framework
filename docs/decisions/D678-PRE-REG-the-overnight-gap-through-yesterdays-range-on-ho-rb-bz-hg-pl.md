@@ -183,3 +183,31 @@ different volatility weigh alike.
   - the cheapest execution (full size, and the best-measured crossing) is the only lever;
   - a vault confirmation is proposed only for roots whose in-sample net is positive, and is left to the principal.
 - **NO MECHANISM:** D677 lead (a) is closed. The opening-break line has nothing left on energy and metals.
+
+## Amendment D678-A1, before the run (2026-09-29): the principal's mechanism criterion, per root
+
+**The principal:** "I am worried about the underlying mechanism if its real or not. What would confirm it for me is
+wether the other roots have a gross edge but not a net edge."
+
+**Written before any data gate or outcome on these roots;** the fixture is still being built.
+
+**The mechanism is judged on GROSS only:** the fill prices, before commission and crossing. Net plays no part in it.
+Gross is judged against the sign-flip null on the same gap days, not against zero, because a random direction on those
+days carries its own mean (drift and stop geometry).
+
+**Per root, declared (not a tradeability gate):**
+- **excess** = the root's gross (% of A) − its own sign-flip null's p50, with the null's rank;
+- **the count of roots with excess > 0,** with its one-sided binomial p at ½ (5 of 5: 0.031; 4 of 5: 0.19).
+
+**The mechanism reading:**
+
+| reading | condition |
+|---|---|
+| **CONFIRMED ACROSS ROOTS** | Gate 1 (family) passes **and** excess > 0 on at least 4 of the 5 |
+| **FAMILY ONLY** | Gate 1 passes, excess > 0 on fewer than 4 |
+| **NOT CONFIRMED** | Gate 1 fails |
+
+This reading is reported beside the tradeability verdicts and does not change §4's gates.
+
+**Power:** each root alone has about 0.25–0.4 power to rank above its own null's p95 at D677's effect size. So a single
+root is not expected to clear its p95. The sign count and the family statistic carry the evidence.
