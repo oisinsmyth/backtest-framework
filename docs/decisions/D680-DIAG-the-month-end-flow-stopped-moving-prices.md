@@ -92,3 +92,19 @@ with D678: no projection could rescue a price response that disappeared. Two thi
 - record these facts: the two-legged mechanism, and its post-2018 absorption;
 - optionally, pre-register the quarter-end ES−ZB book **forward only**: it would accrue from the next quarter-end,
   with no historical slice spent.
+
+## 5. CLOSED by the principal, 2026-09-29
+
+"Ok close no need for 2024+ data." **The month-end rebalancing line (D677, D678, D680) is closed under R15 as a
+strategy.** No unread slice was spent, and none will be.
+- **The component lines** are entered in `COMPONENTS_PROP.md` as SCORED, NOT ENTERED.
+- **The forward-only quarter-end book is not taken up.**
+- **The facts stand:**
+  - the mechanism was real and two-legged (equities, and the long bond, not ZN) through 2018;
+  - its price impact per unit of flow has mostly been absorbed since, except at quarter-ends.
+
+**The principal's reading, checked the same day:** "a real mechanism, still exists today but is anticipated by the
+market and absorbed". The record's qualifications:
+- **"Anticipated" means predictable, not front-run.** The impact did not move earlier in the month.
+- **"Still exists" is measured for the drift and the quarter-end residual, not for the flow itself.**
+- **Absorption over a shift of venue is the best reading, not a tested one.**

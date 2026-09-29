@@ -191,11 +191,11 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     (t −3.27).
   - **The residual in 2019–23 sits at quarter-ends:** −14.1, t −1.54.
   - **The reading:** predictable flow is now absorbed without a price concession.
-- [ ] **The principal's calls (D678 §6, D680 §4):**
-  - close the month-end line as a strategy (D677 + D678, no slice spent);
-  - SCORED, NOT ENTERED in COMPONENTS_PROP;
-  - an anticipation study (days 10–6 before month-end) only as a new line, and its prior is low.
-- [ ] **The principal's calls (D677 §7):**
+- [x] **The month-end line CLOSED** (the principal, 2026-09-29: "Ok close no need for 2024+ data").
+  - D677, D678 and D680 carry closure sections; no slice was spent.
+  - SCORED, NOT ENTERED in COMPONENTS_PROP.
+  - Neither the anticipation line nor the forward-only quarter-end book is taken up.
+- [x] **Superseded by the closure above:** the principal's calls (D677 §7):
   - record MECHANISM ONLY and do not spend 2024-01 → 2025-02 (expected t ≈ 1.1 at the measured effect; 1.65 with
     the vault);
   - enter it in COMPONENTS_PROP as SCORED, NOT ENTERED;

@@ -144,3 +144,10 @@ index roots.
 3. **If a successor is wanted, it should explain the two misfits first:** why ZN is flat, and why the move continues.
    It should not re-tune this signal. A study of where the bond leg's flow lands, or whether the continuation is
    month-end information, would have a mechanism of its own.
+
+## 8. CLOSED by the principal, 2026-09-29
+
+"Ok close no need for 2024+ data." **The line is closed under R15 with D678 and D680;** see D680 §5.
+- **The bond-leg question of proposal 3 is answered by D680:** the leg is in the long bond (ZB +8.6, t 2.09 in
+  2010–15), not ZN.
+- **The continuation is weak in every era.**

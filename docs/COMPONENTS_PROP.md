@@ -444,3 +444,26 @@ with D466's committed series over 2016–2023.
 |---|---|---|---|
 | shock INFO (follow), NQ / ES / CL / GC, 1 micro | D643 | −1.24 (−1.60) / −2.28 (−2.75) / −2.91 (−3.44) / −2.42 (−3.06); gross −0.19 / −0.25 / −0.04 / +0.27 | Gate 1 failed; gross $0.14–$0.74 a trade against a $4.57–$6.93 round trip; 225–378 trades a year; \|ρ\| with K1–K6 ≤ 0.13 |
 | shock LIQ (fade), NQ / ES / CL / GC, 1 micro | D643 | −0.02 (−0.04) / −0.59 (−0.64) / +0.04 (+0.06) / −1.16 (−1.34); gross +0.09 / −0.47 / +0.46 / −0.09 | Gate 1 failed; NQ/ES/CL on 9 / 6 / 4 trades a year, carried by the 2020 crash (CL −0.03 ex-2020); GC's 34 a year are a clean null; \|ρ\| ≤ 0.14 |
+
+## SCORED, NOT ENTERED — month-end rebalancing flow, 2026-09-29 ([D677](decisions/D677-RESULT-mechanism-only-the-month-end-flow-replicates-and-fades.md), [D678](decisions/D678-RESULT-no-variant-rescues-it-and-the-fade-is-not-liquidity.md), [D680](decisions/D680-DIAG-the-month-end-flow-stopped-moving-prices.md))
+
+Component lines as CLAUDE.md requires, taken from the runners' own output (`data/d677_month_end_rebalancing.json`,
+`data/d678_month_end_variants.json`).
+- **The construction:** the lagged 60/40 drift, traded on ES over the last five trading days of each month.
+- **Size and cost:** 1 MES, at the house cost of $4.42 a round trip.
+- **The score:** daily net Sharpe over every trading day of **2010-07 → 2023-12** (√252). That is wider than the
+  ledger's 2016–2023, because D677 scored that window.
+- **Correlations** are with the admitted MACD arm's daily net, 2016–2023.
+
+**Closed by the principal, 2026-09-29** ("Ok close no need for 2024+ data"). No unread slice was spent.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| month-end drift, unfiltered, 1 MES | D677 | +0.26 (+0.39); gross +0.32 | Gate 2 failed: net t 1.04, on noise and fade, not cost ($4.42 a round trip against a $93 mean move). Lost money in each of 2019–2022. ρ with the arm −0.035 |
+| month-end drift, expected-profit filtered, 1 MES | D677 | +0.24 (+0.36); gross +0.28 | the filter adds nothing; ρ +0.007 |
+| O2: stand aside on FOMC/CPI/NFP days, 1 MES | D678 | +0.33 (+0.50) | best of 13 variants, but only at the 75.5th percentile of the best-of-13 null; NW t 1.42; ρ −0.032 |
+
+**Why the line is closed (D680).** The price response per unit of flow collapsed after 2018: −15.8 and −19.7 fell to
+−5.9 bp per 0.01 of drift. That happened in both legs (the long bond had responded, ZB t 2.09, in 2010–15), while the
+flows grew and the square-root law predicted more impact. The effect was not front-run earlier into the month. The
+residual sits at quarter-ends only.

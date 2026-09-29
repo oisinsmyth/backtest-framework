@@ -145,3 +145,9 @@ filter the last five days.
 3. **If the anticipation reading is to be tested, it is a new line with a new window.** The drift signal would be
    scored over trading days 10–6 before month-end, and on the early days of the month (the flow from those who
    rebalance late). It would need its own pre-registration and power, and **by D678's evidence its prior is low**.
+
+## 7. CLOSED by the principal, 2026-09-29
+
+"Ok close no need for 2024+ data." **The line is closed under R15 with D677 and D680;** see D680 §5. D680 also answers
+proposal 3: the impact did not move earlier (days 10–6 before month-end: −2.0, t −0.12), so the anticipation line is
+not taken up.
