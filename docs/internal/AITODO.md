@@ -161,11 +161,9 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   clean slice (ZN/ZB/6E 2024-01 → 2025-02) even at full effect. The best is ZN's overnight reversal (t 1.37), which
   is D499's effect and has no money in it. NQ has no unread slice. CL and GC 2024-01 → 2025-02 are about to be read by
   the other session's root-aware break (its number 676). The next free number is 677.
-- [ ] **The principal's calls (D675 §8, §9):**
-  - close the log MACD as a signal line, and spend no slice on a §3 clock cell;
-  - whether Stage 2 designs on NQ's afternoon continuation (mechanism unidentified; gamma, LETF and Gao et al.'s
-    published form already measured; overlaps the other session's break studies);
-  - record in FINDINGS that D484's pooled pass rests on NQ and CL.
+- [x] **The log MACD line CLOSED (D675 §10; the principal, 2026-09-29: "Ok close it").** It includes any MACD variant
+  and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
+- [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
 
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 

@@ -228,3 +228,20 @@ in it does not exist: the reversal is under a tick, and the continuation is NQ's
 **Proposal (R15, the principal's):** close the log MACD line, and do not spend any slice on a clock cell from §3.
 Keep the clock map (§3) as a fact of market structure. A future construction may condition on it, provided it is
 designed on a window that has not read it.
+
+## 10. CLOSED by the principal, 2026-09-29
+
+"Ok close it." **The log MACD line is closed under R15.** Closed with it:
+- D484's signal as a line;
+- any MACD variant or re-parameterisation;
+- a Stage 2 built on any §3 clock cell.
+
+No unread slice was spent.
+
+**What stays open:**
+- **The clock map of §3,** kept as a fact of market structure: recent moves revert in the thin overnight hours and
+  continue into the US afternoon. A new construction may condition on it only if it is designed on a window that has
+  not read it.
+- **The admitted arm** in `BOOK_PROP.md`, as D674 left it.
+- **The FINDINGS correction** (§8, proposal 3: D484's pooled pass rests on NQ and CL). It waits for the principal's
+  word.
