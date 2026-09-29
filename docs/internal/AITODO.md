@@ -136,12 +136,6 @@
       (1.58 MB) and `track2/cim_2026.json` written from the 2026-01-07 settlements, once, on the frozen code.
     - `--forecast` REFUSES until the 2027 targets are transcribed after the announcement.
 
-## Margin-hike pause on the MACD arm (D667, 2026-09-29)
-
-- [ ] **D667 RESULT: not supported; recommends CLOSING** (principal, R15). Pausing the arm ten sessions after each of
-  11 NQ increases lifts net Sharpe 0.724 -> 0.763 (+0.040), at the 73rd percentile of the exact rotation (p95 +0.137)
-  and below the volatility-matched p95 (+0.060); breaches unchanged. D657's M3 route to the prop book ends here.
-
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,

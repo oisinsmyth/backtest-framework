@@ -88,3 +88,9 @@ and this record does not claim it.
 **The margin-hike pause is not supported on the admitted arm,** and D657's M3 route to the prop book ends here. The hike
 filter stays what the principal recorded in D657: an input for a new component's pre-registration, where an unread
 slice could confirm it. Recommended: close (principal, R15).
+
+## 7. CLOSED by the principal, 2026-09-29
+
+"Close after then investigate the MACD." **The margin-hike pause on the admitted arm is closed under R15,** and with it
+D657's route to the prop book. The conditioner line on the arm returns to its 2026-09-13 closure. The hike filter
+remains the strategy input D657 recorded.
