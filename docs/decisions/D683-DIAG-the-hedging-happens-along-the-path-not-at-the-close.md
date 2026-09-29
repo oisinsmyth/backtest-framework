@@ -189,3 +189,13 @@ along the path, not as a directional push at any fixed clock.**
     The 5-minute effect is far below cost, so it would need a slower bar.
   - A breakout or continuation construction should stand aside on long-gamma days.
   - Both would need their own pre-registration, and a check on the volatility confound in §2 first.
+
+## Addendum, 2026-09-29: §2 narrowed by D684
+
+[D684](D684-SIZING-no-go-the-long-gamma-fade-is-far-below-cost.md) ran the check this record left open: the same-day
+volatility control.
+- **With the day's realised variance up to each decision as a control, the 5-minute gamma gradient is not
+  distinguishable from zero** (c −0.0065, t −0.62, the 31st percentile of the rotation null). §2's "long gamma
+  deepens the path's mean reversion" is therefore mostly the volatility level.
+- **Unchanged:** §1 (not too little impact), the realised-variance result, and §7 (the crash concentration).
+- **What gamma adds beyond volatility, at 30–60 minutes,** is short-gamma continuation (D684 §2 and §4).

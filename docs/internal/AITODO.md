@@ -220,6 +220,15 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     - Both books carry real information.
     - **Open idea, the principal's call:** gamma-gated intraday mean reversion on a slower bar (check the volatility
       confound first).
+  - **D684 SIZING: NO-GO**
+    ([record](../decisions/D684-SIZING-no-go-the-long-gamma-fade-is-far-below-cost.md)).
+    - The long-gamma fade makes $0.2–0.3 gross a trade against an $8.84 bar, at 5–60 minutes.
+    - D683's 5-minute gradient disappears under a same-day volatility control (addendum on D683).
+    - Gamma's role now: the size term of the expected-profit filter.
+  - [ ] **Post-hoc lead, the principal's call:** short-gamma continuation at 60 minutes.
+    - It makes +$3.77 a MES trade gross (t 2.9, 379 a year), or about +$18.5 net on full ES.
+    - **Before any pre-registration:** (a) by year and without Feb–Apr 2020; (b) the short-gamma count of G_SUM in
+      2024-01 → 2025-02 and the vault (ES options OI only, no returns).
 - [x] **D681 PRE-REG committed** (`de4a4f7e`); runner `7be544a3`. The formation decisions F1–F10 were settled with
   the principal:
   - **Gamma:** SPX GEX plus the ES book (re-evaluated at the prior close), with SPX-only and ES-only beside it.

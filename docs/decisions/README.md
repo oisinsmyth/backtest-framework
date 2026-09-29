@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 424 of these records carry neither field —
+**No Status or Category column, deliberately.** 425 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -742,6 +742,7 @@ would look like data. The tokens are what is shown.
 | D680 | why the month-end mechanism fails: the flow did not shrink, move earlier or get offset. Its price impact per unit colla… | [record](D680-DIAG-the-month-end-flow-stopped-moving-prices.md) |
 | D681 | NOT SUPPORTED: the dealer hedge flow predicts the close with the right sign but at about a quarter of the square-root l… | [PRE-REG](D681-PRE-REG-the-dealer-gamma-close-on-es-spx-plus-es-books.md) · [RESULT](D681-RESULT-not-supported-the-close-sees-a-quarter-of-the-flow.md) |
 | D683 | why D681's dealer-gamma close failed: not too little impact. The flow is large and the test had power, but the hedging… | [record](D683-DIAG-the-hedging-happens-along-the-path-not-at-the-close.md) |
+| D684 | NO-GO: the long-gamma fade earns $0.2–0.3 a trade against an $8.84 bar at every horizon; D683's 5-minute gradient does… | [record](D684-SIZING-no-go-the-long-gamma-fade-is-far-below-cost.md) |
 
 <!-- REGISTER:END -->
 
