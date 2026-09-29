@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 419 of these records carry neither field —
+**No Status or Category column, deliberately.** 420 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -738,7 +738,7 @@ would look like data. The tokens are what is shown.
 | D674 | the MACD arm resized: one MNQ stays the floor, so the account moves to MFFU Rapid 150k and the book's expectation moves… | [record](D674-the-macd-arm-resized-to-the-150k-account.md) |
 | D675 | D675 STAGE 1 RESULT — the log MACD has no mechanism of its own: it is a clock-blind blend of effects the record already… | [record](D675-STAGE-1-DESIGN-the-log-macd-edge-decomposed-exactly.md) · [RESULT](D675-STAGE-1-RESULT-the-macd-is-a-clock-blind-blend.md) |
 | D677 | MECHANISM ONLY: the month-end rebalancing signal replicates on ES futures (−14 bp per 1-SD, t −3.2, above its null and… | [PRE-REG](D677-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md) · [RESULT](D677-RESULT-mechanism-only-the-month-end-flow-replicates-and-fades.md) |
-| D678 | REGISTRATION (DEVELOPMENT) — thirteen profit projections, overlays and lags on D677's month-end mechanism, scored as on… | [PRE-REG](D678-PRE-REG-thirteen-projections-overlays-and-lags-for-d677.md) |
+| D678 | D678 RESULT (DEVELOPMENT) — no projection, overlay or lag rescues the month-end mechanism: none reaches NW t 2, the bes… | [PRE-REG](D678-PRE-REG-thirteen-projections-overlays-and-lags-for-d677.md) · [RESULT](D678-RESULT-no-variant-rescues-it-and-the-fade-is-not-liquidity.md) |
 
 <!-- REGISTER:END -->
 
