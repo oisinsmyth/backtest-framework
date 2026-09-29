@@ -102,15 +102,21 @@ def process_chunk(arr: np.ndarray, w: pd.DataFrame | None, sessions: np.ndarray,
 _CTX: dict = {}
 
 
-def _init(sessions: np.ndarray, front: pd.DataFrame, roots: tuple[str, ...] = ROOTS) -> None:
-    _CTX["sessions"], _CTX["front"], _CTX["roots"] = sessions, front, roots
+def _init(sessions: np.ndarray, front: pd.DataFrame, roots: tuple[str, ...] = ROOTS, breadth: bool = False) -> None:
+    _CTX["sessions"], _CTX["front"], _CTX["roots"], _CTX["breadth"] = sessions, front, roots, breadth
+    if breadth:
+        sys.path.insert(0, str(REPO / "scripts"))
 
 
 def worker(path: str) -> dict:
     import databento as db
     t0 = time.time()
     store = db.DBNStore.from_file(path)
-    w = D462.ids_of(store)
+    if _CTX.get("breadth"):  # D674: non-index roots take the breadth builder's windowed id table (all 36 roots)
+        import build_fut_breadth_hourly as BH
+        w = BH.ids_of(store)
+    else:
+        w = D462.ids_of(store)
     parts, n_in = [], 0
     for arr in store.to_ndarray(count=CHUNK):
         n_in += len(arr)
@@ -122,9 +128,15 @@ def worker(path: str) -> dict:
             "secs": round(time.time() - t0, 1), "bars": bars}
 
 
-def load_front(data_root: Path, through: str, roots: tuple[str, ...] = ROOTS) -> tuple[np.ndarray, pd.DataFrame]:
-    s = pd.read_csv(data_root / "fixtures" / "fut_index_sessions.csv.gz", encoding="utf-8", dtype={"day": str})
-    s = s[s["root"].isin(roots) & (s["day"] >= START) & (s["day"] <= through)]
+def load_front(data_root: Path, through: str, roots: tuple[str, ...] = ROOTS, breadth: bool = False) -> tuple[np.ndarray, pd.DataFrame]:
+    if breadth:  # D674: the breadth fixture's front (the election every later futures fixture inherits); its
+        # placeholder rows (Sundays, holidays with no bars) are not sessions
+        s = pd.read_csv(data_root / "fixtures" / "fut_breadth_hourly.csv.gz", encoding="utf-8", dtype={"day": str},
+                        usecols=["root", "day", "contract", "bars"])
+        s = s[s["root"].isin(roots) & (s["bars"].fillna(0) > 0) & (s["day"] >= START) & (s["day"] <= through)]
+    else:
+        s = pd.read_csv(data_root / "fixtures" / "fut_index_sessions.csv.gz", encoding="utf-8", dtype={"day": str})
+        s = s[s["root"].isin(roots) & (s["day"] >= START) & (s["day"] <= through)]
     sessions = np.array(sorted(s["day"].unique()), dtype=object)
     front = s[["root", "day", "contract"]].rename(columns={"day": "session", "contract": "front"})
     if front.duplicated(["root", "session"]).any():
@@ -132,20 +144,20 @@ def load_front(data_root: Path, through: str, roots: tuple[str, ...] = ROOTS) ->
     return sessions, front.reset_index(drop=True)
 
 
-def cmd_build(workers: int, data_root: Path, through: str, roots: tuple[str, ...] = ROOTS) -> int:
+def cmd_build(workers: int, data_root: Path, through: str, roots: tuple[str, ...] = ROOTS, breadth: bool = False) -> int:
     global OUT, META
-    if roots != ROOTS:  # D673: YM/RTY go to their own fixture; ES/NQ's is untouched
+    if roots != ROOTS:  # D673/D674: other roots go to their own fixture; ES/NQ's is untouched
         tag = "_".join(r.lower() for r in roots)
         OUT, META = FIX / f"fut_opening_globex_1m_{tag}.csv.gz", FIX / f"fut_opening_globex_1m_{tag}.meta.json"
     t0 = time.time()
     files = sorted((data_root / "raw" / "databento").glob("*/*.ohlcv-1m.dbn.zst"), key=lambda p: p.name)
     assert files, "no ohlcv-1m files"
-    sessions, front = load_front(data_root, through, roots)
+    sessions, front = load_front(data_root, through, roots, breadth)
     print(f"{len(files)} ohlcv-1m files, {len(sessions)} sessions {sessions[0]} .. {sessions[-1]}, {workers} workers",
           flush=True)
     order = {f.name: i for i, f in enumerate(files)}
     from multiprocessing import Pool
-    with Pool(workers, initializer=_init, initargs=(sessions, front, roots)) as pool:
+    with Pool(workers, initializer=_init, initargs=(sessions, front, roots, breadth)) as pool:
         res = pool.map(worker, [str(f) for f in sorted(files, key=lambda p: -p.stat().st_size)], chunksize=1)
     res.sort(key=lambda r: order[r["file"]])
     sec = sum(r["secs"] for r in res)
@@ -194,11 +206,13 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
     ap.add_argument("--through", default=THROUGH, help="last session written (the vault only in the joint run)")
     ap.add_argument("--roots", default=",".join(ROOTS), help="D673: YM,RTY (written to their own fixture)")
+    ap.add_argument("--breadth", action="store_true",
+                    help="D674: non-index roots (e.g. GC,SI): the breadth builder's id table and front election")
     a = ap.parse_args(argv)
     if a.selftest:
         return selftest()
     if a.build:
-        return cmd_build(a.workers, a.data_root, a.through, tuple(a.roots.split(",")))
+        return cmd_build(a.workers, a.data_root, a.through, tuple(a.roots.split(",")), a.breadth)
     ap.print_help()
     return 1
 
