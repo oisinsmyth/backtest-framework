@@ -77,6 +77,15 @@
    "alpha": 0.005,
    "amendment": null,
    "note": "Vault line on D630's trade: one MNG when b_t x |I_t| projects >= 2 x $5 (b_t from earlier traded days); PASS with >= 15 trades, one-sided t >= 1.2816 on the MNG gross and a positive MNG net"
+  },
+  {
+   "name": "opening compression break (NQ)",
+   "doc": "D680-PRE-REG-the-nq-compression-break-for-the-joint-vault.md",
+   "registered_utc": "2026-09-29",
+   "slot": 9,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line: D672's C1 on NQ (the plain break of yesterday's RTH range, E4, on the compressed third), one MNQ, friction once; PASS with >= 30 C1 trades, one-sided HAC t >= 1.2816 on the gross and a positive net"
   }
  ]
 }

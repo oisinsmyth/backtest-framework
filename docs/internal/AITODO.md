@@ -17,13 +17,17 @@
   NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
   move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's
   word). D649 needs D630's vault inputs built first (D630 §8).
-- **QUEUED, NOT YET FROZEN (the principal, 2026-09-29: "happy for the NQ compression to stay in queue for the big
-  vault run"): D672's NQ compression break.** In-sample C1 net +7.56 bp single count (D672-A1, t 2.62, ~55 trades a
-  year); development on its own discovery sample (circular); D673 did not transfer to YM/RTY; D679 found the tier's
-  sign on nine energy/metals roots at about a quarter of NQ's size. Before the joint run it needs a vault
-  pre-registration with friction counted once (D668-A2), its vault power (rough: ~85 C1 trades, low), a freeze and an
-  NQ vault-input path proved on the in-sample. D668's NQ plain break (+2.48 single count) is the same clock and signal
-  (C1 is its subset): queue one or the other, not both as separate components.
+- **FROZEN 2026-09-29 (the principal: "happy for the NQ compression to stay in queue for the big vault run"; "Freeze
+  the ones that where queued today"): D680, the NQ compression break, programme slot 9.**
+  `data/FROZEN_vault_d680_nq_compression.json`; runner `scripts/vault_d680_nq_compression.py` (known answer reproduced:
+  387 C1 trades, +6.93 / +7.56 bp net). PASS: >= 30 C1 trades, gross one-sided HAC t >= 1.2816, net > 0. Power
+  (`data/vault_d680_power.json`): PASS 0.66 / 0.30 / 0.18 / 0.10 at 100 / 50 / 25 / 0% of the in-sample edge, ~85
+  trades. D668's plain break is NOT queued (C1 is its subset); B0 is reported beside.
+  **Prerequisite before the joint run (not built): the NQ vault-input path** -- D644's `fut_opening_globex_1m` built
+  through 2026-09-18 into a separate file and G0's loader (`usable_sessions`, `load_bars`) with the cut moved, written
+  out as `--vault-bars` / `--vault-use`; `--vault` re-proves the known answer on its in-sample part before scoring.
+- **Opening v2 (D652/D659): recommended NOT to join** (vault power 5-6.5%; V2-C adds nothing to the always-on hold;
+  V2-F's policy is +0.40 bp at t 0.78 and 2022-carried). Close without spending its look; waits for the principal.
 - **PARKED (the principal, 2026-09-28): D630 §8's vault-input path.** The plan, inventoried 2026-09-28 from metadata only:
   - a wrapper (`scripts/build_ledger_vault_inputs.py`, not yet written) loads each frozen builder unchanged and moves
     only its cut and output paths;

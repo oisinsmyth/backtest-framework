@@ -154,18 +154,22 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     """`data/programme_registry.json` as rendered, against the two docs' own list:
     LETF close flow H1; shock classifier H1; ledger H2; index H-R1, H-R2, H-R3(b);
     opening H-O2 -- slots 1-7, registered at the seal. Since 2026-09-28 one reserved slot is allocated: slot 8, D649's
-    NG projected-profit vault line (a reserved slot, so no amendment). Two remain."""
+    NG projected-profit vault line (a reserved slot, so no amendment); since 2026-09-29 a second: slot 9, D680's NQ
+    compression-break vault line. One remains."""
     registry = Registry(path=DEFAULT_REGISTRY_PATH)
     seeded = [f for f in registry if f.slot <= 7]
     assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES]
-    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8]
-    assert registry.free_slots() == (9, 10)
+    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert registry.free_slots() == (10,)
     assert all(f.registered_utc == SEALED_DATE for f in seeded)
     eighth = registry.get("ledger H2 projected-profit (NG)")
     assert (eighth.slot, eighth.registered_utc, eighth.amendment) == (8, "2026-09-28", None)
     assert (REPO / "docs" / "decisions" / eighth.doc).exists()
+    ninth = registry.get("opening compression break (NQ)")
+    assert (ninth.slot, ninth.registered_utc, ninth.amendment) == (9, "2026-09-29", None)
+    assert (REPO / "docs" / "decisions" / ninth.doc).exists()
     assert all(f.alpha == SLOT_ALPHA for f in registry)
-    assert registry.alpha_total() == pytest.approx(0.040)
+    assert registry.alpha_total() == pytest.approx(0.045)
     docs = {f.doc for f in seeded}
     assert docs == {
         "LETF_CLOSE_FLOW_PREREG.md",
@@ -193,8 +197,9 @@ def test_the_rendered_page_exists_and_says_where_the_deposits_path_maps_to():
     assert "data/programme_registry.json" in page
     for name, _, _ in SEED_FAMILIES:
         assert f"`{name}`" in page
-    assert page.count("*(reserved)*") == 2  # slot 8 allocated to D649 on 2026-09-28
+    assert page.count("*(reserved)*") == 1  # slot 8 allocated to D649 on 2026-09-28, slot 9 to D680 on 2026-09-29
     assert "`ledger H2 projected-profit (NG)`" in page
+    assert "`opening compression break (NQ)`" in page
     assert not (REPO / "results").exists(), "the mapping exists because this path does not"
 
 
@@ -313,7 +318,8 @@ def test_67_the_counter_reads_the_census_and_not_a_registry():
 #: together with the record that adds rows: the first is the LETF close-flow run of 2026-09-27
 #: (D640, 71 configurations). **Editing this is the point**: a trials.csv that appears or grows
 #: without a record turns this red.
-TRIALS_CSV_FILES = {"data/letf/trials.csv": 71, "data/opening/trials.csv": 3, "data/shock/trials.csv": 96}
+# opening: 3 at D646, + 14 at D658's Phases 4-5 run (9b0086bc), + 2 at D659's run (cd661f86)
+TRIALS_CSV_FILES = {"data/letf/trials.csv": 71, "data/opening/trials.csv": 19, "data/shock/trials.csv": 96}
 
 
 def test_67_the_trials_csv_files_are_the_ones_recorded():

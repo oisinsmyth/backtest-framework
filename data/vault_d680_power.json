@@ -1,0 +1,62 @@
+{
+ "known_answer_in_sample": {
+  "trades": 387,
+  "net_prereg": 6.9339375340996625,
+  "net_single": 7.557843970553623,
+  "gross_level": 9.418892754919655,
+  "window": [
+   "2018-01-09",
+   "2025-02-28"
+  ]
+ },
+ "in_sample_c1_gross_mean": 9.418892754919655,
+ "in_sample_c1_rate_per_session": 0.21741573033707864,
+ "n_vault_sessions": 390,
+ "block": 20,
+ "reps": 2000,
+ "edge_scale=1": {
+  "PASS": 0.661,
+  "FAIL": 0.339,
+  "UNRESOLVED": 0.0,
+  "programme_promotion_rate": 0.145,
+  "trades_median": 85.0,
+  "trades_p10_p90": [
+   72.0,
+   99.0
+  ]
+ },
+ "edge_scale=0.5": {
+  "PASS": 0.3015,
+  "FAIL": 0.6985,
+  "UNRESOLVED": 0.0,
+  "programme_promotion_rate": 0.028,
+  "trades_median": 85.0,
+  "trades_p10_p90": [
+   72.0,
+   98.0
+  ]
+ },
+ "edge_scale=0.25": {
+  "PASS": 0.1775,
+  "FAIL": 0.8225,
+  "UNRESOLVED": 0.0,
+  "programme_promotion_rate": 0.01,
+  "trades_median": 86.0,
+  "trades_p10_p90": [
+   73.0,
+   99.0
+  ]
+ },
+ "edge_scale=0": {
+  "PASS": 0.1035,
+  "FAIL": 0.8965,
+  "UNRESOLVED": 0.0,
+  "programme_promotion_rate": 0.0035,
+  "trades_median": 85.0,
+  "trades_p10_p90": [
+   72.0,
+   99.0
+  ]
+ },
+ "runtime_min": 0.56
+}
