@@ -5164,7 +5164,7 @@ so the account moves to MFFU Rapid 150k. The book's expectation is Sharpe 0.24, 
 
 **The rule: the options market's forecast of the day's size is worth using as a ratio to realised volatility, never as
 a level.**
-([D691 STAGE 0 RESULT](decisions/D691-STAGE-0-RESULT-implied-vol-adds-size-information-beyond-realised.md))
+([D691 STAGE 0 RESULT](decisions/D691-STAGE-0-RESULT-implied-vol-adds-size-beyond-realised.md))
 - **The object:** the prior close's at-the-money IV (the nearest 16:00 weekly at least 2 sessions out), as
   ln(IV / RV20), added to D671's walk-forward realised-only size forecast of ln(range / ATR20).
 - **Gate S passes on both roots:**
