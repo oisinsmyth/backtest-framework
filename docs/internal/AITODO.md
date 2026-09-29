@@ -15,7 +15,14 @@
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 700.** D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
   MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
-  long. D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
+  long.
+- **D699 RESULT (2026-09-30): V1, the histogram with a ±0.5 band, is a LEAD, but it fails the declared reading on (b).**
+  - **Results:** +$10.47 a MES trade, net Sharpe +0.63, every year positive. Timing null 98.5th, gamma-label null 99.6th.
+  - **Gate (b):** its gross beats the time-matched drift at NW t 1.64, not 2.
+  - **Concentration:** 2022 is 75% of the net.
+  - **V2 (ROC) and V3 (OR)** are inside their nulls.
+  - **Waiting on the principal** to choose: stop; the expected-profit filter on V1 (designed together, oracle first);
+    a vault pre-reg (count the vault's short-gamma days first); or the 2022 diagnosis. D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
   - D691 is the implied-vs-realised volatility premise check (RESULT: SIZE INFORMATION CONFIRMED on ES and NQ).

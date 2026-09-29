@@ -561,3 +561,20 @@ Component lines come from the runner's own output (`data/stage1_d694_coiled_brea
 | COILED, ES, 1 MES ($4.42) | D694 | +0.69 (+1.54); gross +0.94 (+2.33) | its lift over the quiet C1 trades is matched by a count-matched label with IV's own information scrambled (rank 0.765); 120 trades in 7 years; top 5 trades are 53% of gross; ρ +0.02 |
 | COILED, NQ, 1 MNQ ($4.07) | D694 | +0.55 (+1.19); gross +0.70 (+1.59) | earns less than the quiet C1 trades (−3.1 bp); rank 0.298; a subset of D680's C1 (ρ +0.46) that is worse than C1 itself (1.03); ρ +0.04 |
 | COILED, expected-profit filtered, ES / NQ | D694 | +0.20 (+0.38) / +0.54 (+1.15) | Gate 2 fails: 36 / 87 trades, net t 0.74 / 1.30 |
+
+## SCORED, NOT ENTERED — the gamma-gated 15-minute log MACD long on ES, 2026-09-30 ([D699](decisions/D699-STAGE-0-RESULT-hist-clears-the-timing-null-not-the-drift.md))
+
+Component lines come from the runner's own output (`data/d699_gamma_macd_long.json`).
+- **The construction:** on days with G_SUM < 0, a 12/26/9 log MACD on 15-minute bars of the gap-spliced day session,
+  normalised to unit sd under a random walk; long with hysteresis; flat at 16:00.
+- **The score:** daily net Sharpe over every session of 2016–2023 (√252).
+- **Correlations** are with the admitted MACD arm's daily net.
+
+**Status: in-sample development (a stage 0).** V1 fails the declared reading on one gate of three (its lead over the
+time-matched drift is NW t 1.64, not 2). UNCONFIRMABLE on 2024-01 → 2025-02 (expected t about 0.6). Not a candidate.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| V1 HIST (z_H band ±0.5), 1 MES ($4.42) | D699 | +0.63 (+1.06); gross +0.90 (+1.56) | 72 trades a year, hit 50.5%, skew +1.09, median +$0.58 against a mean +$10.47; 2022 is 75% of the net; beats the drift at t 1.64 only; timing null 98.5th, gamma-label null 99.6th; ρ +0.154 |
+| V2 ROC (z_R band ±1.0), 1 MES | D699 | +0.19 (+0.28); gross +0.57 (+0.89) | inside its timing null (83rd; 40th in the family); +$0.35 a trade without Feb–Apr 2020; ρ +0.056 |
+| V3 OR, 1 MES | D699 | +0.27 (+0.41); gross +0.59 (+0.91) | inside its timing null (82nd; 62nd in the family); median −$15.67; ρ +0.106 |
