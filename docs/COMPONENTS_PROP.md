@@ -402,6 +402,21 @@ would avoid the worst quote. That is a **different construction**, and this entr
 frozen — it would need its own pre-registration, not a quiet edit to a component already in the
 ledger.
 
+## AMENDMENT to ENTRY #2, 2026-09-29 — **expectation cut to Sharpe 0.24; account moved to MFFU Rapid 150k. The entry stands, spec unchanged**
+
+**On the principal's word, after D669, D670 and D673:**
+- the arm's in-sample 0.72 is the top of a 486-cell neighbourhood whose median is **0.24 net**;
+- its deflated Sharpe fails;
+- no plain statement of its behaviour carries to YM, RTY or ES, or clears its null on NQ.
+
+**What changes on this ledger:**
+- The entry's **expected net Sharpe for any assembled book is 0.24.**
+- **C-a is not re-scored:** it was passed on the measured +0.698, and the ledger does not rewrite a score.
+- **C-d's 2026 reading ($386) now sits against a 150k account** ([D674](decisions/D674-the-macd-arm-resized-to-the-150k-account.md)).
+- The account change is recorded in `BOOK_PROP.md`'s amendment of the same date.
+
+---
+
 ## SCORED, NOT ENTERED — the LETF close-flow cells, 2026-09-27 ([D640](decisions/D640-RESULT-letf-close-flow-killed-by-its-own-11am-placebo.md))
 
 Component lines as D639 §10 requires, whatever the verdict: 1 micro, D639's cost (MNQ $4.07, MES $4.42 a round trip),

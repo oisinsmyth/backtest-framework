@@ -138,11 +138,11 @@
 
 ## The MACD arm's mechanism (D669, 2026-09-29)
 
-- [ ] **D669 RESULT written; the principal's call on its two proposals.** The arm carries the move since yesterday's
-  close into days that trend (timing, not drift; not price level; efficiency, not volatility). Its 0.72 is the top of
-  its family: median neighbour 0.24, deflated Sharpe fails, a spike on impulse length and on M = 5's one 15:00 exit.
-  Proposals: (1) amend the arm's qualification in `BOOK_PROP.md`; (2) pre-register the RON-direction rule as a new
-  component on roots with checked unread slices. Nothing changed until the principal rules (R15).
+- [x] **The MACD arm RESIZED and AMENDED (D674, 2026-09-29, the principal: "resize it, then amend", "MFFU Rapid
+  150k").** One MNQ unchanged; account MFFU Rapid 150k (P3a 1.90 -> 0/yr); expectation Sharpe 0.24. BOOK_PROP and
+  COMPONENTS_PROP amended. D669's second proposal was withdrawn by D670.
+- [ ] **Still the principal's call:** close the reshaping line (D670, D673); the D673 number clash with the other
+  session's compression-break pre-registration is left for merge time (the principal's choice).
 - [ ] **D670 RESULT written: NOT SUPPORTED on YM and RTY; the principal's call on its proposals.** The 10:00
   direction held to the close carries nowhere (YM -4.45 bp, t -2.76; NQ +1.26 below its null's median); no 10:00
   forecast discriminates. Post hoc: the arm's gross sits in its later entries (23% of sessions, t 3.7), not at
