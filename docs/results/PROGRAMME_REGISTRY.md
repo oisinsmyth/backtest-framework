@@ -16,12 +16,18 @@ A family may only be registered into a free slot. When all ten are used, an elev
 | 4 | `index H-R1` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Execution-day effect: signed entry -> W_end close return pooled across commodities, days and years (§6 H-R1; Holm across constructions A and B) |
 | 5 | `index H-R2` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Reversal: signed return in the reversal direction over 1/3/5 days (§6 H-R2; Holm across 3 holds x 2 constructions) |
 | 6 | `index H-R3(b)` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (§6 H-R3(b); H-R3(a) is descriptive and is not a decision family) |
-| 7 | `opening H-O2` | 0.005 | `OPENING_AGENT_STATE_PREREG.md` | 2026-09-21 | Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (§7 H-O2; Holm across t0 in {09:45, 10:00}) |
 | 8 | `ledger H2 projected-profit (NG)` | 0.005 | `D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md` | 2026-09-28 | Vault line on D630's trade: one MNG when b_t x |I_t| projects >= 2 x $5 (b_t from earlier traded days); PASS with >= 15 trades, one-sided t >= 1.2816 on the MNG gross and a positive MNG net |
-| 9 | *(reserved)* | 0.005 | — | — | — |
+| 9 | `opening compression break (NQ)` | 0.005 | `D680-PRE-REG-the-nq-compression-break-for-the-joint-vault.md` | 2026-09-29 | Vault line: D672's C1 on NQ (the plain break of yesterday's RTH range, E4, on the compressed third), one MNQ, friction once; PASS with >= 30 C1 trades, one-sided HAC t >= 1.2816 on the gross and a positive net |
+| 7 | *(released)* | 0.005 | — | — | — |
 | 10 | *(reserved)* | 0.005 | — | — | — |
 
 **α allocated: 0.040 of 0.05.**
+
+**Released slots.** The deposit's default is that α is never re-allocated retroactively for a family already evaluated; each row below is the principal's recorded override for one closed family. Its slot is free again; the family itself can never be registered again.
+
+| Slot | Family | Doc | Registered | Released | Reason |
+|---|---|---|---|---|---|
+| 7 | `opening H-O2` | `OPENING_AGENT_STATE_PREREG.md` | 2026-09-21 | 2026-09-29 | D658 CLOSED by the principal ('close opening model v1'; on slot 7: 'Release it'): Gate O1 failed, no agent retained, H-O2's policy net-negative at both t0; the vault was never read for it. The principal's override of the deposit's never-retroactively default, for this family only |
 
 ---
 

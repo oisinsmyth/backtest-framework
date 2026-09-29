@@ -61,15 +61,6 @@
    "note": "Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (\u00a76 H-R3(b); H-R3(a) is descriptive and is not a decision family)"
   },
   {
-   "name": "opening H-O2",
-   "doc": "OPENING_AGENT_STATE_PREREG.md",
-   "registered_utc": "2026-09-21",
-   "slot": 7,
-   "alpha": 0.005,
-   "amendment": null,
-   "note": "Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (\u00a77 H-O2; Holm across t0 in {09:45, 10:00})"
-  },
-  {
    "name": "ledger H2 projected-profit (NG)",
    "doc": "D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md",
    "registered_utc": "2026-09-28",
@@ -77,6 +68,28 @@
    "alpha": 0.005,
    "amendment": null,
    "note": "Vault line on D630's trade: one MNG when b_t x |I_t| projects >= 2 x $5 (b_t from earlier traded days); PASS with >= 15 trades, one-sided t >= 1.2816 on the MNG gross and a positive MNG net"
+  },
+  {
+   "name": "opening compression break (NQ)",
+   "doc": "D680-PRE-REG-the-nq-compression-break-for-the-joint-vault.md",
+   "registered_utc": "2026-09-29",
+   "slot": 9,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line: D672's C1 on NQ (the plain break of yesterday's RTH range, E4, on the compressed third), one MNQ, friction once; PASS with >= 30 C1 trades, one-sided HAC t >= 1.2816 on the gross and a positive net"
+  }
+ ],
+ "released": [
+  {
+   "name": "opening H-O2",
+   "doc": "OPENING_AGENT_STATE_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 7,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (\u00a77 H-O2; Holm across t0 in {09:45, 10:00})",
+   "released_utc": "2026-09-29",
+   "reason": "D658 CLOSED by the principal ('close opening model v1'; on slot 7: 'Release it'): Gate O1 failed, no agent retained, H-O2's policy net-negative at both t0; the vault was never read for it. The principal's override of the deposit's never-retroactively default, for this family only"
   }
  ]
 }

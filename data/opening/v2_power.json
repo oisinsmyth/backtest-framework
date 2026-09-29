@@ -1,0 +1,61 @@
+{
+ "alpha_first_holm_step": 0.025,
+ "block": 20,
+ "cells": {
+  "V2-C": {
+   "edge_kept": {
+    "0.0": {
+     "FAIL": 0.9935,
+     "PASS": 0.0065,
+     "UNRESOLVED": 0.0
+    },
+    "0.25": {
+     "FAIL": 0.9905,
+     "PASS": 0.0095,
+     "UNRESOLVED": 0.0
+    },
+    "0.5": {
+     "FAIL": 0.9775,
+     "PASS": 0.0225,
+     "UNRESOLVED": 0.0
+    },
+    "1.0": {
+     "FAIL": 0.9505,
+     "PASS": 0.0495,
+     "UNRESOLVED": 0.0
+    }
+   },
+   "insample_policy_mean_bp": 1.3168706480712793,
+   "insample_traded_per_390": 256.40208877284596
+  },
+  "V2-F": {
+   "edge_kept": {
+    "0.0": {
+     "FAIL": 0.975,
+     "PASS": 0.025,
+     "UNRESOLVED": 0.0
+    },
+    "0.25": {
+     "FAIL": 0.96,
+     "PASS": 0.04,
+     "UNRESOLVED": 0.0
+    },
+    "0.5": {
+     "FAIL": 0.9585,
+     "PASS": 0.0415,
+     "UNRESOLVED": 0.0
+    },
+    "1.0": {
+     "FAIL": 0.9355,
+     "PASS": 0.0645,
+     "UNRESOLVED": 0.0
+    }
+   },
+   "insample_policy_mean_bp": 0.39786963682700704,
+   "insample_traded_per_390": 192.71126760563382
+  }
+ },
+ "draws": 2000,
+ "n_sessions": 390,
+ "spec": "D652 s.7"
+}

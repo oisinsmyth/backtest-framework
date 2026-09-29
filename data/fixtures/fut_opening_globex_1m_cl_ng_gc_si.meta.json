@@ -1,0 +1,293 @@
+{
+ "spec": "OPENING_AGENT_STATE_PREREG.md s.3 / Gate O0; OA-A1",
+ "built_utc": "2026-09-29T12:22:41Z",
+ "sessions": [
+  "2015-09-01",
+  "2025-02-28"
+ ],
+ "roots": [
+  "CL",
+  "NG",
+  "GC",
+  "SI"
+ ],
+ "session_rule": "bar >= 18:00 ET -> next D462 session day; else its own day if a session day",
+ "contract_rule": "the session's front per D462 fut_index_sessions (highest full-day volume)",
+ "float_format": "%.5f",
+ "rows": 12785626,
+ "duplicates_dropped": 0,
+ "files": [
+  {
+   "file": "glbx-mdp3-20100606-20101231.ohlcv-1m.dbn.zst",
+   "rows_in": 12709200,
+   "rows_kept": 1,
+   "secs": 61.8
+  },
+  {
+   "file": "glbx-mdp3-20110101-20111231.ohlcv-1m.dbn.zst",
+   "rows_in": 27280970,
+   "rows_kept": 25,
+   "secs": 118.7
+  },
+  {
+   "file": "glbx-mdp3-20120101-20121231.ohlcv-1m.dbn.zst",
+   "rows_in": 34215872,
+   "rows_kept": 17,
+   "secs": 121.3
+  },
+  {
+   "file": "glbx-mdp3-20130101-20131231.ohlcv-1m.dbn.zst",
+   "rows_in": 44528359,
+   "rows_kept": 107,
+   "secs": 166.0
+  },
+  {
+   "file": "glbx-mdp3-20140101-20140629.ohlcv-1m.dbn.zst",
+   "rows_in": 21953487,
+   "rows_kept": 255,
+   "secs": 78.2
+  },
+  {
+   "file": "glbx-mdp3-20140630-20141231.ohlcv-1m.dbn.zst",
+   "rows_in": 25417746,
+   "rows_kept": 1236,
+   "secs": 81.0
+  },
+  {
+   "file": "glbx-mdp3-20150101-20151231.ohlcv-1m.dbn.zst",
+   "rows_in": 52313387,
+   "rows_kept": 405381,
+   "secs": 176.7
+  },
+  {
+   "file": "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
+   "rows_in": 50604555,
+   "rows_kept": 1299842,
+   "secs": 158.9
+  },
+  {
+   "file": "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
+   "rows_in": 49989121,
+   "rows_kept": 1334582,
+   "secs": 170.7
+  },
+  {
+   "file": "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
+   "rows_in": 32153793,
+   "rows_kept": 751578,
+   "secs": 104.0
+  },
+  {
+   "file": "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
+   "rows_in": 24713186,
+   "rows_kept": 586542,
+   "secs": 77.7
+  },
+  {
+   "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+   "rows_in": 58051976,
+   "rows_kept": 1339301,
+   "secs": 185.3
+  },
+  {
+   "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+   "rows_in": 67058153,
+   "rows_kept": 1386161,
+   "secs": 252.7
+  },
+  {
+   "file": "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
+   "rows_in": 68752439,
+   "rows_kept": 1369770,
+   "secs": 242.9
+  },
+  {
+   "file": "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
+   "rows_in": 55424065,
+   "rows_kept": 851220,
+   "secs": 143.9
+  },
+  {
+   "file": "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
+   "rows_in": 33062368,
+   "rows_kept": 510565,
+   "secs": 85.3
+  },
+  {
+   "file": "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
+   "rows_in": 55951485,
+   "rows_kept": 873173,
+   "secs": 143.2
+  },
+  {
+   "file": "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
+   "rows_in": 31602486,
+   "rows_kept": 482968,
+   "secs": 78.7
+  },
+  {
+   "file": "glbx-mdp3-20240101-20240828.ohlcv-1m.dbn.zst",
+   "rows_in": 61461670,
+   "rows_kept": 902039,
+   "secs": 169.5
+  },
+  {
+   "file": "glbx-mdp3-20240829-20241231.ohlcv-1m.dbn.zst",
+   "rows_in": 32289655,
+   "rows_kept": 465645,
+   "secs": 78.8
+  },
+  {
+   "file": "glbx-mdp3-20250101-20250903.ohlcv-1m.dbn.zst",
+   "rows_in": 68981842,
+   "rows_kept": 225218,
+   "secs": 192.7
+  },
+  {
+   "file": "glbx-mdp3-20250904-20251204.ohlcv-1m.dbn.zst",
+   "rows_in": 26028907,
+   "rows_kept": 0,
+   "secs": 65.9
+  },
+  {
+   "file": "glbx-mdp3-20251205-20251231.ohlcv-1m.dbn.zst",
+   "rows_in": 6690321,
+   "rows_kept": 0,
+   "secs": 21.3
+  },
+  {
+   "file": "glbx-mdp3-20260101-20260307.ohlcv-1m.dbn.zst",
+   "rows_in": 21406276,
+   "rows_kept": 0,
+   "secs": 57.6
+  },
+  {
+   "file": "glbx-mdp3-20260308-20260608.ohlcv-1m.dbn.zst",
+   "rows_in": 31964175,
+   "rows_kept": 0,
+   "secs": 75.9
+  },
+  {
+   "file": "glbx-mdp3-20260609-20260909.ohlcv-1m.dbn.zst",
+   "rows_in": 28394079,
+   "rows_kept": 0,
+   "secs": 72.3
+  }
+ ],
+ "gates": {
+  "run": "stage0_d676_root_aware_break.py --gates, 2026-09-29, after the %.5f rebuild (97e04a16)",
+  "seal": "no session >= 2025-03-01 (load_fixture raises)",
+  "identity": {
+   "CL": {
+    "bars_fixture": 791549,
+    "bars_day1m": 791549,
+    "matched": 791549,
+    "price_mismatches": 0,
+    "only_fixture": 0,
+    "only_day1m": 0,
+    "pass": true
+   },
+   "NG": {
+    "bars_fixture": 790607,
+    "bars_day1m": 790607,
+    "matched": 790607,
+    "price_mismatches": 0,
+    "only_fixture": 0,
+    "only_day1m": 0,
+    "pass": true
+   },
+   "GC": {
+    "bars_fixture": 648037,
+    "bars_day1m": 648037,
+    "matched": 648037,
+    "price_mismatches": 0,
+    "only_fixture": 0,
+    "only_day1m": 0,
+    "pass": true
+   },
+   "SI": {
+    "bars_fixture": 633695,
+    "bars_day1m": 633695,
+    "matched": 633695,
+    "price_mismatches": 0,
+    "only_fixture": 0,
+    "only_day1m": 0,
+    "pass": true
+   }
+  },
+  "coverage": {
+   "CL": {
+    "sessions": 2441,
+    "unusable": 40,
+    "coverage_median": 1.0,
+    "by_year_usable": {
+     "2015": 0.974,
+     "2016": 0.977,
+     "2017": 0.977,
+     "2018": 0.977,
+     "2019": 0.977,
+     "2020": 0.969,
+     "2021": 0.977,
+     "2022": 1.0,
+     "2023": 1.0,
+     "2024": 1.0,
+     "2025": 1.0
+    }
+   },
+   "NG": {
+    "sessions": 2441,
+    "unusable": 39,
+    "coverage_median": 1.0,
+    "by_year_usable": {
+     "2015": 0.974,
+     "2016": 0.977,
+     "2017": 0.977,
+     "2018": 0.977,
+     "2019": 0.977,
+     "2020": 0.973,
+     "2021": 0.977,
+     "2022": 1.0,
+     "2023": 1.0,
+     "2024": 1.0,
+     "2025": 1.0
+    }
+   },
+   "GC": {
+    "sessions": 2442,
+    "unusable": 2,
+    "coverage_median": 1.0,
+    "by_year_usable": {
+     "2015": 1.0,
+     "2016": 1.0,
+     "2017": 1.0,
+     "2018": 1.0,
+     "2019": 1.0,
+     "2020": 0.992,
+     "2021": 1.0,
+     "2022": 1.0,
+     "2023": 1.0,
+     "2024": 1.0,
+     "2025": 1.0
+    }
+   },
+   "SI": {
+    "sessions": 2442,
+    "unusable": 6,
+    "coverage_median": 1.0,
+    "by_year_usable": {
+     "2015": 0.987,
+     "2016": 1.0,
+     "2017": 1.0,
+     "2018": 0.996,
+     "2019": 0.996,
+     "2020": 0.988,
+     "2021": 1.0,
+     "2022": 1.0,
+     "2023": 1.0,
+     "2024": 1.0,
+     "2025": 1.0
+    }
+   }
+  }
+ }
+}

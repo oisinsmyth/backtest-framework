@@ -1,0 +1,713 @@
+{
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
+ "spec": "post hoc: D668 development by year (ab49940e)",
+ "credit": "dealer gamma (GEX): SqueezeMetrics",
+ "roots": {
+  "ES": {
+   "unfiltered": {
+    "overall": {
+     "trades": 1432,
+     "trades_per_year": 157.927352297593,
+     "long_share": 0.5544692737430168,
+     "gross": {
+      "mean": 1.203504431608876,
+      "t_hac": 1.3083354618342666,
+      "boot_ci95": [
+       -0.614491248094655,
+       3.0951881095842104
+      ],
+      "yearly_means_t": 1.407909744283647,
+      "full_years": 9,
+      "years_positive": 6,
+      "sign_test_p_one_sided": 0.25390625,
+      "without_best_year": {
+       "year": "2021",
+       "mean": 0.5421376727742651
+      },
+      "without_worst_year": {
+       "year": "2020",
+       "mean": 1.8099360125180304
+      }
+     },
+     "net": {
+      "mean": -2.3079793997311597,
+      "t_hac": -2.493804384504731,
+      "boot_ci95": [
+       -4.190248443713842,
+       -0.35055244727256973
+      ],
+      "yearly_means_t": -1.8494671310483313,
+      "full_years": 9,
+      "years_positive": 2,
+      "sign_test_p_one_sided": 0.98046875,
+      "without_best_year": {
+       "year": "2021",
+       "mean": -3.0685327545495995
+      },
+      "without_worst_year": {
+       "year": "2020",
+       "mean": -1.6962702500467324
+      }
+     },
+     "concentration": {
+      "top_1pct_share_of_net": -0.741806183935998,
+      "top_5pct_share_of_net": -2.195963695593755,
+      "top_10pct_share_of_net": -3.3210574866249134
+     },
+     "lag1_autocorr_net": -0.019010886699264977,
+     "usd_per_micro": {
+      "total": -4728.9401421116,
+      "per_year": -521.5286283641676,
+      "max_drawdown": 4859.509990809312,
+      "longest_underwater_sessions": 2284,
+      "daily_sharpe": -0.6444304343652424,
+      "daily_sortino": -1.0784958105739582
+     }
+    },
+    "by_year": {
+     "2016": {
+      "trades": 157,
+      "sessions": 251,
+      "long_share": 0.5286624203821656,
+      "gross_mean": 0.3207823442445064,
+      "net_mean": -5.155626407014313,
+      "net_median": -11.455884221947532,
+      "win": 0.3375796178343949,
+      "payoff": 1.273818764638169,
+      "t_gross": 0.12962883924226157,
+      "sum_net_bp": -809.4333459012471,
+      "usd_net_per_micro": -837.0862926407214,
+      "daily_sharpe_net": -2.1265917033274673,
+      "n1_null_mean": -1.9718142770886844,
+      "gross_minus_null": 2.2925966213331908
+     },
+     "2017": {
+      "trades": 147,
+      "sessions": 249,
+      "long_share": 0.6122448979591837,
+      "gross_mean": -0.36980680256247156,
+      "net_mean": -5.0211989873553176,
+      "net_median": -11.239476377154233,
+      "win": 0.272108843537415,
+      "payoff": 1.3264403684057358,
+      "t_gross": -0.26455897818230883,
+      "sum_net_bp": -738.1162511412317,
+      "usd_net_per_micro": -895.9673408801914,
+      "daily_sharpe_net": -3.550915265410297,
+      "n1_null_mean": -2.320832021080081,
+      "gross_minus_null": 1.9510252185176093
+     },
+     "2018": {
+      "trades": 155,
+      "sessions": 248,
+      "long_share": 0.535483870967742,
+      "gross_mean": 0.9157006767923066,
+      "net_mean": -3.2129822681905393,
+      "net_median": -11.699580467095275,
+      "win": 0.36129032258064514,
+      "payoff": 1.393641907609699,
+      "t_gross": 0.30346817999638137,
+      "sum_net_bp": -498.0122515695336,
+      "usd_net_per_micro": -674.0937522886124,
+      "daily_sharpe_net": -1.0817996597888713,
+      "n1_null_mean": -1.1001136795711526,
+      "gross_minus_null": 2.0158143563634594
+     },
+     "2019": {
+      "trades": 155,
+      "sessions": 249,
+      "long_share": 0.5870967741935483,
+      "gross_mean": 1.9229459251335987,
+      "net_mean": -1.9821481363892601,
+      "net_median": -8.886101242539812,
+      "win": 0.36774193548387096,
+      "payoff": 1.4387873458672862,
+      "t_gross": 0.8393999539183804,
+      "sum_net_bp": -307.2329611403353,
+      "usd_net_per_micro": -437.34375228861677,
+      "daily_sharpe_net": -0.8681732592555247,
+      "n1_null_mean": -0.9759989656918232,
+      "gross_minus_null": 2.898944890825422
+     },
+     "2020": {
+      "trades": 167,
+      "sessions": 251,
+      "long_share": 0.562874251497006,
+      "gross_mean": -3.390124010607174,
+      "net_mean": -6.941584635364698,
+      "net_median": -17.34848725224959,
+      "win": 0.31137724550898205,
+      "payoff": 1.5560807815051796,
+      "t_gross": -0.756486840414782,
+      "sum_net_bp": -1159.2446341059047,
+      "usd_net_per_micro": -1877.330244401262,
+      "daily_sharpe_net": -1.7595041562145362,
+      "n1_null_mean": -1.894108560893846,
+      "gross_minus_null": -1.496015449713328
+     },
+     "2021": {
+      "trades": 152,
+      "sessions": 251,
+      "long_share": 0.5921052631578947,
+      "gross_mean": 6.772908716531919,
+      "net_mean": 4.0966804303188535,
+      "net_median": -7.038891863772373,
+      "win": 0.4407894736842105,
+      "payoff": 1.7606166061776858,
+      "t_gross": 2.713940974914271,
+      "sum_net_bp": 622.6954254084658,
+      "usd_net_per_micro": 1305.48880823955,
+      "daily_sharpe_net": 1.6337859953115452,
+      "n1_null_mean": 0.2035485716456333,
+      "gross_minus_null": 6.569360144886286
+     },
+     "2022": {
+      "trades": 164,
+      "sessions": 250,
+      "long_share": 0.4695121951219512,
+      "gross_mean": 4.611600633949605,
+      "net_mean": 1.835345496740387,
+      "net_median": -10.97002244349773,
+      "win": 0.40853658536585363,
+      "payoff": 1.5857503591464586,
+      "t_gross": 1.1330797665691,
+      "sum_net_bp": 300.9966614654235,
+      "usd_net_per_micro": 632.6898161268774,
+      "daily_sharpe_net": 0.46903874424163555,
+      "n1_null_mean": 0.4642002564560311,
+      "gross_minus_null": 4.1474003774935735
+     },
+     "2023": {
+      "trades": 160,
+      "sessions": 248,
+      "long_share": 0.5875,
+      "gross_mean": 1.873953109693114,
+      "net_mean": -0.7687874650028192,
+      "net_median": -6.794178130085219,
+      "win": 0.425,
+      "payoff": 1.264490994128396,
+      "t_gross": 0.794926634913905,
+      "sum_net_bp": -123.00599440045107,
+      "usd_net_per_micro": -308.7626031688883,
+      "daily_sharpe_net": -0.39401416598535616,
+      "n1_null_mean": -0.18751271018528196,
+      "gross_minus_null": 2.061465819878396
+     },
+     "2024": {
+      "trades": 148,
+      "sessions": 249,
+      "long_share": 0.5405405405405406,
+      "gross_mean": -0.19177343575222416,
+      "net_mean": -2.291460114732673,
+      "net_median": -8.811795726877973,
+      "win": 0.36486486486486486,
+      "payoff": 1.3778469424588515,
+      "t_gross": -0.09199539499246845,
+      "sum_net_bp": -339.1360969804356,
+      "usd_net_per_micro": -869.0417360562326,
+      "daily_sharpe_net": -1.0306615964223687,
+      "n1_null_mean": -0.6464628606586853,
+      "gross_minus_null": 0.45468942490646114
+     },
+     "2025": {
+      "trades": 27,
+      "sessions": 39,
+      "long_share": 0.4444444444444444,
+      "gross_mean": -7.542853832335793,
+      "net_mean": -9.427298224065607,
+      "net_median": -10.040633799139973,
+      "win": 0.2962962962962963,
+      "payoff": 0.6392811731225476,
+      "t_gross": -2.113946792482459,
+      "sum_net_bp": -254.53705204977138,
+      "usd_net_per_micro": -767.4930447534952,
+      "daily_sharpe_net": -6.541168500443343,
+      "n1_null_mean": -2.195588039810575,
+      "gross_minus_null": -5.347265792525218
+     }
+    }
+   },
+   "filtered": {
+    "overall": {
+     "trades": 3
+    },
+    "by_year": {
+     "2016": {
+      "trades": 0,
+      "sessions": 251
+     },
+     "2017": {
+      "trades": 0,
+      "sessions": 249
+     },
+     "2018": {
+      "trades": 0,
+      "sessions": 248
+     },
+     "2019": {
+      "trades": 0,
+      "sessions": 249
+     },
+     "2020": {
+      "trades": 1,
+      "sessions": 251,
+      "long_share": 1.0,
+      "gross_mean": 42.94305396649101,
+      "net_mean": 38.975127907434405,
+      "net_median": 38.975127907434405,
+      "win": 1.0,
+      "payoff": NaN,
+      "t_gross": NaN,
+      "sum_net_bp": 38.975127907434405,
+      "usd_net_per_micro": 55.67560482394591,
+      "daily_sharpe_net": 1.0019900517195868
+     },
+     "2021": {
+      "trades": 2,
+      "sessions": 251,
+      "long_share": 0.0,
+      "gross_mean": -17.122161236230447,
+      "net_mean": -19.788003346243087,
+      "net_median": -19.788003346243087,
+      "win": 0.0,
+      "payoff": NaN,
+      "t_gross": NaN,
+      "sum_net_bp": -39.576006692486175,
+      "usd_net_per_micro": -84.64879035211118,
+      "daily_sharpe_net": -1.3844702731592653
+     },
+     "2022": {
+      "trades": 0,
+      "sessions": 250
+     },
+     "2023": {
+      "trades": 0,
+      "sessions": 248
+     },
+     "2024": {
+      "trades": 0,
+      "sessions": 249
+     },
+     "2025": {
+      "trades": 0,
+      "sessions": 39
+     }
+    },
+    "note": "the predictor forecasts from the 251st trade and trades from 40 forecasts later (mid-2017 on)"
+   }
+  },
+  "NQ": {
+   "unfiltered": {
+    "overall": {
+     "trades": 1435,
+     "trades_per_year": 158.2582056892779,
+     "long_share": 0.570034843205575,
+     "gross": {
+      "mean": 4.289101638203896,
+      "t_hac": 3.568083758406672,
+      "boot_ci95": [
+       1.8765411991924734,
+       6.724428927972817
+      ],
+      "yearly_means_t": 3.3000277860292426,
+      "full_years": 9,
+      "years_positive": 8,
+      "sign_test_p_one_sided": 0.01953125,
+      "without_best_year": {
+       "year": "2024",
+       "mean": 3.6307382611839842
+      },
+      "without_worst_year": {
+       "year": "2020",
+       "mean": 5.2857184782509385
+      }
+     },
+     "net": {
+      "mean": 1.6855474675955053,
+      "t_hac": 1.3986242157522735,
+      "boot_ci95": [
+       -0.726394621166166,
+       4.176466008686591
+      ],
+      "yearly_means_t": 1.2372349289790525,
+      "full_years": 9,
+      "years_positive": 6,
+      "sign_test_p_one_sided": 0.25390625,
+      "without_best_year": {
+       "year": "2024",
+       "mean": 0.8695137632819725
+      },
+      "without_worst_year": {
+       "year": "2020",
+       "mean": 2.6391851630368035
+      }
+     },
+     "concentration": {
+      "top_1pct_share_of_net": 1.2255732520312979,
+      "top_5pct_share_of_net": 4.028138073955512,
+      "top_10pct_share_of_net": 6.300448913208706
+     },
+     "lag1_autocorr_net": -0.018325683363734552,
+     "usd_per_micro": {
+      "total": 7584.65621273026,
+      "per_year": 836.4697442485889,
+      "max_drawdown": 2212.5358536144986,
+      "longest_underwater_sessions": 853,
+      "daily_sharpe": 0.5977398947226422,
+      "daily_sortino": 1.1606950676016567
+     }
+    },
+    "by_year": {
+     "2016": {
+      "trades": 161,
+      "sessions": 251,
+      "long_share": 0.5341614906832298,
+      "gross_mean": 5.828938216996783,
+      "net_mean": 0.8077430897547833,
+      "net_median": -8.955275352242474,
+      "win": 0.40993788819875776,
+      "payoff": 1.5224870500972159,
+      "t_gross": 1.9343836041524323,
+      "sum_net_bp": 130.0466374505201,
+      "usd_net_per_micro": 98.00600191608385,
+      "daily_sharpe_net": 0.23054522600110577,
+      "n1_null_mean": 0.6755025504766277,
+      "gross_minus_null": 5.1534356665201555
+     },
+     "2017": {
+      "trades": 135,
+      "sessions": 249,
+      "long_share": 0.6518518518518519,
+      "gross_mean": 1.941343234679291,
+      "net_mean": -2.0587717023592766,
+      "net_median": -9.836225163367564,
+      "win": 0.34074074074074073,
+      "payoff": 1.5332479887210066,
+      "t_gross": 0.9829909146094683,
+      "sum_net_bp": -277.93417981850234,
+      "usd_net_per_micro": -306.94259932502473,
+      "daily_sharpe_net": -0.9889421671399669,
+      "n1_null_mean": -0.4872857033617066,
+      "gross_minus_null": 2.4286289380409976
+     },
+     "2018": {
+      "trades": 157,
+      "sessions": 248,
+      "long_share": 0.5732484076433121,
+      "gross_mean": 5.273973040820635,
+      "net_mean": 1.9994248837481952,
+      "net_median": -11.777748622602632,
+      "win": 0.4012738853503185,
+      "payoff": 1.6669890737095108,
+      "t_gross": 1.350111080319228,
+      "sum_net_bp": 313.90970674846665,
+      "usd_net_per_micro": 438.1369863404932,
+      "daily_sharpe_net": 0.5263247919802655,
+      "n1_null_mean": -0.43263585045534286,
+      "gross_minus_null": 5.706608891275978
+     },
+     "2019": {
+      "trades": 165,
+      "sessions": 249,
+      "long_share": 0.6181818181818182,
+      "gross_mean": 4.66951505385671,
+      "net_mean": 1.6637819944236054,
+      "net_median": -7.875212168183492,
+      "win": 0.3939393939393939,
+      "payoff": 1.7261294545175991,
+      "t_gross": 1.558197681314576,
+      "sum_net_bp": 274.5240290798949,
+      "usd_net_per_micro": 461.15001749163963,
+      "daily_sharpe_net": 0.6330300341987084,
+      "n1_null_mean": 0.7313362237814334,
+      "gross_minus_null": 3.9381788300752767
+     },
+     "2020": {
+      "trades": 160,
+      "sessions": 251,
+      "long_share": 0.61875,
+      "gross_mean": -3.6526888059209823,
+      "net_mean": -5.913752917952339,
+      "net_median": -18.492077838919037,
+      "win": 0.3375,
+      "payoff": 1.4933732424789607,
+      "t_gross": -0.7199317503324003,
+      "sum_net_bp": -946.2004668723741,
+      "usd_net_per_micro": -2010.4456269778236,
+      "daily_sharpe_net": -1.3536368545530064,
+      "n1_null_mean": 1.7843091468732428,
+      "gross_minus_null": -5.436997952794226
+     },
+     "2021": {
+      "trades": 154,
+      "sessions": 251,
+      "long_share": 0.538961038961039,
+      "gross_mean": 7.412738937314528,
+      "net_mean": 5.823933830753194,
+      "net_median": -1.740997982060869,
+      "win": 0.4805194805194805,
+      "payoff": 1.6098667668423126,
+      "t_gross": 2.3502898643579186,
+      "sum_net_bp": 896.8858099359918,
+      "usd_net_per_micro": 2524.313349658864,
+      "daily_sharpe_net": 1.836414105439213,
+      "n1_null_mean": -0.32931525221706603,
+      "gross_minus_null": 7.742054189531594
+     },
+     "2022": {
+      "trades": 167,
+      "sessions": 250,
+      "long_share": 0.4431137724550898,
+      "gross_mean": 7.36528618467025,
+      "net_mean": 5.55750624564161,
+      "net_median": -15.160387940983576,
+      "win": 0.41916167664670656,
+      "payoff": 1.7239267244762513,
+      "t_gross": 1.4458675856391188,
+      "sum_net_bp": 928.1035430221489,
+      "usd_net_per_micro": 2371.540775279389,
+      "daily_sharpe_net": 1.103587061007939,
+      "n1_null_mean": 0.46187030998343465,
+      "gross_minus_null": 6.903415874686815
+     },
+     "2023": {
+      "trades": 164,
+      "sessions": 248,
+      "long_share": 0.6219512195121951,
+      "gross_mean": 1.4364598499654893,
+      "net_mean": -0.188015484689971,
+      "net_median": -10.68226931888563,
+      "win": 0.3719512195121951,
+      "payoff": 1.667730351168317,
+      "t_gross": 0.4365731937957216,
+      "sum_net_bp": -30.834539489155247,
+      "usd_net_per_micro": -318.0328614022826,
+      "daily_sharpe_net": -0.22001041578692435,
+      "n1_null_mean": 0.9108708820132984,
+      "gross_minus_null": 0.5255889679521909
+     },
+     "2024": {
+      "trades": 145,
+      "sessions": 249,
+      "long_share": 0.5724137931034483,
+      "gross_mean": 10.146265475139652,
+      "net_mean": 8.94543352666073,
+      "net_median": -9.089778117846365,
+      "win": 0.43448275862068964,
+      "payoff": 2.219051869150178,
+      "t_gross": 2.6042123283367333,
+      "sum_net_bp": 1297.087861365806,
+      "usd_net_per_micro": 5038.342439613912,
+      "daily_sharpe_net": 2.3074999189011143,
+      "n1_null_mean": 0.7260213472489379,
+      "gross_minus_null": 9.420244127890713
+     },
+     "2025": {
+      "trades": 27,
+      "sessions": 39,
+      "long_share": 0.4074074074074074,
+      "gross_mean": -5.11428072664425,
+      "net_mean": -6.178806867527633,
+      "net_median": -11.71373411385443,
+      "win": 0.4444444444444444,
+      "payoff": 0.7756889799040242,
+      "t_gross": -0.8959100036081596,
+      "sum_net_bp": -166.82778542324607,
+      "usd_net_per_micro": -711.4122698649969,
+      "daily_sharpe_net": -2.7322661596656403,
+      "n1_null_mean": 0.5946010440422066,
+      "gross_minus_null": -5.708881770686456
+     }
+    }
+   },
+   "filtered": {
+    "overall": {
+     "trades": 225,
+     "trades_per_year": 24.814004376367613,
+     "long_share": 0.8355555555555556,
+     "gross": {
+      "mean": 6.618816632115375,
+      "t_hac": 2.5558554717297315,
+      "boot_ci95": [
+       0.48608004482762046,
+       13.134441073384094
+      ],
+      "yearly_means_t": 1.3809356034487306,
+      "full_years": 7,
+      "years_positive": 6,
+      "sign_test_p_one_sided": 0.0625,
+      "without_best_year": {
+       "year": "2021",
+       "mean": 5.698143681769515
+      },
+      "without_worst_year": {
+       "year": "2020",
+       "mean": 7.483634542583293
+      }
+     },
+     "net": {
+      "mean": 4.70680078641015,
+      "t_hac": 1.817146455508457,
+      "boot_ci95": [
+       -1.4764318311823965,
+       11.174086407367904
+      ],
+      "yearly_means_t": 0.7757016442132731,
+      "full_years": 7,
+      "years_positive": 5,
+      "sign_test_p_one_sided": 0.2265625,
+      "without_best_year": {
+       "year": "2021",
+       "mean": 3.7499361904111375
+      },
+      "without_worst_year": {
+       "year": "2020",
+       "mean": 5.597056001636118
+      }
+     },
+     "concentration": {
+      "top_1pct_share_of_net": 0.37842572390702006,
+      "top_5pct_share_of_net": 1.359319570618689,
+      "top_10pct_share_of_net": 2.2452785644264055
+     },
+     "lag1_autocorr_net": -0.1685763003851177,
+     "usd_per_micro": {
+      "total": 2851.9790011249606,
+      "per_year": 314.5289751787703,
+      "max_drawdown": 784.0359065466682,
+      "longest_underwater_sessions": 694,
+      "daily_sharpe": 0.5119646442512099,
+      "daily_sortino": 0.9690314747719678
+     }
+    },
+    "by_year": {
+     "2016": {
+      "trades": 0,
+      "sessions": 251
+     },
+     "2017": {
+      "trades": 0,
+      "sessions": 249
+     },
+     "2018": {
+      "trades": 28,
+      "sessions": 248,
+      "long_share": 0.9285714285714286,
+      "gross_mean": 10.232357791211873,
+      "net_mean": 6.9407054818493075,
+      "net_median": -11.251491075269273,
+      "win": 0.32142857142857145,
+      "payoff": 2.9698464257179893,
+      "t_gross": 0.8965590154078649,
+      "sum_net_bp": 194.3397534917806,
+      "usd_net_per_micro": 222.50185902886963,
+      "daily_sharpe_net": 0.5415320313839296
+     },
+     "2019": {
+      "trades": 20,
+      "sessions": 249,
+      "long_share": 0.85,
+      "gross_mean": 2.9199719729294253,
+      "net_mean": -0.1802536904442742,
+      "net_median": -6.089953200128963,
+      "win": 0.45,
+      "payoff": 1.2075490466331589,
+      "t_gross": 0.3283778498726841,
+      "sum_net_bp": -3.605073808885484,
+      "usd_net_per_micro": -19.967422122229273,
+      "daily_sharpe_net": -0.08312178178363537
+     },
+     "2020": {
+      "trades": 9,
+      "sessions": 251,
+      "long_share": 0.6666666666666666,
+      "gross_mean": -14.136813219114664,
+      "net_mean": -16.65932437901309,
+      "net_median": -15.18547098569182,
+      "win": 0.3333333333333333,
+      "payoff": 0.9193092480547821,
+      "t_gross": -0.6374335400322061,
+      "sum_net_bp": -149.9339194111178,
+      "usd_net_per_micro": -269.5415899550107,
+      "daily_sharpe_net": -0.8849472948372015
+     },
+     "2021": {
+      "trades": 19,
+      "sessions": 251,
+      "long_share": 0.631578947368421,
+      "gross_mean": 16.600849672707344,
+      "net_mean": 15.081227458820502,
+      "net_median": 10.415349251877593,
+      "win": 0.6842105263157895,
+      "payoff": 1.5816719053343848,
+      "t_gross": 2.0493941580500965,
+      "sum_net_bp": 286.54332171758955,
+      "usd_net_per_micro": 898.6184489839064,
+      "daily_sharpe_net": 1.774381015096699
+     },
+     "2022": {
+      "trades": 47,
+      "sessions": 250,
+      "long_share": 0.9148936170212766,
+      "gross_mean": 10.403692318967767,
+      "net_mean": 8.62382634957247,
+      "net_median": -9.688284596657864,
+      "win": 0.48936170212765956,
+      "payoff": 1.4711840887884013,
+      "t_gross": 1.1519189766563114,
+      "sum_net_bp": 405.31983842990604,
+      "usd_net_per_micro": 1154.132808012753,
+      "daily_sharpe_net": 1.037158433211606
+     },
+     "2023": {
+      "trades": 46,
+      "sessions": 248,
+      "long_share": 0.8913043478260869,
+      "gross_mean": 5.701836349686158,
+      "net_mean": 4.086529215029358,
+      "net_median": -4.810427319380539,
+      "win": 0.43478260869565216,
+      "payoff": 1.698450268849167,
+      "t_gross": 0.8675807554221453,
+      "sum_net_bp": 187.9803438913505,
+      "usd_net_per_micro": 377.35617911888346,
+      "daily_sharpe_net": 0.4780080056081648
+     },
+     "2024": {
+      "trades": 44,
+      "sessions": 249,
+      "long_share": 0.8409090909090909,
+      "gross_mean": 3.697000724681256,
+      "net_mean": 2.477855470687122,
+      "net_median": -10.23575801834808,
+      "win": 0.4090909090909091,
+      "payoff": 1.7099327021344253,
+      "t_gross": 0.6557878092462669,
+      "sum_net_bp": 109.02564071023338,
+      "usd_net_per_micro": 360.42167133112247,
+      "daily_sharpe_net": 0.3918953237381388
+     },
+     "2025": {
+      "trades": 12,
+      "sessions": 39,
+      "long_share": 0.5,
+      "gross_mean": 3.518118070083934,
+      "net_mean": 2.4466893267855805,
+      "net_median": 10.081423530501318,
+      "win": 0.5833333333333334,
+      "payoff": 0.9070639055945198,
+      "t_gross": 0.5253471803113511,
+      "sum_net_bp": 29.360271921426964,
+      "usd_net_per_micro": 128.4570467266678,
+      "daily_sharpe_net": 0.9757035107865271
+     }
+    },
+    "note": "the predictor forecasts from the 251st trade and trades from 40 forecasts later (mid-2017 on)"
+   }
+  }
+ }
+}

@@ -681,6 +681,22 @@ def windows_broken() -> None:
         raise OpeningRunError("walk-forward: a training session is also a test session")
 
 
+def log_trials45(trials: list[dict]) -> int:
+    """Append phase 4-5's trials. S-A is Phase 3's model re-run on the same rows, so its trials are already logged:
+    one already in trials.csv is skipped only if its logged numbers are identical, and raises otherwise."""
+    log = TrialsCsv(OD / "trials.csv")
+    old = {r["trial_id"]: r for r in log.rows()}
+    new = 0
+    for t in trials:
+        r = old.get(t["trial_id"])
+        if r is None:
+            log.append(t)
+            new += 1
+        elif (int(r["n_obs"]), float(r["mean_net"]), float(r["t_hac"])) != (t["n_obs"], t["mean_net"], t["t_hac"]):
+            raise OpeningRunError(f"{t['trial_id']} is logged with different numbers: {r} vs {t}")
+    return new
+
+
 def phase45(a: argparse.Namespace) -> int:
     """Phases 4-5 (scripts/opening_phase45.py), under D645 and OA-A8."""
     s = importlib.util.spec_from_file_location("opening_phase45", REPO / "scripts" / "opening_phase45.py")
@@ -702,11 +718,15 @@ def phase45(a: argparse.Namespace) -> int:
             raise SystemExit("phases 4-5 run once (D645): phase45.json exists")
         doc, trials = P45.build()
         out.write_text(dump(doc), encoding="utf-8", newline="\n")
-        log = TrialsCsv(OD / "trials.csv")
-        for t in trials:
-            log.append(t)
-        print(f"wrote {out.name} and {len(trials)} trials in {doc['runtime_min']} min; final {doc['final_stage']}; "
+        n = log_trials45(trials)
+        print(f"wrote {out.name} and {n} new trials in {doc['runtime_min']} min; final {doc['final_stage']}; "
               f"gate O1 {doc['gate_O1']}; v2 trigger {doc['v2_trigger']['fires']}")
+        return 0
+    if a.log_trials:  # the run of 2026-09-28 wrote phase45.json, then stopped on S-A's rows (logged by Phase 3)
+        doc = json.loads(out.read_text(encoding="utf-8"))
+        stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(out.stat().st_mtime))
+        trials = [t | {"timestamp": stamp} for st in doc["stages"] if "skipped" not in st for t in P45.stage_trials(st)]
+        print(f"logged {log_trials45(trials)} new trials from {out.name} (stamped at its write, {stamp})")
         return 0
     doc, _ = P45.build()
     old = json.loads(out.read_text(encoding="utf-8"))
@@ -724,6 +744,7 @@ def main() -> int:
     g.add_argument("--dry-run", action="store_true")
     g.add_argument("--run", action="store_true")
     g.add_argument("--check", action="store_true")
+    g.add_argument("--log-trials", action="store_true", help="phase 4-5 only: log the trials of the written phase45.json")
     ap.add_argument("--phase", default="3")
     ap.add_argument("--data-root", type=Path, default=REPO / "data",
                     help="where the gitignored inputs (SPY's daily file, D589) live; a worktree passes the main checkout's")

@@ -5,6 +5,16 @@
 > stale. The build-phase list this file held until 2026-09-01 is in git history at `f78786e`
 > (`git show f78786e:docs/internal/AITODO.md`).
 
+## Decision numbers across branches (2026-09-29)
+
+- Main holds D676–D682 from `wt/after-d643`, which merged first.
+- **`wt/after-d674` merged second (2026-09-29) and RENUMBERED its clashing records:**
+  - month-end: D677 → **D685**, D678 → **D686**, D680 → **D687**;
+  - the dealer-gamma close: D681 → **D688**.
+  D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
+  note; commit messages and recorded outputs in `data/` keep the old numbers.
+- **Next free number: 689.** Check every branch before claiming one.
+
 ## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)
 
 - No model opens the vault (2025-03-01 → 2026-09-18) by itself.
@@ -17,6 +27,22 @@
   NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
   move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's
   word). D649 needs D630's vault inputs built first (D630 §8).
+- **FROZEN 2026-09-29 (the principal: "happy for the NQ compression to stay in queue for the big vault run"; "Freeze
+  the ones that where queued today"): D680, the NQ compression break, programme slot 9.**
+  `data/FROZEN_vault_d680_nq_compression.json`; runner `scripts/vault_d680_nq_compression.py` (known answer reproduced:
+  387 C1 trades, +6.93 / +7.56 bp net). PASS: >= 30 C1 trades, gross one-sided HAC t >= 1.2816, net > 0. Power
+  (`data/vault_d680_power.json`): PASS 0.66 / 0.30 / 0.18 / 0.10 at 100 / 50 / 25 / 0% of the in-sample edge, ~85
+  trades. D668's plain break is NOT queued (C1 is its subset); B0 is reported beside.
+  **Prerequisite before the joint run (not built): the NQ vault-input path** -- D644's `fut_opening_globex_1m` built
+  through 2026-09-18 into a separate file and G0's loader (`usable_sessions`, `load_bars`) with the cut moved, written
+  out as `--vault-bars` / `--vault-use`; `--vault` re-proves the known answer on its in-sample part before scoring.
+- **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
+  look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
+  stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**
+- **CLOSED 2026-09-29 (the principal: "close opening model v1"; slot 7: "Release it"):** the opening agent-state
+  model's H-O2 (D658), without its vault look. **Programme slot 7 RELEASED** (`Registry.release`; the family is kept in
+  `released` in `data/programme_registry.json`): the principal's override of the never-retroactively default, for
+  this family only. Allocated: slots 1–6, 8, 9 (0.040); **free: 7 and 10.**
 - **PARKED (the principal, 2026-09-28): D630 §8's vault-input path.** The plan, inventoried 2026-09-28 from metadata only:
   - a wrapper (`scripts/build_ledger_vault_inputs.py`, not yet written) loads each frozen builder unchanged and moves
     only its cut and output paths;
@@ -143,8 +169,8 @@
   COMPONENTS_PROP amended. D669's second proposal was withdrawn by D670.
 - [x] **The reshaping line CLOSED (D670, D673; the principal, 2026-09-29: "Close and merge then remove the
   worktree").** No plain form of the arm's behaviour carries on YM, RTY or ES. The 15:00 last-hour cut stays a
-  candidate exit. **Open at merge time:** `wt/after-d643` merges second, so it renumbers its D673 (the compression
-  break's pre-registration) and its D667 (its diagnostic of its record 666; main's D667 is the margin-hike pause).
+  candidate exit. **Done at the merge (2026-09-29):** `wt/after-d643` merged second and renumbered its D667 → D681
+  (the diagnostic of D666) and its D673 → D682 (the compression break on YM/RTY).
 
 ## The log MACD's mechanism, mechanism first (D675, 2026-09-29)
 
@@ -160,7 +186,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
 - [x] **Seal inventory and power DONE (D675 §9).** No clock cell can be confirmed: 0 of 105 reach t 1.5 on the one
   clean slice (ZN/ZB/6E 2024-01 → 2025-02) even at full effect. The best is ZN's overnight reversal (t 1.37), which
   is D499's effect and has no money in it. NQ has no unread slice. CL and GC 2024-01 → 2025-02 are about to be read by
-  the other session's root-aware break (its number 676). The next free number is 677.
+  the other session's root-aware break (D676, since run: NOT SUPPORTED). The next free number is now **685** (see the
+  numbering note at the top).
 - [x] **The log MACD line CLOSED (D675 §10; the principal, 2026-09-29: "Ok close it").** It includes any MACD variant
   and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
 - [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
@@ -181,8 +208,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - **Nothing is confirmable:** the expected t is at most 0.64 even with the vault.
   - **The fade is not liquidity:** the square-root impact factor doubled from 2013–15 to 2020–23 while the edge turned
     negative (Spearman −0.25). The flow was anticipated or offset, not diluted.
-  - **Number note:** the other session committed its own D685 in the same minute (13:40), so whichever branch merges
-    second renumbers.
+  - **Number note:** the other session committed its own D677 in the same minute (13:40). This branch merged second,
+    so this record became D685 (see the numbering note at the top).
 - [x] **D687 DIAG: why the mechanism fails.** The flow did not shrink, move earlier or get offset.
   - **Its price response per unit collapsed after 2018:** −15.8 / −19.7 → −5.9 bp per 0.01 of drift. This happened
     while |drift| grew and the square-root law predicted more impact.
@@ -285,7 +312,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
 - **Rulings taken 2026-09-27** (`docs/internal/LETF_CLOSE_FLOW_AMENDMENTS.md`): LETF-A1 run the deposit as
   written, D530/D463/D487 disclosed in every result; LETF-A2 in-sample 2016-01 → 2025-02-28 (A10); LETF-A3 Direxion
   from N-PORT (2019-Q3 on: quarter-end net assets plus monthly flows and returns, CIK 1424958), band measured on the
-  ProShares funds, else the principal sources it; LETF-A4 Q1/Q2 defaults (proposed).
+  ProShares funds, else the principal sources it; LETF-A4 Q1/Q2 defaults (proposed, never ruled; **moot**: Gate 1
+  killed the line before Phase 6, and D639 §11 had already fixed Q2).
 - **Phase 1 / Gate 0 DONE (D637, 2026-09-27):** `scripts/build_letf_aum.py` → `data/letf/letf_aum_daily.csv.gz`,
   `gate0.json`. **NQ set PASSES** (four ProShares funds, 2016-01 → 2025-02, 22 N-PORT spot checks each within
   0.011%). **ES set:** ProShares four PASS; Direxion (39% of the S&P flow) estimated from N-PORT 2019-10 → 2025-02
@@ -320,8 +348,8 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - `--selftest` shows 7 checks firing (on synthetic prices).
   - `--dry-run` substitutes synthetic prices and reads only the bars' calendar. Every path ran (6 cells, 71 trials,
     5.2 min).
-  - **Its one `--run` waits for the principal.** It writes `data/letf/letf_close_flow_signal.json` and
-    `data/letf/trials.csv`. Phases 6–7 run only if Gates 1–2 pass.
+  - **It ran once on 2026-09-27 (D640, above)** and wrote `data/letf/letf_close_flow_signal.json` and
+    `data/letf/trials.csv`. Phases 6–7 did not run.
 
 ## Shock classifier — opened 2026-09-27 (the principal: "open the shock classifier")
 
@@ -379,46 +407,17 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
     - A7 from Sierra Chart tick data, one contract at a time;
     - A6 from Alpha Vantage 1-minute SPY/QQQ;
     - costs: D508 + one tick, checked forward.
-- **Work is in the worktree `.claude/worktrees/after-d643` (branch `wt/after-d643`)** while another agent works in
-  main.
-- **Done:**
-  - SPY/QQQ 1-minute, 264 slices (OA-A4).
-  - OA-A6 RULED.
-  - **Gate O0 PASSED (D644):**
-    - coverage 99.98% (ES) and 99.97% (NQ);
-    - SPY/QQQ aligned (lag-0 correlation 0.985 and 0.992);
-    - ES O0-H 99.7%.
-  - **REV < 8% in both markets → merged into RANGE (O-D4).** The model has three states.
-  - The fixture is `fut_opening_globex_1m.csv.gz`: gitignored, in the worktree, and in the manifest by hash. **It
-    must be copied to the main checkout when the branch merges.**
-- **Running:** the Sierra ES/NQ tick pull (`scripts/sierra_index_tick_download.py`), one contract at a time, each
-  compressed in place (NTFS LZX, hash-checked). Log:
-  `scratchpad/sierra_index.log`; record `data/opening/sierra_index_tick_record.json`.
-- **The principal kept O-D4** (REV stays merged).
-- **OA-A7 ruled.**
-- **Phase 2 pressures A1–A6 BUILT:**
-  - `src/backtest_framework/opening/agents.py`, with deposit tests 4–11 (crosswalk 110/146);
-  - `scripts/build_opening_agents.py` → `data/opening/agents.csv`, 2.2 min.
-  - On usable sessions: z1–z3 100%, z5 99.8%, z6 98.9%, ES z4 95%; NQ z4 waits for the NQ options fixture.
-  - A series with a hole (a CME-only holiday session) is computed over its finite sessions, so one hole does not
-    blank 20.
-  - **Flag for the stage runs:** z5's double standardisation (§4 plus OA-A7.5) gives extremes to −45.9 on release
-    days. It is as written; the classifier's inner CV has to live with it, or it needs an amendment before S-F.
-- **POWER DONE** (`scripts/power_opening.py` → `data/opening/power.json`, `docs/results/OPENING_AGENT_STATE_POWER.md`;
-  t0 = 10:00, on 2,030 out-of-sample sessions):
-  - labels: ρ_same_day 0.42 → n_eff 2,831, as planned. H-O1's accuracy-lift MDE is 1.8 points at t = 2 over a
-    61.7% base rate.
-  - 60-minute moves: ρ 0.91 → n_eff 2,125, below the plan's 2,700–2,900. σ is 36 bp (ES) and 48 bp (NQ); the micro
-    round trip is 3.27 / 2.31 bp.
-  - H-O2 all days: MDE 0.043 σ = 1.84 bp at t = 2, testable against the 2.79 bp cost. At the programme's α 0.005
-    with 80% power it is 3.35 bp: **underpowered at the promotion bar**.
-  - **Per traded day (35% confident): MDE 3.10 bp at t = 2 against the 2.79 bp cost: UNDERPOWERED.** A policy
-    whose edge only covers the cost cannot be told from zero.
-- **Next:**
-  - **D645 PRE-REG (`17c2b05`); runner `7339bfe`; PHASE 3 RUN (D646):** S-A passes H-O1 by the letter (log loss −2.8% vs base, 9× noise; accuracy +0.1 pt, 1/19 of the MDE; the permutation passes any base-rate matcher) and fails H-O2 within the doc (policy net −0.05 to −0.13 bp/day; the +1.75/+1.99 bp paired difference, t 2.7, is the baselines' cost). Retention reference: S-A's H-O2 t 2.74 at 10:00. Phase 4 after A7.
-  - A7 comes after the Sierra pull and its check against the exchange flag.
-  - The NQ options fixture (O0-H, S-H).
-  - Phase 0b: the vault guard over the new inputs (test 18).
+- **CLOSED 2026-09-29 by the principal.** What ran:
+  - Gate O0 passed (D644);
+  - stage S-A (D646) passed H-O1 by the letter and failed H-O2;
+  - Phases 4–5 (D658) retained no agent, and Gate O1 failed;
+  - v2 (D652/D659) passed its own kill, but its vault power was 5–6.5 %.
+  - **v2 was closed without its vault look ("Ok close both of those"). v1 was closed with programme slot 7 released
+    ("close opening model v1"; "Release it").** The line has no vault look left.
+  - Diagnostics: D647, D660, D661. Findings: FINDINGS §87 and §92. Component lines: COMPONENTS_PROP (scored, not
+    entered).
+- The branch `wt/after-d643` was merged to main and pushed (`6506cc26`), and the worktree was removed. Its
+  gitignored fixtures, `fut_opening_globex_1m*.csv.gz`, are in the main checkout.
 
 ## Settlement flow ledger — the full study, one problem at a time (opened 2026-09-24)
 
@@ -692,7 +691,7 @@ outputs stay byte-identical.
             - CL: Rubin t 1.79; β above 0.76 is excluded.
             - POST HOC: NG's pass exists only with the return control. Without it, window flow runs against the funds (t −7.98). In the top fund-size tercile β is 0.008 ± 0.02, so the pass does not look like a proportional footprint.
           - **Next:**
-            1. After D626's read (2026-10-10): extend `check_sierra_aggressor.py` to CL/NG on the post-vault sessions. r < 0.8 VOIDs that root (D629 §6).
+            1. **BUILT 2026-09-29, runs after D626's read (D629 §6):** `check_sierra_aggressor.py --root NG --run` and `--root CL --run`, **after** the 10-11 `c0-signcheck-energy` task has refreshed the Sierra files (they end at the 09-29 download). It refuses before 2026-10-11, before D626's marker (`data/ledger_tas_sign_validation.json`) and before the `topup-trades` job is downloaded; it reads D626's own truth files and only CLX26/CLF27/NGX26/NGF27 inside 2026-09-21 → 2026-10-09. The principal's rulings: UNRESOLVED below 10 sessions, else KEEP at r(ts_recv) ≥ 0.8, VOID below; the four contracts on disk. A VOID follows D629's VOID row and D630/D631's own. **Do not re-run the legacy HO/RB path before 10-10:** its `read_scid` decodes whole files, and the HO/RB files now reach D626's sealed sessions.
             2. **D630 RESULT (2026-09-26): H2 on NG PASSES.** $66 a trade gross, $40 net, t 5.01; placebo −0.42; rotation p95 1.47. Gate 1 is met on NG, with H1 provisional.
                - The move reverts after the settlement (+$29, t 3.98).
                - POST HOC partner control: traded beats untraded at the same move, +$65 (t 4.76).

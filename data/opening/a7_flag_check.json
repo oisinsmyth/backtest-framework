@@ -1,0 +1,136 @@
+{
+ "spec": "D645 s.2; OA-A3",
+ "days": [
+  "2026-09-21",
+  "2026-09-22",
+  "2026-09-23",
+  "2026-09-24",
+  "2026-09-25"
+ ],
+ "cut": {
+  "ES": 2,
+  "NQ": 1
+ },
+ "session_markets": 10,
+ "day_level_r_large": 0.9471521701386001,
+ "day_level_r_all": 1.0,
+ "minute_level_r_all": 1.0,
+ "minute_sign_agreement": 1.0,
+ "minutes": 3900,
+ "volume_ratio_sc_over_ex": {
+  "ES 2026-09-21": 1.0,
+  "ES 2026-09-22": 1.0,
+  "ES 2026-09-23": 1.0,
+  "ES 2026-09-24": 1.0,
+  "ES 2026-09-25": 1.0,
+  "NQ 2026-09-21": 1.0,
+  "NQ 2026-09-22": 1.0,
+  "NQ 2026-09-23": 1.0,
+  "NQ 2026-09-24": 1.0,
+  "NQ 2026-09-25": 1.0
+ },
+ "sierra_side_share": 1.0,
+ "table": [
+  {
+   "root": "ES",
+   "day": "2026-09-21",
+   "vol_ex": 102516,
+   "net_all_ex": 4092,
+   "net_large_ex": 3614,
+   "vol_sc": 102516,
+   "net_all_sc": 4092,
+   "net_large_sc": 2345
+  },
+  {
+   "root": "ES",
+   "day": "2026-09-22",
+   "vol_ex": 125752,
+   "net_all_ex": 7280,
+   "net_large_ex": 6540,
+   "vol_sc": 125752,
+   "net_all_sc": 7280,
+   "net_large_sc": 6045
+  },
+  {
+   "root": "ES",
+   "day": "2026-09-23",
+   "vol_ex": 126525,
+   "net_all_ex": -5183,
+   "net_large_ex": -4801,
+   "vol_sc": 126525,
+   "net_all_sc": -5183,
+   "net_large_sc": -2143
+  },
+  {
+   "root": "ES",
+   "day": "2026-09-24",
+   "vol_ex": 113057,
+   "net_all_ex": 395,
+   "net_large_ex": 308,
+   "vol_sc": 113057,
+   "net_all_sc": 395,
+   "net_large_sc": -611
+  },
+  {
+   "root": "ES",
+   "day": "2026-09-25",
+   "vol_ex": 135495,
+   "net_all_ex": 3271,
+   "net_large_ex": 950,
+   "vol_sc": 135495,
+   "net_all_sc": 3271,
+   "net_large_sc": 1946
+  },
+  {
+   "root": "NQ",
+   "day": "2026-09-21",
+   "vol_ex": 68258,
+   "net_all_ex": 2250,
+   "net_large_ex": 2250,
+   "vol_sc": 68258,
+   "net_all_sc": 2250,
+   "net_large_sc": 2250
+  },
+  {
+   "root": "NQ",
+   "day": "2026-09-22",
+   "vol_ex": 63952,
+   "net_all_ex": 2786,
+   "net_large_ex": 2786,
+   "vol_sc": 63952,
+   "net_all_sc": 2786,
+   "net_large_sc": 2786
+  },
+  {
+   "root": "NQ",
+   "day": "2026-09-23",
+   "vol_ex": 63796,
+   "net_all_ex": -1684,
+   "net_large_ex": -1684,
+   "vol_sc": 63796,
+   "net_all_sc": -1684,
+   "net_large_sc": -1684
+  },
+  {
+   "root": "NQ",
+   "day": "2026-09-24",
+   "vol_ex": 75271,
+   "net_all_ex": 985,
+   "net_large_ex": 985,
+   "vol_sc": 75271,
+   "net_all_sc": 985,
+   "net_large_sc": 985
+  },
+  {
+   "root": "NQ",
+   "day": "2026-09-25",
+   "vol_ex": 63260,
+   "net_all_ex": 966,
+   "net_large_ex": 966,
+   "vol_sc": 63260,
+   "net_all_sc": 966,
+   "net_large_sc": 966
+  }
+ ],
+ "pass": true
+}

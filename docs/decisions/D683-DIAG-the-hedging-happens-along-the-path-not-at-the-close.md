@@ -177,7 +177,7 @@ it halves the day's variance and deepens its mean reversion when they are long g
 assumption:** that the day's hedging accumulates and lands in the last half-hour. The data say it lands as the price
 moves.
 
-This is the same shape as B665 (gamma predicts size; a record on the unmerged branch `wt/after-d643`) and D581 (the ES book does not sort the close), now with
+This is the same shape as D665 (gamma predicts size) and D581 (the ES book does not sort the close), now with
 a mechanism: **the hedge flow is a damper applied continuously, so it shows up as lower variance and more reversal
 along the path, not as a directional push at any fixed clock.**
 

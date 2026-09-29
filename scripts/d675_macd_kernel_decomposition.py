@@ -642,8 +642,8 @@ def do_run(data_root: Path) -> int:
     t0 = time.perf_counter()
     fix = data_root / "fixtures" / "fut_sessions_hourly.csv.gz"
     meta = json.loads((data_root / "fixtures" / "fut_sessions_hourly.meta.json").read_text(encoding="utf-8"))
-    d_all = pd.read_csv(fix)
-    gex = pd.read_csv(data_root / "raw" / "squeezemetrics" / "DIX.csv", usecols=["date", "gex"])
+    d_all = pd.read_csv(fix, encoding="utf-8")
+    gex = pd.read_csv(data_root / "raw" / "squeezemetrics" / "DIX.csv", usecols=["date", "gex"], encoding="utf-8")
     gex = gex.sort_values("date", kind="stable").reset_index(drop=True)
 
     # G0: D484's B2 cells, bit for bit, with D484's own functions

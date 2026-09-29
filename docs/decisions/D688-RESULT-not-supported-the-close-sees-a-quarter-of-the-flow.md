@@ -191,8 +191,8 @@ long-gamma days, the reversal half, it is zero: Y = 0.5 is 2.7 SE away. **This d
 - **The ES book's 43% short share** is an unexplained premise fact worth one line in any future gamma work. A
   convention that fits SPX may not fit futures options, where dealers can hold either side.
 - **Relation to earlier records.**
-  - It is consistent with D581 (the ES book does not sort the close) and B662/B663 (the open).
-  - It is consistent with **B665: SPX GEX carries information about the SIZE of moves, and this record finds its
+  - It is consistent with D581 (the ES book does not sort the close) and D662/D663 (the open).
+  - It is consistent with **D665: SPX GEX carries information about the SIZE of moves, and this record finds its
     direction information at most a quarter of what the hedge-flow arithmetic implies.**
   - That matches the memory "dealer gamma predicts size, not carry", now tested on the hedge-flow construction built
     to extract direction.

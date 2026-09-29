@@ -484,3 +484,48 @@ Component lines as CLAUDE.md requires, from the runner's own output (`data/d688_
 | gamma push, expected-profit filtered (regime-split π), 1 MES | D688 | +0.10 (+0.15); gross +0.33 (+0.53) | Gate 1 failed (β +0.12, t 1.23, 91st percentile); 30 trades a year, all short-gamma days; net t 0.30; mean $1.91 against a median of −$1.92; 2020-03-13 is 134% of the net; ρ +0.156 |
 | gamma push, unfiltered sign(Z), 1 MES | D688 | −1.16 (−1.65); gross +0.20 (+0.31) | $0.66 gross a trade against a $4.42 round trip; lost money in every year; ρ +0.058 |
 | gamma push, filtered, 1 full ES ($19.24) | D688 | +0.14 (+0.21); gross +0.30 (+0.46) | 50 a year; net t 0.45; the same single-day dependence; ρ +0.133 |
+
+## SCORED, NOT ENTERED — the opening model, the opening-break line and the MACD arm's reshaping tests, 2026-09-29
+
+**Why this section exists.** Component lines as CLAUDE.md requires, whatever the verdict. These constructions were
+scored but never entered here. The principal's ruling (2026-09-29): enter them as recorded, with the departures from
+this ledger's standard disclosed. Nothing below is recomputed here; every figure is from the record named. Two sets
+come from post-hoc scripts rather than the runners:
+- the single-count restatements (`diag_d677_single_count_index.py`);
+- D659's correlations (`diag_opening_v2_component_corr.py`, on per-session bp, not dollars).
+
+**Departures from the standard, per row:**
+- **Window:** most run 2016-01-04 → 2025-02-28 rather than 2016–2023. D671 and D672 run from 2018-01-09; D682 from
+  2018-01 (YM) and 2019-08 (RTY); D679 from about 2017-10.
+- **Cost:**
+  - **"double":** the D666/D668/D671/D672/D676/D682 stack counts friction twice, filling each stop a tick through and then
+    charging the crossing plus another tick (D668-A2). The single-count restatements are per trade only:
+    - D668: NQ +2.48 bp (t 2.06), ES −0.03, YM −1.02, RTY −3.60;
+    - D672 C1: NQ +7.56 (t 2.62), ES +2.78.
+  - D671 and D682 are the same runner stack, but no single-count restatement exists for them.
+  - **"once":** D678 and D679 count it once; so do D670 and D673 (`d508_exec`, $3 + crossing, no stop fills).
+  - D658 and D659 use OA-A5's line (crossing + $3 + one adverse tick). Whether their fills also carry a tick is
+    not stated, so they are unclassified.
+- **Size:** micro, except D678 and D679, which are one full contract. That is the minimum size only for HO, RB, BZ and
+  PL, since HG, CL, NG, GC and SI have micros.
+- **Correlation:** ρ with #2 (the MACD arm) was not rebuilt, except by D670 and D673.
+- **No rows** for D669 or D675. D669's component table is the arm itself and free-running variants on spent data.
+  D675 is a Stage 1 decomposition, "not a trade", with a gross-only line.
+- **Three cells clear C-a on the point estimate:** D672 NQ C1, D659 V2-C and D668 NQ. Each row says why it is not
+  entered.
+
+| construction | record | daily $ net Sharpe (Sortino); gross | window · cost · size | why not |
+|---|---|---|---|---|
+| opening agent-state model v1, H-O2 policy, ES+NQ | D658 | no daily line (the runner wrote no per-session series); policy −0.135 / −0.051 bp a day net at 09:45 / 10:00 | 2016 → 2025-02 · OA-A5 · micro | Gate O1 failed; **CLOSED 2026-09-29, slot 7 released** |
+| opening v2, V2-F (fade 09:45 to the prior close) | D659 | +0.22 (0.29); gross +0.64; hit 57 %; 842 trades | 2016-04 → 2025-02 · OA-A5 · micro | 2022-carried; policy −0.22 bp a session at 2× cost; vault power 6.5 %; **CLOSED 2026-09-29** without its vault look; \|ρ\| K1–K6 ≤ 0.06 (bp series) |
+| opening v2, V2-C (hold from 10:30 to the close) | D659 | **+0.62 (0.94)**; gross +0.87; hit 55 %; 1,259 trades | 2016-04 → 2025-02 · OA-A5 · micro | clears C-a on the point estimate, but "the component is the always-on hold, not v2's model" (diff +0.06, t 0.05); vault power 5.0 %; **CLOSED**; \|ρ\| K1–K6 ≤ 0.101 (bp series) |
+| re-break of yesterday's range, ES / NQ, E1–E4 | D666 | no daily line (correlations omitted, every cell net-negative); per-trade Sharpe net −1.15 to −0.23 | 2016 → 2025-02 · **double** · micro | NOT SUPPORTED at Gate 1; worse than the plain break in every cell |
+| plain break, E4 unfiltered: ES / NQ / YM / RTY | D668 | −0.64 / **+0.60** / −0.68 / −1.32; gross +0.46 / +1.11 / +0.43 / −0.06 | 2016 → 2025-02 (RTY 2017-07) · **double** · micro | YM/RTY NOT SUPPORTED; ES/NQ development; NQ clears C-a on the point estimate but is in-sample, double-counted, and **CLOSED as a separate vault line** (its subset D680 is frozen); ρ K8 −0.05 / −0.11 / −0.04 / −0.05 |
+| size-forecast break B3: NQ / ES | D671 | −0.03 (−0.05) / −0.05 (−0.09); gross +0.35 / +0.57 | 2018-01 → 2025-02 · **double** · micro | development; on NQ worse than the plain break (placebo rank 0.003); on ES only the short-side veto helps; ρ K8 −0.08 / +0.05 |
+| compression break C1: NQ / ES | D672 | **+0.97 (2.14)** / +0.14 (0.25); gross +1.21 / +0.66; $1,025 / $83 a year | 2018-01 → 2025-02 · **double** · micro | development, "close to circular" on NQ; **frozen for the joint vault as D680 (slot 9)**, whose PASS is the confirmation; not entered before it; ρ K8 −0.05 / −0.02 |
+| compression break C1: YM / RTY | D682 | −0.45 (−0.76) / −1.33 (−1.98); gross +0.11 / −0.65 | YM 2018-01, RTY 2019-08 → 2025-02 · **double** · micro | NOT SUPPORTED (RTY's compressed third is its worst); ρ K8 +0.04 / −0.07 |
+| root-aware break: CL / NG / GC / SI | D676 | −1.12 (−1.90) / −1.22 (−1.75) / −1.19 (−1.92) / −1.41 (−2.26); gross −0.05 / −0.24 / +0.13 / −0.29 | 2016 → 2025-02 · **double** · micro (MCL $6.03, MNG $5.00, MGC $6.93, SIL $13.00) | NOT SUPPORTED on all four; ρ K8 ≤ 0.05 |
+| overnight gap at the open: HO / RB / BZ / HG / PL | D678 | −0.44 (−0.72) / −0.21 (−0.38) / −0.60 (−1.01) / −1.14 (−1.83) / −0.69 (−1.15); gross +0.23 / +0.15 / −0.02 / −0.37 / +0.67 | 2016 → 2025-02 · once · **full** ($57 / $37 / $35 / $34 / $50) | NO MECHANISM: a random side earns the same on the same days; ρ K8 ≤ 0.05 |
+| compression tier C1, nine roots: HO / RB / BZ / HG / PL / CL / NG / GC / SI | D679 | +0.21 / +0.05 / +0.03 / −0.92 / −1.18 / −0.01 / +0.15 / −0.16 / −0.87; gross +0.73 / +0.44 / +0.51 / −0.28 / +0.18 / +0.22 / +0.40 / +0.42 / +0.42 | 2017-10 → 2025-02 · once · **full** | NO MECHANISM by the declared bar; net at most +0.21; \|ρ\| K8 ≤ 0.04 |
+| 10:00 direction held to the close: YM / RTY / ES / NQ | D670 | −1.64 (−2.08) / −0.76 (−1.00) / −0.73 (−0.95) / −0.11 (−0.16); gross −1.07 / −0.13 / −0.24 / +0.16 | 2016 (RTY 2017-07) → 2025-02 · `d508_exec` · micro | fails on every root; **ρ with the arm 0.19 / 0.24 / 0.35 / 0.37**; line CLOSED (R15) |
+| join the formed move: YM / RTY / ES / NQ | D673 | −1.07 (−1.39) / −0.82 (−1.04) / −0.60 (−0.78) / +0.04 (+0.06); gross −0.43 / −0.08 / −0.05 / +0.36 | 2016 (RTY 2017-07) → 2025-02 · `d508_exec` · micro | NOT SUPPORTED; **ρ with the arm 0.21 / 0.17 / 0.26 / 0.35**; line CLOSED (R15) |

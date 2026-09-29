@@ -1,0 +1,10 @@
+{
+ "contracts": {
+  "ESH25": {
+   "multi_trade_records": 0,
+   "rth_records": 3,
+   "secs": 0.0,
+   "sessions": 3
+  }
+ }
+}

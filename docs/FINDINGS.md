@@ -4902,6 +4902,8 @@ D622 established that something is specific to ES 14:00 → 15:00 → 16:00 and 
 
 **Why it fails** ([D647](decisions/D647-POST-HOC-opening-S-A-cannot-see-trend-days.md), post hoc): **the pre-registered trade makes money on the TRUE labels** — CONT +12.6 bp net a trade (t 8.6), FADE +6.4 (t 4.1) — so the trade is not the bottleneck. **The observables cannot see trend days**: one-vs-rest AUC CONT **0.506**, FADE 0.655, RANGE 0.593; the log-loss gain is the prior-day location, volatility and the gap. Phase 4's agents (A1–A7, dealer gamma, large-lot flow) are the registered route to that information; the same diagnostics are fixed at every stage and a v2 redesign is parked behind a fixed trigger (OA-A8). **General lesson: a classifier can pass a log-loss bar while adding nothing a trade can use — report accuracy against the base rate, per-class AUC and the perfect-foresight ceiling beside it.**
 
+*Superseded (2026-09-29): Phase 4 retained no agent (D658); v1 and v2 (D659) are both closed. See §92.*
+
 ## 88. Margin increases (D657): CME's hikes force positions out and precede two weeks of volatility no model forecast, but move no price that comes back — an input for strategies, not a trade
 
 **511 front-month margin increases of 5 % or more on 32 CME roots, 2010–2023**, parsed from CME's own archived
@@ -4990,3 +4992,170 @@ sample.**
 **What earns is its specific NQ timing,** set by the two parameters D669 found to be a spike.
 
 **The 15:00 last-hour cut repeats on all four roots** (+0.4 to +1.0 bp here). It is an exit, not an edge.
+
+## 92. The opening agent-state model ends: no agent adds information, the v2 redesign cannot be confirmed, and both are closed (D658–D661)
+
+**The rule:** Phase 4 added seven agents (dealer gamma, large-lot flow and five others) one at a time to the stage S-A
+model of the morning. An agent was kept only if it cut the out-of-sample log loss by at least 2 % and did not lower H-O2's t
+([D658](decisions/D658-RESULT-opening-phase-4-no-agent-retained-gate-O1-fails.md)).
+- **No agent was retained.** Five of seven made the log loss worse; the best, A6, improved it by 0.11 %.
+- **Gate O1 failed:** H-O2's policy nets −0.135 bp a day at 09:45 and −0.051 at 10:00.
+- **The trade was never the bottleneck.** On the true labels it pays (CONT +12.6 bp net, t 8.6), but the model cannot
+  see continuation: CONT AUC 0.506.
+
+**The v2 redesign** ([D659](decisions/D659-RESULT-opening-v2-both-cells-carried-power-5-percent.md)):
+- Two cells, each passing its own kill:
+  - the fade at 09:45: policy +0.40 bp, t 0.78, 2022-carried;
+  - the hold from 10:30: +1.32 bp, but +0.06 over the always-on hold.
+- The vault could confirm neither: power 6.5 % and 5.0 %.
+
+**Two diagnostics:**
+- [D660](decisions/D660-DIAG-opening-v1-v2-mechanics-statistics-and-oracle-edge.md): the mechanics are exact and the
+  results are noise. The oracle edge is real, but it needs near-perfect information (CONT AUC about 0.98).
+- [D661](decisions/D661-DIAG-opening-prize-sizing.md): no known flow can carry a confirmable morning trade. The largest
+  flows land at the close. (D661 §5 discloses that one of its research agents read vault-period market-size data; the record
+  does not use it.)
+
+**CLOSED 2026-09-29 by the principal:**
+- v2 without spending its vault look;
+- v1 with **programme slot 7 released**, the principal's recorded override of the never-retroactively default.
+
+**General lesson:** a stage that passes a log-loss bar can still add nothing a trade can use (§87). Confirm that an
+information source reaches the tradeable label before building agents on it.
+
+## 93. Dealer gamma at the open predicts how far the market moves, not which way (D662, D663, D665)
+
+**The rule:** after the 10:00 opening-range break, regress the next hour's follow-through on dealer short gamma times a
+shock. On ES this used the carried book, then SqueezeMetrics SPX GEX; NQ used its own options book
+([D662](decisions/D662-STAGE-0-RESULT-shock-times-gamma-not-supported.md),
+[D663](decisions/D663-STAGE-0-RESULT-per-root-break-times-gamma-not-supported.md)).
+
+**NOT SUPPORTED on either root.** On ES the null is powered against the mechanism's own best case. NQ's own options
+book is too thin to power it (vault power 1–7 %):
+- D662: gap × gamma b₃ −0.79 (t −1.06), rotation rank 0.10.
+- D663: ES's break × gamma slope +0.22 (t 0.55) on SPX GEX. D662's post-hoc t of 2.30 does not replicate.
+
+**D665** ([record](decisions/D665-DIAG-d663-gamma-predicts-size-not-carry.md)):
+- **The gamma measures work, on size.** Absolute follow-through rises with short gamma at t 8.7, and keeps t 5.9
+  beyond trailing volatility.
+- **The break trade itself loses** about 3.2 bp net on both roots.
+- **On ES a gamma filter would need a slope 9–45× the one observed.** On NQ the observed slope has the wrong sign.
+- This is the fifth gamma null on direction (D581, H-O6, S-H, D662, D663). **Gamma belongs in a size forecast, not a
+  direction filter.** Dealer gamma: SqueezeMetrics.
+
+## 94. The spark spread cannot be traded on CME (D664)
+
+A data probe ([D664](decisions/D664-PROBE-the-spark-spread-is-not-on-cme.md)):
+- all **121 CME electricity futures carry zero open interest and zero volume**;
+- the main US power codes are absent from the Globex feed in 2012, 2016, 2020 and 2024.
+
+**CLOSED under R15.** With the crack (D653) and the crush (D656), every processing spread in ALPHA_PROGRAMME §3.2 is
+closed. Reopening needs an ICE source and venue.
+
+## 95. The break of yesterday's range carries a small piece of direction everywhere; only on NQ is it larger than its cost (D666, D681, D668, D671)
+
+**The rule:** a stop 0.25 × ATR beyond yesterday's RTH high or low, and an E4 trailing exit (initial stop at the level,
+trail 0.25 ATR).
+
+**The re-break loses** ([D666](decisions/D666-STAGE-0-RESULT-the-rebreak-does-not-carry.md)): waiting for a retest and
+re-break is worse than the plain break in all eight cells. The diagnostic
+([D681](decisions/D681-DIAG-the-retest-selects-the-failed-breaks.md), renumbered from D667) found the reason: the
+retest selects the failed breaks.
+- Breaks that come back to the level lose 17–19 bp.
+- Breaks that never do earn 18–25 bp.
+
+**The plain break grades by root** ([D668](decisions/D668-STAGE-0-RESULT-plain-break-not-on-ym-or-rty.md)). Its excess
+over a same-clock random entry:
+
+| root | excess, bp | rank against the random entry |
+|---|---|---|
+| NQ | +3.9 | 1.00 |
+| ES | +2.1 | 0.99 |
+| YM | +1.2 | 0.90 |
+| RTY | +0.8 | 0.71 |
+
+- **NOT SUPPORTED** on the evidence roots, YM and RTY.
+- The expected-profit predictor ranks nothing (β_disc t < 1).
+- **D668-A2 found the stack counted friction twice.** Counted once, NQ nets +2.48 bp (t 2.06) and ES −0.03.
+
+**A day-size forecast points the wrong way for this trade**
+([D671](decisions/D671-STAGE-0-RESULT-size-forecast-points-the-wrong-way.md)): it predicts the range well (Spearman
+0.42–0.46), but NQ's breaks pay on the days it calls QUIET.
+
+**Across all eight roots** (the index four here, energy and metals in §97): the break beats its random entry on all
+eight, but its excess is 15–61 % of its cost everywhere except NQ (148 %; D677 §6).
+
+**General lesson: a filter that selects on a later event can select the losers.** The retest is conditioned on the
+break failing.
+
+## 96. The compression break: NQ's in-sample edge does not transfer, and the tier's lift elsewhere is small (D672, D682, D679, D680)
+
+**The rule:** the plain break, traded only on the compressed third of sessions: the walk-forward percentile of the
+previous five sessions' ranges and the overnight two-way range
+([D672](decisions/D672-STAGE-0-RESULT-compression-break-carries-on-nq.md)).
+
+**On NQ, in development:** +6.93 bp net (t 2.40), 55 trades a year, daily Sharpe 0.97, positive in every full year
+2018–2024. That is +7.56 bp with friction counted once (D672-A1).
+- The record calls it "close to circular": the rule was found on this data.
+
+**It did not transfer** ([D682](decisions/D682-RESULT-the-compression-break-does-not-transfer-to-ym-or-rty.md),
+renumbered from D673): on RTY the compressed third is the worst (−8.07 bp net, t −2.70); on YM it is no better than the
+rest.
+
+**On nine energy and metals roots** ([D679](decisions/D679-RESULT-compression-tier-lifts-but-misses-its-bar.md)):
+- the compressed third beats the rest before costs on all nine;
+- on the five new roots the lift clears its exact rotation p95 (rank 0.957), but the compressed breaks' own gross is
+  +0.86 % of ATR (t 1.2);
+- **NO MECHANISM by the declared bar**, and the lift is about a quarter of NQ's size.
+
+**Frozen for the joint vault run:** the NQ compression break, as
+[D680](decisions/D680-PRE-REG-the-nq-compression-break-for-the-joint-vault.md), programme slot 9.
+- PASS needs: ≥ 30 trades, gross one-sided t ≥ 1.28, net > 0.
+- Power: 0.66 at the full in-sample edge, 0.30 at half.
+- NQ's plain break is not queued separately.
+
+## 97. Energy and metals: the break's direction is a random walk after friction, the root-aware skips only remove days, and the overnight gap carries nothing (D676, D677, D678)
+
+**The rule:** the plain break on CL, NG, GC and SI at micro size, with root-aware skips: roll, the delivery buffer,
+the index-roll window and EIA arming
+([D676](decisions/D676-RESULT-the-root-aware-break-carries-on-none-of-cl-ng-gc-si.md)).
+
+**NOT SUPPORTED on all four:**
+- each root's gross sits inside its same-clock random-entry null (ranks 0.70–0.92);
+- net is −3.9 to −18.7 bp;
+- an NQ-sized edge relative to ATR is excluded at one-sided 95 %.
+
+**The diagnostic** ([D677](decisions/D677-DIAG-why-the-break-fails-on-energy-and-metals.md)):
+- the break reaches +0.25 ATR before its stop 48–51 % of the time, a random walk's 50 %;
+- friction is 4.9–6.4 % of ATR, against NQ's about 1.8 %;
+- the skips can only remove sessions, and just two removed genuinely bad ones: GC's pre-first-notice window
+  (t −3.1) and NG's early-month window (a 1-in-17 placebo).
+
+**The overnight gap at the open** ([D678](decisions/D678-RESULT-overnight-gap-carries-no-direction.md)), on HO, RB,
+BZ, HG and PL:
+- the family earns +0.25 % of ATR, exactly what a random side earns on the same gap days (rank 0.50);
+- D677's gap lead was the trailing exit profiting on big days, not the gap's direction.
+
+**General lesson: a gross edge is a mechanism only if it beats a direction-randomised null on the same days** (the
+principal's criterion as D678-A1 made it testable).
+
+## 98. The MACD arm: a margin-hike pause adds nothing, the account is resized, and the log MACD is a clock-blind blend (D667, D674, D675)
+
+**The margin-hike pause does not help**
+([D667](decisions/D667-RESULT-the-hike-pause-sits-inside-both-nulls.md)):
+- pausing the admitted arm for ten sessions after each NQ margin increase lifts its net Sharpe 0.724 → 0.763;
+- that is inside both nulls (rotation 72.7th percentile);
+- the arm is no more volatile after a hike (0.87×).
+- CLOSED.
+
+**The account is resized** ([D674](decisions/D674-the-macd-arm-resized-to-the-150k-account.md)): one MNQ is the floor,
+so the account moves to MFFU Rapid 150k. The book's expectation is Sharpe 0.24, the family median, not the arm's 0.72.
+
+**The log MACD** ([D675](decisions/D675-STAGE-1-RESULT-the-macd-is-a-clock-blind-blend.md)):
+- it decomposes exactly into effects the record already holds:
+  - overnight reversal;
+  - US-afternoon continuation;
+  - NQ's daily fade.
+- Per root, only NQ (0.976) and CL (0.997) clear their own null.
+- CLOSED under R15. The clock map is kept as market structure.
+- *The correction of D484's pooled reading (it rests on NQ and CL) waits for the principal's word.*

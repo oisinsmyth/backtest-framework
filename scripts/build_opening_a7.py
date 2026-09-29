@@ -49,10 +49,15 @@ def to_us(ts: pd.Timestamp) -> int:
     return int((ts.tz_convert("UTC").tz_localize(None) - EPOCH) / pd.Timedelta(microseconds=1))
 
 
+EXCH = {"ES": "CME", "NQ": "CME", "RTY": "CME", "YM": "CBOT"}  # D668 adds YM (CBOT) and RTY
+D668_OUT = REPO / "data" / "opening" / "a7_ym_rty.csv"
+D668_META = REPO / "data" / "opening" / "a7_ym_rty.meta.json"
+
+
 def sierra_symbol(d462_contract: str, day: str) -> str:
-    """D462 writes one-digit years (ESH6); Sierra two (ESH16). The decade is the one that puts the expiry within a
-    year after the session."""
-    root, letter, digit = d462_contract[:2], d462_contract[2], int(d462_contract[3:])
+    """D462 writes one-digit years (ESH6, RTYU7); Sierra two (ESH16). The decade is the one that puts the expiry
+    within a year after the session."""
+    root, letter, digit = d462_contract[:-2], d462_contract[-2], int(d462_contract[-1])
     y = int(day[:4])
     for yy in (y, y + 1):
         if yy % 10 == digit:
@@ -92,7 +97,8 @@ def session_rows(m: np.ndarray, day: str) -> dict:
     signed = r["av"].astype(np.int64) - r["bv"].astype(np.int64)
     cs = np.minimum(size, SIZE_CAP)
     out = {"n": int(len(r)), "hist": np.bincount(cs, minlength=SIZE_CAP + 1), "side_share":
-           float((r["av"].astype(np.int64) + r["bv"]).sum() / max(size.sum(), 1))}
+           float((r["av"].astype(np.int64) + r["bv"]).sum() / max(size.sum(), 1)),
+           "multi_trade_records": int((r["n"] > 1).sum())}
     for t in CHECKPOINTS:
         w = mins < (int(t[:2]) * 60 + int(t[3:]) - (9 * 60 + 30))
         out[f"vol_{t}"] = int(size[w].sum())
@@ -107,16 +113,17 @@ def finished_contracts() -> set[str]:
     return {k for k, v in rec["contracts"].items() if v.get("compressed") and v.get("cut_short") is False}
 
 
-def build(data_root: Path, only: set[str] | None = None) -> pd.DataFrame:
+def build(data_root: Path, only: set[str] | None = None, roots: tuple[str, ...] = ROOTS,
+          meta_path: Path = META) -> pd.DataFrame:
     ses = pd.read_csv(data_root / "fixtures" / "fut_index_sessions.csv.gz", encoding="utf-8", dtype={"day": str})
-    ses = ses[ses["root"].isin(ROOTS) & (ses["day"] >= FIRST) & (ses["day"] < RESERVED_FROM)]
+    ses = ses[ses["root"].isin(roots) & (ses["day"] >= FIRST) & (ses["day"] < RESERVED_FROM)]
     rows, meta = [], {"contracts": {}}
-    for r in ROOTS:
+    for r in roots:
         s = ses[ses["root"] == r].sort_values("day")
         s = s.assign(sym=[sierra_symbol(c, d) for c, d in zip(s["contract"], s["day"])])
         per = {}
         for sym, g in s.groupby("sym", sort=False):
-            p = SC_DATA / f"{sym}-CME.scid"
+            p = SC_DATA / f"{sym}-{EXCH[r]}.scid"
             if only is not None and sym not in only:
                 meta["contracts"][sym] = "NOT IN TRIAL"
                 continue
@@ -127,7 +134,9 @@ def build(data_root: Path, only: set[str] | None = None) -> pd.DataFrame:
             t = time.time()
             for day in g["day"]:
                 per[day] = session_rows(m, day)
-            meta["contracts"][sym] = {"sessions": int(len(g)), "secs": round(time.time() - t, 1)}
+            meta["contracts"][sym] = {"sessions": int(len(g)), "secs": round(time.time() - t, 1),
+                                      "rth_records": int(sum(per[d]["n"] for d in g["day"])),
+                                      "multi_trade_records": int(sum(per[d]["multi_trade_records"] for d in g["day"]))}
             del m
         days = [d for d in s["day"] if d in per]
         hists = [per[d]["hist"] for d in days]
@@ -147,7 +156,7 @@ def build(data_root: Path, only: set[str] | None = None) -> pd.DataFrame:
     if (res["session"] >= RESERVED_FROM).any():
         raise SystemExit("a vault session reached A7")
     if only is None:
-        META.write_text(json.dumps(meta, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+        meta_path.write_text(json.dumps(meta, indent=1, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
     return res
 
 
@@ -161,6 +170,7 @@ def selftest() -> int:
     assert np.allclose(ref[N_PRIOR:], mine[N_PRIOR:], rtol=0, atol=1e-12), (ref[N_PRIOR:], mine[N_PRIOR:])
     assert sierra_symbol("ESH6", "2015-12-20") == "ESH16" and sierra_symbol("ESZ9", "2019-10-01") == "ESZ19"
     assert sierra_symbol("NQH0", "2019-12-15") == "NQH20"
+    assert sierra_symbol("RTYU7", "2017-07-10") == "RTYU17" and sierra_symbol("YMH6", "2015-12-20") == "YMH16"
     print("selftest: the histogram threshold equals agents.large_lot_threshold exactly; symbols map")
     return 0
 
@@ -172,13 +182,15 @@ def main() -> int:
     ap.add_argument("--trial", action="store_true", help="only the contracts the downloader has finished; writes to "
                     "temp/ (a runtime projection and a check on real files before the full build)")
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
+    ap.add_argument("--d668", action="store_true", help="YM and RTY (D668) -> data/opening/a7_ym_rty.csv + meta")
     a = ap.parse_args()
     if a.selftest:
         return selftest()
     if a.build or a.trial:
         t = time.time()
-        res = build(a.data_root, finished_contracts() if a.trial else None)
-        out = REPO / "temp" / "a7_trial.csv" if a.trial else OUT
+        roots = ("YM", "RTY") if a.d668 else ROOTS
+        res = build(a.data_root, finished_contracts() if a.trial else None, roots, D668_META if a.d668 else META)
+        out = REPO / "temp" / "a7_trial.csv" if a.trial else (D668_OUT if a.d668 else OUT)
         out.parent.mkdir(parents=True, exist_ok=True)
         res.to_csv(out, index=False, encoding="utf-8", lineterminator="\n", float_format="%.8g")
         print(f"wrote {out}: {len(res):,} rows in {(time.time() - t) / 60:.1f} min")

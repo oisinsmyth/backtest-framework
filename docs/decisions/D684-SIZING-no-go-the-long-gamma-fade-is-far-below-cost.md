@@ -120,7 +120,7 @@ much the day moves, and on short-gamma days, whether the last hour keeps going.*
 ## 6. What this decides, for the principal
 
 1. **The long-gamma fade is dead** at every bar from 5 to 60 minutes, on MES and on full ES.
-2. **Gamma's confirmed role is size.** It halves or doubles the day's variance: t ≈ 12 in D683, and B665's |move|
+2. **Gamma's confirmed role is size.** It halves or doubles the day's variance: t ≈ 12 in D683, and D665's |move|
    results. That belongs in the expected-profit filter's magnitude term, as recommended.
 3. **One lead, the principal's call: short-gamma continuation at 60 minutes, on full ES.** Before any
    pre-registration it needs two cheap checks:

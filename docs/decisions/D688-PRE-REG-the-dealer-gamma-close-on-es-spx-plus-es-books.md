@@ -6,8 +6,8 @@
 (R8). **This record reopens the gamma-conditioned close,** which D582 closed "in any variant". The reopen falls under
 D582's own clause (a new fixture the record names): SqueezeMetrics' SPX GEX, received 2026-09-28. **No return has been
 read for this construction.** Only the GEX series' own distribution and the two books' yearly scale were read (§2).
-Numbers written B6xx (B661, B662, B663, B665) are records on the unmerged branch `wt/after-d643`, read with
-`git show wt/after-d643:docs/decisions/<file>`.*
+Records D661, D662, D663 and D665 were cited as "B6xx" while they sat on the unmerged branch
+`wt/after-d643`; main now holds them.*
 
 ## 0. The mechanism
 
@@ -23,15 +23,15 @@ Numbers written B6xx (B661, B662, B663, B665) are records on the unmerged branch
 **So the last 30 minutes should follow the hedge flow.** When dealers are short gamma, the close continues the day.
 When they are long gamma, it reverts. Both are sized by `√(|Γ·r|/V)`.
 
-**The published anchor:** Baltussen, Da, Lammers and Martens (2021), cited in B661 (the paper is still to be read at
+**The published anchor:** Baltussen, Da, Lammers and Martens (2021), cited in D661 (the paper is still to be read at
 its source): about +6.6 bp in the last 30 minutes per 1% prior move, on negative-gamma days.
 
 **What the record already knows:**
 - D463: intraday momentum on ES is small (1.2 bp).
 - **D581:** carried **ES-options** gamma, evaluated at 15:30 with a sign split, does not sort the close. The close
   continues its prior hour by about +0.10 in every regime.
-- B662 and B663 (at the open): not supported.
-- **B665: SPX GEX predicts the SIZE of moves** (t 8–12), beyond volatility.
+- D662 and D663 (at the open): not supported.
+- **D665: SPX GEX predicts the SIZE of moves** (t 8–12), beyond volatility.
 
 **What is new here:**
 - the SPX book, plus the ES book re-evaluated at the prior close;
@@ -147,7 +147,7 @@ Gate 1 passes (the house rule).
 
 ## 7. Power (computed before the run)
 
-**Per session,** at the square-root table's size (Y 0.5–1, B661's V and σ), the predicted push against the
+**Per session,** at the square-root table's size (Y 0.5–1, D661's V and σ), the predicted push against the
 last half-hour's noise (≈ 22 bp) is about 0.15–0.45 on days with a sizeable |Q|, and near zero on quiet days.
 
 | slice | sessions | expected t at the table's size / at half |
@@ -161,7 +161,7 @@ is declared now: the frozen rule on 2024-01 → 2025-02 plus the vault, in the j
 
 ## 8. Predictions (mine, before the run)
 
-1. **β_G > 0, but Gate 1 fails.** Given D581, B662, B663 and B665, I expect gamma's information to be mostly about
+1. **β_G > 0, but Gate 1 fails.** Given D581, D662, D663 and D665, I expect gamma's information to be mostly about
    size, not direction.
 2. **The SPX-only and sum β_G have the same sign;** ES-only is weaker.
 3. **Short-gamma β > long-gamma β:** hedging with the move is more forceful than hedging against it.

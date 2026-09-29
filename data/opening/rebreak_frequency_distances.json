@@ -1,0 +1,130 @@
+{
+ "ES k0.25 wNone": {
+  "entries": 954,
+  "per_year": 105.2,
+  "long": 488,
+  "short": 466,
+  "vault_events": 162.8,
+  "push_needed_bp": 11.1
+ },
+ "ES k0.25 w30": {
+  "entries": 545,
+  "per_year": 60.1,
+  "long": 225,
+  "short": 320,
+  "vault_events": 93.0,
+  "push_needed_bp": 13.8
+ },
+ "ES k0.25 w45": {
+  "entries": 640,
+  "per_year": 70.6,
+  "long": 278,
+  "short": 362,
+  "vault_events": 109.2,
+  "push_needed_bp": 12.9
+ },
+ "ES k0.25 w60": {
+  "entries": 696,
+  "per_year": 76.8,
+  "long": 313,
+  "short": 383,
+  "vault_events": 118.8,
+  "push_needed_bp": 12.5
+ },
+ "ES k0.5 wNone": {
+  "entries": 489,
+  "per_year": 53.9,
+  "long": 233,
+  "short": 256,
+  "vault_events": 83.5,
+  "push_needed_bp": 14.4
+ },
+ "ES k0.5 w30": {
+  "entries": 103,
+  "per_year": 11.4,
+  "long": 32,
+  "short": 71,
+  "vault_events": 17.6,
+  "push_needed_bp": 28.1
+ },
+ "ES k0.5 w45": {
+  "entries": 151,
+  "per_year": 16.7,
+  "long": 48,
+  "short": 103,
+  "vault_events": 25.8,
+  "push_needed_bp": 23.7
+ },
+ "ES k0.5 w60": {
+  "entries": 179,
+  "per_year": 19.7,
+  "long": 60,
+  "short": 119,
+  "vault_events": 30.6,
+  "push_needed_bp": 22.0
+ },
+ "NQ k0.25 wNone": {
+  "entries": 977,
+  "per_year": 107.7,
+  "long": 527,
+  "short": 450,
+  "vault_events": 166.8,
+  "push_needed_bp": 13.2
+ },
+ "NQ k0.25 w30": {
+  "entries": 587,
+  "per_year": 64.7,
+  "long": 267,
+  "short": 320,
+  "vault_events": 100.2,
+  "push_needed_bp": 16.6
+ },
+ "NQ k0.25 w45": {
+  "entries": 664,
+  "per_year": 73.2,
+  "long": 312,
+  "short": 352,
+  "vault_events": 113.3,
+  "push_needed_bp": 15.7
+ },
+ "NQ k0.25 w60": {
+  "entries": 731,
+  "per_year": 80.6,
+  "long": 359,
+  "short": 372,
+  "vault_events": 124.8,
+  "push_needed_bp": 15.1
+ },
+ "NQ k0.5 wNone": {
+  "entries": 480,
+  "per_year": 52.9,
+  "long": 228,
+  "short": 252,
+  "vault_events": 81.9,
+  "push_needed_bp": 18.2
+ },
+ "NQ k0.5 w30": {
+  "entries": 100,
+  "per_year": 11.0,
+  "long": 24,
+  "short": 76,
+  "vault_events": 17.1,
+  "push_needed_bp": 38.0
+ },
+ "NQ k0.5 w45": {
+  "entries": 148,
+  "per_year": 16.3,
+  "long": 40,
+  "short": 108,
+  "vault_events": 25.3,
+  "push_needed_bp": 31.5
+ },
+ "NQ k0.5 w60": {
+  "entries": 194,
+  "per_year": 21.4,
+  "long": 63,
+  "short": 131,
+  "vault_events": 33.1,
+  "push_needed_bp": 27.7
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "quoted_utc": "2026-09-28T21:37:20Z",
+ "spans": {
+  "in_sample": [
+   "2016-01-01",
+   "2025-03-01"
+  ],
+  "vault": [
+   "2025-03-01",
+   "2026-09-19"
+  ]
+ },
+ "probe": {
+  "SPX.OPT": {
+   "instruments_on_2024-06-03": 6758,
+   "not_found": []
+  },
+  "SPXW.OPT": {
+   "instruments_on_2024-06-03": 16102,
+   "not_found": []
+  },
+  "SPY.OPT": {
+   "instruments_on_2024-06-03": 9318,
+   "not_found": []
+  },
+  "NDX.OPT": {
+   "instruments_on_2024-06-03": 6139,
+   "not_found": []
+  },
+  "NDXP.OPT": {
+   "instruments_on_2024-06-03": 15112,
+   "not_found": []
+  },
+  "QQQ.OPT": {
+   "instruments_on_2024-06-03": 7814,
+   "not_found": []
+  }
+ },
+ "opra": {
+  "spx_complex": {
+   "in_sample": {
+    "statistics": {
+     "billable_gb": 34.477,
+     "usd": 353.2
+    },
+    "definition": {
+     "billable_gb": 19.729,
+     "usd": 91.87
+    },
+    "ohlcv-1d": {
+     "billable_gb": 3.113,
+     "usd": 1739.67
+    }
+   },
+   "vault": {
+    "statistics": {
+     "billable_gb": 33.803,
+     "usd": 346.29
+    },
+    "definition": {
+     "billable_gb": 5.392,
+     "usd": 25.11
+    },
+    "ohlcv-1d": {
+     "billable_gb": 0.972,
+     "usd": 543.13
+    }
+   }
+  },
+  "ndx_complex": {
+   "in_sample": {
+    "statistics": {
+     "billable_gb": 31.874,
+     "usd": 326.53
+    },
+    "definition": {
+     "billable_gb": 13.962,
+     "usd": 65.02
+    },
+    "ohlcv-1d": {
+     "billable_gb": 1.688,
+     "usd": 943.22
+    }
+   },
+   "vault": {
+    "statistics": {
+     "billable_gb": 26.571,
+     "usd": 272.21
+    },
+    "definition": {
+     "billable_gb": 3.46,
+     "usd": 16.11
+    },
+    "ohlcv-1d": {
+     "billable_gb": 0.706,
+     "usd": 394.77
+    }
+   }
+  }
+ },
+ "imbalance": {
+  "XNYS.PILLAR": {
+   "in_sample": {
+    "billable_gb": 89.21,
+    "usd": 1329.33
+   },
+   "vault": {
+    "billable_gb": 26.045,
+    "usd": 388.1
+   }
+  },
+  "XNAS.ITCH": {
+   "in_sample": {
+    "billable_gb": 899.245,
+    "usd": 13399.8
+   },
+   "vault": {
+    "billable_gb": 260.161,
+    "usd": 3876.7
+   }
+  },
+  "ARCX.PILLAR": {
+   "in_sample": {
+    "billable_gb": 786.725,
+    "usd": 11723.12
+   },
+   "vault": {
+    "billable_gb": 178.249,
+    "usd": 2656.12
+   }
+  },
+  "ARCX.PILLAR_SPY_QQQ_only": {
+   "in_sample": {
+    "billable_gb": 2.075,
+    "usd": 30.92
+   },
+   "vault": {
+    "billable_gb": 0.503,
+    "usd": 7.49
+   }
+  }
+ },
+ "note": "on-demand (pay-as-you-go) prices from metadata.get_cost; plan entitlements are not applied",
+ "timing_s": 177.2
+}
