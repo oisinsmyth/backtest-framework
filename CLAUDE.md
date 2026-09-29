@@ -200,6 +200,12 @@ things you would not mind losing mid-command.**
 
 ## Habits
 
+- **Read-heavy work goes to Sonnet 5** (the principal, 2026-09-29): search, repo
+  discovery, extracting figures from records and JSONs, and verification passes go
+  to `Agent` with `model: "sonnet"` (Explore for read-only work). Coding, reasoning,
+  statistics, design and anything written into the repo stay on Opus. A delegated
+  reader's claims that a decision rests on get a second, independent verification
+  pass before they are used.
 - **>~2 min → `run_in_background: true`. Never `nohup`/`&`** — they detach, so the
   wrapper exits at once and the completion notice fires on nothing, leaving you
   polling with foreground `sleep`s that block the agent. **Never poll**; you are
