@@ -104,3 +104,17 @@
 1. **The primary rule:** the root-aware plain break, with quiet-overnight as a secondary (recommended), or quiet-overnight as the primary?
 2. **Index-roll windows:** skip them in the primary (recommended), or report them as a split only?
 3. **ZN/ZB at full size:** acceptable (their dollar risk per trade is several times a micro index's), or leave treasuries out until a micro-equivalent cost line exists?
+
+## 8. Decisions (the principal, 2026-09-29)
+
+> "On the first two, I'll go with your recommendations. and will defer the treasuries until later"
+
+1. **The primary rule is the root-aware plain break.** The quiet-overnight filter is the declared secondary.
+2. **Index-roll windows** (GSCI business days 5–9, BCOM 6–10) are **skipped in the primary** and reported as a split.
+3. **Treasuries (ZN, ZB) are deferred.**
+
+**The scope is therefore CL, NG, GC and SI.** Consequences for the plan:
+- **§3:** the 08:00 one-minute build is needed for **GC and SI** only.
+- **§2:** the FOMC flat-before-14:00 rule applies to GC only. The month-end-extension and auction rows fall away with the treasuries.
+- **§4:** Holm runs across the four roots.
+- **§5:** prediction 3 covers GC alone.
