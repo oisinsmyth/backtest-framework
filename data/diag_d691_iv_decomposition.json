@@ -1,0 +1,76 @@
+{
+ "spec": "post-hoc diagnostic to D691 (not pre-registered)",
+ "credit": "dealer gamma (GEX): SqueezeMetrics",
+ "ES": {
+  "n": 1774,
+  "corr_ivrv_lnIV": 0.2053759201123994,
+  "corr_ivrv_negLnRV20": 0.43592102748651146,
+  "corr_lnIV_negLnRV20": -0.7912724059275608,
+  "A_rv20 over M0": {
+   "dbar": 0.006007139868975634,
+   "t_hac": 2.7203031364882353,
+   "mse_reduction_pct": 3.488036379662827
+  },
+  "B_lniv over M0": {
+   "dbar": -0.00020246260902209893,
+   "t_hac": -0.8750956554119792,
+   "mse_reduction_pct": -0.11755959761112678
+  },
+  "C_ivrv over M0": {
+   "dbar": 0.018466667651578686,
+   "t_hac": 7.3417730374018255,
+   "mse_reduction_pct": 10.722641720482041
+  },
+  "D_lniv_rv20 over M0": {
+   "dbar": 0.018403642661284022,
+   "t_hac": 7.462994049081846,
+   "mse_reduction_pct": 10.68604635833457
+  },
+  "D_lniv_rv20 over A_rv20": {
+   "dbar": 0.012396502792308386,
+   "t_hac": 5.619414205552238,
+   "mse_reduction_pct": 7.458153071040576
+  },
+  "C_ivrv over A_rv20": {
+   "dbar": 0.01245952778260305,
+   "t_hac": 5.363112210941946,
+   "mse_reduction_pct": 7.4960710252244045
+  }
+ },
+ "NQ": {
+  "n": 1745,
+  "corr_ivrv_lnIV": 0.0852844407321854,
+  "corr_ivrv_negLnRV20": 0.5558654859491895,
+  "corr_lnIV_negLnRV20": -0.780836957796403,
+  "A_rv20 over M0": {
+   "dbar": 0.006648850066724675,
+   "t_hac": 3.7449027216548187,
+   "mse_reduction_pct": 4.3547204083222235
+  },
+  "B_lniv over M0": {
+   "dbar": -0.00019883652568594291,
+   "t_hac": -1.3501878495922615,
+   "mse_reduction_pct": -0.1302296589086729
+  },
+  "C_ivrv over M0": {
+   "dbar": 0.014093091019804537,
+   "t_hac": 7.644030673229388,
+   "mse_reduction_pct": 9.23038878368301
+  },
+  "D_lniv_rv20 over M0": {
+   "dbar": 0.014025098460426025,
+   "t_hac": 7.532069057927559,
+   "mse_reduction_pct": 9.185856483665974
+  },
+  "D_lniv_rv20 over A_rv20": {
+   "dbar": 0.007376248393701349,
+   "t_hac": 5.18371889999398,
+   "mse_reduction_pct": 5.0510972375934315
+  },
+  "C_ivrv over A_rv20": {
+   "dbar": 0.00744424095307986,
+   "t_hac": 4.455809938052336,
+   "mse_reduction_pct": 5.097657088960012
+  }
+ }
+}

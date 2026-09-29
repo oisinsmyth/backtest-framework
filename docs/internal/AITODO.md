@@ -13,8 +13,12 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 692.** D689 is the short-gamma continuation stage 0; D690 the oracle filter and accuracy
-  assessment (`wt/after-d674`, record committed); D691 the implied-vs-realised volatility premise check.
+- **Next free number: 693.** D689 is the short-gamma continuation stage 0; D690 the oracle filter and accuracy
+  assessment (`wt/after-d674`, record committed); D691 the implied-vs-realised volatility premise check (RESULT:
+  SIZE INFORMATION CONFIRMED on ES and NQ); D692 the oracle profile at MES (the other session).
+- **D691 Stage 1 waits for the principal's word.** It would test the break split by the "coiled" label (low realised
+  range, high IV/RV20), with the RV20-only control (rotate `ln IV`, hold RV20) that D691 §4 shows is needed. On NQ it
+  refines D680 and confirms only through D680's vault look; ES has no unread index slice.
   **Check every branch, and the commit messages, before claiming a number.**
 
 ## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)

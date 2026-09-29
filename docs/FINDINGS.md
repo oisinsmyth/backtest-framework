@@ -5159,3 +5159,23 @@ so the account moves to MFFU Rapid 150k. The book's expectation is Sharpe 0.24, 
 - Per root, only NQ (0.976) and CL (0.997) clear their own null.
 - CLOSED under R15. The clock map is kept as market structure.
 - *The correction of D484's pooled reading (it rests on NQ and CL) waits for the principal's word.*
+
+## 99. Implied volatility carries size information beyond realised volatility and dealer gamma, but only relative to realised (D691)
+
+**The rule: the options market's forecast of the day's size is worth using as a ratio to realised volatility, never as
+a level.**
+([D691 STAGE 0 RESULT](decisions/D691-STAGE-0-RESULT-implied-vol-adds-size-information-beyond-realised.md))
+- **The object:** the prior close's at-the-money IV (the nearest 16:00 weekly at least 2 sessions out), as
+  ln(IV / RV20), added to D671's walk-forward realised-only size forecast of ln(range / ATR20).
+- **Gate S passes on both roots:**
+  - out-of-sample MSE falls 10.7 % (ES) and 9.2 % (NQ), at DM t 7.3 and 7.6;
+  - the gain is above every one of ~2,200 enumerated rotations;
+  - it is positive in every year 2018–2025 (2022 near zero) and without Feb–Apr 2020.
+- **Spearman with the day's range:** M0 0.47 → M1 0.55 (ES); 0.42 → 0.50 (NQ).
+- **The level of IV adds nothing** (t −0.9, −1.4): it is volatility's level, which the target already normalises away.
+- **About a third (ES) to a half (NQ) of the gain is the ratio's realised denominator.** Implied volatility adds 7.5 % /
+  5.1 % beyond it (t 5.4 / 4.5; post hoc, no rotation null for that split).
+- **Complementary to dealer gamma, not a substitute:** the gain is slightly smaller with g removed.
+- The gain roughly halves after 2022-05-16 and stays positive.
+- **Status:** a premise, not a trade. Stage 1 (the break split by the "coiled" label) needs its own pre-registration on
+  the principal's word, and carries the RV20-only control.

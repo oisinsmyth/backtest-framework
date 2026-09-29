@@ -1,0 +1,219 @@
+{
+ "spec": "D691 (7a9e4e69)",
+ "credit": "dealer gamma (GEX): SqueezeMetrics",
+ "gates": {
+  "ES": {
+   "G1_coverage_in_window": 1.0,
+   "G1_pass": true,
+   "missing_by_year": {},
+   "missing_reasons": {},
+   "G2_roundtrip_worst_rel": 3.870190220310333e-14,
+   "G3_lag_audit": "passed on 30 sessions",
+   "G4_seal": "held",
+   "G5_median_iv_by_year": {
+    "2016": 0.1118,
+    "2017": 0.0672,
+    "2018": 0.1151,
+    "2019": 0.1118,
+    "2020": 0.1984,
+    "2021": 0.1164,
+    "2022": 0.2267,
+    "2023": 0.1315,
+    "2024": 0.1078,
+    "2025": 0.1325
+   },
+   "sessions": 2278,
+   "G5_corr_iv_rv20": 0.8059830883098438
+  },
+  "NQ": {
+   "G1_coverage_in_window": 0.9836527621195039,
+   "G1_pass": true,
+   "missing_by_year": {
+    "2018": 4,
+    "2020": 1,
+    "2021": 10,
+    "2022": 12,
+    "2023": 1,
+    "2024": 1
+   },
+   "missing_reasons": {
+    "no bracketing pair": 29
+   },
+   "G2_roundtrip_worst_rel": 2.458093788575482e-14,
+   "G3_lag_audit": "passed on 30 sessions",
+   "G4_seal": "held",
+   "G5_median_iv_by_year": {
+    "2016": 0.1366,
+    "2017": 0.1012,
+    "2018": 0.1639,
+    "2019": 0.153,
+    "2020": 0.2545,
+    "2021": 0.172,
+    "2022": 0.2925,
+    "2023": 0.1788,
+    "2024": 0.1564,
+    "2025": 0.1818
+   },
+   "sessions": 2278,
+   "G5_corr_iv_rv20": 0.8059609416860816
+  }
+ },
+ "roots": {
+  "ES": {
+   "n_eval": 1774,
+   "window": [
+    "2018-01-09",
+    "2025-02-28"
+   ],
+   "gate_S": {
+    "a_dbar": 0.018466667651578682,
+    "a_t_hac": 7.341773037401825,
+    "a_se": 0.002515287187100766,
+    "a_p_one_sided": 1.0539131048420441e-13,
+    "b_rotation": {
+     "offsets": 2234,
+     "p50": -0.00015089588219913705,
+     "p95": 2.0598773573358027e-06,
+     "p95_se": 0.0,
+     "rank": 1.0,
+     "wall_s": 302.7
+    },
+    "c_dbar_ex_covid": 0.016916696487165515,
+    "holm_p": 1.0539131048420441e-13,
+    "checks": {
+     "a_dm_t_holm": true,
+     "b_above_rotation_p95": true,
+     "c_positive_ex_covid": true
+    }
+   },
+   "mse0": 0.17222125044338893,
+   "mse1": 0.15375458279181026,
+   "mse_reduction_pct": 10.722641720482041,
+   "reported": {
+    "spearman_M0": 0.4709754415780333,
+    "spearman_M1": 0.5514276112766322,
+    "spearman_lnIV_alone": 0.16039355962977478,
+    "spearman_rv5_alone": 0.38252458558118513,
+    "M1_final_slope_on_ivrv": 0.16239010496579454,
+    "M1_final_slopes": {
+     "g": 0.034759627469303764,
+     "on_range": 0.07070144932529993,
+     "rv5": 0.06105875906564057,
+     "abs_gap": 0.08005241852754355,
+     "event": 0.02913920540750918,
+     "opex": 0.007790547863591225,
+     "ivrv": 0.16239010496579454
+    },
+    "dbar_by_year": {
+     "2018": 0.009188663371500481,
+     "2019": 0.027401409797753965,
+     "2020": 0.02366909904262235,
+     "2021": 0.03590571049299258,
+     "2022": 0.002519178562815958,
+     "2023": 0.013494124276396631,
+     "2024": 0.01336029198935224,
+     "2025": 0.04039176855208795
+    },
+    "dbar_before_after_2022_05_16": [
+     0.02229965144970802,
+     0.012501793729417756
+    ],
+    "without_g": {
+     "dbar": 0.017783360893624,
+     "t_hac": 7.150901390597203
+    },
+    "secondary_open_close": {
+     "target": "ln(|open - close| / ATR20)",
+     "dbar": 0.02465892787833347,
+     "t_hac": 4.6159175717090575,
+     "n": 1762
+    },
+    "iv_coverage_in_window": 0.996629213483146,
+    "deviation": "D665's break |follow-through| secondary target not computed (D691 s.1 lists it as reported)"
+   },
+   "verdict": "SIZE INFORMATION CONFIRMED"
+  },
+  "NQ": {
+   "n_eval": 1745,
+   "window": [
+    "2018-01-09",
+    "2025-02-28"
+   ],
+   "gate_S": {
+    "a_dbar": 0.014093091019804533,
+    "a_t_hac": 7.644030673229389,
+    "a_se": 0.0018436727457361965,
+    "a_p_one_sided": 1.0526261048310843e-14,
+    "b_rotation": {
+     "offsets": 2182,
+     "p50": -0.00021689251774437975,
+     "p95": 9.200509513376767e-05,
+     "p95_se": 0.0,
+     "rank": 1.0,
+     "wall_s": 314.9
+    },
+    "c_dbar_ex_covid": 0.013260852541760518,
+    "holm_p": 2.1052522096621687e-14,
+    "checks": {
+     "a_dm_t_holm": true,
+     "b_above_rotation_p95": true,
+     "c_positive_ex_covid": true
+    }
+   },
+   "mse0": 0.1526814454957472,
+   "mse1": 0.1385883544759427,
+   "mse_reduction_pct": 9.230388783683008,
+   "reported": {
+    "spearman_M0": 0.4242642822528256,
+    "spearman_M1": 0.5046588676847431,
+    "spearman_lnIV_alone": 0.10338753591077886,
+    "spearman_rv5_alone": 0.34726563827189355,
+    "M1_final_slope_on_ivrv": 0.13816591279855195,
+    "M1_final_slopes": {
+     "g": 0.040202617505647145,
+     "on_range": 0.060567373363904956,
+     "rv5": 0.0547611577135807,
+     "abs_gap": 0.07939370624454242,
+     "event": 0.019696781620064822,
+     "opex": 0.004181768097056896,
+     "ivrv": 0.13816591279855195
+    },
+    "dbar_by_year": {
+     "2018": 0.013392446362299337,
+     "2019": 0.018806715610539478,
+     "2020": 0.0193279181476285,
+     "2021": 0.02312989355556069,
+     "2022": 0.0010097774625693133,
+     "2023": 0.009521380396624368,
+     "2024": 0.010328572194844544,
+     "2025": 0.032280287612027385
+    },
+    "dbar_before_after_2022_05_16": [
+     0.016967369585587058,
+     0.009613093783108312
+    ],
+    "without_g": {
+     "dbar": 0.012814981844423458,
+     "t_hac": 7.0848495726409535
+    },
+    "secondary_open_close": {
+     "target": "ln(|open - close| / ATR20)",
+     "dbar": 0.021771195705161082,
+     "t_hac": 4.359297363593953,
+     "n": 1741
+    },
+    "iv_coverage_in_window": 0.9803370786516854,
+    "deviation": "D665's break |follow-through| secondary target not computed (D691 s.1 lists it as reported)"
+   },
+   "verdict": "SIZE INFORMATION CONFIRMED"
+  }
+ },
+ "predictions": {
+  "1_ES_passes_gate_S": true,
+  "2_NQ_gain_smaller_than_ES": true,
+  "3_lnIV_beats_rv5_both": false,
+  "4_ivrv_slope_positive_both": true,
+  "5_gain_larger_without_g_both": false
+ },
+ "runtime_min": 12.26
+}
