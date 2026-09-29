@@ -176,3 +176,55 @@ to point the same way as its kernel, and its overnight losses are smaller there.
    break studies (the same roots, the same afternoon), so it is to be coordinated before anything is designed.
 3. **Name the correction to D484 in the record:** its pooled pass rests on NQ and CL, not eight roots. That belongs
    in FINDINGS beside D484 when the principal agrees.
+
+## 9. Seal inventory and holdout power (added the same day)
+
+The principal: "We have since learnt that time of day is part of market structure. I have no problem with a time of
+day based filter or strategy." Then: "Run steps 1 and 2": the seal inventory, then the power of every clock cell,
+before any clock-specific design is written. No return was read for this section.
+
+### 9.1 Where a clock rule chosen from §3 could still be confirmed
+
+| roots | 2024-01 → 2025-02 | the vault, 2025-03-01 → 2026-09-18 | after the vault |
+|---|---|---|---|
+| **NQ** | spent (D503, the day session to 2026-09) | spent (D503) | — |
+| **ES, YM** (and RTY) | read for this very idea: "join the formed move after 10:00" (D673, 2016 → 2025-02), and the break studies on the other branch | joint run only (A10) | index mids 2025-09 → 2026-09 read by D526 |
+| **CL, GC** | read by the shock classifier's event windows (D643, to 2025-02); **about to be read by the other session's pre-registration 676**, a root-aware break (day-session continuation) on CL, NG, GC and SI to 2025-02 | joint run only | CL: D626's sample, sealed until its read on 2026-10-10 |
+| **ZN, ZB, 6E** | **unread** for any intraday price path. D513–D535 and D622 declared it unread, and pre-registration 676 defers treasuries. | joint run only | — |
+
+Number 676 is the other session's, claimed on `wt/after-d643`. The next free number on every branch is **677**.
+
+### 9.2 Power
+
+`scripts/d675_power.py` → `data/d675_power.json`. For each of the 105 cells (root × {S, CONT, REV} × target clock on
+GC, CL, ZN, ZB, 6E, ES and YM):
+- `z_in` is the cell's distance from its null median in null standard deviations. The SD is `(p95 − p50)/1.645`, a
+  normal approximation of the exact null.
+- The expected holdout t, **if the effect is entirely real**, is `|z_in| · √(months in the slice / 96)`.
+- The power rule's floor is t = 1.5.
+
+| | |
+|---|---|
+| cells with \|z_in\| ≥ 1.645 | **19 of 105** (10.5 expected by chance at two-sided 10%) |
+| the strongest cell | ZN CONT at Asian targets, z −3.59 (the overnight reversal) |
+| its expected t on 2024-01 → 2025-02 | **1.37** at full effect, 0.69 at half |
+| on 2024-01 → 2025-02 plus the vault | 2.09 at full effect, 1.04 at half |
+| cells reaching t ≥ 1.5 on the one clean slice | **0** |
+| the best continuation cells (CL S at Asian targets, CL CONT at US_OPEN, GC CONT at US_CLOSE) | t 0.95, 0.66, 0.68 on slice A; 1.45, 1.00, 1.04 with the vault |
+
+**No clock cell can be confirmed.**
+- **Every cell is under the floor even if its whole in-sample effect is real,** and in-sample effects picked as the
+  largest of 105 are inflated.
+- **The only cells that approach the floor are the overnight reversal,** and those are D499's effect: under a tick,
+  with no money even if confirmed.
+- **The cells that would carry money are weakest:** NQ's afternoon has no unread slice, and CL and GC continuation
+  sit at t ≤ 1.45 with the vault.
+- **Reading a slice now would return a number near zero whichever world is true, and spend it.**
+
+**What would change this is a construction that fires more often,** not a longer wait. For example, pooling one
+clock effect across the roots that share it: six roots show the overnight reversal. But the pooled effect with money
+in it does not exist: the reversal is under a tick, and the continuation is NQ's alone.
+
+**Proposal (R15, the principal's):** close the log MACD line, and do not spend any slice on a clock cell from §3.
+Keep the clock map (§3) as a fact of market structure. A future construction may condition on it, provided it is
+designed on a window that has not read it.

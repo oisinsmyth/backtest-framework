@@ -157,8 +157,12 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   (US_CLOSE at the 100th percentile, mechanism unidentified); and on NQ, yesterday's move reverts (D495/K8). Per root
   the traded signal clears its own null only on NQ (0.976) and CL (0.997); 6E loses (0.024); on ES, YM and CL most of
   it is 2020.
-- [ ] **The principal's calls (D675 §8):**
-  - close the log MACD as a signal line;
+- [x] **Seal inventory and power DONE (D675 §9).** No clock cell can be confirmed: 0 of 105 reach t 1.5 on the one
+  clean slice (ZN/ZB/6E 2024-01 → 2025-02) even at full effect. The best is ZN's overnight reversal (t 1.37), which
+  is D499's effect and has no money in it. NQ has no unread slice. CL and GC 2024-01 → 2025-02 are about to be read by
+  the other session's root-aware break (its number 676). The next free number is 677.
+- [ ] **The principal's calls (D675 §8, §9):**
+  - close the log MACD as a signal line, and spend no slice on a §3 clock cell;
   - whether Stage 2 designs on NQ's afternoon continuation (mechanism unidentified; gamma, LETF and Gao et al.'s
     published form already measured; overlaps the other session's break studies);
   - record in FINDINGS that D484's pooled pass rests on NQ and CL.
