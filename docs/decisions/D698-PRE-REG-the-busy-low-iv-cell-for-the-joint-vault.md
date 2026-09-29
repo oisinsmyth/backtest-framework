@@ -175,3 +175,88 @@ trades (session blocks, the vault's expected counts, the effect scaled to 100 / 
    same.**
 3. **NQ's X hold-to-close on the E4 break is negative** (the reversal holds).
 4. **The veto lifts the E4 plain break's net on both roots.**
+
+## Amendment D698-A1 (2026-09-30), before the freeze and before any vault session was read: the pooled z test is replaced by a rotation test inside the vault
+
+*The principal: "Write D698-A1 and re-run the power check". Nothing in the vault had been read. The rule had not been
+frozen, and no slot had been registered.*
+
+### Why: the power check showed the registered test is miscalibrated
+
+The runner (`0df49639`) ran its `--power` mode on in-sample data. The output is kept as
+`data/vault_d698_power_registered_statistic.json`. Its line for **0 % of the in-sample effect** — no edge at all — was:
+
+| | the registered test | nominal |
+|---|---:|---:|
+| PASS | **0.21** | ≤ 0.10 (lower, given the 3-of-4 sign rule) |
+| promotion | **0.0675** | 0.005 |
+
+The cause was traced with `scripts/diag_d698_calibration.py` (output `data/diag_d698_calibration.json`, in-sample
+only). It resamples 385-session vaults under the null:
+
+| draw | per-slice z variance under the null (ES E4 / NQ E4 / ES D663 / NQ D663) |
+|---|---|
+| sessions one at a time (block 1) | 1.08 / 1.07 / 1.16 / 1.13 |
+| blocks of 20 | 1.44 / 1.72 / 1.21 / 1.09 |
+| blocks of 60 and 120 | about 1.6 / 1.8 / 1.2–1.3 / 0.75–0.9 |
+
+- **The label is persistent.** After an X break, the next break of the same slice is also X 20–35 % of the time,
+  against base rates of 8–10 %.
+- **So X breaks cluster, and the Welch SE, which assumes independent trades, understates the noise.** Draws that keep
+  the clusters inflate the E4 slices' z variance to 1.4–1.8.
+- **§2's second assumption was wrong the other way.** The slices' null correlations are −0.02 to +0.03 in the full-length
+  bootstrap and −0.06 to +0.04 at the vault's size, not 0.3–0.5.
+- **The in-sample pooled Z of −4.65 is therefore overstated too.** D696's evidence stands: its nulls were rotations,
+  which keep the persistence.
+
+### What replaces §2's statistic and verdict
+
+**The per-slice statistic is unchanged:** d_s = mean(X) − mean(rest), with its Welch z_s. **T = z_ES,E4 + z_NQ,E4 +
+z_ES,D663 + z_NQ,D663**, equal weights. R is dropped.
+
+**The null is an enumerated rotation inside the vault:**
+- **The session axis:** the vault sessions (2025-03-01 → 2026-09-18) on which either root has a label, n of them.
+- **The rotation:** each root's session-level X flag (missing where the root has no label) is rotated circularly along
+  that axis by k. The same k is used for both roots and both breaks, for every k from 21 to n − 21.
+- **At each offset,** every break takes the rotated flag of its session, and T_k is recomputed. A break whose rotated
+  flag is missing is left out at that offset.
+- **The trades never move. Only the label does,** so the vault's own clustering, tails and cross-slice dependence are
+  kept by construction.
+
+**p = (1 + #{k : T_k ≤ T}) / (1 + the number of offsets).**
+
+| verdict | condition |
+|---|---|
+| **PASS** | **p ≤ 0.10, and at least 3 of the 4 d_s < 0** |
+| **FAIL** | otherwise |
+| **UNRESOLVED** | fewer than 40 X breaks, or fewer than 8 in either E4 slice (as §2) |
+
+- **Programme promotion:** p ≤ 0.005, with the same sign rule. With about 343 offsets, that means the vault's T lies
+  below every rotation.
+- **Unchanged:** the slot (10), the objects (§1), the reporting (§3), the prerequisites (§5), the forward route (§6)
+  and the predictions (§8).
+
+### What replaces §4's power estimate
+
+The power check is run on **contiguous 385-session windows** of the in-sample window, each window's own label and
+trades, not resampled blocks.
+- **Window starts:** every 5 sessions.
+- **The effect:** each slice's X breaks are shifted so that the slice's in-sample d_s is scaled to 100 / 50 / 25 / 0 %.
+- **The test:** each window is scored with the rotation test above, rotating within the window.
+- **Reported:** PASS, promotion and UNRESOLVED rates, and the X count, at each scale.
+- **The 0 % line is the calibration check.** Its PASS rate must be at or below 0.10, and its promotion rate near 0.005.
+  If it is not, nothing is frozen and the principal is told.
+- The windows overlap, so the rates are averages over correlated windows, not independent replications. The number of
+  distinct windows is reported beside them.
+
+**§4's decision rule stands.** If PASS at 100 % of the in-sample effect is below 0.5, the rule is still frozen, and
+the decision goes to the principal before slot 10 is spent.
+
+### The runner's assertions (§7) are amended to match
+
+- **Kept:** the known answers, the rehearsal and the lag checks.
+- **The pooled-Z assertions are replaced by:**
+  - offset 0 reproduces the observed T exactly;
+  - the vectorised rotation equals a loop over offsets on a sample of offsets;
+  - on synthetic data, an injected X effect gives p ≤ 0.01;
+  - clustered noise (a persistent label, no effect) gives p ≤ 0.10 in at most about 12 % of draws.
