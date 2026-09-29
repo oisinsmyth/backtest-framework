@@ -1,0 +1,68 @@
+{
+ "record": "D695",
+ "builder": "scripts/build_fut_es_signed_1m.py",
+ "source": "C:\\SierraChart\\Data",
+ "sessions": 2062,
+ "span": [
+  "2016-01-04",
+  "2023-12-29"
+ ],
+ "cutoff": "2024-01-01",
+ "contracts": [
+  "ESH16",
+  "ESH17",
+  "ESH18",
+  "ESH19",
+  "ESH20",
+  "ESH21",
+  "ESH22",
+  "ESH23",
+  "ESH24",
+  "ESM16",
+  "ESM17",
+  "ESM18",
+  "ESM19",
+  "ESM20",
+  "ESM21",
+  "ESM22",
+  "ESM23",
+  "ESU16",
+  "ESU17",
+  "ESU18",
+  "ESU19",
+  "ESU20",
+  "ESU21",
+  "ESU22",
+  "ESU23",
+  "ESZ16",
+  "ESZ17",
+  "ESZ18",
+  "ESZ19",
+  "ESZ20",
+  "ESZ21",
+  "ESZ22",
+  "ESZ23"
+ ],
+ "validation": {
+  "minutes_sierra": 792639,
+  "minutes_databento": 792644,
+  "minutes_matched": 792639,
+  "V1_median_volume_ratio": 1.0,
+  "V1_ratio_p10_p90": [
+   1.0,
+   1.0
+  ],
+  "V2_volume_correlation": 0.9996837699926767,
+  "V3_signed_share": 0.9999999889717955,
+  "V4_last_equals_close_share": 0.9888435971482604,
+  "V4_within_one_tick_share": 0.9993603645543557,
+  "pass": true
+ },
+ "columns": {
+  "trades": "Sierra NumTrades",
+  "volume": "TotalVolume",
+  "buy": "AskVolume (buyer-initiated)",
+  "sell": "BidVolume (seller-initiated)"
+ },
+ "built_seconds": 87.2
+}

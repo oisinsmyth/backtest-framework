@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 465 of these records carry neither field —
+**No Status or Category column, deliberately.** 466 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -767,7 +767,7 @@ would look like data. The tokens are what is shown.
 | D692 | the oracle profile at MES: where the winners of the hourly continuation sit, shown before any filter is designed | [record](D692-DESIGN-the-oracle-profile-at-mes.md) · [record](D692-DIAG-the-mes-oracle-profile.md) |
 | D693 | D693 STAGE 0 RESULT — the principal's per-cell filter fails at MES: anti-calibrated (slope −2.2), worse than the gate a… | [record](D693-STAGE-0-DESIGN-the-short-gamma-long-filter-at-mes.md) · [RESULT](D693-STAGE-0-RESULT-the-cell-filter-is-anti-calibrated-at-mes.md) |
 | D694 | D694 STAGE 1 RESULT — NOT SUPPORTED on ES and NQ: coiled days are bigger, but the options market's own information does… | [record](D694-STAGE-1-DESIGN-the-break-on-coiled-days.md) · [RESULT](D694-STAGE-1-RESULT-not-supported-iv-adds-nothing-to-the-break.md) |
-| D695 | D695 STAGE 0 DESIGN — three new directional inputs for the short-gamma long continuation, ranked continuously at MES: o… | [record](D695-STAGE-0-DESIGN-three-directional-inputs-ranked-at-mes.md) |
+| D695 | D695 STAGE 0 RESULT — none of the three inputs carries direction for the short-gamma long continuation: order flow and… | [record](D695-STAGE-0-DESIGN-three-directional-inputs-ranked-at-mes.md) · [RESULT](D695-STAGE-0-RESULT-no-input-carries-direction.md) |
 
 <!-- REGISTER:END -->
 
