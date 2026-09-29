@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 409 of these records carry neither field —
+**No Status or Category column, deliberately.** 411 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -735,6 +735,7 @@ would look like data. The tokens are what is shown.
 | D662 | D662 STAGE 0 RESULT — NOT SUPPORTED: neither the gap nor the stop run is multiplied by dealer short gamma at the openin… | [record](D662-STAGE-0-DESIGN-does-dealer-short-gamma-multiply-the-opening-shock.md) · [RESULT](D662-STAGE-0-RESULT-shock-times-gamma-not-supported-short-gamma-breaks-carry-slightly.md) |
 | D663 | D663 STAGE 0 RESULT — NOT SUPPORTED on either root: measured on the SPX options book, ES breaks do not carry further wh… | [record](D663-STAGE-0-DESIGN-per-root-break-times-dealer-gamma-with-cash-flow-shocks.md) · [RESULT](D663-STAGE-0-RESULT-per-root-break-times-gamma-not-supported-on-either-root.md) |
 | D665 | DIAG of D663: the gamma measures work, and they predict how FAR the market moves after the break, not which way it carr… | [record](D665-DIAG-d663-gamma-predicts-size-not-carry.md) |
+| D666 | D666 STAGE 0 RESULT — NOT SUPPORTED at Gate 1 on both roots: the re-break of yesterday's range does not carry before co… | [record](D666-STAGE-0-DESIGN-the-rebreak-of-yesterdays-range.md) · [RESULT](D666-STAGE-0-RESULT-the-rebreak-does-not-carry-and-is-worse-than-a-plain-break.md) |
 
 <!-- REGISTER:END -->
 
