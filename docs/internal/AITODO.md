@@ -17,6 +17,13 @@
   NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
   move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's
   word). D649 needs D630's vault inputs built first (D630 §8).
+- **QUEUED, NOT YET FROZEN (the principal, 2026-09-29: "happy for the NQ compression to stay in queue for the big
+  vault run"): D672's NQ compression break.** In-sample C1 net +7.56 bp single count (D672-A1, t 2.62, ~55 trades a
+  year); development on its own discovery sample (circular); D673 did not transfer to YM/RTY; D679 found the tier's
+  sign on nine energy/metals roots at about a quarter of NQ's size. Before the joint run it needs a vault
+  pre-registration with friction counted once (D668-A2), its vault power (rough: ~85 C1 trades, low), a freeze and an
+  NQ vault-input path proved on the in-sample. D668's NQ plain break (+2.48 single count) is the same clock and signal
+  (C1 is its subset): queue one or the other, not both as separate components.
 - **PARKED (the principal, 2026-09-28): D630 §8's vault-input path.** The plan, inventoried 2026-09-28 from metadata only:
   - a wrapper (`scripts/build_ledger_vault_inputs.py`, not yet written) loads each frozen builder unchanged and moves
     only its cut and output paths;
