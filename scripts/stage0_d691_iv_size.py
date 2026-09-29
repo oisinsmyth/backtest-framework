@@ -155,13 +155,14 @@ def build_iv(root: str) -> tuple[pd.DataFrame, dict[str, Any]]:
     return tab, {"tcal": tcal, "refs": refs, "settle_map": settle_map, "cand": cand}
 
 
-def iv_cached(root: str) -> tuple[pd.DataFrame, dict[str, Any]]:
-    """The IV table, cached in temp/ keyed on the options fixture's, the strip's, the calendar's and this file's mtimes."""
+def iv_cached(root: str, need_ctx: bool = False) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """The IV table, cached in temp/ keyed on the options fixture's, the strip's, the calendar's and this file's mtimes.
+    `need_ctx` rebuilds (the round-trip gate needs the option rows) and refreshes the cache."""
     key = ";".join(f"{p.name}:{p.stat().st_mtime_ns}" for p in (FIX / f"fut_{root.lower()}_options_eod.csv.gz",
                                                                 FIX / "fut_settle_strip.csv.gz", FIX / "fut_index_sessions.csv.gz",
                                                                 Path(__file__)))
     path, kpath = CACHE / f"d691_iv_{root.lower()}.csv", CACHE / f"d691_iv_{root.lower()}.key"
-    if path.exists() and kpath.exists() and kpath.read_text(encoding="utf-8") == key:
+    if not need_ctx and path.exists() and kpath.exists() and kpath.read_text(encoding="utf-8") == key:
         tab = pd.read_csv(path, index_col=0, dtype={"expiry": str, "underlying": str, "reason": str}, encoding="utf-8")
         tab.index = tab.index.astype(str)
         return tab, {}
@@ -363,7 +364,7 @@ def root_study(r: str, dz: dict[str, Any], workers: int, iv_tab: pd.DataFrame) -
     win = ev
     cov = float(np.isfinite(dz["iv"][sess >= WINDOW_FROM]).mean())
     res = {
-        "n_eval": int(ev.sum()), "window": [str(sess[ev].min()), str(sess[ev].max())],
+        "n_eval": int(ev.sum()), "window": [str(min(sess[ev])), str(max(sess[ev]))],
         "gate_S": {"a_dbar": obs, "a_t_hac": t, "a_se": se, "a_p_one_sided": float(stats.norm.sf(t)),
                    "b_rotation": {"offsets": len(offsets), "p50": float(np.median(null)), "p95": float(np.quantile(null, 0.95)),
                                   "p95_se": 0.0, "rank": float((null < obs).mean()), "wall_s": round(wall, 1)},
@@ -409,7 +410,7 @@ def build(workers: int) -> dict[str, Any]:
     t0 = time.time()
     iv_tabs, ctxs = {}, {}
     for r in ROOTS:
-        iv_tabs[r], ctxs[r] = build_iv(r)
+        iv_tabs[r], ctxs[r] = iv_cached(r, need_ctx=True)
     out: dict[str, Any] = {"spec": "D691 (7a9e4e69)", "credit": "dealer gamma (GEX): SqueezeMetrics", "gates": gates(iv_tabs, ctxs)}
     if not all(v["G1_pass"] for v in out["gates"].values()):
         raise D691Error(f"G1 failed: {out['gates']}")
@@ -543,14 +544,14 @@ def main() -> int:
     if a.gates:
         iv_tabs, ctxs = {}, {}
         for r in ROOTS:
-            iv_tabs[r], ctxs[r] = build_iv(r)
+            iv_tabs[r], ctxs[r] = iv_cached(r, need_ctx=True)
         g = gates(iv_tabs, ctxs)
         # the IV lag canary on real data: taking the session's own settle must be caught
         r0 = "ES"
         tab = iv_tabs[r0]
         some = [s for s in tab.index[np.isfinite(tab["iv"])] if s >= "2019-01-01"][:3]
         try:
-            iv_lag_audit(tab, r0, some, ref_rule=lambda refs, d: refs[refs <= d].max())
+            iv_lag_audit(tab, r0, some, ref_rule=lambda refs, d: max(refs[refs <= d]))
         except D691Error:
             g["G3_canary"] = "fired: an IV built on the session's own settle is caught"
         else:
