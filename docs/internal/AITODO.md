@@ -165,6 +165,15 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
 - [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
 
+## Month-end rebalancing flow (D677, 2026-09-29; the principal: "Write, build then run it please")
+
+- [ ] **D677 PRE-REG committed; runner next** (`scripts/stage0_d677_month_end_rebalancing.py`). The source is
+  Harvey–Mazzoleni–Melone's calendar signal, a 60/40 portfolio's month-to-date drift, lagged one settlement for
+  execution. The outcome is ES over the last five trading days of each month, 2010-07 → 2023-12.
+  - Gate 1 (gross): B1 NW slope, B2 month-rotation null, B3 against a mid-month placebo.
+  - Gate 2 (net): the expected-profit-filtered MES book.
+  - Confirmation, declared: 2024-01 → 2025-02 plus the joint-run vault (expected t 2.0 at the published effect).
+
 ## Pre-lapse data sweep (2026-09-27; the Databento CME Standard subscription lapses ~2026-10-11)
 
 - Quoted by `scripts/quote_prelapse_sweep.py` → `data/prelapse_sweep_quote.json` (`8dac850`), metadata only,

@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 416 of these records carry neither field —
+**No Status or Category column, deliberately.** 417 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -737,6 +737,7 @@ would look like data. The tokens are what is shown.
 | D673 | D673 STAGE 0 RESULT — joining the day's move once it has formed carries nowhere: not on YM, RTY or ES, and not beyond i… | [record](D673-STAGE-0-DESIGN-join-the-formed-move-after-ten.md) · [RESULT](D673-STAGE-0-RESULT-the-formed-move-does-not-carry-either.md) |
 | D674 | the MACD arm resized: one MNQ stays the floor, so the account moves to MFFU Rapid 150k and the book's expectation moves… | [record](D674-the-macd-arm-resized-to-the-150k-account.md) |
 | D675 | D675 STAGE 1 RESULT — the log MACD has no mechanism of its own: it is a clock-blind blend of effects the record already… | [record](D675-STAGE-1-DESIGN-the-log-macd-edge-decomposed-exactly.md) · [RESULT](D675-STAGE-1-RESULT-the-macd-is-a-clock-blind-blend.md) |
+| D677 | REGISTRATION — month-end rebalancing flow: does a 60/40 portfolio's month-to-date drift predict ES over the last five t… | [PRE-REG](D677-PRE-REG-month-end-rebalancing-flow-on-es-and-zn.md) |
 
 <!-- REGISTER:END -->
 
