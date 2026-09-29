@@ -115,3 +115,21 @@ Accuracy is scored against the oracle label (net > 0 at full ES, base rate 0.474
   is D689's.
 - **The next gain would come from a new input that raises the Spearman above about 0.05.** It must be an input whose
   mechanism bears on the NEXT hour's direction, not its size.
+
+## Addendum, 2026-09-29: the principal's ruling on §3–§5
+
+"Hold up, I am not happy with those filters, first of all, a filter should tested on the real trades we are doing so MES
+no the full ES contracts. Next you did not show me what the results of the oracle was and we did not design the
+candidate filters together."
+- **Sections 2–5 do not stand as a filter assessment.**
+  - The oracle label, the partial-oracle curve and the accuracy scores used full ES. The account trades MES.
+  - R1–R5 were chosen by me, not designed with the principal.
+- **What remains is the library, and §1's oracle.** At MES ($4.42), over 8,555 candidates (1,240 a year):
+  - take everything: −2.10 (−$3.12 a trade);
+  - the oracle (net > 0): +13.6 (+$35.17, 44% taken);
+  - the oracle at the 2c bar: +13.4 (+$40.86, 37% taken);
+  - a perfect size forecast: −0.04 (top 20%) and −0.35 (top 40%).
+- **Next, in order:**
+  - the oracle at MES shown to the principal and profiled (where the winners are);
+  - the candidate filters designed together;
+  - then scored at MES.
