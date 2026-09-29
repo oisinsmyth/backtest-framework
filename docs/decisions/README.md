@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 470 of these records carry neither field —
+**No Status or Category column, deliberately.** 471 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -770,6 +770,7 @@ would look like data. The tokens are what is shown.
 | D695 | D695 STAGE 0 RESULT — none of the three inputs carries direction for the short-gamma long continuation: order flow and… | [record](D695-STAGE-0-DESIGN-three-directional-inputs-ranked-at-mes.md) · [RESULT](D695-STAGE-0-RESULT-no-input-carries-direction.md) |
 | D696 | D696 STAGE 0 RESULT — LEAD SURVIVES: busy realised range that the options market does not price forward is the worst ce… | [record](D696-STAGE-0-DESIGN-the-busy-low-iv-cell.md) · [RESULT](D696-STAGE-0-RESULT-lead-survives-the-busy-low-iv-cell.md) |
 | D697 | D697 STAGE 0 RESULT — the move-triggered short-gamma long loses: fast rises on short-gamma days fade into the close (−$… | [record](D697-STAGE-0-DESIGN-the-short-gamma-burst-long-to-the-close.md) · [RESULT](D697-STAGE-0-RESULT-fast-rises-fade-and-the-drift-does-the-work.md) |
+| D698 | PRE-REGISTRATION: the busy / low-IV/RV cell on unseen data. A pooled four-slice test for the joint vault run (ES and NQ… | [PRE-REG](D698-PRE-REG-the-busy-low-iv-cell-for-the-joint-vault.md) |
 
 <!-- REGISTER:END -->
 
