@@ -175,6 +175,15 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   - **Against the mechanism:** the sign book lost money in each of 2019–2022; ZN's β is −0.01 (no bond leg); the next
     10 days continue (−49, t −1.97) rather than revert.
   - **Component line:** unfiltered MES net Sharpe 0.26, Sortino 0.39, ρ −0.04 with the MACD arm.
+- [ ] **D678 PRE-REG (development) committed; runner next.** It holds 13 variants on D677's base:
+  - projections P0–P7, where P1 is the square-root impact law, P6 the structural combination and P7 an equal-weight
+    blend;
+  - overlays O1 (volatility size), O2 (macro-day stand-aside) and O3 (hold into the next month);
+  - lags L1 (a 15:45 signal, 2016+) and L2 (a 10-day window).
+
+  Each is scored against its own month-rotation null and a best-of-13 family null, with prior-only refits inside
+  every rotation. It also asks whether the square-root law explains the fade. **Number note:** the other session
+  committed its own D677 in the same minute (13:40), so whichever branch merges second renumbers.
 - [ ] **The principal's calls (D677 §7):**
   - record MECHANISM ONLY and do not spend 2024-01 → 2025-02 (expected t ≈ 1.1 at the measured effect; 1.65 with
     the vault);
