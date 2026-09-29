@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 409 of these records carry neither field —
+**No Status or Category column, deliberately.** 410 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -733,6 +733,7 @@ would look like data. The tokens are what is shown.
 | D664 | the spark spread cannot be tested or traded on CME: all 121 CME electricity futures carry zero open interest and zero v… | [record](D664-PROBE-the-spark-spread-is-not-on-cme.md) |
 | D667 | pausing the MACD arm after NQ margin increases lifts its net Sharpe by 0.04, inside both nulls: not supported, and the… | [PRE-REG](D667-PRE-REG-margin-hike-pause-on-the-macd-arm.md) · [RESULT](D667-RESULT-the-hike-pause-sits-inside-both-nulls.md) |
 | D669 | D669 STAGE 0 RESULT — the MACD arm earns by carrying the direction of the move since yesterday's close into days that t… | [record](D669-STAGE-0-DESIGN-where-the-macd-arms-returns-come-from.md) · [RESULT](D669-STAGE-0-RESULT-a-day-scale-timer-that-fails-its-search.md) |
+| D670 | D670 STAGE 0 DESIGN — the MACD arm's mechanism built directly: carry the direction of the move since yesterday's close… | [record](D670-STAGE-0-DESIGN-carry-the-overnight-direction-from-ten.md) |
 
 <!-- REGISTER:END -->
 
