@@ -8,7 +8,7 @@ the D668 runner's functions and seeds (reproduces ab49940e). Statistics only.
 Day size, known only after the close: R = RTH (high - low) / ATR20 (primary); T = |close - open| / ATR20 (the trend-day
 statistic). Per root:
   A  E4 by quintile of R (and of T), quintiles over ALL sessions: trades, gross, net, P(hold) (never back to yesterday's
-     level; the retest split of D667), win rate, gain-if-hold, loss-if-fail.
+     level; the retest split of D681), win rate, gain-if-hold, loss-if-fail.
   B  the perfect size oracle: trade only the breaks on the top 20 / 40 / 60 % of days by R: trades a year, net, $ a year
      per micro, daily Sharpe, the removed trades' net.
   C  a partial size oracle: a forecast whose Spearman correlation with R over all sessions is rho (0.1 ... 0.6; the
@@ -40,7 +40,7 @@ N_DRAW = 300
 
 
 def retest(bb: dict, i: int, D: int, L: float) -> bool:
-    """Did price come back to yesterday's level after the entry (the D667 split)? Hindsight."""
+    """Did price come back to yesterday's level after the entry (the D681 split)? Hindsight."""
     m, h, l = bb["m"], bb["h"], bb["l"]
     after = np.arange(i + 1, len(m))
     after = after[m[after] <= M.X.LAST_ENTRY]

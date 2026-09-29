@@ -25,7 +25,7 @@ of sessions.
 |---|---|---|
 | NQ (development, D672) | C1 net +6.93 bp (t 2.40); +7.56 with single-count friction (D672-A1); a monotone C1 > C2 > C3 ladder | spent |
 | ES (development, D672) | C1 about 0; C3 (busy) −5.66 | spent |
-| YM, RTY (evidence, D673) | NOT SUPPORTED; on RTY C1 was the worst third (−8.07 net) | spent |
+| YM, RTY (evidence, D682) | NOT SUPPORTED; on RTY C1 was the worst third (−8.07 net) | spent |
 | CL, NG, GC, SI (D676's secondary, overnight input only) | quiet − rest +0.3 to +2.9% of ATR on all four, none above its rotation's p95 | spent |
 
 **The index roots split, and energy and metals lean positive.** HO, RB, BZ, HG and PL have never been read by any break
@@ -136,7 +136,7 @@ refutation.**
 - **CONFIRMED ACROSS ROOTS:** compression before a break is a mechanism of these markets as well as of NQ. The NQ vault
   case gains support from outside its own sample.
 - **FAMILY ONLY:** recorded; the NQ result stays NQ-specific.
-- **NOT CONFIRMED:** the compression break stays an NQ-specific in-sample finding, as D673 left it.
+- **NOT CONFIRMED:** the compression break stays an NQ-specific in-sample finding, as D682 left it.
 
 ## Amendment D679-A1, before the run (2026-09-29): CL, NG, GC and SI added as a second family
 
@@ -154,8 +154,8 @@ refutation.**
 the tier on them, as its secondary, and not the full tier or the rv5 half.
 - **Family 2 is therefore evidence for the mechanism, but not clean evidence for the overnight input.** That is
   disclosed beside it.
-- **Not added:** ES, NQ, YM and RTY. ES and NQ are where the idea came from, and YM and RTY are D673's evidence. Their
-  existing C1 − rest reads (D672, D673) are quoted in the result for completeness only.
+- **Not added:** ES, NQ, YM and RTY. ES and NQ are where the idea came from, and YM and RTY are D682's evidence. Their
+  existing C1 − rest reads (D672, D682) are quoted in the result for completeness only.
 
 **How it enters:**
 

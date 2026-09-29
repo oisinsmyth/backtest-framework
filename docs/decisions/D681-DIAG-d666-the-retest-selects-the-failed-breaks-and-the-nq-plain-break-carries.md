@@ -1,4 +1,6 @@
-# D667 — DIAG of D666: the retest selects the failed breaks, which is why the re-break loses; the thread is NQ's plain break with a trailing stop (+4.29 bp gross, HAC t 3.57, 8 of 10 years), found post hoc and unpromotable as it stands
+# D681 — DIAG of D666: the retest selects the failed breaks, which is why the re-break loses; the thread is NQ's plain break with a trailing stop (+4.29 bp gross, HAC t 3.57, 8 of 10 years), found post hoc and unpromotable as it stands
+
+*Renumbered from D667 on 2026-09-29, at this branch's merge into main: main holds D667 (the margin-hike pause on the MACD arm). Commits before the merge, recorded run outputs and the frozen D680 cite the old number.*
 
 *2026-09-29.*
 - *The principal: "B, I would like a diagnostic on this, a statistical analysis of the results, trades by year etc..

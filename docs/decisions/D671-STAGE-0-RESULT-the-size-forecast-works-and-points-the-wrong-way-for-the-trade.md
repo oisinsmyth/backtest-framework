@@ -91,7 +91,7 @@ The net when a term fires, against when it does not (post-skip trades):
 That is a design flaw of the declared score, recorded for the successor.
 
 **On ES the contraindications are reversed:** a probed level and a big gap are *good*. This fits lane D's mechanism
-(ES is priced overnight, and its edge is the overnight move accepted at the open) and ES's gap-through class (D667).
+(ES is priced overnight, and its edge is the overnight move accepted at the open) and ES's gap-through class (D681).
 **Those signs are root-specific, with a stated mechanism.**
 
 ## 5. By year and the four groups

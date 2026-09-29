@@ -1,12 +1,14 @@
-# D673 RESULT — NOT SUPPORTED on YM and on RTY: the compression break does not transfer. On RTY the compressed third is the WORST of the three (−8.07 bp net, t −2.70); on YM it is no better than the rest. The NQ result stands only as an NQ-specific, in-sample finding
+# D682 RESULT — NOT SUPPORTED on YM and on RTY: the compression break does not transfer. On RTY the compressed third is the WORST of the three (−8.07 bp net, t −2.70); on YM it is no better than the rest. The NQ result stands only as an NQ-specific, in-sample finding
+
+*Renumbered from D673 on 2026-09-29, at this branch's merge into main: main holds D673 (join the formed move after ten). Commits before the merge, recorded run outputs (`data/stage0_d682_compression_ym_rty.json` keeps its old spec string) and the frozen D680 cite the old number.*
 
 *2026-09-29.*
-- *One completed run of `scripts/stage0_d673_compression_ym_rty.py` under D673 (`fb8c4c5e`), 1.2 min.*
+- *One completed run of `scripts/stage0_d682_compression_ym_rty.py` under D682 (`fb8c4c5e`), 1.2 min.*
 - *Data gates passed before any outcome (`febb7ff9`):*
   - *(i) identity of the new overnight fixture's RTH bars with D462's is exact (YM 906,639 bars, RTY 756,413);*
   - *(ii) overnight coverage is 100% every year on both roots;*
   - *(iii) no vault row.*
-- *Output: `data/stage0_d673_compression_ym_rty.json`. Dealer gamma (GEX): SqueezeMetrics, a secondary only.*
+- *Output: `data/stage0_d682_compression_ym_rty.json`. Dealer gamma (GEX): SqueezeMetrics, a secondary only.*
 
 **Disclosure.**
 - The first `--run` crashed in its output step (a `KeyError`: YM's daily series was trimmed before RTY's correlation
@@ -79,12 +81,12 @@ whole break is negative before costs (B0 gross −0.26). The small-cap index giv
 - YM Sharpe −0.45 (ρ K8 +0.04);
 - RTY −1.33 (ρ K8 −0.07).
 
-## 5. Routing (D673 §7)
+## 5. Routing (D682 §7)
 
 **NOT SUPPORTED on both evidence roots:**
 - **The compression break is recorded as NQ-specific or spurious.** NQ's in-sample +6.93 (D672) was found and checked
   on the same sample, and it failed to transfer to the two roots that could confirm it.
-- **It stands only until the vault reads NQ,** with about 30% power per D667. It is not a ledger candidate.
+- **It stands only until the vault reads NQ,** with about 30% power per D681. It is not a ledger candidate.
 
 **What survives as a direction, not a result:**
 - The overnight-quiet half is consistent in sign across ES, YM and RTY, and on NQ.

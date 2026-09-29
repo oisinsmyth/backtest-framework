@@ -5,12 +5,12 @@
   gamma as confluences with a profit predictor?"*
 - *Their choice of target: **"Expectant profit"**. The predictor forecasts each trade's profit in basis points, not
   the probability that the break holds.*
-- *It follows D667, the diagnostic of D666. To be committed alone, before any runner or any YM/RTY feature exists
+- *It follows D681, the diagnostic of D666. To be committed alone, before any runner or any YM/RTY feature exists
   (R8).*
 
 ## 1. Why this, and what is already known
 
-**What D666/D667 found** (in-sample 2016-01-04 → 2025-02-28), for NQ's plain break with the trailing stop:
+**What D666/D681 found** (in-sample 2016-01-04 → 2025-02-28), for NQ's plain break with the trailing stop:
 - **+4.29 bp gross per trade (HAC t 3.57), 8 of 10 years positive, +1.69 net at 1 micro.** It holds after 0DTE
   (+5.56, t 2.18).
 - On ES the same construction makes +1.20 (t 1.31).
@@ -21,7 +21,7 @@
 
 **What counts against it, and what this design does about each:**
 
-| D667's caveat | the answer here |
+| D681's caveat | the answer here |
 |---|---|
 | post hoc: found on NQ, as D666's control, with one of four exits | the evidence comes from **YM and RTY**, which have never been run through this construction; ES and NQ are run identically but reported as development only |
 | the drift is uncontrolled | the gate's null is a **same-clock, same-side-mix random entry on every session** (§5) |
@@ -63,10 +63,10 @@ reason it could carry "will this break hold".** More would fit noise at about 15
 
 | # | feature | definition | why it could carry the hold |
 |---|---|---|---|
-| f1, f2 | **open class** | dummies for gap-inside (the open beyond L, inside the stop) and gap-through (beyond the stop); no-gap is the base | D667 §2: the classes differ in how often price returns to L (40–55%) |
+| f1, f2 | **open class** | dummies for gap-inside (the open beyond L, inside the stop) and gap-through (beyond the stop); no-gap is the base | D681 §2: the classes differ in how often price returns to L (40–55%) |
 | f3 | **overnight gap** | D × (open / prior close − 1) / (A / prior close) | an overnight move the break agrees with has already been accepted |
 | f4 | **dealer gamma** | 1 if dealers are short gamma, from the prior row: ES SPX GEX (SqueezeMetrics); NQ its own options book G; **YM and RTY SPX GEX** (no own book on disk) | D665: short gamma predicts a bigger move, and a trailing stop is paid by size |
-| f5 | **large-lot futures flow** | D × A7 at the latest checkpoint (09:45 / 10:00 / 10:30 / 11:00) at or before the entry, the root's own; 0 before 09:45 | informed size in the break's direction. It pointed the wrong way on NQ in D667; **coefficient signs are free** |
+| f5 | **large-lot futures flow** | D × A7 at the latest checkpoint (09:45 / 10:00 / 10:30 / 11:00) at or before the entry, the root's own; 0 before 09:45 | informed size in the break's direction. It pointed the wrong way on NQ in D681; **coefficient signs are free** |
 | f6 | **cash breadth** | D × the constituent TICK z over 09:30 → the entry bar (D663's definition): ES TICK-SP, NQ TICK-NQ, **YM TICK-NYSE**, **RTY the mean of the TICK-NYSE and TICK-NASDAQ z** | the cash market's participation in the move |
 | f7 | **travel** | D × (entry − open) / A | how much of the day's range the break has already used |
 | f8 | **clock** | minutes from 09:30 to the entry / 390 | an early break and a late break are different events |
@@ -172,7 +172,7 @@ the thread was found; ES was its control. The ES/NQ variant with p_FADE (§3) is
 
 ## 7. The prize and the power, before the run
 
-The per-trade sd of E4 gross is taken from D667 (ES 34.7 bp, NQ 45.5), not from YM or RTY, which are unread. YM is
+The per-trade sd of E4 gross is taken from D681 (ES 34.7 bp, NQ 45.5), not from YM or RTY, which are unread. YM is
 assumed ES-like and RTY NQ-like (similar ATR in bp).
 
 | root | in-sample trades (≈ 157 a year) | assumed σ | Gate-1 MDE (80% power, Holm α 0.025) | vs NQ's +4.29 | vs ES's +1.20 |
@@ -225,12 +225,12 @@ session. N1's 1,000 draws and N2's 200 run on precomputed per-session paths.
 
 1. **YM fails Gate 1.** It behaves like ES (+1.2).
 2. **At most one of YM and RTY passes Gate 1.**
-3. **β_disc has HAC t < 2 on every root, development included.** The confluences are individually weak (D667 §4).
+3. **β_disc has HAC t < 2 on every root, development included.** The confluences are individually weak (D681 §4).
 4. **Development NQ reproduces D666's +4.29 exactly unfiltered, and its filtered net is within ±1.5 bp of the
    unfiltered.**
 5. **The long side's gross exceeds the short side's on every root** (the drift).
 6. **RTY's filter passes fewer than 30% of its forecast trades** (the M2K cost).
-7. **The sign of f5 (A7) is negative on NQ's final fit,** as in D667.
+7. **The sign of f5 (A7) is negative on NQ's final fit,** as in D681.
 
 ## 11. Outputs
 
@@ -287,6 +287,6 @@ has been read.** Gate F was checked on the TICK files; it reads coverage only.
    (close − (open + 0.25)) × $2 − $3 on sessions after a day session that closed below its open. ρ is also reported
    against each other root's unfiltered book.
 9. **BREAK ONLY's unfiltered-net test** is Holm across the roots that passed Gate 1.
-10. **The reproduction check:** the runner stops unless ES and NQ's plain-break E4 and E2 gross means equal D667's
+10. **The reproduction check:** the runner stops unless ES and NQ's plain-break E4 and E2 gross means equal D681's
     recorded values to 1e-9. The bars come from the same fixture; the RTH fixture was shown identical to the opening
     fixture's RTH bars on ES and NQ in-sample, bar for bar.

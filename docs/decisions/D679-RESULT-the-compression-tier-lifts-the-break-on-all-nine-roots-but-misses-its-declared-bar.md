@@ -119,7 +119,7 @@ NG 8, GC 6, SI 7.
 **The honest summary is a consistent but small selection effect at the edge of detection.** It is not a confirmed
 mechanism, and it is nowhere near NQ's size.
 - On NQ the compressed third was about 4.8% of ATR above the rest (D672). Here it is 1.25–1.54%.
-- The NQ vault case stays NQ-specific, as D673 left it. This record adds that the tier's sign holds on nine other roots.
+- The NQ vault case stays NQ-specific, as D682 left it. This record adds that the tier's sign holds on nine other roots.
 
 **Not done, and not to be done on this data:** combining the two families into one nine-root rotation test. It was
 not declared, and choosing it now, after seeing two p95s just either side of the line, would be selection.

@@ -5,7 +5,7 @@
   the general shape".*
 - *The construction is the synthesis of the five analyst lanes (`docs/research/opening-break-predictor-lanes.md`,
   `db29902f`).*
-- *It also builds on D667 and D668's development and oracle reads: `ab49940e`, `f82c859f`, `3f90b2a2`, `f769c43c`.*
+- *It also builds on D681 and D668's development and oracle reads: `ab49940e`, `f82c859f`, `3f90b2a2`, `f769c43c`.*
 - *Numbered D671 because the other session's unmerged branch holds D669 and D670. Its D670 names this plain-break line
   as an overlap.*
 - *Committed alone, before its runner.*
@@ -92,7 +92,7 @@ S ≤ −1.**
 | gap aligned | +1 | +1 | D × (open − prior close) > 0.10 A | the auction has accepted the overnight move |
 | breadth aligned | — | +1 | D × TICK-NQ z (09:30 → the bar before entry, D663's definition) > 0.5 | NQ's leaders moving with the break. **Not on ES:** TICK-SP is arbitrage-linked (lanes B, D) |
 | cross-index confirmation | +1 | — | the other root's close on the bar before the entry is beyond its own yesterday level on the same side | a complex-wide break is a re-pricing. **Not on NQ,** which leads (lane D) |
-| overnight probe | −1 | −1 | the Globex high (for a long) or low (for a short), over 18:00 → 09:29, went beyond the stop level, and the 09:30 open is inside yesterday's range | the stops were run overnight, so the RTH break is a second break (lane C; D666/D667) |
+| overnight probe | −1 | −1 | the Globex high (for a long) or low (for a short), over 18:00 → 09:29, went beyond the stop level, and the 09:30 open is inside yesterday's range | the stops were run overnight, so the RTH break is a second break (lane C; D666/D681) |
 | exhausted gap | −1 | −1 | the gap is aligned and \|gap\|/A is above the 80th percentile of the root's previous 250 sessions | the gap has spent the day's range budget (lanes C, E) |
 | spent flow | — | −1 | D × A7 at the latest checkpoint at or before the entry is above the 80th percentile of \|A7\| at that checkpoint over the root's previous 250 sessions | the flow that made the break is spent (lanes B, A, D). **Not on ES:** its D668 sign stability was 0.66 < 0.8 (lane E's gate) |
 

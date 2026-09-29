@@ -8,9 +8,9 @@
 
 ## 0. Where this comes from
 
-- **D666/D667:** the plain break of yesterday's range with a trailing stop beats random entry at the same clock on ES and NQ (8 of 9 years). It pays on NQ only.
+- **D666/D681:** the plain break of yesterday's range with a trailing stop beats random entry at the same clock on ES and NQ (8 of 9 years). It pays on NQ only.
 - **D671/D672:** a "compression" filter looked strong on NQ (+6.93 bp, Sharpe 0.97) but was found and checked on the same sample.
-- **D673:** it **failed to transfer** to YM and RTY; RTY's compressed third was its worst. Split into halves, across all four index roots:
+- **D682:** it **failed to transfer** to YM and RTY; RTY's compressed third was its worst. Split into halves, across all four index roots:
   - **quiet overnight** is positive gross on every root (NQ +7.3, ES +4.8, RTY +4.9, YM +3.3);
   - quiet recent days helped NQ only.
 
@@ -74,7 +74,7 @@
 - HO/RB (D626's sibling year) are not used.
 - Nothing from SqueezeMetrics is needed.
 
-## 4. Statistics (the D673 standard)
+## 4. Statistics (the D682 standard)
 
 - **Gate 1, the mechanism:** the root-aware break's gross against **N1**, a random entry on every session at the break's own clock distribution and side mix, with the same exit (D668 §5), p95 + 2 SE. Its gross > 0, HAC t. Holm across the six roots.
 - **Gate 2, tradeability:** net > 0 (HAC t); above a within-year random-subset placebo; still > 0 at +1 tick; at least 60 trades; positive without February–April 2020.

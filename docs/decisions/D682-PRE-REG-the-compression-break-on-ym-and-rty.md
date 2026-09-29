@@ -1,4 +1,6 @@
-# D673 — PRE-REGISTRATION: the compression break on YM and RTY, the roots that have never been read for it
+# D682 — PRE-REGISTRATION: the compression break on YM and RTY, the roots that have never been read for it
+
+*Renumbered from D673 on 2026-09-29, at this branch's merge into main: main holds D673 (join the formed move after ten). Commits before the merge, recorded run outputs (`data/stage0_d682_compression_ym_rty.json` keeps its old spec string) and the frozen D680 cite the old number.*
 
 *2026-09-29.*
 - *The principal: "Yeah write up the pre-reg for the YM/RTY".*
@@ -115,7 +117,7 @@ Each is stated with its power (§6).
 4. **(S1) holds on RTY.** Within C1, higher dealer g is better.
 5. **RTY's C1 is positive in at least 4 of its full years** (2020–2024).
 
-## 6. Power (from D667/D672, before any YM/RTY read)
+## 6. Power (from D681/D672, before any YM/RTY read)
 
 Per-trade σ is taken as ES's 35 bp for YM and NQ's 45 bp for RTY (assumptions, not reads).
 
@@ -138,7 +140,7 @@ Per-trade σ is taken as ES's 35 bp for YM and NQ's 45 bp for RTY (assumptions, 
 **Order of work:**
 1. This record, committed alone.
 2. The overnight fixture for YM/RTY, with gates (i)–(iii), committed.
-3. `scripts/stage0_d673_compression_ym_rty.py`:
+3. `scripts/stage0_d682_compression_ym_rty.py`:
    - D672's functions;
    - lag audits for the tier, the overnight window and the GEX row date;
    - a selftest in which each audit raises on a broken input;

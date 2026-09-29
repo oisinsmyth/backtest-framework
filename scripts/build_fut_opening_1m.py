@@ -146,7 +146,7 @@ def load_front(data_root: Path, through: str, roots: tuple[str, ...] = ROOTS, br
 
 def cmd_build(workers: int, data_root: Path, through: str, roots: tuple[str, ...] = ROOTS, breadth: bool = False) -> int:
     global OUT, META
-    if roots != ROOTS:  # D673/D674: other roots go to their own fixture; ES/NQ's is untouched
+    if roots != ROOTS:  # D682/D676: other roots go to their own fixture; ES/NQ's is untouched
         tag = "_".join(r.lower() for r in roots)
         OUT, META = FIX / f"fut_opening_globex_1m_{tag}.csv.gz", FIX / f"fut_opening_globex_1m_{tag}.meta.json"
     t0 = time.time()
@@ -207,7 +207,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--workers", type=int, default=6)
     ap.add_argument("--data-root", type=Path, default=REPO / "data")
     ap.add_argument("--through", default=THROUGH, help="last session written (the vault only in the joint run)")
-    ap.add_argument("--roots", default=",".join(ROOTS), help="D673: YM,RTY (written to their own fixture)")
+    ap.add_argument("--roots", default=",".join(ROOTS), help="D682: YM,RTY (written to their own fixture)")
     ap.add_argument("--breadth", action="store_true",
                     help="D674: non-index roots (e.g. GC,SI): the breadth builder's id table and front election")
     a = ap.parse_args(argv)

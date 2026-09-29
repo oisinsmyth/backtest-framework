@@ -148,7 +148,7 @@ harder here than on NQ.**
   2026-10-10). No physical contract is held near delivery (R2).
 - **MECHANISM ONLY:** recorded, with the cost failure named. A cheaper execution route is the only lever.
 - **NOT SUPPORTED on all four:** the opening-break line closes on energy and metals as it did on the index roots
-  (D668, D673).
+  (D668, D682).
 
 ## Amendment D676-A1, before the run (2026-09-29): R2 counts business days
 

@@ -13,7 +13,7 @@
 - TICK-NASDAQ re-downloaded in full (2014-02 → live).
 - Gate F passes on all four TICK series (2,344 in-sample sessions, median coverage 1.0).
   - RTY's f6 is the mean of the TICK-NYSE and TICK-NASDAQ z, as A1 §3 declared.
-- **Reproduction:** ES and NQ's plain-break E4 and E2 gross equal D667 to 1e-9 (ES E4 +1.2035; NQ E4 +4.2891).
+- **Reproduction:** ES and NQ's plain-break E4 and E2 gross equal D681 to 1e-9 (ES E4 +1.2035; NQ E4 +4.2891).
 - ES and NQ's development numbers are identical to the development run `ab49940e`.
 
 ## 1. Gate 1, the mechanism (E4 gross, unfiltered; Holm across YM and RTY)
@@ -95,14 +95,14 @@ Gate 2.
 
 - **The plain break of yesterday's range does not generalise across the index roots.** Only NQ carries it, and NQ's
   number is in-sample (vault power about 31%).
-- **With D673, the index-root line of the opening break closes on its current constructions:**
+- **With D682, the index-root line of the opening break closes on its current constructions:**
   - the plain break (D668);
   - the re-break (D666);
   - the size-tier construction (D671);
-  - the compression break (D672/D673).
+  - the compression break (D672/D682).
 - **What stays open, named:**
   - NQ's in-sample result, for the vault;
-  - the quiet-overnight direction (D673 §4);
+  - the quiet-overnight direction (D682 §4);
   - the spent-flow contraindication (§5);
   - the root-aware test on CL, NG, GC and SI (`docs/planning/ROOT_AWARE_BREAK_PLAN.md`), which uses roots none of
     these reads have touched.

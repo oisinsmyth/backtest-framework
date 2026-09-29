@@ -1,11 +1,11 @@
-"""D673: the compression break on YM and RTY. Spec: docs/decisions/D673-PRE-REG-the-compression-break-on-ym-and-rty.md
+"""D682: the compression break on YM and RTY. Spec: docs/decisions/D682-PRE-REG-the-compression-break-on-ym-and-rty.md
 (fb8c4c5e): D672's rule unchanged (D666 plain break + E4 at each root's own tick; trade only when the compression tier
 < 1/3; one micro; MYM/M2K d508_exec cost). In-sample to 2025-02-28; the vault is never read. Dealer gamma (GEX,
 SqueezeMetrics) enters only as a declared secondary, prior row, never output per date.
 
-    uv run python scripts/stage0_d673_compression_ym_rty.py --selftest
-    uv run python scripts/stage0_d673_compression_ym_rty.py --gates [--data-root DIR]   # data gates only, no outcome
-    uv run python scripts/stage0_d673_compression_ym_rty.py --run   [--data-root DIR]   # once
+    uv run python scripts/stage0_d682_compression_ym_rty.py --selftest
+    uv run python scripts/stage0_d682_compression_ym_rty.py --gates [--data-root DIR]   # data gates only, no outcome
+    uv run python scripts/stage0_d682_compression_ym_rty.py --run   [--data-root DIR]   # once
 
 Data: RTH from D462's fut_{YM,RTY}_rth_1m; overnight bars from fut_opening_globex_1m_ym_rty (build_fut_opening_1m.py
 --roots YM,RTY), gated by (i) identity of its RTH bars with D462's, (ii) overnight coverage, (iii) the seal.
@@ -30,7 +30,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 import stage0_d671_break_construction as C  # noqa: E402
 
 M, X, T = C.M, C.X, C.T
-OUT = REPO / "data" / "stage0_d673_compression_ym_rty.json"
+OUT = REPO / "data" / "stage0_d682_compression_ym_rty.json"
 GLOBEX = REPO / "data" / "fixtures" / "fut_opening_globex_1m_ym_rty.csv.gz"
 EVID = ("YM", "RTY")
 N_PLACEBO, N_BOOT, SEED = 1000, 500, 673
@@ -38,7 +38,7 @@ MIN_C1 = 60
 COVID = X.COVID
 
 
-class D673Error(RuntimeError):
+class D682Error(RuntimeError):
     pass
 
 
@@ -79,7 +79,7 @@ def seal_gate(g: pd.DataFrame) -> dict[str, Any]:
     """(iii) No session on or after 2025-03-01."""
     bad = int((g["session"] >= M.RESERVED_FROM).sum())
     if bad:
-        raise D673Error(f"seal: {bad} rows on or after {M.RESERVED_FROM}")
+        raise D682Error(f"seal: {bad} rows on or after {M.RESERVED_FROM}")
     return {"rows_at_or_after_reserved": 0, "pass": True}
 
 
@@ -181,7 +181,7 @@ def build(data_root: Path, gates_only: bool = False) -> dict[str, Any]:
     b, use, Gd, R, g = load_all(data_root)
     C._R = R
     rth = b[b["root"].isin(EVID) & (b["hhmm"] >= "09:30") & (b["hhmm"] <= "15:59")]
-    out: dict[str, Any] = {"spec": "D673 (fb8c4c5e)", "credit": "dealer gamma (GEX): SqueezeMetrics (secondary only)",
+    out: dict[str, Any] = {"spec": "D682 (fb8c4c5e)", "credit": "dealer gamma (GEX): SqueezeMetrics (secondary only)",
                            "data_gates": {"seal": seal_gate(g)}}
     for r in EVID:
         out["data_gates"][f"identity_{r}"] = identity_gate(g, rth, r)
@@ -191,7 +191,7 @@ def build(data_root: Path, gates_only: bool = False) -> dict[str, Any]:
         dd = T.root_frame(b, tabs[r], r)
         out["data_gates"][f"coverage_{r}"] = coverage_gate(g, dd.index, r)
     if not all(out["data_gates"][f"identity_{r}"]["pass"] for r in EVID):
-        raise D673Error(f"data gate (i) failed: {out['data_gates']}")
+        raise D682Error(f"data gate (i) failed: {out['data_gates']}")
     if gates_only:
         return out
     bars = R.bar_arrays(b)
@@ -277,7 +277,7 @@ def selftest() -> int:
     def must_raise(name: str, fn: Callable[[], Any]) -> None:
         try:
             fn()
-        except (D673Error, C.D671Error, T.D663Error):
+        except (D682Error, C.D671Error, T.D663Error):
             fired.append(name)
             return
         raise SystemExit(f"selftest: the {name} canary did not raise")

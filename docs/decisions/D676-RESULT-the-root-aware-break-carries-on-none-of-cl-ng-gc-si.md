@@ -98,7 +98,7 @@ equal.
 
 - **Quiet − rest is positive on all four roots (prediction 4 held). None clears its rotation's p95.**
 - Combining the four rotation ranks by Fisher gives p ≈ 0.06 (computed here, not by the runner; not a declared test).
-- With D673's post-hoc reads on ES, NQ, YM and RTY, the sign is now positive on **8 of 8 roots**.
+- With D682's post-hoc reads on ES, NQ, YM and RTY, the sign is now positive on **8 of 8 roots**.
 - **The quiet third is net-negative everywhere.**
 
 ## 5. Reported only
@@ -169,7 +169,7 @@ equal.
 - D668, the plain break;
 - D666, the re-break;
 - D671, the size tier;
-- D672/D673, the compression break.
+- D672/D682, the compression break.
 
 Only NQ carried the plain break, and its number is in-sample.
 
