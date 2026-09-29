@@ -633,7 +633,7 @@ outputs stay byte-identical.
             - CL: Rubin t 1.79; β above 0.76 is excluded.
             - POST HOC: NG's pass exists only with the return control. Without it, window flow runs against the funds (t −7.98). In the top fund-size tercile β is 0.008 ± 0.02, so the pass does not look like a proportional footprint.
           - **Next:**
-            1. After D626's read (2026-10-10): extend `check_sierra_aggressor.py` to CL/NG on the post-vault sessions. r < 0.8 VOIDs that root (D629 §6).
+            1. **BUILT 2026-09-29, runs after D626's read (D629 §6):** `check_sierra_aggressor.py --root NG --run` and `--root CL --run`, **after** the 10-11 `c0-signcheck-energy` task has refreshed the Sierra files (they end at the 09-29 download). It refuses before 2026-10-11, before D626's marker (`data/ledger_tas_sign_validation.json`) and before the `topup-trades` job is downloaded; it reads D626's own truth files and only CLX26/CLF27/NGX26/NGF27 inside 2026-09-21 → 2026-10-09. The principal's rulings: UNRESOLVED below 10 sessions, else KEEP at r(ts_recv) ≥ 0.8, VOID below; the four contracts on disk. A VOID follows D629's VOID row and D630/D631's own. **Do not re-run the legacy HO/RB path before 10-10:** its `read_scid` decodes whole files, and the HO/RB files now reach D626's sealed sessions.
             2. **D630 RESULT (2026-09-26): H2 on NG PASSES.** $66 a trade gross, $40 net, t 5.01; placebo −0.42; rotation p95 1.47. Gate 1 is met on NG, with H1 provisional.
                - The move reverts after the settlement (+$29, t 3.98).
                - POST HOC partner control: traded beats untraded at the same move, +$65 (t 4.76).
