@@ -2,6 +2,121 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## THE DEPOSIT SWEEP, 2026-09-29 EVENING: what is still open in `User-Doc-Deposit/` (read this before re-auditing)
+
+The principal: "Have another look though the user deposited files, find anything open", then "record the findings in
+PickUp so other agent don't have to do the same work".
+
+**How it was done.**
+- Five read-only agents read all 20 deposit files in full and classified every testable item as tested, closed
+  unrun, blocked, parked or untouched, with evidence. They searched `docs/decisions` (both branches), FINDINGS,
+  AITODO, PICKUP and the tracker.
+- The top "untouched" claims were re-checked by grep in the main session.
+- No data was read and nothing was run.
+- **Numbers written `B6xx`** (B658, B659, B661, B662, B663, B665, B668, B672, B676) are records that exist only on the
+  unmerged branch `wt/after-d643`. Read them with `git show wt/after-d643:docs/decisions/<file>`. They become D-numbers
+  on main when that branch merges, but its D667 and D673 clash with main's and must be renumbered.
+
+**The rules that set most statuses.**
+- **D582 §1 closed the first deposit's list** "in any variant" on the fixtures on disk. The principal has since
+  reopened single items: crack D653, crush D656, spark D664, delivery D654/D655, margin D657, handoff D651. All are
+  closed again.
+- **D582 §2 exempts `FEATURE_RESEARCH.md` and `READING_LIST.md`:** they "are method, not studies, and stay in force"
+  (checked, D582 line 63). An untested idea from those two needs no reopening.
+- **D563 closed trend and carry; D603 closed basis momentum** in every variant.
+- **D640 (LETF) and D643 (shock classifier)** stopped at their own pre-registered kills.
+- **The log MACD (D675)** is closed as of today.
+
+**Corrections to the agents' reports.**
+- One report said Sierra's aggressor-signed ticks exist "for CL/NG only". That is wrong: ES, NQ, YM and RTY tick files
+  were pulled pre-vault for the opening model's A7 (the other session, B658/B668 data commits). **Micros were not
+  pulled.**
+- Book and signed Databento data (`mbo`, `tbbo`, `bbo-1m`) exist only inside the vault.
+
+### A. Untested, data on disk, NOT under any closure (FEATURE_RESEARCH stays in force)
+
+| idea | source | data | the catch |
+|---|---|---|---|
+| **Month-end / quarter-end rebalancing flow.** Balanced and pension funds rebalance to fixed weights, so the month's equity-minus-bond return predicts the flow's sign and size into the close or the next session. **The principal was offered this first**; next steps: power and seal check, then a Stage 0. | FEATURE §9.2 | ES/NQ/ZN/ZB 1-minute bars 2010+; month- and quarter-end flags (D589) | 12 events a year, so power first. Verified untested: no record studies it. B661 (on `wt/after-d643`) cites Harvey–Mazzoleni–Melone (about −16/−17 bp next day) and sized pension flow for the opening window only. |
+| **Implied vs realised volatility spread** | FEATURE §9.2 | ES option end-of-day fixture 2016–2026 (D581); CL/NG option raw pulled, not built | A conditioner for size, not direction (memory: confluences predict size). Verified untested; D404 "does not reach implied volatility". |
+| **Lead-lag between related instruments** | FEATURE §9.2; D473:112 "untested here" | 41 roots, 1-minute bars 2010+ | FEATURE §10's timezone and settlement-alignment trap. D504 is the only instance (Asian chips into US semis). |
+| **Global vs per-root parameters, out of sample** | FEATURE §7.1 | any | A method check; it would test the principal's root-aware ruling. D141 adopted one global setting without the comparison. |
+| **CPCV + PBO, and PBO run retrospectively on past sweep families** | FEATURE §8, §12.5 | none needed | "Not built" (D600, D603) |
+| PEAD; gross profitability; Ken French library | FEATURE §9.2; READING_LIST | EDGAR raw (equities) | No consensus EPS. Equities only. |
+
+### B. Untested, but inside a closure: reopening needs the principal's word
+
+- **The gamma-conditioned close, re-run with SqueezeMetrics SPX GEX as the regime** (GAMMA_CONDITIONED_CLOSE).
+  - D581 used its own carried ES dealer book. SPX GEX calls short gamma on 11% of days against that book's 42%
+    (B665 A1, other branch), so the published regime was never tested at the close.
+  - GEX is a fixture newer than D582, which D582's reopen clause allows.
+  - The prior is weakened by the GEX results at the open (B662, B663: not supported) and by B665 (GEX predicts size,
+    not carry).
+  - Open Q2 (NQ's close on its own options book) and Q3 (an intraday crossing of the flip level) are also untested.
+- **The shock classifier with signed flow** on ES/NQ/YM/RTY (Sierra ticks). It is the one question D643 left
+  open. Headwinds: almost every shock is INFO, and LIQ has only 51–85 shocks.
+- **Commodity skewness and commodity value** (PUBLISHED_STRATEGIES §0, READING_LIST). D563 §3 says they were never
+  tested. They are 17-root cross-sectional books, and D557–D559's sorts all lost. Value's 5-year lookback leaves
+  only 2015 onward.
+- **Minor, each with a low prior:**
+  - a Kalman estimate of the transitory price state at the open, price-only (OVERNIGHT_IMBALANCE F4);
+  - the open's reaction to the overnight move, split by news and no-news nights (D585 calendar);
+  - the dispersion arm in its declared form;
+  - the CL "maintenance flow" clock: contracts entering hedgers' 12/24-month window (HEDGING_FLOW §4.1; D577
+    measured that flow at about 1/40 of the derivation);
+  - the decay of the index-roll disturbance (BASIS_MOMENTUM §4.4; overlaps the index-reweight line);
+  - MET/ETH funding;
+  - the managed-money change reversal (D263 closed weekly positioning for prop);
+  - the consumer-hedged sign flip (it rests on hedging pressure, which lost in D573).
+
+### C. Settlement ledger items never run (inputs on disk; low prior; NG's in-sample already read 7–8 times)
+
+- **Diagnostics:** H9 (stress × impact), H10 (crowding reversal), H13 (fund-roll flow vs calendar spread) and H8(a)
+  (ETF flow into futures flow).
+- **Stages:** I (the large-lot split, which must gate on the midday placebo, D631), F (the P8a/P8b fund-roll flows),
+  E and §8A.2 (worth anything only on CL, where Stage A is inconclusive), and C2 (D632 §5's question goes to the
+  principal first).
+- **Sizing and exits:** H7 (sizing) and the §7.4 flow-reversal exit.
+- **P11, the options pin-risk diagnostic,** once the CL/NG options panel is built.
+
+### D. Pending, scheduled, or waiting on a ruling
+
+- **Index reweight.**
+  - Frozen 2026-09-27, so the 10-16 deadline is met. What still binds is that no 2027 BCOM or GSCI publication may be
+    read.
+  - C0's sign checks run on 10-05 (non-energy) and 10-11 (energy). C0's one run is then on the principal's word,
+    followed by R1–R3.
+  - R-Q6 (which contracts the prop firm offers, and overnight holds) is open.
+- **Settlement ledger.**
+  - D626's one read is on 10-10. The CL/NG Sierra-sign check against true trades follows it; **its script extension
+    is not written.** A correlation r < 0.8 voids that root (D629 §6).
+  - The D630 §8 vault-input wrapper is PARKED. NG Stage A and D649 are frozen for the joint run.
+- **The opening line (evidence on `wt/after-d643`).**
+  - **v1 (B658, slot 7) has no closure record.**
+  - **v2 (B659) is unruled:** freeze it for the vault at 5–6.5% power, or close it.
+  - **The component lines of V2-F (net Sharpe 0.22) and V2-C (0.62) are not in `COMPONENTS_PROP.md`**, which CLAUDE.md
+    requires.
+  - Also untested: O-Q5, the 09:30–10:05 spread measurement promised by OA-A5, and the OA-A2 list of prior vault
+    exposure. Both are needed only if a vault look happens.
+- **The other session's line:** B676 (root-aware break on CL/NG/GC/SI) is registered, with its runner committed and
+  not yet run. B672 (NQ compression break) waits for the vault at about 30% power.
+- **Stale bookkeeping:**
+  - AITODO still says LETF's "one `--run` waits for the principal", and LETF-A4 is still labelled "proposed";
+  - releasing the LETF H1 and shock H1 slots in `data/programme_registry.json` is unverified;
+  - FINDINGS §87 predates B658.
+
+### E. Blocked on data, a purchase or a decision
+
+- **Needs a purchase:** order-book history (ledger Stage H and H14, index H-R4; about $916 windowed for CL/NG),
+  Norgate ($270, a deep-history holdout), Pinnacle/CSI.
+- **Free, but needs the principal's download approval:** DTCC swaps (H15, about 0.5 GB), the CFTC supplemental/CIT
+  and combined disaggregated reports (index §5A.2/§5A.3, grains index traders), the attention backfill (Stage C3;
+  multi-terabyte, plus a design decision on Q12).
+- **Not reachable:** FRED/ALFRED resets every connection from this machine.
+- **Other blockers:** hedge-ratio filings (HEDGING P4, P7, RBL covenant count), CL option implied volatility at 12–24
+  months (P5), 1-minute perp and spot klines (FUNDING F3), CIP / forward / OIS rates, and the recorder host (Q17), on
+  which Track 2/3 and every forward protocol wait.
+
 ## WHERE WE ARE, 2026-09-29 AFTERNOON — the MACD-arm session (written at the principal's request before a context wipe)
 
 **UPDATE, same day: the reshaping line is CLOSED and `worktree-next` is merged into main (fast-forward); the worktree
