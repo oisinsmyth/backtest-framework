@@ -364,7 +364,7 @@ def root_study(r: str, dz: dict[str, Any], workers: int, iv_tab: pd.DataFrame) -
     win = ev
     cov = float(np.isfinite(dz["iv"][sess >= WINDOW_FROM]).mean())
     res = {
-        "n_eval": int(ev.sum()), "window": [str(sess[ev].min()), str(sess[ev].max())],
+        "n_eval": int(ev.sum()), "window": [str(min(sess[ev])), str(max(sess[ev]))],
         "gate_S": {"a_dbar": obs, "a_t_hac": t, "a_se": se, "a_p_one_sided": float(stats.norm.sf(t)),
                    "b_rotation": {"offsets": len(offsets), "p50": float(np.median(null)), "p95": float(np.quantile(null, 0.95)),
                                   "p95_se": 0.0, "rank": float((null < obs).mean()), "wall_s": round(wall, 1)},
