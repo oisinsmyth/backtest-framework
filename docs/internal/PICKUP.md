@@ -2,6 +2,80 @@
 
 **What data exists, and what bites each dataset: [`docs/data-available.md`](../data-available.md).**
 
+## WHERE WE ARE, 2026-09-29 AFTERNOON — the MACD-arm session (written at the principal's request before a context wipe)
+
+**Branch `worktree-next`, worktree `.claude/worktrees/fresh`. Committed; NOT merged to main; NOT pushed.**
+- Main is at `de257e6` (D667 CLOSED).
+- `worktree-next` is main plus seven commits:
+
+| commit | what |
+|---|---|
+| `39a25d3` / `1a91815` | D669 design / result: the MACD arm's mechanism |
+| `772ade0` / `d4c5811` | D670 design / result: the 10:00 direction rule, NOT SUPPORTED |
+| `d6aade7` / `d8228dd` | D673 design / result: join the formed move, NOT SUPPORTED |
+| `3268931` | D674: the arm resized to MFFU Rapid 150k, BOOK_PROP and COMPONENTS_PROP amended |
+
+**Done earlier today and already on main:**
+- D657 (margin hikes, recorded as a strategy input);
+- D664 (spark spread, CLOSED);
+- D667 (hike pause on the MACD arm, CLOSED).
+
+**The thread: is the admitted MACD arm overfitted?** The principal: "I think the MACD arm has a high chance of being
+overfitted" / "investigate the MACD" / "resize it, then amend".
+
+1. **D669** (NQ 2016–2023):
+   - **The arm is a timer, not drift.** Drift share is −1 %, and it beats a direction permutation down to the week.
+   - **It earns on efficient trend days**, not on volatility or the price level.
+   - **Its 0.72 is the top of its family.** The neighbourhood median is 0.24 net (rank 13 of 486). The spike is on the
+     impulse length and on M = 5, which buys one 15:00 exit. The deflated Sharpe fails (0.003; 0.28 with pure-noise
+     variance).
+2. **D670:** "the move since yesterday's close at 10:00, held to the close" is NOT SUPPORTED on YM and RTY.
+   - YM −4.45 bp (t −2.76), a reversal; RTY, ES and NQ flat.
+   - No 10:00 forecast discriminates, including SqueezeMetrics GEX.
+   - **Post hoc:** the arm's gross sits in its entries after 10:00 (23 % of sessions, t 3.7); its 10:00 entries are
+     noise.
+   - **Disclosed bug:** the first run's two trailing P2 features were blanked after holidays. It was fixed and rerun,
+     and no gate changed.
+3. **D673:** "join the formed move after 10:00" (price beyond both yesterday's close and today's open, held to the
+   close) is NOT SUPPORTED on YM, RTY and ES. NQ is +1.85 bp, at its null's median.
+   - **So the arm has no portable mechanism;** its returns rest on NQ-specific tuned timing.
+   - The 15:00 last-hour cut helps on all four roots (0.2–1.5 bp): a candidate exit, not an edge.
+4. **D503's forward read, restated for the principal.** Net Sharpe +0.736, but UNRESOLVED against its null (p95
+   +0.758). Three sessions made half the P&L, the mean trade ex-top 1 % is −$0.59, and 2024 was −$21.
+5. **D674, the principal's ruling:**
+   - one MNQ is the floor, so the account moved to **MFFU Rapid 150k**, and the expectation is **Sharpe 0.24**;
+   - P3a goes from 1.90 a year to 0, and the drawdown from 5.1 σ away to 11.6 σ;
+   - V per $463 evaluation: +$86 ± 24 at 0.24, +$1,231 at 0.72, −$171 at 0;
+   - `BOOK_PROP.md` and `COMPONENTS_PROP.md` #2 are amended. The arm's spec is unchanged.
+
+**OPEN, the principal's calls:**
+1. **Close the reshaping line (D670 + D673)?** Proposed, not yet ruled.
+2. **Merge `worktree-next` into main.** From the main folder:
+   `cd "C:/Users/O/Desktop/Projects/Backtest Framework" && git merge --ff-only worktree-next`. It should fast-forward;
+   check first that main has not moved.
+3. **THE D673 NUMBER CLASH.**
+   - The other session's branch `wt/after-d643` holds its own `D673-PRE-REG-the-compression-break-on-ym-and-rty.md`
+     (`fb8c4c5`, 10:58).
+   - Mine is `d6aade7`, committed at 10:35, first.
+   - **The principal chose "leave it for merge"**: whichever branch merges second must renumber its D673.
+   - The other branch also holds D665–D668, D671 and D672. **Always check `git ls-tree -r --name-only wt/after-d643
+     docs/decisions` before claiming a number.**
+4. **Before buying the 150k evaluation,** check MFFU's current terms. D674 used D386's recorded plan figures:
+   $463 fee, $4,500 intraday-trailed funded drawdown, and the 2 % daily line.
+
+**Working notes for whoever resumes:**
+- **Tests.** The full suite passes 4,200 when run with `PYTHONPATH=<worktree>/src`: the worktree's `.venv` is a junction
+  to main's, so without it three tests fail on environment only. In PowerShell: `$env:PYTHONPATH = "$PWD\src";
+  .venv\Scripts\python.exe -m pytest -q -p no:cacheprovider tests`.
+- **Counts.** After any new record: stage it, run `scripts/build_decision_register.py --write` and
+  `scripts/build_readme_counts.py --build`, then hand-edit README lines 134/235, PHILOSOPHY line 7 and TUTORIAL
+  line 5.
+- **Paths.** A record must not cite a decision number that has no record on this branch
+  (`test_cited_decisions_exist`). Tracked paths must stay ≤ 85 characters.
+- **SqueezeMetrics** `DIX.csv` lives in the main checkout's `data/raw/squeezemetrics/`. D670's runner finds it
+  there.
+- **Memory** is updated: `macd-arm-mechanism-is-overnight-direction-on-trend-days.md`.
+
 ## WHERE WE ARE, 2026-09-28 EVENING (written at the principal's request: "record where we were at")
 
 **Branch `wt/after-d650`, worktree `.claude/worktrees/after-d650`. Committed, NOT pushed, NOT on main.**
