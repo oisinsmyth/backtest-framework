@@ -99,8 +99,10 @@ def load(data_root: Path, log=P) -> pd.DataFrame:
     b = b[b["day"].isin(set(days))]
     kb = b[b["hhmm"].isin(BARS)].pivot(index="day", columns="hhmm", values=["open", "close", "contract"]).reindex(days)
     s = pd.read_csv(fx / "fut_ES_signed_1m.csv.gz", usecols=["day", "hhmm", "contract", "volume", "buy", "sell"], dtype={"day": str, "hhmm": str, "contract": str}, encoding="utf-8")
-    s = s[(s["day"] >= LO) & (s["day"] <= HI) & s["hhmm"].isin(FIRST_HOUR)]
+    s = s[(s["day"] >= LO) & (s["day"] <= HI) & s["hhmm"].isin(FIRST_HOUR)].copy()
     seal(s["day"], "ES signed flow")
+    # Sierra names the contract with a two-digit year (ESH16); the bars use one digit (ESH6)
+    s["contract"] = s["contract"].str[:3] + s["contract"].str[-1]
     D = pd.DataFrame(index=days)
     D["contract"] = kb[("contract", "09:30")]
     same = np.ones(len(days), bool)
