@@ -70,6 +70,18 @@
     flat. That split is reported, post hoc.
   - **Net and trend:** net −$2.37 at $8. It fades to nothing in 2022–2023.
   - **Waiting on the principal:** close the silver settlement line, or leave it parked (R15). No redesign is proposed.
+- **D710 STAGE 0 (2026-09-30): PRESENT, then MECHANISM ONLY.**
+  - **The premise:** the dealers' auction-day V (FRBNY SR 1188) is in the Treasury futures. Pooled z +0.26 (t 4.98),
+    above every enumerated placebo schedule, with an achieved share of 0.68 overall and 0.69 in 2015–23. The 11:00 and
+    ±1-week placebos are flat, and all seven of the paper's predictions hold, the dealer-share dose included (t 2.06).
+  - **The trade:**
+    - the unfiltered legs gross +$17.48 (t 2.89) and net −$1.18 at full size;
+    - the paper-sized filter (mostly the 30-year pre-auction short) nets +$43.85 a trade at t 1.45, about 12 trades a
+      year. Component net Sharpe +0.48, ρ under 0.1.
+  - **Waiting on the principal:**
+    - R12's personal-track screen (long-duration Treasury ETFs) before any closure on cost;
+    - whether to seek an α re-allocation for a vault line (all ten slots are allocated).
+  - **New data:** `data/calendar/treasury_auctions.csv` (Fiscal Data, 2009–2026) and `fomc_2010_2015.csv`.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).

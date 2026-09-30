@@ -656,3 +656,18 @@ Component line from the runner's own output (`data/d709_silver_settlement_flow.j
 | construction | record | net Sharpe (Sortino); gross | why not |
 |---|---|---|---|
 | SI 12:55 → 13:24, 1 SIL ($8) | D709 | −0.58 (−0.92), SE 0.52; gross +1.39 (+2.47) | gross +$5.63 a trade (t 3.14) below the $8 round trip. The pre-era carried it too (t 4.03), so the funds are not shown as its cause. It fades: 2022 +$0.87, 2023 −$3.87. Hit 45.9%, daily skew +2.28; ρ +0.05 with #2, +0.03 with #4 |
+
+## SCORED, NOT ENTERED — the Treasury auction-day V, ZT/ZF/ZN/UB, 2026-09-30 ([D710](decisions/D710-STAGE-0-RESULT-the-auction-v-is-in-the-futures-mechanism-only.md))
+
+Component lines from the runner's own output (`data/stage0_d710_auction_v.json`), 2016-01-04 → 2023-12-29, full
+contracts at the d556 round trip.
+- **The construction:** on 13:00 coupon-auction days, short the mapped future from 10:01 to 12:59, and long it from
+  13:06 to 16:00 (the 30-year pre-leg only). U takes every leg. F takes a leg only when the paper-sized projection is at
+  least 2 × its round trip.
+- **Status:** the premise is PRESENT (t 4.98). The trade is MECHANISM ONLY. Not a candidate.
+- **All ten programme slots are allocated,** so a vault line would need an α re-allocation.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| Book U, every leg | D710 | +0.04 (+0.06), SE 0.34; gross +0.77 | gross +$17.48 a leg (t 2.89) against $14–37 round trips; net −$1.18. ρ +0.07 with #2, +0.01 with #4 |
+| Book F, paper-sized filter | D710 | +0.48 (+0.76), SE 0.35; gross +0.64 | about 12 trades a year; net +$43.85 a trade at t 1.45 (the gate is 2), median +$9.63; the top 10 trades are 117% of the net; mostly the 30-year pre-auction short. ρ +0.08 with #2, +0.02 with #4: a diversifier on the point estimate, not established |

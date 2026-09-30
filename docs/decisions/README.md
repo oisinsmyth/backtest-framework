@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 495 of these records carry neither field —
+**No Status or Category column, deliberately.** 496 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -782,7 +782,7 @@ would look like data. The tokens are what is shown.
 | D707 | REGISTRATION — F2 for the joint vault run: the ES last-hour continuation, taken only when the prior hour's relative siz… | [PRE-REG](D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md) |
 | D708 | D708 STAGE 0 RESULT — SIGNAL: on ES-book short-gamma days the hourly continuation's side choice carries the edge (+$3.0… | [record](D708-STAGE-0-DESIGN-does-the-continuation-choose-its-side.md) · [RESULT](D708-STAGE-0-RESULT-the-side-choice-is-the-signal-not-the-drift.md) |
 | D709 | D709 STAGE 0 RESULT — FAIL (not the funds): silver does move into its settlement window with the day's sign after 2019… | [record](D709-STAGE-0-DESIGN-silver-letf-settlement-flow.md) · [RESULT](D709-STAGE-0-RESULT-silver-moves-into-settlement-not-the-funds.md) |
-| D710 | D710 STAGE 0 DESIGN — the Treasury auction-day intraday V on Treasury futures: does the dealers' pre-auction concession… | [record](D710-STAGE-0-DESIGN-treasury-auction-intraday-v.md) |
+| D710 | D710 STAGE 0 RESULT — PRESENT, then MECHANISM ONLY: the dealers' auction-day V is in the Treasury futures at about two-… | [record](D710-STAGE-0-DESIGN-treasury-auction-intraday-v.md) · [RESULT](D710-STAGE-0-RESULT-the-auction-v-is-in-the-futures-mechanism-only.md) |
 | D711 | A1 UNRESOLVED: the midday clocks carry about a third of F2's per-trade information, most of it at 13:30. A2 MIXED: NQ t… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) · [RESULT](D711-RESULT-placebo-unresolved-nq-transfers.md) |
 | D712 | REGISTRATION — the hourly continuation on ES-book short-gamma days, for the joint vault run: its side choice (the timin… | [PRE-REG](D712-PRE-REG-short-gamma-hourly-timing-for-the-joint-vault.md) |
 
