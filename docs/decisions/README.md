@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 476 of these records carry neither field —
+**No Status or Category column, deliberately.** 477 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -773,7 +773,7 @@ would look like data. The tokens are what is shown.
 | D698 | PRE-REGISTRATION: the busy / low-IV/RV cell on unseen data. A pooled four-slice test for the joint vault run (ES and NQ… | [PRE-REG](D698-PRE-REG-the-busy-low-iv-cell-for-the-joint-vault.md) |
 | D699 | D699 STAGE 0 RESULT — the gamma-gated 15-minute log MACD: the histogram variant (V1) earns +$10.47 a MES trade, net Sha… | [record](D699-STAGE-0-DESIGN-the-gamma-gated-15-minute-log-macd-long.md) · [RESULT](D699-STAGE-0-RESULT-hist-clears-the-timing-null-not-the-drift.md) |
 | D700 | D700 STAGE 0 RESULT — no clock fades, and none clears: a hand-cell channel on ES continues weakly at its onset on the 5… | [record](D700-STAGE-0-DESIGN-where-es-channels-stop-fading.md) · [RESULT](D700-STAGE-0-RESULT-no-clock-fades-and-none-clears.md) |
-| D701 | D701 DIAG DESIGN — do D700's 5- and 15-minute channel onsets and D699's V1 carry the same information on short-gamma da… | [record](D701-DIAG-DESIGN-do-the-channel-and-v1-carry-the-same-information.md) |
+| D701 | D701 DIAG RESULT — the 5-minute channel is V1 again (93% of its up onsets fall inside V1's positions, and its continuat… | [record](D701-DIAG-DESIGN-do-the-channel-and-v1-carry-the-same-information.md) · [RESULT](D701-DIAG-RESULT-the-5-minute-channel-is-v1-the-15-minute-is-not.md) |
 
 <!-- REGISTER:END -->
 

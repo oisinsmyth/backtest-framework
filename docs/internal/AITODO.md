@@ -30,7 +30,15 @@
     (97.1st and 96.7th), with clustered t 1.96 and 1.86.
   - **1m:** nothing.
   - **The strict "held 10 closes" reading** removes what there is.
-  - **Waiting on the principal:** stop; overlap with V1 first; or the channel as V1's exit. D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
+  - **Waiting on the principal:** stop; overlap with V1 first; or the channel as V1's exit.
+- **D701 DIAG RESULT (2026-09-30): the overlap between the channel and V1.**
+  - **5m: SAME INFORMATION as V1.** 93% of its up onsets come while V1 is long (base 53%), and all of the
+    continuation is there. D700's 5m t 1.96 is not a second confirmation.
+  - **15m: uncorrelated with V1** (φ 0.00), and it continues whether V1 is flat or long. The INDEPENDENT and
+    CONDITIONER flags rest on 41 onsets and 29 trades, and the conditioner is 0.35 SE.
+  - **Channels arrive after V1's entries** (up held at 5–9% of them).
+  - **Waiting on the principal.**
+- D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
   - D691 is the implied-vs-realised volatility premise check (RESULT: SIZE INFORMATION CONFIRMED on ES and NQ).

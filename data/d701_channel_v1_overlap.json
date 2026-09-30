@@ -1,0 +1,246 @@
+{
+ "spec": "D701 DIAG (in-sample; the overlap of D700's channel onsets and D699's V1 on short-gamma days)",
+ "cost_rt_usd": 4.418145176055553,
+ "v1": {
+  "trades": 572,
+  "mean_net": 10.47477440436403,
+  "mean_gross": 14.89291958041958
+ },
+ "short_gamma_days": 603,
+ "clocks": {
+  "5": {
+   "A1_v1_holding_at_onsets": {
+    "up": {
+     "n": 621,
+     "observed": 0.9339774557165862,
+     "time_matched_base": 0.5289147392399249
+    },
+    "down": {
+     "n": 654,
+     "observed": 0.08256880733944955,
+     "time_matched_base": 0.5140201134997794
+    }
+   },
+   "A2_channel_up_at_v1_entries": {
+    "n": 572,
+    "observed": 0.08566433566433566,
+    "time_matched_base": 0.12601618944902526
+   },
+   "A3_phi_v1_vs_channel_up": 0.3440073013745564,
+   "A3_rates": {
+    "v1_long": 0.5388391376451078,
+    "channel_up": 0.15164179104477613,
+    "both": 0.1432172470978441
+   },
+   "B_channel_by_v1_state_60m": {
+    "up_v1_long": {
+     "n": 516,
+     "per_day": 0.8557213930348259,
+     "mean_gross": 9.016472868217054,
+     "t_gross": 2.6117577500430995,
+     "median_gross": 7.5,
+     "hit": 0.5852713178294574,
+     "mean_drift_control": 1.9273263848714615,
+     "mean_excess": 7.089146483345592,
+     "t_excess": 2.068155258425401
+    },
+    "up_v1_flat": {
+     "n": 37,
+     "per_day": 0.06135986733001658,
+     "mean_gross": -1.722972972972973,
+     "t_gross": -0.13753740629731476,
+     "median_gross": -7.5,
+     "hit": 0.40540540540540543,
+     "mean_drift_control": 2.1613217695302582,
+     "mean_excess": -3.884294742503231,
+     "t_excess": -0.3086205695970882
+    },
+    "up_pooled": {
+     "n": 553,
+     "per_day": 0.9170812603648425,
+     "mean_gross": 8.297920433996383,
+     "t_gross": 2.4997433007565246,
+     "median_gross": 6.25,
+     "hit": 0.5732368896925859,
+     "mean_drift_control": 1.9429824955990844,
+     "mean_excess": 6.354937938397299,
+     "t_excess": 1.9285075190738141
+    },
+    "down_v1_long": {
+     "n": 46,
+     "per_day": 0.07628524046434494,
+     "mean_gross": 4.076086956521739,
+     "t_gross": 0.33761667223127717,
+     "median_gross": 10.0,
+     "hit": 0.5652173913043478,
+     "mean_drift_control": -1.116383661403194,
+     "mean_excess": 5.192470617924933,
+     "t_excess": 0.4332573118741762
+    },
+    "down_v1_flat": {
+     "n": 531,
+     "per_day": 0.8805970149253731,
+     "mean_gross": 0.3413370998116761,
+     "t_gross": 0.10340908019677966,
+     "median_gross": -1.25,
+     "hit": 0.4821092278719397,
+     "mean_drift_control": -1.9731263644115105,
+     "mean_excess": 2.3144634642231865,
+     "t_excess": 0.7039757482643186
+    },
+    "down_pooled": {
+     "n": 577,
+     "per_day": 0.956882255389718,
+     "mean_gross": 0.6390814558058926,
+     "t_gross": 0.20114650410247428,
+     "median_gross": -1.25,
+     "hit": 0.48873483535528595,
+     "mean_drift_control": -1.9048245198042617,
+     "mean_excess": 2.543905975610154,
+     "t_excess": 0.8026618955929232
+    }
+   },
+   "C_v1_by_channel_up": {
+    "channel_up": {
+     "n": 49,
+     "mean_net": 19.56144666067914,
+     "mean_gross": 23.979591836734695,
+     "median_net": -8.168145176055553,
+     "hit": 0.4489795918367347,
+     "drift_excess": 16.122702812467836,
+     "t_excess": 0.7891904168977959
+    },
+    "no_channel_up": {
+     "n": 523,
+     "mean_net": 9.623441822032405,
+     "mean_gross": 14.041586998087954,
+     "median_net": 1.8318548239444468,
+     "hit": 0.5105162523900574,
+     "drift_excess": 8.243957871572768,
+     "t_excess": 1.3457061985645664
+    }
+   },
+   "reading": [
+    "SAME INFORMATION"
+   ]
+  },
+  "15": {
+   "A1_v1_holding_at_onsets": {
+    "up": {
+     "n": 168,
+     "observed": 0.6666666666666666,
+     "time_matched_base": 0.5418542209586986
+    },
+    "down": {
+     "n": 298,
+     "observed": 0.40939597315436244,
+     "time_matched_base": 0.5344307545048804
+    }
+   },
+   "A2_channel_up_at_v1_entries": {
+    "n": 572,
+    "observed": 0.050699300699300696,
+    "time_matched_base": 0.09517679666933397
+   },
+   "A3_phi_v1_vs_channel_up": 0.00015262620526402398,
+   "A3_rates": {
+    "v1_long": 0.5388391376451078,
+    "channel_up": 0.112106135986733,
+    "both": 0.06043117744610282
+   },
+   "B_channel_by_v1_state_60m": {
+    "up_v1_long": {
+     "n": 97,
+     "per_day": 0.16086235489220563,
+     "mean_gross": 8.917525773195877,
+     "t_gross": 1.2499357072663027,
+     "median_gross": 2.5,
+     "hit": 0.5257731958762887,
+     "mean_drift_control": 1.4962558342310246,
+     "mean_excess": 7.421269938964851,
+     "t_excess": 1.0437998500208228
+    },
+    "up_v1_flat": {
+     "n": 41,
+     "per_day": 0.06799336650082918,
+     "mean_gross": 15.640243902439025,
+     "t_gross": 1.344833399791221,
+     "median_gross": 30.0,
+     "hit": 0.6097560975609756,
+     "mean_drift_control": 2.1943635481129493,
+     "mean_excess": 13.445880354326075,
+     "t_excess": 1.169010865013328
+    },
+    "up_pooled": {
+     "n": 138,
+     "per_day": 0.22885572139303484,
+     "mean_gross": 10.914855072463768,
+     "t_gross": 1.834602747808724,
+     "median_gross": 8.75,
+     "hit": 0.5507246376811594,
+     "mean_drift_control": 1.7036646477756545,
+     "mean_excess": 9.211190424688114,
+     "t_excess": 1.5556429322897913
+    },
+    "down_v1_long": {
+     "n": 102,
+     "per_day": 0.1691542288557214,
+     "mean_gross": 2.6715686274509802,
+     "t_gross": 0.40743476153428937,
+     "median_gross": -3.125,
+     "hit": 0.47058823529411764,
+     "mean_drift_control": -1.1129402009560538,
+     "mean_excess": 3.7845088284070343,
+     "t_excess": 0.5781088705943219
+    },
+    "down_v1_flat": {
+     "n": 154,
+     "per_day": 0.25538971807628524,
+     "mean_gross": 4.342532467532467,
+     "t_gross": 0.6641675950714696,
+     "median_gross": -0.625,
+     "hit": 0.4935064935064935,
+     "mean_drift_control": -2.202407874049747,
+     "mean_excess": 6.5449403415822145,
+     "t_excess": 1.0015334878985442
+    },
+    "down_pooled": {
+     "n": 256,
+     "per_day": 0.42454394693200664,
+     "mean_gross": 3.6767578125,
+     "t_gross": 0.7870065442132902,
+     "median_gross": -1.25,
+     "hit": 0.484375,
+     "mean_drift_control": -1.7683230980514786,
+     "mean_excess": 5.445080910551479,
+     "t_excess": 1.1669942293018158
+    }
+   },
+   "C_v1_by_channel_up": {
+    "channel_up": {
+     "n": 29,
+     "mean_net": 18.72840654808238,
+     "mean_gross": 23.146551724137932,
+     "median_net": 10.581854823944447,
+     "hit": 0.5517241379310345,
+     "drift_excess": 18.14969691771043,
+     "t_excess": 0.8995457306661574
+    },
+    "no_channel_up": {
+     "n": 543,
+     "mean_net": 10.033972687664523,
+     "mean_gross": 14.452117863720074,
+     "median_net": 0.5818548239444468,
+     "hit": 0.5027624309392266,
+     "drift_excess": 8.425895384953737,
+     "t_excess": 1.388072303800712
+    }
+   },
+   "reading": [
+    "INDEPENDENT",
+    "CONDITIONER CANDIDATE"
+   ]
+  }
+ },
+ "timing_s": 173.6
+}
