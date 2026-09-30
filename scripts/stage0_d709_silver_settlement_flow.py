@@ -934,8 +934,16 @@ def components(B: dict[str, Any]) -> dict[str, Any]:
     return B.get("components") or {}
 
 
-def load_components() -> tuple[dict[str, Any], list[str]]:
+def load_components(data_root: Path | None = None) -> tuple[dict[str, Any], list[str]]:
     notes = []
+    if data_root is not None:
+        # D618's loader (under F2's frame) resolves its fixtures under its own REPO; in a worktree they live in the main
+        # checkout's data/. Point its fixture paths at data_root (the same move D688's d581() makes for D581).
+        m618 = _load("m618", "stage0_d618_sharpened_ladder.py")
+        fx = Path(data_root) / "fixtures"
+        m618.FIX = fx
+        m618.OPTS, m618.CUTS, m618.ES_1M = fx / "fut_es_options_eod.csv.gz", fx / "fut_es_0dte_volume_cutoffs.csv.gz", fx / "fut_ES_rth_1m.csv.gz"
+        m618.STRIP, m618.SESSIONS = fx / "fut_settle_strip.csv.gz", fx / "fut_index_sessions.csv.gz"
     comp: dict[str, Any] = {}
     m667 = _load("d667r", "run_d667_hike_pause_overlay.py")
     arm = m667.load_arm()
@@ -1495,7 +1503,7 @@ def run_main(data_root: Path, check: bool = False) -> int:
     if check and not OUT.exists():
         raise D709Error(f"{OUT} does not exist: nothing to check")
     B = load(data_root, blind=False)
-    comp, notes = load_components()
+    comp, notes = load_components(data_root)
     doc = analyse(B, comp, notes)
     if check:
         old = json.loads(OUT.read_text(encoding="utf-8"))
