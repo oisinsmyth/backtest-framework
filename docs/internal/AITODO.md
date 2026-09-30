@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 711.** D708–D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
+- **Next free number: 711.** D708 and the next two numbers (709, 710; designs being drafted) are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, 709 silver leveraged-ETF flow into the COMEX settlement, 710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
   MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
   long.
 - **D699 RESULT (2026-09-30): V1, the histogram with a ±0.5 band, is a LEAD, but it fails the declared reading on (b).**
@@ -50,6 +50,19 @@
   - **The power:** best case (V1 + the 15m channel, all 186 days, full in-sample effect), a pass probability of 0.39.
     At 50% of the effect it is 0.17.
   - **Waiting on the principal:** park or close the line (R15), or hold it for a longer unseen sample.
+  - **Superseded in part by D708:** D706's power covered once-a-day constructions on G_SUM days only. The hourly grid
+    on ES-book-short days (288 unseen sessions) has more power.
+- **D708 STAGE 0 (2026-09-30): SIGNAL, GO for a joint-vault pre-registration.** This is proposal E from the five-agent
+  round, on the principal's ruling "Timing term as the gate".
+  - **The result:** on ES-book short-gamma days (858), the hourly continuation's side choice earns +$3.09 a MES trade
+    over the per-year clock-matched drift (t 3.17, the 99.9th percentile of its timing null). Both legs are positive
+    (+$2.98 / +$3.22), long-gamma days are −$0.18, the gamma contrast is at the 99.8th percentile, and 7 of 8 years
+    are positive.
+  - **The drift is only 2% of the profit,** because the book is balanced long and short.
+  - **Net at MES:** −0.45 in-sample; at full ES +0.45. The unseen-price projection at MES is a thin positive.
+  - **The power:** 0.63 at the full effect, 0.26 at half.
+  - **Waiting on the principal:** the joint-vault pre-registration (programme slot 10), with gross T as the primary
+    gate and MES net as the second.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).

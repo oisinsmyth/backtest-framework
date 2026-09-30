@@ -579,6 +579,23 @@ time-matched drift is NW t 1.64, not 2). UNCONFIRMABLE on 2024-01 → 2025-02 (e
 | V2 ROC (z_R band ±1.0), 1 MES | D699 | +0.19 (+0.28); gross +0.57 (+0.89) | inside its timing null (83rd; 40th in the family); +$0.35 a trade without Feb–Apr 2020; ρ +0.056 |
 | V3 OR, 1 MES | D699 | +0.27 (+0.41); gross +0.59 (+0.91) | inside its timing null (82nd; 62nd in the family); median −$15.67; ρ +0.106 |
 
+## SCORED, NOT ENTERED — the hourly continuation on ES-book short-gamma days, 2026-09-30 ([D708](decisions/D708-STAGE-0-RESULT-the-side-choice-is-the-signal-not-the-drift.md))
+
+Component lines come from the runner's own output (`data/d708_short_gamma_timing.json`).
+- **The construction:** on days with G_ES < 0 (the ES options book short gamma at the prior settlement), at 10:30,
+  11:30, 12:30, 13:30 and 14:30, hold the sign of the last 60 minutes' move for 60 minutes. D689's primary grid.
+- **The score:** daily net Sharpe over every session of 2016–2023 (√252).
+- **Correlations** are with the admitted MACD arm's daily net.
+
+**Status: in-sample development (a stage 0).**
+- **The signal:** SIGNAL on the timing term: +$3.09 a MES trade over the drift, t 3.17, both legs positive.
+- **As a component:** not a candidate at MES in-sample. A joint-vault pre-registration awaits the principal.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| E, 1 MES ($4.42) | D708 | −0.45 (−0.62); gross +1.14 (+1.73) | 537 trades a year, hit 48.0%, skew −0.03; gross +$3.16 a trade against a $4.42 round trip. The fee is 1.32–3.37 × the gross in 2016–2022 (33× in 2017) and 0.69× in 2023. Net is positive only in 2023. ρ −0.042 |
+| E, 1 full ES ($19.24) | D708 | +0.45 (+0.65); gross +1.14 (+1.73) | max drawdown $18,972, annual vol $14,830 a contract (the prop account's size problem). 2023 is 54% of the net, and the top 10 trades 67%. ρ −0.039 |
+
 ## ENTRY #4, PROVISIONAL, 2026-09-30 — F2, the ES last-hour continuation on a relative-size filter ([D705](decisions/D705-RESULT-none-passes-f2-fails-only-on-2022-concentration.md), [D707](decisions/D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md))
 
 *The principal: "The F2 construction is now a candidate, add it to the big vault run."*
