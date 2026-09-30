@@ -56,7 +56,15 @@ and NQ/MNQ from `tbbo`, exchange aggressor side, front month per session, 259 se
 2025-09-11 → 2026-09-10; gates T1–T5 in its meta; builder `scripts/build_fut_micro_flow.py`,
 3.3 min on 8 processes).** What bites: the ohlcv-1m span ends one session before the tbbo span,
 so session 2026-09-10 cannot be cross-checked; nine holiday sessions are absent by the presence
-rule and listed. And **`fut_{ES,NQ,YM,RTY}_rth_1m.csv.gz` + `fut_index_sessions.csv.gz` +
+rule and listed. And **`fut_{ES,NQ}_signed_1m.csv.gz`: aggressor-signed volume per day-session minute (trades,
+volume, buy = AskVolume, sell = BidVolume) of the front contract, 2016-01-04 → 2023-12-29, from Sierra Chart's tick files
+(`C:\SierraChart\Data\{ES,NQ}{H,M,U,Z}{15..24}-CME.scid`).** ES is D695 (builder `scripts/build_fut_es_signed_1m.py`) and
+NQ is D717 (`scripts/build_fut_nq_signed_1m.py`, reusing ES's). Each validates against its Databento bars: volume
+ratio 1.00, ρ ≥ 0.9997, signed share 1.000, last = close on ≥ 98%. What bites: **Sierra writes contracts with a
+two-digit year (ESH16) and the bars with one (ESH6);** normalise before joining (D715's first launch matched nothing).
+The side is Sierra's inference, never checked against exchange-flagged trades in-sample. Sierra also holds YM and RTY
+tick files, which are not built. There is no signed flow for 2024-01 → 2025-09-10 on disk. And
+**`fut_{ES,NQ,YM,RTY}_rth_1m.csv.gz` + `fut_index_sessions.csv.gz` +
 `fut_index_rolls.csv.gz` (D462: the index day session at ONE MINUTE, 09:30–15:59 ET, front month by
 full-day volume, no stitching and no adjustment; ES/NQ/YM 2010-06-07 →, RTY 2017-07-10 →; builder
 `scripts/build_fut_index_1m.py`, 6.2 min on 6 workers). **ALL GATES PASS as of D522** — RTY joined

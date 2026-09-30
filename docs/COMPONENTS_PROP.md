@@ -704,3 +704,15 @@ Component lines from the runner's own output (`data/stage0_d715_absorbed_morning
 | construction | record | net Sharpe (Sortino); gross | why not |
 |---|---|---|---|
 | B, absorbed + breadth | D715 | −0.66 (−0.87); −0.41 | −$11.64 a trade net (t −1.77); 626 trades; the mechanism runs the other way. ρ +0.19 with #2, −0.09 with F2 |
+
+## SCORED, NOT ENTERED — the reversed flow rule, NQ (primary) and ES, 2026-09-30 ([D717](decisions/D717-STAGE-0-RESULT-the-reversal-does-not-transfer-to-nq.md))
+
+Component lines from the runner's own output (`data/stage0_d717_reversed_flow.json`), 2018-02 → 2023-12.
+- **The construction:** from the 10:30 open to the 15:59 close, follow a first-hour move whose aggressor flow exceeded
+  what its size predicts, and fade one whose flow fell short.
+- **Status:** NEITHER on NQ (the flow residual ranks nothing). ES is D715's selection restated. Not a candidate.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| reversed, NQ, 1 MNQ ($4.07) | D717 | −0.32 (−0.44) | −$5.37 a trade net (t −0.92), 1,444 trades; G1 ρ −0.007 (37th percentile); positive in 1 of 6 years. ρ −0.10 with #2, +0.09 with NQ F2 |
+| reversed, ES, 1 MES ($4.42) | D717 | +0.41 (+0.59) | selected by D715 (not evidence); +$4.31 net (t 1.10); 2022 is 74% of the net |
