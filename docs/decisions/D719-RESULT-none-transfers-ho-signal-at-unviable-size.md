@@ -144,3 +144,27 @@ instead of its price size, so it read "100 % within 2 ticks" on every root.
 - **In every case, confirmation would be on HO's held 2024-01 → 2025-02 slice and the vault,** under a new
   pre-registration.
 - **Nothing is carried automatically.** No slot is spent.
+
+## CLOSED by the principal, 2026-09-30: heating oil
+
+**The principal:** "Ok close, Heating Oil".
+
+**A correction first: "HO has no micro" (§2) was imprecise.**
+- A micro exists: Micro NY Harbor ULSD (MHO), 4,200 gallons, $0.42 a tick, cash-settled against the HO futures price.
+  CME's own contract-spec service confirms it.
+- The repo's "no micro" came from `data/futures_contract_specs.json`, which fetched nine micros and never looked for
+  one on HO.
+- **The micro does not trade.** CME's volume service shows zero MHO volume on all 32 sessions from 2026-08-14 to
+  09-29, with 2 contracts open, against about 187,000 a day on HO. The E-mini (QH, also 4,200 gallons) traded 13
+  contracts in 31 sessions. Micro RBOB (MRB) returned no volume rows.
+- Evidence: `data/d719_ho_micro_volume_check.json`.
+- **So §2's NOT VIABLE reading stands:** no sub-size heating-oil contract can be traded, and one full contract is
+  twice the drawdown budget.
+
+**What the closure means:**
+- None of §6's three routes is taken: no larger-account sizing, no stop-inside-the-hold construction, no personal-book
+  line.
+- HO's held 2024-01 → 2025-02 slice and its vault stay unread for this line. No slot is spent.
+- RB, the same shape but weaker (fails Holm), closes with it.
+- KE stays deferred, as before; it is not part of this closure.
+- Reopening needs the principal's word and a new pre-registration. Re-tuning the in-sample result is not a route.

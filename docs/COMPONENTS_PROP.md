@@ -734,6 +734,12 @@ Component lines come from the runner's own output (`data/stage1_d719_commodity_s
 | SI, 1 full ($31.00) | D719 | +0.20 (+0.37); +$45.60 / +$14.60, t 1.78 | fails Holm; negative after 2022-05-16; D709's window |
 | NG, HG, GC, ZC, ZS, ZW, ZL, ZM | D719 | −0.90 to −0.38 | no gross edge (t −1.15 to +0.54) |
 
+**HO and RB CLOSED by the principal, 2026-09-30** ("Ok close, Heating Oil")
+([D719 closure](decisions/D719-RESULT-none-transfers-ho-signal-at-unviable-size.md#closed-by-the-principal-2026-09-30-heating-oil)).
+- A correction to the HO row: a micro exists (MHO, 4,200 gallons).
+- It does not trade: zero volume on 32 of 32 sessions (2026-08-14 → 09-29), with 2 contracts open.
+- The NOT VIABLE reading stands. Neither line is entered.
+
 ## SCORED, NOT ENTERED — the MACD arm and NQ F2 sized by the day-size forecast, 2026-09-30 ([D720](decisions/D720-STAGE-0-RESULT-forecast-big-days-are-where-direction-fails.md))
 
 Component lines come from the runner's own output (`data/stage0_d720_size.json`), 2018-02 → 2023-12.
