@@ -5258,3 +5258,10 @@ RELATIVE to their own history, never on a dollar bar.
   - **A method finding (D711-A1):** rotating a filter's inputs against fixed outcomes is anti-conservative on a
     mean-P&L statistic when the filter picks bigger-than-average days. Σg / Σ|g| holds its size. ES F2 still ranks
     0.991 on it.
+  - **The decision times on NQ (D711 addendum 2): the rule works at 15:30 only.** ES's 13:30 island does not
+    replicate, and was five trades on ES.
+  - **ES and NQ F2 are one signal on two contracts.** They share 217 days, agree on direction on 216, and take
+    96–104 % of their profit on those days.
+  - **Requiring ES's agreement to trade NQ adds nothing demonstrable**
+    ([D714](decisions/D714-RESULT-no-increment-es-agreement-is-inside-chance.md)): +$25.58 against +$20.77 a MNQ
+    trade, but random deletion of as many trades matches it (rank 0.856).

@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 714.** D713 is this session's MES oracle profile of E (the principal: "go get me the oracle first"; result: no single cut clears the fee). D712 is this session's joint-vault pre-registration of D708's rule, WITHDRAWN before any look (slot 10 free again). D711 is the other session's F2 placebo clocks and other index roots. D708, D709 and D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
+- **Next free number: 715.** D714 is NQ F2 only when ES F2 agrees (this session; NO INCREMENT). D713 is this session's MES oracle profile of E (the principal: "go get me the oracle first"; result: no single cut clears the fee). D712 is this session's joint-vault pre-registration of D708's rule, WITHDRAWN before any look (slot 10 free again). D711 is the other session's F2 placebo clocks and other index roots. D708, D709 and D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
   MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
   long.
 - **D699 RESULT (2026-09-30): V1, the histogram with a ±0.5 band, is a LEAD, but it fails the declared reading on (b).**
@@ -128,9 +128,16 @@
           rotation (0.936). RTY has no edge.
         - **The corrected (efficiency) null ranks ES F2 at 0.991.**
         - **Open, the principal's call:**
-          - NQ F2 as a sizing choice beside ES F2 (it would need its own vault pre-registration, and every programme
-            slot will be allocated once the vault pre-registration of D708's rule takes 10);
-          - 13:30 → 14:00 as its own study (found among five placebo clocks; check the FOMC 14:00 releases first).
+          - NQ F2 as a sizing choice beside ES F2 (it would need its own vault pre-registration; programme slot 10 is
+            free again, after D712's withdrawal).
+        - **The D711 addenda (post hoc):**
+          - with 10 % trimmed from each tail, ES F2 keeps +$9.79 (t 3.14) and NQ +$18.94 (t 4.00);
+          - ES's 13:30 island is five trades and does not replicate on NQ, so it is DROPPED as a lead;
+          - ES and NQ F2 share 217 days, agree on direction on 216, and take 96–104 % of their profit there.
+        - **D714 (in-sample): NQ traded only when ES F2 agrees is NO INCREMENT.**
+          - +$25.58 against +$20.77 a MNQ trade;
+          - but random deletion of 55 trades matches it (efficiency rank 0.856);
+          - not carried.
     - **2. CL settlement flow (D648): OPEN**; the form choice (x_GM vs x_SR) is with the principal.
       - **The trade** runs with the funds into the window: +$28.46 gross, t 2.230 against a bar of 2.241, net −$3.00
         at $31.46. The fade after the window (T3) is +$22.34, t 3.18, not cost-tested.

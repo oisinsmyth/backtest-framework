@@ -645,6 +645,7 @@ Component lines come from the runner's own output (`data/stage1_d711_f2_mechanis
 | F2 on NQ, 1 MNQ ($4.07), 2018-04 → 2023-12 | D711 | +0.92 (+1.56); +$24.74 gross / +$20.67 net a trade, t 3.53, efficiency rank 0.984 | **ρ 0.87 with entry #4**: the same trade on a bigger-moving contract, so it fails C-b. 2022 is 67 % of the net. At most a sizing choice beside #4, on the principal's word |
 | F2 on YM, 1 MYM ($3.80) | D711 | +0.54 (+0.85); +$9.94 / +$6.15 | fails its efficiency rotation (rank 0.936); ρ 0.86 with #4 |
 | F2 on RTY, 1 M2K ($3.76), 2019-11 → 2023-12 | D711 | +0.07 (+0.11); +$4.39 / +$0.64 | no edge (t 1.53, Holm 0.063; rank 0.839) |
+| NQ F2 only when ES F2 agrees (same day, same side), 1 MNQ, 2018-05 → 2023-12 | [D714](decisions/D714-RESULT-no-increment-es-agreement-is-inside-chance.md) | +0.98 (+1.71); +$29.65 / +$25.58, 216 trades | NO INCREMENT: random deletion of 55 NQ trades matches it (efficiency rank 0.856); ρ 0.96 with entry #4; found by looking |
 
 ## SCORED, NOT ENTERED — silver into its settlement window, 2026-09-30 ([D709](decisions/D709-STAGE-0-RESULT-silver-moves-into-settlement-not-the-funds.md))
 
