@@ -1,0 +1,1789 @@
+{
+ "built_utc": "2026-09-30T10:47:47Z",
+ "builder": "scripts/fetch_treasury_auctions.py",
+ "record": "D710",
+ "source": {
+  "api": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query",
+  "filter": "security_type:in:(Note,Bond),auction_date:gte:2009-01-01",
+  "page_size": 10000,
+  "total_count": 1716,
+  "pages": [
+   {
+    "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?filter=security_type:in:(Note,Bond),auction_date:gte:2009-01-01&page%5Bsize%5D=10000&page%5Bnumber%5D=1&sort=auction_date",
+    "accessed_utc": "2026-09-30T10:44:13Z",
+    "bytes": 5840907,
+    "sha256": "2cd062aa3ef28c6a78673bdcff7f5f088f46ad9419234a46e89a6c30478391ab"
+   }
+  ]
+ },
+ "second_source_g8": {
+  "api": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip={cusip}&format=json",
+  "responses": {
+   "td_912810SC3": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810SC3&format=json",
+    "accessed_utc": "2026-09-30T10:44:19Z",
+    "bytes": 10839,
+    "sha256": "2d6d3974d3c5f907c02721decac29a32ac8de11bd22b6088d050e1876fa831b6"
+   },
+   "td_912810SH2": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810SH2&format=json",
+    "accessed_utc": "2026-09-30T10:44:20Z",
+    "bytes": 10840,
+    "sha256": "0a0aea0345c90cd90d652069d7aa20cf2e1e9025dd78cf55a8c72acd69bab194"
+   },
+   "td_912810SK5": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810SK5&format=json",
+    "accessed_utc": "2026-09-30T10:47:29Z",
+    "bytes": 10860,
+    "sha256": "efbac4bc7989f9307a2d37ed711020dc0272dd55dc07ff9e1ca9e01211a3129e"
+   },
+   "td_912810SQ2": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810SQ2&format=json",
+    "accessed_utc": "2026-09-30T10:44:22Z",
+    "bytes": 10907,
+    "sha256": "8b2c0090b04ce38d6ff8c4d310d955c9592dede343805f005a999c88c27df6f6"
+   },
+   "td_912810TC2": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810TC2&format=json",
+    "accessed_utc": "2026-09-30T10:44:24Z",
+    "bytes": 14452,
+    "sha256": "7493169f2ed5a5edfd4a8f2ec27436fcc8fd4904078a8e63b213fcb04d7882d7"
+   },
+   "td_912810TD0": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810TD0&format=json",
+    "accessed_utc": "2026-09-30T10:47:31Z",
+    "bytes": 10906,
+    "sha256": "efe3699e42afc9c9108ab97699835666c2cfcd69db08b03cb8c3c55516066399"
+   },
+   "td_912810TH1": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810TH1&format=json",
+    "accessed_utc": "2026-09-30T10:44:26Z",
+    "bytes": 10923,
+    "sha256": "6159a6e094f6f0f162b234809b9ab1c66261335b4fc6303ec679a827550effda"
+   },
+   "td_912810TQ1": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810TQ1&format=json",
+    "accessed_utc": "2026-09-30T10:44:27Z",
+    "bytes": 10905,
+    "sha256": "a74750ab6578531701179d3dfb17a82cf22353d86f9e6947c4916d5e152843d4"
+   },
+   "td_912810TT5": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912810TT5&format=json",
+    "accessed_utc": "2026-09-30T10:44:29Z",
+    "bytes": 10860,
+    "sha256": "335db302b79ca7b4502e32f60f8aff5cb65337227486b4c620f91f566b1d6e20"
+   },
+   "td_9128284R8": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=9128284R8&format=json",
+    "accessed_utc": "2026-09-30T10:44:30Z",
+    "bytes": 3542,
+    "sha256": "d86f156fad6bb8e5ecdc1a956e98e7803e42c75e6659544c45dc8adf2304acc2"
+   },
+   "td_9128284T4": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=9128284T4&format=json",
+    "accessed_utc": "2026-09-30T10:44:32Z",
+    "bytes": 3554,
+    "sha256": "6ce58a777bf63030ee0a5bd4ad1726bc541bcae79385a34fd7c224611a3e8fd0"
+   },
+   "td_9128285S5": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=9128285S5&format=json",
+    "accessed_utc": "2026-09-30T10:44:33Z",
+    "bytes": 3614,
+    "sha256": "26e6d48dbe3a4516755f7f938e6eb0388372e14de13b7fe9cd76c0a7bb331621"
+   },
+   "td_912828B41": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828B41&format=json",
+    "accessed_utc": "2026-09-30T10:44:35Z",
+    "bytes": 3540,
+    "sha256": "f42f43099288058558f8a8dc155836129d9e3705155ceb0af4d39a0ec3bc9904"
+   },
+   "td_912828NC0": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828NC0&format=json",
+    "accessed_utc": "2026-09-30T10:44:36Z",
+    "bytes": 3578,
+    "sha256": "7388c99937968183b05e3acdbfcb7453cb4110091045ce5bacd7d408d391f77a"
+   },
+   "td_912828P87": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828P87&format=json",
+    "accessed_utc": "2026-09-30T10:44:38Z",
+    "bytes": 3543,
+    "sha256": "31419d2a59f982ba253051a10bbbede5a87303aff3a1c6d3934fd239762c2fdb"
+   },
+   "td_912828PX2": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828PX2&format=json",
+    "accessed_utc": "2026-09-30T10:44:39Z",
+    "bytes": 10802,
+    "sha256": "9750b705966e2ea50e7acc8275dc6f84d175f6670973713452718242983fe299"
+   },
+   "td_912828QY9": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828QY9&format=json",
+    "accessed_utc": "2026-09-30T10:44:41Z",
+    "bytes": 3572,
+    "sha256": "e5ec1f5b351982f09b743ac694e3f85740510f78e1150204c7939875184f145e"
+   },
+   "td_912828RS1": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828RS1&format=json",
+    "accessed_utc": "2026-09-30T10:44:42Z",
+    "bytes": 3546,
+    "sha256": "223d4a498746c05178fd4b7461c6c9bd29a3b466bad1c5d86e04e00b2597d78b"
+   },
+   "td_912828UN8": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828UN8&format=json",
+    "accessed_utc": "2026-09-30T10:44:44Z",
+    "bytes": 10766,
+    "sha256": "b587219edb5911badb5d5a36a056d0ff827722bb00c9b326c32b86bb1a40dd69"
+   },
+   "td_912828VL1": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828VL1&format=json",
+    "accessed_utc": "2026-09-30T10:44:45Z",
+    "bytes": 3540,
+    "sha256": "553ff05fa7ceb9d2734b8a1c7c98f68da35ea4fd6b3c4964a261b3c8bd813e0c"
+   },
+   "td_912828YS3": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828YS3&format=json",
+    "accessed_utc": "2026-09-30T10:44:47Z",
+    "bytes": 10804,
+    "sha256": "5db91b61772635ea512a0080e87b1f7420a40a085597b4ec063d52d2358db802"
+   },
+   "td_912828ZQ6": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828ZQ6&format=json",
+    "accessed_utc": "2026-09-30T10:47:32Z",
+    "bytes": 10840,
+    "sha256": "54381435883bb51e093cf7179461982a1112c8138d1ba06d8983a1e1f73da0c7"
+   },
+   "td_912828ZY9": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=912828ZY9&format=json",
+    "accessed_utc": "2026-09-30T10:44:48Z",
+    "bytes": 3559,
+    "sha256": "ccf8898326c0f267eb72fbb70728e65e1b4dd44d5d34f1a983b788eac8cbd413"
+   },
+   "td_91282CAG6": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CAG6&format=json",
+    "accessed_utc": "2026-09-30T10:47:34Z",
+    "bytes": 3547,
+    "sha256": "9beae651c82e5bb4cd0636e0503d0e0de79d593fff1dca1d97c1f0802a4a5d18"
+   },
+   "td_91282CAL5": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CAL5&format=json",
+    "accessed_utc": "2026-09-30T10:44:50Z",
+    "bytes": 3542,
+    "sha256": "2ebb86b67c6e870c4227c71925c20bb157dac1f083c0b266b06ca722691a2ee5"
+   },
+   "td_91282CAP6": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CAP6&format=json",
+    "accessed_utc": "2026-09-30T10:47:35Z",
+    "bytes": 3579,
+    "sha256": "b422fce639458a8c2d33a38661f6a6bfaf188d6ac54bbe267a351caa43b1db51"
+   },
+   "td_91282CCB5": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CCB5&format=json",
+    "accessed_utc": "2026-09-30T10:44:51Z",
+    "bytes": 10905,
+    "sha256": "b8e59fd09247da9d5678326b5757582f2c2c3c7c450a4923f488842ac6a82668"
+   },
+   "td_91282CCL3": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CCL3&format=json",
+    "accessed_utc": "2026-09-30T10:47:37Z",
+    "bytes": 3565,
+    "sha256": "a3638172bc7269875c4c7894f58b4b87c70b702ef5c1727ed56b9537df8e4157"
+   },
+   "td_91282CDD0": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CDD0&format=json",
+    "accessed_utc": "2026-09-30T10:44:53Z",
+    "bytes": 3596,
+    "sha256": "d9a95b9ff0bfca46e285d711240262795024116c536cc0948092d6dd6df66239"
+   },
+   "td_91282CDG3": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CDG3&format=json",
+    "accessed_utc": "2026-09-30T10:47:38Z",
+    "bytes": 3614,
+    "sha256": "960b0cb805970fb713d75204cd8032b344dc385abbeaebe07f2deb413a0c4616"
+   },
+   "td_91282CDJ7": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CDJ7&format=json",
+    "accessed_utc": "2026-09-30T10:47:40Z",
+    "bytes": 10850,
+    "sha256": "cb50bf215a9920f3ec7b3377ee6be30f0392c69dfb416f31a494649af396d4d6"
+   },
+   "td_91282CED9": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CED9&format=json",
+    "accessed_utc": "2026-09-30T10:44:54Z",
+    "bytes": 3562,
+    "sha256": "099172d2f8c6228c57313ca5b81e877b0fced81c5797eb0ce159b1600be15704"
+   },
+   "td_91282CET4": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CET4&format=json",
+    "accessed_utc": "2026-09-30T10:47:41Z",
+    "bytes": 3562,
+    "sha256": "534878dac5fe217a85b3ae6183876b3e73032e1fe50b312e3d073eb458de32a2"
+   },
+   "td_91282CGT2": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CGT2&format=json",
+    "accessed_utc": "2026-09-30T10:47:43Z",
+    "bytes": 3545,
+    "sha256": "7599480d850c35f84531d826c23c4702989fbec0c009fe7e5412490a15633d20"
+   },
+   "td_91282CJE2": {
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?cusip=91282CJE2&format=json",
+    "accessed_utc": "2026-09-30T10:47:44Z",
+    "bytes": 3533,
+    "sha256": "9015586498487fce34973884599b5bdac7193b162592219634176fb74fab90ca"
+   }
+  }
+ },
+ "span": {
+  "from": "2009-01-06",
+  "to": "2026-09-24"
+ },
+ "rows": 1716,
+ "rows_per_kind_tenor_per_year": {
+  "FRN 2y": {
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 13,
+   "2020": 12,
+   "2021": 12,
+   "2022": 13,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 10y": {
+   "2009": 12,
+   "2010": 12,
+   "2011": 12,
+   "2012": 12,
+   "2013": 12,
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 13,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 20y": {
+   "2020": 8,
+   "2021": 13,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 2y": {
+   "2009": 12,
+   "2010": 12,
+   "2011": 12,
+   "2012": 12,
+   "2013": 12,
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 30y": {
+   "2009": 10,
+   "2010": 12,
+   "2011": 12,
+   "2012": 12,
+   "2013": 12,
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 3y": {
+   "2009": 12,
+   "2010": 12,
+   "2011": 12,
+   "2012": 12,
+   "2013": 12,
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 5y": {
+   "2009": 12,
+   "2010": 12,
+   "2011": 12,
+   "2012": 12,
+   "2013": 12,
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "NOMINAL 7y": {
+   "2009": 11,
+   "2010": 12,
+   "2011": 12,
+   "2012": 12,
+   "2013": 12,
+   "2014": 12,
+   "2015": 12,
+   "2016": 12,
+   "2017": 12,
+   "2018": 12,
+   "2019": 12,
+   "2020": 12,
+   "2021": 12,
+   "2022": 12,
+   "2023": 12,
+   "2024": 12,
+   "2025": 12,
+   "2026": 9
+  },
+  "TIPS 10y": {
+   "2009": 4,
+   "2010": 5,
+   "2011": 6,
+   "2012": 6,
+   "2013": 6,
+   "2014": 6,
+   "2015": 6,
+   "2016": 6,
+   "2017": 6,
+   "2018": 6,
+   "2019": 6,
+   "2020": 6,
+   "2021": 6,
+   "2022": 6,
+   "2023": 6,
+   "2024": 6,
+   "2025": 6,
+   "2026": 5
+  },
+  "TIPS 20y": {
+   "2009": 2
+  },
+  "TIPS 30y": {
+   "2010": 2,
+   "2011": 3,
+   "2012": 3,
+   "2013": 3,
+   "2014": 3,
+   "2015": 3,
+   "2016": 3,
+   "2017": 3,
+   "2018": 3,
+   "2019": 2,
+   "2020": 2,
+   "2021": 2,
+   "2022": 2,
+   "2023": 2,
+   "2024": 2,
+   "2025": 2,
+   "2026": 2
+  },
+  "TIPS 5y": {
+   "2009": 2,
+   "2010": 2,
+   "2011": 3,
+   "2012": 3,
+   "2013": 3,
+   "2014": 3,
+   "2015": 3,
+   "2016": 3,
+   "2017": 3,
+   "2018": 3,
+   "2019": 4,
+   "2020": 5,
+   "2021": 4,
+   "2022": 4,
+   "2023": 4,
+   "2024": 4,
+   "2025": 4,
+   "2026": 2
+  }
+ },
+ "gates": {
+  "G1": {
+   "rows": 1716,
+   "pass": true
+  },
+  "G4": {
+   "pass": true
+  },
+  "G2": {
+   "years": [
+    2010,
+    2025
+   ],
+   "named_short_years": {
+    "20y 2020": {
+     "count": 8,
+     "reason": "the 20-year bond was reintroduced with its first auction in May 2020 (8 auctions May-Dec)"
+    }
+   },
+   "pass": true
+  },
+  "G3": {
+   "closes": {
+    "10:00": 1,
+    "11:00": 3,
+    "11:30": 211,
+    "13:00": 1501
+   },
+   "unusual_closes_listed": [
+    {
+     "auction_date": "2019-12-24",
+     "kind": "NOMINAL",
+     "tenor": "5y",
+     "close": "10:00"
+    }
+   ],
+   "not_sourced": 0,
+   "pass": true
+  },
+  "G7": {
+   "pass": true
+  },
+  "G8": {
+   "sampled": 24,
+   "checked": 24,
+   "date_and_close_agree": 24,
+   "amount_disagreements_listed": [],
+   "uncheckable": [],
+   "pass": true
+  },
+  "G5": {
+   "shared_days_by_type": {
+    "nominal-tips": 1,
+    "nominal-nominal": 45,
+    "frn-nominal": 132,
+    "frn-nominal-tips": 1,
+    "frn-tips": 1
+   },
+   "pass": true
+  }
+ },
+ "shared_days": {
+  "nominal-tips": [
+   {
+    "date": "2013-12-19",
+    "auctions": [
+     "TIPS 5y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   }
+  ],
+  "nominal-nominal": [
+   {
+    "date": "2014-01-30",
+    "auctions": [
+     "NOMINAL 5y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2015-01-29",
+    "auctions": [
+     "NOMINAL 5y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2016-09-12",
+    "auctions": [
+     "NOMINAL 10y 13:00",
+     "NOMINAL 3y 13:00"
+    ]
+   },
+   {
+    "date": "2016-10-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2016-12-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2017-06-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2017-08-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-10-11",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2017-11-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-12-11",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2018-03-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2018-06-11",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2018-10-10",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2019-01-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-02-25",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-05-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-01-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-04-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-07-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-11-23",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-12-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-04-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2021-04-26",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-07-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2021-09-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-10-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2021-11-22",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-03-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-06-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-09-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2022-11-21",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-12-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2023-06-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2023-08-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-11-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-12-11",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2024-02-26",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-05-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-10-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-01-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-07-28",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-10-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-01-12",
+    "auctions": [
+     "NOMINAL 3y 11:30",
+     "NOMINAL 10y 13:00"
+    ]
+   },
+   {
+    "date": "2026-04-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-07-27",
+    "auctions": [
+     "NOMINAL 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   }
+  ],
+  "frn-nominal": [
+   {
+    "date": "2014-02-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-03-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-05-28",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-06-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-07-30",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2014-08-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-09-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-10-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-11-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2014-12-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-01-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 2y 13:00"
+    ]
+   },
+   {
+    "date": "2015-02-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-03-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-04-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2015-05-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2015-06-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-07-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-08-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-09-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-10-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2015-11-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-01-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-02-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-04-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2016-05-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-08-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-09-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2016-10-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-11-22",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2016-12-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-01-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-02-22",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-03-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2017-04-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-05-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-06-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2017-07-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-09-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-10-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2017-12-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-01-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-02-21",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-03-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2018-04-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-05-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-06-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-07-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-08-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2018-09-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-10-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2018-11-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2018-12-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-01-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2019-03-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-04-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-05-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2019-06-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-07-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-08-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-09-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-10-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2019-11-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-01-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2020-02-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-03-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-04-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2020-05-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-06-24",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-07-28",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2020-08-26",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-09-23",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-10-28",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2020-11-24",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2021-02-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-03-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-04-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2021-05-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-06-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-08-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-10-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2021-11-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2021-12-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2022-02-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-03-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 20y 13:00"
+    ]
+   },
+   {
+    "date": "2022-04-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-05-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-06-22",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 20y 13:00"
+    ]
+   },
+   {
+    "date": "2022-08-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-09-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2022-10-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2022-11-22",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2022-12-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-01-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-02-22",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-03-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2023-04-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-05-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-06-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2023-08-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 20y 13:00"
+    ]
+   },
+   {
+    "date": "2023-09-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-10-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2023-12-27",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-01-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-02-21",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 20y 13:00"
+    ]
+   },
+   {
+    "date": "2024-03-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2024-04-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-05-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2024-06-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-07-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-08-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-09-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-10-29",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2024-11-26",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2024-12-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 11:30"
+    ]
+   },
+   {
+    "date": "2025-01-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2025-02-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2025-03-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-04-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-05-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-06-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-07-29",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2025-08-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-09-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-11-25",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2025-12-23",
+    "auctions": [
+     "FRN 2y 13:00",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-02-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-03-25",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-04-28",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   },
+   {
+    "date": "2026-05-27",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-06-24",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-08-26",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   },
+   {
+    "date": "2026-09-23",
+    "auctions": [
+     "FRN 2y 11:30",
+     "NOMINAL 5y 13:00"
+    ]
+   }
+  ],
+  "frn-nominal-tips": [
+   {
+    "date": "2016-06-22",
+    "auctions": [
+     "FRN 2y 11:30",
+     "TIPS 30y 11:30",
+     "NOMINAL 7y 13:00"
+    ]
+   }
+  ],
+  "frn-tips": [
+   {
+    "date": "2023-11-21",
+    "auctions": [
+     "FRN 2y 11:30",
+     "TIPS 10y 13:00"
+    ]
+   }
+  ]
+ },
+ "not_sourced": [],
+ "conventions": {
+  "tenor": "the ORIGINAL security term; a reopening's security_term is its remaining term",
+  "close_comp_et": "closing_time_comp parsed to HH:MM, America/New_York; never assumed",
+  "pd_share": "primary_dealer_accepted / comp_accepted; public at the results release",
+  "shared_day": "the other Note/Bond auctions on the same date, as KIND-tenor@close",
+  "future_rows": "the dataset carries announced auctions whose results are not yet published; their amounts are empty. D710's runner cuts the file below 2024-01-01 at read."
+ }
+}

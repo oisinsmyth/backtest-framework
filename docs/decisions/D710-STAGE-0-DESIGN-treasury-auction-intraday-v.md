@@ -591,3 +591,110 @@ dated 2024 or later).
 - **No release-time field exists.** A release later than 13:05 would put the post-leg's entry before the information,
   which is conservative for the statistic but not for the PD-share secondary. The paper says release has come within a
   few minutes since 2001.
+
+## Amendment A1 (2026-09-30, before the run)
+
+*Written after the calendar builders ran and the runner was written, before `--run`. No Treasury bar price has been
+read: the builders read only the Fiscal Data, TreasuryDirect and federalreserve.gov responses. The runner has run only
+its synthetic `--selftest` and `--components-only` (the arm and F2; no Treasury bar loaded). The coordinator relayed
+the rulings on points 1–3 below.*
+
+**1. The delivery window (a correction to §8.2 and decision 18).**
+- **The design said the volume-elected front never breaks the delivery rule. It is wrong on this fixture.** The front
+  rolls ON first notice day, for example ZNU0 → ZNZ0 on 2010-08-31. So a late-month auction in Feb, May, Aug or Nov can
+  fall on or after the held contract's first position day: the second-to-last session of the month before delivery,
+  from the root's own session list.
+- **The handling, accepted:**
+  - premise events on those days are KEPT and counted (a measurement, not a position);
+  - stage-2 legs on those days are EXCLUDED;
+  - the assertion covers traded legs only: no traded leg sits inside its contract's delivery window.
+
+**2. The control-day rule (making §5 precise), accepted.**
+- The week-before control is the last clean non-auction session on or before d − 7. The week-after control is the first
+  on or after d + 7.
+- Each must lie within 14 calendar days of its target.
+- An event missing either control is dropped and counted. The events of late December 2023 lose their week-after
+  control to the seal.
+
+**3. The leg-level N1 (making §8.3 precise), accepted.**
+- It uses the same enumeration as the premise's N1.
+- A pseudo day's leg is scored only where its fill prices exist (a mean over the available days), and the range of the
+  per-offset count is reported.
+
+**4. What an auction's tenor is: the term it was SOLD as.**
+- A routine reopening carries its remaining term ("9-Year 10-Month"), so its tenor is the original term.
+- But Treasury has met a standard auction by reopening an older issue. There, `security_term` is itself a whole
+  standard term that differs from the original. Examples: 2015-05-26 "2-Year" on a 5-year CUSIP; 2019-11-05 "3-Year"
+  on a 10-year CUSIP; 2013-08-28 "5-Year" on a 7-year CUSIP.
+- **19 rows (2013–2026)** are those auctions, and their tenor is `security_term`. Without this rule, the builder's
+  12-a-year gate (G2) fails in 11 tenor-years.
+- **Five small-value contingency auctions of $25m** (2019-06-21 10y, 2019-12-06 2y, 2020-07-10 5y, 2021-12-02 20y,
+  2022-07-14 2y) are flagged and are not supply events. They are not counted, not events, not shared days and not
+  control exclusions. SR 1188 excludes the 2019 one (footnote 10).
+
+**5. The FOMC extension's form.**
+- `scripts/fetch_fomc_2010_2015.py` imports D585's fetcher unmodified. It writes a SEPARATE file,
+  `data/calendar/fomc_2010_2015.csv`, which the runner merges with `events.csv`'s FOMC and FOMC_UNSCHEDULED dates at
+  read. D585's committed outputs are unchanged.
+- **Before any 2010–2015 row is used, the builder reproduces D585's 2016–2023 FOMC rows exactly,** 69 rows and every
+  column, three ways:
+  - D585's own builder over its own cache;
+  - the same builder with the extension parser in place of D585's;
+  - the extension's date builder on D585's 2016–2020 pages.
+- **Why the extension needed its own parser:** the 2010 pages use an older layout with legacy statement links (the
+  canonical URL is fetched and cited), and 2010–2012 carry "Conference Call" and month-spanning headings that D585's
+  parser refuses.
+- **No clock:** every 2010–2015 statement page reads "For immediate release" and states no time. The extension
+  therefore writes the sourced DATE with an empty clock, and each page's own dateline is checked. D710 excludes whole
+  sessions, so the date suffices.
+- **The result:** 8 scheduled statements a year for 2010–2015, plus one unscheduled (2010-05-09). Five meetings issued
+  no statement and have no row.
+
+**6. The calendar's actual counts.** `data/calendar/treasury_auctions.csv` holds 1,716 Note and Bond auctions,
+2009-01-06 → 2026-09-24, all fetched, none `not_sourced`.
+- **Close times:** 13:00 on 1,501; 11:30 on 211; 11:00 on 3; 10:00 on 1.
+- **G8:** TreasuryDirect agrees on date and close time for 24 of 24 sampled auctions, with no amount disagreement.
+
+Shared days in the study span (2010-06-07 → 2023-12-29):
+
+| type | days |
+|---|---:|
+| nominal + nominal (mostly 2y 11:30 with 5y 13:00, and 3y 11:30 with 10y 13:00, from 2016) | 36 |
+| nominal + TIPS | 1 |
+| FRN + nominal (kept and flagged) | 102 |
+| FRN + nominal + TIPS | 1 |
+| FRN + TIPS | 1 |
+
+Primary pairs in the span, calendar level only (before the session exclusions: roll, early close, anchors, σ burn-in,
+controls):
+
+| pair | auctions | 13:00 closes | shared at 13:00 | kept after shared, FOMC and root span |
+|---|---:|---:|---:|---:|
+| 2y → ZT | 163 | 144 | 0 | 143 |
+| 3y → ZT | 163 | 148 | 1 | 145 |
+| 5y → ZF | 163 | 156 | 18 | 130 |
+| 7y → ZN | 163 | 155 | 4 | 146 |
+| 10y → ZN | 163 | 162 | 16 | 144 |
+| 30y → UB (from 2013) | 163 | 162 | 0 | 132 |
+| **total** | | | **39** | **840** |
+
+- The shared-day rule drops 39 events at 13:00, more than §5 assumed.
+- The FOMC coincidences, before any other rule, are: 2y 1, 3y 2, 5y 12, 7y 5, 10y 3, 30y 1.
+- The 2012-09-13 30y was moved to 11:30 on an FOMC day. It is not an event.
+
+**7. The run environment.** The run is made from THIS worktree, so no output lands in the shared main checkout's
+working tree:
+
+`uv run --with pyarrow python scripts/stage0_d710_auction_v.py --run --data-root "C:/Users/O/Desktop/Projects/Backtest Framework/data"`
+
+- Fixtures are read from the data root, and the component builders' fixture paths are pointed there (D709's
+  `load_components` move).
+- Outputs go to the worktree's `data/`.
+- `--components-only` (run 2026-09-30) reproduced both components' known answers from inputs cut below 2024-01-01:
+  - **the arm's 2016–2023 per-year totals equal D504's to the cent:** −140.05, −316.07, +751.91, −757.04, +8,743.93,
+    +1,815.40, +5,624.93, −299.59;
+  - **F2 is 252 trades at +$13.208968 a trade.**
+
+**8. The N1 calibration check.** On 400 synthetic no-effect datasets, N1's p95 was beaten on 26 (6.5%). That is inside
+the 99% binomial band of 10–32 at the nominal 5%. G1 fired on 11 of the 400 (2.8%). The synthetic data carries slow
+volatility regimes and 30% noisier mid-week sessions, the nuisance a rotation null could mishandle.

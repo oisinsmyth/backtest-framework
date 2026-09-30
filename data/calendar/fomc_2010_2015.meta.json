@@ -1,0 +1,506 @@
+{
+ "built_utc": "2026-09-30T10:43:58Z",
+ "builder": "scripts/fetch_fomc_2010_2015.py",
+ "record": "D710 (extends D585's FOMC fetch back to 2010)",
+ "span": {
+  "from": "2010-01-27",
+  "to": "2015-12-16"
+ },
+ "reproduction_of_d585": {
+  "span": [
+   "2016-01-01",
+   "2023-12-31"
+  ],
+  "rows": 69,
+  "rows_per_year": {
+   "2016": 8,
+   "2017": 8,
+   "2018": 8,
+   "2019": 9,
+   "2020": 12,
+   "2021": 8,
+   "2022": 8,
+   "2023": 8
+  },
+  "R1_d585_parser": {
+   "rows": 69,
+   "exact": true
+  },
+  "R2_extension_parser_in_build_fomc": {
+   "rows": 69,
+   "exact": true
+  },
+  "R3_extension_date_builder_2016_2020": {
+   "rows": 45,
+   "exact": true
+  }
+ },
+ "rows": 49,
+ "rows_per_event_per_year": {
+  "FOMC": {
+   "2010": 8,
+   "2011": 8,
+   "2012": 8,
+   "2013": 8,
+   "2014": 8,
+   "2015": 8
+  },
+  "FOMC_UNSCHEDULED": {
+   "2010": 1,
+   "2011": 0,
+   "2012": 0,
+   "2013": 0,
+   "2014": 0,
+   "2015": 0
+  }
+ },
+ "clocks_stated": 1,
+ "why_no_clock": "every 2010-2015 statement page reads 'For immediate release' and states no clock; D710 excludes the whole session, so only the sourced date is used. No clock is filled in.",
+ "legacy_links": "fomchistorical2010 links statements by /newsevents/press/monetary/YYYYMMDDa.htm; the canonical /newsevents/pressreleases/monetaryYYYYMMDDa.htm was fetched and is cited, and each page's dateline was checked against the date (G3)",
+ "gates": {
+  "G1": {
+   "rows": 49,
+   "pass": true
+  },
+  "G2": {
+   "scheduled_per_year": {
+    "2010": 8,
+    "2011": 8,
+    "2012": 8,
+    "2013": 8,
+    "2014": 8,
+    "2015": 8
+   },
+   "named_short_years": {},
+   "pass": true
+  },
+  "G3": {
+   "scheduled_on_meeting_last_day": true,
+   "dateline_on_statement_page": true,
+   "pass": true
+  },
+  "G4": {
+   "pass": true
+  }
+ },
+ "sources": {
+  "fomc_hist_2010": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2010.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:38:13Z",
+   "bytes": 98325,
+   "sha256": "b4fd60b468f1f600e8b8a29fff621da2dd7bfa8def56e49af3a62f828d470055"
+  },
+  "fomc_hist_2011": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2011.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:38:14Z",
+   "bytes": 100332,
+   "sha256": "e042c7fee37f9c7c251c8aad2c20ce7f341d663610dc42dc8ec7eeb8355821f0"
+  },
+  "fomc_hist_2012": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2012.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:38:16Z",
+   "bytes": 100253,
+   "sha256": "802b3c66fb6844e00c86a9a28ae34429c7810d3a4e9b1044ae10507d311da260"
+  },
+  "fomc_hist_2013": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2013.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:38:17Z",
+   "bytes": 97914,
+   "sha256": "ea4e0e18166b917dbba9249e0501a51e7d87198b74b7b80e1e4937e9dc98b081"
+  },
+  "fomc_hist_2014": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2014.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:38:18Z",
+   "bytes": 98194,
+   "sha256": "f754797af63721c3a8aba27727fb862f7b9cdafd86f90fd3cf79ed2e149f968f"
+  },
+  "fomc_hist_2015": {
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2015.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:38:20Z",
+   "bytes": 97346,
+   "sha256": "e28da8b9fb13aacaf354c3877ea678a34ac6cfa34ca9ab839d4b7468740ce2da"
+  },
+  "fomc_pr_20100127": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100127a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:04Z",
+   "bytes": 85034,
+   "sha256": "17a7be2b993c3f1709e374fcdf1081a0a73698fedce07c8f8856c367d05444f3"
+  },
+  "fomc_pr_20100316": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100316a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:06Z",
+   "bytes": 84493,
+   "sha256": "13102ace39a52e094da92129777f847021512ad6ebc1a5bd1a651310dcc5f5f0"
+  },
+  "fomc_pr_20100428": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100428a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:07Z",
+   "bytes": 84235,
+   "sha256": "2078ffab77fd9b8985c63565a385e70d07f217de29bccb43e77c53fd7d43de7d"
+  },
+  "fomc_pr_20100509": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100509a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:08Z",
+   "bytes": 85479,
+   "sha256": "9f95fc9780f7833241cc3464aabee17cebbb0f182db6bc469c9d995a3bc664cf"
+  },
+  "fomc_pr_20100623": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100623a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:09Z",
+   "bytes": 83955,
+   "sha256": "dc42f6b3a1288f340685622778641b8e25bcd1daf66fbdbf32a12882d14e0bc1"
+  },
+  "fomc_pr_20100810": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100810a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:11Z",
+   "bytes": 84949,
+   "sha256": "d1609ec674a3ac012255cae44238a6af66e8f206300650b44e61846e24b73417"
+  },
+  "fomc_pr_20100921": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20100921a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:12Z",
+   "bytes": 84407,
+   "sha256": "ac0588c8df66d58392013f2497e72b12e6169f6d2dd116a56798a83898bd3781"
+  },
+  "fomc_pr_20101103": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20101103a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:13Z",
+   "bytes": 84996,
+   "sha256": "38e2b24001fa3861587b5408c329209d4ae290a58e0c11fe36a088bdf447d763"
+  },
+  "fomc_pr_20101214": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20101214a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:14Z",
+   "bytes": 84845,
+   "sha256": "4936eec7b48eafa3fe390076b07d7f35f2208840caf809af0f7e5ad3200e7316"
+  },
+  "fomc_pr_20110126": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20110126a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:16Z",
+   "bytes": 84478,
+   "sha256": "c7ac8123c5cac6807a86d4d737c34dd245dcca8a05219e7658d7fae5c779c2dd"
+  },
+  "fomc_pr_20110315": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20110315a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:17Z",
+   "bytes": 84620,
+   "sha256": "0fc38426e7c323a92e72e93613b7a2bb803c0a3c7bf549352832fb2868af0209"
+  },
+  "fomc_pr_20110427": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20110427a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:18Z",
+   "bytes": 84685,
+   "sha256": "b29218641a9d336b42af9b1d871d5f02e4d04e72dc33a22223fe17fecd1dca78"
+  },
+  "fomc_pr_20110622": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20110622a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:20Z",
+   "bytes": 84630,
+   "sha256": "26ca19dd77d5ffb0584110fe665d0d877afd73bc7739beb056cc7ed12a4f3954"
+  },
+  "fomc_pr_20110809": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20110809a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:21Z",
+   "bytes": 85103,
+   "sha256": "75558e6623478fa89faa037deaa111091dc8a762c604194dea8080a85cab00f3"
+  },
+  "fomc_pr_20110921": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20110921a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:22Z",
+   "bytes": 86336,
+   "sha256": "1820543579d6b78febe81d0bb63636e2c96f1004c19a7dae62fe6b0fdbaa3553"
+  },
+  "fomc_pr_20111102": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20111102a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:23Z",
+   "bytes": 85050,
+   "sha256": "cde408a82f314df18f83311063c1d68fde3df09e251a4397033beb4703c7b77a"
+  },
+  "fomc_pr_20111213": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20111213a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:25Z",
+   "bytes": 84693,
+   "sha256": "6d990f8a74633d758bb71c7084ef41b372187d211bad3ae0e35c203cc5dae920"
+  },
+  "fomc_pr_20120125": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20120125a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:26Z",
+   "bytes": 84579,
+   "sha256": "0f94609ce3c9bc2d2e6664232cdb124387d1d08ed386a8e80a9b96f00b4d7881"
+  },
+  "fomc_pr_20120313": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20120313a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:27Z",
+   "bytes": 84628,
+   "sha256": "31ab59e1e303060756cd5d8e4718568b69e48329f9f7a72212bd819f25c8f04d"
+  },
+  "fomc_pr_20120425": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20120425a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:28Z",
+   "bytes": 84679,
+   "sha256": "e1bfb9ce469e767cbf40b40e64206d8666e63132825de2cbf0e65c96bbcb81a5"
+  },
+  "fomc_pr_20120620": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20120620a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:30Z",
+   "bytes": 85789,
+   "sha256": "705de63b65a14dcf008d0fb4fbe9f492e02a86aec30652d1cf0971f6543ba848"
+  },
+  "fomc_pr_20120801": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20120801a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:31Z",
+   "bytes": 84757,
+   "sha256": "d061ad922ede2c7a4ff6678494c37df6b1cd7e67e29fee6e7519698af6567245"
+  },
+  "fomc_pr_20120913": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20120913a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:32Z",
+   "bytes": 85586,
+   "sha256": "2a12d7f4a7e931bde82364d578e07568cf88ee6601abe04ad62dd8dfb4444d85"
+  },
+  "fomc_pr_20121024": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20121024a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:33Z",
+   "bytes": 85570,
+   "sha256": "703e5f16ee07c5f61cab430b435345dd89b71b6c8374f9085ff5f71afebc4343"
+  },
+  "fomc_pr_20121212": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20121212a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:35Z",
+   "bytes": 86622,
+   "sha256": "b66f73432ff64156ae2c8e72c6616aaa2e5f2b15e0df493720064add209686d9"
+  },
+  "fomc_pr_20130130": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20130130a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:36Z",
+   "bytes": 86208,
+   "sha256": "a977c66cd8cb7036805f994fcf905371d754f34137beaac88e0accb7c1488445"
+  },
+  "fomc_pr_20130320": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20130320a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:37Z",
+   "bytes": 86245,
+   "sha256": "626298bee25e434b741cfc42bb5954596bcb62a1cdbaae8e69a4aebda5bff71c"
+  },
+  "fomc_pr_20130501": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20130501a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:38Z",
+   "bytes": 86320,
+   "sha256": "f903cec92453ea2e593c95b20e0f42dfc1f65aa8b8d7a9bf099df438d3a89696"
+  },
+  "fomc_pr_20130619": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20130619a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:40Z",
+   "bytes": 86532,
+   "sha256": "ea52d0c2c9eda0d1f29cc4a63f2e2efe96d2c0a4a109da2420af8aa6c6e5f8b1"
+  },
+  "fomc_pr_20130731": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20130731a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:41Z",
+   "bytes": 86508,
+   "sha256": "571282841507b26753d28c3c87a4adbda9d008076bf087139cd6ec71e0618754"
+  },
+  "fomc_pr_20130918": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20130918a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:42Z",
+   "bytes": 87176,
+   "sha256": "135c3d2a2cf977d1030a70850f38f5ea323e8cf4cfd1e853bc5b8cc0253648a3"
+  },
+  "fomc_pr_20131030": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20131030a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:44Z",
+   "bytes": 87045,
+   "sha256": "87790ad064ba39c6dda54318563c93d09a1562612c9aa5c62caebee6704012fd"
+  },
+  "fomc_pr_20131218": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20131218a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:45Z",
+   "bytes": 87833,
+   "sha256": "127ce808e56f6afe666eddf4000fee9f5ebc171540360a91b101c59b8ca449ba"
+  },
+  "fomc_pr_20140129": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20140129a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:46Z",
+   "bytes": 87758,
+   "sha256": "286921ca0de92d2fceb7ea099ec7830a568190aeca53e5bdd23b6bb39217272f"
+  },
+  "fomc_pr_20140319": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20140319a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:47Z",
+   "bytes": 88054,
+   "sha256": "14edef92939910c65946ae7c40ae1f933ae9f9e71eb8bd3214429ed13740a0ed"
+  },
+  "fomc_pr_20140430": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20140430a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:49Z",
+   "bytes": 87542,
+   "sha256": "65734c273e561dd31100063fb0defdc2e748d0ee9eb73f40d1784c058906b588"
+  },
+  "fomc_pr_20140618": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20140618a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:50Z",
+   "bytes": 87472,
+   "sha256": "a7fb6f168bf96dfa2283a9a0f1934ea9cedbf30d1d686217521a1c5ec6e4d56e"
+  },
+  "fomc_pr_20140730": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20140730a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:51Z",
+   "bytes": 88391,
+   "sha256": "0135b44fb69cf3a480450ad8e70aca29c293f17fa4416a7b895f465a015ab143"
+  },
+  "fomc_pr_20140917": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20140917a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:52Z",
+   "bytes": 88120,
+   "sha256": "c8dd718c13392cefb3db071d0a6b87fa682f0b18fadde1802257ff15f2014f67"
+  },
+  "fomc_pr_20141029": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20141029a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:54Z",
+   "bytes": 87503,
+   "sha256": "42319e3d52c2af0cb8cb970310f3403ebf6512fadf0dcf7555395a2e39ba6a3e"
+  },
+  "fomc_pr_20141217": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20141217a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:55Z",
+   "bytes": 86857,
+   "sha256": "9b3a75710ddf35e59feb539e86f564ceaaf86be49c0e30c1dc4ecf87e199326c"
+  },
+  "fomc_pr_20150128": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20150128a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:56Z",
+   "bytes": 85858,
+   "sha256": "aa3733e0446229a73b79562641bf460c5fb3e9a2bb3d4335057bc061eb4ec9a2"
+  },
+  "fomc_pr_20150318": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20150318a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:57Z",
+   "bytes": 85771,
+   "sha256": "09b24fd7f159c9111e733950e13eb80a7d8498862a9efa05d910ef3b36190a52"
+  },
+  "fomc_pr_20150429": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20150429a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:40:59Z",
+   "bytes": 85662,
+   "sha256": "44f24ac7062f033e93db14a1b4780f2713929d42228955b6219f4ae10484839e"
+  },
+  "fomc_pr_20150617": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20150617a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:41:00Z",
+   "bytes": 85518,
+   "sha256": "871378dc5e5c28a195a45f4f81e6b7370827f62a6695c6acfb68704ee5c16f5b"
+  },
+  "fomc_pr_20150729": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20150729a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:41:01Z",
+   "bytes": 85487,
+   "sha256": "00355714470f6cb3da97b419d4de92b9f96d6aaa066f16c933c866ddff122905"
+  },
+  "fomc_pr_20150917": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20150917a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:41:02Z",
+   "bytes": 85788,
+   "sha256": "a59cc855a8364ba84488f6a2f61a9bad7350261e0d406eab606117471b88e8b7"
+  },
+  "fomc_pr_20151028": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20151028a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:41:04Z",
+   "bytes": 85698,
+   "sha256": "95b1c8316676a78eeb0d8b327e29d8b6ad53c93321d75d2fc48f853d2e20dca1"
+  },
+  "fomc_pr_20151216": {
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20151216a.htm",
+   "method": "fetched",
+   "accessed_utc": "2026-09-30T10:41:05Z",
+   "bytes": 85726,
+   "sha256": "95191c176500346fa44c31c476dd4faa002c22310f714ca60f0934f2511a13b1"
+  }
+ },
+ "raw_cache": "data/raw/fomc_ext/ (gitignored; _manifest.json beside the responses)",
+ "meetings_without_a_statement": [
+  {
+   "panel": "October 15 Conference Call - 2010",
+   "meeting_last_day": "2010-10-15",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2010.htm",
+   "consequence": "no statement was issued, so there is no market event; no row"
+  },
+  {
+   "panel": "August 1 Conference Call - 2011",
+   "meeting_last_day": "2011-08-01",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2011.htm",
+   "consequence": "no statement was issued, so there is no market event; no row"
+  },
+  {
+   "panel": "November 28 Conference Call - 2011",
+   "meeting_last_day": "2011-11-28",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2011.htm",
+   "consequence": "no statement was issued, so there is no market event; no row"
+  },
+  {
+   "panel": "October 16 (unscheduled) - 2013",
+   "meeting_last_day": "2013-10-16",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2013.htm",
+   "consequence": "no statement was issued, so there is no market event; no row"
+  },
+  {
+   "panel": "March 4 (unscheduled) - 2014",
+   "meeting_last_day": "2014-03-04",
+   "source_url": "https://www.federalreserve.gov/monetarypolicy/fomchistorical2014.htm",
+   "consequence": "no statement was issued, so there is no market event; no row"
+  }
+ ]
+}
