@@ -1,0 +1,177 @@
+{
+ "name": "ledger_frozen_vault_h2_ng",
+ "record": "docs/decisions/D723-PRE-REG-ng-stage-a-for-the-joint-vault.md",
+ "programme_slot": 3,
+ "retained_stage": "A",
+ "instruction": "the principal, 2026-09-30: \"Do the write up and freeze\"",
+ "runner": {
+  "path": "scripts/vault_d723_ng_stage_a.py",
+  "sha256": "4fdd9dce930759486c5afd9f48f4eca374ae684044c99fe9739014306ea62c31"
+ },
+ "records": {
+  "docs/decisions/D723-PRE-REG-ng-stage-a-for-the-joint-vault.md": "a641baff0fbbd0f03ef171a21c0fd6521dc9493d5126a0205b6422c669a8665f",
+  "docs/decisions/D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md": "d00c0d6b74231c6b289f02c3c4646d8af76c3168ac8eef4eeead2af34ce40b8d",
+  "docs/decisions/D630-RESULT-h2-ng-passes-and-the-move-reverts-after-the-settlement.md": "4ac9cab4484507e91f42cf46206cf01d527d533d26fa25d0a115347fb521ab20"
+ },
+ "builder": {
+  "path": "scripts/build_ledger_vault_inputs.py",
+  "sha256": "588a1c21e5ab4a5b31cb684a41740b5fad0b3749466188897bc5fc62d4d9f96e"
+ },
+ "strip_builder": {
+  "path": "scripts/build_strip_vault.py",
+  "sha256": "472cd89128a071c10f5b93c5a1d5d675531d59041773c3e34c928dc68cd4ad41"
+ },
+ "imported_unchanged": {
+  "scripts/build_fut_settle_strip.py": "8fc2690011c65a3c6ec44dd11967e93b501261f671cb3b93874d8955f26b6c22",
+  "scripts/build_ledger_calendar.py": "1c80a2ef2b4a7a79e7c7c9430cefb64eb490d04680a0fa9c34d2c85b31229246",
+  "scripts/build_ng_minute_bars.py": "910886e9735ff8ebefee72197e13125584a1fa1e80b907e4a630e812d44f9d7a",
+  "scripts/build_predicted_flow_panel.py": "d843596d5252e6b044e70fc2c5653b287cbf97d5ed5e11c01b03f9dc2dd16a74",
+  "scripts/build_window_volume_panel.py": "b84bfef4a0bc0a77e4848a59e9dee230cce0e1bbe76e028daeacb61e9ededaad",
+  "scripts/check_uscf_months_and_rolls.py": "117b4c2738507ff2566fa5fccabe43a058e83282ca662bfbfe52a97bcc87a868",
+  "scripts/estimate_fut_share.py": "23d1f7e4486a2c976d78365bd2c96e470512b0b25130521487efa8214fd8245c",
+  "scripts/explore_d630_exits_micro.py": "86ce5a2c73b34ed02a88e4b675a276b190b3f0c9354f822ea8602ee3403ca95d",
+  "scripts/gate_0b_cl_nav.py": "834cf76e8af5a5ca159b7ee641fe1dcc5933e094efd3ae78e544d5f689d9b911",
+  "scripts/gate_0b_ng_nav.py": "63ee26b7c76ef295127899297ea25cac0c104c1a38665ceb9044fbee03400930",
+  "scripts/ledger_power_h1a.py": "8f86d1354b458ae08f81a67b53437b361f9fea2ca2f578c1af2fae2d7cdfe4ae",
+  "scripts/ledger_power_h2_ng.py": "8690c9e8e0878b6a08501492a80ac548d89c6dc96888420db5cc36de21cbeb1a",
+  "scripts/ledger_vault_pp_ng.py": "c7b0309c4beb10689872fda71887182de1380f661beced45f732ea61c68f58d9",
+  "scripts/run_h1a_stage_a.py": "b0e4c4354caaaf7f08858bad9dc2b9d40b3e7d233f75d269b9a74f3c773ad80c",
+  "scripts/run_h2_ng_stage_a.py": "b118330f64a8b803bc33317c537897628056200149b488d984e440e9ed4382cb",
+  "src/backtest_framework/__init__.py": "aae867d2cba6fa88baffd37737016da88f4a6021f790c6b0be19f3ab74a52020",
+  "src/backtest_framework/data/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/data/bars.py": "204de96250ab7c43e17d24bee6b180aceb523c5a84cf49d544e46bd0d93f33cb",
+  "src/backtest_framework/data/csv_fixture.py": "c1aa6acd8f0dcc35155bdad4d49dddd91b2a473f36f655ff0349698944c69281",
+  "src/backtest_framework/data/panel_catalogue.py": "27fff3b1017dc10009f5622b3329137a448bf06c588d422e0706d0abfad36543",
+  "src/backtest_framework/data/panels.py": "64e7049c7109a4120252f1b8c2541bf7c0bea7bc09b7e7491fb8fc32a7478086",
+  "src/backtest_framework/ledger/__init__.py": "3a4143a59d90edb5e8c4dcf6a597b1e31f6f933ffcf3ca08eb154248edab5033",
+  "src/backtest_framework/ledger/flows.py": "dec3a42117922cf8f51b6b562c8f2b69f2ccc064f02f509422e6531e8f39d670",
+  "src/backtest_framework/registry/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/registry/trial_registry.py": "6f16143ae83af9aea8a39678253bc1ca3c05259e33179a300bc26ec712babd24",
+  "src/backtest_framework/simulator/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/simulator/fills.py": "7c2b9b54a7cf461196ab4a2d15281790d2da86c16380425c8f7876c8fbb4390a",
+  "src/backtest_framework/validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/validation/component_series.py": "3f2fb17f75f8cd69d11626fd3e290d74be360fa836485e3618a317e3accb2ce8",
+  "src/backtest_framework/validation/dsr.py": "55e4fa686a866ffe9b5a1b899b8a36e707af653e009db29556571bd873bacd6e",
+  "src/backtest_framework/validation/frozen.py": "8156c4d3e858604f1fc31c04200e6fac8be58f8fe1ec878d755673934f9c314e",
+  "src/backtest_framework/validation/power.py": "109910e2226bb05449f08fe53c47345892a7e1c5df2d840d84eae96bd2b6e947"
+ },
+ "stage_a_freeze": {
+  "path": "data/FROZEN_ledger_stage_a_ng.json",
+  "sha256_bytes": "5c464720dad59a564e98cf03fca6fb8345b9095e02b544e9d519f88ab52bd9d7"
+ },
+ "params": {
+  "vault": [
+   "2025-03-01",
+   "2026-09-18"
+  ],
+  "seal_from": "2026-09-19",
+  "in_sample_cut": "2025-03-01",
+  "a6_last_in_sample_anchor": "2024-12-31",
+  "cost_full_usd": 26.0,
+  "pass_rule": {
+   "1": "vault mean g > 0 (the in-sample sign)",
+   "2": "one-sided t >= 1.2816, t = Newey-West, 5 lags (D630 nw_t)",
+   "3": "vault mean net at $26 a trade > 0",
+   "floor": "fewer than 15 vault traded days -> UNRESOLVED"
+  },
+  "t_one_sided": 1.2816,
+  "nw_lags": 5,
+  "gate_t": "nw5",
+  "min_vault_traded_days": 15,
+  "rotation": {
+   "seed": 630,
+   "draws": 1000,
+   "form": "D630 C2 on the vault days (reported)"
+  },
+  "placebo": "D630 C1: the 11:30 ledger, 11:31 fill to the 12:19 close, on the vault days (reported)",
+  "mng_cost": "futures_costs.json NG.micro: commission_rt + default crossing x tick + 1 tick slippage",
+  "vault_a6_anchors_accepted": {
+   "LAST_ANCHOR": "2026-06-30",
+   "SWAP_Q_LAST": "2026-Q2"
+  },
+  "a6_tail_moves": "permitted by the principal (D723-A1): pass --accept-a6-tail-moves; rows through 2024-12-31 must still match D630 row for row"
+ },
+ "known_answer": {
+  "source": "run_h2_ng_stage_a.build + signed on the Stage A freeze's in-sample fixtures",
+  "rehearsal_of_the_beside_lines_on_the_in_sample": {
+   "placebo": {
+    "exact": true,
+    "max_abs_diff": 0.0
+   },
+   "rotation": {
+    "exact": true,
+    "max_abs_diff": 0.0
+   },
+   "performance": {
+    "exact": true,
+    "max_abs_diff": 0.0
+   },
+   "distribution_gross": {
+    "exact": true,
+    "max_abs_diff": 0.0
+   },
+   "mng_line": {
+    "exact": true,
+    "max_abs_diff": 0.0
+   },
+   "rotation_observed_t": 5.011724078165154
+  },
+  "n": 1028,
+  "gate_mean": 66.0214007782101,
+  "gate_mean_repr": "66.0214007782101",
+  "exact": {
+   "n": true,
+   "gate_mean": true
+  },
+  "in_sample_days": [
+   "2017-06-20",
+   "2025-02-28"
+  ],
+  "table_rows": 1936,
+  "prefix_through_a6_anchor": {
+   "n": 993,
+   "gate_mean": 66.37462235649544,
+   "sum_g": 65909.99999999997,
+   "first": "2017-06-20",
+   "last": "2024-12-31"
+  },
+  "in_sample_statistics": {
+   "mean_g": 66.0214007782101,
+   "se": 13.173390982526163,
+   "t_ordinary": 5.011724078165154,
+   "t_nw5": 4.547193662335592,
+   "mean_net": 40.021400778210094
+  },
+  "in_sample_mng_line": {
+   "contract": "MNG, 1,000 MMBtu",
+   "cost_usd": 5.0,
+   "trades": 1028,
+   "days": 1936,
+   "mean_gross": 6.602140077821008,
+   "mean_net": 1.6021400778210078,
+   "sharpe_net": 0.43873573605288,
+   "sortino_net": 0.674859205930203,
+   "sharpe_gross": 1.7982798110762566,
+   "sortino_gross": 3.0168645216430177,
+   "hit_rate_net": 0.48151750972762647,
+   "skew_daily_net": 0.5318142181550317
+  },
+  "mng_cost_line": {
+   "symbol": "MNG",
+   "source": "data/futures_costs.json roots.NG.micro",
+   "commission_rt_usd": 3.0,
+   "crossing_line": "d556_one_tick",
+   "crossing_usd": 1.0,
+   "entry_slippage_usd": 1.0,
+   "cost_usd": 5.0,
+   "mng_over_ng": 0.1
+  },
+  "mng_line_reproduces_d630_component_mng": {
+   "max_abs_diff": 0.0,
+   "exact": true
+  },
+  "runtime_s": 7.4
+ },
+ "frozen_utc": "2026-09-30T23:19:30Z",
+ "git_head": "8e6e82ec4111aa51b4e37e4e7541dbb3fddd00a4"
+}
