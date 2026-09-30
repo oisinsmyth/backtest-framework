@@ -122,3 +122,15 @@
      This record proposes nothing.
 6. **Closing the sizing idea under R15 is the principal's call.** In scope: a day-size forecast used to size, skip
    or scale either line.
+
+## CLOSED, 2026-09-30, on the principal's word (for these applications only)
+
+The principal: "Close the sizing overlay on those specific applications, I think will work on another type."
+- **Closed under R15:** a day-size forecast (D691's M1, or any variant of it) used to size, skip or scale **the
+  admitted MACD arm or NQ F2**.
+- **Not closed:** sizing by a size forecast on another type of construction. The principal expects it to work
+  elsewhere, and D720 says nothing about constructions whose P&L rises with the day's realised size in a way a
+  forecast can reach.
+- **The quiet-day pattern on F2 (s.3 item 5):** the principal will close it after a check for similar patterns on
+  other roots, with their hypothesis: NQ is more volatile, so in a high-volatility regime bigger moves revert more.
+  That check is D721.
