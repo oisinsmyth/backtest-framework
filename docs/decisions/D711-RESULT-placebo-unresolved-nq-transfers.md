@@ -127,3 +127,136 @@
 - **The only follow-up this record suggests is NQ F2 as a candidate. It would be the same trade**, so it would sit
   beside ES F2 as a sizing choice (one MES or one MNQ, or both), not as a second component. That is the principal's
   call.
+
+## Addendum (post hoc, 2026-09-30): the extremes stripped out, and where ES and NQ overlap
+
+*The principal: "I would like the extremes striped out for the decision time comparison and the other comparisons to
+the other roots. I would also like to have a statistical breakdown of where the trades overlap between NQ and ES and
+where they disagree?"*
+- *Descriptive, on the same in-sample data. Nothing gates, nothing is fitted, and nothing above changes.*
+- ***Script:** `scripts/diag_d711_trims_and_overlap.py`. **Output:** `data/diag_d711_trims_and_overlap.json`.*
+- *It reproduces D711's lines and pooled placebo exactly, and D707's frozen answer, before any statistic.*
+
+### A. The extremes stripped out
+
+**How the trims work:**
+- The trades are ranked by net, and the same share is cut from **both** tails.
+- z is measured on the same trades, in D711's units (each line's take-everything sd).
+- **"Lift"** is the filter's z minus take-everything's z under the same trim.
+- The top-5 share is the five best trades' share of the line's total net.
+
+**The decision times (ES):**
+
+| clock | full: net ($) / z / t | 1 % | 2.5 % | 5 % | 10 % | median net / z | top-5 share | lift at 10 % |
+|---|---|---|---|---|---|---|---:|---:|
+| 10:30 | +0.48 / 0.103 / 0.12 | +0.36 / 0.100 | +0.63 / 0.106 | +1.77 / 0.130 | +2.88 / 0.153 (t 1.19) | +3.08 / 0.157 | >100 % | 0.153 |
+| 11:30 | −3.82 / 0.016 / −1.14 | −3.54 / 0.023 | −3.40 / 0.027 | −2.91 / 0.040 | −2.13 / 0.060 | −0.67 / 0.098 | — | 0.024 |
+| 12:30 | −2.55 / 0.056 / −0.90 | −2.98 / 0.044 | −2.71 / 0.052 | −2.49 / 0.058 | −2.08 / 0.071 | −3.17 / 0.038 | — | 0.068 |
+| **13:30** | +5.45 / 0.273 / 1.33 | +4.69 / 0.252 | +3.48 / 0.219 | +2.62 / 0.195 | **+2.00 / 0.178 (t 0.85)** | +0.58 / 0.138 | **79 %** | 0.150 |
+| 14:30 | −2.40 / 0.048 / −0.53 | −1.11 / 0.078 | +0.17 / 0.108 | +1.24 / 0.133 | +2.17 / 0.155 | +1.83 / 0.147 | — | 0.099 |
+| **15:30 (F2)** | +13.21 / 0.302 / 2.48 | +12.50 / 0.290 (t 2.89) | +12.27 / 0.286 | +11.21 / 0.268 (t 2.92) | **+9.79 / 0.243 (t 3.14)** | +6.21 / 0.182 | 51 % | 0.206 |
+
+**The pooled placebo (10:30–13:30), with a session-clustered SE:**
+
+| trim | G_P (z) | t | F2's z | ratio to F2 |
+|---|---:|---:|---:|---:|
+| none | 0.112 | 2.56 | 0.302 | 0.37 |
+| 1 % | 0.100 | 2.50 | 0.290 | 0.35 |
+| 2.5 % | 0.100 | 2.48 | 0.286 | 0.35 |
+| 5 % | 0.103 | 2.95 | 0.268 | 0.39 |
+| 10 % | 0.114 | 3.69 | 0.243 | 0.47 |
+| median | 0.105 | | 0.182 | 0.58 |
+
+**The other roots at 15:30:**
+
+| root | full: net / z / t | 1 % | 5 % | 10 % | median net | ex-top-5 / ex-bottom-5 | top-5 share | lift at 10 % |
+|---|---|---|---|---|---:|---|---:|---:|
+| ES | +13.21 / 0.302 / 2.48 | +12.50 (t 2.89) | +11.21 (t 2.92) | +9.79 (t 3.14) | +6.21 | +6.63 / +19.03 | 51 % | 0.206 |
+| **NQ** | +20.67 / 0.304 / 2.95 | +19.52 (t 3.11) | +19.43 (t 3.53) | **+18.94 (t 4.00)** | +11.43 | +12.39 / +27.76 | 41 % | 0.247 |
+| YM | +6.15 / 0.232 / 1.75 | +6.47 (t 1.92) | +5.29 (t 1.99) | +3.72 (t 2.04) | +1.70 | +1.98 / +10.47 | 68 % | 0.143 |
+| RTY | +0.64 / 0.129 / 0.22 | +0.12 | +0.37 | −0.07 | −0.76 | −2.89 / +3.79 | >100 % | 0.092 |
+
+**What stripping the extremes shows:**
+1. **ES F2 does not rest on a few trades.** It keeps +$9.79 a trade with 10 % cut from each tail, and its t RISES
+   (2.48 → 3.14), because the tails were adding noise, not edge.
+2. **NQ is the most robust line in the record:** +$18.94 at a 10 % trim, t 4.00.
+3. **13:30 was a few trades.** Its five best trades are 79 % of its net, its median is +$0.58, and at a 10 % trim it
+   keeps +$2.00 (t 0.85). The headline "13:30 nearly matches F2" does not survive the trims.
+4. **But the midday clocks' small positive z is broad, not a tail effect.** The pooled placebo sits at 0.10–0.11 z
+   under every trim, its t rises to 3.7, and its ratio to F2 rises from 0.35 to 0.47 as F2's own tails are cut. So
+   the rule picks up a small continuation all day, about a third to a half of F2's per-trade size, and **only at
+   15:30 does that clear the fee.** 11:30 and 12:30 are net-negative under every trim.
+5. **YM's edge is thin** (median +$1.70, top-5 share 68 %). **RTY has none** under any trim.
+
+**The reading of A1 moves toward F2's story** (the last half-hour is where the size is), with a qualifier: a smaller
+continuation exists at every clock. It stays UNRESOLVED as registered.
+
+### B. Where ES F2 and NQ F2 overlap and where they disagree
+
+*The common sessions are both roots' F2 windows, 2018-05-14 → 2023-12-29: 1,347 sessions. Net is per micro (MES
+$4.42, MNQ $4.07).*
+
+**Overlap:**
+
+| | sessions |
+|---|---:|
+| both take | **217** |
+| ES only | 33 |
+| NQ only | 52 |
+| neither | 1,045 |
+
+- **The two filters pick nearly the same days.** The Jaccard is 0.72. P(NQ takes \| ES takes) is 0.87, and P(ES takes
+  \| NQ takes) is 0.81. The φ of the take flags is 0.80.
+- **Direction:**
+  - on the days both take, the two agree in 216 of 217 (99.5 %);
+  - across all common sessions, 89 %.
+- **The days only one takes are near misses.** There, the other root's composite tier has a median of about 0.75
+  against the 0.8 bar: 97 % of ES-only days had NQ's tier ≥ 0.6, and 83 % of NQ-only days had ES's.
+
+**Where the money is:**
+
+| cell | n | ES net (median, hit, t) | NQ net (median, hit, t) |
+|---|---:|---|---|
+| **both take, same direction** | 216 | **+$15.51** (+$8.08, 0.56, t 2.50) | **+$25.58** (+$15.68, 0.57, t 2.90) |
+| both take, opposite direction | 1 | +$113.08 | −$223.57 |
+| ES only (ES traded) | 33 | **−$4.50** (−$6.92, 0.39, t −0.73) | NQ untraded that day: +$7.93 (median −$7.07) |
+| NQ only (NQ traded) | 52 | ES untraded that day: −$9.11 (median −$0.67) | **+$4.29** (−$7.82, 0.48, t 0.30) |
+| neither (untraded, both) | 1,045 | −$3.11 (t −2.51) | −$3.32 (t −1.90) |
+
+- **All of both books' profit comes from the days they agree:** 104 % of ES F2's net and 96 % of NQ F2's. The days
+  only one root takes are about flat-to-negative for the root that trades them.
+- **The agreement is descriptive and post hoc.** A both-take ES book earns +$15.96 against −$4.50 for ES alone
+  (Welch t 1.92). For NQ it is +$24.43 against +$4.29 (t 1.06).
+- **"Take only when both roots' tiers clear 0.8" is a new rule found by looking.** It is not tested here, and it could
+  only be judged on data it has not seen.
+- **On the days both take, the two trades are almost one trade:** ρ of gross 0.96, against 0.77 across all common
+  sessions.
+
+**The books on the common sessions** (daily, net):
+
+| book | total | Sharpe (Sortino) | max drawdown |
+|---|---:|---:|---:|
+| ES F2, 1 MES | $3,315 | 0.95 (1.62) | $707 |
+| NQ F2, 1 MNQ | $5,524 | **1.08 (1.83)** | $990 |
+| both, 1 MES + 1 MNQ | $8,839 | 1.06 (1.82) | $1,538 |
+
+- ρ of daily net is 0.87, so **holding both adds size, not diversification.** The combined Sharpe is NQ's alone.
+- These Sharpes are higher than §2's, because the daily denominator here is only the common sessions.
+
+**By year** (mean net a trade on agreement days; counts of the days only one root took):
+
+| | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 |
+|---|---|---|---|---|---|---|
+| both take (n) | 17 | 18 | 59 | 39 | 58 | 26 |
+| ES net / NQ net, both take | +14.1 / +13.2 | −4.6 / −0.8 | +5.6 / +9.1 | +16.8 / +29.1 | **+37.9 / +59.7** | +1.0 / +8.1 |
+| ES only / NQ only (n) | 1 / 6 | 3 / 1 | 6 / 19 | 9 / 11 | 7 / 6 | 7 / 9 |
+
+**What it means:**
+- **ES F2 and NQ F2 are one signal read on two contracts.** Where they differ, it is the tier landing either side of
+  0.8, and those marginal days earn nothing.
+- **NQ is the better contract for the same signal** in-sample: bigger per trade (MNQ moves more dollars for a similar
+  cost), more robust under trims, and a higher Sharpe.
+- **The rest is the principal's call, not a finding:**
+  - ES's vault look is frozen (D707);
+  - NQ would need its own pre-registration;
+  - an agreement rule would need unseen data.
