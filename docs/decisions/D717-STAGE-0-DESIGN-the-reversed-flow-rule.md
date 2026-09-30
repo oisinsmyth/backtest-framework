@@ -88,6 +88,22 @@ Per root:
 - **The component line:** ρ with the MACD arm (#2, NQ, so the overlap matters) and with F2.
 - **The clock overlap:** the share of the gross earned 15:30 → 16:00.
 
+## 4b. The principal's prediction (added 2026-09-30, before the builder or runner exists)
+
+The principal: "Do so on NQ with the prediction that it will be better, higher gross + Net".
+
+**P-principal:** NQ's two-sided reversed book, at one MNQ, has a higher mean gross AND a higher mean net per trade, in
+dollars, than ES's reversed book at one MES, on the same 2016–2023 rule.
+- The runner reports both roots' mean gross and net per trade, in dollars and in bp, and marks P-principal held or
+  missed on the dollar comparison.
+- It is a declared prediction, not a gate. The readings in §4 stand.
+- **One caution, stated now:** NQ at one MNQ is worth about $2.20 a bp at 2016–23 prices, against about $1.50 for ES at
+  one MES. So a dollar comparison favours NQ even at an equal edge in bp. The bp comparison is reported beside it.
+
+**Also reported** (the other session's request): ρ of D717's NQ daily net with NQ F2's in-sample daily net. NQ F2 is
+now the joint-vault line in slot 7 (D716), and this rule's 10:30 → 15:59 hold contains its 15:30 → 16:00 leg. The
+series is rebuilt through `vault_d716_nq_f2`'s in-sample functions; NQ's 2024+ prices stay unread.
+
 ## 5. Size the prize and the power (honest)
 
 - **ES's selected reversed book:** about +$8.7 gross a MES trade (D715's halves), about 5.8 bp at ES ~3,000.
