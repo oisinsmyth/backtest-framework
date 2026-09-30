@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 505 of these records carry neither field —
+**No Status or Category column, deliberately.** 506 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -790,6 +790,7 @@ would look like data. The tokens are what is shown.
 | D715 | D715 STAGE 0 RESULT — NEITHER: the absorption score ranks the 10:30 → close outcome backwards (Spearman −0.061, the 0.7… | [record](D715-STAGE-0-DESIGN-the-absorbed-morning-move.md) · [RESULT](D715-STAGE-0-RESULT-absorption-ranks-backwards.md) |
 | D716 | REGISTRATION — NQ F2 for the joint vault run, with a fixed-sequence takeover by "NQ F2 only when ES F2 agrees"; ES F2 (… | [PRE-REG](D716-PRE-REG-nq-f2-for-the-joint-vault.md) |
 | D717 | D717 STAGE 0 RESULT — NEITHER on NQ: the reversed flow rule does not transfer. NQ's flow residual ranks nothing (Spearm… | [record](D717-STAGE-0-DESIGN-the-reversed-flow-rule.md) · [RESULT](D717-STAGE-0-RESULT-the-reversal-does-not-transfer-to-nq.md) |
+| D718 | D718 PREMISE DESIGN — proposal A: does ES's last 15 minutes move in the direction volatility-target funds must trade at… | [record](D718-PREMISE-DESIGN-vol-control-flow-at-the-close.md) |
 
 <!-- REGISTER:END -->
 
