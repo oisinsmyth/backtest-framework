@@ -235,3 +235,28 @@ Otherwise the rule is frozen on the principal's ruling, whatever checks 2 and 3 
   it at MES.
 - **Disclosure:** this rule and V1 (D699) trade the same days and trend in the same direction. D699 is not carried, so
   the two are not counted as two confirmations.
+
+## WITHDRAWN, 2026-09-30, before any look, on the principal's word
+
+The principal: "Did I tell you to add E to the 10th slot? We can't afford to trade on ES so it doesn't matter if its
+profitable there". And: "Park C while we look into E."
+
+**What was undone:**
+- **Programme slot 10 is unregistered.** `data/programme_registry.json`, `docs/results/PROGRAMME_REGISTRY.md` and
+  `tests/unit/test_programme.py` are restored to their state before `6bcbd793`. Slot 10 is free again.
+- **The freeze file** `data/FROZEN_vault_d712_short_gamma_timing.json` is removed. It stays in history at `6bcbd793`.
+- **The runner and its power output** stay in the repo as evidence.
+
+**Why it is a withdrawal, not a release:** no unseen data was read, and the family was never evaluated. So this is not
+the registry's `release` (which bars a family from being registered again). The rule can be pre-registered again,
+changed or unchanged.
+
+**What was wrong with the registration:**
+- **The account trades micro contracts only.** D708's rule nets −0.45 (daily Sharpe) at one MES in-sample, and only
+  2023 nets positive. Its positive full-ES line is irrelevant to this account.
+- **§3's MES net gate** rested on a projection at the unseen span's prices, not on an in-sample MES result.
+- **It spent the programme's last α slot** without the principal being told that it was the last one, or that the rule
+  loses at the size the account can trade.
+
+**What stands:** D708's in-sample finding stands: the side choice carries +$3.09 a MES trade over the drift, on both
+legs. What follows is the principal's "look into E": its economics at MES.

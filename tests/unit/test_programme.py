@@ -157,12 +157,12 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     NG projected-profit vault line (a reserved slot, so no amendment); since 2026-09-29 a second: slot 9, D680's NQ
     compression-break vault line. On 2026-09-29 the principal closed the opening model v1 and RELEASED slot 7 (D658's
     closure): 'opening H-O2' moved to `released`. On 2026-09-30 slot 7 went to D707's last-hour F2 (the lowest free
-    slot, a different family), and slot 10 to D712's short-gamma hourly timing (ES), so no slot is free."""
+    slot, a different family), so slot 10 alone is free."""
     registry = Registry(path=DEFAULT_REGISTRY_PATH)
     seeded = [f for f in registry if f.slot <= 7 and f.registered_utc == SEALED_DATE]
     assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES if name != "opening H-O2"]
-    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-    assert registry.free_slots() == ()
+    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert registry.free_slots() == (10,)
     assert [(r["name"], r["slot"], r["doc"], r["released_utc"]) for r in registry.released] == [
         ("opening H-O2", 7, "OPENING_AGENT_STATE_PREREG.md", "2026-09-29")]
     assert "D658" in registry.released[0]["reason"] and "principal" in registry.released[0]["reason"]
@@ -177,10 +177,7 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     seventh = registry.get("last-hour F2 (ES)")
     assert (seventh.slot, seventh.registered_utc, seventh.amendment) == (7, "2026-09-30", None)
     assert (REPO / "docs" / "decisions" / seventh.doc).exists()
-    tenth = registry.get("short-gamma hourly timing (ES)")
-    assert (tenth.slot, tenth.registered_utc, tenth.amendment) == (10, "2026-09-30", None)
-    assert (REPO / "docs" / "decisions" / tenth.doc).exists()
-    assert registry.alpha_total() == pytest.approx(0.05)
+    assert registry.alpha_total() == pytest.approx(0.045)
     docs = {f.doc for f in seeded} | {r["doc"] for r in registry.released}
     assert docs == {
         "LETF_CLOSE_FLOW_PREREG.md",
@@ -208,7 +205,7 @@ def test_the_rendered_page_exists_and_says_where_the_deposits_path_maps_to():
     assert "data/programme_registry.json" in page
     for name, _, _ in SEED_FAMILIES:
         assert f"`{name}`" in page
-    assert page.count("*(reserved)*") == 0  # slot 8 to D649 (2026-09-28), 9 to D680 (2026-09-29), 10 to D712 (2026-09-30)
+    assert page.count("*(reserved)*") == 1  # slot 8 allocated to D649 on 2026-09-28, slot 9 to D680 on 2026-09-29
     assert page.count("*(released)*") == 0  # slot 7 released 2026-09-29, re-allocated to D707's F2 on 2026-09-30
     assert "**Released slots.**" in page
     assert "`ledger H2 projected-profit (NG)`" in page

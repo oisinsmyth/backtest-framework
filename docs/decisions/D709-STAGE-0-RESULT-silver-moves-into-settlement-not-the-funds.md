@@ -138,3 +138,11 @@ computable.
    seems to have learned to absorb, as with month-end (D685–D687).
 4. **Under R15, this closes the construction, not the avenue.** Closing the silver settlement line is the principal's
    call.
+
+## CLOSED, 2026-09-30, on the principal's word
+
+The principal: "close the silver".
+- **Closed under R15:** the silver settlement-window line (the LETF-rebalance mechanism on SI's 13:24–13:25 window).
+- **Not to be reopened without the principal's word and a new mechanism.**
+- **What is kept as evidence:** the in-sample finding, the post-2019 clock- and silver-specific move that fades after
+  2021.

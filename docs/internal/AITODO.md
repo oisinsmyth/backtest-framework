@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 713.** D712 is this session's joint-vault pre-registration of D708's rule (the principal: "Yes, write it"; programme slot 10). D711 is the other session's F2 placebo clocks and other index roots. D708, D709 and D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
+- **Next free number: 713.** D712 is this session's joint-vault pre-registration of D708's rule, WITHDRAWN before any look (slot 10 free again). D711 is the other session's F2 placebo clocks and other index roots. D708, D709 and D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
   MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
   long.
 - **D699 RESULT (2026-09-30): V1, the histogram with a ±0.5 band, is a LEAD, but it fails the declared reading on (b).**
@@ -61,15 +61,16 @@
   - **The drift is only 2% of the profit,** because the book is balanced long and short.
   - **Net at MES:** −0.45 in-sample; at full ES +0.45. The unseen-price projection at MES is a thin positive.
   - **The power:** 0.63 at the full effect, 0.26 at half.
-  - **Frozen as D712 for the joint run (slot 10),** with gross T as the primary
-    gate and MES net as the second.
+  - **D712 (its vault pre-registration) was WITHDRAWN before any look,** on the principal's word. The account trades
+    MES only, and at MES the rule loses in-sample.
+  - **Open, the principal's "look into E":** its economics at MES.
 - **D709 STAGE 0 (2026-09-30): FAIL (not the funds).** Silver moves into its 13:24–13:25 settlement window with the
   day's sign after AGQ/ZSL switched to the settlement benchmark: +$5.63 a SIL gross (t 3.14, above every rotation).
   - **Specific:** the midday placebo is flat, and so is gold.
   - **Why it fails:** the pre-era carried the effect too (t 4.03), though only in the pit era: 2015-07 → 2019-01 is
     flat. That split is reported, post hoc.
   - **Net and trend:** net −$2.37 at $8. It fades to nothing in 2022–2023.
-  - **Waiting on the principal:** close the silver settlement line, or leave it parked (R15). No redesign is proposed.
+  - **CLOSED 2026-09-30 (the principal: "close the silver"), under R15.**
 - **D710 STAGE 0 (2026-09-30): PRESENT, then MECHANISM ONLY.**
   - **The premise:** the dealers' auction-day V (FRBNY SR 1188) is in the Treasury futures. Pooled z +0.26 (t 4.98),
     above every enumerated placebo schedule, with an achieved share of 0.68 overall and 0.69 in 2015–23. The 11:00 and
@@ -78,9 +79,7 @@
     - the unfiltered legs gross +$17.48 (t 2.89) and net −$1.18 at full size;
     - the paper-sized filter (mostly the 30-year pre-auction short) nets +$43.85 a trade at t 1.45, about 12 trades a
       year. Component net Sharpe +0.48, ρ under 0.1.
-  - **Waiting on the principal:**
-    - R12's personal-track screen (long-duration Treasury ETFs) before any closure on cost;
-    - whether to seek an α re-allocation for a vault line (all ten slots are allocated).
+  - **PARKED 2026-09-30 (the principal: "Park C while we look into E").** No ETF screen and no vault line.
   - **New data:** `data/calendar/treasury_auctions.csv` (Fiscal Data, 2009–2026) and `fomc_2010_2015.csv`.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
@@ -209,21 +208,11 @@
     on the extended build before scoring. If the 10-09 top-up extends the fixture to 2026-09-18, the fixture's hash is
     for information only.
   - **Ledger:** COMPONENTS_PROP entry #4, PROVISIONAL.
-- **FROZEN 2026-09-30 (the principal: "Yes, write it"): D712, D708's hourly continuation on ES-book short-gamma days,
-  programme slot 10.**
-  - The freeze is `data/FROZEN_vault_d712_short_gamma_timing.json`; the runner `scripts/vault_d712_short_gamma_timing.py`.
-  - **Known answer:** D708's T reproduced exactly (+$3.0925, t 3.17, 4,240 trades). The rule path (G_ES only) equals
-    D708's panel on its 1,989 sessions. Its own 859 sessions give T +$3.0952 (t 3.18).
-  - **The rule:** PASS with ≥ 300 trades on 2024-01-01 → 2026-09-18 when all hold:
-    - the timing term T > 0 at one-sided day-clustered t ≥ 1.2816;
-    - both legs > 0;
-    - MES net > 0.
-
-    It reads MECHANISM ONLY without the net. Promotion is at t ≥ 2.576.
-  - **Power** (`data/vault_d712_power.json`): size 0.103. PASS is 0.59 / 0.26 / 0.13 / 0.06 at 100 / 50 / 25 / 0% of the
-    effect, with the net projected at ES 5,800.
-  - **No vault-input build is needed:** the ES bars and the options book run to 2026-09-09.
-  - **All ten programme slots are now allocated.**
+- **WITHDRAWN 2026-09-30, before any look (the principal: "Did I tell you to add E to the 10th slot? We can't afford to
+  trade on ES so it doesn't matter if its profitable there"): D712.**
+  - Slot 10 is unregistered and free again, and D712's freeze file is removed (see its WITHDRAWN section).
+  - The rule loses at one MES in-sample (−0.45). Its runner and power output are kept as evidence.
+  - **Next free programme slot: 10.**
 - **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
   look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
   stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**

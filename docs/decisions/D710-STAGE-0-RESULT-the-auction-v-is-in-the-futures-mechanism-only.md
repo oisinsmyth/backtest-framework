@@ -136,3 +136,9 @@ agree.
    re-allocates α. That is the principal's call.
 5. **Under R12 (design §10), the next step for MECHANISM ONLY** is a screen of the personal track (long-duration
    Treasury ETFs at about 3.8 bp a round trip) before any closure on cost. It is proposed, not started.
+
+## PARKED, 2026-09-30, on the principal's word
+
+The principal: "Park C while we look into E."
+- **Parked, not closed.** No ETF screen, no vault line and no α re-allocation are started.
+- The premise finding and Book F's in-sample line stand as recorded.

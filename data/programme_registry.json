@@ -86,15 +86,6 @@
    "alpha": 0.005,
    "amendment": null,
    "note": "Vault line: D672's C1 on NQ (the plain break of yesterday's RTH range, E4, on the compressed third), one MNQ, friction once; PASS with >= 30 C1 trades, one-sided HAC t >= 1.2816 on the gross and a positive net"
-  },
-  {
-   "name": "short-gamma hourly timing (ES)",
-   "doc": "D712-PRE-REG-short-gamma-hourly-timing-for-the-joint-vault.md",
-   "registered_utc": "2026-09-30",
-   "slot": 10,
-   "alpha": 0.005,
-   "amendment": null,
-   "note": "Vault line on D708: the ES hourly continuation on ES-book short-gamma days (sign of the last 60 minutes held 60, 10:30-14:30, one MES, $4.42); PASS with >= 300 trades on 2024-01-01 -> 2026-09-18, the timing term T > 0 at one-sided day-clustered t >= 1.2816, both legs > 0 and MES net > 0"
   }
  ],
  "released": [
