@@ -16,7 +16,7 @@ A family may only be registered into a free slot. When all ten are used, an elev
 | 4 | `index H-R1` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Execution-day effect: signed entry -> W_end close return pooled across commodities, days and years (§6 H-R1; Holm across constructions A and B) |
 | 5 | `index H-R2` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Reversal: signed return in the reversal direction over 1/3/5 days (§6 H-R2; Holm across 3 holds x 2 constructions) |
 | 6 | `index H-R3(b)` | 0.005 | `INDEX_REWEIGHT_FLOW_PREREG.md` | 2026-09-21 | Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (§6 H-R3(b); H-R3(a) is descriptive and is not a decision family) |
-| 7 | `last-hour F2 (ES)` | 0.005 | `D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md` | 2026-09-30 | Vault line on D705 F2: the ES last-hour continuation (sign of 14:30->15:30, held to 16:00, one MES, $4.42) when tiers((tiers(abs(F5)/sigma) + tiers(rv to 15:30)) / 2) >= 0.8; PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816 |
+| 7 | `last-hour F2 (NQ)` | 0.005 | `D716-PRE-REG-nq-f2-for-the-joint-vault.md` | 2026-09-30 | Vault line: NQ F2 (the ES F2 rule of D707 on NQ, one MNQ, $4.07); PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816; fixed-sequence takeover by NQ F2 only when ES F2 agrees iff its t >= 2.576 and it beats count-matched random deletion on efficiency |
 | 8 | `ledger H2 projected-profit (NG)` | 0.005 | `D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md` | 2026-09-28 | Vault line on D630's trade: one MNG when b_t x |I_t| projects >= 2 x $5 (b_t from earlier traded days); PASS with >= 15 trades, one-sided t >= 1.2816 on the MNG gross and a positive MNG net |
 | 9 | `opening compression break (NQ)` | 0.005 | `D680-PRE-REG-the-nq-compression-break-for-the-joint-vault.md` | 2026-09-29 | Vault line: D672's C1 on NQ (the plain break of yesterday's RTH range, E4, on the compressed third), one MNQ, friction once; PASS with >= 30 C1 trades, one-sided HAC t >= 1.2816 on the gross and a positive net |
 | 10 | *(reserved)* | 0.005 | — | — | — |
@@ -28,6 +28,7 @@ A family may only be registered into a free slot. When all ten are used, an elev
 | Slot | Family | Doc | Registered | Released | Reason |
 |---|---|---|---|---|---|
 | 7 | `opening H-O2` | `OPENING_AGENT_STATE_PREREG.md` | 2026-09-21 | 2026-09-29 | D658 CLOSED by the principal ('close opening model v1'; on slot 7: 'Release it'): Gate O1 failed, no agent retained, H-O2's policy net-negative at both t0; the vault was never read for it. The principal's override of the deposit's never-retroactively default, for this family only |
+| 7 | `last-hour F2 (ES)` | `D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md` | 2026-09-30 | 2026-09-30 | D716: the principal withdrew ES F2 (D707) from the joint vault run before any look ('Remove ES F2 from the vault run and keep NQ F2 and NQ F2 only when ES F2 agrees'); replaced by NQ F2 in this slot; ES F2's unseen data is read as D716's input, so no clean look remains |
 
 ---
 

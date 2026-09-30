@@ -5265,3 +5265,8 @@ RELATIVE to their own history, never on a dollar bar.
   - **Requiring ES's agreement to trade NQ adds nothing demonstrable**
     ([D714](decisions/D714-RESULT-no-increment-es-agreement-is-inside-chance.md)): +$25.58 against +$20.77 a MNQ
     trade, but random deletion of as many trades matches it (rank 0.856).
+- **The vault line is now NQ F2** ([D716](decisions/D716-PRE-REG-nq-f2-for-the-joint-vault.md), programme slot 7;
+  the principal withdrew ES F2 before any look).
+  - One look at 2024-01-01 → 2026-09-18.
+  - The agreement book takes over only if NQ F2 passes, its t ≥ 2.576 and it beats random deletion.
+  - PASS probability is 0.69 at the full in-sample edge; takeover is about 0.06.

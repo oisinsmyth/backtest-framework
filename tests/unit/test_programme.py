@@ -156,15 +156,18 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     opening H-O2 -- slots 1-7, registered at the seal. Since 2026-09-28 one reserved slot is allocated: slot 8, D649's
     NG projected-profit vault line (a reserved slot, so no amendment); since 2026-09-29 a second: slot 9, D680's NQ
     compression-break vault line. On 2026-09-29 the principal closed the opening model v1 and RELEASED slot 7 (D658's
-    closure): 'opening H-O2' moved to `released`. On 2026-09-30 slot 7 went to D707's last-hour F2 (the lowest free
-    slot, a different family), so slot 10 alone is free."""
+    closure): 'opening H-O2' moved to `released`. On 2026-09-30 slot 7 went to D707's last-hour F2 on ES (the lowest
+    free slot, a different family); later that day the principal withdrew ES F2 before any look (D716), released slot 7
+    again, and D716's NQ F2 took it. Slot 10 alone is free."""
     registry = Registry(path=DEFAULT_REGISTRY_PATH)
     seeded = [f for f in registry if f.slot <= 7 and f.registered_utc == SEALED_DATE]
     assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES if name != "opening H-O2"]
     assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9]
     assert registry.free_slots() == (10,)
     assert [(r["name"], r["slot"], r["doc"], r["released_utc"]) for r in registry.released] == [
-        ("opening H-O2", 7, "OPENING_AGENT_STATE_PREREG.md", "2026-09-29")]
+        ("opening H-O2", 7, "OPENING_AGENT_STATE_PREREG.md", "2026-09-29"),
+        ("last-hour F2 (ES)", 7, "D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md", "2026-09-30")]
+    assert "D716" in registry.released[1]["reason"] and "before any look" in registry.released[1]["reason"]
     assert "D658" in registry.released[0]["reason"] and "principal" in registry.released[0]["reason"]
     assert all(f.registered_utc == SEALED_DATE for f in seeded)
     eighth = registry.get("ledger H2 projected-profit (NG)")
@@ -174,11 +177,11 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     assert (ninth.slot, ninth.registered_utc, ninth.amendment) == (9, "2026-09-29", None)
     assert (REPO / "docs" / "decisions" / ninth.doc).exists()
     assert all(f.alpha == SLOT_ALPHA for f in registry)
-    seventh = registry.get("last-hour F2 (ES)")
+    seventh = registry.get("last-hour F2 (NQ)")
     assert (seventh.slot, seventh.registered_utc, seventh.amendment) == (7, "2026-09-30", None)
     assert (REPO / "docs" / "decisions" / seventh.doc).exists()
     assert registry.alpha_total() == pytest.approx(0.045)
-    docs = {f.doc for f in seeded} | {r["doc"] for r in registry.released}
+    docs = {f.doc for f in seeded} | {r["doc"] for r in registry.released if r["registered_utc"] == SEALED_DATE}
     assert docs == {
         "LETF_CLOSE_FLOW_PREREG.md",
         "SHOCK_CLASSIFIER_PREREG.md",
@@ -219,7 +222,9 @@ def test_render_md_is_deterministic_for_a_pinned_date(tmp_path):
     for f in committed:  # the families registered after the seal, the way they were
         if f.slot > len(SEED_FAMILIES):
             registry.register(f.name, f.doc, registered_utc=f.registered_utc, note=f.note)
-    for r in committed.released:  # then the releases, in order
+    for r in committed.released:  # then the releases, in order, registering a family first if it came after the seal
+        if r["name"] not in {g.name for g in registry}:
+            registry.register(r["name"], r["doc"], registered_utc=r["registered_utc"], note=r["note"])
         registry.release(r["name"], released_utc=r["released_utc"], reason=r["reason"])
     for f in committed:  # then the families that took a released slot (slot 7: D707's F2, 2026-09-30)
         if f.name not in {g.name for g in registry}:

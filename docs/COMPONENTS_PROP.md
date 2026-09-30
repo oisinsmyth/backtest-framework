@@ -673,6 +673,26 @@ contracts at the d556 round trip.
 | Book U, every leg | D710 | +0.04 (+0.06), SE 0.34; gross +0.77 | gross +$17.48 a leg (t 2.89) against $14–37 round trips; net −$1.18. ρ +0.07 with #2, +0.01 with #4 |
 | Book F, paper-sized filter | D710 | +0.48 (+0.76), SE 0.35; gross +0.64 | about 12 trades a year; net +$43.85 a trade at t 1.45 (the gate is 2), median +$9.63; the top 10 trades are 117% of the net; mostly the 30-year pre-auction short. ρ +0.08 with #2, +0.02 with #4: a diversifier on the point estimate, not established |
 
+## ENTRY #4 PARKED and ENTRY #5, PROVISIONAL, 2026-09-30 — NQ F2 replaces ES F2 in the joint vault run ([D716](decisions/D716-PRE-REG-nq-f2-for-the-joint-vault.md))
+
+*The principal: "Remove ES F2 from the vault run and keep NQ F2 and NQ F2 only when ES F2 agrees".*
+
+**Entry #4 (ES F2) is PARKED.**
+- Its promotion path (D707's vault look) is withdrawn before any look.
+- The row stands as scored. After D716's run it has no unread sample left: ES's last-hour data is read there as
+  an input.
+
+**Entry #5 is NQ F2,** from `data/vault_d716_power.json` (D711's book reproduced).
+
+| # | component | window | net Sharpe (SE); Sortino; gross | hit | skew | ρ with prior | entered |
+|---|---|---|---|---|---|---|---|
+| **5** | **NQ F2** (D716 §1): NQ 15:30 → 16:00, 1 MNQ, $4.07, about 48 trades a year | 2018-04 → 2023-12 | **+0.92**; Sortino +1.56; per trade +$20.67 net / +$24.74 gross (HAC t 2.95); max drawdown $990 | 55.5 % | +0.57 (per trade) | +0.02 with #2; **0.87 with #4** (the same signal, and #4 is parked) | **PROVISIONAL, on the principal's ruling.** The joint run's D716 look (slot 7) promotes or removes it. If the agreement book takes over in the fixed sequence, the entry becomes that book |
+
+**Disclosures:**
+- The rule came from ES's in-sample search.
+- NQ was chosen over ES after both were seen, so the in-sample figures are upper estimates.
+- 2022 holds 67 % of the net.
+
 ## SCORED, NOT ENTERED — the absorbed morning move (proposal B), ES, 2026-09-30 ([D715](decisions/D715-STAGE-0-RESULT-absorption-ranks-backwards.md))
 
 Component lines from the runner's own output (`data/stage0_d715_absorbed_morning.json`), one MES at $4.42, 2018-02 →

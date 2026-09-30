@@ -1,0 +1,103 @@
+{
+ "spec": "D716-PRE-REG-nq-f2-for-the-joint-vault.md",
+ "prereg_sha256": "55539f324f0358456bfd556b8aac9ee9651c658c9d5f261f1588fd4b366eaf98",
+ "runner": "scripts/vault_d716_nq_f2.py",
+ "runner_sha256": "ca98b8f9104f68d2edbaad4d8e067a7499eb85c339e4e76a2a1a4932f9091d8c",
+ "imported_unchanged": {
+  "stage1_d711_f2_mechanism.py": "8eddfc37bcfc4ce73b26e1b2826aea2b9639636b522ce7cc50bd85bddba0debc",
+  "stage1_d714_nq_when_es_agrees.py": "fcddff085499dc6ea26c85263669192e9ce42ffebb898f02de02bb81d8a7770c",
+  "diag_d714_drawdown_null.py": "61e7baacd1648a5f3f788622498f06124b00effe2091ea1d7b7e9876a77e20e5",
+  "diag_d711_trims_and_overlap.py": "b03965f9d70d48477744b358459119de8070885f318de28d1c740d3c62c5d2f8",
+  "vault_d707_last_hour_f2.py": "aaf67bbbb149c7e84f9953673ca789d1e30de2c4008dea41942a062b938abf82",
+  "stage1_d703_last_hour_ep_filter.py": "00ed83392e9822d015632076e69674205c54f1bb52e44d78680db74d8f506e11",
+  "diag_d702_last_hour_oracle_mes.py": "f335d2a4d1f9466249b80ea7d9d4b6050a25808a82cae409d5e90d75b70cb148",
+  "stage0_d618_sharpened_ladder.py": "97b4043aa3ed172abf61a0a1c899235d98d8017d7b7edbbe049586ae32b951ac",
+  "stage0_d671_break_construction.py": "ac0b7ea0850d7e5767a35822a0ab58d6f761f00b46e3fbe2fb0f68fd7d60fb37",
+  "stage0_d691_iv_size.py": "1df22cda256ba8c53f2a8e3daad082aec61b1240914251e7c27e83f53e76a2cf",
+  "stage1_d694_coiled_break.py": "1e1ff9fa6881d4d01a059942e61b7f1cfe488de6dcf30cc8a7ab2ca79b9a0c1f",
+  "stage0_d668_break_predictor.py": "3859b6f7e89017c50cbab92f26aa096d7575160c18701bb2bfbd5be7216d66e0"
+ },
+ "params": {
+  "primary": "NQ F2, one MNQ, $4.07; PASS >= 30 trades, net > 0, NW(5) t >= 1.2816",
+  "takeover": "only if step 1 PASSES: A's net t >= 2.576 on >= 30 trades AND D714's INCREMENT rule on direction efficiency (20,000 draws, seed 716)",
+  "promotion": "flagged at one-sided 2.576 and at 2.807"
+ },
+ "known_answers": {
+  "nq_own_window": {
+   "trades": 274,
+   "mean_net": 20.67010517126089,
+   "take_sessions_sha256": "cdd92027b9409de0c9531e4624361c7ca8f39ba1fb0e3db36b6fd35e9f9ac60b"
+  },
+  "B": {
+   "trades": 271,
+   "mean_net": 20.768672251822206
+  },
+  "A": {
+   "trades": 216,
+   "mean_net": 25.57871222722195,
+   "take_sessions_sha256": "f2915d5d38aed2dd9826622e218378b5265225811cc3d64f45579ffb1328876f"
+  },
+  "es_f2": {
+   "trades": 252,
+   "mean_net": 13.208968253968253,
+   "sum_net": 3328.66,
+   "first_window_session": "2018-05-14",
+   "take_sessions_sha256": "5427a6c8006773be758d22a475ea2043ab1b87dddac220abf3f344a65c423cbc"
+  }
+ },
+ "power": {
+  "effect_in_sample_mean_net_B": 20.768672251822206,
+  "size_check": {
+   "draws": 20000,
+   "trades_a_draw": 130,
+   "pass_rate_at_zero": 0.10125,
+   "bar": 0.12,
+   "ok": true
+  },
+  "windows": {
+   "candidates_a_window": 640,
+   "step": 5,
+   "count": 147,
+   "independent_approx": 2.15,
+   "lines": {
+    "100pct": {
+     "primary_pass": 0.6938775510204082,
+     "takeover": 0.061224489795918366,
+     "takeover_given_pass": 0.08823529411764706,
+     "trades_B_median": 129.0,
+     "trades_A_median": 102.0
+    },
+    "50pct": {
+     "primary_pass": 0.6122448979591837,
+     "takeover": 0.10884353741496598,
+     "takeover_given_pass": 0.17777777777777778,
+     "trades_B_median": 129.0,
+     "trades_A_median": 102.0
+    },
+    "25pct": {
+     "primary_pass": 0.5170068027210885,
+     "takeover": 0.08843537414965986,
+     "takeover_given_pass": 0.17105263157894737,
+     "trades_B_median": 129.0,
+     "trades_A_median": 102.0
+    },
+    "0pct": {
+     "primary_pass": 0.1292517006802721,
+     "takeover": 0.0,
+     "takeover_given_pass": 0.0,
+     "trades_B_median": 129.0,
+     "trades_A_median": 102.0
+    }
+   },
+   "note": "every NQ trade is shifted by the same dollars, so A's increment over B is kept as observed"
+  }
+ },
+ "unseen": [
+  "2024-01-01",
+  "2026-09-18"
+ ],
+ "programme_slot": 7,
+ "frozen_date": "2026-09-30",
+ "withdrawn": "ES F2 (D707) withdrawn before any look; slot 7 released from it; D707's --vault must never be run",
+ "instruction": "the principal, 2026-09-30: \"Remove ES F2 from the vault run and keep NQ F2 and NQ F2 only when ES F2 agrees\"; \"Ok I agree with your recommendations, write it up please.\""
+}
