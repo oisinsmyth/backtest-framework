@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 498 of these records carry neither field —
+**No Status or Category column, deliberately.** 499 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -786,6 +786,7 @@ would look like data. The tokens are what is shown.
 | D711 | A1 UNRESOLVED: the midday clocks carry about a third of F2's per-trade information, most of it at 13:30. A2 MIXED: NQ t… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) · [RESULT](D711-RESULT-placebo-unresolved-nq-transfers.md) |
 | D712 | REGISTRATION — the hourly continuation on ES-book short-gamma days, for the joint vault run: its side choice (the timin… | [PRE-REG](D712-PRE-REG-short-gamma-hourly-timing-for-the-joint-vault.md) |
 | D713 | D713 DIAG RESULT — E's MES oracle: 48.0% of its trades win after the $4.42 round trip against a 49.5% breakeven; the ed… | [record](D713-DIAG-DESIGN-the-mes-oracle-profile-of-e.md) · [RESULT](D713-DIAG-RESULT-e-at-mes-no-single-cut-clears-the-fee.md) |
+| D714 | REGISTRATION — an in-sample test: trade NQ F2 only when ES F2 also takes, in the same direction. Does requiring ES's ag… | [PRE-REG](D714-PRE-REG-nq-f2-only-when-es-f2-agrees.md) |
 
 <!-- REGISTER:END -->
 
