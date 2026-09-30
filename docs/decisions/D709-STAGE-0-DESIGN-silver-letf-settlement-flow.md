@@ -465,3 +465,63 @@ checkout's `data/`).
 - No index-reweight window statistic: the carved days are reported beside this trade, and C0, R1–R3 and the 2027
   freeze are not read.
 - **Deviations** are listed in the output and never replace a verdict.
+
+## Amendment A1 (2026-09-30, before the run, after POWER only)
+
+*Ruled by the coordinator after the runner's POWER step (`data/d709_power.json`) and before `--run`. The runner
+(`scripts/stage0_d709_silver_settlement_flow.py`) was not run. POWER reads the fixture blinded from 2011-01-01: only
+09:00–11:29 and the decision windows keep prices. It asserts that no fill or exit price from then on is readable, and
+its noise is the 2010-07 → 2010-12 window. **No outcome of this study was read. No post-2010 window move, P&L or
+return of SI or GC was computed.***
+
+**The old gate (§6):** G4 passes when GC's post-era mean gross has t < +2.00.
+
+**The new gate:** G4 FIRES (FAIL, not the funds) only if **gold's post-era mean, in units of its own trailing daily
+σ, is at least silver's post-era mean in the same units.**
+- A trade's σ-unit value is g / (σ_d × P_prev × contract multiplier), using §5's point-in-time σ_d and prior
+  settlement.
+- Otherwise G4 passes.
+- GC's t, its mean in σ units, SI's mean in σ units, both σ-unit t's, and what the superseded rule would have said are
+  all reported beside the gate.
+
+**Why.**
+- §5 of this record predicts that gold carries a real but smaller effect. Under square-root impact it is about 1/3 of
+  silver's move in σ units, and about 1/4 of silver's t. It is not zero.
+- A test of "gold's t < 2" therefore fires on a true mechanism whenever the effect is large enough, because gold's t
+  grows with the effect even when gold stays a quarter of silver.
+- POWER measured this. The share of datasets in which G4 held, by β (the share of the ledger's |I| injected into both
+  roots):
+
+| β | 0 | 0.155 | 0.31 | 0.62 | 1.0 |
+|---|---|---|---|---|---|
+| **old G4 (GC t < 2) held** | 0.977 | 0.946 | 0.918 | **0.800** | **0.547** |
+| full reading (G1–G5), old G4 | 0.013 | 0.088 | 0.338 | 0.704 | 0.522 |
+| **new G4 (A1) held** | 0.449 | 0.670 | 0.864 | 0.987 | 1.000 |
+| full reading (G1–G5), new G4 | 0.013 | 0.091 | 0.364 | 0.879 | 0.950 |
+| PASS (adds net > 0), new G4 | 0.000 | 0.011 | 0.095 | 0.701 | 0.947 |
+
+- The old gate turned a true mechanism into "FAIL (not the funds)" 20% of the time at β = 0.62 and 45% at β = 1.
+- The new gate is the comparison the mechanism actually makes: silver's flow share is about 8× gold's, so silver must
+  move more than gold in σ units.
+
+**What the new gate costs.**
+- At β = 0 it is a coin flip (0.449). That is harmless, because G1 must also pass.
+- At NG's pass-through (β = 0.31), it holds 0.864 of the time against the old 0.918. Silver's σ-unit mean is noisy at
+  that effect size, and gold's sometimes matches it.
+
+**Checked in the self-test:**
+- On exact series, gold at a quarter of silver does not fire and gold equal to silver fires.
+- A rule that never fires, and the superseded t-rule, each raise on that check. The superseded rule fires at a quarter
+  of silver, because scaling a series leaves its t unchanged.
+- On synthetic bars:
+  - gold at a quarter of silver's effect reads PASS, although gold's t was +2.23 and the old rule would have fired;
+  - gold at twice silver's effect reads FAIL (not the funds).
+
+**Nothing else changes.** G1–G3, G5, N, the nulls, the readings of §10 and the thresholds stand.
+
+**Also ruled, and not an amendment.** The component line's ρ with #2 (the admitted MACD arm) uses
+`run_d667_hike_pause_overlay.load_arm()`, as D685, D699, D707 and D708 did.
+- That loader reads the arm's own NQ fixture, including rows from 2024 on.
+- It scores only 2016-01-04 → 2023-12-29. That slice is spent (D503).
+- This is disclosed in the runner's deviations and in its output. No SI, GC or fund row dated 2024-01-01 or later is
+  read.

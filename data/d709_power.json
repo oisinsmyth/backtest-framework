@@ -1,0 +1,330 @@
+{
+ "spec": {
+  "record": "docs/decisions/D709-STAGE-0-DESIGN-silver-letf-settlement-flow.md",
+  "n_datasets_per_beta": 2000,
+  "seed": 709,
+  "injection": "move = s x beta x x_SR + z x sigma_d x P x 1000 (z iid from the noise pool); the effect is in the direction of s",
+  "controls": "G2 midday and G3 pre-era are noise-only; G4 GC carries beta x its own x_SR; G4 is A1 (GC mean in sigma units >= SI's fires); the superseded t < 2 rate is reported beside"
+ },
+ "noise": {
+  "SI_settle": {
+   "days": 106,
+   "sd_sigma_units": 0.18440984258756546,
+   "mean_sigma_units": -0.013254617005057388,
+   "excess_kurtosis": 4.246618554982783
+  },
+  "SI_mid": {
+   "days": 107,
+   "sd_sigma_units": 0.20504781742242423,
+   "mean_sigma_units": 0.010430041296177901,
+   "excess_kurtosis": 1.5979784385563103
+  },
+  "GC_settle": {
+   "days": 106,
+   "sd_sigma_units": 0.1562246246651777,
+   "mean_sigma_units": 0.007957855480726398,
+   "excess_kurtosis": 3.996752018753224
+  },
+  "window": [
+   "2010-07-01",
+   "2010-12-31"
+  ]
+ },
+ "sample": {
+  "post": {
+   "n": 979,
+   "eligible": 979,
+   "dropped_for_predictors": 0
+  },
+  "mid": {
+   "n": 984,
+   "eligible": 984,
+   "dropped_for_predictors": 0
+  },
+  "pre": {
+   "n": 1512,
+   "eligible": 1512,
+   "dropped_for_predictors": 0
+  },
+  "gc": {
+   "n": 1017,
+   "eligible": 1017,
+   "dropped_for_predictors": 0
+  },
+  "post_waterfall": {
+   "2010": {
+    "sessions": 149,
+    "early_close": 3,
+    "missing_bar": 0,
+    "no_prior_settlement": 0,
+    "roll_session": 2,
+    "fnd": 10,
+    "sign_zero": 1,
+    "carve": 18,
+    "eligible": 115
+   },
+   "2011": {
+    "sessions": 258,
+    "early_close": 6,
+    "missing_bar": 0,
+    "no_prior_settlement": 0,
+    "roll_session": 5,
+    "fnd": 18,
+    "sign_zero": 0,
+    "carve": 36,
+    "eligible": 193
+   },
+   "2012": {
+    "sessions": 257,
+    "early_close": 5,
+    "missing_bar": 0,
+    "no_prior_settlement": 0,
+    "roll_session": 5,
+    "fnd": 20,
+    "sign_zero": 0,
+    "carve": 35,
+    "eligible": 192
+   },
+   "2013": {
+    "sessions": 252,
+    "early_close": 0,
+    "missing_bar": 2,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 20,
+    "sign_zero": 0,
+    "carve": 35,
+    "eligible": 191
+   },
+   "2014": {
+    "sessions": 249,
+    "early_close": 4,
+    "missing_bar": 6,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 15,
+    "sign_zero": 0,
+    "carve": 36,
+    "eligible": 184
+   },
+   "2015": {
+    "sessions": 231,
+    "early_close": 6,
+    "missing_bar": 1,
+    "no_prior_settlement": 0,
+    "roll_session": 3,
+    "fnd": 19,
+    "sign_zero": 0,
+    "carve": 29,
+    "eligible": 173
+   },
+   "2016": {
+    "sessions": 258,
+    "early_close": 6,
+    "missing_bar": 1,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 17,
+    "sign_zero": 0,
+    "carve": 36,
+    "eligible": 194
+   },
+   "2017": {
+    "sessions": 257,
+    "early_close": 6,
+    "missing_bar": 4,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 18,
+    "sign_zero": 0,
+    "carve": 34,
+    "eligible": 191
+   },
+   "2018": {
+    "sessions": 258,
+    "early_close": 6,
+    "missing_bar": 2,
+    "no_prior_settlement": 0,
+    "roll_session": 5,
+    "fnd": 19,
+    "sign_zero": 0,
+    "carve": 35,
+    "eligible": 191
+   },
+   "2019": {
+    "sessions": 258,
+    "early_close": 6,
+    "missing_bar": 1,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 17,
+    "sign_zero": 1,
+    "carve": 36,
+    "eligible": 193
+   },
+   "2020": {
+    "sessions": 259,
+    "early_close": 8,
+    "missing_bar": 2,
+    "no_prior_settlement": 0,
+    "roll_session": 3,
+    "fnd": 17,
+    "sign_zero": 1,
+    "carve": 35,
+    "eligible": 193
+   },
+   "2021": {
+    "sessions": 258,
+    "early_close": 6,
+    "missing_bar": 2,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 15,
+    "sign_zero": 0,
+    "carve": 36,
+    "eligible": 195
+   },
+   "2022": {
+    "sessions": 258,
+    "early_close": 0,
+    "missing_bar": 3,
+    "no_prior_settlement": 0,
+    "roll_session": 4,
+    "fnd": 14,
+    "sign_zero": 0,
+    "carve": 36,
+    "eligible": 201
+   },
+   "2023": {
+    "sessions": 257,
+    "early_close": 0,
+    "missing_bar": 1,
+    "no_prior_settlement": 0,
+    "roll_session": 5,
+    "fnd": 15,
+    "sign_zero": 0,
+    "carve": 36,
+    "eligible": 200
+   }
+  }
+ },
+ "betas": [
+  0.0,
+  0.155,
+  0.31,
+  0.62,
+  1.0
+ ],
+ "expected_gross_per_SIL": {
+  "0.0": 0.0,
+  "0.155": 2.4481925310649,
+  "0.31": 4.8963850621298,
+  "0.62": 9.7927701242596,
+  "1.0": 15.794790522999355
+ },
+ "g1_rate": {
+  "0.0": 0.021,
+  "0.155": 0.126,
+  "0.31": 0.446,
+  "0.62": 0.954,
+  "1.0": 1.0
+ },
+ "full_reading_rate": {
+  "0.0": 0.013,
+  "0.155": 0.0915,
+  "0.31": 0.364,
+  "0.62": 0.879,
+  "1.0": 0.95
+ },
+ "pass_rate": {
+  "0.0": 0.0,
+  "0.155": 0.0115,
+  "0.31": 0.095,
+  "0.62": 0.701,
+  "1.0": 0.947
+ },
+ "controls_and_g5_rates": {
+  "0.0": {
+   "g2": 0.4825,
+   "g3": 0.52,
+   "g4": 0.4485,
+   "g4_superseded_t_lt_2": 0.977,
+   "g5": 0.4845
+  },
+  "0.155": {
+   "g2": 0.71,
+   "g3": 0.741,
+   "g4": 0.6695,
+   "g4_superseded_t_lt_2": 0.9455,
+   "g5": 0.687
+  },
+  "0.31": {
+   "g2": 0.8955,
+   "g3": 0.9155,
+   "g4": 0.8635,
+   "g4_superseded_t_lt_2": 0.918,
+   "g5": 0.834
+  },
+  "0.62": {
+   "g2": 0.971,
+   "g3": 0.974,
+   "g4": 0.987,
+   "g4_superseded_t_lt_2": 0.7995,
+   "g5": 0.9745
+  },
+  "1.0": {
+   "g2": 0.9705,
+   "g3": 0.9795,
+   "g4": 0.9995,
+   "g4_superseded_t_lt_2": 0.547,
+   "g5": 1.0
+  }
+ },
+ "mean_t": {
+  "0.0": -0.011973262542400113,
+  "0.155": 0.8717914317353869,
+  "0.31": 1.8800126014006877,
+  "0.62": 3.731061017158581,
+  "1.0": 5.96802204569572
+ },
+ "n1_size_check": {
+  "beta": 0.0,
+  "share_beating_own_rotation_p95": 0.046,
+  "share_t_ge_2": 0.021,
+  "target": [
+   0.03,
+   0.07
+  ],
+  "ok": true
+ },
+ "mde": {
+  "usd_gross_per_SIL_80pct_at_t2": 7.33738264889313,
+  "sd_per_trade_beta0_median": 81.9925669147043,
+  "n": 979,
+  "beta_at_80pct_g1_interpolated": 0.5260236220472441,
+  "mean_xsr_per_SIL": 15.794790522999355
+ },
+ "paper_kill": {
+  "rule": "G1 rate at beta 0.31 below 0.25 sends the record back to the principal (design s.10)",
+  "g1_rate_at_0.31": 0.446,
+  "triggered": false
+ },
+ "audits": {
+  "blind": "no fill or exit price on or after 2011-01-01 readable",
+  "lag": "passed on every clock"
+ },
+ "reads": {
+  "fut_day1m.parquet": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\fixtures\\fut_day1m.parquet",
+  "calendar": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\fixtures\\cme_session_calendar.csv.gz",
+  "strip": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\fixtures\\fut_settle_strip.csv.gz",
+  "AGQ": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\raw\\recorder\\proshares_nav\\AGQ__20260926T234231Z.csv",
+  "ZSL": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\raw\\recorder\\proshares_nav\\ZSL__20260926T234233Z.csv",
+  "UGL": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\raw\\recorder\\proshares_nav\\UGL__20260926T234227Z.csv",
+  "GLL": "C:\\Users\\O\\Desktop\\Projects\\Backtest Framework\\data\\raw\\recorder\\proshares_nav\\GLL__20260926T234229Z.csv"
+ },
+ "timings": {
+  "load_s": 4.573415517807007,
+  "simulate_s": 17.93768620491028,
+  "total_s": 24.646056652069092
+ }
+}
