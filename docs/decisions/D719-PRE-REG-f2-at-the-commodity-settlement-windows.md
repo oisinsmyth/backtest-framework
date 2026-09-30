@@ -187,3 +187,34 @@ spends a slot.**
    NOT FEE.**
 5. **2022 holds more than 40 % of the net on every energy root that transfers.**
 6. **ρ with NQ F2 is below 0.2 on every root** (a different clock and a different flow).
+
+## Amendment D719-A1 (2026-09-30), before the runner exists: KE deferred, and the bands stated exactly
+
+*Found while inventorying the data for the runner; nothing has been read or run.*
+
+**1. KE is deferred, and reads UNRESOLVED.**
+- Its one-minute bars do not exist. `fut_day1m.parquet` was decoded from the raw `ohlcv-1m` archive (26 files, 12
+  GB), and its front contract is taken from `fut_breadth_hourly`, which has no KE. The decode cache is gone.
+- **Building KE needs a new decode and a new front-month rule.** That is a data build with its own gates, not part
+  of this runner.
+- **The family is therefore the twelve roots with bars,** and gate (a)'s Holm runs across twelve. KE is scored later,
+  under this same rule, only if its bars are built and proved as §5 states. It is not a second look at anything here.
+
+**2. The bands, stated exactly.** The fixture's bar index counts minutes from 09:00 ET (bar 0 = 09:00; the band is
+09:00–15:59).
+
+| roots | band open (for b) | session rule: at least 90 % of the minutes from band open to W carry a bar |
+|---|---|---|
+| CL, NG, HO, RB, HG, GC, SI | **09:00** (bar 0) | 09:00 → W |
+| ZC, ZS, ZW, ZL, ZM | **09:30** (bar 30), CBOT's 08:30 CT open | 09:30 → W |
+
+**3. The multipliers and ticks.**
+- They are taken from `data/futures_costs.json` where it carries them.
+- **GC and SI** come from `data/futures_contract_specs.json` (GC $100 a point, tick $10; SI $5,000 a point, tick
+  $25).
+
+**4. The exit check matches contracts by the strip's own label.** Where the fixture's contract label and the strip's
+do not match, that session is left out of the check and the count is reported.
+
+**Nothing else changes:** the rule, the clock, the size rule, the gates, the readings and the predictions. The family
+readings now count out of twelve and out of eight independent roots.
