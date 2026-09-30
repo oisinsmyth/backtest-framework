@@ -5236,3 +5236,25 @@ RELATIVE to their own history, never on a dollar bar.
   - PASS probability about 0.66 at the full in-sample edge and 0.54 at half, on about 120 trades.
 - **What it does not use:** dealer gamma (F3, the short-gamma version, failed the edge gate), implied volatility, or
   any dollar threshold.
+- **Tested for its mechanism without spending the vault**
+  ([D711](decisions/D711-RESULT-placebo-unresolved-nq-transfers.md)).
+  - **Other times of day (A1): UNRESOLVED.** The same rule, held 30 minutes:
+
+    | clock | per-trade information (z) |
+    |---|---:|
+    | 10:30 | +0.10 |
+    | 11:30 | +0.02 |
+    | 12:30 | +0.06 |
+    | 13:30 | +0.27 |
+    | 14:30 | +0.05 |
+    | 15:30 (F2) | +0.30 |
+
+    - The midday clocks pooled carry about a third of F2's information.
+    - Two islands, 13:30 and 15:30, with nothing at 14:30 between them. So the flow-into-the-close story is neither
+      confirmed nor refuted.
+  - **Other index roots (A2): MIXED.**
+    - NQ transfers (+$20.67 net a MNQ trade, daily Sharpe 0.92), but at ρ 0.87 with ES F2 it is the same trade.
+    - YM misses the rotation (rank 0.936); RTY has no edge.
+  - **A method finding (D711-A1):** rotating a filter's inputs against fixed outcomes is anti-conservative on a
+    mean-P&L statistic when the filter picks bigger-than-average days. Σg / Σ|g| holds its size. ES F2 still ranks
+    0.991 on it.

@@ -625,3 +625,23 @@ exactly: 252 trades, +$13.208968 net).
   and only the last is priced by a null. The in-sample figure is an upper estimate.
 - **The unseen span includes this ledger's own confirmation slice** (2024-01 onward). It is unread for this
   trade, and D707 reads it once, in the joint run, together with the vault.
+
+**Entry #4, a note of 2026-09-30 ([D711](decisions/D711-RESULT-placebo-unresolved-nq-transfers.md)):**
+- **D705's null was anti-conservative.** It compared mean net under an input rotation, and F2 picks bigger days than
+  a rotated selection does (D711-A1: 17 % false passes on synthetic worlds with no direction).
+- **Under the correctly sized statistic** (direction efficiency Σg / Σ|g|), F2 still ranks **0.991** (p95 0.235
+  against its 0.279). The row stands.
+- **D711's A1 read UNRESOLVED:** 13:30 → 14:00 carries almost F2's information per trade, and 11:30, 12:30 and 14:30
+  carry none. So the flow-into-the-close mechanism is neither confirmed nor refuted.
+
+## SCORED, NOT ENTERED — F2 unchanged on NQ, YM and RTY, 2026-09-30 ([D711](decisions/D711-RESULT-placebo-unresolved-nq-transfers.md))
+
+Component lines come from the runner's own output (`data/stage1_d711_f2_mechanism.json`).
+- **The construction:** D707 §1 at 15:30, one micro, each root's single cost line.
+- **The score:** daily net Sharpe over the candidate sessions of each root's window (√252).
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| F2 on NQ, 1 MNQ ($4.07), 2018-04 → 2023-12 | D711 | +0.92 (+1.56); +$24.74 gross / +$20.67 net a trade, t 3.53, efficiency rank 0.984 | **ρ 0.87 with entry #4**: the same trade on a bigger-moving contract, so it fails C-b. 2022 is 67 % of the net. At most a sizing choice beside #4, on the principal's word |
+| F2 on YM, 1 MYM ($3.80) | D711 | +0.54 (+0.85); +$9.94 / +$6.15 | fails its efficiency rotation (rank 0.936); ρ 0.86 with #4 |
+| F2 on RTY, 1 M2K ($3.76), 2019-11 → 2023-12 | D711 | +0.07 (+0.11); +$4.39 / +$0.64 | no edge (t 1.53, Holm 0.063; rank 0.839) |

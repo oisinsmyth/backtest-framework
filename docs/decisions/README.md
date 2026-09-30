@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 492 of these records carry neither field —
+**No Status or Category column, deliberately.** 493 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -783,7 +783,7 @@ would look like data. The tokens are what is shown.
 | D708 | D708 STAGE 0 RESULT — SIGNAL: on ES-book short-gamma days the hourly continuation's side choice carries the edge (+$3.0… | [record](D708-STAGE-0-DESIGN-does-the-continuation-choose-its-side.md) · [RESULT](D708-STAGE-0-RESULT-the-side-choice-is-the-signal-not-the-drift.md) |
 | D709 | D709 STAGE 0 DESIGN — silver's leveraged-ETF rebalance into the COMEX settlement: from 12:55 ET, trade the sign of the… | [record](D709-STAGE-0-DESIGN-silver-letf-settlement-flow.md) |
 | D710 | D710 STAGE 0 DESIGN — the Treasury auction-day intraday V on Treasury futures: does the dealers' pre-auction concession… | [record](D710-STAGE-0-DESIGN-treasury-auction-intraday-v.md) |
-| D711 | REGISTRATION — two mechanism tests of F2 that leave the vault unspent: (A1) does its rule work at midday clocks on ES,… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) |
+| D711 | A1 UNRESOLVED: the midday clocks carry about a third of F2's per-trade information, most of it at 13:30. A2 MIXED: NQ t… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) · [RESULT](D711-RESULT-placebo-unresolved-nq-transfers.md) |
 
 <!-- REGISTER:END -->
 

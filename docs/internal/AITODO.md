@@ -103,6 +103,16 @@
         - F2 is registered as D707 (`b6b42cd4`), frozen, and holds programme slot 7;
         - one look at 2024-01-01 → 2026-09-18 happens in the joint run;
         - COMPONENTS_PROP entry #4, PROVISIONAL. See the programme-rule section below.
+      - **D711 (2026-09-30; mechanism tests of F2, in-sample, the vault unspent):**
+        - **A1, the placebo clocks on ES, is UNRESOLVED.** 13:30 → 14:00 z +0.27 is nearly F2's +0.30; 11:30, 12:30 and
+          14:30 are nothing.
+        - **A2 is MIXED.** NQ transfers (+$20.67 a MNQ trade, ρ 0.87 with ES F2: the same trade). YM misses its
+          rotation (0.936). RTY has no edge.
+        - **The corrected (efficiency) null ranks ES F2 at 0.991.**
+        - **Open, the principal's call:**
+          - NQ F2 as a sizing choice beside ES F2 (it would need its own vault pre-registration, and every programme
+            slot will be allocated once the vault pre-registration of D708's rule takes 10);
+          - 13:30 → 14:00 as its own study (found among five placebo clocks; check the FOMC 14:00 releases first).
     - **2. CL settlement flow (D648): OPEN**; the form choice (x_GM vs x_SR) is with the principal.
       - **The trade** runs with the funds into the window: +$28.46 gross, t 2.230 against a bar of 2.241, net −$3.00
         at $31.46. The fade after the window (T3) is +$22.34, t 3.18, not cost-tested.
