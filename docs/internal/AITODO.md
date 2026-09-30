@@ -22,7 +22,15 @@
   - **Concentration:** 2022 is 75% of the net.
   - **V2 (ROC) and V3 (OR)** are inside their nulls.
   - **Waiting on the principal** to choose: stop; the expected-profit filter on V1 (designed together, oracle first);
-    a vault pre-reg (count the vault's short-gamma days first); or the 2022 diagnosis. D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
+    a vault pre-reg (count the vault's short-gamma days first); or the 2022 diagnosis.
+- **D700 RESULT (2026-09-30): the channel trend detector (D480's hand cell on rescaled ES bars) reads NEITHER on every
+  clock.**
+  - **No clock fades,** against my prediction.
+  - **5m and 15m on short-gamma days:** +$4.41 and +$6.76 a MES event at +60 min, above the timing null's p95
+    (97.1st and 96.7th), with clustered t 1.96 and 1.86.
+  - **1m:** nothing.
+  - **The strict "held 10 closes" reading** removes what there is.
+  - **Waiting on the principal:** stop; overlap with V1 first; or the channel as V1's exit. D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
   - D691 is the implied-vs-realised volatility premise check (RESULT: SIZE INFORMATION CONFIRMED on ES and NQ).
