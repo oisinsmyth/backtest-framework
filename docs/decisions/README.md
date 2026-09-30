@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 511 of these records carry neither field —
+**No Status or Category column, deliberately.** 513 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -793,6 +793,7 @@ would look like data. The tokens are what is shown.
 | D718 | D718 PREMISE RESULT — ABSENT: ES's last 15 minutes lean the way volatility-target funds would trade (+1.35 bp per sd of… | [record](D718-PREMISE-DESIGN-vol-control-flow-at-the-close.md) · [RESULT](D718-PREMISE-RESULT-vol-control-flow-is-absent-at-the-close.md) |
 | D719 | NONE TRANSFERS: F2 at the commodity settlement windows carries nothing on metals, grains or natural gas; heating oil cl… | [PRE-REG](D719-PRE-REG-f2-at-the-commodity-settlement-windows.md) · [RESULT](D719-RESULT-none-transfers-ho-signal-at-unviable-size.md) |
 | D720 | D720 STAGE 0 RESULT — sizing by the day-size forecast makes both NQ lines worse: the forecast knows the day's range (Sp… | [record](D720-STAGE-0-DESIGN-size-the-direction-we-have.md) · [RESULT](D720-STAGE-0-RESULT-forecast-big-days-are-where-direction-fails.md) |
+| D721 | D721 DIAG RESULT — the quiet-day F2 pattern is NQ's alone: ES, YM and RTY lean the same way but none clears its rotatio… | [record](D721-DIAG-DESIGN-the-quiet-day-f2-pattern-on-other-roots.md) · [RESULT](D721-DIAG-RESULT-the-quiet-day-pattern-is-nq-only.md) |
 
 <!-- REGISTER:END -->
 

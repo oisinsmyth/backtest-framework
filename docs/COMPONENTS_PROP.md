@@ -752,3 +752,16 @@ Component lines come from the runner's own output (`data/stage0_d720_size.json`)
 | the MACD arm, R1 | D720 | +0.70 (+1.02); +0.94 | −0.13 against the unsized arm (rotation rank 0.24); P3a at $50k 1.93 a year; the forecast's big days carry the arm's weakest efficiency (0.077 against 0.150) |
 | NQ F2, R1 | D720 | +0.48 (+0.70); +0.68 | −0.31 against unsized F2 (rotation rank 0.016); F2 nets −$0.61 a trade on the forecast's big days |
 | the unsized arm + NQ F2, one MNQ each (reported) | D720 | +1.01 (+1.54) | not a new component: the sum of two existing lines, in-sample, with ρ −0.01 between them |
+
+## SCORED, NOT ENTERED — F2 on forecast-quiet days, four index roots, 2026-09-30 ([D721](decisions/D721-DIAG-RESULT-the-quiet-day-pattern-is-nq-only.md))
+
+Component lines come from the runner's own output (`data/diag_d721_quiet_day_f2.json`), 2018-01 → 2023-12.
+- **The construction:** F2 taken only when D671's size-forecast tier τ is below 1/3.
+- **Status:** CLOSED on the principal's word. The pattern is significant on NQ only.
+
+| construction | record | net Sharpe (Sortino); net $ a year | why not |
+|---|---|---|---|
+| NQ, 1 MNQ | D721 | +1.09 (+1.87); $380 | the root the pattern was found on (G1 rank 0.011); 59 trades |
+| ES, 1 MES | D721 | +0.98 (+2.16); $168 | G1 rank 0.11, NOT SIMILAR; 48 trades; 3 of 6 years positive |
+| YM, 1 MYM | D721 | +0.94 (+2.36); $142 | G1 rank 0.27, NOT SIMILAR; 59 trades |
+| RTY, 1 M2K | D721 | +0.15 (+0.20); $22 | G1 rank 0.13; F2 itself barely pays on RTY |
