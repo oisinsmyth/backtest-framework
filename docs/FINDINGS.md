@@ -5293,3 +5293,6 @@ grains or natural gas. On the refined products the prior hour does continue into
   2.98), matching D630 and D709, while the prior hour does not; on HO and RB it is the reverse.
 - **A method note:** on the energy roots the window's last one-minute close sits a median 9 ticks (HO, RB) or 2–3
   (CL, NG) from the official settlement. A settlement proxy on one-minute bars is not the settlement.
+- **CLOSED by the principal, 2026-09-30** (with RB). Micro heating oil (MHO) exists, but it printed zero volume on 32
+  of 32 sessions, so no sub-size HO contract can be traded
+  ([D719 closure](decisions/D719-RESULT-none-transfers-ho-signal-at-unviable-size.md#closed-by-the-principal-2026-09-30-heating-oil)).

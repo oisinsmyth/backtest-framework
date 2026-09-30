@@ -1,0 +1,30 @@
+{
+ "what": "D719 closure evidence: is there a tradable sub-size heating-oil (and RBOB) contract? CME's own services, read in the built-in browser on 2026-09-30 (plain HTTP to cmegroup.com returns 403; the page's own XHR does not)",
+ "sources": {
+  "product_ids": "https://www.cmegroup.com/CmeWS/mvc/ProductSlate/V2/List?searchString=micro%20ny%20harbor&cleared=Futures (and searchString=micro%20rbob)",
+  "specs": "https://www.cmegroup.com/CmeWS/mvc/ContractSpecs/List/productId/10183",
+  "volume": "https://www.cmegroup.com/CmeWS/mvc/Volume/LastTotals/{product_id}?days=30"
+ },
+ "products": {
+  "HO": {"product_id": 426, "name": "NY Harbor ULSD Futures", "unit_gal": 42000},
+  "MHO": {"product_id": 10183, "name": "Micro NY Harbor ULSD Futures", "unit_gal": 4200, "min_tick": "0.0001 per gallon = $0.42",
+          "settlement_method": "Financially Settled", "floating_price": "NY Harbor ULSD Futures",
+          "listed": "Monthly contracts listed for 12 consecutive months",
+          "termination": "Trading terminates on the 2nd last business day of the month prior to the contract month",
+          "globex_hours": "Sunday 5:00 p.m. - Friday 4:00 p.m. CT with a daily maintenance period from 4:00 p.m. - 5:00 p.m. CT",
+          "rulebook": "NYMEX 434", "codes": {"CmeGlobex": "MHO", "ClearPort": "MHO", "ClearingCode": "MHO"}},
+  "QH": {"product_id": 451, "name": "E-mini NY Harbor ULSD Futures", "unit_gal": 4200},
+  "MRB": {"product_id": 10184, "name": "Micro RBOB Gasoline Futures", "unit_gal": 4200}
+ },
+ "volume_last_30_days": {
+  "HO": {"sessions": 32, "span": ["2026-08-14", "2026-09-29"], "futures_volume_mean": 187294, "futures_volume_median": 175784,
+         "futures_volume_min": 109836, "futures_volume_max": 525183, "futures_oi_min": 238533, "futures_oi_max": 279045,
+         "futures_oi_last": 238533},
+  "MHO": {"sessions": 32, "span": ["2026-08-14", "2026-09-29"], "futures_volume_every_session": 0, "futures_oi_every_session": 2},
+  "QH": {"sessions": 31, "span": ["2026-08-14", "2026-09-28"], "futures_volume_total": 13, "futures_volume_max_day": 2,
+         "futures_oi_last": 0},
+  "MRB": {"sessions": 0, "note": "the service returned no volume rows for product 10184"}
+ },
+ "reading": "A micro heating-oil contract exists (D719's 'no micro' was imprecise: the repo's futures_contract_specs.json fetched nine micros and never looked for one), but it does not trade: zero volume on every one of 32 sessions and 2 contracts open. No sub-size HO contract is tradable, so D719's NOT VIABLE size reading stands.",
+ "not_verified_here": "prop-firm permitted-product lists (a Sonnet reader reported that Topstep's and MyFundedFutures' lists name HO and RB but not MHO or MRB); the MHO launch date 2022-06-27 (NYMEX self-certification 22-139, read by the Sonnet reader)"
+}
