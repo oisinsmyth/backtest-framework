@@ -59,9 +59,17 @@
       - **The trade:** the sign of 14:30 → 15:30, held 15:30 → 16:00.
       - **Numbers:** gross +$3.40 per MES trade (rank 0.999 against an enumerated rotation), fee 1.25× gross, hit
         0.493 with median 0. 2016–17 was negative.
-      - **Prior evidence:** D688's gamma filter at 2× cost failed on the close (t 0.30). An IV filter is untried.
-      - **Next:** the oracle profile at MES (D702), then filters designed with the principal. 2024-01 → 2025-02 is
-        unread and reserved.
+      - **Prior evidence:** D688's gamma filter at 2× cost failed on the close (t 0.30).
+      - **D702 (oracle, MES): the edge IS big-move-shaped.**
+        - The size-only oracle's top 20 % nets +$12.78.
+        - The top 20 % by the prior hour's |F5| (known at 15:30) nets +$8.87, Sharpe 0.74 (hindsight threshold).
+      - **D703 (the principal's filter: |F5|/σ, gamma and ln IV, the expected-profit template): DEVELOPMENT FAIL,
+        and the line closes again.**
+        - +$11.02 net on 211 trades at t 1.51, but 167 of them in 2022.
+        - The dollar bar made it an IV-regime gate; |F5| alone cleared it 4 times.
+        - The slice is unspent.
+      - **Open, the principal's call:** a second look with a relative-size form (the walk-forward |F5|/σ threshold,
+        or a volatility-normalised template). It would be a declared second look at the same window.
     - **2. CL settlement flow (D648): OPEN**; the form choice (x_GM vs x_SR) is with the principal.
       - **The trade** runs with the funds into the window: +$28.46 gross, t 2.230 against a bar of 2.241, net −$3.00
         at $31.46. The fade after the window (T3) is +$22.34, t 3.18, not cost-tested.
