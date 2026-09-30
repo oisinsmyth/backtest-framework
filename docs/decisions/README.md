@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 480 of these records carry neither field —
+**No Status or Category column, deliberately.** 481 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -776,6 +776,7 @@ would look like data. The tokens are what is shown.
 | D701 | D701 DIAG RESULT — the 5-minute channel is V1 again (93% of its up onsets fall inside V1's positions, and its continuat… | [record](D701-DIAG-DESIGN-do-the-channel-and-v1-carry-the-same-information.md) · [RESULT](D701-DIAG-RESULT-the-5-minute-channel-is-v1-the-15-minute-is-not.md) |
 | D702 | the oracle profile of the reopened last-hour continuation at MES: is the edge big-move-shaped, and where do the winners… | [record](D702-DESIGN-the-last-hour-oracle-profile-at-mes.md) · [record](D702-DIAG-the-last-hour-edge-is-big-move-shaped.md) |
 | D703 | REGISTRATION — an expected-profit filter on the reopened ES last-hour continuation at MES: trade only when the projecte… | [PRE-REG](D703-PRE-REG-the-last-hour-expected-profit-filter.md) |
+| D704 | D704 DIAG DESIGN — a volume gate on V1: did the price rise without a matching aggressive-buy imbalance? Ranked against… | [record](D704-DIAG-DESIGN-a-no-aggressive-push-gate-on-v1.md) |
 
 <!-- REGISTER:END -->
 
