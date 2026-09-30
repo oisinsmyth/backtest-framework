@@ -218,3 +218,36 @@ do not match, that session is left out of the check and the count is reported.
 
 **Nothing else changes:** the rule, the clock, the size rule, the gates, the readings and the predictions. The family
 readings now count out of twelve and out of eight independent roots.
+
+## Amendment D719-A2 (2026-09-30), before the runner exists: GC and SI ARE in the cost table
+
+**§2's row "GC and SI full-size, not in the table" rested on a misread.** Their lines sit under the table's `full`
+key: GC is $6.00 + 4.117 crossing ticks × $10 (`d508_exec`), and SI is $6.00 + one tick × $25.
+
+**So §2's primary rule applies to them as to every other root: "full-size: `data/futures_costs.json`'s default
+line".** The one-tick assumption row is withdrawn. D719-A1 §3's multipliers are the same numbers in either file.
+
+**The full cost lines this gives, for the record:**
+
+| root | a round trip |
+|---|---:|
+| CL | $21.46 |
+| NG | $16.00 |
+| HO, RB | $10.20 |
+| HG | $18.50 |
+| GC | $47.17 |
+| SI | $31.00 |
+| ZC, ZS, ZW | $18.50 |
+| ZL | $12.00 |
+| ZM | $16.00 |
+
+**The micro lines:**
+
+| micro | a round trip |
+|---|---:|
+| MCL | $5.03 |
+| MNG | $4.00 |
+| MHG | $4.25 |
+| MGC | $5.93 |
+| SIL | $8.00 |
+| grain micros (§2's assumption) | $3 + one micro tick |
