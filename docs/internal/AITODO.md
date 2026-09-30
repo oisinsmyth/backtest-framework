@@ -80,8 +80,14 @@
         - +$11.02 net on 211 trades at t 1.51, but 167 of them in 2022.
         - The dollar bar made it an IV-regime gate; |F5| alone cleared it 4 times.
         - The slice is unspent.
-      - **Open, the principal's call:** a second look with a relative-size form (the walk-forward |F5|/σ threshold,
-        or a volatility-normalised template). It would be a declared second look at the same window.
+      - **D705 (the declared second look; F1 / F2 / F3 relative-size filters at the top 20 %): NONE PASSES, and the
+        line closes again.**
+        - **F2 (the prior hour's size plus today's vol)** passes the edge (+$13.21, t 2.48, Holm p 0.02), the
+          best-of-three null (rank 0.996) and ex-COVID.
+        - **It fails only the one-year gate:** 2022 holds 59.9 % of its net, against 50 %.
+        - It keeps +$7.17 without 2022 and +$7.06 after 2022-05-16.
+      - **Open, the principal's call:** forward-record F2 as a newly registered rule, scored only on unseen data (the
+        held slice plus sessions from 2026-09-19). It needs about three years at full effect.
     - **2. CL settlement flow (D648): OPEN**; the form choice (x_GM vs x_SR) is with the principal.
       - **The trade** runs with the funds into the window: +$28.46 gross, t 2.230 against a bar of 2.241, net −$3.00
         at $31.46. The fade after the window (T3) is +$22.34, t 3.18, not cost-tested.
