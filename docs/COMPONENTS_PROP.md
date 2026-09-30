@@ -672,3 +672,15 @@ contracts at the d556 round trip.
 |---|---|---|---|
 | Book U, every leg | D710 | +0.04 (+0.06), SE 0.34; gross +0.77 | gross +$17.48 a leg (t 2.89) against $14–37 round trips; net −$1.18. ρ +0.07 with #2, +0.01 with #4 |
 | Book F, paper-sized filter | D710 | +0.48 (+0.76), SE 0.35; gross +0.64 | about 12 trades a year; net +$43.85 a trade at t 1.45 (the gate is 2), median +$9.63; the top 10 trades are 117% of the net; mostly the 30-year pre-auction short. ρ +0.08 with #2, +0.02 with #4: a diversifier on the point estimate, not established |
+
+## SCORED, NOT ENTERED — the absorbed morning move (proposal B), ES, 2026-09-30 ([D715](decisions/D715-STAGE-0-RESULT-absorption-ranks-backwards.md))
+
+Component lines from the runner's own output (`data/stage0_d715_absorbed_morning.json`), one MES at $4.42, 2018-02 →
+2023-12.
+- **The construction:** from the 10:30 open to the 15:59 close, trade in the first hour's direction when its aggressor
+  flow was below what its size predicts (absorbed) and at least two of NQ, RTY and YM agree.
+- **Status:** NEITHER. The absorption gradient is inverted (Spearman −0.061, 0.7th percentile). Not a candidate.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| B, absorbed + breadth | D715 | −0.66 (−0.87); −0.41 | −$11.64 a trade net (t −1.77); 626 trades; the mechanism runs the other way. ρ +0.19 with #2, −0.09 with F2 |
