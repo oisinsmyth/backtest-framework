@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 492 of these records carry neither field —
+**No Status or Category column, deliberately.** 493 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -784,6 +784,7 @@ would look like data. The tokens are what is shown.
 | D709 | D709 STAGE 0 DESIGN — silver's leveraged-ETF rebalance into the COMEX settlement: from 12:55 ET, trade the sign of the… | [record](D709-STAGE-0-DESIGN-silver-letf-settlement-flow.md) |
 | D710 | D710 STAGE 0 DESIGN — the Treasury auction-day intraday V on Treasury futures: does the dealers' pre-auction concession… | [record](D710-STAGE-0-DESIGN-treasury-auction-intraday-v.md) |
 | D711 | REGISTRATION — two mechanism tests of F2 that leave the vault unspent: (A1) does its rule work at midday clocks on ES,… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) |
+| D712 | REGISTRATION — the hourly continuation on ES-book short-gamma days, for the joint vault run: its side choice (the timin… | [PRE-REG](D712-PRE-REG-short-gamma-hourly-timing-for-the-joint-vault.md) |
 
 <!-- REGISTER:END -->
 
