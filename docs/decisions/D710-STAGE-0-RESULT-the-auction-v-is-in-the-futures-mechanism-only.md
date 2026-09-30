@@ -142,3 +142,29 @@ agree.
 The principal: "Park C while we look into E."
 - **Parked, not closed.** No ETF screen, no vault line and no α re-allocation are started.
 - The premise finding and Book F's in-sample line stand as recorded.
+
+## CLOSED, 2026-09-30, on the principal's word
+
+The principal, after a hindsight breakdown of this record's own trade table (no new data read): "Close it, not on the
+size problem, but on the rarity and spikiness of the strategy."
+
+**What the breakdown showed** (net per full contract, from `d710_trades.csv.gz`):
+- **The tradeable part is the pre-auction short on two tenors, and nothing else:**
+  - the 30-year into UB: +$98.56 in 2015–23 (t 1.40, median +$87.75);
+  - the 5-year into ZF: +$22.61 (t 2.08).
+- **Everything else loses after costs:** every post-auction long leg (−$5 to −$26), and the 2y, 7y and 10y shorts
+  (the 10y into ZN is −$37, t −2.14).
+- **Rarity:** a ZF + UB pre-auction book trades about 18 days a year, for +$50.89 a trade (t 1.61) and about
+  $940 a year per pair of contracts.
+- **Spikiness:**
+  - the UB leg's years swing from +$7.9k (2019) to −$3.4k (2020);
+  - without its five best trades it is +$14 a trade;
+  - the per-trade sd is about $500.
+- **It could not be confirmed on the unseen span:** about 48 trades in 2024–26, an expected t of about 0.8 at the full
+  effect.
+
+**Closed under R15:** the Treasury auction-day construction, as a trade for either book, including the pre-auction-only
+book and any filter of it.
+- **The mechanism stands as evidence:** the dealers' V is in the futures (t 4.98), with the paper's predictions and the
+  dealer-share dose.
+- **The calendars stay as data:** `data/calendar/treasury_auctions.csv` and `fomc_2010_2015.csv`.

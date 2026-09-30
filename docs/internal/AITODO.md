@@ -79,7 +79,7 @@
     - the unfiltered legs gross +$17.48 (t 2.89) and net −$1.18 at full size;
     - the paper-sized filter (mostly the 30-year pre-auction short) nets +$43.85 a trade at t 1.45, about 12 trades a
       year. Component net Sharpe +0.48, ρ under 0.1.
-  - **PARKED 2026-09-30 (the principal: "Park C while we look into E").** No ETF screen and no vault line.
+  - **CLOSED 2026-09-30 (the principal: "Close it, not on the size problem, but on the rarity and spikiness of the strategy"), under R15.** The tradeable part is a pre-auction short on ZF and UB, about 18 days a year and lumpy by year. The mechanism stands as evidence.
   - **New data:** `data/calendar/treasury_auctions.csv` (Fiscal Data, 2009–2026) and `fomc_2010_2015.csv`.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
