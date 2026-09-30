@@ -5202,5 +5202,8 @@ a level.**
   - NQ: a false break, down 23 bp by the close;
   - ES: a small day that goes nowhere;
   - both roots: late breaks after about half the day's range is already made.
-- **Unseen data holds only about 18 (E4) or 33 (D663) such breaks a root in the vault.** Confirmation needs a pooled
-  design or forward data, on the principal's word.
+- **CLOSED as unstable** ([D698](decisions/D698-PRE-REG-the-busy-low-iv-cell-for-the-joint-vault.md), the principal,
+  2026-09-30). The effect is concentrated in 2019-07 → 2022-08, and the most recent in-sample window (2022-09 →
+  2024-03) shows nothing (p 0.34). The vault look was never spent, and slot 10 stays free.
+- **The method lesson from D698:** a Welch z on a persistent label understates its noise (the null z variance was
+  1.2–1.8 at the vault's size). The within-window label rotation holds its size.

@@ -31,21 +31,10 @@
 - **D694 (D691's Stage 1) is NOT SUPPORTED on ES and NQ, and the implied-volatility line is CLOSED for the break.**
   - Coiled days are bigger, but IV's own information picks no better breaks: ES rank 0.77, NQ 0.30 against the
     count-matched ingredient null.
-  - **D696: the busy-realised / low-IV/RV cell SURVIVES in-sample** (ES −7.4 bp, NQ −14.7 on the plain break).
-    - It is beyond the six-cell search (0 of 2,182 rotations), beyond the IV ingredient null (2.3 %, thin), and the
-      worst cell of D663's break too (0.7 %).
-    - **D698 (the vault pre-reg), amended by D698-A1: NOT FROZEN, and waiting on the principal.**
-      - A1 replaced the pooled z test, which gave 0.21 false PASS, with a rotation test inside the vault. The selftest
-        shows it is calibrated.
-      - The amended power check's 0 % line still PASSes 0.26 of windows, so A1's calibration clause triggered.
-      - **The reason is the lead:** its effect is concentrated in 2019-07 → 2022-08. The most recent in-sample window
-        (2022-09 → 2024-03) shows nothing (p 0.34).
-      - In-sample overall: p 0.0006.
-      - **Options:**
-        - freeze and spend slot 10 anyway, with honest power below 0.67;
-        - hold for forward data (that needs a post-lapse options source);
-        - close the lead as unstable.
-      - Slot 10 is unspent.
+  - **D696's busy-realised / low-IV/RV cell is CLOSED as unstable (the principal, 2026-09-30; recorded on D698).**
+    - It survived in-sample (D696), but its effect lives in 2019-07 → 2022-08. The most recent window shows nothing.
+    - D698 was never frozen or scored. Slot 10 was never registered and stays free.
+    - Do not re-test it in-sample with a new split.
   - D691 §8's "ES has no unread index slice" was unsupported. ES's vault window is sealed and unread for break
     constructions (D694 §0).
   **Check every branch, and the commit messages, before claiming a number.**
@@ -71,6 +60,14 @@
   **Prerequisite before the joint run (not built): the NQ vault-input path** -- D644's `fut_opening_globex_1m` built
   through 2026-09-18 into a separate file and G0's loader (`usable_sessions`, `load_bars`) with the cut moved, written
   out as `--vault-bars` / `--vault-use`; `--vault` re-proves the known answer on its in-sample part before scoring.
+  **OPEN, the principal's decision (found 2026-09-30 while building D698): D680's frozen `--vault` would score ZERO
+  vault trades.**
+  - Its `book()` builds the frame with D663's `root_frame`, which keeps only sessions before the module constant
+    `RESERVED_FROM` = 2025-03-01 (`scripts/stage0_d663_per_root_gamma_break.py:141`).
+  - Fed vault bars, it would drop every vault session, write UNRESOLVED, and then refuse a second opening.
+  - The frozen files are not edited. The options are an amendment record, or a joint-run wrapper that raises
+    `T.RESERVED_FROM` before calling it.
+  - D698's `raised_cut` and its rehearsal prove that mechanism works both ways.
 - **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
   look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
   stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**

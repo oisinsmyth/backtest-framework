@@ -302,3 +302,28 @@ in-sample). The cell's X − rest difference is concentrated in time:
 - **The 100 % power of 0.67 is therefore optimistic** for a vault that resembles the recent regime.
 
 **§4's rule sends the decision to the principal.** Slot 10 is unspent.
+
+## CLOSED by the principal, 2026-09-30: the busy / low-IV/RV cell is closed as unstable
+
+*The principal: "Close the lead as unstable".*
+
+**Why:**
+- The cell's in-sample effect lives in 2019-07 → 2022-08.
+- The most recent in-sample window (2022-09 → 2024-03) shows nothing on three of the four slices (p 0.34).
+- A vault look would spend the programme's α on a lead that has already faded.
+
+**What this means:**
+- **D698 is never frozen and never scored.** No vault session was read. Slot 10 was never registered, so there is
+  nothing to release, and it stays free.
+- **The cell is not re-tested on the in-sample window with a new split, period or conditioner.** Looking for "when it
+  works" on a lead that has already weakened would be mining.
+- **D696's findings stand as a description of 2018–2025:**
+  - the cell beat its search-adjusted and ingredient nulls;
+  - it predicted D663's worst cell;
+  - on NQ, those breaks were false breaks.
+  They describe a period, not a rule that has held. The mechanism reading is kept.
+- **The runner and its evidence stay as committed:** `scripts/vault_d698_busy_low_iv.py`,
+  `scripts/diag_d698_calibration.py`, `scripts/diag_d698_heterogeneity.py` and their `data/` outputs.
+- **The vault-path lesson carries over.** D663's `root_frame` holds a module-level cut, so any vault path built on it
+  must raise that cut (`raised_cut`) and prove it both ways. D680's frozen vault path does not; that question is open
+  and is the principal's.
