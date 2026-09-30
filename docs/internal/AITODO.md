@@ -35,6 +35,22 @@
     - It survived in-sample (D696), but its effect lives in 2019-07 → 2022-08. The most recent window shows nothing.
     - D698 was never frozen or scored. Slot 10 was never registered and stays free.
     - Do not re-test it in-sample with a new split.
+  - **DEFERRED to a future study (the principal, 2026-09-30): implied volatility as a trade.**
+    - **The design, drafted but not registered or numbered:** sell the ATM ES Friday-PM weekly straddle at Friday's
+      settlement and hold it to the next Friday's 16:00 expiry. That is one non-overlapping trade a week, about 460
+      in-sample weeks, 2016-01 → 2025-02; NQ secondary.
+    - **Tests:**
+      - (A) the premium: gross, with Sharpe and Sortino, the tail and ex-Feb–Apr 2020;
+      - (B) whether the entry-day IV/RV (D691's ivrv) predicts the week's P&L, against a rotation null over weeks;
+      - (C) selling only when IV/RV is high against always selling;
+      - costs as the breakeven in points and net at a declared band.
+    - **Facts already gathered:**
+      - no prior repo study of the VRP or short vol;
+      - EW1–EW4 Friday weeklies from 2016 (EW3 only from 2016-07-15);
+      - the fixture has no expiry-day option settle, so the payoff comes from `fut_settle_strip`'s expiry-date
+        settlement (D618's convention). Check coverage on every expiry, including Good Friday weeks;
+      - there is no options cost line, and no quotes before 2025-09, so the spread is unmeasurable in-sample;
+      - options are eligible for the personal book only.
   - D691 §8's "ES has no unread index slice" was unsupported. ES's vault window is sealed and unread for break
     constructions (D694 §0).
   **Check every branch, and the commit messages, before claiming a number.**
