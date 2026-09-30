@@ -75,3 +75,18 @@ rate, and it is kept as registered.
   - re-proves the known answer on the table's in-sample rows;
   - scores the vault rows once;
   - writes `data/vault_d723_ng_stage_a.json` and refuses a second opening.
+
+## A1 (2026-10-01, before the freeze; the principal: "I take both your recomenations")
+
+1. **The t that gates is Newey–West, 5 lags** (D630's own `nw_t`). §2 said "the same Newey–West convention as
+   D630's registered t", which contradicted itself: D630's registered t was the ordinary one (5.01 in-sample), and
+   NW(5) (4.55) was reported beside it. The principal chose NW(5). It is the stricter of the two and robust to
+   trades clustered on consecutive days. The ordinary t is reported beside it.
+2. **The vault's anchors may move in-sample rows dated 2025-01-02 → 2025-02-28.** The accepted LAST_ANCHOR
+   (2026-06-30) can re-estimate the fund share on those days. The runner still requires the table's rows through
+   2024-12-31 to match D630 row for row, and re-proves n 1,028 / $66.0214007782101 on D630's own path. The run
+   passes `--accept-a6-tail-moves`, which the principal permitted, and the output records it.
+3. **The table is the full** `data/joint_run/ng/d630_trade_table.csv`. The vault-only table holds no in-sample rows
+   to re-prove against.
+4. **The freeze also hashes** `scripts/build_strip_vault.py` (the vault settlement strip's builder) and every repo
+   module it imports, beside `build_ledger_vault_inputs.py`.

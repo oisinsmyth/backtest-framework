@@ -76,6 +76,7 @@ SPEC_REL = "docs/decisions/D723-PRE-REG-ng-stage-a-for-the-joint-vault.md"
 D630_PRE_REL = "docs/decisions/D630-PRE-REG-h2-ng-the-settlement-move-in-the-funds-direction.md"
 D630_RES_REL = "docs/decisions/D630-RESULT-h2-ng-passes-and-the-move-reverts-after-the-settlement.md"
 BUILDER_REL = "scripts/build_ledger_vault_inputs.py"
+STRIP_REL = "scripts/build_strip_vault.py"  # D723-A1: the vault strip's builder is hashed too (its imports discovered)
 STAGE_A_REL = "data/FROZEN_ledger_stage_a_ng.json"
 FROZEN = REPO / "data" / "ledger_frozen_vault_h2_ng.json"
 OUT = REPO / "data" / "vault_d723_ng_stage_a.json"
@@ -251,16 +252,19 @@ def params() -> dict[str, Any]:
             "rotation": {"seed": ROT_SEED, "draws": ROT_DRAWS, "form": "D630 C2 on the vault days (reported)"},
             "placebo": "D630 C1: the 11:30 ledger, 11:31 fill to the 12:19 close, on the vault days (reported)",
             "mng_cost": "futures_costs.json NG.micro: commission_rt + default crossing x tick + 1 tick slippage",
-            "vault_a6_anchors_accepted": {"LAST_ANCHOR": "2026-06-30", "SWAP_Q_LAST": "2026-Q2"}}
+            "vault_a6_anchors_accepted": {"LAST_ANCHOR": "2026-06-30", "SWAP_Q_LAST": "2026-Q2"},
+            "a6_tail_moves": "permitted by the principal (D723-A1): pass --accept-a6-tail-moves; rows through 2024-12-31 "
+                             "must still match D630 row for row"}
 
 
 def manifest(root: Path, known: dict[str, Any] | None) -> dict[str, Any]:
-    imported = discover(root, (BUILDER_REL, RUNNER_REL))
+    imported = discover(root, (BUILDER_REL, RUNNER_REL, STRIP_REL))
     return {"name": "ledger_frozen_vault_h2_ng", "record": SPEC_REL, "programme_slot": PROGRAMME_SLOT,
             "retained_stage": RETAINED_STAGE, "instruction": INSTRUCTION,
             "runner": {"path": RUNNER_REL, "sha256": sha_text(root / RUNNER_REL)},
             "records": {p: sha_text(root / p) for p in (SPEC_REL, D630_PRE_REL, D630_RES_REL)},
             "builder": {"path": BUILDER_REL, "sha256": sha_text(root / BUILDER_REL)},
+            "strip_builder": {"path": STRIP_REL, "sha256": sha_text(root / STRIP_REL)},
             "imported_unchanged": {p: sha_text(root / p) for p in imported},
             "stage_a_freeze": {"path": STAGE_A_REL, "sha256_bytes": sha_bytes(root / STAGE_A_REL)},
             "params": params(), "known_answer": known}
@@ -270,7 +274,7 @@ def check_freeze(doc: dict[str, Any], root: Path) -> None:
     """Every hash the freeze holds, recomputed; the import set re-discovered. Raises on any drift."""
     now = manifest(root, doc.get("known_answer"))
     bad = []
-    for k in ("runner", "builder"):
+    for k in ("runner", "builder", "strip_builder"):
         if now[k] != doc.get(k):
             bad.append(f"{k} {now[k]['path']}")
     for p, h in doc.get("records", {}).items():
@@ -849,12 +853,13 @@ def selftest() -> int:
                  "scripts/helper_a.py": "A = 1\n", "scripts/helper_b.py": 'G = _load_mod("helper_c", "x")\n',
                  "scripts/helper_c.py": "C = 1\n", "src/backtest_framework/__init__.py": "",
                  "src/backtest_framework/x/__init__.py": "", "src/backtest_framework/x/y.py": "from .z import w\n",
-                 "src/backtest_framework/x/z.py": "w = 1\n", STAGE_A_REL: "{}\n"}
+                 "src/backtest_framework/x/z.py": "w = 1\n", STAGE_A_REL: "{}\n",
+                 STRIP_REL: 'S = _load("helper_d")\n', "scripts/helper_d.py": "D = 1\n"}
         for rel, text in files.items():
             (root / rel).parent.mkdir(parents=True, exist_ok=True)
             (root / rel).write_text(text, encoding="utf-8", newline="\n")
         doc = manifest(root, {"n": 1})
-        want = {"scripts/helper_a.py", "scripts/helper_b.py", "scripts/helper_c.py",
+        want = {"scripts/helper_a.py", "scripts/helper_b.py", "scripts/helper_c.py", "scripts/helper_d.py",
                 "src/backtest_framework/__init__.py", "src/backtest_framework/x/__init__.py",
                 "src/backtest_framework/x/y.py", "src/backtest_framework/x/z.py"}
         if set(doc["imported_unchanged"]) != want:
@@ -865,6 +870,7 @@ def selftest() -> int:
         check_freeze(doc, root)  # LF-pinned: a CRLF checkout is not a drift
         for rel, what in ((RUNNER_REL, "a tampered runner"), (SPEC_REL, "a tampered D723 record"),
                           (D630_RES_REL, "a tampered D630 result"), (BUILDER_REL, "a tampered builder"),
+                          (STRIP_REL, "a tampered strip builder"),
                           ("src/backtest_framework/x/z.py", "a tampered imported module"),
                           (STAGE_A_REL, "a tampered Stage A freeze")):
             p = root / rel

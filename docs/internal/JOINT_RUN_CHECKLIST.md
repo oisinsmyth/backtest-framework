@@ -150,15 +150,20 @@ files):
    - It writes `data/joint_run/ng/d630_vault_trade_table.csv` and `panels_manifest.json`. The manifest records the
      strip's sha256 and the anchors used.
 6. D649 (slot 8): `uv run python scripts/ledger_vault_pp_ng.py --vault data/joint_run/ng/d630_vault_trade_table.csv --principals-word "..."`.
-7. Stage A (slot 3) is D723. `scripts/vault_d723_ng_stage_a.py` is being written on another branch.
-   - Its freeze, `data/ledger_frozen_vault_h2_ng.json`, is written once, after this input path is final. It should
-     hash `build_ledger_vault_inputs.py` and `build_strip_vault.py`.
-   - It should also hash the strip builder's three modules: `build_fut_settle_strip.py`, `build_fut_open_interest.py`
-     and `build_fut_breadth_hourly.py`.
-   - Its run: `--vault --trade-table PATH --principals-word "..."` (D723 §4).
-   - **Which table is PATH.** D723 re-proves the known answer on the table's in-sample rows.
-     `d630_vault_trade_table.csv` holds only the rows dated 2025-03-01 → 2026-09-18. The full table from step 5 is
-     `data/joint_run/ng/d630_trade_table.csv`. The runner's author must say which one it takes.
+7. Stage A (slot 3) is D723, with D723-A1 (the principal, 2026-10-01).
+   - The runner is `scripts/vault_d723_ng_stage_a.py`.
+   - **The gate is Newey–West t, 5 lags.**
+   - **The freeze** is `data/ledger_frozen_vault_h2_ng.json`. It hashes:
+     - the runner and the D723 and D630 records;
+     - `build_ledger_vault_inputs.py` and `build_strip_vault.py`;
+     - every repo module either one imports (discovered);
+     - the Stage A freeze file.
+   - Check it first: the runner's `--vault` verifies the freeze before anything else.
+   - **Its run:**
+     `uv run python scripts/vault_d723_ng_stage_a.py --vault --trade-table data/joint_run/ng/d630_trade_table.csv --accept-a6-tail-moves --principals-word "..."`.
+     - It takes the full table from step 5, not the vault-only one.
+     - `--accept-a6-tail-moves` is permitted by the principal (D723-A1). Rows through 2024-12-31 must still match
+       D630 row for row.
 
 ## 4. Proofs on record (in-sample, 2026-09-30; scratch in `temp/`)
 
