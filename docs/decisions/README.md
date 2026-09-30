@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 473 of these records carry neither field —
+**No Status or Category column, deliberately.** 474 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -772,6 +772,7 @@ would look like data. The tokens are what is shown.
 | D697 | D697 STAGE 0 RESULT — the move-triggered short-gamma long loses: fast rises on short-gamma days fade into the close (−$… | [record](D697-STAGE-0-DESIGN-the-short-gamma-burst-long-to-the-close.md) · [RESULT](D697-STAGE-0-RESULT-fast-rises-fade-and-the-drift-does-the-work.md) |
 | D698 | PRE-REGISTRATION: the busy / low-IV/RV cell on unseen data. A pooled four-slice test for the joint vault run (ES and NQ… | [PRE-REG](D698-PRE-REG-the-busy-low-iv-cell-for-the-joint-vault.md) |
 | D699 | D699 STAGE 0 RESULT — the gamma-gated 15-minute log MACD: the histogram variant (V1) earns +$10.47 a MES trade, net Sha… | [record](D699-STAGE-0-DESIGN-the-gamma-gated-15-minute-log-macd-long.md) · [RESULT](D699-STAGE-0-RESULT-hist-clears-the-timing-null-not-the-drift.md) |
+| D700 | D700 STAGE 0 DESIGN — the premise check for the principal's trend detector: after D480's hand-cell channel spans 10 bar… | [record](D700-STAGE-0-DESIGN-where-es-channels-stop-fading.md) |
 
 <!-- REGISTER:END -->
 
