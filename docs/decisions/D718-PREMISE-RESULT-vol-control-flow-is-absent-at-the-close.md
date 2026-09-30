@@ -83,3 +83,12 @@ flow days gross $2.23, half the round trip.
 4. **As a trade it is dead at MES under any variant.** The strongest version grosses $2.23 against $4.42.
 5. **Proposal A's construction is ABSENT at the premise stage.** The design said a trade record would follow only on
    PRESENT, so none is proposed. Closing A under R15 is the principal's call.
+
+## CLOSED, 2026-09-30, on the principal's word
+
+The principal: "Close A".
+- **Closed under R15:** proposal A (volatility-target funds rebalancing at the close) as a trade on the ES close, any
+  variant of its flow convention included.
+- **The ordinary-day flow was tested here for the first time** and is recorded as absent at the premise stage.
+- **The five-agent round of 2026-09-30 is now fully closed:** E (D708–D713), D (D709), C (D710), B and its reversal
+  (D715, D717), and A (D718).
