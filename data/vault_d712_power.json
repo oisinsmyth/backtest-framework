@@ -1,0 +1,130 @@
+{
+ "known_answer": {
+  "d708_T": {
+   "n": 4240,
+   "mean": 3.0925131876111145,
+   "t": 3.1711841578514925,
+   "t_naive": 3.14344766865757,
+   "median": 2.644230769230769
+  },
+  "rule_path_sessions": 1993,
+  "rule_path_extra_sessions_vs_panel": 4,
+  "rule_path_in_sample": {
+   "sessions": 859,
+   "trades": 4245,
+   "T": {
+    "n": 4245,
+    "mean": 3.095174533803751,
+    "t": 3.1777132789278255,
+    "t_naive": 3.1494858152816754,
+    "median": 2.644230769230769
+   },
+   "long_leg": {
+    "n": 2237,
+    "mean": 2.977512246124836,
+    "t": 2.2819311072809403,
+    "t_naive": 2.3492022668737467,
+    "median": 3.4335443037974684
+   },
+   "short_leg": {
+    "n": 2008,
+    "mean": 3.226255478792658,
+    "t": 2.2207155483624272,
+    "t_naive": 2.1164819211364567,
+    "median": 1.2403100775193798
+   },
+   "net_mes": {
+    "n": 4245,
+    "mean": -1.2568669022379273,
+    "t": -1.28082733565643,
+    "t_naive": -1.2739629569277655,
+    "median": -1.92
+   },
+   "gross_mes": {
+    "n": 4245,
+    "mean": 3.1631330977620733,
+    "t": 3.22343386616312,
+    "t_naive": 3.2061584143920885,
+    "median": 2.5
+   },
+   "verdict": "MECHANISM ONLY"
+  },
+  "population_sessions_sha256": "ceea9bcb9bb1f193416314a5f49ceef4f4254ddbe7c00f1bb9b31ac1f930ebe7"
+ },
+ "power": {
+  "effect_T_in_sample_rule_path": 3.095174533803751,
+  "T_bp": 1.7889430213330006,
+  "population_sessions_in_sample": 859,
+  "size_check": {
+   "draws": 20000,
+   "sessions_a_draw": 288,
+   "T_condition_rate_at_zero": 0.10285,
+   "bar": 0.12,
+   "ok": true
+  },
+  "resampled_lines": {
+   "100pct": {
+    "T_condition": 0.71185,
+    "T_and_legs": 0.67215,
+    "PASS_with_net_at_es_5800": 0.59145,
+    "promotion": 0.2402,
+    "mean_trades": 1423.26915
+   },
+   "50pct": {
+    "T_condition": 0.3648,
+    "T_and_legs": 0.33255,
+    "PASS_with_net_at_es_5800": 0.2564,
+    "promotion": 0.0547,
+    "mean_trades": 1423.26915
+   },
+   "25pct": {
+    "T_condition": 0.2098,
+    "T_and_legs": 0.18825,
+    "PASS_with_net_at_es_5800": 0.13385,
+    "promotion": 0.0199,
+    "mean_trades": 1423.26915
+   },
+   "0pct": {
+    "T_condition": 0.10285,
+    "T_and_legs": 0.0919,
+    "PASS_with_net_at_es_5800": 0.06225,
+    "promotion": 0.00525,
+    "mean_trades": 1423.26915
+   }
+  },
+  "net_projection": "gross bp x $ a bp at ES 5800 (the unseen span's approximate mid) against $4.42",
+  "windows": {
+   "sessions_a_window": 288,
+   "step": 10,
+   "count": 58,
+   "independent_approx": 2.98,
+   "lines": {
+    "100pct": {
+     "PASS": 0.034482758620689655,
+     "MECHANISM ONLY": 0.6379310344827587,
+     "FAIL": 0.3275862068965517,
+     "UNRESOLVED": 0.0
+    },
+    "50pct": {
+     "PASS": 0.0,
+     "MECHANISM ONLY": 0.08620689655172414,
+     "FAIL": 0.9137931034482759,
+     "UNRESOLVED": 0.0
+    },
+    "25pct": {
+     "PASS": 0.0,
+     "MECHANISM ONLY": 0.017241379310344827,
+     "FAIL": 0.9827586206896551,
+     "UNRESOLVED": 0.0
+    },
+    "0pct": {
+     "PASS": 0.0,
+     "MECHANISM ONLY": 0.0,
+     "FAIL": 1.0,
+     "UNRESOLVED": 0.0
+    }
+   }
+  },
+  "note": "the windows overlap, and the 0% line shows time concentration, not the test's size (s.5)"
+ }
+}

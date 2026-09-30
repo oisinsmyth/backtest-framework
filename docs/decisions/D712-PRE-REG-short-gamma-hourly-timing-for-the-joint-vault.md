@@ -62,7 +62,15 @@ over the time-matched drift, on both legs. The drift is 2% of the profit.
 | cost | **$4.42 a round trip** (D685's `cost_spec("ES", "micro")`, as D689 and D708) |
 | net | gross − $4.42 |
 
-A decision needs finite P(t − 60), P(t) and P(t + 60).
+A decision needs finite P(t − 60), P(t) and P(t + 60), and **(A1) every 5-minute grid price from the open to t finite**.
+
+**Amendment A1 (2026-09-30, before the runner exists).** D689's and D708's trade rows also required a finite log of
+the day's realised variance to t, `lrv`, so a missing 5-minute grid price anywhere from the open to t drops the
+decision. The drift μ's rows did not need it.
+- A count, with no outcome read, found this binds on **17 of 10,115** in-sample decisions (2016–2023).
+- The rule keeps the condition, so that D708's trades are reproduced exactly (§6). It is a data-quality rule, not a
+  signal.
+- The drift μ still uses every row with finite P(t − 60), P(t) and P(t + 60), as D708 did.
 
 ### 1.3 The timing term (the primary statistic)
 
