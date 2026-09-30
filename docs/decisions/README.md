@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 515 of these records carry neither field —
+**No Status or Category column, deliberately.** 517 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -796,6 +796,7 @@ would look like data. The tokens are what is shown.
 | D721 | D721 DIAG RESULT — the quiet-day F2 pattern is NQ's alone: ES, YM and RTY lean the same way but none clears its rotatio… | [record](D721-DIAG-DESIGN-the-quiet-day-f2-pattern-on-other-roots.md) · [RESULT](D721-DIAG-RESULT-the-quiet-day-pattern-is-nq-only.md) |
 | D722 | D722 DIAG PRE-REGISTRATION — why 2022? Is each line's 2022 dependence scale, count or regime, which measurable variable… | [PRE-REG](D722-DIAG-PRE-REG-why-2022-scale-regime-or-one-bet.md) |
 | D723 | REG — NG Stage A (D630's H2) for the joint vault run: the vault scorer and freeze that D630 §8 requires, programme slot… | [PRE-REG](D723-PRE-REG-ng-stage-a-for-the-joint-vault.md) |
+| D724 | D724 STAGE 0 RESULT — NQ respects no intraday mean. Price moves AWAY from every anchor (VWAP, the open, the running mid… | [record](D724-STAGE-0-DESIGN-which-mean-and-when-is-size-known.md) · [RESULT](D724-STAGE-0-RESULT-nq-respects-no-intraday-mean.md) |
 
 <!-- REGISTER:END -->
 
