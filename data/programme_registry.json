@@ -7,24 +7,6 @@
  "sealed": "2026-09-21",
  "families": [
   {
-   "name": "LETF close flow H1",
-   "doc": "LETF_CLOSE_FLOW_PREREG.md",
-   "registered_utc": "2026-09-21",
-   "slot": 1,
-   "alpha": 0.005,
-   "amendment": null,
-   "note": "Primary effect: on active days the mean signed return tau -> close is positive (\u00a74 H1; Holm across the 6 primary cells)"
-  },
-  {
-   "name": "shock classifier H1",
-   "doc": "SHOCK_CLASSIFIER_PREREG.md",
-   "registered_utc": "2026-09-21",
-   "slot": 2,
-   "alpha": 0.005,
-   "amendment": null,
-   "note": "Class divergence: INFO and LIQ returns differ in the shock direction (\u00a76 H1; Holm across the 4 instruments)"
-  },
-  {
    "name": "ledger H2",
    "doc": "SETTLEMENT_FLOW_LEDGER_PREREG.md",
    "registered_utc": "2026-09-21",
@@ -110,6 +92,28 @@
    "note": "Vault line on D705 F2: the ES last-hour continuation (sign of 14:30->15:30, held to 16:00, one MES, $4.42) when tiers((tiers(abs(F5)/sigma) + tiers(rv to 15:30)) / 2) >= 0.8; PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816",
    "released_utc": "2026-09-30",
    "reason": "D716: the principal withdrew ES F2 (D707) from the joint vault run before any look ('Remove ES F2 from the vault run and keep NQ F2 and NQ F2 only when ES F2 agrees'); replaced by NQ F2 in this slot; ES F2's unseen data is read as D716's input, so no clean look remains"
+  },
+  {
+   "name": "LETF close flow H1",
+   "doc": "LETF_CLOSE_FLOW_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 1,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Primary effect: on active days the mean signed return tau -> close is positive (\u00a74 H1; Holm across the 6 primary cells)",
+   "released_utc": "2026-09-30",
+   "reason": "The principal, 2026-09-30: 'Release 1 and 2'. The LETF close-flow line was killed in-sample by its own 11am placebo (D640) and never reached the vault; the principal's override of the never-retroactively default, for this family only (as H-O2, D658)"
+  },
+  {
+   "name": "shock classifier H1",
+   "doc": "SHOCK_CLASSIFIER_PREREG.md",
+   "registered_utc": "2026-09-21",
+   "slot": 2,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Class divergence: INFO and LIQ returns differ in the shock direction (\u00a76 H1; Holm across the 4 instruments)",
+   "released_utc": "2026-09-30",
+   "reason": "The principal, 2026-09-30: 'Release 1 and 2'. The shock classifier failed Gate 1 on all four instruments in-sample (D643) and never reached the vault; the principal's override of the never-retroactively default, for this family only (as H-O2, D658)"
   }
  ]
 }
