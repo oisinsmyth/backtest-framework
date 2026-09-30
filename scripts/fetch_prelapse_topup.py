@@ -30,6 +30,9 @@ KEY_FILE = Path.home() / ".config" / "databento" / "key"
 JOBS = REPO / "data" / "prelapse_topup_jobs.json"
 DATASET = "GLBX.MDP3"
 START = "2026-09-11"
+# ohlcv-1m's archive ends 2026-09-10T00:00Z (last file 20260609-20260909), so its top-up starts a day earlier to
+# cover session 2026-09-10 (docs/internal/JOINT_RUN_CHECKLIST.md s.1). Every other job starts at START.
+JOB_START = {"ohlcv-1m all symbols": "2026-09-10"}
 ROOTS_41 = ["ES", "NQ", "RTY", "YM", "MES", "MNQ", "M2K", "MYM", "CL", "NG", "GC", "SI", "HG", "ZN", "ZB", "ZF",
             "SR3", "ZT", "UB", "TN", "RB", "HO", "BZ", "PL", "PA", "6E", "6J", "6B", "6A", "6C", "6S",
             "ZC", "ZS", "ZW", "ZL", "ZM", "LE", "HE", "NKD", "BTC", "MBT"]
@@ -71,7 +74,8 @@ def submit() -> int:
     rec: dict = {"instruction": "the principal, 2026-09-27: pre-lapse top-ups approved, MBO included",
                  "start": START, "end": end, "submitted_utc": now(), "jobs": []}
     for label, syms, stype, schema in PLAN:
-        kw = dict(dataset=DATASET, symbols=syms, schema=schema, start=START, end=end, stype_in=stype)
+        start = JOB_START.get(label, START)
+        kw = dict(dataset=DATASET, symbols=syms, schema=schema, start=start, end=end, stype_in=stype)
         usd = float(c.metadata.get_cost(**kw))
         gb = c.metadata.get_billable_size(**kw) / 1e9
         if usd != 0.0:
@@ -81,10 +85,10 @@ def submit() -> int:
             continue
         job = c.batch.submit_job(**kw, encoding="dbn", compression="zstd", split_duration="day",
                                  stype_out="instrument_id", delivery="download")
-        rec["jobs"].append({"label": label, "schema": schema, "billable_gb": round(gb, 2), "requoted_usd": usd,
+        rec["jobs"].append({"label": label, "schema": schema, "start": start, "billable_gb": round(gb, 2), "requoted_usd": usd,
                             "job": {k: (v if isinstance(v, (str, int, float, bool)) or v is None else str(v))
                                     for k, v in job.items()}})
-        print(f"  submitted {label} {START}..{end}: {gb:.2f} GB billable, job {job.get('id')}", flush=True)
+        print(f"  submitted {label} {start}..{end}: {gb:.2f} GB billable, job {job.get('id')}", flush=True)
         JOBS.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8", newline="\n")
     JOBS.write_text(json.dumps(rec, indent=1) + "\n", encoding="utf-8", newline="\n")
     return 0

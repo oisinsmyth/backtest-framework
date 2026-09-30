@@ -59,10 +59,16 @@ evening from 18:00 ET. `mbo` has the same hole (not needed here).
   at USD 0.00.
 - The simplest fix is **ohlcv-1m's START = 2026-09-10 in the top-up before it runs on 10-09.** That is the
   principal's call. Nothing was submitted or downloaded here.
+- **CLOSED 2026-10-01 (the principal: "close that last 10-09 thing"):**
+  - `fetch_prelapse_topup.py` now starts the ohlcv-1m job at 2026-09-10 (`JOB_START`). Every other job starts at
+    09-11.
+  - The re-quote still refuses anything not USD 0.00.
+  - Once the 10-09 top-up downloads, no `--accept-hole` is needed.
 
 ## 2. After the 10-09 top-up, before the run (in order)
 
-1. Decide the 2026-09-10 hole: pull it, or accept it (`--accept-hole 2026-09-10` on D680's fixture build).
+1. Check that the top-up's ohlcv-1m job downloaded from 2026-09-10 (its record in `data/prelapse_topup_jobs.json`
+   carries `"start": "2026-09-10"`). If it was refused, the fallback is `--accept-hole 2026-09-10`.
 2. D462 rebuild (`python scripts/build_fut_index_1m.py --build`).
    - It globs every job dir.
    - It writes `fut_{ES,NQ,YM,RTY}_rth_1m`, `fut_index_sessions` and `fut_index_rolls` in place, so the manifest shas

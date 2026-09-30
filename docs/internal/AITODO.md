@@ -199,12 +199,10 @@
     - The gate is D630 §8's rule with the t as NW(5).
     - `--accept-a6-tail-moves` is permitted.
     - The run takes the full `d630_trade_table.csv`.
-  - **OPEN, the principal's hand:** the 2026-09-10 ohlcv-1m hole. The 10-09 top-up starts 09-11, so it misses that
-    session.
-    - My edit to `scripts/fetch_prelapse_topup.py` (a per-job start of 2026-09-10 for ohlcv-1m, which the principal
-      approved) was blocked by the permission classifier and reverted.
-    - The principal edits the script before 10-09, or the D680 build uses `--accept-hole 2026-09-10`.
-    - Slot 7 (D716) loses the session either way unless the hole is pulled.
+  - **CLOSED 2026-10-01 (the principal: "close that last 10-09 thing"): the 2026-09-10 ohlcv-1m hole.**
+    - `scripts/fetch_prelapse_topup.py` starts the ohlcv-1m job at 2026-09-10 (`JOB_START`); the other jobs start at
+      09-11, and the re-quote still refuses anything not USD 0.00.
+    - After the 10-09 download, check that the job record carries `"start": "2026-09-10"`.
 
 - No model opens the vault (2025-03-01 → 2026-09-18) by itself.
 - Every model that has passed its in-sample gates and is frozen (`scripts/freeze.py`) is scored in one joint run,
