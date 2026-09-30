@@ -391,7 +391,7 @@ own observable (Stage 2), confirm on an unread slice after a seal inventory and 
   numbering note at the top).
 - [x] **The log MACD line CLOSED (D675 §10; the principal, 2026-09-29: "Ok close it").** It includes any MACD variant
   and any Stage 2 on a §3 clock cell; no slice was spent. The clock map stays as market structure.
-- [ ] **Still the principal's word:** record in FINDINGS that D484's pooled pass rests on NQ and CL (D675 §8.3).
+- [x] **DONE 2026-09-30 (the principal: "Do the house keeping"):** FINDINGS §98 and the D484 mention in its micro table now say D484's pooled pass rests on NQ and CL (D675 §2, §8.3).
 
 ## Month-end rebalancing flow (D685, 2026-09-29; the principal: "Write, build then run it please")
 

@@ -4412,7 +4412,9 @@ against the $3.00 + 1.009-tick round trip, 2016–2023:
 **The Nasdaq micro is the best hunting ground for any day-session rule, not crude.** Break-even
 there is **51.2% directional accuracy**, and a component Sharpe of 0.5 at one micro needs
 **53.6%** — about $10.40 of gross a session. The log MACD ([D484](decisions/D484-RESULT-the-log-MACD-is-a-real-signal-that-fails-only-on-cost.md))
-reaches ≈ 50.7%. **The gap is three points of accuracy, not cost.**
+reaches ≈ 50.7%. **The gap is three points of accuracy, not cost.** (D484's pooled pass rests on NQ and CL alone; the
+other roots sit inside their own nulls. See [D675](decisions/D675-STAGE-1-RESULT-the-macd-is-a-clock-blind-blend.md)
+§2 and §98 below.)
 
 **A corollary that kills a plausible lever.** Selecting high-volatility days to raise the move
 against a fixed fee only pays where cost/E|M| is large — scalping, or the 15-minute bar
@@ -5158,7 +5160,11 @@ so the account moves to MFFU Rapid 150k. The book's expectation is Sharpe 0.24, 
   - NQ's daily fade.
 - Per root, only NQ (0.976) and CL (0.997) clear their own null.
 - CLOSED under R15. The clock map is kept as market structure.
-- *The correction of D484's pooled reading (it rests on NQ and CL) waits for the principal's word.*
+- **The correction of D484's pooled reading (recorded 2026-09-30 on the principal's word, "Do the house keeping").**
+  - D484's pooled pass (+0.0072 against a pooled p95 of +0.0043) was read as "a real signal on eight roots".
+  - **Per root it is two: NQ (97.6th percentile of its own null) and CL (99.7th).**
+  - The other five positive roots sit inside their own nulls, and 6E runs the other way (D675 §2).
+  - Read D484's result as an NQ and CL result, never as a cross-root one.
 
 ## 99. Implied volatility carries size information beyond realised volatility and dealer gamma, but only relative to realised, and it does not select the break's trades (D691, D694)
 

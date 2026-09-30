@@ -179,14 +179,24 @@ def test_the_haircut_with_a_vault_is_the_minimum_of_the_two(edge, vault):
 @given(st.lists(_USD, min_size=21, max_size=120))
 def test_the_trim_is_invariant_to_the_order_of_the_sessions(usd):
     """A concentration statistic is a function of the SET of daily P&Ls, not their path.
-    (`sessions_to_half_pnl` is too, since it sorts.)"""
+    (`sessions_to_half_pnl` is too, since it sorts.)
+
+    The tolerance is the float bound, not a fixed 1e-12. `symmetric_trim` must stay bit-identical
+    to D504's source (tests/golden/test_episodes_ledger.py), which sums the total in input order.
+    Reordering changes that sum by up to about n * eps * sum|x|, and every share divides by the
+    total, so its relative error scales with the condition number sum|x| / |total|. A series
+    whose total nearly cancels (hypothesis found one: a share of -66312.5, 2026-09-30) legitimately
+    moves in the eleventh digit. The slices themselves come from the sorted array, which is
+    order-invariant."""
     total = float(np.sum(usd))
     assume(abs(total) > 1e-6)
+    cond = float(np.sum(np.abs(usd))) / abs(total)
+    rel = max(1e-12, 64 * len(usd) * np.finfo(float).eps * cond)
     shuffled = list(np.random.default_rng(592).permutation(usd))
     a, b = symmetric_trim(usd), symmetric_trim(shuffled)
     for key in a:
         if isinstance(a[key], float):
-            assert a[key] == pytest.approx(b[key], rel=1e-12, abs=1e-9)
+            assert a[key] == pytest.approx(b[key], rel=rel, abs=1e-9)
         else:
             assert a[key] == b[key]
 
