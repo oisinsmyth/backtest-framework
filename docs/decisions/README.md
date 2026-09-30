@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 484 of these records carry neither field —
+**No Status or Category column, deliberately.** 485 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -778,6 +778,7 @@ would look like data. The tokens are what is shown.
 | D703 | DEVELOPMENT FAIL: the expected-profit filter nets +$11.02 a MES trade on 211 trades but at t 1.51, and 167 of the 211 f… | [PRE-REG](D703-PRE-REG-the-last-hour-expected-profit-filter.md) · [RESULT](D703-RESULT-development-fail-the-template-became-an-iv-regime-gate.md) |
 | D704 | D704 DIAG RESULT — NO INFORMATION: the no-aggressive-push gate ranks V1's trades the right way (Spearman +0.044, the up… | [record](D704-DIAG-DESIGN-a-no-aggressive-push-gate-on-v1.md) · [RESULT](D704-DIAG-RESULT-the-no-push-gate-points-right-inside-its-null.md) |
 | D705 | REGISTRATION — a declared SECOND LOOK: three relative-size filters on the ES last-hour continuation at MES (the prior h… | [PRE-REG](D705-PRE-REG-relative-size-filters-on-the-last-hour.md) |
+| D706 | D706 PREMISE COUNT — how many short-gamma days the unseen slices hold, and whether the short-gamma direction line can e… | [record](D706-PREMISE-COUNT-short-gamma-days-in-the-unseen-slices.md) |
 
 <!-- REGISTER:END -->
 

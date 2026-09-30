@@ -1,0 +1,288 @@
+{
+ "spec": "D706 PREMISE COUNT (conditioner only; no ES bar, intraday price or return read on or after 2024-01-01)",
+ "slices": {
+  "clean_2024_01_2025_02": {
+   "calendar_sessions": 300,
+   "sessions_with_both_books": 288,
+   "short_gamma_sessions": {
+    "G_SUM": 66,
+    "G_SPX": 1,
+    "G_ES": 101
+   },
+   "composition_of_G_SUM_short": {
+    "spx_short_es_short": 1,
+    "spx_long_es_short": 65,
+    "spx_short_es_long": 0
+   },
+   "short_gamma_by_month_G_SUM": {
+    "2024-01": 1,
+    "2024-02": 1,
+    "2024-03": 0,
+    "2024-04": 9,
+    "2024-05": 5,
+    "2024-06": 0,
+    "2024-07": 7,
+    "2024-08": 8,
+    "2024-09": 6,
+    "2024-10": 6,
+    "2024-11": 4,
+    "2024-12": 5,
+    "2025-01": 7,
+    "2025-02": 7
+   },
+   "first_last_session": [
+    "2024-01-02",
+    "2025-02-28"
+   ]
+  },
+  "vault_2025_03_2026_09": {
+   "calendar_sessions": 394,
+   "sessions_with_both_books": 380,
+   "short_gamma_sessions": {
+    "G_SUM": 120,
+    "G_SPX": 18,
+    "G_ES": 187
+   },
+   "composition_of_G_SUM_short": {
+    "spx_short_es_short": 18,
+    "spx_long_es_short": 102,
+    "spx_short_es_long": 0
+   },
+   "short_gamma_by_month_G_SUM": {
+    "2025-03": 19,
+    "2025-04": 18,
+    "2025-05": 1,
+    "2025-06": 1,
+    "2025-07": 0,
+    "2025-08": 3,
+    "2025-09": 2,
+    "2025-10": 2,
+    "2025-11": 6,
+    "2025-12": 2,
+    "2026-01": 5,
+    "2026-02": 10,
+    "2026-03": 21,
+    "2026-04": 5,
+    "2026-05": 0,
+    "2026-06": 9,
+    "2026-07": 7,
+    "2026-08": 5,
+    "2026-09": 4
+   },
+   "first_last_session": [
+    "2025-03-03",
+    "2026-09-09"
+   ]
+  }
+ },
+ "in_sample": {
+  "sessions": 1989,
+  "G_SUM_short": 603,
+  "G_SPX_short": 249,
+  "G_ES_short": 858,
+  "composition_of_G_SUM_short": {
+   "spx_short_es_short": 249,
+   "spx_long_es_short": 354,
+   "spx_short_es_long": 0
+  }
+ },
+ "power_vault": {
+  "V1_net_gt_0": {
+   "in_sample_units": 572,
+   "in_sample_t": 1.909489260379865,
+   "snr_per_unit": 0.07983975685935057,
+   "expected_units_in_vault": 113.83084577114428,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 0.8518226563737611,
+     "p_pass_one_sided_5pc": 0.21387988942399688
+    },
+    "0.5": {
+     "expected_t": 0.42591132818688054,
+     "p_pass_one_sided_5pc": 0.11143304684781635
+    },
+    "0.25": {
+     "expected_t": 0.21295566409344027,
+     "p_pass_one_sided_5pc": 0.076086512671796
+    }
+   }
+  },
+  "V1_beats_drift": {
+   "in_sample_units": 572,
+   "in_sample_t": 1.6419345602096573,
+   "snr_per_unit": 0.06865273284649162,
+   "expected_units_in_vault": 113.83084577114428,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 0.7324665750628181,
+     "p_pass_one_sided_5pc": 0.18078250159189063
+    },
+    "0.5": {
+     "expected_t": 0.36623328753140905,
+     "p_pass_one_sided_5pc": 0.10051539199144105
+    },
+    "0.25": {
+     "expected_t": 0.18311664376570452,
+     "p_pass_one_sided_5pc": 0.07190664927048074
+    }
+   }
+  },
+  "V1_gated_upper_half_beats_drift": {
+   "in_sample_units": 286,
+   "in_sample_t": 1.830926514672413,
+   "snr_per_unit": 0.10826495442708847,
+   "expected_units_in_vault": 56.91542288557214,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 0.8167758361956653,
+     "p_pass_one_sided_5pc": 0.2038132231480344
+    },
+    "0.5": {
+     "expected_t": 0.40838791809783265,
+     "p_pass_one_sided_5pc": 0.10814275225519054
+    },
+    "0.25": {
+     "expected_t": 0.20419395904891632,
+     "p_pass_one_sided_5pc": 0.07484042725023876
+    }
+   }
+  },
+  "channel_15m_beats_drift_60m": {
+   "in_sample_units": 394,
+   "in_sample_t": 1.8629748766068244,
+   "snr_per_unit": 0.0938553183842323,
+   "expected_units_in_vault": 78.40796019900498,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 0.8310726020177298,
+     "p_pass_one_sided_5pc": 0.20788520364140106
+    },
+    "0.5": {
+     "expected_t": 0.4155363010088649,
+     "p_pass_one_sided_5pc": 0.10947642685824133
+    },
+    "0.25": {
+     "expected_t": 0.20776815050443245,
+     "p_pass_one_sided_5pc": 0.0753468537303234
+    }
+   }
+  },
+  "V1_plus_channel_15m_independent_stouffer": {
+   "by_effect": {
+    "1.0": {
+     "expected_t": 1.1055891547644896,
+     "p_pass_one_sided_5pc": 0.2948521897976535
+    },
+    "0.5": {
+     "expected_t": 0.5527945773822448,
+     "p_pass_one_sided_5pc": 0.13740357364284722
+    },
+    "0.25": {
+     "expected_t": 0.2763972886911224,
+     "p_pass_one_sided_5pc": 0.0855846399260689
+    }
+   }
+  },
+  "in_sample_short_gamma_sessions": 603
+ },
+ "power_clean_plus_vault": {
+  "V1_net_gt_0": {
+   "in_sample_units": 572,
+   "in_sample_t": 1.909489260379865,
+   "snr_per_unit": 0.07983975685935057,
+   "expected_units_in_vault": 176.43781094527364,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 1.0605106547145382,
+     "p_pass_one_sided_5pc": 0.2794947931203806
+    },
+    "0.5": {
+     "expected_t": 0.5302553273572691,
+     "p_pass_one_sided_5pc": 0.13251129967392417
+    },
+    "0.25": {
+     "expected_t": 0.26512766367863455,
+     "p_pass_one_sided_5pc": 0.08383551787718346
+    }
+   }
+  },
+  "V1_beats_drift": {
+   "in_sample_units": 572,
+   "in_sample_t": 1.6419345602096573,
+   "snr_per_unit": 0.06865273284649162,
+   "expected_units_in_vault": 176.43781094527364,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 0.9119135318414762,
+     "p_pass_one_sided_5pc": 0.2317974835407482
+    },
+    "0.5": {
+     "expected_t": 0.4559567659207381,
+     "p_pass_one_sided_5pc": 0.1172401277555063
+    },
+    "0.25": {
+     "expected_t": 0.22797838296036904,
+     "p_pass_one_sided_5pc": 0.07825970279303895
+    }
+   }
+  },
+  "V1_gated_upper_half_beats_drift": {
+   "in_sample_units": 286,
+   "in_sample_t": 1.830926514672413,
+   "snr_per_unit": 0.10826495442708847,
+   "expected_units_in_vault": 88.21890547263682,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 1.0168777154699324,
+     "p_pass_one_sided_5pc": 0.265009860121745
+    },
+    "0.5": {
+     "expected_t": 0.5084388577349662,
+     "p_pass_one_sided_5pc": 0.12789150875175243
+    },
+    "0.25": {
+     "expected_t": 0.2542194288674831,
+     "p_pass_one_sided_5pc": 0.08216819031079886
+    }
+   }
+  },
+  "channel_15m_beats_drift_60m": {
+   "in_sample_units": 394,
+   "in_sample_t": 1.8629748766068244,
+   "snr_per_unit": 0.0938553183842323,
+   "expected_units_in_vault": 121.53233830845771,
+   "by_effect": {
+    "1.0": {
+     "expected_t": 1.0346770453759984,
+     "p_pass_one_sided_5pc": 0.27087242052307314
+    },
+    "0.5": {
+     "expected_t": 0.5173385226879992,
+     "p_pass_one_sided_5pc": 0.12976237903846444
+    },
+    "0.25": {
+     "expected_t": 0.2586692613439996,
+     "p_pass_one_sided_5pc": 0.08284530711760796
+    }
+   }
+  },
+  "V1_plus_channel_15m_independent_stouffer": {
+   "by_effect": {
+    "1.0": {
+     "expected_t": 1.3764473973443119,
+     "p_pass_one_sided_5pc": 0.39419332242829785
+    },
+    "0.5": {
+     "expected_t": 0.6882236986721559,
+     "p_pass_one_sided_5pc": 0.16937703866609416
+    },
+    "0.25": {
+     "expected_t": 0.34411184933607797,
+     "p_pass_one_sided_5pc": 0.09667342848234062
+    }
+   }
+  },
+  "in_sample_short_gamma_sessions": 603
+ },
+ "timing_s": 214.2
+}

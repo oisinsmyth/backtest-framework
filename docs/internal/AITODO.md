@@ -44,6 +44,12 @@
   - **Inside its null:** 84.6th percentile, about 1 SE.
   - **No pre-2016 sample exists** (the options book starts 2016, and Sierra has no ES contract before ESZ15).
   - **Waiting on the principal.**
+- **D706 PREMISE COUNT (2026-09-30): the unseen slices cannot confirm the short-gamma direction line.**
+  - **The count:** the vault holds 120 short-gamma days (to 2026-09-09) and the clean slice 66. 85–98% of them are
+    short by the ES book alone.
+  - **The power:** best case (V1 + the 15m channel, all 186 days, full in-sample effect), a pass probability of 0.39.
+    At 50% of the effect it is 0.17.
+  - **Waiting on the principal:** park or close the line (R15), or hold it for a longer unseen sample.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
