@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 513 of these records carry neither field —
+**No Status or Category column, deliberately.** 515 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -794,6 +794,8 @@ would look like data. The tokens are what is shown.
 | D719 | NONE TRANSFERS: F2 at the commodity settlement windows carries nothing on metals, grains or natural gas; heating oil cl… | [PRE-REG](D719-PRE-REG-f2-at-the-commodity-settlement-windows.md) · [RESULT](D719-RESULT-none-transfers-ho-signal-at-unviable-size.md) |
 | D720 | D720 STAGE 0 RESULT — sizing by the day-size forecast makes both NQ lines worse: the forecast knows the day's range (Sp… | [record](D720-STAGE-0-DESIGN-size-the-direction-we-have.md) · [RESULT](D720-STAGE-0-RESULT-forecast-big-days-are-where-direction-fails.md) |
 | D721 | D721 DIAG RESULT — the quiet-day F2 pattern is NQ's alone: ES, YM and RTY lean the same way but none clears its rotatio… | [record](D721-DIAG-DESIGN-the-quiet-day-f2-pattern-on-other-roots.md) · [RESULT](D721-DIAG-RESULT-the-quiet-day-pattern-is-nq-only.md) |
+| D722 | D722 DIAG PRE-REGISTRATION — why 2022? Is each line's 2022 dependence scale, count or regime, which measurable variable… | [PRE-REG](D722-DIAG-PRE-REG-why-2022-scale-regime-or-one-bet.md) |
+| D723 | REG — NG Stage A (D630's H2) for the joint vault run: the vault scorer and freeze that D630 §8 requires, programme slot… | [PRE-REG](D723-PRE-REG-ng-stage-a-for-the-joint-vault.md) |
 
 <!-- REGISTER:END -->
 
