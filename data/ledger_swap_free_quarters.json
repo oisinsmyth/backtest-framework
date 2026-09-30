@@ -338,6 +338,22 @@
      "swap_realized_usd": 0,
      "swap_unrealized_change_usd": 0,
      "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2026-Q1": {
+     "source": "0001193125-26-214433",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2026-Q2": {
+     "source": "0001193125-26-340159",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": -5,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "SWAPS_HELD"
     }
    },
    "unparsed": []
@@ -674,6 +690,22 @@
      "swap_realized_usd": 0,
      "swap_unrealized_change_usd": 0,
      "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2026-Q1": {
+     "source": "0001193125-26-214433",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2026-Q2": {
+     "source": "0001193125-26-340159",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
     }
    },
    "unparsed": []
@@ -1005,6 +1037,22 @@
     },
     "2025-Q4": {
      "source": "0001193125-26-077441 minus 0001193125-25-272134 (nine months)",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2026-Q1": {
+     "source": "0001193125-26-214433",
+     "swap_line_at_end": false,
+     "swap_line_at_start": false,
+     "swap_realized_usd": 0,
+     "swap_unrealized_change_usd": 0,
+     "verdict": "FUTURES_ONLY_PROVEN"
+    },
+    "2026-Q2": {
+     "source": "0001193125-26-340159",
      "swap_line_at_end": false,
      "swap_line_at_start": false,
      "swap_realized_usd": 0,
@@ -1350,6 +1398,22 @@
      "swap_line_at_start": true,
      "swap_realized_usd": -28458150,
      "swap_unrealized_change_usd": -10106782,
+     "verdict": "SWAPS_HELD"
+    },
+    "2026-Q1": {
+     "source": "0001193125-26-214433",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 182842525,
+     "swap_unrealized_change_usd": 49226743,
+     "verdict": "SWAPS_HELD"
+    },
+    "2026-Q2": {
+     "source": "0001193125-26-340159",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 77435368,
+     "swap_unrealized_change_usd": -113381322,
      "verdict": "SWAPS_HELD"
     }
    },
@@ -1733,6 +1797,24 @@
      "swap_realized_usd": -8264057,
      "swap_unrealized_change_usd": 63,
      "verdict": "SWAPS_HELD"
+    },
+    "2026-Q1": {
+     "futures_pl_usd": 112498736,
+     "source": "0001104659-26-057766",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -5355632,
+     "swap_unrealized_change_usd": 43,
+     "verdict": "SWAPS_HELD"
+    },
+    "2026-Q2": {
+     "futures_pl_usd": 12761588,
+     "source": "0001104659-26-092626",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 191501,
+     "swap_unrealized_change_usd": -14,
+     "verdict": "SWAPS_HELD"
     }
    },
    "unparsed": []
@@ -2109,6 +2191,24 @@
      "swap_line_at_start": true,
      "swap_realized_usd": -10288671,
      "swap_unrealized_change_usd": 872984,
+     "verdict": "SWAPS_HELD"
+    },
+    "2026-Q1": {
+     "futures_pl_usd": 868656151,
+     "source": "0001104659-26-057764",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": 100202075,
+     "swap_unrealized_change_usd": 5486684,
+     "verdict": "SWAPS_HELD"
+    },
+    "2026-Q2": {
+     "futures_pl_usd": -337661120,
+     "source": "0001104659-26-092623",
+     "swap_line_at_end": true,
+     "swap_line_at_start": true,
+     "swap_realized_usd": -25323661,
+     "swap_unrealized_change_usd": -14970067,
      "verdict": "SWAPS_HELD"
     }
    },

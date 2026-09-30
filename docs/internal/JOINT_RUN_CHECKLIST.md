@@ -9,6 +9,14 @@ written. The wrapper holds `stage0_d663_per_root_gamma_break.RESERVED_FROM` at 2
 own call, and restores it however the call ends. This is D698's `raised_cut` mechanism. No frozen file is edited.
 The D630 §8 path is `scripts/build_ledger_vault_inputs.py`. It needs no new decision number.
 
+**Recorded decisions, NG, 2026-09-30.** Both came from the principal:
+- (a) "I accept" the proposed vault anchors: estimate_fut_share's vault `LAST_ANCHOR` 2026-06-30 and `SWAP_Q_LAST`
+  2026-Q2, with the swap-free quarters extended to 2026-Q2;
+- (b) the settlement strip may be extended for the vault.
+
+Both were carried out on 2026-10-01 (§1, §2.4–2.5), with no vault read. D723, which pre-registers NG Stage A,
+records (a).
+
 ## 0. Before anything: verify (all must pass)
 
 | check | command | 2026-09-30, before / after this prep |
@@ -18,7 +26,8 @@ The D630 §8 path is `scripts/build_ledger_vault_inputs.py`. It needs no new dec
 | `freeze.py` guards | `uv run python scripts/freeze.py --selftest` | 9 checks raise / same |
 | D680, D649 self-tests (synthetic) | `uv run python scripts/vault_d680_nq_compression.py --selftest`; same for `ledger_vault_pp_ng.py` | OK / OK |
 | D680 input path (synthetic) | `uv run python scripts/joint_d680_vault.py --selftest` | OK, 6 checks fire |
-| NG input path (synthetic) | `uv run python scripts/build_ledger_vault_inputs.py --selftest` | OK, 6 checks fire |
+| NG input path (synthetic) | `uv run python scripts/build_ledger_vault_inputs.py --selftest` | OK, 6 checks fire; 2026-10-01: OK, 19 fire (anchors, swap quarters, vault strip) |
+| NG vault strip (synthetic) | `python scripts/build_strip_vault.py --selftest` | 2026-10-01: OK, 12 checks fire |
 
 **Do not run D716's `--selftest` or `--known-answer` before the run.** D711's `load_root` reads the whole rth
 fixture, 2024+ rows included, before it filters.
@@ -36,9 +45,9 @@ Sources: file names, sizes, `.meta.json`, job records, and DBN header start/end.
 | 9 D680 | `fixtures/cme_session_calendar` | 2026-09-09 (meta span) | CME definition/status | Rebuild optional. It sets only G0's half days (none on 09-10 → 09-18) and D671's event flags, which D680 reads only in-sample |
 | 3, 8 NG | Databento ohlcv-1s: CL `GLBX-20260924-UMCCWJ39BQ`, NG `…S5DLBTQTSP`, TAS `…NLQP44SHSR` | headers end **2026-09-19T00:00Z** | free pull (D624) | not needed |
 | 3, 8 NG | `fixtures/fund_nav_daily` | 2026-09-18 (meta, all four funds) | D619 | not needed |
-| 3, 8 NG | `fixtures/fut_settle_strip` | **2026-09-10** (meta, CL/NG/HO/RB) | statistics, `GLBX-20260911-SDNLQ6M99S`, header end 2026-09-11 | **Yes for the data** (statistics from 09-11). **But the builder cannot see it as written:** `build_fut_settle_strip.py:40` reads ONE job dir. It also has no cut, and CL/NG/HO/RB from 2026-09-19 are D626's sealed sample until 10-10 |
-| 3, 8 NG | `fixtures/fund_holdings_quarterly` | last period 2026-06-30 (meta) | SEC filings | n/a |
-| 3, 8 NG | `ledger_swap_free_quarters.json` | **2025-Q4** (all six funds) | `prove_swap_free_quarters.py` | **No.** 2026-Q1 and Q2 are needed if the vault's A6 swap quarters run to 2026-Q2 |
+| 3, 8 NG | `fixtures/fut_settle_strip` (committed, unchanged) → **`joint_run/ng/fut_settle_strip_vault.csv.gz`** (the vault's) | committed: **2026-09-10** (meta, CL/NG/HO/RB) | statistics, `GLBX-20260911-SDNLQ6M99S` (header end 2026-09-11T00:00Z), plus the top-up's `statistics 41 roots` job (daily files from 2026-09-11) | **Yes for the data.** The principal approved extending the strip for the vault (2026-09-30). `scripts/build_strip_vault.py` runs the D556 builder unchanged over both job dirs, found from their job records, with a read-time cut at **2026-09-19T00:00:00Z**. It decodes only files whose header ends by the cut, never opens one that starts at or after it, and refuses one that straddles it. It writes a separate file; the committed fixture, its meta and `data_manifest.json` are never written. Proved 2026-10-01 at the committed reach (details in §4) |
+| 3, 8 NG | `fixtures/fund_holdings_quarterly` | last period 2026-06-30 (meta); every fund's 2026-06-30 schedule filed 2026-08-07 | SEC filings | n/a |
+| 3, 8 NG | `ledger_swap_free_quarters.json` | **2026-Q2** (all six funds; extended 2026-10-01, on the principal's acceptance of 2026-09-30) | `prove_swap_free_quarters.py` (LAST 2026-06-30) | n/a. Extended in place: no freeze hashes it, and the rows to 2025-Q4 are unchanged (+100 lines, 0 removed; `--check` reproduces). 2026-Q1 / Q2: KOLD and SCO F / F; BOIL F / **S** (a $5 realized swap loss in Q2's 10-Q, no swap line at either quarter-end); UCO, UNG and USO S / S |
 | 3, 8 NG | `calendar/events.csv`, `raw/uscf/…-2026.csv`, `fixtures/oecd_ir3tib_monthly.csv` | 2026-12-31 / 2026 / 2026-08 | on disk | n/a |
 
 **The one Databento gap the top-up does not close:** GLBX.MDP3 `ohlcv-1m`, `ALL_SYMBOLS` (stype_in `raw_symbol`,
@@ -59,14 +68,28 @@ evening from 18:00 ET. `mbo` has the same hole (not needed here).
    - It writes `fut_{ES,NQ,YM,RTY}_rth_1m`, `fut_index_sessions` and `fut_index_rolls` in place, so the manifest shas
      move. D716 reads `data/fixtures/` of the checkout it runs in.
 3. Refresh SPY daily to ≥ 2026-09-18 into a separate path, for `--spy`.
-4. Extend the settlement strip to 2026-09-18.
-   - It needs the new statistics job dir. `RAW` is one dir, so this means a wrapper or a change.
-   - Read nothing for CL/NG/HO/RB dated ≥ 2026-09-19 before D626's read on 10-10.
-   - Then update `data_manifest.json` deliberately (`load_panel` checks the digest).
-5. NG choices, the principal's:
-   - estimate_fut_share's vault `LAST_ANCHOR` and `SWAP_Q_LAST` (proposed 2026-06-30 and 2026-Q2; there is no
-     default);
-   - swap-free quarters to 2026-Q2.
+4. Extend the settlement strip to 2026-09-18. **Built: `scripts/build_strip_vault.py`** (the principal approved it,
+   2026-09-30).
+   - Before the run: `python scripts/build_strip_vault.py --discover` (SYSTEM python; headers only). It must list the
+     top-up's `statistics 41 roots` job (from `data/prelapse_topup_jobs.json`, with `downloaded_utc`), and at the
+     2026-09-19T00:00:00Z cut its files must stop at the 2026-09-18 daily file.
+   - The cut is 2026-09-19T00:00:00Z, which is 2026-09-18 20:00 EDT. That is after the last vault session's close and
+     every 09-18 settlement window, and before any instant dated 09-19 in ET or UTC. It is the same instant as the NG
+     Databento step's `TS_SEAL_V`.
+   - Nothing stamped ≥ 2026-09-19 is decoded, for any root. That covers CL/NG/HO/RB, D626's sample until its read on
+     10-10.
+   - Cost of the wall-clock cut, measured in-sample on 2024: 0 settlements change value, and 0.17% of rows (NG 2, CL
+     12 a year) have no record before the next UTC midnight. Only the vault's last sessions are exposed.
+   - **`data_manifest.json` is NOT updated.** The vault strip is a separate file. `--build-vault panels` stages it,
+     like every catalogue panel, into its own root with its own manifest.
+   - The committed fixture stays as it is: `data/index_reweight/FROZEN_2027.json` and D709's records hash or name it.
+5. NG choices: **decided by the principal on 2026-09-30, "I accept".**
+   - estimate_fut_share's vault `LAST_ANCHOR` is **2026-06-30** and `SWAP_Q_LAST` is **2026-Q2**. These are now the
+     defaults of `--build-vault panels`, recorded in the code with the principal's word. The two flags still override
+     them, but only as a pair, and the panel manifest records which pair was used.
+   - The swap-free quarters are **extended to 2026-Q2** (done 2026-10-01, see §1).
+   - The build refuses unless every fund's proof reaches `SWAP_Q_LAST`. It also refuses unless every fund's
+     `LAST_ANCHOR` schedule was filed before the cut. All six were filed on 2026-08-07.
 6. **NG Stage A has no vault scorer.**
    - D630 §8 requires a freeze first, `data/ledger_frozen_vault_h2_ng.json` (runner, both builders, the record).
    - Neither that file nor a `--vault` mode in `run_h2_ng_stage_a.py` exists. The pass criteria are in the Stage A
@@ -95,18 +118,47 @@ A 216 / +$25.578712 and the take-session hashes.
    - It holds the cut and calls the frozen `main`. The frozen `main` re-proves 387 C1 trades, +6.93 / +7.56 bp,
      then scores.
 
-**Slots 3 and 8, NG** (after §2.4–2.6):
-1. `python scripts/build_ledger_vault_inputs.py --prove dbn`, then `uv run … --prove panels`. This is the in-sample
-   reference the vault build is compared against.
-2. `python scripts/build_ledger_vault_inputs.py --build-vault dbn --principals-word "..."`. It checks that every
-   file ends by 2026-09-19T00:00Z and that files do not overlap, and that the rows before 2025-03-01 equal the
-   frozen files'.
-3. `uv run python scripts/build_ledger_vault_inputs.py --build-vault panels --principals-word "..." --fut-share-anchor … --swap-q-last …`
+**Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
+files):
+1. In-sample references, each with no vault read. **All three must pass before any vault step.**
+   - `python scripts/build_ledger_vault_inputs.py --prove dbn` (SYSTEM python, ~15 min).
+   - `uv run python scripts/build_ledger_vault_inputs.py --prove panels` (~1.5 min; needs the first).
+   - `python scripts/build_strip_vault.py --prove` (SYSTEM python, ~2 min). This reproduces the committed strip at its
+     own reach, with the top-up present and excluded by the cut.
+2. `python scripts/build_strip_vault.py --discover`. This reads headers only. Check that the top-up's statistics job is
+   listed and that the vault cut decodes files through `…20260918…` only.
+3. `python scripts/build_ledger_vault_inputs.py --build-vault dbn --principals-word "..."` (SYSTEM python).
+   - It checks that every file ends by 2026-09-19T00:00Z and that files do not overlap.
+   - It checks that the rows before 2025-03-01 equal the frozen files'.
+4. `python scripts/build_strip_vault.py --build-vault --principals-word "..."` (SYSTEM python, ~2 min).
+   - It refuses without the top-up's downloaded statistics job, if the decoded files stop short of the cut, and if a
+     file straddles the cut.
+   - After the build it refuses if any row is past 2026-09-18, if NG or CL ends before 2026-09-18, or if the rows
+     before 2025-03-01 differ from the committed strip's.
+   - It writes `data/joint_run/ng/fut_settle_strip_vault.csv.gz`, its `.meta.json` and
+     `fut_settle_strip_vault_manifest.json`. It builds once: a failed post-check leaves the files but no manifest,
+     so step 5 refuses, and the principal decides.
+5. `uv run python scripts/build_ledger_vault_inputs.py --build-vault panels --principals-word "..."`
+   - Its defaults are the principal's anchors (LAST_ANCHOR 2026-06-30, SWAP_Q_LAST 2026-Q2). Override them only as a
+     pair: `--fut-share-anchor … --swap-q-last …`.
+   - It refuses if the vault strip or its manifest is missing, or they disagree, or either lacks the word, the cut or
+     the reach.
+   - It refuses unless every fund's swap-free proof reaches `SWAP_Q_LAST` and every `LAST_ANCHOR` schedule was filed
+     before the cut.
    - It refuses if the NAV or the strip ends before 09-18.
    - It refuses if an in-sample day on or before 2024-12-31 moved.
-   - It writes `data/joint_run/ng/d630_vault_trade_table.csv`.
-4. D649: `uv run python scripts/ledger_vault_pp_ng.py --vault data/joint_run/ng/d630_vault_trade_table.csv --principals-word "..."`.
-5. Stage A (slot 3): only once §2.6's scorer exists and is frozen.
+   - It writes `data/joint_run/ng/d630_vault_trade_table.csv` and `panels_manifest.json`. The manifest records the
+     strip's sha256 and the anchors used.
+6. D649 (slot 8): `uv run python scripts/ledger_vault_pp_ng.py --vault data/joint_run/ng/d630_vault_trade_table.csv --principals-word "..."`.
+7. Stage A (slot 3) is D723. `scripts/vault_d723_ng_stage_a.py` is being written on another branch.
+   - Its freeze, `data/ledger_frozen_vault_h2_ng.json`, is written once, after this input path is final. It should
+     hash `build_ledger_vault_inputs.py` and `build_strip_vault.py`.
+   - It should also hash the strip builder's three modules: `build_fut_settle_strip.py`, `build_fut_open_interest.py`
+     and `build_fut_breadth_hourly.py`.
+   - Its run: `--vault --trade-table PATH --principals-word "..."` (D723 §4).
+   - **Which table is PATH.** D723 re-proves the known answer on the table's in-sample rows.
+     `d630_vault_trade_table.csv` holds only the rows dated 2025-03-01 → 2026-09-18. The full table from step 5 is
+     `data/joint_run/ng/d630_trade_table.csv`. The runner's author must say which one it takes.
 
 ## 4. Proofs on record (in-sample, 2026-09-30; scratch in `temp/`)
 
@@ -138,3 +190,25 @@ restricted as text on their date column.
   So the vault build (main year files, no tail) cannot move the prefix.
 - The signed window panel (H1, Sierra) is frozen but is not a D630 input, and was not rebuilt.
 - Every check fired on its break.
+
+**NG vault strip, 2026-10-01.** `build_strip_vault.py --prove`, 1.7 min, SYSTEM python.
+- **What it read.** The cut was the committed strip's reach, 2026-09-11T00:00:00Z. The 17 files decoded are exactly
+  the committed build's. This is the committed fixture's own extent: nothing was decoded past 2026-09-10's statistics,
+  and only hashes and counts were printed.
+- **The result.**
+  - The CSV text is identical: sha256 `9ca14785…a6381c`, 3,319,301 rows.
+  - The gzip bytes are identical to `data/fixtures/fut_settle_strip.csv.gz` (sha256 `33a74685…7f639e`, as in its meta
+    and `data_manifest.json`) once the header's 4-byte MTIME is set to the committed file's.
+  - That MTIME is the build time. pandas writes it and the builder does not pin it, so raw byte identity is impossible
+    without editing the builder.
+  - The meta's counts, drops and per-root spans are identical.
+- Three checks fired on their breaks.
+- **`--prove panels` after the change** (1.2 min; the extended swap-free file in place). The changed code is
+  `stage_catalogue`'s source override, the anchor defaults and the vault checks. The proof re-ran:
+  - fut-share A6 `f8b0028c…`, calendar `7c2ade96…`, flow `b91d527f…` / `5e34bcab…` and the trade table
+    `de906a48…`, all as on 2026-09-30;
+  - D630 n 1,028 / $66.0214007782101, and D649's 270 trades / MNG net $15.43.
+  `--prove dbn` was not re-run (~15 min): its code is unchanged, and `--prove panels` first checks its two outputs
+  against the freeze's sha256.
+- **Swap-free quarters.** Re-run to 2026-06-30. `--check` reproduces it byte for byte, the controls pass, and the
+  quarters to 2025-Q4 are unchanged.

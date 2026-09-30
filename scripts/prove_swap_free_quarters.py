@@ -30,8 +30,14 @@ Controls, each able to fire:
   * UCO held swaps at every quarter-end and MUST show non-zero swap P&L in every quarter read;
   * every Q3 10-Q's nine-month figure MUST equal the sum of its three quarters.
 
+Extended 2026-10-01 to 2026-Q2 (LAST, a year bound: every 10-Q/10-K whose period ends in 2016..2026). The
+principal accepted the NG vault anchors on 2026-09-30 ("I accept"), with the swap-free quarters extended to
+2026-Q2, for the joint run's estimate_fut_share (SWAP_Q_LAST 2026-Q2). The rows through 2025-Q4 are unchanged,
+checked against the previous file; readers filter by quarter (estimate_fut_share keeps q <= its SWAP_Q_LAST).
+
     uv run python scripts/prove_swap_free_quarters.py            # build and write the JSON
     uv run python scripts/prove_swap_free_quarters.py --check    # rebuild and compare byte for byte
+    ... --data-root PATH   # read the filings and holdings from another checkout's data/ (a worktree has none)
 """
 from __future__ import annotations
 
@@ -44,11 +50,12 @@ from pathlib import Path
 from typing import Any
 
 REPO = Path(__file__).resolve().parents[1]
+BASE = REPO  # the checkout whose data/ is read; --data-root moves it (the sources are recorded relative to it)
 FILES = REPO / "data" / "raw" / "recorder" / "sec_fund_filings"
 HOLDINGS = REPO / "data" / "fixtures" / "fund_holdings_quarterly.csv.gz"
 OUT = REPO / "data" / "ledger_swap_free_quarters.json"
 FUNDS = ("BOIL", "KOLD", "SCO", "UCO")  # UCO is the positive control; SCO added 2026-09-24 (AITODO 1d)
-FIRST, LAST = "2016-12-31", "2025-06-30"
+FIRST, LAST = "2016-12-31", "2026-06-30"  # LAST was 2025-06-30 (so 2025-Q4) until 2026-10-01; see the docstring
 
 
 class ProofError(RuntimeError):
@@ -308,7 +315,7 @@ def build() -> dict[str, object]:
             "(line absent or dash) AND no swap line at either bounding quarter-end; SWAPS_HELD otherwise; "
             "UNPROVEN when a statement or a quarter-end is missing or unparsed. Q4 = 10-K year minus Q3 10-Q nine months."
         ),
-        "sources": {"filings": str(FILES.relative_to(REPO)).replace("\\", "/"), "holdings": str(HOLDINGS.relative_to(REPO)).replace("\\", "/")},
+        "sources": {"filings": str(FILES.relative_to(BASE)).replace("\\", "/"), "holdings": str(HOLDINGS.relative_to(BASE)).replace("\\", "/")},
         "controls": [
             "BOIL 2023-Q1..Q3 read SWAPS_HELD (they held swaps at quarter-end)",
             "UCO never reads FUTURES_ONLY_PROVEN (it held swaps at every quarter-end)",
@@ -322,7 +329,14 @@ def build() -> dict[str, object]:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--data-root", type=Path, default=None, help="another checkout's data/ (filings, holdings)")
     a = ap.parse_args(argv)
+    if a.data_root is not None:
+        global BASE, FILES, HOLDINGS
+        BASE = a.data_root.resolve().parent
+        FILES = a.data_root / "raw" / "recorder" / "sec_fund_filings"
+        HOLDINGS = a.data_root / "fixtures" / "fund_holdings_quarterly.csv.gz"
+        B.ROOT = a.data_root / "raw" / "recorder"
     doc = build()
     text = json.dumps(doc, indent=1, sort_keys=True) + "\n"
     if a.check:
