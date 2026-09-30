@@ -43,6 +43,28 @@
     - It survived in-sample (D696), but its effect lives in 2019-07 → 2022-08. The most recent window shows nothing.
     - D698 was never frozen or scored. Slot 10 was never registered and stays free.
     - Do not re-test it in-sample with a new split.
+  - **EXPECTED-PROFIT FILTER LEADS (the principal, 2026-09-30).** A 7-agent scan of D1–D700 looked for trades whose
+    mechanism works before costs but fails after them. The figures below were checked by an independent verification
+    pass. D1–D200 held no usable candidate.
+    - **1. ES last-hour continuation (D618 §3c): REOPENED by the principal ("that is the whole point of this study"),
+      and IN PROGRESS.**
+      - **The trade:** the sign of 14:30 → 15:30, held 15:30 → 16:00.
+      - **Numbers:** gross +$3.40 per MES trade (rank 0.999 against an enumerated rotation), fee 1.25× gross, hit
+        0.493 with median 0. 2016–17 was negative.
+      - **Prior evidence:** D688's gamma filter at 2× cost failed on the close (t 0.30). An IV filter is untried.
+      - **Next:** the oracle profile at MES (D702), then filters designed with the principal. 2024-01 → 2025-02 is
+        unread and reserved.
+    - **2. CL settlement flow (D648): OPEN**; the form choice (x_GM vs x_SR) is with the principal.
+      - **The trade** runs with the funds into the window: +$28.46 gross, t 2.230 against a bar of 2.241, net −$3.00
+        at $31.46. The fade after the window (T3) is +$22.34, t 3.18, not cost-tested.
+      - **The x_GM-filtered form is already read in-sample** (+$14.91 over 70 MCL trades), so a confirmation needs
+        unread CL data. CL is sealed until 2026-10-10, and CL's vault holds no look.
+    - **3. CL hourly log-MACD (D484/D495): CLOSED** under R15 (D675). Gross Sharpe +1.09 against net +0.11. It needs
+      the principal's word, and CL's in-sample slices are spent.
+    - **4. 5-day reversal in US single names (D350/D353): OPEN, unpromoted, personal book.**
+      - **Numbers:** gross +43.4 bp (t 4.8), hit 51.5 %; net −18.6 on the published spread, +17.9 on the per-bar
+        convention.
+      - Tradeability waits on D336's quoted-spread pull. No expected-profit filter tried.
   - **DEFERRED to a future study (the principal, 2026-09-30): implied volatility as a trade.**
     - **The design, drafted but not registered or numbered:** sell the ATM ES Friday-PM weekly straddle at Friday's
       settlement and hold it to the next Friday's 16:00 expiry. That is one non-overlapping trade a week, about 460

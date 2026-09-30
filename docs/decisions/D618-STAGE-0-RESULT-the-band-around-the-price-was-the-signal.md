@@ -386,3 +386,33 @@ known-answer case before it is trusted.** S1b was written to catch a real failur
 plausibly, passed a synthetic unit test, rejected everything, and was wrong. What exposed it was building an
 object whose answer was known in advance and checking that the screen admitted it. Any future gate that
 *rejects* rather than *reports* should be shown to pass an oracle before its rejections are believed.
+
+## REOPENED by the principal, 2026-09-30, for the expected-profit (size) filter study
+
+*The principal: "Reopen it, that is the whole point of this study".*
+
+**What is reopened, and why.** §3c's last-hour continuation is reopened: the sign of 14:30 → 15:30, held 15:30 →
+16:00. It came first in a scan of D1–D700 for constructions whose mechanism works before costs but fails after them.
+- **Its gross passes its null:** rank 0.9990 against an enumerated rotation.
+- **At one MES the fee is 1.25× the gross.**
+- **Its edge is in the size of the move, not its direction:** hit rate 0.4929, median trade 0. That is the shape a
+  pre-entry size forecast could exploit, which the hourly continuation of D689/D690 lacked.
+- The question is whether a size forecast known at 15:30 can select the sessions whose move covers the cost.
+
+**What carries over from §3e, unchanged:**
+- **The power argument.** Any filtered book must state its expected holdout t before a slice is spent.
+- **The 2016–17 era failure,** declared in advance.
+- **The personal-book framing.** At one ES the barrier fails, so the prop account is not the target.
+- **Nothing in §3c/§3d counts as a test.** They were disclosed looks.
+
+**Prior evidence carried in:**
+- D688's Gate 2 applied a dealer-gamma expected-profit filter at 2× cost to the close. It failed: 235 MES trades,
+  net +$1.91, t 0.30.
+- D690 found a perfect size-only oracle worth about nothing on the hourly continuation.
+- An implied-vol filter on this clock has never been tried.
+
+**The slices.** In-sample is §3c's window, 2016-01-04 → 2023-12-29. **2024-01-01 → 2025-02-28 has never been read
+for this trade.** It is this line's confirmation slice and is reserved. The vault is untouched.
+
+**The order of work** follows the principal's rules for filters: the oracle profile at MES first (D702), then the
+candidate filters designed with the principal, then a pre-registration.
