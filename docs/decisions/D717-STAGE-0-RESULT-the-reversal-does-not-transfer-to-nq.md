@@ -77,3 +77,12 @@ It is missed in dollars and in bp alike. Pooled daily, the two roots net −$1.1
    - D717 found nothing on NQ.
 3. **Under R15, this closes the reversed construction.** Whether to close the avenue (first-hour aggressor flow as a
    direction conditioner on index futures) is the principal's call. The new NQ flow fixture stays as data.
+
+## CLOSED, 2026-09-30, on the principal's word
+
+The principal: "Close B and its reversal under R15."
+- **Closed under R15:** proposal B (the absorbed morning move, D715) and its reversal (follow pushed and fade absorbed
+  first-hour moves, D717), on ES and NQ, including any filter or cut of either.
+- **Not closed:** the wider avenue, first-hour aggressor flow as a direction conditioner on index futures, was not
+  ruled on.
+- **Kept as data:** `fut_NQ_signed_1m`, beside D695's ES file.

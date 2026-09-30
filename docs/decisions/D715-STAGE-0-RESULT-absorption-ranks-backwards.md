@@ -82,3 +82,12 @@ The gradient is monotone across the middle and clearly the wrong way.
 3. **Under R15 this closes proposal B's construction.** Closing the avenue (aggressor flow as a direction conditioner on
    the ES day session) is the principal's call. With D695 and D704, this is the third flow-conditioner result that does
    not establish direction.
+
+## CLOSED, 2026-09-30, on the principal's word
+
+The principal: "Close B and its reversal under R15."
+- **Closed under R15:** proposal B (the absorbed morning move, D715) and its reversal (follow pushed and fade absorbed
+  first-hour moves, D717), on ES and NQ, including any filter or cut of either.
+- **Not closed:** the wider avenue, first-hour aggressor flow as a direction conditioner on index futures, was not
+  ruled on.
+- **Kept as data:** `fut_NQ_signed_1m`, beside D695's ES file.
