@@ -260,3 +260,45 @@ the decision goes to the principal before slot 10 is spent.
   - the vectorised rotation equals a loop over offsets on a sample of offsets;
   - on synthetic data, an injected X effect gives p ≤ 0.01;
   - clustered noise (a persistent label, no effect) gives p ≤ 0.10 in at most about 12 % of draws.
+
+## Status after the amended power check (2026-09-30): NOT FROZEN; the calibration clause triggered; referred to the principal
+
+**The run:** the amended runner (`650271bf`), `--power`, output `data/vault_d698_power.json`. The known answers and the
+rehearsal held.
+- **The selftest:** on clustered synthetic noise, the rotation test gave p ≤ 0.10 in exactly 10.0 % of worlds, where
+  the registered pooled z gave 13.0 % on the same worlds.
+- **The test itself is calibrated.**
+
+**In-sample, the whole window rotated within itself** (reported, not a vault result):
+- T = −9.37 against a null p5 of −4.13 and p50 of −0.05;
+- **p = 0.0006** (1 of 1,732 offsets), with all four d < 0.
+
+**Power on 278 contiguous 385-session windows** (about 4.6 independent ones):
+
+| effect kept | PASS | promotion | median p |
+|---:|---:|---:|---:|
+| 100 % | 0.67 | 0.17 | 0.032 |
+| 50 % | 0.41 | 0.00 | 0.19 |
+| 25 % | 0.29 | 0.00 | 0.31 |
+| **0 %** | **0.26** | 0.00 | 0.48 |
+
+**A1's calibration clause fails: the 0 % line's PASS rate is 0.26, above 0.10. Nothing is frozen.**
+
+**The reason is the lead, not the test** (`scripts/diag_d698_heterogeneity.py`, `data/diag_d698_heterogeneity.json`,
+in-sample). The cell's X − rest difference is concentrated in time:
+
+| non-overlapping window | at 100 % effect | d by slice (ES E4 / NQ E4 / ES D663 / NQ D663), bp |
+|---|---|---|
+| 2018-01 → 2019-07 | FAIL, p 0.29 | −6 / −21 / +5 / +4 |
+| 2019-07 → 2021-02 | PASS, p 0.003 | −34 / −25 / −24 / −12 |
+| 2021-02 → 2022-08 | PASS, p 0.026 | −6 / −34 / +2 / −15 |
+| **2022-09 → 2024-03** | **FAIL, p 0.34** | −2 / −5 / −5 / +5 |
+
+- **By year:** ES's slices carry most of their effect in 2020 (E4 −38.6, D663 −31.3). NQ's E4 slice is negative in
+  every full year except 2023.
+- **Subtracting the full-sample average does not make a window null** when the local effect swings this much. That is
+  why the 0 % line passes 26 % of the time.
+- **The most recent in-sample window,** the one nearest the vault in time, shows no effect on three of the four slices.
+- **The 100 % power of 0.67 is therefore optimistic** for a vault that resembles the recent regime.
+
+**§4's rule sends the decision to the principal.** Slot 10 is unspent.

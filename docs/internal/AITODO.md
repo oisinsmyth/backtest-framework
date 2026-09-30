@@ -34,10 +34,18 @@
   - **D696: the busy-realised / low-IV/RV cell SURVIVES in-sample** (ES −7.4 bp, NQ −14.7 on the plain break).
     - It is beyond the six-cell search (0 of 2,182 rotations), beyond the IV ingredient null (2.3 %, thin), and the
       worst cell of D663's break too (0.7 %).
-    - **Next, on the principal's word:** a pre-registration for unseen data. The vault holds about 18 (E4) or 33
-      (D663) X breaks a root, so it needs a pooled design or forward recording.
-    - The object is still to be chosen: a veto of the plain break, the NQ fade (NQ reads REVERSAL), or the cell's
-      rank.
+    - **D698 (the vault pre-reg), amended by D698-A1: NOT FROZEN, and waiting on the principal.**
+      - A1 replaced the pooled z test, which gave 0.21 false PASS, with a rotation test inside the vault. The selftest
+        shows it is calibrated.
+      - The amended power check's 0 % line still PASSes 0.26 of windows, so A1's calibration clause triggered.
+      - **The reason is the lead:** its effect is concentrated in 2019-07 → 2022-08. The most recent in-sample window
+        (2022-09 → 2024-03) shows nothing (p 0.34).
+      - In-sample overall: p 0.0006.
+      - **Options:**
+        - freeze and spend slot 10 anyway, with honest power below 0.67;
+        - hold for forward data (that needs a post-lapse options source);
+        - close the lead as unstable.
+      - Slot 10 is unspent.
   - D691 §8's "ES has no unread index slice" was unsupported. ES's vault window is sealed and unread for break
     constructions (D694 §0).
   **Check every branch, and the commit messages, before claiming a number.**
