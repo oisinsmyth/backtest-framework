@@ -298,3 +298,60 @@ proven bit-identical in the self-test.
 
 A deviation found by an agent is recorded as an amendment committed before the affected run, or disclosed in the
 RESULT if found after it.
+
+## Amendment D722-A1 (2026-10-01), after Phase 0 was built and before any Part A–D runner exists
+
+**Phase 0 is built:**
+- `scripts/diag_d722_lines.py` and `scripts/diag_d722_conditioners.py`;
+- aggregates in `data/diag_d722_lines_summary.json` and `data/diag_d722_conditioners_summary.json`.
+
+Every §1 known answer reproduced exactly, and every self-test canary raises. I checked the tables and the panel
+independently: counts, means, the seal, and net = gross − cost.
+
+**The rulings:**
+
+1. **K1 takes a seal-preserving path.**
+   - `run_d508_stretch_ranker.load_arm` passes the whole hourly fixture, through 2026, into `D504.build` before clipping.
+   - Phase 0 runs the same steps, but filters the fixture to days before 2024-01-01 as it is read, before `D504.build`.
+   - `D504.build` is causal. It reproduces 1,876 sessions and $15,423.41, within $1 of `REPRO_NET`, and D504's per-year
+     totals to 2.3e-13.
+   - **K1's rows:** one per traded session (1,708), side from a replay of D491's `simulate`, asserted identical, with 0
+     on the 200 sessions that flipped. Untraded sessions are $0 in Part D.
+2. **X9's third date changes.**
+   - IRS IR-2021-54 and Treasury jy0063: EIP3 payments "began processing on Friday, March 12", with deposits "as early
+     as this weekend".
+   - So the first deposit date is 2021-03-13, and the window starts at the first session after it, **2021-03-15.**
+   - The rule (35 sessions from the first deposit) is unchanged; only the approximated date is corrected. EIP1
+     (2020-04-10, first session 04-13) and EIP2 (2020-12-29) were verified as stated.
+   - The record's date is kept as `X9_record`: reported, but not in the Holm family.
+3. **X6 horizon.**
+   - §3's 30-minute returns are X6, in the family.
+   - D487's own horizon was 15 minutes. It is built as `X6_15m`: reported beside X6, **not** in the Holm family.
+   - The window is the 60 most recent full sessions strictly before the session.
+   - **HO's X6:** the band 09:00–14:29, 11 thirty-minute buckets. A session counts as full when all 12 anchor bars are
+     present.
+4. **The sig20 conventions:**
+   - **ES and NQ:** D663's `root_frame` exactly (the roll-day front-to-front return included), matched to 1.8e-16.
+   - **HO and CL (X5):** the same contract's daily settlement log return, which is roll-free. A front-to-front series
+     would carry the roll spread: up to 10 % on HO and 27 % on CL in sig20.
+   - **X4:** ZT changes across a front change are excluded, as §3 says.
+5. **Disclosed, no ruling needed:**
+   - **Settlement windows** skip the archive dropouts (2020-02-27 and 2020-06-30 on CL, HO and ZT).
+   - **Five macro events fall on no session** and flag nothing: four Good Friday releases and the Sunday FOMC of
+     2020-03-15.
+   - **X10** jumps after half-day holiday sessions.
+   - **X3** is defined on D688's 1,993 days, of which D699 keeps 1,989.
+   - **Calendar dates beyond 2023:** D688's panel, on L3's and X3's path, reads trading-day calendar dates after 2023
+     to count options' days to expiry. These are exchange dates, not market values, as in D699's own run. No price,
+     settlement, GEX or option value dated 2024 or later enters.
+6. **What I have seen before Part B's statistics exist:**
+   - each line's by-year table (§1's records);
+   - each variable's per-year mean, from checking the panel.
+   - **Notable from those means:**
+     - X4 (rates volatility) is highest in **2022 and 2023** (ES rows −1.91 and −1.88, against −2.49 to −3.63 in
+       2016–2021).
+     - X5 (CL volatility) is not elevated in 2022 (−3.61, against 2020's −3.44).
+   - **X9 is zero on every 2022 session by construction** (the payment windows are 2020–21). Its fitted prediction for
+     2022 is therefore the baseline, and φ reflects only the slope's sign and size. Prediction 6's X9 half is close to
+     vacuous, and is scored as stated.
+
