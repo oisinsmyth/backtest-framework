@@ -7,8 +7,20 @@ inputs before the Databento subscription lapses); the vault is never opened here
     uv run python scripts/build_ledger_vault_inputs.py --prove panels   # in-sample only; needs --prove dbn first
     uv run python scripts/build_ledger_vault_inputs.py --selftest       # synthetic only
     python scripts/build_ledger_vault_inputs.py --build-vault dbn --principals-word "..."            # joint run ONLY
+    python scripts/build_strip_vault.py --build-vault --principals-word "..."                        # joint run ONLY
     uv run python scripts/build_ledger_vault_inputs.py --build-vault panels --principals-word "..." \\
-        --fut-share-anchor YYYY-MM-DD --swap-q-last YYYY-Qn                                           # joint run ONLY
+        [--fut-share-anchor YYYY-MM-DD --swap-q-last YYYY-Qn]                                         # joint run ONLY
+
+THE VAULT ANCHORS ARE THE PRINCIPAL'S (2026-09-30, "I accept"): estimate_fut_share's vault LAST_ANCHOR = 2026-06-30
+and SWAP_Q_LAST = 2026-Q2, with the swap-free quarters (data/ledger_swap_free_quarters.json) extended to 2026-Q2.
+They are the defaults of `--build-vault panels`; the two flags override them, and the panel manifest records which.
+
+THE VAULT STRIP. `--build-vault panels` reads the settlement strip from `data/joint_run/ng/fut_settle_strip_vault.csv.gz`
+(scripts/build_strip_vault.py: the D556 builder unchanged over the original and the top-up statistics job dirs, cut at
+2026-09-19T00:00:00Z), never from data/fixtures/fut_settle_strip.csv.gz, and refuses unless that file's manifest
+carries the principal's word, the cut, a matching sha256, NG and CL reaching 2026-09-18 and an identical in-sample
+prefix. It is staged, like every catalogue panel, into its own repo root with its own manifest, so data/data_manifest.json
+is neither read for it nor updated.
 
 THE PLAN (docs/internal/AITODO.md, "PARKED (the principal, 2026-09-28): D630 s.8's vault-input path"): load each
 frozen builder UNCHANGED, move only its cut and its output paths, prove it first with the cut left at 2025-03-01 by
@@ -85,6 +97,13 @@ NAMES = {"wp": "ledger_window_volume_daily.csv.gz", "wp_sum": "ledger_window_vol
          "table": "d630_trade_table.csv"}
 D630_KNOWN = {"n": 1028, "gate_mean": 66.0214007782101}  # data/ledger_h2_ng_stage_a.json NG.gate
 REFUSED = 2
+# The principal, 2026-09-30, on the proposed vault anchors: "I accept" (estimate_fut_share's vault LAST_ANCHOR
+# 2026-06-30 and SWAP_Q_LAST 2026-Q2; the swap-free quarters extended to 2026-Q2). The panel step's defaults.
+VAULT_ANCHOR, VAULT_SWAP_Q = "2026-06-30", "2026-Q2"
+SWAP_FUNDS = ("BOIL", "KOLD", "SCO", "UCO", "UNG", "USO")
+STRIP_V = JOINT / "fut_settle_strip_vault.csv.gz"            # scripts/build_strip_vault.py --build-vault
+STRIP_V_MANIFEST = JOINT / "fut_settle_strip_vault_manifest.json"
+STRIP_REACH_ROOTS = ("NG", "CL")
 
 
 class VaultInputError(RuntimeError):
@@ -324,16 +343,22 @@ def restrict_by_column(src: Path, col: str, before: str) -> tuple[bytes, dict[st
     return gzip.compress(out.getvalue().encode("utf-8"), mtime=0), {"kept": kept, "dropped": dropped, "last_kept": last}
 
 
-def stage_catalogue(stage: Path, before: str) -> dict[str, Any]:
-    """A repo root holding the three catalogue panels restricted before `before`, and a manifest of their digests."""
+def stage_catalogue(stage: Path, before: str, src: dict[str, Path] | None = None) -> dict[str, Any]:
+    """A repo root holding the three catalogue panels restricted before `before`, and a manifest of their digests.
+    `src` replaces a panel's source file (the vault strip); it is staged at the catalogue's own path."""
     import backtest_framework.data.panel_catalogue as PC
     info, files = {}, []
+    src = src or {}
+    if set(src) - set(CATALOGUE):
+        raise VaultInputError(f"no catalogue panel {sorted(set(src) - set(CATALOGUE))}")
     for name, col in CATALOGUE.items():
         spec = PC.spec_for(name)
         rel = spec.path
         if spec.date_col != col or spec.date_format != "iso_day":
             raise VaultInputError(f"{name}: the catalogue cuts on {spec.date_col} ({spec.date_format}), not {col}")
-        gz, info[name] = restrict_by_column(MAIN_DATA.parent / rel, col, before)
+        gz, info[name] = restrict_by_column(src.get(name, MAIN_DATA.parent / rel), col, before)
+        if name in src:
+            info[name]["source"] = str(src[name])
         p = stage / rel
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_bytes(gz)
@@ -394,11 +419,11 @@ def cut_pairs(M: dict[str, Any], cut: str, last: str, a6: tuple[str, ...]) -> li
 
 
 def build_panels(M: dict[str, Any], cut: str, last: str, a6: tuple[str, ...], dbn_dir: Path, stage: Path,
-                 out_dir: Path) -> dict[str, Any]:
+                 out_dir: Path, src: dict[str, Path] | None = None) -> dict[str, Any]:
     """Steps 3-6 with every cut held, reading the staged catalogue panels and the Databento step's outputs."""
     FS, CAL, FP, R, H, U = M["FS"], M["CAL"], M["FP"], M["R"], M["H"], M["U"]
     out_dir.mkdir(parents=True, exist_ok=True)
-    rep: dict[str, Any] = {"staged": stage_catalogue(stage, cut)}
+    rep: dict[str, Any] = {"staged": stage_catalogue(stage, cut, src)}
     for name in ("fund_nav_daily", "fut_settle_strip"):  # a short input would drop the last days silently
         if rep["staged"][name]["last_kept"] < last:
             raise VaultInputError(f"{name} ends {rep['staged'][name]['last_kept']}, short of {last}: rebuild it first")
@@ -525,6 +550,64 @@ def refuse(word: str | None) -> bool:
     return False
 
 
+def check_anchor_pair(anchor: str, swap_q: str) -> None:
+    """A quarter-end on or before the vault's end, and the swap quarter it closes (A6 paired 2024-12-31 with 2024-Q4)."""
+    ends = {"03-31": "Q1", "06-30": "Q2", "09-30": "Q3", "12-31": "Q4"}
+    if len(anchor) != 10 or anchor[5:] not in ends or not anchor[:4].isdigit() or anchor > VAULT_END:
+        raise VaultInputError(f"LAST_ANCHOR {anchor!r} is not a quarter-end on or before {VAULT_END}")
+    if swap_q != f"{anchor[:4]}-{ends[anchor[5:]]}":
+        raise VaultInputError(f"SWAP_Q_LAST {swap_q!r} is not the quarter LAST_ANCHOR {anchor} closes; override both together")
+
+
+def check_strip_vault(path: Path, manifest: Path) -> dict[str, Any]:
+    """The vault strip exists, is the file its manifest describes, and was cut and checked as build_strip_vault.py does."""
+    if not manifest.exists() or not path.exists():
+        raise VaultInputError(f"{path.name} or its manifest is missing: run scripts/build_strip_vault.py --build-vault first")
+    m = json.loads(manifest.read_text(encoding="utf-8"))
+    got = sha(path.read_bytes())
+    bad = []
+    if not str(m.get("principals_word") or "").strip():
+        bad.append("no principal's word")
+    if m.get("cut") != TS_SEAL_V or m.get("vault_end") != VAULT_END:
+        bad.append(f"cut {m.get('cut')} / end {m.get('vault_end')}")
+    if m.get("sha256") != got:
+        bad.append(f"sha256 {got} is not the manifest's {m.get('sha256')}")
+    if m.get("in_sample_prefix_identical") is not True:
+        bad.append("the in-sample prefix was not proved identical")
+    last = m.get("last_ref_per_root") or {}
+    short = {r: last.get(r) for r in STRIP_REACH_ROOTS if (last.get(r) or "") < VAULT_END}
+    over = {r: v for r, v in last.items() if v and v > VAULT_END}
+    if short:
+        bad.append(f"ends before {VAULT_END} on {short}")
+    if over:
+        bad.append(f"rows past {VAULT_END}: {over}")
+    if bad:
+        raise VaultInputError(f"the vault strip is refused: {bad}")
+    return {"path": str(path), "sha256": got, "cut": m["cut"], "last_ref": {r: last[r] for r in STRIP_REACH_ROOTS},
+            "roots_short_of_vault_end": m.get("roots_short_of_vault_end")}
+
+
+def check_swap_quarters(path: Path, swap_q: str) -> dict[str, str]:
+    """Every fund's swap-free proof reaches SWAP_Q_LAST (prove_swap_free_quarters.py, extended to 2026-Q2 on 2026-10-01)."""
+    d = json.loads(path.read_text(encoding="utf-8"))["funds"]
+    missing = [f for f in SWAP_FUNDS if swap_q not in (d.get(f) or {}).get("quarters", {})]
+    if missing:
+        raise VaultInputError(f"{path.name} does not reach {swap_q} for {missing}: run prove_swap_free_quarters.py first")
+    return {f: d[f]["quarters"][swap_q]["verdict"] for f in SWAP_FUNDS}
+
+
+def check_anchor_filed(holdings: Path, anchor: str) -> dict[str, str]:
+    """Every fund's LAST_ANCHOR schedule was filed before the vault's cut (else it would be `carried` from earlier)."""
+    gz, _ = restrict_by_column(holdings, "filed_date", CUT_V)
+    h = pd.read_csv(io.BytesIO(gzip.decompress(gz)), dtype=str, encoding="utf-8")
+    h = h[h["period_end"] == anchor]
+    filed = {f: str(h.loc[h["fund"] == f, "filed_date"].min()) for f in SWAP_FUNDS if (h["fund"] == f).any()}
+    missing = [f for f in SWAP_FUNDS if f not in filed]
+    if missing:
+        raise VaultInputError(f"no {anchor} schedule filed before {CUT_V} for {missing}")
+    return filed
+
+
 def build_vault(step: str, workers: int, word: str, anchor: str | None, swap_q: str | None) -> int:
     JOINT.mkdir(parents=True, exist_ok=True)
     if step == "dbn":
@@ -545,14 +628,22 @@ def build_vault(step: str, workers: int, word: str, anchor: str | None, swap_q: 
                                                  encoding="utf-8", newline="\n")
         print(json.dumps(rep, indent=1))
         return 0
-    if not (anchor and swap_q):
-        raise VaultInputError("--fut-share-anchor and --swap-q-last are the principal's choice for the vault; no default")
+    anchor, swap_q = anchor or VAULT_ANCHOR, swap_q or VAULT_SWAP_Q
+    check_anchor_pair(anchor, swap_q)
     if (JOINT / NAMES["table"]).exists():
         raise VaultInputError("the vault trade table exists; it is built once")
+    strip = check_strip_vault(STRIP_V, STRIP_V_MANIFEST)
     M = modules()
+    swapq = check_swap_quarters(M["FS"].SWAPQ, swap_q)
+    filed = check_anchor_filed(MAIN_DATA / "fixtures" / "fund_holdings_quarterly.csv.gz", anchor)
     a6 = (CUT_V, VAULT_END, anchor, swap_q)
     stage = STAGE / "repo_vault"
-    rep = build_panels(M, CUT_V, VAULT_END, a6, JOINT, stage, JOINT)
+    rep = build_panels(M, CUT_V, VAULT_END, a6, JOINT, stage, JOINT, {"fut_settle_strip": STRIP_V})
+    rep["strip_vault"] = strip
+    rep["anchors"] = {"last_anchor": anchor, "swap_q_last": swap_q, "anchor_filed": filed, "swap_verdicts_at_last_q": swapq,
+                      "the_principals": (anchor, swap_q) == (VAULT_ANCHOR, VAULT_SWAP_Q),
+                      "source": "the principal, 2026-09-30: \"I accept\"" if (anchor, swap_q) == (VAULT_ANCHOR, VAULT_SWAP_Q)
+                      else "OVERRIDDEN on the command line"}
     tab =pd.read_csv(JOINT / NAMES["table"], encoding="utf-8", dtype={"day": str})
     v = tab[(tab["day"] >= VAULT_FROM) & (tab["day"] <= VAULT_END)]
     v.to_csv(JOINT / "d630_vault_trade_table.csv", index=False, encoding="utf-8", lineterminator="\n", float_format="%.17g")
@@ -626,20 +717,72 @@ def selftest() -> int:
     with held(cut_pairs(M, CUT_V, VAULT_END, (CUT_V, VAULT_END, "2026-06-30", "2026-Q2"))):
         expect_cuts(expected_cuts(CUT_V, VAULT_END, (CUT_V, VAULT_END, "2026-06-30", "2026-Q2")), cut_state(M))
     expect_cuts(expected_cuts(CUT_IN, LAST_IN, A6_IN), cut_state(M))
+    # the principal's anchors (2026-09-30) are the panel step's defaults, and the flags still override them
+    for argv, want in (([], (VAULT_ANCHOR, VAULT_SWAP_Q)), (["--fut-share-anchor", "2026-03-31", "--swap-q-last", "2026-Q1"],
+                                                           ("2026-03-31", "2026-Q1"))):
+        ns = parser().parse_args(["--build-vault", "panels", *argv])
+        assert (ns.fut_share_anchor, ns.swap_q_last) == want, (argv, ns)
+    assert (VAULT_ANCHOR, VAULT_SWAP_Q) == ("2026-06-30", "2026-Q2")
+    check_anchor_pair(VAULT_ANCHOR, VAULT_SWAP_Q)
+    expect_raise(lambda: check_anchor_pair("2026-06-29", "2026-Q2"), "anchor: not a quarter-end", fired)
+    expect_raise(lambda: check_anchor_pair("2026-06-30", "2026-Q1"), "anchor: swap quarter not the anchor's", fired)
+    expect_raise(lambda: check_anchor_pair("2026-09-30", "2026-Q3"), "anchor: after the vault's end", fired)
+    with tempfile.TemporaryDirectory() as td:
+        t = Path(td)
+        sq = {"funds": {f: {"quarters": {"2026-Q1": {"verdict": "SWAPS_HELD"}, "2026-Q2": {"verdict": "FUTURES_ONLY_PROVEN"}}}
+                        for f in SWAP_FUNDS}}
+        (t / "sq.json").write_text(json.dumps(sq), encoding="utf-8")
+        assert check_swap_quarters(t / "sq.json", "2026-Q2")["BOIL"] == "FUTURES_ONLY_PROVEN"
+        del sq["funds"]["USO"]["quarters"]["2026-Q2"]
+        (t / "sq.json").write_text(json.dumps(sq), encoding="utf-8")
+        expect_raise(lambda: check_swap_quarters(t / "sq.json", "2026-Q2"), "swap quarters: USO short of 2026-Q2", fired)
+        hold = "fund,period_end,filed_date,note\n" + "".join(f"{f},2026-06-30,2026-08-07,\"a, b\"\n" for f in SWAP_FUNDS) + \
+               "BOIL,2026-09-30,2026-11-06,SECRET\n"
+        (t / "h.csv").write_text(hold, encoding="utf-8", newline="\n")
+        assert check_anchor_filed(t / "h.csv", "2026-06-30")["UNG"] == "2026-08-07"
+        (t / "h.csv").write_text(hold.replace("UNG,2026-06-30,2026-08-07", "UNG,2026-06-30,2026-09-21"), encoding="utf-8", newline="\n")
+        expect_raise(lambda: check_anchor_filed(t / "h.csv", "2026-06-30"), "anchor: UNG's schedule filed after the cut", fired)
+        body = b"root,contract,ref,settle\nNG,NGX6,2026-09-18,3.1\n"
+        (t / "s.csv.gz").write_bytes(gzip.compress(body, mtime=0))
+        man = {"principals_word": "go", "cut": TS_SEAL_V, "vault_end": VAULT_END, "sha256": sha((t / "s.csv.gz").read_bytes()),
+               "in_sample_prefix_identical": True, "last_ref_per_root": {"NG": VAULT_END, "CL": VAULT_END, "ES": "2026-09-17"}}
+
+        def with_man(**kw: Any) -> dict[str, Any]:
+            (t / "m.json").write_text(json.dumps({**man, **kw}), encoding="utf-8")
+            return check_strip_vault(t / "s.csv.gz", t / "m.json")
+
+        assert with_man()["last_ref"] == {"NG": VAULT_END, "CL": VAULT_END}
+        expect_raise(lambda: with_man(sha256="0" * 64), "vault strip: the file is not the manifest's", fired)
+        expect_raise(lambda: with_man(principals_word=" "), "vault strip: no principal's word", fired)
+        expect_raise(lambda: with_man(cut="2026-09-20T00:00:00Z"), "vault strip: another cut", fired)
+        expect_raise(lambda: with_man(in_sample_prefix_identical=False), "vault strip: prefix not proved", fired)
+        expect_raise(lambda: with_man(last_ref_per_root={"NG": "2026-09-10", "CL": VAULT_END}), "vault strip: NG ends 2026-09-10", fired)
+        expect_raise(lambda: with_man(last_ref_per_root={"NG": VAULT_END, "CL": VAULT_END, "RB": "2026-09-21"}),
+                     "vault strip: an RB row dated 2026-09-21", fired)
+        expect_raise(lambda: check_strip_vault(t / "none.csv.gz", t / "m.json"), "vault strip: missing", fired)
+        # the staged catalogue takes the vault strip in place of the fixture, at the catalogue's own path
+        expect_raise(lambda: stage_catalogue(t / "stage", CUT_V, {"not_a_panel": t / "s.csv.gz"}), "stage: an unknown panel", fired)
     print(f"selftest OK: vault modes refused without the word; held() restores on a raise; {len(fired)} checks fired: {fired}; "
-          "the real modules carry the frozen cuts, the vault cuts hold and restore")
+          "the real modules carry the frozen cuts, the vault cuts hold and restore; the principal's anchors are the defaults")
     return 0
 
 
-def main(argv: list[str] | None = None) -> int:
+def parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser()
     ap.add_argument("--prove", choices=("dbn", "panels"))
     ap.add_argument("--selftest", action="store_true")
     ap.add_argument("--build-vault", choices=("dbn", "panels"))
     ap.add_argument("--principals-word", default=None)
     ap.add_argument("--workers", type=int, default=8)
-    ap.add_argument("--fut-share-anchor", default=None, help="estimate_fut_share's LAST_ANCHOR for the vault (the principal's)")
-    ap.add_argument("--swap-q-last", default=None, help="estimate_fut_share's SWAP_Q_LAST for the vault (the principal's)")
+    ap.add_argument("--fut-share-anchor", default=VAULT_ANCHOR,
+                    help="estimate_fut_share's LAST_ANCHOR for the vault; default the principal's (2026-09-30, \"I accept\")")
+    ap.add_argument("--swap-q-last", default=VAULT_SWAP_Q,
+                    help="estimate_fut_share's SWAP_Q_LAST for the vault; default the principal's (2026-09-30, \"I accept\")")
+    return ap
+
+
+def main(argv: list[str] | None = None) -> int:
+    ap = parser()
     a = ap.parse_args(argv)
     if a.build_vault:
         if refuse(a.principals_word):
