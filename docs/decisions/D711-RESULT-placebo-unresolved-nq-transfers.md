@@ -260,3 +260,64 @@ $4.42, MNQ $4.07).*
   - ES's vault look is frozen (D707);
   - NQ would need its own pre-registration;
   - an agreement rule would need unseen data.
+
+## Addendum 2 (post hoc, 2026-09-30): the decision times on ES and NQ side by side, with a per-time correlation
+
+*The principal: "Ok last one I would like to see the Descision times of NQ and ES side by side, and a per time
+corrlation?"*
+- *Descriptive, in-sample; nothing gates.*
+- ***Script:** `scripts/diag_d711_nq_es_clocks.py`. **Output:** `data/diag_d711_nq_es_clocks.json`.*
+- *The rule is F2's at each clock, held 30 minutes. The common window is 2018-05-14 → 2023-12-29, the same start as
+  A1.*
+- *D707's frozen answer is reproduced first.*
+- ***NQ's midday clocks were not read by D711**, so they are a fresh look at A1's question.*
+
+**The books (net a trade at one micro; the 10 % trim cuts 10 % from each tail):**
+
+| clock | ES n, net (t), z | ES 10 % trim, median | NQ n, net (t), z | NQ 10 % trim, median |
+|---|---|---|---|---|
+| 10:30 | 250, +$0.48 (0.12), 0.103 | +$2.88 (t 1.19), +$3.08 | 253, −$1.99 (−0.35), 0.025 | +$0.16 (t 0.04), +$3.43 |
+| 11:30 | 250, −$3.82 (−1.14), 0.016 | −$2.13, −$0.67 | 251, −$0.81 (−0.15), 0.050 | +$1.07 (t 0.30), +$0.43 |
+| 12:30 | 251, −$2.55 (−0.90), 0.056 | −$2.08, −$3.17 | 255, −$3.99 (−0.99), 0.001 | −$4.55, −$6.57 |
+| 13:30 | 250, +$5.45 (1.33), **0.273** | +$2.00 (t 0.85), +$0.58 | 247, +$4.70 (0.76), 0.151 | **−$1.65** (t −0.42), −$2.07 |
+| 14:30 | 241, −$2.40 (−0.53), 0.048 | +$2.17, +$1.83 | 254, −$0.48 (−0.07), 0.054 | +$5.13 (t 1.45), +$4.68 |
+| **15:30** | 252, **+$13.21 (2.48), 0.302** | **+$9.79 (t 3.14)**, +$6.21 | 271, **+$20.77 (2.93), 0.304** | **+$19.03 (t 3.97)**, +$11.43 |
+
+**The per-time correlation between ES and NQ:**
+
+| clock | common candidate sessions | ρ unfiltered gross | same direction, unfiltered | ρ filtered daily net | both / ES only / NQ only | overlap (Jaccard) | ρ gross when both take |
+|---|---:|---:|---:|---:|---|---:|---:|
+| 10:30 | 1,356 | **0.58** | 0.82 | 0.60 | 168 / 80 / 84 | 0.51 | 0.84 |
+| 11:30 | 1,355 | 0.71 | 0.88 | 0.83 | 191 / 59 / 59 | 0.62 | 0.95 |
+| 12:30 | 1,343 | 0.68 | 0.88 | 0.81 | 198 / 52 / 55 | 0.65 | 0.94 |
+| 13:30 | 1,345 | 0.69 | 0.89 | 0.89 | 194 / 54 / 51 | 0.65 | 0.97 |
+| 14:30 | 1,348 | **0.88** | 0.90 | 0.81 | 197 / 42 / 56 | 0.67 | 0.97 |
+| 15:30 | 1,347 | 0.77 | 0.89 | 0.87 | 217 / 33 / 52 | **0.72** | 0.96 |
+
+**Net a trade on the days both take:**
+
+| clock | ES | NQ |
+|---|---:|---:|
+| 10:30 | −$2.65 | −$1.69 |
+| 11:30 | −$5.62 | −$7.75 |
+| 12:30 | −$2.87 | −$2.94 |
+| 13:30 | +$4.64 | +$8.51 |
+| 14:30 | +$2.46 | +$4.94 |
+| **15:30** | **+$15.96** | **+$24.43** |
+
+When both take, they point the same way at 97–100 % of those days at every clock.
+
+**What it shows (descriptive):**
+1. **On NQ the rule works at 15:30 and nowhere else.** NQ's five other clocks run from z 0.001 to 0.151 (15:30:
+   0.304), and every one is net-negative or flat after a 10 % trim except 14:30 (+$5.13, t 1.45).
+2. **ES's 13:30 island does not replicate on NQ.** NQ at 13:30 is z 0.151, and −$1.65 after the trim. Together with
+   the addendum above (13:30 is five trades), **13:30 reads as noise, not a second window.**
+3. **So, read across both roots, the evidence leans toward A1's close-specific reading.** 15:30 is the only clock
+   where the rule carries size on both contracts. It stays UNRESOLVED as registered: this addendum is post hoc, and
+   ES's pooled placebo still holds its broad, small, fee-losing z of about 0.10.
+4. **The two roots move together at every clock:** ρ of the unfiltered 30-minute continuation is 0.58–0.88, lowest at
+   10:30 (the open's idiosyncratic noise) and highest at 14:30.
+   - **The filter raises agreement at every clock except 14:30:** ρ of the filtered daily books is 0.60–0.89, and ρ
+     on the days both take is 0.84–0.97.
+   - **The filters pick the most overlapping set at 15:30** (Jaccard 0.72, against 0.51–0.67 elsewhere).
+   - **No clock offers ES and NQ as diversifiers of each other.**
