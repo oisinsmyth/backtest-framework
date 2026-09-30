@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 507 of these records carry neither field —
+**No Status or Category column, deliberately.** 508 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -791,6 +791,7 @@ would look like data. The tokens are what is shown.
 | D716 | REGISTRATION — NQ F2 for the joint vault run, with a fixed-sequence takeover by "NQ F2 only when ES F2 agrees"; ES F2 (… | [PRE-REG](D716-PRE-REG-nq-f2-for-the-joint-vault.md) |
 | D717 | D717 STAGE 0 RESULT — NEITHER on NQ: the reversed flow rule does not transfer. NQ's flow residual ranks nothing (Spearm… | [record](D717-STAGE-0-DESIGN-the-reversed-flow-rule.md) · [RESULT](D717-STAGE-0-RESULT-the-reversal-does-not-transfer-to-nq.md) |
 | D718 | D718 PREMISE RESULT — ABSENT: ES's last 15 minutes lean the way volatility-target funds would trade (+1.35 bp per sd of… | [record](D718-PREMISE-DESIGN-vol-control-flow-at-the-close.md) · [RESULT](D718-PREMISE-RESULT-vol-control-flow-is-absent-at-the-close.md) |
+| D719 | REGISTRATION — F2, unchanged, at the commodity settlement windows: a transfer test on thirteen roots (CL, NG, HO, RB, H… | [PRE-REG](D719-PRE-REG-f2-at-the-commodity-settlement-windows.md) |
 
 <!-- REGISTER:END -->
 
