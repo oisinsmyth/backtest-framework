@@ -185,3 +185,42 @@ otherwise.
    leveraged-ETF complex is smallest there.
 5. **ρ with ES F2's daily net** is above 0.6 for NQ and YM, and lower for RTY.
 6. **Every transferring root's 2022 share is above 40 %.** 2022 was a volatile year on every index.
+
+## Amendment D711-A1 (2026-09-30), before the run: A2's gate (b) scores direction efficiency, not mean gross
+
+*Nothing has been run on real data: the runner's `--selftest` found this on synthetic worlds.*
+
+**The fault.** §3's gate (b) compares the filtered mean gross with the same statistic under a joint rotation of the
+inputs. **F2 selects big-move days, but a rotated selection picks days of ordinary size.** So:
+- the rotated means are less dispersed than the observed one;
+- the p95 is too low, even when direction carries no information.
+
+**The measurement** (the runner's selftest, 60 synthetic worlds):
+- the filter picks big days and the sign is a coin;
+- **the registered statistic cleared its p95 in 17 % of them.**
+
+**The replacement:** the **direction efficiency** E = Σ gross / Σ |gross| of the filtered book, against the same
+enumerated joint rotation.
+- It does not grow with the size of the trades picked.
+- On the same worlds it cleared its p95 in **3 %**.
+- An injected relative-size effect still clears it.
+
+**What changes:**
+
+| | before | after |
+|---|---|---|
+| A2 gate (b) | filtered mean gross > the rotation's p95 of mean gross | **E > the exact p95 of E under the rotation** |
+| the mean-gross rotation | gating | **reported only, flagged anti-conservative** |
+
+**Unchanged:** gate (a) (a HAC t, which carries its own sampling variance), A1 (no rotation), the readings, the
+predictions and the known answers.
+
+**The same fault touches D705's gate (b), which was already run and is not re-opened here.**
+- D705's rotation compared **mean net** under a joint rotation of the inputs. So F2's rank of 0.996 against a best-of-three
+  p95 of +$7.94 overstates how far F2 sits outside a "big days, no direction" null. By D711-A1's measurement, the
+  false-pass rate at one member is about three times the nominal.
+- **What still stands:** F2's gate (a), a HAC t of 2.48 whose SE comes from F2's own trades, and D707's vault test,
+  which is a t-test, not a rotation.
+- **What changes:** the "beats the null" line of D705 §1 and COMPONENTS_PROP entry #4 is weaker than written. A2's
+  efficiency rotation on NQ, YM and RTY is the first correctly-sized version of that check. **The runner reports the
+  same E rotation for ES F2 at 15:30, reported only.**
