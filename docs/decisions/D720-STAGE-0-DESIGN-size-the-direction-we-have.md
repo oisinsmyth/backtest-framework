@@ -120,3 +120,18 @@ sized and unsized daily books between L1 and L2; and L1+L2 combined, sized and u
 - Any retuning of either line's signal.
 - ES or MES: the principal trades micro, and MNQ is the vehicle (the fee is 2.4% of NQ's typical move, against 4.7%
   on MES).
+
+## A1 (2026-09-30, before the runner is committed or run)
+
+**What the runner's synthetic self-test showed about R1's statistic.** On a book where every day has the same
+Sharpe (the move scales the P&L and its risk alike) and there is no fee, a size label that is right about the day
+LOWERS R1's net Sharpe. It sat at the 1st percentile of its own rotation, because doubling the largest days adds
+variance where variance is already largest. The label beats its rotation only when the fee is large against the
+move (then big days carry more net per unit of risk) or when efficiency rises with size. So R1's Δ net Sharpe asks
+exactly the question the account needs answered ("does sizing by the forecast raise risk-adjusted net?"). It is
+not a test of "does the label know the size", and a size-informative label can fail it. Nothing in s.3 or s.4
+changes.
+
+**One line is added, reported and never gating:** Δ net $ (the sized book's total net less R0's) against the same
+enumerated rotation, for R1–R4. It asks whether the label picks days with more net per contract than a random
+choice of the same number of days.
