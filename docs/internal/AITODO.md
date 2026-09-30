@@ -38,6 +38,12 @@
     CONDITIONER flags rest on 41 onsets and 29 trades, and the conditioner is 0.35 SE.
   - **Channels arrive after V1's entries** (up held at 5–9% of them).
   - **Waiting on the principal.**
+- **D704 DIAG RESULT (2026-09-30): the no-aggressive-push volume gate on V1 reads NO INFORMATION.**
+  - **Direction right:** Spearman +0.044, the upper half +$18.72 against the lower +$2.23, 6 of 8 years positive,
+    +0.084 without 2022, and nothing on long-gamma days.
+  - **Inside its null:** 84.6th percentile, about 1 SE.
+  - **No pre-2016 sample exists** (the options book starts 2016, and Sierra has no ES contract before ESZ15).
+  - **Waiting on the principal.**
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).

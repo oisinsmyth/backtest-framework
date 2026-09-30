@@ -1,0 +1,244 @@
+{
+ "spec": "D704 DIAG (in-sample; the no-aggressive-push volume gate on D699's V1, ranked against its oracle)",
+ "cost_rt_usd": 4.418145176055553,
+ "fixture_validation": {
+  "minutes_sierra": 792639,
+  "minutes_databento": 792644,
+  "minutes_matched": 792639,
+  "V1_median_volume_ratio": 1.0,
+  "V1_ratio_p10_p90": [
+   1.0,
+   1.0
+  ],
+  "V2_volume_correlation": 0.9996837699926767,
+  "V3_signed_share": 0.9999999889717955,
+  "V4_last_equals_close_share": 0.9888435971482604,
+  "V4_within_one_tick_share": 0.9993603645543557,
+  "pass": true
+ },
+ "v1": {
+  "trades": 572,
+  "scored": 572,
+  "mean_net": 10.47477440436403,
+  "mean_gross": 14.89291958041958,
+  "edge_per_noise": 0.06403947336654076
+ },
+ "i_hat": {
+  "a": 0.00036442658700554194,
+  "b": 0.017496516512336767,
+  "r2": 0.32109046753608045,
+  "windows": 49725
+ },
+ "oracle_d699": {
+  "share": 0.5052447552447552,
+  "mean_net_winners": 110.06714894159151
+ },
+ "S_B": {
+  "spearman_net": {
+   "observed": 0.04364347921184374,
+   "p05": -0.07161382470413645,
+   "p50": -0.00048808942698298747,
+   "p95": 0.06861766608368672,
+   "n_offsets": 553,
+   "p95_se": 0.0,
+   "pct_rank": 0.8462929475587704,
+   "above_p95": false
+  },
+  "spearman_excess": 0.0415113916838346,
+  "auc_oracle": 0.5381417584701725,
+  "calibration_on_rank": {
+   "bins": [
+    {
+     "bin": 0,
+     "n": 115,
+     "mean_projected": 0.10139860139860139,
+     "mean_realized": 1.6905504761183596
+    },
+    {
+     "bin": 1,
+     "n": 114,
+     "mean_projected": 0.30157342657342656,
+     "mean_realized": 11.294574122190062
+    },
+    {
+     "bin": 2,
+     "n": 114,
+     "mean_projected": 0.5008741258741259,
+     "mean_realized": 0.11036359587427531
+    },
+    {
+     "bin": 3,
+     "n": 114,
+     "mean_projected": 0.7001748251748251,
+     "mean_realized": 15.64764429762866
+    },
+    {
+     "bin": 4,
+     "n": 115,
+     "mean_projected": 0.9003496503496502,
+     "mean_realized": 23.592724389161845
+    }
+   ],
+   "slope": 26.01399675411008,
+   "intercept": -2.554963480343204
+  },
+  "assess_upper_half": {
+   "confusion_vs_oracle": {
+    "tp": 155,
+    "fp": 131,
+    "fn": 134,
+    "tn": 152,
+    "precision": 0.541958041958042,
+    "recall": 0.5363321799307958,
+    "f1": 0.5391304347826087,
+    "accuracy": 0.5367132867132867,
+    "balanced_accuracy": 0.5367173267145146,
+    "base_rate": 0.5052447552447552,
+    "take_rate": 0.5
+   },
+   "auc_vs_oracle_label": 0.5381417584701725,
+   "spearman_score_vs_gross": 0.04364347921184374,
+   "capture": {
+    "filter_net": 5355.160479648113,
+    "oracle_net": 31809.406044119947,
+    "take_all_net": 5991.570959296225,
+    "trades": 286,
+    "mean_net_per_trade": 18.72433734142697,
+    "capture_of_oracle": 0.16835147667392641
+   }
+  },
+  "upper_half": {
+   "trades": 286,
+   "mean_net": 18.72433734142697,
+   "median_net": 10.581854823944447,
+   "hit": 0.541958041958042,
+   "net_sharpe": 0.7029977097595295,
+   "net_sortino": 1.2102976138246888,
+   "mean_excess": 16.935717681986365,
+   "edge_per_noise": 0.10826495442708847,
+   "lift_vs_v1": 1.6905972010015713
+  },
+  "lower_half": {
+   "trades": 286,
+   "mean_net": 2.225211467301089,
+   "mean_excess": 0.9020529636202148
+  }
+ },
+ "S_A1": {
+  "spearman_net": {
+   "observed": 0.051771399295256315,
+   "p05": -0.06988227424144343,
+   "p50": -0.000577249745981916,
+   "p95": 0.06303791649794938,
+   "n_offsets": 553,
+   "p95_se": 0.0,
+   "pct_rank": 0.9023508137432188,
+   "above_p95": false
+  },
+  "spearman_excess": 0.04721314868522729,
+  "auc_oracle": 0.5205839558854096,
+  "calibration_on_rank": {
+   "bins": [
+    {
+     "bin": 0,
+     "n": 115,
+     "mean_projected": 0.10139860139860139,
+     "mean_realized": -15.12466691518599
+    },
+    {
+     "bin": 1,
+     "n": 114,
+     "mean_projected": 0.3015734265734266,
+     "mean_realized": -0.6352504392134469
+    },
+    {
+     "bin": 2,
+     "n": 114,
+     "mean_projected": 0.5008741258741258,
+     "mean_realized": 32.35817061341814
+    },
+    {
+     "bin": 3,
+     "n": 114,
+     "mean_projected": 0.7001748251748251,
+     "mean_realized": 18.53141622745322
+    },
+    {
+     "bin": 4,
+     "n": 115,
+     "mean_projected": 0.9003496503496504,
+     "mean_realized": 17.40794178046619
+    }
+   ],
+   "slope": 32.04681325129973,
+   "intercept": -5.576645169932075
+  },
+  "assess_upper_half": {
+   "confusion_vs_oracle": {
+    "tp": 150,
+    "fp": 136,
+    "fn": 139,
+    "tn": 147,
+    "precision": 0.5244755244755245,
+    "recall": 0.5190311418685121,
+    "f1": 0.5217391304347826,
+    "accuracy": 0.5192307692307693,
+    "balanced_accuracy": 0.5192328854218886,
+    "base_rate": 0.5052447552447552,
+    "take_rate": 0.5
+   },
+   "auc_vs_oracle_label": 0.5205839558854096,
+   "spearman_score_vs_gross": 0.051771399295256315,
+   "capture": {
+    "filter_net": 5122.660479648112,
+    "oracle_net": 31809.406044119947,
+    "take_all_net": 5991.570959296225,
+    "trades": 286,
+    "mean_net_per_trade": 17.911400278489904,
+    "capture_of_oracle": 0.1610423178773893
+   }
+  },
+  "upper_half": {
+   "trades": 286,
+   "mean_net": 17.911400278489904,
+   "median_net": 7.456854823944447,
+   "hit": 0.5244755244755245,
+   "net_sharpe": 0.7392270759288011,
+   "net_sortino": 1.3134508844568769,
+   "mean_excess": 15.63274826334521,
+   "edge_per_noise": 0.10798167737214613,
+   "lift_vs_v1": 1.6861737252911926
+  },
+  "lower_half": {
+   "trades": 286,
+   "mean_net": 3.038148530238153,
+   "mean_excess": 2.205022382261368
+  }
+ },
+ "long_gamma_check": {
+  "trades": 1024,
+  "spearman_S_B_net": -0.02193003330723314,
+  "mean_net": -3.6027154885555532
+ },
+ "false_positive_checks": {
+  "spearman_S_B_abs_z": 0.20243556596754073,
+  "spearman_S_B_z": 0.2925267050866292,
+  "spearman_S_B_hour": -0.10811581516496885,
+  "truncated_window_share": 0.4597902097902098,
+  "spearman_net_by_year": {
+   "2016": 0.1420507248003828,
+   "2017": 0.3399945377871191,
+   "2018": 0.010708889336345936,
+   "2019": 0.07075147751888616,
+   "2020": -0.09612741822099569,
+   "2021": 0.13364993241158482,
+   "2022": -0.04661740394731157,
+   "2023": 0.17177948819621783
+  },
+  "spearman_net_ex_2022": 0.0837398403496336,
+  "spearman_net_full_windows_only": 0.05231643673483924
+ },
+ "reading": "NO INFORMATION",
+ "detection_limit_spearman_se": 0.04184869753186872,
+ "timing_s": 99.3
+}
