@@ -355,3 +355,65 @@ independently: counts, means, the seal, and net = gross − cost.
      2022 is therefore the baseline, and φ reflects only the slope's sign and size. Prediction 6's X9 half is close to
      vacuous, and is scored as stated.
 
+## Amendment D722-A2 (2026-10-01), after the four Part runners were built and self-tested, before any `--run`
+
+I reviewed each runner against §2–§5. The rulings:
+
+**Part A** (`scripts/diag_d722_part_a.py`):
+1. **The count term is a per-session rate.**
+   - Several lines start partway through 2018 (L4 from 2018-08, the F2 lines and K2 from 2018-04/05). §2's literal
+     "mean count per other year" therefore understates n_R and tilts 2022 toward COUNT.
+   - The n term is now the ratio of trades per calendar session: T's sessions against the other years' sessions, on the
+     line's own root calendar, from its first trade through 2023-12-29.
+   - G_R is rescaled to T's length (G_R = Σg_R · s_T / s_R). The identity still holds exactly and is asserted.
+   - The literal per-year ratio is reported beside it, and not read.
+   - The same applies to T = 2018.
+2. **Annualisation:** trades per year = trades / (calendar sessions / 252) on the same calendar.
+3. **Flagged, not changed:**
+   - a negative log excess is read literally, with a deficit flag;
+   - SCALE and COUNT together are both named;
+   - ln(G_T/G_R) = 0 is treated as undefined logs;
+   - the bootstrap's p50 and p95 describe Δe's sampling distribution, not a null.
+
+**Part B** (`scripts/diag_d722_part_b.py`):
+1. A cell whose finite-X subset has no 2022 excess reads NO, flagged `subset_excess_le_0`.
+2. NOT_UNEXPLAINED is the complement label of UNEXPLAINED. It is not a new reading.
+3. **Prediction 10 is scored on a fit that excludes both 2018 and 2022.** The literal leave-one-year-out 2018 fit
+   includes 2022 in its training set, which would bias the prediction toward confirming. The literal version is reported
+   beside it.
+4. The clustered SE is CR1 by ISO week (Stata's small-sample factor), and p comes from the normal.
+5. **Disclosed:** X10 cells rest on 2019-05 onward, and X9 carries only a few trades on L1 and L4.
+
+**Part C** (`scripts/diag_d722_part_c.py`):
+1. The rank uses ≤, so the whole-year window ranks 1. The strict rank and the mid-rank are beside it.
+2. CLAUDE.md's 2-SE rule is reported beside the declared verdict as `verdict_se`, applied symmetrically.
+3. **Where a year's net ≤ 0**, shares and verdicts are UNDEFINED. A year whose net t < 2 is flagged
+   `denominator_unstable`.
+4. **A rotation null beside the declared test.** C2 and C3 are contiguous blocks, so a random-trade draw is
+   anti-conservative for them. They also carry an exact enumerated rotation null: every circular shift of a same-length
+   block of the line's 2022 trading sessions.
+5. 2022's ten largest trades are named by date, including L3's, on the precedent of D699's committed top five. No GEX
+   value is carried.
+
+**Part D** (`scripts/diag_d722_part_d.py`):
+1. **L3's same-session trades are summed** into its daily net. D699 defines the line to allow several trades a day. The
+   runner asserts they are distinct and do not overlap in time, and every other line raises on a second trade in a
+   session.
+2. **D3's share** is b·Σx / Σy, leaving the intercept out; with it, the ratio is 1 by construction. The share of each
+   line's 2022 net earned on days K2_ES netted above 0 is reported beside it, and not read.
+3. K1's sessions whose trips flipped enter at their net. Trades before 2018-05-14 are outside Part D's window.
+
+**The encoding ratchet.**
+- `scripts/diag_d722_lines.py` carries two text-IO calls without `encoding=` (lines 430 and 614), which puts the
+  repo's ceiling test at 1,130 against 1,128.
+- They are fixed after all four runs, as a non-functional change.
+- The line table's sha256 is asserted unchanged after the cache rebuilds.
+
+**Real figures seen before the runs** (all disclosed by the agents):
+- **Part D:** two whole-window variances, Var(L1 + L2) = 3,277 $² and Var(L1 + L2 + L3) = 10,632 $². These are not
+  2022 figures.
+- **Part C:** L1's net in the war window, **+$741.60 over 20 sessions.**
+- **Part B:** one 2018 L1 trade's u (8.99), and per-year standard deviations of the variables.
+- **None of these enters a reading's threshold.**
+
+
