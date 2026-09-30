@@ -77,3 +77,40 @@ modest and uneven, consistent with the null's rank.
   gain that dropping any 55 trades produces about one time in seven. It is not carried anywhere, and it is not
   re-tested in-sample with another cut.
 - **NQ F2 on its own is unchanged** as described in D711. Whether it goes to the vault is still the principal's call.
+
+## Addendum (post hoc, 2026-09-30): the drawdown against the same null
+
+*The principal asked for the max drawdown of the skipped trades, then: "Null test drawdown also?"*
+- *Descriptive; the verdict above stands.*
+- ***Script:** `scripts/diag_d714_drawdown_null.py`. **Output:** `data/diag_d714_drawdown_null.json`.*
+- *The null is D714's own draw sequence, asserted: the same 20,000 random 216-trade subsets of NQ F2, each kept in
+  time order.*
+
+**The skipped trades themselves** (55, one MNQ):
+- +$103 in all, with a max drawdown of **$808**;
+- it runs from the peak on 2021-05-06 to the trough on 2021-12-03, and was never recovered by 2023-12;
+- the three large losses in it are −$124 (2021-10-04), −$336 (2021-11-22) and −$224 (2021-12-03);
+- by year: 2018 −$237, 2019 −$15, **2020 +$681**, 2021 −$595, 2022 +$312, 2023 −$42.
+
+**The agreement book (216 trades) against random 216-trade subsets:**
+
+| | A | null p5 | p50 | p95 | A's position |
+|---|---:|---:|---:|---:|---|
+| max drawdown | **$837** | $619 | $929 | $1,467 | **36 % of random subsets draw down no more** |
+| net / max drawdown | 6.60 | | 4.79 | 8.94 | rank 0.79 |
+| total net | $5,525 | | $4,487 | $5,935 | rank 0.88 |
+
+**The skipped set (55) against random 55-trade subsets (reported):**
+
+| | skipped | null p5 | p50 | p95 | position |
+|---|---:|---:|---:|---:|---|
+| max drawdown | $808 | $297 | $602 | $1,221 | 75 % of random subsets draw down no more |
+| total net | $103 | | $1,122 | $2,599 | rank 0.12 |
+
+**The drawdown improvement is also inside chance.**
+- A's $837 is better than the typical random deletion ($929), but more than a third of random 216-trade books draw
+  down no more.
+- The drawdown-adjusted return ranks 0.79.
+- **The skipped trades are worse than a typical random 55:** less profit (rank 0.12) and a deeper drawdown (75th
+  percentile). But neither is extreme.
+- **The drawdown reading agrees with the efficiency verdict:** NO INCREMENT.
