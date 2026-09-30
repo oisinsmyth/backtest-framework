@@ -61,13 +61,13 @@
    "note": "Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (\u00a76 H-R3(b); H-R3(a) is descriptive and is not a decision family)"
   },
   {
-   "name": "last-hour F2 (ES)",
-   "doc": "D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md",
+   "name": "last-hour F2 (NQ)",
+   "doc": "D716-PRE-REG-nq-f2-for-the-joint-vault.md",
    "registered_utc": "2026-09-30",
    "slot": 7,
    "alpha": 0.005,
    "amendment": null,
-   "note": "Vault line on D705 F2: the ES last-hour continuation (sign of 14:30->15:30, held to 16:00, one MES, $4.42) when tiers((tiers(abs(F5)/sigma) + tiers(rv to 15:30)) / 2) >= 0.8; PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816"
+   "note": "Vault line: NQ F2 (the ES F2 rule of D707 on NQ, one MNQ, $4.07); PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816; fixed-sequence takeover by NQ F2 only when ES F2 agrees iff its t >= 2.576 and it beats count-matched random deletion on efficiency"
   },
   {
    "name": "ledger H2 projected-profit (NG)",
@@ -99,6 +99,17 @@
    "note": "Decision value: the state-conditioned policy's net daily return minus the best of B1-B3, paired by day (\u00a77 H-O2; Holm across t0 in {09:45, 10:00})",
    "released_utc": "2026-09-29",
    "reason": "D658 CLOSED by the principal ('close opening model v1'; on slot 7: 'Release it'): Gate O1 failed, no agent retained, H-O2's policy net-negative at both t0; the vault was never read for it. The principal's override of the deposit's never-retroactively default, for this family only"
+  },
+  {
+   "name": "last-hour F2 (ES)",
+   "doc": "D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md",
+   "registered_utc": "2026-09-30",
+   "slot": 7,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line on D705 F2: the ES last-hour continuation (sign of 14:30->15:30, held to 16:00, one MES, $4.42) when tiers((tiers(abs(F5)/sigma) + tiers(rv to 15:30)) / 2) >= 0.8; PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816",
+   "released_utc": "2026-09-30",
+   "reason": "D716: the principal withdrew ES F2 (D707) from the joint vault run before any look ('Remove ES F2 from the vault run and keep NQ F2 and NQ F2 only when ES F2 agrees'); replaced by NQ F2 in this slot; ES F2's unseen data is read as D716's input, so no clean look remains"
   }
  ]
 }

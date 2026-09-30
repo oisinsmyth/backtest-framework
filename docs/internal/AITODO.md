@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 716.** D715 is this session's in-sample test of proposal B, the absorbed morning move (the principal: "Pre-reg, build and run a test for B please"). D714 is NQ F2 only when ES F2 agrees (this session; NO INCREMENT). D713 is this session's MES oracle profile of E (the principal: "go get me the oracle first"; result: no single cut clears the fee). D712 is this session's joint-vault pre-registration of D708's rule, WITHDRAWN before any look (slot 10 free again). D711 is the other session's F2 placebo clocks and other index roots. D708, D709 and D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
+- **Next free number: 717.** D716 is NQ F2 for the joint vault run (this session; ES F2 withdrawn). D715 is this session's in-sample test of proposal B, the absorbed morning move (the principal: "Pre-reg, build and run a test for B please"). D714 is NQ F2 only when ES F2 agrees (this session; NO INCREMENT). D713 is this session's MES oracle profile of E (the principal: "go get me the oracle first"; result: no single cut clears the fee). D712 is this session's joint-vault pre-registration of D708's rule, WITHDRAWN before any look (slot 10 free again). D711 is the other session's F2 placebo clocks and other index roots. D708, D709 and D710 are this session's three Stage 0 studies from the five-agent signal round (the principal: "I would like E, D and C all looked at"): D708 the short-gamma hourly continuation's timing term over the drift, D709 silver leveraged-ETF flow into the COMEX settlement, D710 the Treasury auction-day intraday V (D499 reopened for this use). D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
   MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
   long.
 - **D699 RESULT (2026-09-30): V1, the histogram with a ±0.5 band, is a LEAD, but it fails the declared reading on (b).**
@@ -121,6 +121,9 @@
         - F2 is registered as D707 (`b6b42cd4`), frozen, and holds programme slot 7;
         - one look at 2024-01-01 → 2026-09-18 happens in the joint run;
         - COMPONENTS_PROP entry #4, PROVISIONAL. See the programme-rule section below.
+        - **SUPERSEDED the same day by D716:**
+          - ES F2 is withdrawn before any look;
+          - NQ F2 (with the agreement-book takeover) holds slot 7 instead.
       - **D711 (2026-09-30; mechanism tests of F2, in-sample, the vault unspent):**
         - **A1, the placebo clocks on ES, is UNRESOLVED.** 13:30 → 14:00 z +0.27 is nearly F2's +0.30; 11:30, 12:30 and
           14:30 are nothing.
@@ -198,23 +201,27 @@
   - The frozen files are not edited. The options are an amendment record, or a joint-run wrapper that raises
     `T.RESERVED_FROM` before calling it.
   - D698's `raised_cut` and its rehearsal prove that mechanism works both ways.
-- **FROZEN 2026-09-30 (the principal: "The F2 construction is now a candidate, add it to the big vault run"): D707,
-  the ES last-hour F2, programme slot 7.**
-  - The freeze is `data/FROZEN_vault_d707_last_hour_f2.json`; the runner `scripts/vault_d707_last_hour_f2.py`.
-  - **Known answer:** D705's F2 reproduced exactly (252 trades, +$13.208968), with the path equal to D702 + D705 session
-    by session.
-  - **The rule:** PASS with ≥ 30 trades on 2024-01-01 → 2026-09-18, net > 0 and one-sided NW(5) t ≥ 1.2816;
-    promotion at t ≥ 2.576.
-  - **Power** (`data/vault_d707_power.json`):
-    - the test's size is 0.103 (bar 0.12);
-    - over 145 contiguous 640-candidate windows (about two independent), PASS is 0.66 / 0.54 / 0.36 / 0.18 at
-      100 / 50 / 25 / 0 % of the in-sample edge, on a median of 122 trades;
-    - the 0 % line is 2022's concentration.
-  - **The span includes the held 2024-01 → 2025-02 slice** (unread for this trade), read once with the vault.
-  - **No vault-input build is needed.** `fut_ES_rth_1m` runs to 2026-09-09, and `--vault` re-proves the known answer
-    on the extended build before scoring. If the 10-09 top-up extends the fixture to 2026-09-18, the fixture's hash is
-    for information only.
-  - **Ledger:** COMPONENTS_PROP entry #4, PROVISIONAL.
+- **WITHDRAWN 2026-09-30, before any look (the principal: "Remove ES F2 from the vault run and keep NQ F2 and NQ F2 only
+  when ES F2 agrees"): D707, the ES last-hour F2.**
+  - Slot 7 was released with a recorded reason (`Registry.release`).
+  - D707's record, runner and freeze are kept as committed, and still verify. **Its `--vault` mode must never be run.**
+  - ES's 2024+ last-hour data is read as D716's input, so ES F2 has no clean look left.
+- **FROZEN 2026-09-30 (the principal: "Ok I agree with your recommendations, write it up please"): D716, NQ F2, with a
+  fixed-sequence takeover by "NQ F2 only when ES F2 agrees". Programme slot 7.**
+  - The freeze is `data/FROZEN_vault_d716_nq_f2.json`; the runner `scripts/vault_d716_nq_f2.py`.
+  - **Known answers held:** D711's NQ book (274, +$20.670105), D714's B (271) and A (216, +$25.578712), and D707's
+    ES F2.
+  - **Step 1:** NQ F2 PASS with ≥ 30 trades on 2024-01-01 → 2026-09-18, net > 0 and NW(5) t ≥ 1.2816.
+  - **Step 2, only if step 1 passes:** the agreement book takes over iff its net t ≥ 2.576 and it beats count-matched
+    random deletion on efficiency (D714's rule, seed 716).
+  - **Power** (`data/vault_d716_power.json`, 147 contiguous 640-candidate windows, about two independent):
+    - the size is 0.101;
+    - PASS is 0.69 / 0.61 / 0.52 / 0.13 at 100 / 50 / 25 / 0 % of the in-sample edge;
+    - takeover is 0.06 / 0.11 / 0.09 / 0.00;
+    - medians are 129 B and 102 A trades.
+  - **Data:** both fixtures run to 2026-09-09. No vault-input build is needed; `--vault` re-proves every known answer on
+    the extended build first.
+  - **Ledger:** entry #5, PROVISIONAL. Entry #4 (ES F2) is PARKED.
 - **WITHDRAWN 2026-09-30, before any look (the principal: "Did I tell you to add E to the 10th slot? We can't afford to
   trade on ES so it doesn't matter if its profitable there"): D712.**
   - Slot 10 is unregistered and free again, and D712's freeze file is removed (see its WITHDRAWN section).
