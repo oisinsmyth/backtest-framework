@@ -61,7 +61,7 @@
   - **The drift is only 2% of the profit,** because the book is balanced long and short.
   - **Net at MES:** −0.45 in-sample; at full ES +0.45. The unseen-price projection at MES is a thin positive.
   - **The power:** 0.63 at the full effect, 0.26 at half.
-  - **Waiting on the principal:** the joint-vault pre-registration (programme slot 10), with gross T as the primary
+  - **Frozen as D712 for the joint run (slot 10),** with gross T as the primary
     gate and MES net as the second.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
@@ -180,7 +180,21 @@
     on the extended build before scoring. If the 10-09 top-up extends the fixture to 2026-09-18, the fixture's hash is
     for information only.
   - **Ledger:** COMPONENTS_PROP entry #4, PROVISIONAL.
-  - **Next free programme slot: 10.**
+- **FROZEN 2026-09-30 (the principal: "Yes, write it"): D712, D708's hourly continuation on ES-book short-gamma days,
+  programme slot 10.**
+  - The freeze is `data/FROZEN_vault_d712_short_gamma_timing.json`; the runner `scripts/vault_d712_short_gamma_timing.py`.
+  - **Known answer:** D708's T reproduced exactly (+$3.0925, t 3.17, 4,240 trades). The rule path (G_ES only) equals
+    D708's panel on its 1,989 sessions. Its own 859 sessions give T +$3.0952 (t 3.18).
+  - **The rule:** PASS with ≥ 300 trades on 2024-01-01 → 2026-09-18 when all hold:
+    - the timing term T > 0 at one-sided day-clustered t ≥ 1.2816;
+    - both legs > 0;
+    - MES net > 0.
+
+    It reads MECHANISM ONLY without the net. Promotion is at t ≥ 2.576.
+  - **Power** (`data/vault_d712_power.json`): size 0.103. PASS is 0.59 / 0.26 / 0.13 / 0.06 at 100 / 50 / 25 / 0% of the
+    effect, with the net projected at ES 5,800.
+  - **No vault-input build is needed:** the ES bars and the options book run to 2026-09-09.
+  - **All ten programme slots are now allocated.**
 - **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
   look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
   stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**
