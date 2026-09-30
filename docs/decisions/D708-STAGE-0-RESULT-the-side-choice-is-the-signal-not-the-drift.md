@@ -166,3 +166,17 @@ in-sample daily series without its vault path. The clocks are adjacent (this boo
      trade units, and a pre-registration should state which unit its one-year gate uses.
 4. **The next step is a pre-registration for the joint vault run.** It freezes this rule, T as the primary, the both-legs
    gate and the long-gamma contrast, and it needs a programme slot (10 is free). It waits for the principal's word.
+
+## CLOSED, 2026-09-30, on the principal's word
+
+The principal, after [D713](D713-DIAG-RESULT-e-at-mes-no-single-cut-clears-the-fee.md): "Close E - If even the
+oracle's best is 0.93 dollars 106 times a year we stand no chance".
+- **Closed under R15:** E, the hourly continuation on ES-book short-gamma days, at the size the account trades (one
+  MES). It covers D708's rule and any cut of it.
+- **Why:**
+  - the side choice is real (+$3.09 over the drift);
+  - but the best bucket in D713's oracle profile nets about +$0.92 a trade on 106 trades a year, about $100 a year at
+    one MES, and that is before the selection from 58 buckets is priced.
+- **D712 was already withdrawn.** Programme slot 10 stays free.
+- **What stays on the record:** the finding that short dealer gamma makes the hourly side choice right more often than
+  chance is kept as mechanism evidence, beside gamma's established role as a size predictor (D665).

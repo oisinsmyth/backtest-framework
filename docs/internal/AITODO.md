@@ -63,7 +63,7 @@
   - **The power:** 0.63 at the full effect, 0.26 at half.
   - **D712 (its vault pre-registration) was WITHDRAWN before any look,** on the principal's word. The account trades
     MES only, and at MES the rule loses in-sample.
-  - **Open, the principal's "look into E":** its economics at MES.
+  - **CLOSED 2026-09-30 (the principal: "Close E - If even the oracle's best is 0.93 dollars 106 times a year we stand no chance"), under R15.** D713: the oracle's best bucket nets about +$0.92 a MES trade, 106 a year.
 - **D709 STAGE 0 (2026-09-30): FAIL (not the funds).** Silver moves into its 13:24–13:25 settlement window with the
   day's sign after AGQ/ZSL switched to the settlement benchmark: +$5.63 a SIL gross (t 3.14, above every rotation).
   - **Specific:** the midday placebo is flat, and so is gold.
