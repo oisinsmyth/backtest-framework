@@ -645,3 +645,14 @@ Component lines come from the runner's own output (`data/stage1_d711_f2_mechanis
 | F2 on NQ, 1 MNQ ($4.07), 2018-04 → 2023-12 | D711 | +0.92 (+1.56); +$24.74 gross / +$20.67 net a trade, t 3.53, efficiency rank 0.984 | **ρ 0.87 with entry #4**: the same trade on a bigger-moving contract, so it fails C-b. 2022 is 67 % of the net. At most a sizing choice beside #4, on the principal's word |
 | F2 on YM, 1 MYM ($3.80) | D711 | +0.54 (+0.85); +$9.94 / +$6.15 | fails its efficiency rotation (rank 0.936); ρ 0.86 with #4 |
 | F2 on RTY, 1 M2K ($3.76), 2019-11 → 2023-12 | D711 | +0.07 (+0.11); +$4.39 / +$0.64 | no edge (t 1.53, Holm 0.063; rank 0.839) |
+
+## SCORED, NOT ENTERED — silver into its settlement window, 2026-09-30 ([D709](decisions/D709-STAGE-0-RESULT-silver-moves-into-settlement-not-the-funds.md))
+
+Component line from the runner's own output (`data/d709_silver_settlement_flow.json`).
+- **The construction:** on SI, from 12:55 ET, hold the sign of the move since the prior settlement to the 13:24 close,
+  one SIL at $8. Post-era, 2019-01-07 → 2023-12-29.
+- **Status:** FAIL (not the funds). Not a candidate.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| SI 12:55 → 13:24, 1 SIL ($8) | D709 | −0.58 (−0.92), SE 0.52; gross +1.39 (+2.47) | gross +$5.63 a trade (t 3.14) below the $8 round trip. The pre-era carried it too (t 4.03), so the funds are not shown as its cause. It fades: 2022 +$0.87, 2023 −$3.87. Hit 45.9%, daily skew +2.28; ρ +0.05 with #2, +0.03 with #4 |

@@ -63,6 +63,13 @@
   - **The power:** 0.63 at the full effect, 0.26 at half.
   - **Frozen as D712 for the joint run (slot 10),** with gross T as the primary
     gate and MES net as the second.
+- **D709 STAGE 0 (2026-09-30): FAIL (not the funds).** Silver moves into its 13:24–13:25 settlement window with the
+  day's sign after AGQ/ZSL switched to the settlement benchmark: +$5.63 a SIL gross (t 3.14, above every rotation).
+  - **Specific:** the midday placebo is flat, and so is gold.
+  - **Why it fails:** the pre-era carried the effect too (t 4.03), though only in the pit era: 2015-07 → 2019-01 is
+    flat. That split is reported, post hoc.
+  - **Net and trend:** net −$2.37 at $8. It fades to nothing in 2022–2023.
+  - **Waiting on the principal:** close the silver settlement line, or leave it parked (R15). No redesign is proposed.
 - D695 is the short-gamma continuation's directional inputs; D696 is D694's busy / low-IV/RV cell (below).
   - D689 is the short-gamma continuation stage 0.
   - D690 is the oracle filter and accuracy assessment, and D692 the oracle profile at MES (the other session).
