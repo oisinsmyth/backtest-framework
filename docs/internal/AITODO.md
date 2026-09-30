@@ -295,6 +295,16 @@
 | IR-G7 | CIT supplement | 5A.2 | not on disk; tracker line 158 wrong | free CFTC yearly zips |
 | IR-G8 | designated-contract 1-minute panel | R1, C0 | raw bars on disk; builder not written | build |
 
+**This table is the 2026-09-27 opening state, and it is SUPERSEDED.** The rulings and the "Next" list below closed it,
+and the model is FROZEN (IR-A15/A16). **Checked 2026-09-30:**
+- `freeze_index_reweight_2027.py --verify` passes: nothing has moved.
+- The Track 2 recorder's daily task has succeeded every day (settlements 2026-09-21 → 09-29).
+- The two sign-check tasks (10-05, 10-11) and the Databento pre-lapse top-up (10-09) are scheduled.
+- **Nothing in this line waits on the Databento lapse.**
+- **One loose end:** D636 §1 lists FC, CC (before 2026) and LME copper for the GSCI reference-day weights as inputs
+  "pending the principal's approval", with a declared fallback. No amendment records a ruling, so the frozen code's
+  behaviour governs. Confirm which applies before R1 runs.
+
 - **Rulings taken, 2026-09-27.** They are recorded in
   [`INDEX_REWEIGHT_FLOW_AMENDMENTS.md`](INDEX_REWEIGHT_FLOW_AMENDMENTS.md), IR-A1–IR-A12.
   - IR-G1 → ICE from Sierra Chart and LME from Westmetall (IR-A4). The LME prices are on disk:
