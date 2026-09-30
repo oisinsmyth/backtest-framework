@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 489 of these records carry neither field —
+**No Status or Category column, deliberately.** 490 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -781,6 +781,7 @@ would look like data. The tokens are what is shown.
 | D706 | D706 PREMISE COUNT — how many short-gamma days the unseen slices hold, and whether the short-gamma direction line can e… | [record](D706-PREMISE-COUNT-short-gamma-days-in-the-unseen-slices.md) |
 | D707 | REGISTRATION — F2 for the joint vault run: the ES last-hour continuation, taken only when the prior hour's relative siz… | [PRE-REG](D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md) |
 | D708 | D708 STAGE 0 RESULT — SIGNAL: on ES-book short-gamma days the hourly continuation's side choice carries the edge (+$3.0… | [record](D708-STAGE-0-DESIGN-does-the-continuation-choose-its-side.md) · [RESULT](D708-STAGE-0-RESULT-the-side-choice-is-the-signal-not-the-drift.md) |
+| D711 | REGISTRATION — two mechanism tests of F2 that leave the vault unspent: (A1) does its rule work at midday clocks on ES,… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) |
 
 <!-- REGISTER:END -->
 
