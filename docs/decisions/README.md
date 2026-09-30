@@ -774,6 +774,7 @@ would look like data. The tokens are what is shown.
 | D699 | D699 STAGE 0 RESULT — the gamma-gated 15-minute log MACD: the histogram variant (V1) earns +$10.47 a MES trade, net Sha… | [record](D699-STAGE-0-DESIGN-the-gamma-gated-15-minute-log-macd-long.md) · [RESULT](D699-STAGE-0-RESULT-hist-clears-the-timing-null-not-the-drift.md) |
 | D700 | D700 STAGE 0 RESULT — no clock fades, and none clears: a hand-cell channel on ES continues weakly at its onset on the 5… | [record](D700-STAGE-0-DESIGN-where-es-channels-stop-fading.md) · [RESULT](D700-STAGE-0-RESULT-no-clock-fades-and-none-clears.md) |
 | D701 | D701 DIAG RESULT — the 5-minute channel is V1 again (93% of its up onsets fall inside V1's positions, and its continuat… | [record](D701-DIAG-DESIGN-do-the-channel-and-v1-carry-the-same-information.md) · [RESULT](D701-DIAG-RESULT-the-5-minute-channel-is-v1-the-15-minute-is-not.md) |
+| D702 | the oracle profile of the reopened last-hour continuation at MES: is the edge big-move-shaped, and where do the winners… | [record](D702-DESIGN-the-last-hour-oracle-profile-at-mes.md) |
 
 <!-- REGISTER:END -->
 
