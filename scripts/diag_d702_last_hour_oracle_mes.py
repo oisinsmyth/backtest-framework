@@ -196,7 +196,7 @@ def profile(X: pd.DataFrame) -> dict[str, Any]:
     g = X["gross"].to_numpy(float)
     net = g - COST
     days = X.index.to_numpy(str)
-    years = (pd.Timestamp(days[-1]) - pd.Timestamp(days[0])).days / 365.25
+    years = (pd.Timestamp(str(days[-1])) - pd.Timestamp(str(days[0]))).days / 365.25
     win_all, bar_all = float((net > 0).mean()), float((g >= 2 * COST).mean())
     tot_oracle = float(net[net > 0].sum())
     n_all = len(g)
