@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 496 of these records carry neither field —
+**No Status or Category column, deliberately.** 497 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -785,6 +785,7 @@ would look like data. The tokens are what is shown.
 | D710 | D710 STAGE 0 RESULT — PRESENT, then MECHANISM ONLY: the dealers' auction-day V is in the Treasury futures at about two-… | [record](D710-STAGE-0-DESIGN-treasury-auction-intraday-v.md) · [RESULT](D710-STAGE-0-RESULT-the-auction-v-is-in-the-futures-mechanism-only.md) |
 | D711 | A1 UNRESOLVED: the midday clocks carry about a third of F2's per-trade information, most of it at 13:30. A2 MIXED: NQ t… | [PRE-REG](D711-PRE-REG-f2-placebo-clocks-and-other-index-roots.md) · [RESULT](D711-RESULT-placebo-unresolved-nq-transfers.md) |
 | D712 | REGISTRATION — the hourly continuation on ES-book short-gamma days, for the joint vault run: its side choice (the timin… | [PRE-REG](D712-PRE-REG-short-gamma-hourly-timing-for-the-joint-vault.md) |
+| D713 | D713 DIAG DESIGN — the MES oracle profile of E: which of the hourly short-gamma continuation's trades net a profit at o… | [record](D713-DIAG-DESIGN-the-mes-oracle-profile-of-e.md) |
 
 <!-- REGISTER:END -->
 
