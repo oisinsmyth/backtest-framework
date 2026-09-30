@@ -173,3 +173,14 @@ $22.80 fill). Its symmetric trim is +0.43 bp against a 10.6 bp cost.
 
 The bars-only v1 (SC-A3) is what failed. The deposit's aggressor-flow feature was never available in-sample. Whether
 a flow-signed classifier would separate the classes is not answered here.
+
+## Programme slot 2 RELEASED by the principal, 2026-09-30
+
+*The principal: "Release 1 and 2".*
+
+- **Slot 2** ("shock classifier H1") is moved to `released` in `data/programme_registry.json` with its reason
+  (`Registry.release`).
+- **Why it is free:** the classifier failed Gate 1 on all four instruments in-sample (above) and never reached the
+  vault, so no vault look is being given up.
+- **This is the principal's override** of the deposit's never-retroactively default, as for H-O2 (D658). It
+  applies to this family only, and the family can never be registered again.

@@ -226,14 +226,14 @@
   trade on ES so it doesn't matter if its profitable there"): D712.**
   - Slot 10 is unregistered and free again, and D712's freeze file is removed (see its WITHDRAWN section).
   - The rule loses at one MES in-sample (−0.45). Its runner and power output are kept as evidence.
-  - **Next free programme slot: 10.**
+  - **Free programme slots (2026-09-30, after the principal released slots 1 and 2, "Release 1 and 2"): 1, 2 and 10; 0.035 allocated.**
 - **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
   look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
   stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**
 - **CLOSED 2026-09-29 (the principal: "close opening model v1"; slot 7: "Release it"):** the opening agent-state
   model's H-O2 (D658), without its vault look. **Programme slot 7 RELEASED** (`Registry.release`; the family is kept in
   `released` in `data/programme_registry.json`): the principal's override of the never-retroactively default, for
-  this family only. Allocated: slots 1–6, 8, 9 (0.040); **free: 7 and 10.**
+  this family only. (Superseded: slot 7 now holds NQ F2, D716; slots 1 and 2 were released 2026-09-30; free: 1, 2 and 10.)
 - **PARKED (the principal, 2026-09-28): D630 §8's vault-input path.** The plan, inventoried 2026-09-28 from metadata only:
   - a wrapper (`scripts/build_ledger_vault_inputs.py`, not yet written) loads each frozen builder unchanged and moves
     only its cut and output paths;

@@ -141,3 +141,14 @@ half their variance with it.
 3. **ES is untestable at this bar.** ES volume swamps the S&P funds' flow: 3% of days activate, and none after 2023.
 4. **Deposit §14's v2 overlays** (vol-control, month-end, late-day conditioning) would rest on this v1 verdict. There is
    no v1 effect for them to overlay.
+
+## Programme slot 1 RELEASED by the principal, 2026-09-30
+
+*The principal: "Release 1 and 2".*
+
+- **Slot 1** ("LETF close flow H1") is moved to `released` in `data/programme_registry.json` with its reason
+  (`Registry.release`).
+- **Why it is free:** the line was killed in-sample by its own 11am placebo (above) and never reached the vault, so
+  no vault look is being given up.
+- **This is the principal's override** of the deposit's never-retroactively default, as for H-O2 (D658). It
+  applies to this family only, and the family can never be registered again.
