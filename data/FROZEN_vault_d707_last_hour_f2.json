@@ -1,0 +1,114 @@
+{
+ "spec": "D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md",
+ "prereg_sha256": "3f10874f0b0c4c7d70a22a2c2e05ece7205dd032fe5105effe609991f9eb867e",
+ "runner": "scripts/vault_d707_last_hour_f2.py",
+ "runner_sha256": "aaf67bbbb149c7e84f9953673ca789d1e30de2c4008dea41942a062b938abf82",
+ "imported_unchanged": {
+  "stage0_d618_sharpened_ladder.py": "97b4043aa3ed172abf61a0a1c899235d98d8017d7b7edbbe049586ae32b951ac",
+  "diag_d702_last_hour_oracle_mes.py": "f335d2a4d1f9466249b80ea7d9d4b6050a25808a82cae409d5e90d75b70cb148",
+  "stage1_d703_last_hour_ep_filter.py": "00ed83392e9822d015632076e69674205c54f1bb52e44d78680db74d8f506e11",
+  "stage0_d671_break_construction.py": "ac0b7ea0850d7e5767a35822a0ab58d6f761f00b46e3fbe2fb0f68fd7d60fb37",
+  "stage0_d691_iv_size.py": "1df22cda256ba8c53f2a8e3daad082aec61b1240914251e7c27e83f53e76a2cf"
+ },
+ "fixture_for_information": {
+  "path": "data/fixtures/fut_ES_rth_1m.csv.gz",
+  "sha256_at_freeze": "0d21ed3dc5cf2e95471ef2c3d177d6e453dcb0a76061fb147d487a20fcc313c9",
+  "note": "not verified at the vault run (it may be extended to 2026-09-18); the in-sample known answer is re-proved instead"
+ },
+ "params": {
+  "q": 0.8,
+  "tier_n": 250,
+  "sigma_sessions": 252,
+  "sigma_min": 60,
+  "rv_grid": "5-minute, 09:30 -> 15:30",
+  "cost_usd_round_trip": 4.42,
+  "size": "one MES",
+  "t_pass": 1.2816,
+  "t_promotion": 2.576,
+  "min_trades": 30,
+  "nw_lags": 5
+ },
+ "known_answer_in_sample_own_window": {
+  "trades": 252,
+  "mean_net": 13.208968253968253,
+  "sum_net": 3328.66,
+  "first_window_session": "2018-05-14",
+  "take_sessions_sha256": "5427a6c8006773be758d22a475ea2043ab1b87dddac220abf3f344a65c423cbc"
+ },
+ "known_answer_d705_window": {
+  "trades": 252,
+  "mean_net": 13.208968253968253
+ },
+ "power": {
+  "effect_in_sample_mean_net": 13.208968253968253,
+  "in_sample_trades_own_window": 252,
+  "size_check": {
+   "draws": 20000,
+   "trades_a_draw": 120,
+   "pass_rate_at_zero": 0.1026,
+   "promotion_rate_at_zero": 0.0066,
+   "bar": 0.12,
+   "ok": true
+  },
+  "windows": {
+   "candidates_a_window": 640,
+   "step": 5,
+   "count": 145,
+   "independent_approx": 2.12,
+   "first_and_last_start": [
+    "2018-05-14",
+    "2021-05-18"
+   ],
+   "lines": {
+    "100pct": {
+     "pass": 0.6551724137931034,
+     "promotion": 0.38620689655172413,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    },
+    "50pct": {
+     "pass": 0.5448275862068965,
+     "promotion": 0.09655172413793103,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    },
+    "25pct": {
+     "pass": 0.3586206896551724,
+     "promotion": 0.0,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    },
+    "0pct": {
+     "pass": 0.1793103448275862,
+     "promotion": 0.0,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    }
+   }
+  },
+  "note": "the windows overlap and 2022 sits in many of them, so the 0% line shows time concentration, not the test's size (s.5)"
+ },
+ "unseen": [
+  "2024-01-01",
+  "2026-09-18"
+ ],
+ "programme_slot": 7,
+ "frozen_date": "2026-09-30",
+ "instruction": "the principal, 2026-09-30: \"The F2 construction is now a candidate, add it to the big vault run.\""
+}

@@ -578,3 +578,33 @@ time-matched drift is NW t 1.64, not 2). UNCONFIRMABLE on 2024-01 → 2025-02 (e
 | V1 HIST (z_H band ±0.5), 1 MES ($4.42) | D699 | +0.63 (+1.06); gross +0.90 (+1.56) | 72 trades a year, hit 50.5%, skew +1.09, median +$0.58 against a mean +$10.47; 2022 is 75% of the net; beats the drift at t 1.64 only; timing null 98.5th, gamma-label null 99.6th; ρ +0.154 |
 | V2 ROC (z_R band ±1.0), 1 MES | D699 | +0.19 (+0.28); gross +0.57 (+0.89) | inside its timing null (83rd; 40th in the family); +$0.35 a trade without Feb–Apr 2020; ρ +0.056 |
 | V3 OR, 1 MES | D699 | +0.27 (+0.41); gross +0.59 (+0.91) | inside its timing null (82nd; 62nd in the family); median −$15.67; ρ +0.106 |
+
+## ENTRY #4, PROVISIONAL, 2026-09-30 — F2, the ES last-hour continuation on a relative-size filter ([D705](decisions/D705-RESULT-none-passes-f2-fails-only-on-2022-concentration.md), [D707](decisions/D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md))
+
+*The principal: "The F2 construction is now a candidate, add it to the big vault run."*
+
+The component line comes from the runner's own output (`data/vault_d707_power.json`, which reproduces D705's F2
+exactly: 252 trades, +$13.208968 net).
+- **The construction:**
+  - at 15:30, trade the sign of the 14:30 → 15:30 ES move, held to 16:00, one MES, $4.42 a round trip;
+  - only when tiers((tiers(|F5| / σ_F5) + tiers(today's 5-minute realised volatility to 15:30)) / 2) ≥ 0.8;
+  - D707 §1 is the full specification.
+- **The score:** daily net Sharpe over every candidate session of 2018-05-14 → 2023-12-29 (√252).
+
+| # | component | window | net Sharpe (SE); Sortino; gross | hit | skew | ρ with prior | entered |
+|---|---|---|---|---|---|---|---|
+| **4** | **F2** (D707 §1), ES 15:30 → 16:00, 1 MES, $4.42, about 45 trades a year | 2018-05 → 2023-12 (the walk-forward burn-in) | **+0.80 (0.36)**; Sortino +1.37; per trade +$13.21 net / +$17.63 gross (HAC t 2.48); max drawdown $707 | 53.6 % | +0.81 (per trade) | +0.02 with #2 (the MACD arm) | **PROVISIONAL, on the principal's ruling.** D705's development verdict was FAIL on its one-year gate (2022 = 59.9 % of the net, bar 50 %); +$7.17 a trade without 2022, +$7.06 after 2022-05-16. Promotion or removal by D707's one look at 2024-01-01 → 2026-09-18 in the joint run (programme slot 7) |
+
+**How it meets the standard:**
+- **C-a:** +0.80 > 0.5 on the point estimate, SE 0.36 (a monthly block bootstrap). **C-b:** ρ +0.02 with #2.
+- **C-c:** positive skew. **C-d:** daily σ about $40 at one MES. **C-e:** D705 and D707.
+- **It sits above its family null:** D705's best-of-three count-matched rotation had p95 +$7.94 a trade, and F2's rank
+  was 0.996.
+
+**Disclosures:**
+- **The window** is 2018-05 onward, not the standard's 2016-01, because the composite tier needs two 250-value
+  burn-ins.
+- **Selection:** three steps chose F2 on this window (D702's hindsight profile, D703's failure, D705's best of three),
+  and only the last is priced by a null. The in-sample figure is an upper estimate.
+- **The unseen span includes this ledger's own confirmation slice** (2024-01 onward). It is unread for this
+  trade, and D707 reads it once, in the joint run, together with the vault.

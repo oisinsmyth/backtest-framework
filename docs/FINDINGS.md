@@ -5207,3 +5207,32 @@ a level.**
   2024-03) shows nothing (p 0.34). The vault look was never spent, and slot 10 stays free.
 - **The method lesson from D698:** a Welch z on a persistent label understates its noise (the null z variance was
   1.2–1.8 at the vault's size). The within-window label rotation holds its size.
+
+## 100. The ES last-hour continuation pays on big hours, and a relative filter finds them; F2 goes to the joint vault run (D618, D702, D703, D705, D707)
+
+**The rule: the last hour's continuation is a size trade.** Filter it on how big the prior hour and the day are
+RELATIVE to their own history, never on a dollar bar.
+- **The trade** ([D618](decisions/D618-STAGE-0-RESULT-the-band-around-the-price-was-the-signal.md) §3c, reopened by
+  the principal 2026-09-30):
+  - at 15:30, take the sign of 14:30 → 15:30 on ES and hold it to 16:00;
+  - taken every day at one MES it is flat (−$0.32 a trade on 2018-05 → 2023-12).
+- **Its edge is big-move-shaped** ([D702](decisions/D702-DIAG-the-last-hour-edge-is-big-move-shaped.md)):
+  - a size-only oracle's top fifth nets +$12.78 a trade;
+  - the prior hour's size against its own σ is the input that ranks.
+- **A dollar expected-profit bar became a volatility-regime gate**
+  ([D703](decisions/D703-RESULT-development-fail-the-template-became-an-iv-regime-gate.md)): 79 % of its trades fell in
+  2022.
+- **Walk-forward percentile filters** ([D705](decisions/D705-RESULT-none-passes-f2-fails-only-on-2022-concentration.md))
+  were scored against a best-of-three count-matched rotation.
+  - **F2**, the composite of the prior hour's relative size and today's realised volatility at the top 20 %:
+    - +$13.21 net a trade (t 2.48), about 45 trades a year;
+    - daily Sharpe 0.80 (Sortino 1.37), rank 0.996;
+    - **but 2022 holds 60 % of its net;** +$7.17 a trade without 2022 and +$7.06 after 2022-05-16.
+  - It failed D705's one-year gate, and the verdict stands.
+- **Carried to unseen data on the principal's ruling**
+  ([D707](decisions/D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md)):
+  - frozen, programme slot 7, COMPONENTS_PROP entry #4 (PROVISIONAL);
+  - one look at 2024-01-01 → 2026-09-18 in the joint run: PASS with ≥ 30 trades, net > 0 and NW t ≥ 1.2816;
+  - PASS probability about 0.66 at the full in-sample edge and 0.54 at half, on about 120 trades.
+- **What it does not use:** dealer gamma (F3, the short-gamma version, failed the edge gate), implied volatility, or
+  any dollar threshold.

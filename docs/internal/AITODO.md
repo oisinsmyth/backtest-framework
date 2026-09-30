@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 707.** D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
+- **Next free number: 708.** D707 is F2's vault pre-registration (this session; the principal: "The F2 construction is now a candidate, add it to the big vault run"). D706 is the short-gamma day count on the unseen slices (this session; the principal: "Count short-gamma days"). D705 is the other session's relative-size filters on the last hour. D704 is the no-aggressive-push volume gate on V1 (this session). D702 and D703 are the other session's last-hour line. D701 is the channel–V1 overlap diagnostic (this session). D700 is the channel clock profile (this session; the premise check for the principal's trend detector). D698 is the other session's pre-reg for D696's cell. D699 is the gamma-gated 15-minute log
   MACD long (this session; the principal reopened the MACD for it, D675 §11). D697 is the move-triggered short-gamma
   long.
 - **D699 RESULT (2026-09-30): V1, the histogram with a ±0.5 band, is a LEAD, but it fails the declared reading on (b).**
@@ -86,8 +86,10 @@
           best-of-three null (rank 0.996) and ex-COVID.
         - **It fails only the one-year gate:** 2022 holds 59.9 % of its net, against 50 %.
         - It keeps +$7.17 without 2022 and +$7.06 after 2022-05-16.
-      - **Open, the principal's call:** forward-record F2 as a newly registered rule, scored only on unseen data (the
-        held slice plus sessions from 2026-09-19). It needs about three years at full effect.
+      - **DECIDED 2026-09-30 (the principal: "The F2 construction is now a candidate, add it to the big vault run"):**
+        - F2 is registered as D707 (`b6b42cd4`), frozen, and holds programme slot 7;
+        - one look at 2024-01-01 → 2026-09-18 happens in the joint run;
+        - COMPONENTS_PROP entry #4, PROVISIONAL. See the programme-rule section below.
     - **2. CL settlement flow (D648): OPEN**; the form choice (x_GM vs x_SR) is with the principal.
       - **The trade** runs with the funds into the window: +$28.46 gross, t 2.230 against a bar of 2.241, net −$3.00
         at $31.46. The fade after the window (T3) is +$22.34, t 3.18, not cost-tested.
@@ -148,6 +150,24 @@
   - The frozen files are not edited. The options are an amendment record, or a joint-run wrapper that raises
     `T.RESERVED_FROM` before calling it.
   - D698's `raised_cut` and its rehearsal prove that mechanism works both ways.
+- **FROZEN 2026-09-30 (the principal: "The F2 construction is now a candidate, add it to the big vault run"): D707,
+  the ES last-hour F2, programme slot 7.**
+  - The freeze is `data/FROZEN_vault_d707_last_hour_f2.json`; the runner `scripts/vault_d707_last_hour_f2.py`.
+  - **Known answer:** D705's F2 reproduced exactly (252 trades, +$13.208968), with the path equal to D702 + D705 session
+    by session.
+  - **The rule:** PASS with ≥ 30 trades on 2024-01-01 → 2026-09-18, net > 0 and one-sided NW(5) t ≥ 1.2816;
+    promotion at t ≥ 2.576.
+  - **Power** (`data/vault_d707_power.json`):
+    - the test's size is 0.103 (bar 0.12);
+    - over 145 contiguous 640-candidate windows (about two independent), PASS is 0.66 / 0.54 / 0.36 / 0.18 at
+      100 / 50 / 25 / 0 % of the in-sample edge, on a median of 122 trades;
+    - the 0 % line is 2022's concentration.
+  - **The span includes the held 2024-01 → 2025-02 slice** (unread for this trade), read once with the vault.
+  - **No vault-input build is needed.** `fut_ES_rth_1m` runs to 2026-09-09, and `--vault` re-proves the known answer
+    on the extended build before scoring. If the 10-09 top-up extends the fixture to 2026-09-18, the fixture's hash is
+    for information only.
+  - **Ledger:** COMPONENTS_PROP entry #4, PROVISIONAL.
+  - **Next free programme slot: 10.**
 - **CLOSED 2026-09-29 (the principal: "Ok close both of those"):** opening v2 (D652/D659) without spending its vault
   look (no freeze, no slot); D668's NQ plain break as a separate vault line (reported beside D680 as B0). Slot 10
   stays free. **The NQ vault-input path is deferred ("start on the NQ Vault period data later").**

@@ -1,0 +1,220 @@
+{
+ "known_answer": {
+  "d618_known_answer": {
+   "n": 1960,
+   "mean_pts": 0.6794642857142857,
+   "hit": 0.4928571428571429
+  },
+  "d705_F2_on_d705_window": {
+   "trades": 252,
+   "mean_net": 13.208968253968253
+  },
+  "path_equality": "candidates, gross, a, b and the F2 take flags equal D702's build + D705's family exactly",
+  "in_sample_own_window": {
+   "trades": 252,
+   "mean_net": 13.208968253968253,
+   "sum_net": 3328.66,
+   "first_window_session": "2018-05-14",
+   "take_sessions_sha256": "5427a6c8006773be758d22a475ea2043ab1b87dddac220abf3f344a65c423cbc"
+  },
+  "in_sample_report": {
+   "span": [
+    "2018-05-14",
+    "2023-12-29"
+   ],
+   "candidates": 1360,
+   "years": 5.626283367556468,
+   "F2": {
+    "trades": 252,
+    "trades_per_year": 44.78978102189781,
+    "mean_gross": 17.628968253968253,
+    "mean_net": 13.208968253968253,
+    "t_net_hac": 2.4808960683129446,
+    "median_net": 6.205,
+    "hit_net": 0.5357142857142857,
+    "payoff": 1.3290072290495394,
+    "skew": 0.8066111223062487,
+    "kurtosis_excess": 7.432104252204628,
+    "sharpe_per_trade": 0.9309211009084938,
+    "sortino_per_trade": 1.5891028617231724,
+    "sharpe_per_trade_gross": 1.242426979861561,
+    "sharpe_daily": 0.7952979390386173,
+    "sortino_daily": 1.3666333811134628,
+    "max_drawdown_usd": 706.9800000000002,
+    "trim_1pct": {
+     "ex_top": 9.555000000000017,
+     "ex_bottom": 16.155000000000015,
+     "trimmed": 12.495322580645169
+    },
+    "by_year": {
+     "2018": {
+      "n": 18,
+      "net": 13.357777777777779
+     },
+     "2019": {
+      "n": 21,
+      "net": -2.277142857142859
+     },
+     "2020": {
+      "n": 65,
+      "net": 4.830000000000003
+     },
+     "2021": {
+      "n": 49,
+      "net": 16.115714285714287
+     },
+     "2022": {
+      "n": 66,
+      "net": 30.220151515151517
+     },
+     "2023": {
+      "n": 33,
+      "net": 1.1481818181818173
+     }
+    },
+    "before_after_2022_05_16_net": [
+     14.473540669856458,
+     7.062558139534882
+    ],
+    "long_net": 17.04455223880597,
+    "short_net": 8.853305084745763,
+    "cost_usd_round_trip": 4.42,
+    "rho_with_macd_arm": 0.020487656627242203
+   },
+   "take_everything": {
+    "trades": 1360,
+    "trades_per_year": 241.7226277372263,
+    "mean_gross": 4.1755514705882355,
+    "mean_net": -0.2444485294117654,
+    "t_net_hac": -0.165799054055731,
+    "median_net": -3.17,
+    "hit_net": 0.46397058823529413,
+    "payoff": 1.1404125478976812,
+    "skew": 0.9707379162430898,
+    "kurtosis_excess": 14.15243608192121,
+    "sharpe_per_trade": -0.06510397059509285,
+    "sortino_per_trade": -0.0987551580613913,
+    "sharpe_per_trade_gross": 1.1120745165194237,
+    "sharpe_daily": -0.05599545858355411,
+    "sortino_daily": -0.08492974168927321,
+    "max_drawdown_usd": 1875.1999999999994,
+    "trim_1pct": {
+     "ex_top": -2.861907943578326,
+     "ex_bottom": 1.8893912397921322,
+     "trimmed": -0.732781109445282
+    },
+    "by_year": {
+     "2018": {
+      "n": 151,
+      "net": -1.2163576158940412
+     },
+     "2019": {
+      "n": 242,
+      "net": -4.435495867768596
+     },
+     "2020": {
+      "n": 237,
+      "net": 0.010379746835440793
+     },
+     "2021": {
+      "n": 245,
+      "net": 1.7024489795918365
+     },
+     "2022": {
+      "n": 244,
+      "net": 5.651721311475409
+     },
+     "2023": {
+      "n": 241,
+      "net": -3.62643153526971
+     }
+    },
+    "before_after_2022_05_16_net": [
+     0.9906217616580302,
+     -3.2617721518987355
+    ],
+    "long_net": -1.714880785413746,
+    "short_net": 1.3759814528593488,
+    "cost_usd_round_trip": 4.42,
+    "rho_with_macd_arm": 0.08767146137287188
+   },
+   "daily_sharpe_monthly_block_se": 0.36066316813939303,
+   "d705_d_reported": {
+    "max_year_share": 0.5991990771061029,
+    "max_year": "2022",
+    "positive_years": "5 of 6"
+   },
+   "mean_gross_vs_2c": [
+    17.628968253968253,
+    8.84
+   ]
+  },
+  "runtime_min": 1.81
+ },
+ "power": {
+  "effect_in_sample_mean_net": 13.208968253968253,
+  "in_sample_trades_own_window": 252,
+  "size_check": {
+   "draws": 20000,
+   "trades_a_draw": 120,
+   "pass_rate_at_zero": 0.1026,
+   "promotion_rate_at_zero": 0.0066,
+   "bar": 0.12,
+   "ok": true
+  },
+  "windows": {
+   "candidates_a_window": 640,
+   "step": 5,
+   "count": 145,
+   "independent_approx": 2.12,
+   "first_and_last_start": [
+    "2018-05-14",
+    "2021-05-18"
+   ],
+   "lines": {
+    "100pct": {
+     "pass": 0.6551724137931034,
+     "promotion": 0.38620689655172413,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    },
+    "50pct": {
+     "pass": 0.5448275862068965,
+     "promotion": 0.09655172413793103,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    },
+    "25pct": {
+     "pass": 0.3586206896551724,
+     "promotion": 0.0,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    },
+    "0pct": {
+     "pass": 0.1793103448275862,
+     "promotion": 0.0,
+     "unresolved": 0.0,
+     "trades_median": 122.0,
+     "trades_p10_p90": [
+      105.0,
+      176.0
+     ]
+    }
+   }
+  },
+  "note": "the windows overlap and 2022 sits in many of them, so the 0% line shows time concentration, not the test's size (s.5)"
+ },
+ "runtime_min": 1.85
+}

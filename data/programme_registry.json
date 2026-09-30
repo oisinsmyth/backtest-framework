@@ -61,6 +61,15 @@
    "note": "Pre-positioning, TRADING arm only: the December entry -> pre-execution exit return in the forecast direction (\u00a76 H-R3(b); H-R3(a) is descriptive and is not a decision family)"
   },
   {
+   "name": "last-hour F2 (ES)",
+   "doc": "D707-PRE-REG-f2-last-hour-filter-for-the-joint-vault.md",
+   "registered_utc": "2026-09-30",
+   "slot": 7,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line on D705 F2: the ES last-hour continuation (sign of 14:30->15:30, held to 16:00, one MES, $4.42) when tiers((tiers(abs(F5)/sigma) + tiers(rv to 15:30)) / 2) >= 0.8; PASS with >= 30 trades on 2024-01-01 -> 2026-09-18, net > 0 and one-sided NW t >= 1.2816"
+  },
+  {
    "name": "ledger H2 projected-profit (NG)",
    "doc": "D649-PRE-REG-ng-projected-profit-line-for-the-joint-vault.md",
    "registered_utc": "2026-09-28",
