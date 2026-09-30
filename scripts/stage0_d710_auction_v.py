@@ -190,16 +190,16 @@ def load_bars(root_dir: Path) -> pd.DataFrame:
 
 
 def load_calendars(root_dir: Path) -> dict:
-    cal = pd.read_csv(tracked("calendar", "treasury_auctions.csv"), dtype=str, keep_default_na=False)
+    cal = pd.read_csv(tracked("calendar", "treasury_auctions.csv"), dtype=str, keep_default_na=False, encoding="utf-8")
     cal = cal[cal["auction_date"] < RESERVED].copy()
     assert_window(cal["auction_date"].to_numpy(str), "treasury_auctions.csv (after the cut)")
-    ev = pd.read_csv(tracked("calendar", "events.csv"), dtype=str, keep_default_na=False)
+    ev = pd.read_csv(tracked("calendar", "events.csv"), dtype=str, keep_default_na=False, encoding="utf-8")
     fomc = {d[:10] for d, e in zip(ev["datetime_et"], ev["event"]) if e in ("FOMC", "FOMC_UNSCHEDULED") and d[:10] < RESERVED}
-    ext = pd.read_csv(tracked("calendar", "fomc_2010_2015.csv"), dtype=str, keep_default_na=False)
+    ext = pd.read_csv(tracked("calendar", "fomc_2010_2015.csv"), dtype=str, keep_default_na=False, encoding="utf-8")
     fomc |= set(ext["date_et"])
     macro = {d[:10] for d, e in zip(ev["datetime_et"], ev["event"]) if e in ("CPI", "EMPSIT") and d[:10] < RESERVED}
     sc = pd.read_csv(root_dir / "fixtures" / "cme_session_calendar.csv.gz", usecols=["root", "day", "is_early_close"],
-                     dtype={"root": str, "day": str})
+                     dtype={"root": str, "day": str}, encoding="utf-8")
     sc = sc[sc["root"].isin(ROOTS) & (sc["day"] < RESERVED)]
     early = {(r, d) for r, d, e in zip(sc["root"], sc["day"], sc["is_early_close"]) if bool(e)}
     return {"auctions": cal, "fomc": fomc, "macro": macro, "early": early}
@@ -1231,12 +1231,12 @@ def run(dr: Path) -> int:
         if s2.get("book_F"):
             s2["component_line_F"] = component_line(s2["_trades"][s2["_trades"]["take_F"]], series, costs)
         out["stage2"] = s2
-        s2["_trades"].to_csv(REPO / "data" / "d710_trades.csv.gz", index=False)
+        s2["_trades"].to_csv(REPO / "data" / "d710_trades.csv.gz", index=False, encoding="utf-8")
     else:
         out["stage2"] = {"ran": False, "why": f"premise verdict {res['verdict']}: the study goes no further (design 7)"}
     ev = res["events"].drop(columns=["i"])
     assert_window(ev["date"].to_numpy(str), "the events file")
-    ev.to_csv(REPO / "data" / "d710_events.csv.gz", index=False)
+    ev.to_csv(REPO / "data" / "d710_events.csv.gz", index=False, encoding="utf-8")
     out["runtime_min"] = round((time.time() - t0) / 60, 2)
     (REPO / "data" / "stage0_d710_auction_v.json").write_text(json.dumps(to_jsonable(out), indent=1) + "\n",
                                                               encoding="utf-8")

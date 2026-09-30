@@ -119,7 +119,7 @@ def must(cond: bool, msg: str) -> None:
 
 def sha256(p: Path) -> str:
     h = hashlib.sha256()
-    with p.open("rb") as fh:
+    with p.open(mode="rb") as fh:
         for chunk in iter(lambda: fh.read(1 << 22), b""):
             h.update(chunk)
     return h.hexdigest()
@@ -1494,7 +1494,7 @@ def _clean(o: Any) -> Any:
 
 
 def dump(doc: dict[str, Any]) -> str:
-    return json.dumps(_clean(doc), indent=1, ensure_ascii=False) + "\n"
+    return json.dumps(_clean(doc), indent=1) + "\n"
 
 
 def run_main(data_root: Path, check: bool = False) -> int:
