@@ -716,3 +716,20 @@ Component lines from the runner's own output (`data/stage0_d717_reversed_flow.js
 |---|---|---|---|
 | reversed, NQ, 1 MNQ ($4.07) | D717 | −0.32 (−0.44) | −$5.37 a trade net (t −0.92), 1,444 trades; G1 ρ −0.007 (37th percentile); positive in 1 of 6 years. ρ −0.10 with #2, +0.09 with NQ F2 |
 | reversed, ES, 1 MES ($4.42) | D717 | +0.41 (+0.59) | selected by D715 (not evidence); +$4.31 net (t 1.10); 2022 is 74% of the net |
+
+## SCORED, NOT ENTERED — F2 at the commodity settlement windows, 2026-09-30 ([D719](decisions/D719-RESULT-none-transfers-ho-signal-at-unviable-size.md))
+
+Component lines come from the runner's own output (`data/stage1_d719_commodity_settlement_f2.json`).
+- **The construction:** D707's F2 held for the final 30 minutes into each root's settlement window.
+- **Size:** the biggest viable for a $50k prop account, set from the burn-in.
+- **The score:** daily net Sharpe on the root's candidate sessions, 2018 → 2023.
+
+**Family: NONE.**
+
+| construction | record | net Sharpe (Sortino); per contract | why not |
+|---|---|---|---|
+| **HO, 1 full ($10.20)** | D719 | **+0.92 (+1.72)**; +$119.41 gross / +$109.21 net, t 2.74, efficiency rank 0.991 | **NOT VIABLE on size:** a q99 hold loss of $1,117 > $1,000 and no micro; one contract draws down $4,304 with 9 days below −$1,000. 2022 is about two-thirds of the net. At the quoted 12-tick crossing the net is about +$62. ρ −0.02 with NQ F2 |
+| RB, 1 full ($10.20) | D719 | +0.54 (+0.84); +$76.69 / +$66.49, t 1.85 | fails Holm (0.35); NOT VIABLE on size |
+| CL, 1 full ($21.46) | D719 | +0.27 (+0.43); +$49.79 / +$28.33, t 1.35 | fails Holm and the rotation (0.910) |
+| SI, 1 full ($31.00) | D719 | +0.20 (+0.37); +$45.60 / +$14.60, t 1.78 | fails Holm; negative after 2022-05-16; D709's window |
+| NG, HG, GC, ZC, ZS, ZW, ZL, ZM | D719 | −0.90 to −0.38 | no gross edge (t −1.15 to +0.54) |

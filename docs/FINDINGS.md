@@ -5276,3 +5276,20 @@ RELATIVE to their own history, never on a dollar bar.
   - One look at 2024-01-01 → 2026-09-18.
   - The agreement book takes over only if NQ F2 passes, its t ≥ 2.576 and it beats random deletion.
   - PASS probability is 0.69 at the full in-sample edge; takeover is about 0.06.
+
+## 101. F2 does not transfer to the commodity settlement windows; heating oil carries it, at a size a $50k account cannot hold (D719)
+
+**The rule: the settlement windows' concentrated volume does not make the last half-hour a continuation trade on metals,
+grains or natural gas. On the refined products the prior hour does continue into the settlement.**
+([D719](decisions/D719-RESULT-none-transfers-ho-signal-at-unviable-size.md), in-sample 2018 → 2023, twelve roots; KE deferred)
+- **Family: NONE.**
+- **HO carries the signal:** +$119 gross a full contract, t 2.74 (Holm 0.037), efficiency rank 0.991, +$109 net.
+  - It is NOT VIABLE at a $50k prop account: a $1,117 q99 hold loss, no micro, and a $4,304 drawdown at one
+    contract.
+  - 2022 is about two-thirds of its net, and 2020–21 are flat.
+- **RB** is the same shape, weaker (t 1.85). **CL** and **SI** are positive, but short of Holm.
+- **NG, HG, GC and the five grains** have no gross edge.
+- **The oracle profile splits by root.** The day's return since the last settlement carries on NG (t 2.36) and SI (t
+  2.98), matching D630 and D709, while the prior hour does not; on HO and RB it is the reverse.
+- **A method note:** on the energy roots the window's last one-minute close sits a median 9 ticks (HO, RB) or 2–3
+  (CL, NG) from the official settlement. A settlement proxy on one-minute bars is not the settlement.

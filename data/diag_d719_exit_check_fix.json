@@ -1,0 +1,110 @@
+{
+ "CL": {
+  "tick_points": 0.01,
+  "matched": 1133,
+  "unmatched": 12,
+  "median_ticks": 2.999999999999403,
+  "p90_ticks": 8.000000000000114,
+  "share_within_2_ticks": 0.48102383053839365,
+  "flag_below_0.8": true
+ },
+ "NG": {
+  "tick_points": 0.001,
+  "matched": 1120,
+  "unmatched": 11,
+  "median_ticks": 2.000000000000224,
+  "p90_ticks": 8.000000000000007,
+  "share_within_2_ticks": 0.5410714285714285,
+  "flag_below_0.8": true
+ },
+ "HO": {
+  "tick_points": 0.0001,
+  "matched": 1148,
+  "unmatched": 1,
+  "median_ticks": 9.00000000000123,
+  "p90_ticks": 30.999999999998806,
+  "share_within_2_ticks": 0.1750871080139373,
+  "flag_below_0.8": true
+ },
+ "RB": {
+  "tick_points": 0.0001,
+  "matched": 1144,
+  "unmatched": 1,
+  "median_ticks": 9.00000000000123,
+  "p90_ticks": 27.999999999996916,
+  "share_within_2_ticks": 0.17482517482517482,
+  "flag_below_0.8": true
+ },
+ "HG": {
+  "tick_points": 0.0005,
+  "matched": 1290,
+  "unmatched": 26,
+  "median_ticks": 1.0000000000012221,
+  "p90_ticks": 4.000000000000448,
+  "share_within_2_ticks": 0.7232558139534884,
+  "flag_below_0.8": true
+ },
+ "GC": {
+  "tick_points": 0.1,
+  "matched": 1297,
+  "unmatched": 11,
+  "median_ticks": 1.0000000000013642,
+  "p90_ticks": 4.0000000000009095,
+  "share_within_2_ticks": 0.7393986121819583,
+  "flag_below_0.8": true
+ },
+ "SI": {
+  "tick_points": 0.005,
+  "matched": 1223,
+  "unmatched": 7,
+  "median_ticks": 0.999999999999801,
+  "p90_ticks": 2.999999999999403,
+  "share_within_2_ticks": 0.812755519215045,
+  "flag_below_0.8": false
+ },
+ "ZC": {
+  "tick_points": 0.25,
+  "matched": 1160,
+  "unmatched": 0,
+  "median_ticks": 1.0,
+  "p90_ticks": 2.0,
+  "share_within_2_ticks": 0.9456896551724138,
+  "flag_below_0.8": false
+ },
+ "ZS": {
+  "tick_points": 0.25,
+  "matched": 1235,
+  "unmatched": 0,
+  "median_ticks": 1.0,
+  "p90_ticks": 3.0,
+  "share_within_2_ticks": 0.8283400809716599,
+  "flag_below_0.8": false
+ },
+ "ZW": {
+  "tick_points": 0.25,
+  "matched": 1164,
+  "unmatched": 0,
+  "median_ticks": 1.0,
+  "p90_ticks": 4.0,
+  "share_within_2_ticks": 0.8015463917525774,
+  "flag_below_0.8": false
+ },
+ "ZL": {
+  "tick_points": 0.01,
+  "matched": 1225,
+  "unmatched": 0,
+  "median_ticks": 1.999999999999602,
+  "p90_ticks": 5.999999999999233,
+  "share_within_2_ticks": 0.6530612244897959,
+  "flag_below_0.8": true
+ },
+ "ZM": {
+  "tick_points": 0.1,
+  "matched": 1199,
+  "unmatched": 0,
+  "median_ticks": 1.0000000000002274,
+  "p90_ticks": 3.9999999999997726,
+  "share_within_2_ticks": 0.7856547122602169,
+  "flag_below_0.8": true
+ }
+}
