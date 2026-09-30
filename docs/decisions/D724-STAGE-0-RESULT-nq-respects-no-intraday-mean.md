@@ -106,3 +106,13 @@ touch margin** is how much more often the price reaches the anchor than an equid
 5. **Proposed, not decided:**
    - close quiet-day mean reversion on NQ's day session under R15, on the principal's word;
    - keep Q2's finding (early, persistent size knowledge) and Q1's level effect as structure for the next design.
+
+## CLOSED, 2026-10-01, on the principal's word
+
+The principal: "Close it".
+- **Closed under R15:** intraday mean reversion to a session mean on NQ's day session, on quiet or big days. The
+  means are VWAP, the open, and the running, overnight or opening-range midpoints, plus the prior close and prior
+  VWAP as means.
+- **Kept as structure:**
+  - the day's size is known the evening before, and the knowledge persists all day;
+  - yesterday's levels are touched beyond the mirror control, but there is no reversion to them.
