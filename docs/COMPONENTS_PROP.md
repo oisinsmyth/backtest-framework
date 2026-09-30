@@ -733,3 +733,16 @@ Component lines come from the runner's own output (`data/stage1_d719_commodity_s
 | CL, 1 full ($21.46) | D719 | +0.27 (+0.43); +$49.79 / +$28.33, t 1.35 | fails Holm and the rotation (0.910) |
 | SI, 1 full ($31.00) | D719 | +0.20 (+0.37); +$45.60 / +$14.60, t 1.78 | fails Holm; negative after 2022-05-16; D709's window |
 | NG, HG, GC, ZC, ZS, ZW, ZL, ZM | D719 | −0.90 to −0.38 | no gross edge (t −1.15 to +0.54) |
+
+## SCORED, NOT ENTERED — the MACD arm and NQ F2 sized by the day-size forecast, 2026-09-30 ([D720](decisions/D720-STAGE-0-RESULT-forecast-big-days-are-where-direction-fails.md))
+
+Component lines come from the runner's own output (`data/stage0_d720_size.json`), 2018-02 → 2023-12.
+- **The construction:** each line's own trades, at 2 MNQ when D691's walk-forward forecast of the day's range is in
+  its top third (R1), otherwise 1.
+- **Status:** a sizing overlay on existing components, not a new one. It lowers both. Not a candidate.
+
+| construction | record | net Sharpe (Sortino); gross | why not |
+|---|---|---|---|
+| the MACD arm, R1 | D720 | +0.70 (+1.02); +0.94 | −0.13 against the unsized arm (rotation rank 0.24); P3a at $50k 1.93 a year; the forecast's big days carry the arm's weakest efficiency (0.077 against 0.150) |
+| NQ F2, R1 | D720 | +0.48 (+0.70); +0.68 | −0.31 against unsized F2 (rotation rank 0.016); F2 nets −$0.61 a trade on the forecast's big days |
+| the unsized arm + NQ F2, one MNQ each (reported) | D720 | +1.01 (+1.54) | not a new component: the sum of two existing lines, in-sample, with ρ −0.01 between them |
