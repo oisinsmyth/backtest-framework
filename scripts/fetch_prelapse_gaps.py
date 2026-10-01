@@ -5,6 +5,8 @@ around 2026-10-11, after which every one of them is billed.
     python scripts/fetch_prelapse_gaps.py --submit                       # SYSTEM interpreter; batch jobs, recorded
     python scripts/fetch_prelapse_gaps.py --download --only A,B,C [--wait]
     python scripts/fetch_prelapse_gaps.py --download --only D [--wait]   # AFTER the 2026-10-09 top-up has downloaded
+    python scripts/fetch_prelapse_gaps.py --submit-c2                    # 2026-10-10: C again, 10-01 -> the lapse
+    python scripts/fetch_prelapse_gaps.py --download --only C2 [--wait]
 
 A  ohlcv-1s, NQ ES YM RTY MNQ MES MYM M2K (parents), 2010-06-06 -> end
 B  statistics + definition, MGC MCL SIL MHG M6E (parents), 2010-06-06 -> end
@@ -54,6 +56,40 @@ PLAN = [  # (group, label, symbols, schema, start, split)
     ("D", "mbo micro index parents, last free month", [f"{r}.FUT" for r in ["MNQ", "MES", "MYM", "M2K"]], "mbo",
      "2026-09-01", "day"),
 ]
+
+
+C2_START = "2026-10-01"  # C's first jobs end where the dataset ended on 2026-10-01; C2 carries them to the lapse
+
+
+def submit_c2() -> int:
+    """C's continuity top-ups again, from 2026-10-01 to the dataset's end, appended to the record as group C2.
+    Run once, on 2026-10-10 (before the lapse); re-quoted and refused unless USD 0.00."""
+    import databento as db
+    rec = json.loads(JOBS.read_text(encoding="utf-8"))
+    if any(j.get("group") == "C2" for j in rec["jobs"]):
+        raise SystemExit("C2 already submitted; use --download --only C2")
+    c = db.Historical(TU.api_key())
+    rng = c.metadata.get_dataset_range(dataset=DATASET)
+    end = str(rng["end"])[:10] if isinstance(rng, dict) else str(rng.end)[:10]
+    for group, label, syms, schema, _start, _split in PLAN:
+        if group != "C":
+            continue
+        kw = dict(dataset=DATASET, symbols=syms, schema=schema, start=C2_START, end=end, stype_in="parent")
+        usd = float(c.metadata.get_cost(**kw))
+        if usd != 0.0:
+            print(f"  REFUSED C2 {label}: now quotes USD {usd:.2f}; not submitted", flush=True)
+            rec["jobs"].append({"group": "C2", "label": label, "refused_usd": usd})
+            write(rec)
+            continue
+        job = c.batch.submit_job(**kw, encoding="dbn", compression="zstd", split_duration="day",
+                                 stype_out="instrument_id", delivery="download")
+        rec["jobs"].append({"group": "C2", "label": label, "schema": schema, "start": C2_START, "split": "day",
+                            "requoted_usd": usd, "submitted_utc": now(),
+                            "job": {k: (v if isinstance(v, (str, int, float, bool)) or v is None else str(v))
+                                    for k, v in job.items()}})
+        print(f"  submitted [C2] {label} {C2_START}..{end}, job {job.get('id')}", flush=True)
+        write(rec)
+    return 0
 
 
 def now() -> str:
@@ -129,8 +165,10 @@ def download(only: set[str], wait: bool) -> int:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--submit", action="store_true")
+    ap.add_argument("--submit-c2", action="store_true")
     ap.add_argument("--download", action="store_true")
     ap.add_argument("--only", default="A,B,C")
     ap.add_argument("--wait", action="store_true")
     a = ap.parse_args()
-    sys.exit(submit() if a.submit else download(set(a.only.split(",")), a.wait) if a.download else 1)
+    sys.exit(submit() if a.submit else submit_c2() if a.submit_c2 else
+             download(set(a.only.split(",")), a.wait) if a.download else 1)
