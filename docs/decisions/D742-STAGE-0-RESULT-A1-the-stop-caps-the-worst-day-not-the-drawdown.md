@@ -82,5 +82,59 @@ worse with the stop.
      exits truncating the losers' tails, with p 0.0001 on the worst day.
    - As a **drawdown filter**, nothing tested so far (D741's MACD agreement, this stop) reduces A's \$4,131 drawdown
      reliably. The stopped book's \$2,872 is still above the \$50k account's \$2,000 trailing barrier.
+
+## Addendum (2026-10-01): the principal keeps the stop as a risk rule; how the book overlaps D737 (POST HOC, descriptive)
+
+**The principal:** "Ok keep the 1.0 σ_rem stop as a risk rule. I would like you to see how often it agrees / wants to
+trade at the same time as the similar strategy that is in the vault."
+
+**The comparison.** The similar vault line is [D737](D737-PRE-REG-nq-leads-the-dow-for-the-joint-vault.md) (D735's
+YM k1.0 1σ_rem cell, slot 1): MNQ, entries 10:00–14:30, the same stop, held to 15:59.
+- **The script:** `scripts/diag_d742_overlap_d737.py`, with output `data/diag_d742_overlap_d737.json`.
+- **The rebuild:** D737's trades come from its own frozen functions (`cell`, `check_known`: 1,699 trades, D735's mean to
+  1e-9). The book is floor A plus the 1.0 σ_rem stop, with D742's total re-proved.
+- **The window:** in-sample only, A's window 2018-02 → 2023-12-29.
+- **It tests nothing.** A test needs its own pre-registration.
+
+**The overlap:**
+
+| | |
+|---|---:|
+| A's trade days on which D737 also trades | **513 of 546 (94 %)** |
+| D737's days (in A's window) on which A also trades | 513 of 1,282 (40 %) |
+| same direction on the shared days | 77 % (393 days); opposite on 120 |
+| entry timing on shared days | same minute 42 %, D737 first 40 %, A first 18 %; within 30 minutes 74 % |
+| daily net correlation | 0.36 (all sessions), 0.45 (shared days) |
+
+**Where each book's money is, in A's window** (net \$):
+
+| days | A + stop | D737 |
+|---|---:|---:|
+| both trade, **same direction** (393) | **+\$13,142** (+\$33.4 a day) | **+\$43,450** (+\$110.6 a day) |
+| both trade, **opposite** (120) | −\$1,042 | **−\$11,955** |
+| only A trades (33) | +\$784 | — |
+| only D737 trades (769) | — | **−\$5,877** |
+| total | \$12,884 | \$25,619 |
+
+**The books together** (A's window, one MNQ each):
+
+| | Sharpe (Sortino) | max DD | worst day |
+|---|---|---:|---:|
+| A + stop | 0.92 (1.48) | \$2,872 | −\$587 |
+| D737 | 1.31 (2.20) | \$2,690 | −\$609 |
+| A + stop + D737 | 1.38 (2.38) | **\$3,925** | **−\$1,156** |
+
+**What it says (descriptive):**
+1. **The floored follow is nearly a subset of D737's days.** 94 % of its days are D737 days, mostly the same direction.
+   By the principal's component rule (two constructions sharing a clock and largely a signal do not diversify), A is not
+   a separate component next to D737. Holding both stacks risk: the drawdown rises to \$3,925 and the worst day to
+   −\$1,156, for a Sharpe gain of 0.07.
+2. **In-sample, D737's money is on the days the follow agrees with it.**
+   - Where both point the same way, D737 makes +\$110 a day.
+   - Where they disagree it loses \$100 a day, and on the 769 days the follow abstains (calm, or no |z| ≥ 1.5) it loses
+     \$7.6 a day.
+   - **POST HOC:** it suggests an agreement book (D737 traded only when the floored follow agrees), like D716's
+     ES-agreement book. It was seen here, on the in-sample data. Only the vault, which is unseen for both, could test it,
+     through its own pre-registration in a free slot on the principal's word. D737 itself stays frozen as it is.
    - The drawdown is the cost of a regime-shaped edge traded at one micro. The options are the account size (\$150k), or
      accepting it.

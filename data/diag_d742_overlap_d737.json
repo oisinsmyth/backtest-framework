@@ -1,0 +1,69 @@
+{
+ "seal": "nothing on or after 2024-01-01; aggregates only",
+ "d737_known_answer": {
+  "trades": 1699,
+  "mean_net": 14.869653841921307
+ },
+ "A_trades": 546,
+ "d737_trades": 1699,
+ "d737_trades_in_A_window": 1282,
+ "shared_days": 513,
+ "share_of_A_days_D737_also_trades": 0.9395604395604396,
+ "share_of_D737_days_in_A_window_A_also_trades": 0.4001560062402496,
+ "same_direction_on_shared_days": 0.7660818713450293,
+ "opposite_direction_days": 120,
+ "entry_timing_on_shared_days": {
+  "A_first": 0.17543859649122806,
+  "D737_first": 0.4015594541910331,
+  "same_minute": 0.42300194931773877,
+  "median_A_minus_D737_minutes": 0.0,
+  "within_30_minutes": 0.7368421052631579
+ },
+ "daily_net_correlation": {
+  "all_sessions_in_A_window": 0.3644962961550708,
+  "shared_days_only": 0.45247797215657515
+ },
+ "A_net_on_D737_days": {
+  "same_direction": 13142.329613762655,
+  "opposite": -1042.484456064562,
+  "D737_flat": 784.0018614469689,
+  "n_D737_flat": 33,
+  "mean_same": 33.44104227420523,
+  "mean_D737_flat": 23.75763216505966
+ },
+ "D737_net_on_A_days": {
+  "same_direction": 43450.4769716696,
+  "opposite": -11955.212206056756,
+  "A_flat_in_A_window": -5876.541676802651,
+  "n_A_flat_in_A_window": 769
+ },
+ "books_in_A_window": {
+  "A_stop": {
+   "total": 12883.84701914506,
+   "sharpe": 0.9188306422897455,
+   "sortino": 1.4804137231834251,
+   "max_dd": 2871.926662815595,
+   "calmar": 4.48613371154609,
+   "worst_day": -587.4104962936495,
+   "days_traded": 546
+  },
+  "D737": {
+   "total": 25618.72308881019,
+   "sharpe": 1.311442653460271,
+   "sortino": 2.198691133416402,
+   "max_dd": 2690.302977059735,
+   "calmar": 9.522616339966508,
+   "worst_day": -609.4617145939106,
+   "days_traded": 1282
+  },
+  "A_stop_plus_D737": {
+   "total": 38502.57010795525,
+   "sharpe": 1.3804667531278068,
+   "sortino": 2.3821899025752855,
+   "max_dd": 3925.4838188224453,
+   "calmar": 9.808362964926134,
+   "worst_day": -1155.6456866852798,
+   "days_traded": 1315
+  }
+ }
+}
