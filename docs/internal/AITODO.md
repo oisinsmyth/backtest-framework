@@ -357,6 +357,16 @@
     - downloading C2 and D after the 10-09 top-up, whose 90 GB free-space check D would otherwise threaten.
   - **The principal's own action:** a backup of `data/raw/databento` (about 250 GB; no copy exists; after the lapse
     the base pull alone re-costs about $7,719).
+- [ ] **PARKED for the personal book, until there is real capital** (the principal, 2026-10-01: "Prop book only
+  personal book when we have some real capital"). These are mean-reversion ideas from the same day; all hold for
+  several days, so the prop book's 16:10 flat rule excludes them.
+  - **The multi-day index dip:** ES, NQ, YM or RTY closes well below its recent range; hold 2–5 sessions, with a time
+    stop counted in bars.
+    - Basis: the daily variance ratio is below 1 on 7 of 8 roots; D483's dip earned +47 bp over 5 bars on the stock
+      panel; D528 found reversion decays over about 5 bars.
+    - It needs an always-long control with matched exposure.
+  - **Its volatility-spike gate:** volatility-targeting funds re-lever as realised volatility falls after a spike.
+  - **Treasury multi-day reversion:** ZN and ZB variance ratios are 0.89 and 0.92; micro yield futures exist.
 - [ ] **AFTER THE JOINT RUN: state-based allocation** (the principal, 2026-10-01: "Add that to the AITODO for after the
   vault run if we still have components then (We will)").
   - **The source:** the principal's deposit `User-Doc-Deposit/STATE_BASED_ALLOCATION.md` and its review
