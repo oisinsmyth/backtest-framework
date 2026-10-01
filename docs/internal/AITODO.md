@@ -14,10 +14,19 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 747.**
-  - **D746 (2026-10-01): PRE-REGISTERED** (the principal: "Pre-reg D746 and run the A and B oracle"). The prop-book
-    mean-reversion oracle on ES and YM at one micro: A fades a stretch of |z| >= k from the open (10:00-14:30) to the
-    VWAP; B fades an opening gap to yesterday's close. Both use 1:1 brackets, with an enumerated timing null, the
-    oracle and partial-oracle filter ceilings, and a dealer-gamma split. In-sample 2016-2023 only.
+  - **D746 (2026-10-01): NO ROOM on all four primary cells** (the principal: "Pre-reg D746 and run the A and B
+    oracle"). The prop-book mean-reversion oracle on ES and YM at one micro, in-sample 2016–2023.
+    - **A, the stretch fade** (|z| ≥ 2.5 from the open, faded to the VWAP with a 1:1 bracket): gross −$5.76 (ES) and
+      −$1.56 (YM) a trade.
+    - **B, the gap fade** (to yesterday's close): gross −$5.27 (ES) and −$0.55 (YM).
+    - Every cell sits at its timing null's median (Holm 1.00), and gross is at or below zero in 11 of 12 cells.
+    - **The size is there (the median target is 4–10× the fee); the direction is not.** Stretches carry on to the
+      stop more often than they return, and gaps extend as often as they fill.
+    - A filter would need ρ 0.075–0.20 to break even; at the realistic 0.05, every kept half loses.
+    - The dealer-gamma split runs the wrong way: the fade does best on short-gamma days (n ≈ 60, not significant).
+    - Post hoc and not significant: holding YM's fades to the close grosses +$4–8 (t ≤ 1.6), D727's weak YM reversal.
+    - Closing it is the principal's call. The remaining prop reversion candidate is C, NQ's night-break fade, on the
+      principal's word.
   - **D743 (2026-10-01): NOT SUPPORTED, all six; CLOSED by the principal** ("Ok close that and look at idea 2").
     It tested skipping busy two-way nights and CPI / jobs days on D735's legs (YM k1.0 = D737's twin, EQ k1.5); idea 1
     of the C1 mechanism comparison.
