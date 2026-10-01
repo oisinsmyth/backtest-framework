@@ -504,7 +504,7 @@ def equity_side(M) -> dict:
         bars = cleaned.get(s)
         if not bars or len(bars) < ATR_N + 2:
             continue
-        dd = np.array([b.timestamp.date().isoformat() for b in bars])
+        dd = np.array([str(b.timestamp)[:10] for b in bars])          # the panel's timestamp is an ISO string
         h = np.array([b.bar.high for b in bars], float)
         lo = np.array([b.bar.low for b in bars], float)
         c = np.array([b.bar.close for b in bars], float)
