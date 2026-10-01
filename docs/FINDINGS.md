@@ -5340,3 +5340,18 @@ the MACD arm and the unfiltered last half-hour as controls)
   | NG MNG (D649) | 75 % | 61 % | BOTH |
   | NG Stage A | 62 % | 44 % | SCALE-CARRIED |
   | NQ compression | 34 % (2024) | — | NEITHER |
+
+## 103. The ES/NQ micro book: three uncorrelated components, two carrying years, and one that pays outside them (D732)
+
+**The rule: low daily correlation and a single-year concentration test are not enough. Test the book without its two
+biggest years. Here, outside 2020 and 2022, only the NQ compression break pays.**
+([D732](decisions/D732-STAGE-0-RESULT-go-but-the-book-is-two-years-and-compression.md), in-sample 2018-05 → 2023, one MNQ
+each)
+- **The book:** the MACD arm, NQ F2 and the NQ compression break C1.
+  - Net Sharpe 1.22 (Sortino 1.97), max drawdown $4,920.
+  - Pairwise ρ is below 0.25 in every year.
+  - **GO by the declared rule:** no year is over half, and the Sharpe without 2022 is 0.95.
+- **Post hoc, 2020 and 2022 are 86 % of the net.** Without both, the book is 0.34.
+  - **The compression break:** 0.98. NQ F2: 0.33. The MACD arm: 0.01.
+- **The arm's net, per unit of volatility, is 99 % 2020.** Its fixed fee costs more per unit of risk in calm years.
+- **ES adds nothing at micro size.**

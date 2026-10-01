@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 531 of these records carry neither field —
+**No Status or Category column, deliberately.** 532 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -804,6 +804,7 @@ would look like data. The tokens are what is shown.
 | D729 | the volatility-unit year-concentration report: informational, binds nothing; applied in-sample to the four lines queued… | [record](D729-METHOD-the-volatility-unit-year-concentration-report.md) |
 | D730 | D730 STAGE 0 RESULT — the volume profile does not detect continuation (NOTHING on NQ, YM and RTY). A heavy open, if any… | [PRE-REG](D730-STAGE-0-PRE-REG-volume-profile-as-the-trend-detector.md) · [RESULT](D730-STAGE-0-RESULT-volume-finds-big-days-not-continuation.md) |
 | D731 | D731 STAGE 0 RESULT — NOTHING by the declared rule, and the dose runs the other way: on NQ, the flatter the volume U (a… | [PRE-REG](D731-STAGE-0-PRE-REG-a-flatter-u-continues-more.md) · [RESULT](D731-STAGE-0-RESULT-a-flatter-u-continues-less.md) |
+| D732 | D732 STAGE 0 PRE-REGISTRATION — is there an ES/NQ book at one micro that does not rest on one year? A premise check bef… | [PRE-REG](D732-STAGE-0-PRE-REG-a-book-that-does-not-rest-on-one-year.md) |
 
 <!-- REGISTER:END -->
 

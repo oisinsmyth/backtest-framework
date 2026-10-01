@@ -787,3 +787,16 @@ lines D699, D707/D705 and D719.
 **D699 CLOSED by the principal, 2026-10-01** ("Close D699";
 [closure](decisions/D699-STAGE-0-RESULT-hist-clears-the-timing-null-not-the-drift.md#closed-by-the-principal-2026-10-01)).
 V1 is positive in volatility units only in 2022 (D722). Not entered.
+
+## SCORED — the assembled ES/NQ micro book, 2026-10-01 ([D732](decisions/D732-STAGE-0-RESULT-go-but-the-book-is-two-years-and-compression.md))
+
+**Not an admission.** Only the assembled book goes to BOOK_PROP, and only after a pre-registered test on unseen data.
+This is the in-sample premise check.
+
+| book | window | net Sharpe (Sortino) | max DD | largest year ($ / vol) | without 2022 | without 2020 and 2022 (post hoc) |
+|---|---|---|---:|---|---:|---:|
+| #2 the arm + #5 NQ F2 + D680 C1, one MNQ each | 2018-05 → 2023-12 | **1.22 (1.97)** | $4,920 | 2022 45 % / 2020 49 % | 0.95 | **0.34** |
+
+- **Pairwise ρ** is below 0.25 in every year.
+- **Outside 2020 and 2022,** the compression break carries the book: C1 0.98, NQ F2 0.33, the arm 0.01.
+- **ES offers no eligible micro component;** ES F2 is NQ F2's trade (ρ 0.87).
