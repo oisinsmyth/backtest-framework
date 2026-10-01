@@ -1118,3 +1118,37 @@ good its ledger line, is a vault or personal-book candidate, not a prop componen
 
 **Carried forward:** the 15:00 last-hour cut (exit when the last hour went against the position) helped on all four
 index roots in D670 and D673. It is a candidate exit for a new component's pre-registration, not a change to this arm.
+
+## THE MACD ARM RETIRED BY THE PRINCIPAL, 2026-10-01 — **the prop book is empty again**
+
+> *"That MACD arm is useless. I don't mind if a strategy does not trade when the conditions are not right, in fact that
+> is the best, but using capital to trade when you don't make money, even if you don't lose money is shit."* ...
+> *"write the arm's retirement"* — the principal
+
+**What decided it ([D732](decisions/D732-STAGE-0-RESULT-go-but-the-book-is-two-years-and-compression.md), in-sample
+2018-05 → 2023, one MNQ):**
+- **It is in the market on 83 % of sessions.** NQ F2 and the compression break are in on about 20 %.
+- **Without 2020 and 2022, its net Sharpe is 0.01** ($67 over 937 sessions).
+- **Its net, per unit of volatility, is 99 % 2020.** The fixed fee costs more per unit of risk in calm years, so outside
+  the crash year it spends capital, drawdown budget and fees for nothing.
+- **It costs the book most of its drawdown.** The book with it: max drawdown $4,920, Sharpe 1.22. Without it (NQ F2 and
+  the compression break): $1,360, Sharpe 1.38, every year positive, and 1.00 without 2020 and 2022. That last
+  comparison was computed after D732's reading, and chosen after seeing it.
+- **Nothing rescues it, and it was already overfitted:**
+  - its Sharpe is the top of its parameter family (D669; family median 0.24);
+  - the day-size overlay made it worse (D720);
+  - no conditioner is available to it (D669, D675);
+  - no unread NQ slice remains to confirm it (D503).
+
+**The ruling:**
+1. **The MACD day-session arm is RETIRED from the prop book,** and is not traded on any account. The admission of
+   2026-09-13, its amendments of 2026-09-14 and 2026-09-29, and their qualifications are closed by this entry, not
+   edited.
+2. **The prop book admits no strategy** until an assembled book passes a pre-registered test on unseen data.
+   - The candidate is NQ F2 + the NQ compression break, to be scored in the joint vault run.
+   - An empty book with stated standards beats a populated one with borrowed ones.
+3. **The principal's standard is carried forward as the reason:** a strategy should earn in the conditions it trades
+   in, and stand aside otherwise. Using capital and drawdown to trade without making money is not acceptable, even at
+   break-even.
+4. **Reopening needs the principal's word and a new pre-registration.** Re-tuning the arm's in-sample record is not a
+   route.

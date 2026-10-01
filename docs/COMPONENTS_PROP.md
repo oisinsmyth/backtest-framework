@@ -800,3 +800,21 @@ This is the in-sample premise check.
 - **Pairwise ρ** is below 0.25 in every year.
 - **Outside 2020 and 2022,** the compression break carries the book: C1 0.98, NQ F2 0.33, the arm 0.01.
 - **ES offers no eligible micro component;** ES F2 is NQ F2's trade (ρ 0.87).
+
+## ENTRY #2 RETIRED — the MACD arm, 2026-10-01, on the principal's word
+
+> *"That MACD arm is useless ... using capital to trade when you don't make money, even if you don't lose money is
+> shit."* — the principal ([BOOK_PROP](BOOK_PROP.md#the-macd-arm-retired-by-the-principal-2026-10-01--the-prop-book-is-empty-again))
+
+**Entry #2 is retired.** It is not a component of any assembled book.
+
+**The reason, D732's numbers:**
+- in the market on 83 % of sessions;
+- net Sharpe 0.01 without 2020 and 2022;
+- 99 % of its volatility-unit net in 2020;
+- it brings the in-sample book's drawdown from $1,360 to $4,920.
+
+**The ledger's live entries:**
+- **#5 NQ F2:** PROVISIONAL, programme slot 7.
+- **The NQ compression break (D680):** frozen for the joint run in slot 9. It is not a ledger entry; it is scored as a
+  component line in D732.
