@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 556 of these records carry neither field —
+**No Status or Category column, deliberately.** 557 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -816,7 +816,7 @@ would look like data. The tokens are what is shown.
 | D741 | D741 STAGE 0 RESULT — NOT SUPPORTED: the 30-minute log-MACD agreement filter trims the floored follow's drawdown only b… | [PRE-REG](D741-STAGE-0-PRE-REG-macd-agreement-for-the-follows-drawdown.md) · [RESULT](D741-STAGE-0-RESULT-the-macd-agreement-drops-the-best-trades.md) |
 | D742 | D742 STAGE 0 RESULT (step 3, amendment A1) — the 1.0 σ_rem stop: NOT SUPPORTED as a drawdown filter. It reliably caps t… | [PRE-REG](D742-STAGE-0-PRE-REG-a-protective-stop-for-the-floored-follow.md) · [RESULT](D742-STAGE-0-RESULT-A1-the-stop-caps-the-worst-day-not-the-drawdown.md) · [RESULT](D742-STAGE-0-RESULT-losers-go-far-against-winners-do-not.md) |
 | D743 | D743 STAGE 0 RESULT — NOT SUPPORTED, all six: skipping busy nights and release days does not select D735's trades, and… | [PRE-REG](D743-STAGE-0-PRE-REG-skip-busy-nights-and-release-days-on-d735.md) · [RESULT](D743-STAGE-0-RESULT-the-skips-drop-d735s-better-trades.md) |
-| D744 | D744 STAGE 0 PRE-REGISTRATION — the consolidation break at the European open: NQ's first fresh crossing of yesterday's… | [PRE-REG](D744-STAGE-0-PRE-REG-the-consolidation-break-at-the-european-open.md) |
+| D744 | D744 STAGE 0 RESULT — NOT SUPPORTED: NQ's consolidation break at the European open earns nothing, and the ungated night… | [PRE-REG](D744-STAGE-0-PRE-REG-the-consolidation-break-at-the-european-open.md) · [RESULT](D744-STAGE-0-RESULT-the-night-break-earns-nothing.md) |
 
 <!-- REGISTER:END -->
 
