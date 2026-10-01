@@ -1,0 +1,879 @@
+{
+ "record": "D748 (0de00296)",
+ "known_answer": {
+  "6E": {
+   "sd_usd": 8.078572403130238,
+   "n": 1983
+  },
+  "ES": {
+   "sd_usd": 31.97140732085389,
+   "n": 1975
+  },
+  "NQ": {
+   "sd_usd": 50.36813638885208,
+   "n": 1972
+  },
+  "RTY": {
+   "sd_usd": 22.31844424891922,
+   "n": 1598
+  },
+  "YM": {
+   "sd_usd": 24.297709361234972,
+   "n": 1970
+  }
+ },
+ "window": [
+  "2018-05-14",
+  "2023-12-29"
+ ],
+ "sessions": 1457,
+ "eligible_sessions": 1357,
+ "component_trades_in_window": {
+  "C1": 311,
+  "D737": 1235,
+  "F2": 271
+ },
+ "costs": {
+  "M6E": 4.382,
+  "M2K": 3.757,
+  "MYM": 3.797,
+  "MES": 4.418,
+  "MNQ": 4.067
+ },
+ "cells": {
+  "F|FULL|C7": {
+   "fires": 2,
+   "fires_per_year": 0.3554744525547445,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": 1.5551429323299866,
+   "net_median": 1.5551429323299866,
+   "net_worst": -4.382357067670053,
+   "net_best": 7.4926429323300265,
+   "gross_mean": 5.93750000000004,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -4.382357067670053,
+   "net_per_year": 0.5528135825143822,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.0010049793596237648,
+   "breaches": 0
+  },
+  "F|FULL|W1": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "F|FULL|T5": {
+   "fires": 2,
+   "fires_per_year": 0.3554744525547445,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": 1.5551429323299866,
+   "net_median": 1.5551429323299866,
+   "net_worst": -4.382357067670053,
+   "net_best": 7.4926429323300265,
+   "gross_mean": 5.93750000000004,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -4.382357067670053,
+   "net_per_year": 0.5528135825143822,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.0010049793596237648,
+   "breaches": 0
+  },
+  "F|FULL|T10": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "F|FULL|C30": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "F|NO_D737|C7": {
+   "fires": 186,
+   "fires_per_year": 33.05912408759124,
+   "failed": 0,
+   "redundant": 55,
+   "net_mean": -3.4082316724212367,
+   "net_median": -3.7573570676701222,
+   "net_worst": -35.52514730402374,
+   "net_best": 48.24292895555872,
+   "gross_mean": 0.9459433943333974,
+   "stop_hit_rate": 0.010752688172043012,
+   "worst_30d": -56.911785338346405,
+   "net_per_year": -112.6731537778323,
+   "root_share": {
+    "M6E": 0.946236559139785,
+    "M2K": 0.03763440860215054,
+    "MYM": 0.005376344086021506,
+    "MES": 0.005376344086021506,
+    "MNQ": 0.005376344086021506
+   },
+   "rho_with_full_book_daily": -0.007539512771004537,
+   "breaches": 0
+  },
+  "F|NO_D737|W1": {
+   "fires": 95,
+   "fires_per_year": 16.885036496350367,
+   "failed": 0,
+   "redundant": 22,
+   "net_mean": -2.8817856797444326,
+   "net_median": -3.75735706767151,
+   "net_worst": -24.38235706766785,
+   "net_best": 24.36764293233233,
+   "gross_mean": 1.4815789473686314,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -38.15442827067378,
+   "net_per_year": -48.659056377144594,
+   "root_share": {
+    "M6E": 0.9473684210526315,
+    "M2K": 0.031578947368421054,
+    "MES": 0.021052631578947368
+   },
+   "rho_with_full_book_daily": -0.03047672790260964,
+   "breaches": 0
+  },
+  "F|NO_D737|T5": {
+   "fires": 181,
+   "fires_per_year": 32.17043795620438,
+   "failed": 0,
+   "redundant": 55,
+   "net_mean": -3.7404381532154276,
+   "net_median": -3.75735706767151,
+   "net_worst": -35.52514730402374,
+   "net_best": 48.24292895555872,
+   "gross_mean": 0.6129584052266249,
+   "stop_hit_rate": 0.011049723756906077,
+   "worst_30d": -56.911785338346405,
+   "net_per_year": -120.33153353703662,
+   "root_share": {
+    "M6E": 0.9447513812154696,
+    "M2K": 0.03867403314917127,
+    "MYM": 0.0055248618784530384,
+    "MES": 0.0055248618784530384,
+    "MNQ": 0.0055248618784530384
+   },
+   "rho_with_full_book_daily": 0.0003162685649884509,
+   "breaches": 0
+  },
+  "F|NO_D737|T10": {
+   "fires": 33,
+   "fires_per_year": 5.865328467153285,
+   "failed": 0,
+   "redundant": 11,
+   "net_mean": -3.3985844035836776,
+   "net_median": -5.007357067671372,
+   "net_worst": -16.257357067670135,
+   "net_best": 24.36764293233233,
+   "gross_mean": 0.9659090909093211,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -22.52178517978157,
+   "net_per_year": -19.933813850362515,
+   "root_share": {
+    "M6E": 0.9393939393939394,
+    "MES": 0.030303030303030304,
+    "M2K": 0.030303030303030304
+   },
+   "rho_with_full_book_daily": 0.026343519468782123,
+   "breaches": 0
+  },
+  "F|NO_D737|C30": {
+   "fires": 3,
+   "fires_per_year": 0.5332116788321168,
+   "failed": 0,
+   "redundant": 1,
+   "net_mean": -6.674023734336006,
+   "net_median": -5.632357067669916,
+   "net_worst": -11.882357067669227,
+   "net_best": -2.507357067668872,
+   "gross_mean": -2.291666666665952,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -14.3897141353381,
+   "net_per_year": -3.5586673999506955,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.008580811864406955,
+   "breaches": 0
+  },
+  "F|NONE|C7": {
+   "fires": 384,
+   "fires_per_year": 68.25109489051096,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -3.9298657524728946,
+   "net_median": -4.382357067670053,
+   "net_worst": -29.264934406917128,
+   "net_best": 32.74292895555917,
+   "gross_mean": 0.4397654497284668,
+   "stop_hit_rate": 0.005208333333333333,
+   "worst_30d": -73.79414240602341,
+   "net_per_year": -268.21764037899675,
+   "root_share": {
+    "M6E": 0.9765625,
+    "M2K": 0.015625,
+    "MYM": 0.005208333333333333,
+    "MES": 0.0026041666666666665
+   },
+   "rho_with_full_book_daily": 0.0016876764794908198,
+   "breaches": 0
+  },
+  "F|NONE|W1": {
+   "fires": 293,
+   "fires_per_year": 52.07700729927008,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -3.4074763018608545,
+   "net_median": -3.7573570676687345,
+   "net_worst": -40.54743260818745,
+   "net_best": 32.74292895555917,
+   "gross_mean": 0.9623205612952099,
+   "stop_hit_rate": 0.0034129692832764505,
+   "worst_30d": -73.70157485564283,
+   "net_per_year": -177.45116824409752,
+   "root_share": {
+    "M6E": 0.9726962457337884,
+    "M2K": 0.020477815699658702,
+    "MES": 0.006825938566552901
+   },
+   "rho_with_full_book_daily": -0.04146938210858831,
+   "breaches": 0
+  },
+  "F|NONE|T5": {
+   "fires": 376,
+   "fires_per_year": 66.82919708029198,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -3.6498016780897617,
+   "net_median": -4.382357067670053,
+   "net_worst": -29.264934406917128,
+   "net_best": 116.70304508682665,
+   "gross_mean": 0.7164340267895538,
+   "stop_hit_rate": 0.007978723404255319,
+   "worst_30d": -75.0441424060205,
+   "net_per_year": -243.91331564904107,
+   "root_share": {
+    "M6E": 0.9680851063829787,
+    "M2K": 0.018617021276595744,
+    "MYM": 0.007978723404255319,
+    "MES": 0.005319148936170213
+   },
+   "rho_with_full_book_daily": 0.0025646280568830107,
+   "breaches": 0
+  },
+  "F|NONE|T10": {
+   "fires": 166,
+   "fires_per_year": 29.5043795620438,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -5.086527056765795,
+   "net_median": -5.007357067668597,
+   "net_worst": -35.52514730402374,
+   "net_best": 20.617642932329968,
+   "gross_mean": -0.7152300746436535,
+   "stop_hit_rate": 0.006024096385542169,
+   "worst_30d": -51.89707120300589,
+   "net_per_year": -150.07482493542352,
+   "root_share": {
+    "M6E": 0.9819277108433735,
+    "M2K": 0.012048192771084338,
+    "MYM": 0.006024096385542169
+   },
+   "rho_with_full_book_daily": 0.017052249636555605,
+   "breaches": 0
+  },
+  "F|NONE|C30": {
+   "fires": 75,
+   "fires_per_year": 13.33029197080292,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -4.0470078092056285,
+   "net_median": -3.75735706767151,
+   "net_worst": -24.38235706766785,
+   "net_best": 18.117642932330245,
+   "gross_mean": 0.32701211148804743,
+   "stop_hit_rate": 0.013333333333333334,
+   "worst_30d": -35.63971413534131,
+   "net_per_year": -53.947795704830504,
+   "root_share": {
+    "M6E": 0.9866666666666667,
+    "M2K": 0.013333333333333334
+   },
+   "rho_with_full_book_daily": -0.09102069686883851,
+   "breaches": 0
+  },
+  "I|FULL|C7": {
+   "fires": 2,
+   "fires_per_year": 0.3554744525547445,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -13.046954913173359,
+   "net_median": -13.046954913173359,
+   "net_worst": -25.29695491317336,
+   "net_best": -0.7969549131733578,
+   "gross_mean": -9.25,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -25.29695491317336,
+   "net_per_year": -4.637859155266734,
+   "root_share": {
+    "MYM": 1.0
+   },
+   "rho_with_full_book_daily": 0.002892532029219864,
+   "breaches": 0
+  },
+  "I|FULL|W1": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "I|FULL|T5": {
+   "fires": 2,
+   "fires_per_year": 0.3554744525547445,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -13.046954913173359,
+   "net_median": -13.046954913173359,
+   "net_worst": -25.29695491317336,
+   "net_best": -0.7969549131733578,
+   "gross_mean": -9.25,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -25.29695491317336,
+   "net_per_year": -4.637859155266734,
+   "root_share": {
+    "MYM": 1.0
+   },
+   "rho_with_full_book_daily": 0.002892532029219864,
+   "breaches": 0
+  },
+  "I|FULL|T10": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "I|FULL|C30": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "I|NO_D737|C7": {
+   "fires": 185,
+   "fires_per_year": 32.88138686131387,
+   "failed": 1,
+   "redundant": 54,
+   "net_mean": -2.8580383852681304,
+   "net_median": -2.757071044441513,
+   "net_worst": -64.81141599480117,
+   "net_best": 48.24292895555872,
+   "gross_mean": 0.924364035283925,
+   "stop_hit_rate": 0.010810810810810811,
+   "worst_30d": -77.06848703924427,
+   "net_per_year": -93.97626581048621,
+   "root_share": {
+    "M2K": 0.654054054054054,
+    "MYM": 0.32432432432432434,
+    "MES": 0.016216216216216217,
+    "MNQ": 0.005405405405405406
+   },
+   "rho_with_full_book_daily": -0.031579227785501034,
+   "breaches": 0
+  },
+  "I|NO_D737|W1": {
+   "fires": 95,
+   "fires_per_year": 16.885036496350367,
+   "failed": 0,
+   "redundant": 22,
+   "net_mean": 1.971679857398541,
+   "net_median": -0.25707104444151296,
+   "net_worst": -71.75707104444129,
+   "net_best": 181.70304508682665,
+   "gross_mean": 5.755263157894768,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -74.27121313332478,
+   "net_per_year": 33.29188635129325,
+   "root_share": {
+    "M2K": 0.6631578947368421,
+    "MYM": 0.3157894736842105,
+    "MES": 0.021052631578947368
+   },
+   "rho_with_full_book_daily": -0.04046189325762265,
+   "breaches": 0
+  },
+  "I|NO_D737|T5": {
+   "fires": 180,
+   "fires_per_year": 31.99270072992701,
+   "failed": 1,
+   "redundant": 54,
+   "net_mean": -3.0530076826694175,
+   "net_median": -2.5070710444417403,
+   "net_worst": -64.81141599480117,
+   "net_best": 48.24292895555872,
+   "gross_mean": 0.7298768101705264,
+   "stop_hit_rate": 0.016666666666666666,
+   "worst_30d": -77.06848703924427,
+   "net_per_year": -97.67396111781063,
+   "root_share": {
+    "M2K": 0.65,
+    "MYM": 0.3277777777777778,
+    "MES": 0.016666666666666666,
+    "MNQ": 0.005555555555555556
+   },
+   "rho_with_full_book_daily": -0.020321345796117572,
+   "breaches": 0
+  },
+  "I|NO_D737|T10": {
+   "fires": 33,
+   "fires_per_year": 5.865328467153285,
+   "failed": 0,
+   "redundant": 11,
+   "net_mean": -5.64009166736274,
+   "net_median": -3.7969549131733578,
+   "net_worst": -70.7570710444422,
+   "net_best": 23.74292895555826,
+   "gross_mean": -1.8484848484848415,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -70.7570710444422,
+   "net_per_year": -33.080990213936715,
+   "root_share": {
+    "M2K": 0.6060606060606061,
+    "MYM": 0.36363636363636365,
+    "MES": 0.030303030303030304
+   },
+   "rho_with_full_book_daily": 0.050472468593611916,
+   "breaches": 0
+  },
+  "I|NO_D737|C30": {
+   "fires": 3,
+   "fires_per_year": 0.5332116788321168,
+   "failed": 0,
+   "redundant": 1,
+   "net_mean": -5.616993623596456,
+   "net_median": -3.2969549131733578,
+   "net_worst": -15.796954913173359,
+   "net_best": 2.24292895555735,
+   "gross_mean": -1.8333333333336366,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -19.093909826346717,
+   "net_per_year": -2.9950466000271616,
+   "root_share": {
+    "MYM": 0.6666666666666666,
+    "M2K": 0.3333333333333333
+   },
+   "rho_with_full_book_daily": -0.011033774174959883,
+   "breaches": 0
+  },
+  "I|NONE|C7": {
+   "fires": 384,
+   "fires_per_year": 68.25109489051096,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -1.4596018548008753,
+   "net_median": -3.257071044442195,
+   "net_worst": -99.75707104444197,
+   "net_best": 181.70304508682665,
+   "gross_mean": 2.318540634708217,
+   "stop_hit_rate": 0.010416666666666666,
+   "worst_30d": -169.2019617415769,
+   "net_per_year": -99.61942469438033,
+   "root_share": {
+    "M2K": 0.6744791666666666,
+    "MYM": 0.3125,
+    "MES": 0.013020833333333334
+   },
+   "rho_with_full_book_daily": -0.02561112658130125,
+   "breaches": 0
+  },
+  "I|NONE|W1": {
+   "fires": 293,
+   "fires_per_year": 52.07700729927008,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -0.3490432733404748,
+   "net_median": -0.7570710444421951,
+   "net_worst": -71.75707104444129,
+   "net_best": 181.70304508682665,
+   "gross_mean": 3.4315599173262306,
+   "stop_hit_rate": 0.013651877133105802,
+   "worst_30d": -174.82523909093987,
+   "net_per_year": -18.177129093513027,
+   "root_share": {
+    "M2K": 0.6757679180887372,
+    "MYM": 0.30716723549488056,
+    "MES": 0.017064846416382253
+   },
+   "rho_with_full_book_daily": -0.018743946806590785,
+   "breaches": 0
+  },
+  "I|NONE|T5": {
+   "fires": 376,
+   "fires_per_year": 66.82919708029198,
+   "failed": 1,
+   "redundant": 0,
+   "net_mean": -1.2507899265949904,
+   "net_median": -3.257071044442195,
+   "net_worst": -99.75707104444197,
+   "net_best": 181.70304508682665,
+   "gross_mean": 2.532969345059444,
+   "stop_hit_rate": 0.005319148936170213,
+   "worst_30d": -136.70350039826448,
+   "net_per_year": -83.58928651046055,
+   "root_share": {
+    "M2K": 0.6622340425531915,
+    "MYM": 0.31648936170212766,
+    "MES": 0.02127659574468085
+   },
+   "rho_with_full_book_daily": -0.016478715153500988,
+   "breaches": 0
+  },
+  "I|NONE|T10": {
+   "fires": 166,
+   "fires_per_year": 29.5043795620438,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -0.23309321095616134,
+   "net_median": -1.0469549131733578,
+   "net_worst": -102.46094062196832,
+   "net_best": 181.70304508682665,
+   "gross_mean": 3.552401072645214,
+   "stop_hit_rate": 0.03614457831325301,
+   "worst_30d": -148.475082710852,
+   "net_per_year": -6.8772705693861305,
+   "root_share": {
+    "M2K": 0.6626506024096386,
+    "MYM": 0.3132530120481928,
+    "MES": 0.024096385542168676
+   },
+   "rho_with_full_book_daily": 0.015244630446212916,
+   "breaches": 0
+  },
+  "I|NONE|C30": {
+   "fires": 75,
+   "fires_per_year": 13.33029197080292,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -3.5760510584377765,
+   "net_median": -2.2969549131733578,
+   "net_worst": -71.75707104444129,
+   "net_best": 50.24292895555917,
+   "gross_mean": 0.2031289306693543,
+   "stop_hit_rate": 0.013333333333333334,
+   "worst_30d": -71.55402595761464,
+   "net_per_year": -47.66980471147438,
+   "root_share": {
+    "M2K": 0.6533333333333333,
+    "MYM": 0.3333333333333333,
+    "MES": 0.013333333333333334
+   },
+   "rho_with_full_book_daily": -0.05830723338298576,
+   "breaches": 0
+  },
+  "M|FULL|C7": {
+   "fires": 2,
+   "fires_per_year": 0.3554744525547445,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": 1.5551429323299866,
+   "net_median": 1.5551429323299866,
+   "net_worst": -4.382357067670053,
+   "net_best": 7.4926429323300265,
+   "gross_mean": 5.93750000000004,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -4.382357067670053,
+   "net_per_year": 0.5528135825143822,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.0010049793596237648,
+   "breaches": 0
+  },
+  "M|FULL|W1": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "M|FULL|T5": {
+   "fires": 2,
+   "fires_per_year": 0.3554744525547445,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": 1.5551429323299866,
+   "net_median": 1.5551429323299866,
+   "net_worst": -4.382357067670053,
+   "net_best": 7.4926429323300265,
+   "gross_mean": 5.93750000000004,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -4.382357067670053,
+   "net_per_year": 0.5528135825143822,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.0010049793596237648,
+   "breaches": 0
+  },
+  "M|FULL|T10": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "M|FULL|C30": {
+   "fires": 0,
+   "fires_per_year": 0.0,
+   "failed": 0,
+   "redundant": 0,
+   "breaches": 0
+  },
+  "M|NO_D737|C7": {
+   "fires": 185,
+   "fires_per_year": 32.88138686131387,
+   "failed": 5,
+   "redundant": 55,
+   "net_mean": -3.8820940204437955,
+   "net_median": -3.75735706767151,
+   "net_worst": -28.083693330799477,
+   "net_best": 21.867642932329833,
+   "gross_mean": 0.5002630472262584,
+   "stop_hit_rate": 0.005405405405405406,
+   "worst_30d": -60.044142406019375,
+   "net_per_year": -127.64863531820576,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": 0.004903762735698008,
+   "breaches": 0
+  },
+  "M|NO_D737|W1": {
+   "fires": 95,
+   "fires_per_year": 16.885036496350367,
+   "failed": 0,
+   "redundant": 22,
+   "net_mean": -3.277093909775146,
+   "net_median": -4.382357067670053,
+   "net_worst": -24.38235706766785,
+   "net_best": 24.36764293233233,
+   "gross_mean": 1.1052631578949073,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -38.15442827067378,
+   "net_per_year": -55.333850268520855,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.03486200798965808,
+   "breaches": 0
+  },
+  "M|NO_D737|T5": {
+   "fires": 180,
+   "fires_per_year": 31.99270072992701,
+   "failed": 5,
+   "redundant": 55,
+   "net_mean": -4.2848644913541305,
+   "net_median": -4.382357067670053,
+   "net_worst": -28.083693330799477,
+   "net_best": 21.867642932329833,
+   "gross_mean": 0.09749257631592244,
+   "stop_hit_rate": 0.005555555555555556,
+   "worst_30d": -60.044142406019375,
+   "net_per_year": -137.0843873401836,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": 0.016500271536652105,
+   "breaches": 0
+  },
+  "M|NO_D737|T10": {
+   "fires": 33,
+   "fires_per_year": 5.865328467153285,
+   "failed": 1,
+   "redundant": 11,
+   "net_mean": -3.567963128275868,
+   "net_median": -6.257357067671235,
+   "net_worst": -16.257357067670135,
+   "net_best": 24.36764293233233,
+   "gross_mean": 0.8143939393941861,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -18.764714135336227,
+   "net_per_year": -20.927275706029736,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": 0.02925353134903732,
+   "breaches": 0
+  },
+  "M|NO_D737|C30": {
+   "fires": 3,
+   "fires_per_year": 0.5332116788321168,
+   "failed": 0,
+   "redundant": 1,
+   "net_mean": -6.674023734336006,
+   "net_median": -5.632357067669916,
+   "net_worst": -11.882357067669227,
+   "net_best": -2.507357067668872,
+   "gross_mean": -2.291666666665952,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -14.3897141353381,
+   "net_per_year": -3.5586673999506955,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.008580811864406955,
+   "breaches": 0
+  },
+  "M|NONE|C7": {
+   "fires": 384,
+   "fires_per_year": 68.25109489051096,
+   "failed": 2,
+   "redundant": 0,
+   "net_mean": -4.2795890671766434,
+   "net_median": -4.382357067670053,
+   "net_worst": -26.25735706767181,
+   "net_best": 24.367642932329556,
+   "gross_mean": 0.10276800049341046,
+   "stop_hit_rate": 0.0026041666666666665,
+   "worst_30d": -73.79414240602341,
+   "net_per_year": -292.0866395162663,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.004786736949462767,
+   "breaches": 0
+  },
+  "M|NONE|W1": {
+   "fires": 293,
+   "fires_per_year": 52.07700729927008,
+   "failed": 1,
+   "redundant": 0,
+   "net_mean": -3.7144051070574493,
+   "net_median": -4.382357067670053,
+   "net_worst": -40.54743260818745,
+   "net_best": 24.36764293233233,
+   "gross_mean": 0.6679519606126048,
+   "stop_hit_rate": 0.0034129692832764505,
+   "worst_30d": -67.4518608788708,
+   "net_per_year": -193.43510187267682,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.037335520668783935,
+   "breaches": 0
+  },
+  "M|NONE|T5": {
+   "fires": 376,
+   "fires_per_year": 66.82919708029198,
+   "failed": 4,
+   "redundant": 0,
+   "net_mean": -4.509093308184409,
+   "net_median": -5.007357067668597,
+   "net_worst": -27.507357067668895,
+   "net_best": 24.367642932329556,
+   "gross_mean": -0.12673624051435517,
+   "stop_hit_rate": 0.005319148936170213,
+   "worst_30d": -75.0441424060205,
+   "net_per_year": -301.33908534608156,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": 0.0053722565247023325,
+   "breaches": 0
+  },
+  "M|NONE|T10": {
+   "fires": 166,
+   "fires_per_year": 29.5043795620438,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -5.090188392971239,
+   "net_median": -5.007357067668597,
+   "net_worst": -23.757357067669307,
+   "net_best": 20.617642932329968,
+   "gross_mean": -0.7078313253011854,
+   "stop_hit_rate": 0.0,
+   "worst_30d": -51.89707120300589,
+   "net_per_year": -150.18285038853318,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": 0.012072141937585627,
+   "breaches": 0
+  },
+  "M|NONE|C30": {
+   "fires": 75,
+   "fires_per_year": 13.33029197080292,
+   "failed": 0,
+   "redundant": 0,
+   "net_mean": -4.145344956181995,
+   "net_median": -4.382357067670053,
+   "net_worst": -24.38235706766785,
+   "net_best": 18.117642932330245,
+   "gross_mean": 0.23701211148805912,
+   "stop_hit_rate": 0.013333333333333334,
+   "worst_30d": -35.63971413534131,
+   "net_per_year": -55.258658585601225,
+   "root_share": {
+    "M6E": 1.0
+   },
+   "rho_with_full_book_daily": -0.09137217589336671,
+   "breaches": 0
+  }
+ },
+ "readings": {
+  "F": {
+   "K1_worst_trade": -40.54743260818745,
+   "K2_worst_30d": -75.0441424060205,
+   "K3_cost_per_year": 268.21764037899675,
+   "K3_cadence": "F|NONE|C7",
+   "K4_breaches": 0,
+   "K1_holds": true,
+   "K2_holds": true,
+   "K3_holds": true,
+   "K4_holds": true,
+   "reading": "READY"
+  },
+  "I": {
+   "K1_worst_trade": -102.46094062196832,
+   "K2_worst_30d": -174.82523909093987,
+   "K3_cost_per_year": 99.61942469438033,
+   "K3_cadence": "I|NONE|C7",
+   "K4_breaches": 0,
+   "K1_holds": false,
+   "K2_holds": false,
+   "K3_holds": true,
+   "K4_holds": true,
+   "reading": "NOT READY: K1, K2"
+  },
+  "M": {
+   "K1_worst_trade": -40.54743260818745,
+   "K2_worst_30d": -75.0441424060205,
+   "K3_cost_per_year": 292.0866395162663,
+   "K3_cadence": "M|NONE|C7",
+   "K4_breaches": 0,
+   "K1_holds": true,
+   "K2_holds": true,
+   "K3_holds": true,
+   "K4_holds": true,
+   "reading": "READY"
+  }
+ },
+ "F_mean_M6E_share_of_fires": 0.9719740442023861,
+ "selector_is_M6E": true,
+ "runner_sha256": "4803e497a134f62c7082d5c313bf4672b907e0dd3655e6928b1c415430743e5c",
+ "prereg_sha256": "66a96880dd6ffda4fea6d7fa9fa2552cc884d234faa891b863115a3e727f587a",
+ "wall_s": 5.3
+}

@@ -14,13 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 749.**
-  - **D748 (2026-10-01): PRE-REGISTERED, Stage 0.** The activity keeper: one placeholder trade at 13:30–14:00 ET on
-    the cash-settled financial micro with the smallest forecast σ\$ (the principal's "vol\*tick size, smallest root";
-    "Financial micros only"). It fires only when a firm's inactivity window would otherwise lapse.
-    - **The standard:** it may break even, and it must never threaten the account.
-    - **Readings:** K1 worst trade ≥ −\$50; K2 worst 30 days ≥ −\$150; K3 ≤ \$300 a year; K4 zero breaches.
-    - **Next:** the runner, `scripts/stage0_d748_activity_keeper.py`, runs on the system interpreter (`fut_day5m`
-      needs pyarrow).
+  - **D748 (2026-10-01): READY, Stage 0.** The activity keeper: one placeholder trade at 13:30–14:00 ET on the
+    cash-settled financial micro with the smallest forecast σ\$ (the principal's "vol\*tick size, smallest root").
+    It fires only when a firm's inactivity deadline would lapse.
+    - **The selector is M6E:** 97 % of fires.
+    - **The readings:** worst trade −\$40.55, worst 30 days −\$75, \$268 a year keeper-alone (C7), zero breaches.
+    - **With D737 in the book it fires about 0.4 times a year;** without D737, about 33 a year (C7).
+    - **The index-only fallback is NOT READY:** worst −\$102 and −\$175 over 30 days.
+    - **An execution rule, not a component.** Before it is relied on:
+      - confirm each firm's activity rule and permitted products at the source, especially M6E at Apex and
+        MyFundedFutures;
+      - a firm without FX needs a new record.
   - **D747 (2026-10-01): NOT SUPPORTED, and NO ROOM on ES; CLOSED by the principal** ("Close D747 and push it"). The
     night-break fade (resting limits at yesterday's range ± 0.25 ATR20, 03:00–08:29, 1:1 bracket, flat 09:29),
     decided on data D744 never scored.
