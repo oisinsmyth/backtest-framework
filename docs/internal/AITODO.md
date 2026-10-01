@@ -13,8 +13,19 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 740.**
-  - D738 is the other session's.
+- **Next free number: 743.**
+  - **D736, D738, D740, D741, D742: the NQ follow's selectivity line (2026-10-01), CLOSED.**
+    - **The records:**
+      - D736 is the earn-when-trading screen;
+      - D738 tests expected-profit filters on D727's follow (NOT SUPPORTED);
+      - D740 keeps a fixed volatility floor σ\$ ≥ \$150, in-sample and post hoc; the 20-day SMA agreement adds nothing;
+      - D741's MACD agreement for drawdown is NOT SUPPORTED;
+      - D742 keeps the 1.0 σ_rem stop as a worst-day risk rule, not a drawdown fix.
+    - **Closed by the principal** ("close the follow plus stop and leave D737 as is"): the line is 94 % D737's days and
+      still a follow. D737 stays frozen.
+    - **Monitor, not a test:** split D737's forward trades (`data/forward/d737_forward.csv`) by floor on and off at the
+      open. Post hoc in-sample, D737 nets +\$2.66 a trade below the floor and 92 % of its total above it (D742,
+      addendum 2).
   - **D739 is this session's transfer test of D735's mechanism** (the principal: "Lets do 3. D735's mechanism on other
     roots"). The rule is D737's, unchanged, on 25 roots (metals, energy, rates, FX, grains; PA dropped by A1's coverage
     gate).

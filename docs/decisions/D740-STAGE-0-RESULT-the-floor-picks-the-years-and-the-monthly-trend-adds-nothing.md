@@ -84,3 +84,12 @@
    - It can only be confirmed on unseen data, and it is still a follow, which the principal declined as a strategy.
    - If it goes further, it is a vault pre-registration in a free slot (2 or 10) on the principal's word. NQ's 2024+ would
      be its first look.
+
+## CLOSED (2026-10-01)
+
+- **The principal kept floor A** and added the 1.0 σ_rem stop as a risk rule
+  ([D742](D742-STAGE-0-RESULT-A1-the-stop-caps-the-worst-day-not-the-drawdown.md)). The principal then closed the
+  floored follow with its stop ("close the follow plus stop and leave D737 as is"; "Write it").
+- **The reasons and the lessons kept** are in D742's CLOSED section. In brief: the line is 94 % D737's days, it is
+  still a follow, and its case rests on in-sample numbers after many looks.
+- No vault slot is taken, and D737 is unchanged.

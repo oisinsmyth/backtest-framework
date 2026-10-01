@@ -228,3 +228,36 @@ is large enough. D737 stays frozen. Scoring D737 with the floor in the vault wou
 free slot, on the principal's word.
    - The drawdown is the cost of a regime-shaped edge traded at one micro. The options are the account size (\$150k), or
      accepting it.
+
+## CLOSED (2026-10-01): the floored NQ follow with its stop; D737 left as frozen
+
+**The principal:** "My leaning is to close the follow plus stop and leave D737 as is", then "Write it".
+
+**What is closed.** D727's NQ follow is closed as a line, with D740's floor A and this record's 1.0 σ_rem stop. That
+covers [D738](D738-STAGE-0-RESULT-A1-no-filter-beats-its-rotation-null.md),
+[D740](D740-STAGE-0-RESULT-the-floor-picks-the-years-and-the-monthly-trend-adds-nothing.md),
+[D741](D741-STAGE-0-RESULT-the-macd-agreement-drops-the-best-trades.md) and this record. No vault slot is taken.
+
+**Why:**
+1. **It is not a separate component.** 94 % of its days are D737's, on the same clock and mostly the same side.
+   Holding both raised the max DD to \$3,925 for a Sharpe gain of 0.07 (addendum 1).
+2. **It is still the follow the principal declined as a strategy.** The floor and the stop make it selective and cap
+   its worst day, but they give it no entry signal.
+3. **Every number that recommends it is in-sample, after about 50 looks.** The floor was seen before it was tested.
+
+**D737 is untouched.** It stays frozen in slot 1 and is scored in the joint run on its own rule. The agreement lead is
+closed (addendum 2).
+
+**Kept as lessons, not as a book:**
+- **Abstain when the day's volatility cannot cover the fee.** The floor σ\$ ≥ \$150 separated the follow's earning and
+  break-even regimes (D740). Post hoc, D737 shows the same split: +\$2.66 a trade below the floor, 92 % of its net above
+  it.
+- **A volatility-scaled stop caps the worst day** (random-exit p 0.0001), **but it does not fix a regime-shaped
+  drawdown** (Calmar p 0.24).
+- **A rule judged on the mean per trade alone can pass while the book gets worse.** Declare book-level statistics
+  (total, Sharpe, Calmar) in every decision rule (addendum 2).
+
+**A monitor item, not a test.** On the forward data the other session already records for D737
+(`data/forward/d737_forward.csv`), split D737's forward trades by floor on and floor off (σ\$ ≥ \$150 at the open). This
+watches the floor observation on unseen sessions. It changes nothing in D737's rule or its vault scoring, and it is read
+only after enough forward sessions to say anything.
