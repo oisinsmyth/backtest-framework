@@ -319,12 +319,23 @@
       NQ and ES sessions; minutes ≥ 99.85%.
     - **Their ledgers are NOT computed yet, and cannot be before the joint run.** Both rank each day among the
       previous 250 days, three times over (D671's `tiers`), so their first forward tier reads the vault window.
-    - **Owed AFTER the joint run:** each line's forward trades = its frozen code over the vault-built history
-      (D716's `build(VAULT_END)`; `joint_d680_vault.py`'s inputs), followed by the forward bars.
-      - Prove the splice first: in-sample, Databento history to 2023-06 + Sierra bars 2023-07 → 12 against
-        all-Databento, as D737's 118 trades were.
-      - C1 also needs its usable-session list (SPY's date keys and the CME calendar's half days), which can be
-        re-fetched at any time.
+    - **The forward-log step is BUILT and PROVED (2026-10-01; the principal: "yes start on the F2 and C1 forward-log
+      step"):** `scripts/forward_f2_c1_ledgers.py`.
+      - The splice is each line's frozen functions over Databento history + Sierra bars, with Sierra contract
+        names mapped to Databento codes so the join never reads as a roll.
+      - **The proof, in-sample** (`data/forward/f2_c1_splice_proof.json`): Databento to 2023-06 + Sierra 2023-07 → 12
+        against all-Databento, every Databento file restricted as text before 2024.
+        - F2: 129/129 sessions agree, and all 32 trades match on side, entry and tier; net $29.35 against $30.85
+          (7 exits differ by ≤ 1.25 points).
+        - C1: 129/129 sessions agree, and all 27 trades match on side and tier; net $11.20 against $11.89.
+      - C1's forward half days come from ES's own bars (the day session ending before 15:30). The CME calendar
+        (ends 2026-09-09) is built from the Databento archive and cannot be extended after the lapse. The rule
+        equals the calendar on every NYSE day of 2016–2023, and the usable sessions equal G0's (124/124 on 2023-H2).
+    - **Owed AFTER the joint run (one command, in the main checkout):**
+      `uv run python scripts/forward_f2_c1_ledgers.py --ledgers --spy <a SPY daily file reaching the last forward
+      session>`. It writes `data/forward/f2_forward.csv` and `c1_forward.csv`, and refuses until both
+      vault results exist. History: the rebuilt `fut_{NQ,ES}_rth_1m` and `data/joint_run/d680/`, through
+      2026-09-18.
 - [ ] **Pre-lapse gap pulls (2026-10-01; the principal approved A, B, C and D).**
   - **The record:** `scripts/fetch_prelapse_gaps.py`; jobs in `data/prelapse_gap_jobs.json`; quotes in
     `data/prelapse_gap_quote.json`, all USD 0.00.
