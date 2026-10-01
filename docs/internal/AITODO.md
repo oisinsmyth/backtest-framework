@@ -21,8 +21,7 @@
   - **No root reads MECHANISM:** δ < 0 on 12 of 25, which is chance; the only p_low < 0.05 is RB's 0.027, at Holm
     0.67.
   - **None TRANSFERS, none reaches GO.** All five micros (GC, SI, HG, CL, 6E) net negative.
-  - **Most of these markets revert intraday from the window open:** C2a's p50 is negative on metals, rates, FX and
-    grains.
+  - **The drift from the open in these markets is too weak to pay its cost** (gross −$7 to +$13 a contract, positive on 20 of 25; the C2a medians are negative only net of cost — corrected the same day; not a reversion).
   - **CLOSED under R15** (the principal, 2026-10-01: "Close this, move on"). D737 is unaffected.
   - D736 is the other session's screen.
   - **D737 is this session's vault pre-registration of D735's YM k1.0 1σ_rem, FROZEN, programme slot 1** (the

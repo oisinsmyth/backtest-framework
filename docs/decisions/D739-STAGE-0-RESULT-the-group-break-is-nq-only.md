@@ -62,11 +62,12 @@ with `--data-root` set to the main checkout.*
 - **Holm over the 25 C2a p_high:** nothing ≤ 0.05.
 - **The five micro-tradable roots** (GC, SI, HG, CL, 6E) all net negative. Their gross is −$3.25 to +$2.46 against
   round trips of $4.25–8.00.
-- **The timing nulls themselves are informative:**
-  - on metals, rates, FX and three grains, C2a's p50 is negative (−$1.77 to −$44.66);
-  - that is, entering at those minutes in the direction the root has already moved since the window opened LOSES on
-    average;
-  - these markets mean-revert intraday where NQ trends, so there is no drift for an own-part signal to sit on.
+- **The timing nulls show how little drift there is** (corrected the same day; see §5):
+  - C2a's p50 is NET of the round trip. Added back, the median gross of entering in the direction a root has already
+    moved since the window opened is small: −$7.41 to +$12.58 a contract, positive on 20 of 25. BZ (+$28.57) and RB
+    (+$40.19) are the full-size energy contracts.
+  - **These markets have a weak, mostly positive drift from the open that does not pay its round trip.** They are not
+    reverting. The negative net medians are the cost.
 - **The DRIFT ONLY cells with high timing-null ranks** (HO 0.997, ZM 1.000, ZL 0.979, BZ 0.957) are post hoc,
   without MECHANISM, and at full size only:
   - HO's +$63 a full contract has a max drawdown of $47,291, and HO is CLOSED (the principal, 2026-09-30; D719);
@@ -87,17 +88,16 @@ with `--data-root` set to the main checkout.*
    is concentrated mega-cap flow, worked through the day. None of these groups has that structure.
    - Their common factors (the dollar, the rate level, the oil price, the metals complex, the grain complex) do not
      leave an own part that continues.
-2. **Most of these markets revert intraday from their window open.** The negative timing-null medians across metals,
-   rates, FX and grains say that a move since the open is, on average, given back. That is the opposite of NQ (D727).
-   It is the same sign D724 found for NQ's means and D490 for ranges, measured here on the trades' own entry minutes.
+2. **Their drift from the open is too weak to trade at their cost.** Gross, the follow at the trades' own minutes
+   earns −$7 to +$13 a contract (positive on 20 of 25), well under round trips of $4–37. On NQ, D727's drift is several
+   times its cost.
 3. **Rates point the other way on the mechanism too:** the shared part continues more. The curve moves together, and
    a single contract's own part fades.
 4. **Proposed, not decided:**
    - **(a) close the cross-group extension of D735 under R15,** on the principal's word. This study's rule, the group
      legs and the 2016–2023 slice are spent. 2024+ stays unread for these roots.
    - **(b) D737 is unaffected:** it is NQ against YM, frozen in slot 1.
-   - **(c) the intraday reversion seen in the timing-null medians is recorded as structure,** not a lead. It is a
-     different object (fading the move since the open) and would need its own premise check.
+   - **(c) Withdrawn in the same-day correction (§5):** there is no intraday reversion here to record.
 
 ## 5. CLOSED (2026-10-01, the principal: "Close this, move on")
 
@@ -105,3 +105,9 @@ with `--data-root` set to the main checkout.*
 - It covers the group-relative onset on metals, energy, rates, FX and grains, under any leg, threshold or stop.
 - 2024+ for these roots stays unread.
 - D737 (NQ against YM) is unaffected.
+
+**Correction (2026-10-01, the same day, after the closure; no reading changes).** The first version of §2 and §4
+read C2a's negative p50s as "these markets revert intraday from the open". Those medians are NET of the round
+trip. Gross, the follow at the trades' own minutes is −$7.41 to +$12.58 a contract, positive on 20 of 25: a weak
+drift that does not pay its cost, not a reversion. §2, §4 point 2 and (c) are corrected. The reversion "structure"
+and its suggested premise check are withdrawn.
