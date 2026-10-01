@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 536 of these records carry neither field —
+**No Status or Category column, deliberately.** 538 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -807,6 +807,7 @@ would look like data. The tokens are what is shown.
 | D732 | D732 STAGE 0 RESULT — GO by the declared rule (no single year over half; Sharpe 0.95 without 2022), but POST HOC the bo… | [PRE-REG](D732-STAGE-0-PRE-REG-a-book-that-does-not-rest-on-one-year.md) · [RESULT](D732-STAGE-0-RESULT-go-but-the-book-is-two-years-and-compression.md) |
 | D733 | D733 STAGE 0 RESULT — DRIFT ONLY. The pullback entry adds nothing beyond the drift at the same moment (C2 rank 0.74, ma… | [PRE-REG](D733-STAGE-0-PRE-REG-the-nq-pullback-entry.md) · [RESULT](D733-STAGE-0-RESULT-the-pullback-entry-is-drift-only.md) |
 | D734 | REGISTRATION — the assembled book NQ F2 + the NQ compression break, one MNQ each, scored once in the joint vault run af… | [PRE-REG](D734-PRE-REG-the-nq-f2-and-compression-book-for-the-joint-vault.md) |
+| D735 | D735 STAGE 0 RESULT — NQ breaking from the market beats its timing null, unlike D733: the equity legs rank 0.94–1.00 ag… | [PRE-REG](D735-STAGE-0-PRE-REG-nq-breaks-from-the-market.md) · [RESULT](D735-STAGE-0-RESULT-nq-breaking-from-the-market-beats-its-null.md) |
 
 <!-- REGISTER:END -->
 
