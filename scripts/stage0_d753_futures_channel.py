@@ -568,8 +568,10 @@ def run() -> int:
     for r in roots:
         R = build_root(sess[sess["root"] == r], settles, r)
         need(stitch_check(R) == 0, f"{r}: the stitch check fails")
-        if R["roll"].sum() > 0:
-            need(stitch_check(R, skip=0) > 0, f"{r}: the stitch canary did not fire")
+        rj = np.flatnonzero(R["roll"])
+        if rj.size and np.max(np.abs(np.log(R["F"][rj]))) > 1e-9:       # skip the largest adjustment
+            need(stitch_check(R, skip=int(np.argmax(np.abs(np.log(R["F"][rj]))))) > 0,
+                 f"{r}: the stitch canary did not fire")
         RD[r] = R
         ATRP[r] = atr_pct(R)
         SIG[r] = sigma_usd(R, U[r]["upp"])
