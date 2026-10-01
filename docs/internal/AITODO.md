@@ -13,9 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 747.**
-  - **D746 (2026-10-01): NO ROOM on all four primary cells** (the principal: "Pre-reg D746 and run the A and B
-    oracle"). The prop-book mean-reversion oracle on ES and YM at one micro, in-sample 2016–2023.
+- **Next free number: 748.**
+  - **D747 (2026-10-01): PRE-REGISTERED** (the principal: "Close D746 and pre-reg C as D747"). The night-break fade:
+    resting limits at yesterday's RTH high + 0.25 ATR20 (or low − 0.25 ATR20), 03:00–08:29 ET, with a 1:1 bracket of
+    b·ATR20 (primary b 0.25, which targets yesterday's extreme), flat at 09:29.
+    - **The decision is taken on data D744 never scored:** ES 2016–2023 and NQ 2016-01 → 2018-01-08.
+    - NQ 2018–2023, D744's read ungated break (−4.48 bp), is reported post hoc only.
+  - **D746 (2026-10-01): NO ROOM on all four primary cells; CLOSED by the principal** ("Close D746 and pre-reg C as
+    D747"). The prop-book mean-reversion oracle on ES and YM at one micro, in-sample 2016–2023.
     - **A, the stretch fade** (|z| ≥ 2.5 from the open, faded to the VWAP with a 1:1 bracket): gross −$5.76 (ES) and
       −$1.56 (YM) a trade.
     - **B, the gap fade** (to yesterday's close): gross −$5.27 (ES) and −$0.55 (YM).

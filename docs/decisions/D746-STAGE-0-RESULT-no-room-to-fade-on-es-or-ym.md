@@ -150,7 +150,16 @@ E1 is the 1:1 bracket. Dollars are per trade at one MES (cost $4.42) or one MYM 
   long-gamma days. It loses there, and its only positive cells are on the roughly 60 short-gamma days (not
   significant). Gamma predicts size, not reversion, consistent with D665 and D684.
 
-## 7. Next
+## 7. CLOSED
+
+*2026-10-01, the principal: "Close D746 and pre-reg C as D747".*
+- **D746 is closed:** no intraday fade of a stretch to the VWAP, or of an opening gap to yesterday's close, on ES or
+  YM at micro size.
+- **Don't re-propose** either fade with a 1:1 bracket on ES or YM, or a dealer-gamma gate for intraday reversion
+  (the split ran against the hedging mechanism).
+- **Next:** C, NQ's night-break fade, is pre-registered as D747.
+
+## 7a. What stood at the result, before the closure
 
 - **The reading is NO ROOM for both setups.** Whether to close the line is the principal's call (R15).
 - **The one remaining prop-compatible reversion candidate is C**, NQ's night-break fade (03:00–09:29; D744's ungated
