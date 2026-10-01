@@ -36,6 +36,9 @@ FIX = REPO / "data" / "fixtures" / "fut_day5m.parquet"
 CAL = REPO / "data" / "fixtures" / "cme_session_calendar.csv.gz"
 COSTS = REPO / "data" / "futures_costs.json"
 OUT = REPO / "data" / "stage0_d748_activity_keeper.json"
+BOOKS = REPO / "data" / "d748_component_books.csv"       # written by --export-books under the venv
+BOOK_COUNTS = {"F2": 271, "C1": 328, "D737": 1699}        # vault_d745's rehearsal: trades in each book's WIN_IN window
+BOOK_WIN = {"F2": "2018-05-14", "C1": "2018-01-09", "D737": "2016-01-04"}
 
 SEAL = "2024-01-01"
 KA_LO, IN_HI = "2016-01-01", "2023-12-29"
@@ -294,8 +297,7 @@ def run() -> int:
     elig = np.array([not bool(es.loc[s, "fomc"]) and not bool(es.loc[s, "is_early_close"]) for s in ses])
     early = {(r, dd): bool(v) for r, dd, v in cal[["root", "day", "is_early_close"]].itertuples(index=False)}
 
-    import vault_d745_abstention_principle as V
-    b = V.in_sample_books()["books"]
+    b = read_books()
     comp = {k: v[(v["session"] >= WIN_LO) & (v["session"] <= IN_HI)] for k, v in b.items()}
     cal_sets = {"FULL": (set(comp["D737"]["session"]), set(comp["C1"]["session"]) | set(comp["F2"]["session"])),
                 "NO_D737": (set(), set(comp["C1"]["session"]) | set(comp["F2"]["session"])),
@@ -328,6 +330,30 @@ def run() -> int:
     write_once(OUT, res)
     show(res)
     return 0
+
+
+def export_books() -> int:
+    """The project venv (scipy, no pyarrow): vault_d745's in_sample_books(), read-only, written once to BOOKS."""
+    need(not BOOKS.exists(), f"{BOOKS.name} exists: written once")
+    import vault_d745_abstention_principle as V
+    b = V.in_sample_books()["books"]
+    rows = pd.concat([pd.DataFrame({"book": k, "session": v["session"].astype(str).to_numpy(),
+                                    "net": v["net"].to_numpy(float)}) for k, v in b.items()], ignore_index=True)
+    no_seal(rows["session"].unique(), "the component books")
+    with open(BOOKS, "x", encoding="utf-8", newline="\n") as fh:
+        rows.to_csv(fh, index=False, float_format="%.10g", encoding="utf-8", lineterminator="\n")
+    print(f"[D748] wrote {BOOKS.name}: " + ", ".join(f"{k} {n}" for k, n in rows["book"].value_counts().items()))
+    return 0
+
+
+def read_books() -> dict[str, pd.DataFrame]:
+    """The system interpreter (pyarrow, no scipy): the exported books, held to in_sample_books()'s asserted counts."""
+    rows = pd.read_csv(BOOKS, dtype={"book": str, "session": str, "net": float}, encoding="utf-8")
+    no_seal(rows["session"].unique(), "the component books")
+    b = {k: g[["session", "net"]].reset_index(drop=True) for k, g in rows.groupby("book")}
+    got = {k: int(((v["session"] >= BOOK_WIN[k]) & (v["session"] <= IN_HI)).sum()) for k, v in b.items()}
+    need(got == BOOK_COUNTS, f"component books {got}, not {BOOK_COUNTS}")
+    return b
 
 
 def readings(cells: dict, vn: str) -> dict[str, Any]:
@@ -439,7 +465,10 @@ def main() -> int:
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--selftest", action="store_true")
     g.add_argument("--run", action="store_true")
+    g.add_argument("--export-books", action="store_true")
     a = ap.parse_args()
+    if a.export_books:
+        return export_books()
     return selftest() if a.selftest else run()
 
 
