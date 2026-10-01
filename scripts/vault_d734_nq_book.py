@@ -2,7 +2,7 @@
 docs/decisions/D734-PRE-REG-the-nq-f2-and-compression-book-for-the-joint-vault.md (09b7e2a0).
 
     uv run python scripts/vault_d734_nq_book.py --selftest
-    uv run python scripts/vault_d734_nq_book.py --rehearse     # in-sample 2018-05-14 -> 2023-12-29 (D734 s.3.4)
+    uv run python scripts/vault_d734_nq_book.py --rehearse     # in-sample 2018-05-14 -> 2023-12-29 (D734 s.3.4), under D734-A1
 
 THIS COMMIT HOLDS THE IN-SAMPLE REHEARSAL ONLY. The vault mode (rebuilding both parts' vault trades through their frozen
 functions after D716's --vault and D680's joint-wrapper --run-vault, reproducing their recorded results exactly) is
@@ -32,7 +32,9 @@ sys.path.insert(0, str(REPO / "src"))
 from backtest_framework.validation import hurdle_p as H  # noqa: E402
 
 LO, HI, SEAL = "2018-05-14", "2023-12-29", "2024-01-01"
-OUT_REHEARSAL = REPO / "data" / "rehearsal_d734_nq_book.json"
+OUT_REHEARSAL_V1 = REPO / "data" / "rehearsal_d734_nq_book.json"      # the first rehearsal (before D734-A1), kept
+OUT_REHEARSAL = REPO / "data" / "rehearsal_d734_nq_book_a1.json"     # the re-run under D734-A1
+P3_CAP_FRACTION, P3B_BAR = 0.02, 0.33
 VENUES = ("topstep_50k", "mffu_rapid_50k")
 ACCOUNT, TRAIL = 50_000.0, 2_000.0
 P4_COST_VENUE = "mffu_rapid_50k"        # topstep_50k's plan (fees) is not recorded in data/prop_venues.json
@@ -130,6 +132,34 @@ def p5_largest_day_share(d: pd.Series) -> dict:
     return {"by_year": out, "max": max(vals) if vals else None, "operative_haircut": 0.30}
 
 
+def lives_censored(d: np.ndarray, trail: float, p3_cap: float, with_p3: bool, censor: bool = True) -> list[int]:
+    """D734-A1: the module's walkers (a death is the trailing drawdown reaching `trail`, or, with_p3, a day <= -p3_cap;
+    the account restarts flat), with the final UNFINISHED spell kept as a life censored at the window's end."""
+    lives, eq, peak, start = [], 0.0, 0.0, 0
+    for i, x in enumerate(d):
+        eq += x
+        peak = max(peak, eq)
+        if peak - eq >= trail or (with_p3 and x <= -p3_cap):
+            lives.append(i - start + 1)
+            eq, peak, start = 0.0, 0.0, i + 1
+    if censor and start < len(d):
+        lives.append(len(d) - start)
+    return lives
+
+
+def p3b_a1(d: np.ndarray, module_p3: dict, account: float = ACCOUNT, censor: bool = True) -> dict:
+    """D734-A1's P3b: the module's value where it is finite (the account dies under the drawdown walker); otherwise the
+    censored value. A NaN never passes."""
+    trail, cap = TRAIL, P3_CAP_FRACTION * account
+    a = lives_censored(d, trail, cap, False, censor)
+    b = lives_censored(d, trail, cap, True, censor)
+    cens = (1.0 - float(np.mean(b)) / float(np.mean(a))) if (a and b and np.mean(a) > 0) else float("nan")
+    mod = module_p3["p3b_life_cost"]
+    read = mod if math.isfinite(mod) else cens
+    return {"module_p3b": mod, "censored_p3b": cens, "read_p3b": read, "read_from": "module" if math.isfinite(mod) else "censored (A1)",
+            "lives_dd": len(a), "lives_either": len(b), "pass": bool(math.isfinite(read) and read <= P3B_BAR)}
+
+
 def gates(f_crit: dict, c_crit: dict, book: pd.Series) -> dict:
     x = book.to_numpy(float)
     g1 = {"F": f_crit.get("verdict"), "C": c_crit.get("verdict"),
@@ -139,6 +169,7 @@ def gates(f_crit: dict, c_crit: dict, book: pd.Series) -> dict:
     g3 = {"first_half_net": a, "second_half_net": b, "holds": bool(a > 0 and b > 0)}
     p2 = {v: H.p2_flatten([EXIT_ET], v) for v in VENUES}
     p3 = H.p3(x, ACCOUNT)
+    p3b = p3b_a1(x, p3)
     sd = float(np.std(x, ddof=1))
     plan = H.load_venue(P4_COST_VENUE)
     cost = float(plan.fee_eval + plan.fee_activation)
@@ -147,7 +178,8 @@ def gates(f_crit: dict, c_crit: dict, book: pd.Series) -> dict:
     g4 = {"P2": p2, "P2_pass": all(p2.values()),
           "P3": {k: p3[k] for k in ("p3a_breaches", "p3a_breaches_per_year", "p3a_pass", "p3b_life_cost", "p3b_pass",
                                      "p3c_worst_day_usd", "p3c_share_of_loss_budget", "daily_sigma_usd", "life_dd_only_sessions")},
-          "P3_pass": bool(p3["p3a_pass"] and p3["p3b_pass"]),
+          "P3b_A1": p3b,
+          "P3_pass": bool(p3["p3a_pass"] and p3b["pass"]),
           "P4": {"expected_profit_before_breach_usd": prof, "expected_life_days": life, "account_cost_usd": cost,
                  "cost_venue": P4_COST_VENUE},
           "P4_pass": bool(math.isfinite(prof) and prof > cost),
@@ -176,7 +208,7 @@ def rehearse() -> int:
     G["G4"]["P5_reported"] = p5_largest_day_share(book)
     x = book.to_numpy(float)
     yrs = book.index.str[:4]
-    res = {"spec": "docs/decisions/D734-PRE-REG-the-nq-f2-and-compression-book-for-the-joint-vault.md (09b7e2a0)",
+    res = {"spec": "docs/decisions/D734-PRE-REG-the-nq-f2-and-compression-book-for-the-joint-vault.md (09b7e2a0), with D734-A1 (be558fb8)",
            "mode": "IN-SAMPLE REHEARSAL (not the vault)", "span": [LO, HI], "sessions": int(len(cal)),
            "parts": {"F": {"trades": int(len(f)), "net": float(F.sum()), "sharpe": sharpe(F.to_numpy()), "criterion": f_crit},
                      "C": {"trades": int(len(c)), "net": float(C.sum()), "sharpe": sharpe(C.to_numpy()), "criterion": c_crit,
@@ -230,6 +262,25 @@ def selftest() -> int:
     expect(lambda: daily(t, cal, "x"), "daily: two trades on one session")
     need(not H.p2_flatten(["16:20"], "topstep_50k"), "[P2] 16:20 passes a 16:10 flatten")
     print("  PASS    P2 refuses an exit after the venue's flatten time")
+    # D734-A1: P3b with the unfinished life censored
+    calm = np.tile([30.0, -20.0, 25.0, -10.0], 100)                  # never dies, never a 2 % day
+    m = H.p3(calm, ACCOUNT)
+    r = p3b_a1(calm, m)
+    need(not math.isfinite(m["p3b_life_cost"]) and r["read_p3b"] == 0.0 and r["pass"],
+         "[A1] a never-dying, breach-free book must read P3b = 0 and pass")
+    print(f"  PASS    A1: never dies, no 2 % day -> module P3b {m['p3b_life_cost']}, censored {r['read_p3b']} (pass)")
+    one_bad = calm.copy()
+    one_bad[200] = -1_100.0                                          # one 2 % day, still no trailing death
+    r1 = p3b_a1(one_bad, H.p3(one_bad, ACCOUNT))
+    need(r1["read_from"].startswith("censored") and r1["read_p3b"] > 0, "[A1] a 2 % day must shorten the censored life")
+    print(f"  PASS    A1: one 2 % day, no death -> censored P3b {r1['read_p3b']:.3f}")
+    dying = np.r_[np.full(50, 20.0), np.full(30, -80.0), np.full(300, 15.0)]
+    md = H.p3(dying, ACCOUNT)
+    need(math.isfinite(md["p3b_life_cost"]) and p3b_a1(dying, md)["read_from"] == "module",
+         "[A1] the module's finite value must be the one read")
+    print("  PASS    A1: an account that dies reads the module's own P3b")
+    expect(lambda: need(p3b_a1(calm, m, censor=False)["pass"], "[A1] without censoring the 0/0 case must not pass"),
+           "A1: the uncensored 0/0 case does not pass")
     print(f"SELFTEST PASS: {len(fired)} canaries raised")
     return 0
 
