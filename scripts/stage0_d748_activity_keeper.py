@@ -8,7 +8,7 @@ Run on the SYSTEM interpreter: fut_day5m.parquet needs pyarrow, which the projec
 
 One placeholder trade, 13:30 -> 14:00 ET (fut_day5m bars 54..59), on the candidate micro with the smallest forecast
 sigma$ (prior-20 RMS of the window move in points x micro $/point), direction = sign(open_54 - open_0) (long on zero),
-stop 4 x sigma-hat with one tick of slippage, cost $3 + the measured crossing. It fires only when a cadence's deadline
+stop 4 x sigma-hat with one tick of slippage, cost $3 + the d508_exec effective crossing (D748-A1). It fires only when a cadence's deadline
 would otherwise lapse, with one backup eligible session. Variants F (M6E M2K MYM MES MNQ, primary), I (index micros),
 M (M6E always). Calendars FULL (D737 + C1 + F2), NO_D737, NONE on 2018-05-14 -> 2023-12-29. In-sample only.
 """
@@ -69,7 +69,8 @@ def specs() -> dict[str, dict[str, float]]:
     for root in ROOTS:
         m = r[root]["micro"]
         need(m["symbol"] == ROOTS[root], f"{root}: micro is {m['symbol']}")
-        xt = m["crossing_ticks_rt"]["d507_exec"]["value"]
+        need(m["default_line"] == "d508_exec", f"{root}: the micro's default line is {m['default_line']}")   # D748-A1
+        xt = m["crossing_ticks_rt"]["d508_exec"]["value"]
         out[root] = {"upp": float(m["usd_per_point"]), "tick_usd": float(m["tick_usd"]),
                      "tick_pts": float(m["tick_usd"]) / float(m["usd_per_point"]),
                      "cost": float(m["commission_rt_usd"]["value"]) + float(xt) * float(m["tick_usd"])}
