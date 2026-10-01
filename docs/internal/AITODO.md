@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 754.**
+- **Next free number: 755.**
+  - **D754 (2026-10-02): PRE-REGISTERED** (the principal: "Pre-reg D754 and run both"). The calm bull, the vault's
+    largest untraded regime (25% of sessions; the NQ book −$3.44 a day there, post hoc).
+    - **(A) The abstention diagnostic:** a walk-forward rv20-lowest-third gate on the three NQ lines' in-sample books,
+      with the decisive within-year contrast against a stratified permutation null (is it the regime or 2017?).
+    - **(B) The long-gamma Friday-afternoon charm drift:** long MES 14:00–16:00 on Fridays with GEX long and above its
+      median and the S&P above its 200-day average. Day, clock and state controls; pre-0DTE vs 0DTE eras.
+    - In-sample ≤ 2023; no frozen line changes.
   - **D753 (2026-10-02): PRE-REGISTERED, Stage 0; NOT RUN.** The channel level rule carried to daily futures (the
     principal: "revisit the channel mean reversion idea … improve it … dont look at results just the construction";
     "B: daily futures"). Personal book, parked until real capital, so when it runs is the principal's call.
