@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 523 of these records carry neither field —
+**No Status or Category column, deliberately.** 524 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -798,7 +798,7 @@ would look like data. The tokens are what is shown.
 | D723 | REG — NG Stage A (D630's H2) for the joint vault run: the vault scorer and freeze that D630 §8 requires, programme slot… | [PRE-REG](D723-PRE-REG-ng-stage-a-for-the-joint-vault.md) |
 | D724 | D724 STAGE 0 RESULT — NQ respects no intraday mean. Price moves AWAY from every anchor (VWAP, the open, the running mid… | [record](D724-STAGE-0-DESIGN-which-mean-and-when-is-size-known.md) · [RESULT](D724-STAGE-0-RESULT-nq-respects-no-intraday-mean.md) |
 | D725 | D725 STAGE 0 RESULT — NO-GO. A crossing of yesterday's close, VWAP or overnight midpoint does not continue: at 60 minut… | [PRE-REG](D725-STAGE-0-PRE-REG-crossing-yesterdays-levels.md) · [RESULT](D725-STAGE-0-RESULT-yesterdays-levels-are-sticky-not-launch-points.md) |
-| D726 | D726 STAGE 0 PRE-REGISTRATION — did daily 0DTE options end the last-half-hour continuation? Three cheap premise checks:… | [PRE-REG](D726-STAGE-0-PRE-REG-did-daily-0dte-end-the-close-run.md) |
+| D726 | D726 STAGE 0 RESULT — NOT SUPPORTED on ES and NQ: every sign points the way the 0DTE story says, but none clears 2 SE,… | [PRE-REG](D726-STAGE-0-PRE-REG-did-daily-0dte-end-the-close-run.md) · [RESULT](D726-STAGE-0-RESULT-0dte-not-supported-direction-only.md) |
 | D727 | D727 STAGE 0 RESULT — NQ's move since the open continues into the rest of the day at every clock (strongest at 10:00),… | [PRE-REG](D727-STAGE-0-PRE-REG-the-trend-detection-curve.md) · [RESULT](D727-STAGE-0-RESULT-nq-continues-from-the-open-alone.md) |
 
 <!-- REGISTER:END -->
