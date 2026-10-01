@@ -183,3 +183,18 @@ the e roll null is enumerated over 1,901 offsets.
      before any 2024+ read, on the principal's word;
    - (c) a premise check on the YM mechanism alone (e.g. at the 10:00 clock), from ES and RTY's absence. This is new
      selection on spent data, so its value is low.
+
+## 6. Recorded after the result: the named cell (2026-10-01, before any 2024+ read)
+
+- **The principal: "I choose YM 1.0, it look really good".** The chosen cell is **YM k1.0 1σ_rem**, chosen over EQ
+  k1.5 1σ_rem on the comparison set out in chat:
+  - its higher Sharpe gives more power in a one-shot test;
+  - it is the only leg where MECHANISM read;
+  - its max drawdown is $2,690 against $4,747;
+  - it needs one leg, not three.
+- **This names the cell any confirmation would test. It is a post-hoc choice among 20 cells,** and any confirmation
+  must say so.
+- **It grants no programme slot.** A vault pre-registration in slot 10 (NQ 2024-01-01 → 2026-09-18, which overlaps
+  D716's slot-7 window) needs the principal's separate, explicit word, and its pass gate and power are declared there
+  before any 2024+ read.
+
