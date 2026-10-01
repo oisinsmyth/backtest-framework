@@ -29,7 +29,8 @@ from backtest_framework.validation.concentration import year_concentration  # no
 
 STRIP = REPO / "data" / "fixtures" / "fut_settle_strip.csv.gz"
 FRONT = REPO / "data" / "fixtures" / "fut_curve_front_next.csv.gz"
-OUT = REPO / "data" / "report_d729_vol_unit_concentration.json"
+OUT_V1 = REPO / "data" / "report_d729_vol_unit_concentration.json"    # v1: superseded, kept as evidence (see the record)
+OUT = REPO / "data" / "report_d729_vol_unit_concentration_v2.json"
 LIMIT = {"NQ": "2025-03-01", "NG": "2025-03-01", "ES": "2024-01-01", "HO": "2024-01-01"}
 WIN, MINP = 20, 15
 NG_USD_PP = 10_000.0        # one full NG contract: 10,000 MMBtu, $ per $1/MMBtu
@@ -112,13 +113,14 @@ def d722_lines() -> pd.DataFrame:
     return DL.load_lines()
 
 
-def rows_d722(df: pd.DataFrame, line: str) -> tuple[np.ndarray, np.ndarray, str]:
+def rows_d722(df: pd.DataFrame, line: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, str]:
+    """(sessions, gross $, $ per unit return = usd_pp x entry price, root)."""
     x = df[df["line"] == line]
-    r = x["gross_usd"].to_numpy(float) / (x["usd_pp"].to_numpy(float) * x["entry_price"].to_numpy(float))
-    return x["session"].to_numpy(str), r, str(x["root"].iloc[0])
+    mult = x["usd_pp"].to_numpy(float) * x["entry_price"].to_numpy(float)
+    return x["session"].to_numpy(str), x["gross_usd"].to_numpy(float), mult, str(x["root"].iloc[0])
 
 
-def rows_d680() -> tuple[np.ndarray, np.ndarray, dict]:
+def rows_d680() -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
     import vault_d680_nq_compression as V
     tr, _sessions, _R = V.in_sample()
     ka = V.known_answer(tr)
@@ -127,7 +129,8 @@ def rows_d680() -> tuple[np.ndarray, np.ndarray, dict]:
     need(int(c1.sum()) == ka["trades"], "[D680] the C1 mask differs from the known answer's")
     x = tr[c1]
     need((x["session"].astype(str) < "2025-03-01").all(), "[SEAL] D680 holds a vault session")
-    return x["session"].astype(str).to_numpy(), x["gross"].to_numpy(float) / 1e4, ka
+    mult = 2.0 * x["entry"].to_numpy(float)                 # one MNQ: $2 a point, so $ per unit return = 2 x price
+    return x["session"].astype(str).to_numpy(), x["gross"].to_numpy(float) / 1e4 * mult, mult, ka
 
 
 def ng_table() -> tuple[pd.DataFrame, dict]:
@@ -139,12 +142,12 @@ def ng_table() -> tuple[pd.DataFrame, dict]:
     return tab, got
 
 
-def rows_d723(tab: pd.DataFrame, P: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+def rows_d723(tab: pd.DataFrame, P: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     m = tab["traded"].to_numpy()
-    return tab["day"].to_numpy(str)[m], tab["g"].to_numpy(float)[m] / (NG_USD_PP * P[m])
+    return tab["day"].to_numpy(str)[m], tab["g"].to_numpy(float)[m], NG_USD_PP * P[m]
 
 
-def rows_d649(tab: pd.DataFrame, P: np.ndarray) -> tuple[np.ndarray, np.ndarray, dict]:
+def rows_d649(tab: pd.DataFrame, P: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict]:
     import ledger_vault_pp_ng as L
     t = L.in_sample()
     ka = L.known_answer(t)
@@ -152,15 +155,19 @@ def rows_d649(tab: pd.DataFrame, P: np.ndarray) -> tuple[np.ndarray, np.ndarray,
          "[D649] D649's in-sample table differs from D723's")
     take = L.select(np.array([]), np.array([]), t["traded"].to_numpy(), t["absI_usd"].to_numpy(), t["g"].to_numpy())
     need(int(take.sum()) == ka["trades"], "[D649] the take count differs from the known answer")
-    return t["day"].to_numpy(str)[take], t["g"].to_numpy(float)[take] / (NG_USD_PP * P[take]), ka
+    return t["day"].to_numpy(str)[take], t["g"].to_numpy(float)[take], NG_USD_PP * P[take], ka
 
 
 # ------------------------------------------------------------------------------------------------ run
-def report(sessions, r, sig) -> dict:
-    ok = np.isfinite(r) & np.isfinite(sig) & (sig > 0)
-    rep = year_concentration(sessions[ok], r[ok], sig[ok])
+def report(sessions, g_usd, mult, sig) -> dict:
+    """The declared report: gross in DOLLARS against the dollar scale mult x sigma20 (so u = r / sigma20). The
+    return-unit shares (gross / mult: the price level removed, the volatility not) are reported beside."""
+    sc = mult * sig
+    ok = np.isfinite(g_usd) & np.isfinite(sc) & (sc > 0)
+    rep = year_concentration(sessions[ok], g_usd[ok], sc[ok])
+    rep["return_units_beside"] = year_concentration(sessions[ok], g_usd[ok] / mult[ok])
     rep["n_without_scale"] = int((~ok).sum())
-    rep["mean_r_bp"] = float(np.mean(r[ok]) * 1e4)
+    rep["mean_gross_usd"] = float(np.mean(g_usd[ok]))
     return rep
 
 
@@ -171,25 +178,25 @@ def study() -> dict:
            "informational": True, "scale": f"sigma20: same-contract front settlement log returns, {WIN} settling sessions "
                                              f"before the session (>= {MINP})", "queued": {}, "reference": {}}
     df = d722_lines()
-    s, r, root = rows_d722(df, "L2")
+    s, g, mult, root = rows_d722(df, "L2")
     sig, _ = lookup(tables[root], s)
-    out["queued"]["D716 NQ F2 book B (slot 7)"] = report(s, r, sig)
-    s, r, ka = rows_d680()
+    out["queued"]["D716 NQ F2 book B (slot 7)"] = report(s, g, mult, sig)
+    s, g, mult, ka = rows_d680()
     sig, _ = lookup(tables["NQ"], s)
-    out["queued"]["D680 NQ compression C1 (slot 9)"] = {**report(s, r, sig), "known_answer": ka}
+    out["queued"]["D680 NQ compression C1 (slot 9)"] = {**report(s, g, mult, sig), "known_answer": ka}
     tab, got = ng_table()
     sig_all, p_all = lookup(tables["NG"], tab["day"].to_numpy(str))
-    s, r = rows_d723(tab, p_all)
+    s, g, mult = rows_d723(tab, p_all)
     sig = lookup(tables["NG"], s)[0]
-    out["queued"]["D723 NG Stage A (slot 3)"] = {**report(s, r, sig), "known_answer": got}
-    s, r, ka = rows_d649(tab, p_all)
+    out["queued"]["D723 NG Stage A (slot 3)"] = {**report(s, g, mult, sig), "known_answer": got}
+    s, g, mult, ka = rows_d649(tab, p_all)
     sig = lookup(tables["NG"], s)[0]
-    out["queued"]["D649 NG projected-profit MNG (slot 8)"] = {**report(s, r, sig), "known_answer": ka}
+    out["queued"]["D649 NG projected-profit MNG (slot 8)"] = {**report(s, g, mult, sig), "known_answer": ka}
     for line, name in (("L1", "ES F2 (D707, withdrawn)"), ("L3", "D699 V1 (closed)"), ("L4", "HO F2 (D719, closed)"),
                        ("K1", "the MACD arm (admitted)")):
-        s, r, root = rows_d722(df, line)
+        s, g, mult, root = rows_d722(df, line)
         sig, _ = lookup(tables[root], s)
-        out["reference"][name] = report(s, r, sig)
+        out["reference"][name] = report(s, g, mult, sig)
     out["wall_s"] = round(time.time() - t0, 1)
     return out
 
@@ -219,7 +226,9 @@ def run() -> int:
             g, u = rep["gross"], rep["vol_units"]
             gs = "undefined" if g["max_share"] is None else f"{g['max_year']} {g['max_share']:.0%}"
             us = "undefined" if u["max_share"] is None else f"{u['max_year']} {u['max_share']:.0%}"
-            print(f"{grp:9s} {name:42s} n {rep['n']:5d}  $: {gs:14s} vol: {us:14s} {rep['label']}"
+            rr = rep["return_units_beside"]["gross"]
+            rs = "undefined" if rr["max_share"] is None else f"{rr['max_year']} {rr['max_share']:.0%}"
+            print(f"{grp:9s} {name:42s} n {rep['n']:5d}  $: {gs:14s} ret: {rs:14s} vol: {us:14s} {rep['label']}"
                   f"  (no scale {rep['n_without_scale']})")
     print(f"wrote {OUT.relative_to(REPO)} in {res['wall_s']} s")
     return 0
