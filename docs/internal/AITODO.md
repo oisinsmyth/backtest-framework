@@ -13,7 +13,18 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 755.**
+- **Next free number: 756.**
+  - **D755 (2026-10-02): PRE-REGISTERED** (the principal: "Run the hot-root table then pre-reg the ECB as D755"). The
+    ECB press-conference drift on M6E: the statement-to-conference move J sets the side; hold from the conference's
+    start + 2 to + 60 minutes.
+    - **Controls:** the enumerated sign rotation, placebo Thursdays, the FOMC replication (reported), and the eras.
+    - **The size check first:** M6E is the weakest mover per fee (hot-root table), so ECB hours must be exceptional.
+    - **Step 1, before the runner:** a sourced `data/calendar/ecb_meetings.csv` (ECB sites; dates and times only).
+      Bars before 09:00 ET come from the raw ohlcv-1m archive. In-sample 2011–2023.
+    - Not yet run; the principal's word starts the build.
+  - **The hot-root premise table (2026-10-02, descriptive, no record):** on calm-NQ days (D754's gate), every micro's
+    09:00 → 15:00 |move| is 3–15× its 2c, with NQ the largest (14.7×). Calm days lack direction, not size. Metals
+    and BTC keep their activity when NQ is calm (0.94–1.25×); M6E is the weakest (3.0×).
   - **D754 (2026-10-02): (A) NOT SUPPORTED, (B) NOTHING; CLOSED by the principal** ("Close D754, then lets go back to the other ideas that the agents found").
     - **(A):** on the pre-registered single-variable walk-forward calm gate (NQ rv20 lowest third, 41% of sessions),
       the NQ book still EARNS when calm: +$5.11 a session against +$26.54 for the rest.
