@@ -5323,3 +5323,9 @@ the MACD arm and the unfiltered last half-hour as controls)
   earns 77 % of its net in 2022.**
 - **A method note:** score a year-concentration gate in volatility units as well as dollars. HO's 2022 share falls from
   62 % to 30 %; the F2 lines' barely move.
+- **Daily 0DTE is not shown to be the cause**
+  ([D726](decisions/D726-STAGE-0-RESULT-0dte-not-supported-direction-only.md)): NOT SUPPORTED on ES and NQ.
+  - The signs point that way: the era delta is z −0.80. Before 2022-05-16, Tuesday and Thursday had no same-day ES
+    expiry, and the weekday difference in differences is z +0.95.
+  - The day's 0DTE dose carries nothing (ρ +0.03).
+  - This is weak evidence against 0DTE, not a refutation.
