@@ -142,3 +142,48 @@ contract, known at entry. y pools the roots; dollars are reported beside it.
 - **P4:** rates and equity index carry most of any edge, and energy and metals the least (the variance-ratio
   ordering).
 - **P(GO) ≈ 0.07.**
+
+## A1 (2026-10-02, committed before the runner and before any run): how the construction is made exact
+
+**Why.** Building the runner showed points the pre-registration left open, and one that cannot be built as written.
+**No data has been read for this record.**
+
+**A1.1, the volatility conversion, made exact.**
+- **The change.** r is constant within each (root, calendar year):
+  - r = the median of ATR20% over the root's sessions in the **previous calendar year** (at least 100 sessions),
+    ÷ c_eq;
+  - the lines for year y are drawn on the adjusted price raised to the power 1/r, over a window from 300 sessions
+    before the year's first session to t;
+  - a root's first traded year is its first with at least 250 earlier sessions.
+- **Why a per-session r cannot be built.** The line construction is path-dependent (a segment persists for many
+  bars), so a threshold that moves every bar cannot be applied to one line.
+- **What the power transform does.** Every comparison the construction makes in log-price distance is multiplied
+  by r at once, including two not listed in §2 #4:
+  - **`delta`**, the slope gate (no line flatter than 1e-3 a bar). A slope is a log distance per bar.
+  - **`touch_tol`**.
+  - Pivot detection only compares highs and lows, so it is unchanged.
+- **At r = 1 the transform is the identity** (`x ** 1.0` is exact), which is what §4's known answer checks.
+- **A diagnostic, reported and not asserted:** the transformed run, against a run on raw prices with every
+  log-distance threshold multiplied by r explicitly. A difference would expose a constant in the code that the
+  explicit list misses.
+
+**A1.2, non-positive prices.** A session with any non-positive price (CL, April 2020) is dropped from that root's
+series. No trade spans a dropped session.
+
+**A1.3, "a line break of the side being traded".** This is `recalc_pair`'s own `body` invalidation event on that
+side (support for a long, resistance for a short) at the close of session u. The exit is at u + 1's open.
+
+**A1.4, the control's break.** For the plain-range control (X), a close beyond the range's extreme, frozen at entry
+(the low for a long, the high for a short), by `break_depth` × r. The exit is at the next open. This gives both
+arms the same exit structure.
+
+**A1.5, one position per root.** Re-entry only after an exit (D476's rule). The rotation null applies the same rule
+to the rotated signals.
+
+**A1.6, the control's length L.** Channel age at an entry = t − the later of the two segments' start bars. L = the
+median over the channel's entries, rounded, computed before any P&L.
+
+**A1.7, the daily book** (Sharpe, Sortino, drawdown, ρ): each trade's net is booked on its exit session.
+
+**A1.8, the expected-profit gate's cost.** The base round trip: commission + the default-line crossing × tick. The
+exit-at-open tick of slippage is charged in net but is not in the gate.
