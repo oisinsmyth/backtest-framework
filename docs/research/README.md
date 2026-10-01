@@ -297,6 +297,10 @@ Earlier work, predating the scan: [`the-signal-hunt-part2.md`](the-signal-hunt-p
 Databento, Tiingo) that is now standing exclusion ground** · [`shorts/`](shorts/) ·
 [`Prop-Firm-080926/`](Prop-Firm-080926/).
 
+**[`mean-reversion-inventory.md`](mean-reversion-inventory.md)** (2026-10-02): every mean-reversion study from D1 to
+D752, by family, compiled by five read-only readers. The channel line's results are withheld while the principal
+redesigns it blind.
+
 ---
 
 ## THE TOPIC-FIRST VIEW — `consolidated/`, added 2026-09-10
