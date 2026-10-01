@@ -14,11 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 748.**
-  - **D747 (2026-10-01): PRE-REGISTERED** (the principal: "Close D746 and pre-reg C as D747"). The night-break fade:
-    resting limits at yesterday's RTH high + 0.25 ATR20 (or low − 0.25 ATR20), 03:00–08:29 ET, with a 1:1 bracket of
-    b·ATR20 (primary b 0.25, which targets yesterday's extreme), flat at 09:29.
-    - **The decision is taken on data D744 never scored:** ES 2016–2023 and NQ 2016-01 → 2018-01-08.
-    - NQ 2018–2023, D744's read ungated break (−4.48 bp), is reported post hoc only.
+  - **D747 (2026-10-01): NOT SUPPORTED, and NO ROOM on ES** (the principal: "Close D746 and pre-reg C as D747"). The
+    night-break fade (resting limits at yesterday's range ± 0.25 ATR20, 03:00–08:29, 1:1 bracket, flat 09:29),
+    decided on data D744 never scored.
+    - **ES 2016–2023, b 0.25:** +$1.45 gross (t 0.56), inside its timing null (p 0.30); net −$3.67; 2 of 8 years.
+    - **NQ 2016-01 → 2018-01-08:** −$0.50 gross, 0 of 3 years.
+    - **On D744's read slice (NQ 2018–2023, post hoc):** +$9.09 gross, but 2022 alone exceeds the whole book's total.
+    - The reversal belonged to the slice, not the market. With D746, the prop book has no intraday mean-reversion line
+      on the index micros. Closing it is the principal's call.
   - **D746 (2026-10-01): NO ROOM on all four primary cells; CLOSED by the principal** ("Close D746 and pre-reg C as
     D747"). The prop-book mean-reversion oracle on ES and YM at one micro, in-sample 2016–2023.
     - **A, the stretch fade** (|z| ≥ 2.5 from the open, faded to the VWAP with a 1:1 bracket): gross −$5.76 (ES) and
