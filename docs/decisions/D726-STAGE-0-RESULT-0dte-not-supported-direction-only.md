@@ -64,3 +64,17 @@ Efficiency e = Σg/Σ\|g\| on gross dollars.
 - **D716 (NQ F2's vault look) is unchanged.** Nothing here says the vault era is hostile to it beyond what D722 already
   recorded.
 - **Not pursued unless the principal asks:** a larger test would need SPX's own 0DTE volume, which is not on disk.
+
+## CLOSED by the principal, 2026-10-01
+
+**The principal:** "Close, Move on".
+
+**Why:**
+- The tradeable form (the day's 0DTE dose) carries nothing: ρ +0.03, the wrong sign.
+- The weekday hint (about 1 SE) cannot be sharpened in-sample. Its post-date sample is fixed at about 400 sessions, and
+  the only extra data is the held 2024 slice and the vault, which a diagnostic does not spend.
+
+**What follows:**
+- No 0DTE-conditioned design is registered, and D716 is unchanged.
+- **Reopening needs SPX's own 0DTE volume** (not on disk, a paid pull) **and the principal's word.**
+

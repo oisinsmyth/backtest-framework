@@ -5328,4 +5328,4 @@ the MACD arm and the unfiltered last half-hour as controls)
   - The signs point that way: the era delta is z −0.80. Before 2022-05-16, Tuesday and Thursday had no same-day ES
     expiry, and the weekday difference in differences is z +0.95.
   - The day's 0DTE dose carries nothing (ρ +0.03).
-  - This is weak evidence against 0DTE, not a refutation.
+  - This is weak evidence against 0DTE, not a refutation. CLOSED by the principal, 2026-10-01; reopening needs SPX 0DTE volume.
