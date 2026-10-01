@@ -144,3 +144,24 @@ p95. That was power, not sign. Multiplicity over the 26 roots is carried by the 
 - **Roots in parallel** (threads; numpy). The projected wall time is a few minutes.
 
 **The output:** `data/stage0_d739_group_breaks.json` (aggregates only).
+
+## D739-A1 (2026-10-01, after a first launch stopped at the scoring step, before any statistic was read)
+
+**What happened.** The first launch built every root's panel. It printed each root's count of valid days (a
+data-coverage figure, not an outcome) and then stopped inside the scoring of a root, with nothing written. No mean,
+slope, null or reading was computed or seen.
+
+**The finding:**
+- **PA passes the 90%-bar day rule on 205 of about 1,950 sessions.** Palladium is too thin in the 09:00–12:59 window
+  to form a bar most minutes.
+- Because §3's leg requires every other member to be present, **PA alone would cut GC, SI, HG and PL to about 205
+  days.**
+
+**The amendment (a coverage gate, declared now, applied the same way to every group):**
+- A root is kept in its group only if its valid days are ≥ 50% of its group's median.
+- A root that fails is dropped both as a traded root and as a leg member, and its count is reported.
+- **On the counts the first launch printed, only PA fails** (205 against a METALS median of 1,947). The next lowest
+  are ZT 1,566 of 1,952, 6S 1,740, BZ 1,682 and TN 1,623; all are kept.
+- METALS becomes GC, SI, HG and PL. **25 roots remain;** Holm and the family null run over 25.
+
+**A code note, not a rule change:** a null with no finite draw now reports "none" instead of stopping the run.
