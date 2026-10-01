@@ -92,3 +92,35 @@ lines D722 already read as SCALE or REGIME.
    - each line's known answer.
 
 **No predictions:** this is a report, not a test.
+
+## 5. The report, applied (2026-10-01): informational, binding nothing
+
+**The commits:**
+- the code is `c1ef11a5`, with its unit tests (four broken versions each caught);
+- the fix is `ab355138`;
+- the output is `data/report_d729_vol_unit_concentration_v2.json`.
+
+**A disclosed error, caught before anything was recorded.** The first run (`data/report_d729_vol_unit_concentration.json`,
+kept as evidence) passed each trade's return, not its dollars, as the gross. Its "dollar" column was therefore a
+return-unit share (the price level removed). v2 passes dollars against the dollar scale (dollars per point × price ×
+σ20), as §2 declares, and reports the return-unit shares beside. **The shares are of gross P&L.** D705's gate (d)
+reads net, which this report does not restate.
+
+| line | n | largest year, \$ | largest year, return units (beside) | largest year, vol units | label |
+|---|---:|---|---|---|---|
+| **NQ F2 book B** (D716, slot 7) | 271 | 2022 60 % | 2022 52 % | **2022 55 %** | **BOTH** |
+| **NQ compression C1** (D680, slot 9) | 387 | 2024 34 % | 2022 22 % | 2024 26 % | **NEITHER** |
+| **NG Stage A** (D723, slot 3) | 1,028 | 2022 62 % | 2022 41 % | 2022 44 % | **SCALE-CARRIED** |
+| **NG projected-profit MNG** (D649, slot 8) | 270 | 2022 75 % | 2022 62 % | **2022 61 %** | **BOTH** |
+| ES F2 (D707, withdrawn; reference) | 252 | 2022 51 % | 2022 45 % | 2022 45 % | SCALE-CARRIED |
+| D699 V1 (closed; reference) | 572 | 2022 60 % | 2022 49 % | 2022 58 % | BOTH |
+| HO F2 (D719, closed; reference) | 239 | 2022 62 % | 2022 47 % | 2019 31 % | SCALE-CARRIED |
+| the MACD arm (admitted; reference) | 1,708 | 2020 43 % | 2020 44 % | 2020 40 % | NEITHER |
+
+**What the labels say about the queued lines:**
+- **NQ F2 and the NG MNG line lean on 2022 even per unit of volatility.** That is a concentration of direction, not of
+  size. It matches D722's REGIME reading for NQ F2.
+- **NG Stage A's 2022 is mostly size.** In volatility units 2024 nearly matches it (36 % against 44 %).
+- **The NQ compression break is the one queued line with no year dependence** (7 of 8 years positive).
+- **Nothing changes:** no slot, no vault criterion and no frozen file is touched by this report.
+

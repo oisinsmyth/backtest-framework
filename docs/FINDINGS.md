@@ -5329,3 +5329,14 @@ the MACD arm and the unfiltered last half-hour as controls)
     expiry, and the weekday difference in differences is z +0.95.
   - The day's 0DTE dose carries nothing (ρ +0.03).
   - This is weak evidence against 0DTE, not a refutation. CLOSED by the principal, 2026-10-01; reopening needs SPX 0DTE volume.
+- **The method note is now a report**
+  ([D729](decisions/D729-METHOD-the-volatility-unit-year-concentration-report.md)): `validation/concentration.py`,
+  informational, binds nothing. The largest year's share of gross, in dollars and then in volatility units, for the
+  queued vault lines:
+
+  | line | dollars | vol units | label |
+  |---|---:|---:|---|
+  | NQ F2 | 60 % | 55 % | BOTH (direction) |
+  | NG MNG (D649) | 75 % | 61 % | BOTH |
+  | NG Stage A | 62 % | 44 % | SCALE-CARRIED |
+  | NQ compression | 34 % (2024) | — | NEITHER |
