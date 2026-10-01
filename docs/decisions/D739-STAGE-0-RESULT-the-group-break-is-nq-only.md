@@ -98,3 +98,10 @@ with `--data-root` set to the main checkout.*
    - **(b) D737 is unaffected:** it is NQ against YM, frozen in slot 1.
    - **(c) the intraday reversion seen in the timing-null medians is recorded as structure,** not a lead. It is a
      different object (fading the move since the open) and would need its own premise check.
+
+## 5. CLOSED (2026-10-01, the principal: "Close this, move on")
+
+**The cross-group extension of D735 is CLOSED under R15.**
+- It covers the group-relative onset on metals, energy, rates, FX and grains, under any leg, threshold or stop.
+- 2024+ for these roots stays unread.
+- D737 (NQ against YM) is unaffected.

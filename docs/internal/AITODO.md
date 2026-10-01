@@ -23,7 +23,7 @@
   - **None TRANSFERS, none reaches GO.** All five micros (GC, SI, HG, CL, 6E) net negative.
   - **Most of these markets revert intraday from the window open:** C2a's p50 is negative on metals, rates, FX and
     grains.
-  - **Proposed:** close the cross-group extension under R15, on the principal's word. D737 is unaffected.
+  - **CLOSED under R15** (the principal, 2026-10-01: "Close this, move on"). D737 is unaffected.
   - D736 is the other session's screen.
   - **D737 is this session's vault pre-registration of D735's YM k1.0 1σ_rem, FROZEN, programme slot 1** (the
     principal: "Yes write it into slot 110 and freeze"; the registry gave the lowest free slot). See the programme
