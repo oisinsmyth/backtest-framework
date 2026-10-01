@@ -21,14 +21,14 @@
     - **Readings:** K1 worst trade ≥ −\$50; K2 worst 30 days ≥ −\$150; K3 ≤ \$300 a year; K4 zero breaches.
     - **Next:** the runner, `scripts/stage0_d748_activity_keeper.py`, runs on the system interpreter (`fut_day5m`
       needs pyarrow).
-  - **D747 (2026-10-01): NOT SUPPORTED, and NO ROOM on ES** (the principal: "Close D746 and pre-reg C as D747"). The
+  - **D747 (2026-10-01): NOT SUPPORTED, and NO ROOM on ES; CLOSED by the principal** ("Close D747 and push it"). The
     night-break fade (resting limits at yesterday's range ± 0.25 ATR20, 03:00–08:29, 1:1 bracket, flat 09:29),
     decided on data D744 never scored.
     - **ES 2016–2023, b 0.25:** +$1.45 gross (t 0.56), inside its timing null (p 0.30); net −$3.67; 2 of 8 years.
     - **NQ 2016-01 → 2018-01-08:** −$0.50 gross, 0 of 3 years.
     - **On D744's read slice (NQ 2018–2023, post hoc):** +$9.09 gross, but 2022 alone exceeds the whole book's total.
-    - The reversal belonged to the slice, not the market. With D746, the prop book has no intraday mean-reversion line
-      on the index micros. Closing it is the principal's call.
+    - The reversal belonged to the slice, not the market. With D746, intraday mean reversion on the index micros is
+      closed for the prop book.
   - **D746 (2026-10-01): NO ROOM on all four primary cells; CLOSED by the principal** ("Close D746 and pre-reg C as
     D747"). The prop-book mean-reversion oracle on ES and YM at one micro, in-sample 2016–2023.
     - **A, the stretch fade** (|z| ≥ 2.5 from the open, faded to the VWAP with a 1:1 bracket): gross −$5.76 (ES) and

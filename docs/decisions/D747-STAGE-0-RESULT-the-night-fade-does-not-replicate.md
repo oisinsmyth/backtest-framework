@@ -104,7 +104,16 @@ The decision cells are ES-full and NQ-early, both never scored by D744. Dollars 
   - D746: neither the day session's stretches nor its gaps come back.
   - D747: the night's breaks do not come back either, outside 2022 on NQ.
 
-## 6. Next
+## 6. CLOSED
+
+*2026-10-01, the principal: "Close D747 and push it".*
+- **D747 is closed:** no night-break fade on ES or NQ.
+- **Don't re-propose** a fade of the 03:00–08:29 break of yesterday's range ± 0.25 ATR20 on the index micros; its
+  NQ 2018–2023 reversal is a 2022 artefact.
+- **With D746, intraday mean reversion on the index micros is closed for the prop book.** The multi-day ideas stay
+  parked for the personal book.
+
+## 6a. What stood at the result, before the closure
 
 - **The reading is NOT SUPPORTED.** Closing it is the principal's call (R15).
 - **Not proposed:** another reversion construction on the index micros. Two in-sample tests and D724/D725 all say the
