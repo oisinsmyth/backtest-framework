@@ -115,7 +115,10 @@ reversed on EQ and absent on YM.
 - **Not a lead:** "D735 earns more on news days" is the reverse of a declared hypothesis, at p ≈ 0.13, after the
   fact. It is recorded and not pursued.
 
-## 6. Next
+## 6. CLOSED
 
-On the principal's word: idea 2 of the C1 comparison (the post-shock consolidation break at the European open,
-03:00–08:29 ET, flat before 09:30), or another item from the menu.
+*2026-10-01, the principal: "Ok close that and look at idea 2".*
+- **The line is closed:** no skip layer on D735's legs, and D737 is unchanged.
+- **Don't re-propose** the overnight or release-day skip for D735 or D737.
+- **Next:** idea 2 of the C1 comparison (the post-shock consolidation break at the European open), designed with the
+  principal under its own number.
