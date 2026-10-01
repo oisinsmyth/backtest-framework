@@ -108,7 +108,13 @@ t −2.11).
 - It is recorded so that nobody re-proposes the continuation version. Pursuing a fade is the principal's call and
   would need its own pre-registration.
 
-## 7. Next
+## 7. CLOSED
 
-The C1 comparison's ideas are spent: idea 1 (D743) and idea 2 (D744) are NOT SUPPORTED, and idea 3 (FOMC 14:00) was
-underpowered by its author's own account. C1 stays as frozen, in vault slot 9.
+*2026-10-01, the principal: "Close D743 and D744 Only".*
+- **D744 is closed:** no consolidation-break entry at the European open, gated or ungated. C1 stays as frozen, in
+  vault slot 9.
+- **Only D743 and D744 are closed.** The C1 comparison line itself is not: idea 3 (FOMC 14:00, underpowered by its
+  author's own account) and any further idea stay open on the principal's word.
+- **Not pursued:** the ungated night break's reversal (gross −4.48 bp, t −2.08) is an observation, not a lead; a fade
+  would need its own pre-registration on the principal's word.
+- **Don't re-propose** the 03:00–08:29 break of yesterday's range ± 0.25 ATR20, gated by C1's tier, for NQ.

@@ -20,13 +20,14 @@
     - The skips do not select; on EQ the skipped trades earn more (\$29–42 against \$11–16).
     - D737 is unchanged.
     - Next: idea 2, the consolidation break at the European open, is D744.
-  - **D744 (2026-10-01): NOT SUPPORTED.** It tested NQ's fresh break of yesterday's range between 03:00 and 08:29 ET,
+  - **D744 (2026-10-01): NOT SUPPORTED; CLOSED by the principal** ("Close D743 and D744 Only"). It tested NQ's fresh break of yesterday's range between 03:00 and 08:29 ET,
     gated by C1's tier rebuilt for 03:00, flat at 09:29.
     - **The gated book:** 96 trades, gross −0.30 bp (t −0.09).
     - **The ungated night break reverses:** −4.48 bp, t −2.08. This is an observation; a fade is not pursued without
       the principal's word.
     - **C1's edge is a cash-session effect.**
-    - **The C1 comparison's ideas are spent;** awaiting the principal's word to close.
+    - **Only D743 and D744 are closed;** the C1 comparison line stays open (idea 3, FOMC 14:00, underpowered; anything
+      further on the principal's word).
   - **D736, D738, D740, D741, D742: the NQ follow's selectivity line (2026-10-01), CLOSED.**
     - **The records:**
       - D736 is the earn-when-trading screen;
