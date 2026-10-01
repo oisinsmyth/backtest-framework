@@ -13,14 +13,21 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 751.**
+- **Next free number: 752.**
+  - **D751 (2026-10-01): PRE-REGISTERED** (the principal: "Close D749 and pre-reg the gold fix as D751"). The gold
+    fix on MGC: the move from 09:30 to 5 minutes before the LBMA PM auction (15:00 London = 10:00 ET, or 11:00 in
+    DST-mismatch weeks), gated by a walk-forward median.
+    - **The legs:** A follows it into the fix (fix − 5 → fix + 5); B fades it after (fix + 5 → fix + 30).
+    - **Controls:** the enumerated sign rotation, an 11:30 ET placebo clock, the DST control, and the phone vs ICE-auction
+      eras.
+    - **The bar:** MGC costs $5.93, so 2c = $11.87. In-sample 2011–2023.
   - **D750 (2026-10-01): PRE-REGISTERED, Stage 0.** A positive-mean keeper (the principal's request to scavenge a
     closed line with real gross edge): D748's index-micro keeper (13:30–14:00, the move since 09:00) with a \$40 stop
     cap.
     - **The bars:** mean net > 0 at t ≥ 2, the direction-rotation null, median net ≥ 0, and D748's K1–K4.
     - **A pass is a candidate only:** the evidence is contaminated, so it needs a forward read and the principal's
       word before it replaces M6E.
-  - **D749 (2026-10-01): NOTHING** (the principal: "Pre-reg D749 and run the month-end fix oracle"). The month-end
+  - **D749 (2026-10-01): NOTHING; CLOSED by the principal** ("Close D749 and pre-reg the gold fix as D751"). The month-end
     London 4pm fix on M6E (Melvin & Prins 2015), 152 month-ends 2011–2023.
     - **The room is there:** the mean |move| is $19.76, 2.3 × the bar.
     - **The signed mean is not:** +$0.59 gross (t 0.28), inside the sign rotation (p 0.23), and equal to the placebo

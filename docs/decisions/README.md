@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 567 of these records carry neither field —
+**No Status or Category column, deliberately.** 568 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -823,6 +823,7 @@ would look like data. The tokens are what is shown.
 | D748 | D748 STAGE 0 RESULT — READY: the activity keeper is one M6E at 13:30, never worse than −\$41 a trade in-sample, and the… | [PRE-REG](D748-STAGE-0-PRE-REG-the-activity-keeper.md) · [RESULT](D748-STAGE-0-RESULT-the-keeper-is-ready-on-m6e.md) |
 | D749 | D749 STAGE 0 RESULT — NOTHING: EUR/USD moves enough into the month-end London fix to pay, but not in the direction the… | [PRE-REG](D749-STAGE-0-PRE-REG-the-month-end-london-fix-on-m6e.md) · [RESULT](D749-STAGE-0-RESULT-the-fix-flow-is-not-there-after-2015.md) |
 | D750 | D750 STAGE 0 PRE-REGISTRATION — a positive-mean keeper: D748's index-micro keeper with a \$40 stop cap, held to mean ne… | [PRE-REG](D750-STAGE-0-PRE-REG-a-positive-mean-keeper.md) |
+| D751 | D751 STAGE 0 PRE-REG — the gold fix on MGC: does gold keep moving into the LBMA PM price auction (15:00 London) in the… | [PRE-REG](D751-STAGE-0-PRE-REG-the-gold-fix-on-mgc.md) |
 
 <!-- REGISTER:END -->
 

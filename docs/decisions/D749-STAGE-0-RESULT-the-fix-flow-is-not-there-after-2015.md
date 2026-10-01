@@ -101,7 +101,15 @@ One M6E, P = the 30 minutes into the fix, signed by SPY's month-to-date return.
   - It is recorded so it is not rediscovered as new. A full-size 6E version is outside the principal's micro-only
     ruling.
 
-## 6. Next
+## 6. CLOSED
+
+*2026-10-01, the principal: "Close D749 and pre-reg the gold fix as D751".*
+- **D749 is closed:** no month-end London-fix trade on M6E.
+- **Don't re-propose** the pre-fix hedge-rebalancing trade signed by US equities' month-to-date return.
+- The post-fix fade observation stays recorded and is not pursued (it is under the micro bar).
+- **Next:** the gold 10:00 fix (MGC) is D751.
+
+## 6a. What stood at the result, before the closure
 
 - **The reading is NOTHING.** Closing it is the principal's call (R15).
 - **The next ideas from the same round:** the gold 10:00 fix (MGC), and the London Metal Exchange official price on
