@@ -170,14 +170,20 @@ def run() -> int:
     # C. the stop curve
     curve = {"none": dict(summary(net0, g0), stopped=0, winners_stopped=0)}
     fired = 0
+    one_bar: dict[str, int] = {}
     for w in WIDTHS:
         res = [stop_exit(E[k], side[k], ent_m[k], w, soc[k], Op[i], H[i], L[i], last[i]) for k, i in enumerate(ai)]
         gx = np.array([side[k] * (r[0] - E[k]) * usd for k, r in enumerate(res)])
         st = np.array([r[1] for r in res])
+        can1 = [stop_exit(E[k], side[k], ent_m[k], w, soc[k], Op[i], H[i], L[i], last[i], start_shift=-1) for k, i in enumerate(ai)]
+        one_bar[str(w)] = int(sum(c[0] != r[0] for c, r in zip(can1, res)))
         if w == 1.0:
-            can = [stop_exit(E[k], side[k], ent_m[k], w, soc[k], Op[i], H[i], L[i], last[i], start_shift=-1) for k, i in enumerate(ai)]
+            # D742 s.3's one-bar canary is too weak on real data (an entry bar's range rarely reaches w sigma_rem); the
+            # decisive canary scans from the session open, i.e. lets the pre-entry bars leak in (disclosed in the RESULT)
+            can = [stop_exit(E[k], side[k], ent_m[k], w, soc[k], Op[i], H[i], L[i], last[i], start_shift=-int(ent_m[k]))
+                   for k, i in enumerate(ai)]
             fired = int(sum(c[0] != r[0] for c, r in zip(can, res)))
-            need(fired > 0, "the early-scan canary did not change any exit")
+            need(fired > 0, "the from-the-open canary did not change any exit")
             # sign / second implementation on stopped trades from the raw rows
             for k in [int(x) for x in rng.choice(np.flatnonzero(st), min(25, int(st.sum())), replace=False)]:
                 i = ai[k]
@@ -194,7 +200,8 @@ def run() -> int:
         curve[str(w)] = dict(summary(nx, gx), stopped=int(st.sum()), winners_stopped=int((st & win).sum()),
                              losers_stopped=int((st & ~win).sum()))
     out["stop_curve"] = curve
-    out["canary_early_scan_changed"] = fired
+    out["canary_from_open_changed_at_w1"] = fired
+    out["canary_one_bar_early_changed_by_width"] = one_bar
     out["wall_min"] = (time.time() - t0) / 60
     OUT.write_text(json.dumps(out, indent=1, default=float) + "\n", encoding="utf-8", newline="\n")
     P("[D742] " + "; ".join(f"w {w}: DD {c['max_dd']:.0f} Calmar {c['calmar']:.2f} mean {c['mean_net']:.2f} worst {c['worst_day']:.0f} "
