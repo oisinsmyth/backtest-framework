@@ -23,6 +23,12 @@ An independent pass over this checklist was made on 2026-10-01: a Sonnet reader 
 code, the corrections below were each re-verified by hand, and §0 was re-run (results in §0). It read no vault data:
 only code, records, freezes, job records and DBN headers. **Nothing blocks the run if these corrections are followed.**
 
+**Recorded decisions, 2026-10-01 (the principal: "Yes to all 3"):**
+- **V2:** the D680 vault-fixture build may accept the Saturday gap. `--accept-hole 2026-09-12` is passed on this word.
+- **V4:** the procedural fix is accepted. The builder stays frozen as it is (no D723 re-freeze). The NG proofs run on the
+  day, in the main checkout, and the `temp/` reference file is checked just before step 5.
+- **V8:** the D462 rebuild (§2.2) runs **after** D626's read on 2026-10-10. So the joint run follows 10-10.
+
 | # | what | correction |
 |---|---|---|
 | V1 | **Run every step in the MAIN checkout** (`C:\Users\O\Desktop\Projects\Backtest Framework`). | `vault_d680_nq_compression.py:43`, `joint_d680_vault.py:69`, `build_ledger_vault_inputs.py:82` and `build_strip_vault.py:64` hard-code main's `data/`. Outputs and D716's fixtures are checkout-relative. In a worktree, the inputs would come from main and the outputs from the worktree. The fixtures are hardlinked across worktrees, so a D462 rebuild also writes them there. |
@@ -94,7 +100,8 @@ evening from 18:00 ET. `mbo` has the same hole (not needed here).
 
 1. Check that the top-up's ohlcv-1m job downloaded from 2026-09-10 (its record in `data/prelapse_topup_jobs.json`
    carries `"start": "2026-09-10"`). If it was refused, the fallback is `--accept-hole 2026-09-10`.
-2. D462 rebuild (`python scripts/build_fut_index_1m.py --build`).
+2. D462 rebuild (`python scripts/build_fut_index_1m.py --build`). **Not before D626's read on 2026-10-10** (V8; the
+   principal, 2026-10-01).
    - It globs every job dir.
    - It writes `fut_{ES,NQ,YM,RTY}_rth_1m`, `fut_index_sessions` and `fut_index_rolls` in place, so the manifest shas
      move. D716 reads `data/fixtures/` of the checkout it runs in.

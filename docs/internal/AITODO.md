@@ -206,6 +206,11 @@
 ## Programme rule: ONE joint vault run (the principal, 2026-09-26; amendment A10)
 
 - **JOINT-RUN PREP, 2026-09-30 → 10-01 (the principal: "go with your full recommendation"; "1-3 I approve"; "I take both your recomenations"). The run order and every input's status is `docs/internal/JOINT_RUN_CHECKLIST.md`.**
+  - **Independent verification pass, 2026-10-01 (2b1a6c93): §0 is 11/11 and every freeze verifies.** Read the
+    checklist's V-table first. The principal said "Yes to all 3" on 2026-10-01:
+    - `--accept-hole 2026-09-12` (the daily-split top-up has no Saturday file);
+    - the NG panels step's `temp/` reference file is handled by procedure, with no D723 re-freeze;
+    - the D462 rebuild, and so the joint run, comes **after** D626's 10-10 read.
   - **Slot 9, D680:**
     - `scripts/joint_d680_vault.py` builds the NQ vault inputs and holds D663's cut at 2026-09-19 for the frozen
       runner's call. This is a joint-run wrapper, not an amendment.
