@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 749.**
+- **Next free number: 750.**
+  - **D749 (2026-10-01): PRE-REGISTERED** (the principal: "Pre-reg D749 and run the month-end fix oracle"). The
+    month-end London 4pm fix on M6E (Melvin & Prins 2015). Both this session's and a Fable 5.1 agent's independent
+    lists ranked it first.
+    - **The trade:** long or short EUR/USD for the 30 minutes into the fix (11:00 ET, or 12:00 in DST-mismatch weeks),
+      signed by SPY's month-to-date return.
+    - **Controls:** an enumerated sign-rotation null, placebo days (−5 … −2), and the DST clock control.
+    - **Readings:** NO ROOM if the mean |move| < 2c ($8.76). In-sample 2011–2023 only.
   - **D748 (2026-10-01): READY, Stage 0.** The activity keeper: one placeholder trade at 13:30–14:00 ET on the
     cash-settled financial micro with the smallest forecast σ\$ (the principal's "vol\*tick size, smallest root").
     It fires only when a firm's inactivity deadline would lapse.
