@@ -177,5 +177,54 @@ For each class: the count, D737's mean and total net, and its win rate.
 
 If both hold, step 2 follows: the power and a pre-registration on the principal's word. Otherwise the lead is closed.
 Either way this is in-sample and post hoc, and nothing here is evidence for a vault claim.
+
+### Addendum 2, the result: the rule as written reads SURVIVES, but the gain is the floor's, not the agreement's
+
+**The checks.**
+- D737's 1,699 trades and mean were re-proved.
+- D737's own trades, re-priced by D742's `stop_exit`, equal its E1 gross on every trade, so the conventions agree.
+
+**PIT-1, D737 by what was known at its entry** (2016-02 → 2023-12):
+
+| state at D737's entry | trades | mean net | total | win rate |
+|---|---:|---:|---:|---:|
+| **floor off** (σ\$ < \$150, known at the open) | 725 | **+\$2.66** | \$1,926 | 0.47 |
+| already agreed | 248 | +\$35.65 | \$8,841 | 0.57 |
+| already opposed | 59 | **+\$48.14** | \$2,840 | 0.49 |
+| not yet | 667 | +\$17.48 | \$11,656 | 0.52 |
+
+**PIT-2, wait for agreement** (145 of its 393 entries move to the follow's later trigger), beside D737 and two post hoc
+lines:
+
+| book | trades | net / trade (median) | total | Sharpe (Sortino) | max DD | Calmar | worst day |
+|---|---:|---|---:|---|---:|---:|---:|
+| **PIT-2, the agreement book** | 393 | **+\$30.21** (+\$24.43) | \$11,871 | 0.90 (1.49) | \$1,687 | 7.04 | −\$587 |
+| D737 as frozen | 1,699 | +\$14.87 (+\$0.93) | \$25,264 | **1.11 (1.85)** | \$2,690 | **9.39** | −\$609 |
+| *POST HOC:* D737, floor on only | 974 | +\$23.96 (+\$14.43) | \$23,338 | 1.05 (1.76) | \$2,690 | 8.67 | −\$609 |
+| *POST HOC:* D737, floor off only | 725 | +\$2.66 (−\$3.57) | \$1,926 | 0.37 (0.62) | \$1,537 | 1.25 | −\$148 |
+
+**The declared rule:**
+- (a) PIT-2's mean +\$30.21 ≥ +\$24.87: holds.
+- (b) agreed minus not yet = +\$18.17 ≥ \$10: holds.
+- **As written, the lead SURVIVES.**
+
+**What the full table says** (my rule was incomplete: it judged only the mean per trade):
+1. **The agreement book is not better as a book.** It has a higher mean per trade but less than half D737's total, a lower
+   Sharpe (0.90 against 1.11) and a lower Calmar (7.04 against 9.39). The per-trade gain is bought by dropping trades
+   that also earn.
+2. **The agreement mechanism does not hold point in time.** D737 does better when the follow had already gone the
+   **other** way (+\$48.14, 59 trades) than when it had already agreed (+\$35.65). The eventual-trade split in the
+   first addendum (+\$43k against −\$12k) was mostly the outcome showing in the label.
+3. **The floor carries it.**
+   - **Floor off:** D737's 725 trades on days with σ\$ < \$150 (known before the open) net +\$2.66 a trade: break-even
+     trading, which the principal's standard rejects.
+   - **Floor on:** its 974 trades carry \$23,338 of its \$25,264 (92 %).
+   - **The overlap with the follow's floor:** the "A abstains" losses in the first addendum were mostly these calm days.
+   - The floor-on line is post hoc: the floor was found on the follow and is applied to D737 here after being seen.
+
+**Reading.** The agreement lead is **closed**. Its declared rule passed, but it is not a better book and its mechanism
+reverses point in time. What remains is a post hoc observation: D737, like the follow, earns only when the daily range
+is large enough. D737 stays frozen. Scoring D737 with the floor in the vault would need its own pre-registration in a
+free slot, on the principal's word.
    - The drawdown is the cost of a regime-shaped edge traded at one micro. The options are the account size (\$150k), or
      accepting it.
