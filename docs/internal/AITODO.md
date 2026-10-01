@@ -13,7 +13,12 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 736.**
+- **Next free number: 738.**
+  - D736 is the other session's screen.
+  - **D737 is this session's vault pre-registration of D735's YM k1.0 1σ_rem, FROZEN, programme slot 1** (the
+    principal: "Yes write it into slot 110 and freeze"; the registry gave the lowest free slot). See the programme
+    section.
+  - **D733 CLOSED** (the principal: "Close D733").
   - **D735** is this session's NQ entry construction after D733. The principal: "That is so bad, have a fable 5.1
     agent analyse the results and come up with a better construction"; "Pre-reg D735, build and run it. Go for the
     widest construction". It is a merged design with a Fable 5.1 agent: NQ breaks from the market. The first minute
@@ -238,6 +243,28 @@
 - Each model is scored on its own pre-registered vault criteria, and the assembled book is scored on the same
   period.
 - α stays in fixed slots of 0.005 per family, so a joint run changes no bar.
+- **FROZEN 2026-10-01 (the principal: "I choose YM 1.0, it look really good"; "Yes write it into slot 110 and
+  freeze"): D737, NQ leads the Dow (D735's YM k1.0 1σ_rem, one MNQ). Programme slot 1.**
+  - **Why slot 1, not 10:** the principal said slot 10, but `Registry.register` takes the lowest free slot, and 1 has
+    been free since 09-30. The α is the same 0.005; free slots are now 2 and 10, with 0.040 allocated.
+  - **The files:** the freeze is `data/FROZEN_vault_d737_nq_leads_the_dow.json`, hashing the runner, D737, D735's
+    records and JSON, the rehearsal, the power file and 29 imported files. The runner is
+    `scripts/vault_d737_nq_leads_the_dow.py`.
+  - **Known answer:** 1,699 trades, +$14.869654. The Nov–Dec 2023 overlap (36 trades) reproduces through the vault
+    loader.
+  - **The gate:**
+    - PASS: ≥ 100 trades, mean net > 0 with one-sided NW(5) t ≥ 1.645, and mean net above the vault-window timing
+      null's p95;
+    - FAIL: mean net ≤ 0;
+    - else UNRESOLVED.
+  - **Power** (`data/vault_d737_power.json`, about 595 expected trades):
+    - G1: 0.63–0.68 / 0.37–0.42 / 0.16–0.19 / 0.05–0.07 / 0.013–0.015 at 100 / 75 / 50 / 25 / 0 %;
+    - the full gate on 64 in-sample windows the vault's length: PASS 0.61, UNRESOLVED 0.39, FAIL 0.
+  - **Promotion is a separate, higher bar.** The registry page requires an adjusted p ≤ 0.005 (one-sided t ≈ 2.58)
+    plus the programme DSR. A vault PASS at t 1.645–2.58 confirms the line but does not promote it on the programme's
+    α; the same holds for D716 and D680.
+  - **When it runs:** after the D462 rebuild, in JOINT_RUN_CHECKLIST §3. It shares NQ's 2024+ sessions with D716.
+  - **Ledger:** entry #6, PROVISIONAL.
 - **Frozen and waiting:** the settlement ledger's NG Stage A (`data/FROZEN_ledger_stage_a_ng.json`), and **D649's
   NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
   move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's

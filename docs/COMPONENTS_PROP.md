@@ -816,5 +816,20 @@ This is the in-sample premise check.
 
 **The ledger's live entries:**
 - **#5 NQ F2:** PROVISIONAL, programme slot 7.
+- **#6 NQ leads the Dow:** PROVISIONAL, programme slot 1 (below).
 - **The NQ compression break (D680):** frozen for the joint run in slot 9. It is not a ledger entry; it is scored as a
   component line in D732.
+
+## ENTRY #6, PROVISIONAL, 2026-10-01 — NQ leads the Dow ([D735](decisions/D735-STAGE-0-RESULT-nq-breaking-from-the-market-beats-its-null.md), [D737](decisions/D737-PRE-REG-nq-leads-the-dow-for-the-joint-vault.md))
+
+*The principal: "I choose YM 1.0, it look really good"; "Yes write it into slot 110 and freeze".*
+
+| # | component | window | net Sharpe; Sortino; gross | hit | skew | ρ with prior | entered |
+|---|---|---|---|---|---|---|---|
+| **6** | **NQ leads the Dow** (D735's YM k1.0 1σ_rem): at the first minute 10:00–14:30 where NQ's move since the open minus YM's (own-σ units) reaches \|z\| 1.0, one MNQ in the spread's direction, held to the close under a 1σ_rem stop; $4.07; about 210 trades a year | 2016-01 → 2023-12 | **+1.11**; Sortino +1.85; gross Sharpe +1.41 (Sortino +2.40); per trade +$14.87 net / +$18.94 gross (NW t 3.15); max drawdown $2,690 | 50 % | +0.94 (per trade) | **+0.05 with #5** (NQ F2) | **PROVISIONAL.** The joint run's D737 look (slot 1) confirms or removes it |
+
+**Disclosures:**
+- **This cell was chosen after the fact from D735's 20.** D735's declared reading was DRIFT ONLY: every cell failed the per-\|x\| bin leg.
+- Largest year: 51 % in dollars, 35 % in volatility units. Without 2022 it nets +$8.52 a trade.
+- About 96 % of entries fall in the 10:00 hour.
+- The drawdown exceeds a $50k account's $2,000 trailing barrier at one MNQ.

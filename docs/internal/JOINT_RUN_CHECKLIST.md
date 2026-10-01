@@ -1,4 +1,4 @@
-# Joint vault run: checklist (programme slots 3, 7, 8, 9)
+# Joint vault run: checklist (programme slots 1, 3, 7, 8, 9)
 
 *Prepared 2026-09-30, before the Databento CME subscription lapses (~2026-10-11). Nothing here opened the vault.
 The vault is 2025-03-01 → 2026-09-18. The principal calls the run (A10).*
@@ -170,6 +170,24 @@ Run it only after slot 7's `--vault` and slot 9's `--run-vault` have both writte
 - **What it scores.** It writes `data/vault_d734_nq_book.json`. The gates are G1–G4 (D734 with A1 and A2).
 - **The freeze** hashes `joint_d680_vault.py`, `vault_d716_nq_f2.py`, `vault_d680_nq_compression.py`, `hurdle_p.py` and
   `data/prop_venues.json`. Any edit to them breaks it. Tell the documentation-review session before touching them.
+
+**D737, NQ leads the Dow (D735's YM k1.0 1σ_rem, one MNQ). FROZEN 2026-10-01; programme slot 1** (the principal said
+"slot 10"; the registry gives the lowest free slot).
+
+Run it after §2.2 (the D462 rebuild, which writes `fut_NQ_rth_1m` and `fut_YM_rth_1m` through 2026-09-18), in the
+checkout holding the rebuilt fixtures:
+`uv run python scripts/vault_d737_nq_leads_the_dow.py --vault --principals-word "..."`.
+- **In order, it:**
+  - verifies `data/FROZEN_vault_d737_nq_leads_the_dow.json`;
+  - refuses a second opening;
+  - re-proves the in-sample known answer (1,699 trades, D735's mean net);
+  - loads 2023-09-01 → 2026-09-18 and re-proves the Nov–Dec 2023 overlap trade for trade;
+  - scores 2024-01-01 → 2026-09-18.
+- **It refuses** if either fixture ends before 2026-09-18. `--accept-end DATE` is the principal's call.
+- **Independent of the other lines:** it reads only NQ and YM bars. It shares NQ's 2024+ sessions with D716 (slot 7),
+  whose window is the last hour.
+- **Its freeze** hashes `stage0_d735_nq_breaks_from_the_market.py` and its imports (D727, D733, D731, D720, D711's
+  `cost_line` and others). Do not edit those before the run.
 
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):

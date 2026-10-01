@@ -1,0 +1,82 @@
+{
+ "name": "FROZEN_vault_d737_nq_leads_the_dow",
+ "record": "docs/decisions/D737-PRE-REG-nq-leads-the-dow-for-the-joint-vault.md",
+ "instruction": "the principal, 2026-10-01: \"I choose YM 1.0, it look really good\"; \"Yes write it into slot 110 and freeze\"",
+ "programme_slot": 1,
+ "programme_family": "NQ leads the Dow (D735 YM k1.0)",
+ "alpha": 0.005,
+ "runner": {
+  "path": "scripts/vault_d737_nq_leads_the_dow.py",
+  "sha256": "0575ef40af061eb446486d140004304a1c6b41bb15067b7553b2baea27f84f2a"
+ },
+ "records": {
+  "docs/decisions/D737-PRE-REG-nq-leads-the-dow-for-the-joint-vault.md": "1d7448590b9cd91f127e8610fed7205437beede07529214456e2110e2861da14",
+  "docs/decisions/D735-STAGE-0-PRE-REG-nq-breaks-from-the-market.md": "8b9dd8f0c3df8978617db3f062aac9b3f7c44ca040b518e53bcceffea418b8cc",
+  "docs/decisions/D735-STAGE-0-RESULT-nq-breaking-from-the-market-beats-its-null.md": "95c85e2fbb6678d95476b2052cb9cddff386d2824f41798fb94a63cce3868bc5"
+ },
+ "imported_unchanged": {
+  "scripts/diag_d702_last_hour_oracle_mes.py": "f335d2a4d1f9466249b80ea7d9d4b6050a25808a82cae409d5e90d75b70cb148",
+  "scripts/stage0_d662_gamma_product.py": "0409343906d5d4c5296594ee37189c4a4000e171996d004f7014cafa8598022f",
+  "scripts/stage0_d663_per_root_gamma_break.py": "835007832de6a556f6bda40a578eb1e4e0a4f4955406e83acbec7edd2338163b",
+  "scripts/stage0_d666_rebreak.py": "91effc788dc99cccf1487c7dc64425de08a1e527b9fd2de0937251124221a969",
+  "scripts/stage0_d668_break_predictor.py": "3859b6f7e89017c50cbab92f26aa096d7575160c18701bb2bfbd5be7216d66e0",
+  "scripts/stage0_d671_break_construction.py": "ac0b7ea0850d7e5767a35822a0ab58d6f761f00b46e3fbe2fb0f68fd7d60fb37",
+  "scripts/stage0_d691_iv_size.py": "1df22cda256ba8c53f2a8e3daad082aec61b1240914251e7c27e83f53e76a2cf",
+  "scripts/stage0_d720_size_the_direction.py": "39cf5d12a5df238bea46dbd0833b0f8c19888db2b868d916ddacf0347f05e007",
+  "scripts/stage0_d727_trend_curve.py": "6604b6cde549beed1acaab389075ea811f0e7e466138d63c9fe3d9870e4e73a1",
+  "scripts/stage0_d730_volume_detector.py": "68d33b05f520fb7fb55e596a4cb20841c07fd0a80037313b3ad8431cb0f9732f",
+  "scripts/stage0_d731_flat_u.py": "3d2592cef5dfc5916eb201b2ab4ccf00548b3b45f22029f3a63df97d2ca1933b",
+  "scripts/stage0_d733_pullback_entry.py": "1def44315e74c30d1a453fd6577d7041bc5b38c1e5c641d028dc7f654317de37",
+  "scripts/stage0_d735_nq_breaks_from_the_market.py": "6aa6f7273157244ee719fabb238235fe2f3106ee5991eba3498e0c63599c5fad",
+  "scripts/stage1_d694_coiled_break.py": "1e1ff9fa6881d4d01a059942e61b7f1cfe488de6dcf30cc8a7ab2ca79b9a0c1f",
+  "scripts/stage1_d703_last_hour_ep_filter.py": "00ed83392e9822d015632076e69674205c54f1bb52e44d78680db74d8f506e11",
+  "scripts/stage1_d711_f2_mechanism.py": "8eddfc37bcfc4ce73b26e1b2826aea2b9639636b522ce7cc50bd85bddba0debc",
+  "scripts/vault_d707_last_hour_f2.py": "aaf67bbbb149c7e84f9953673ca789d1e30de2c4008dea41942a062b938abf82",
+  "src/backtest_framework/__init__.py": "aae867d2cba6fa88baffd37737016da88f4a6021f790c6b0be19f3ab74a52020",
+  "src/backtest_framework/opening/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/opening/agents.py": "ebbc3ec5d9537a0c3b6be923329f14ebfaeb49a7dfce8d4879f813fb5903b9a3",
+  "src/backtest_framework/registry/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/registry/trial_registry.py": "6f16143ae83af9aea8a39678253bc1ca3c05259e33179a300bc26ec712babd24",
+  "src/backtest_framework/validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/validation/concentration.py": "55628d7c860496d39541b41be678b5b2f2e7ba58193e3d5ed2141cb5001e0a34",
+  "src/backtest_framework/validation/episodes.py": "73c73e4f586f5ee2823e69bbeae7730a6445c19023ba186d58efaa05b81a5819",
+  "src/backtest_framework/validation/filter_oracle.py": "5064e70bc9e87a532cf4f71319c73bfd7d89565f7d10806bed91ee82709764b5",
+  "src/backtest_framework/validation/frozen.py": "8156c4d3e858604f1fc31c04200e6fac8be58f8fe1ec878d755673934f9c314e",
+  "src/backtest_framework/validation/hurdle_p.py": "7b144578c34cef45b109f674d42c70bb1e6208eee8238af46f8ef4f5560a3cca",
+  "src/backtest_framework/validation/programme.py": "1d48d5cb513a05e19f4c01556805b9ba8ee7da4ae5711609d862d57b76d6654d"
+ },
+ "files": {
+  "data/stage0_d735_nq_breaks_from_the_market.json": "323b7b62ca2544e92b15ff5122722f35fd822d873af001e1ef4b3b1f8a916dff",
+  "data/rehearsal_vault_d737.json": "3a69efb3828d69fcbb13b11024651333c7f52c580b9d2ae84571dd60ce31bfa4",
+  "data/vault_d737_power.json": "8f268cfbdd9b231a82f6f136cd4558035354b59482a3365af1bd0dbf465c6011"
+ },
+ "params": {
+  "cell": "YM_k1.0_1s",
+  "leg": "YM",
+  "k": 1.0,
+  "stop_sigma_rem": 1.0,
+  "vault": [
+   "2024-01-01",
+   "2026-09-18"
+  ],
+  "load_from": "2023-09-01",
+  "overlap": [
+   "2023-11-01",
+   "2023-12-29"
+  ],
+  "known_trades": 1699,
+  "gate": {
+   "G0": ">= 100 trades",
+   "G1": "mean net > 0 and one-sided NW(5) t >= 1.645",
+   "G2": "mean net > the vault-window C2a p95 (enumerated offsets 20 .. n-20)",
+   "FAIL": "mean net <= 0",
+   "else": "UNRESOLVED"
+  },
+  "seed": 737,
+  "programme_family": "NQ leads the Dow (D735 YM k1.0)"
+ },
+ "known_answer": {
+  "trades": 1699,
+  "mean_net": 14.869653841921307
+ }
+}
