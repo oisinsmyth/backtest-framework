@@ -13,7 +13,15 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 756.**
+- **Next free number: 757.**
+  - **D756 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Can we find mean reverting days?";
+    "Yes, index micros"; "for the prop book"). Classification only, with intraday mean reversion reopened for that
+    purpose alone.
+    - **The label:** the bottom third of the year's day efficiency, |C − O| / (H − L).
+    - **The prize:** a 10:00 fade on known RD days, with p\* the break-even precision.
+    - **The predictors:** seven pre-open variables (overnight range, gap, previous E, previous range, volatility
+      level, event day, GEX sign) against the label by an exact rotation, Holm over the seven.
+    - **The readings:** NO PRIZE / PREDICTABLE AND WORTH IT / RECOGNISABLE, NOT WORTH IT / NOT PREDICTABLE.
   - **D755 (2026-10-02): PRE-REGISTERED** (the principal: "Run the hot-root table then pre-reg the ECB as D755"). The
     ECB press-conference drift on M6E: the statement-to-conference move J sets the side; hold from the conference's
     start + 2 to + 60 minutes.
