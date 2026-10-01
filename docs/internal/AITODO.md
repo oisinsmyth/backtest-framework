@@ -13,7 +13,11 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 746.**
+- **Next free number: 747.**
+  - **D746 (2026-10-01): PRE-REGISTERED** (the principal: "Pre-reg D746 and run the A and B oracle"). The prop-book
+    mean-reversion oracle on ES and YM at one micro: A fades a stretch of |z| >= k from the open (10:00-14:30) to the
+    VWAP; B fades an opening gap to yesterday's close. Both use 1:1 brackets, with an enumerated timing null, the
+    oracle and partial-oracle filter ceilings, and a dealer-gamma split. In-sample 2016-2023 only.
   - **D743 (2026-10-01): NOT SUPPORTED, all six; CLOSED by the principal** ("Ok close that and look at idea 2").
     It tested skipping busy two-way nights and CPI / jobs days on D735's legs (YM k1.0 = D737's twin, EQ k1.5); idea 1
     of the C1 mechanism comparison.
