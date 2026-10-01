@@ -97,3 +97,21 @@ checkout).*
    limit beats the turn, a late entry. They were right on every count.
 6. **Proposed, not decided:** close the pullback entry (all six cells, any stop or exit variant) under R15, on the
    principal's word. The quiet-pullback split (slow > fast) is recorded as structure, unconfirmed.
+
+## 7. CLOSED (2026-10-01, the principal: "Close D733")
+
+**The pullback entry in an NQ trend is CLOSED under R15:** all six cells, any depth, trigger, stop or exit variant. It
+was closed after D735 (NQ breaking from the market) beat its own timing null where this did not.
+
+**A correction to §2–§3, from the two re-analyses written for D735** (this session's and a Fable 5.1 agent's). None
+of them changes a reading.
+- **C1's −$31.84 is mostly selection, not a cost of waiting.**
+  - The follow's +$39.80 is measured on the trigger days, which are days that extended after arming.
+  - An unconditional follow from a comparable arming grosses about $11 (D728's k 1.0 book).
+  - So "later and higher" describes those days, not money an ex-ante alternative would have kept. The clean
+    comparisons are C2 and the matched rows, both zero.
+- **O1 (+$86.62) and O2's +$128 are hindsight quantities.**
+  - The fill at a segment's eventual extreme and the survivors of a near barrier would read "room" on a random walk.
+  - §3's "there is room" and §6's point 4 overstate what they show. A room oracle must be predictive; D735's O1 is.
+- **The stop's 70% hit rate is about the random-walk rate.** At 0.22 σ_oc, a driftless walk hits it about 81% of
+  the time. It was a noise barrier, not a level.
