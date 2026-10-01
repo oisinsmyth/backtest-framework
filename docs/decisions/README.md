@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 539 of these records carry neither field —
+**No Status or Category column, deliberately.** 540 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -808,6 +808,7 @@ would look like data. The tokens are what is shown.
 | D733 | D733 STAGE 0 RESULT — DRIFT ONLY. The pullback entry adds nothing beyond the drift at the same moment (C2 rank 0.74, ma… | [PRE-REG](D733-STAGE-0-PRE-REG-the-nq-pullback-entry.md) · [RESULT](D733-STAGE-0-RESULT-the-pullback-entry-is-drift-only.md) |
 | D734 | REGISTRATION — the assembled book NQ F2 + the NQ compression break, one MNQ each, scored once in the joint vault run af… | [PRE-REG](D734-PRE-REG-the-nq-f2-and-compression-book-for-the-joint-vault.md) |
 | D735 | D735 STAGE 0 RESULT — NQ breaking from the market beats its timing null, unlike D733: the equity legs rank 0.94–1.00 ag… | [PRE-REG](D735-STAGE-0-PRE-REG-nq-breaks-from-the-market.md) · [RESULT](D735-STAGE-0-RESULT-nq-breaking-from-the-market-beats-its-null.md) |
+| D736 | D736 STAGE 0 PRE-REGISTRATION — a screen of the ES/NQ index-futures constructions already scored, under the principal's… | [PRE-REG](D736-STAGE-0-PRE-REG-which-es-nq-constructions-earn-when-they-trade.md) |
 | D737 | REGISTRATION — NQ's lead over the Dow (D735's YM k1.0 1σ_rem) for the joint vault run | [PRE-REG](D737-PRE-REG-nq-leads-the-dow-for-the-joint-vault.md) |
 
 <!-- REGISTER:END -->
