@@ -11,7 +11,7 @@
 
 ## 0. The base and the question
 
-**The base** is [D740](D740-STAGE-0-RESULT-the-floor-picks-the-years-and-the-monthly-trend-adds-nothing.md)'s
+**The base** is [D740](D740-STAGE-0-RESULT-the-floor-picks-years-the-trend-adds-nothing.md)'s
 filter **A**:
 - D727's k 1.5 NQ follow, taken only when σ\$ = σ_oc × \$2 ≥ \$150;
 - 546 trades, +\$28.85 a trade, Sharpe 0.87 (Sortino 1.27), **max drawdown \$4,131** (in 2020–22);

@@ -1,7 +1,7 @@
 # D738 STAGE 0 RESULT (step 1) — the NQ follow's prize is large and needs little accuracy; its winners thin out in calm regimes, and the volatility level is the strongest pre-entry axis (Spearman +0.12), then dealer gamma (−0.07); no filter is chosen
 
 *2026-10-01.*
-- *Pre-registration: [D738](D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md) (e17a3424).*
+- *Pre-registration: [D738](D738-STAGE-0-PRE-REG-an-expected-profit-filter-on-the-nq-follow.md) (e17a3424).*
 - *Runner: `scripts/stage0_d738_follow_oracle.py` (c868c917), one run, 1.6 min.*
 - *Output: `data/stage0_d738_follow_oracle.json`, which holds aggregates only.*
 - *In-sample 2016-02-02 → 2023-12-29: 1,941 NQ sessions, one MNQ at \$4.0671.*

@@ -1,5 +1,5 @@
 """D742 step 3 (amendment A1): the principal's 1.0 sigma_rem stop on D740's floor-A NQ follow, against a random-exit null
-and a paired month-block bootstrap (docs/decisions/D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md).
+and a paired month-block bootstrap (docs/decisions/D742-STAGE-0-PRE-REG-a-protective-stop-for-the-floored-follow.md).
 
     uv run python scripts/stage0_d742_step3_stop.py --selftest   # synthetic only
     uv run python scripts/stage0_d742_step3_stop.py --run        # once -> data/stage0_d742_stop_test.json

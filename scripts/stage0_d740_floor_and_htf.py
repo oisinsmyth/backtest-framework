@@ -1,5 +1,5 @@
 """D740 Stage 0: a fixed volatility floor (A), agreement with the 20-day SMA's three-day direction (B), and both (C), on
-D727's k 1.5 NQ follow (docs/decisions/D740-STAGE-0-PRE-REG-a-volatility-floor-and-higher-time-frame-agreement-on-the-nq-follow.md).
+D727's k 1.5 NQ follow (docs/decisions/D740-STAGE-0-PRE-REG-a-volatility-floor-and-trend-agreement.md).
 
     uv run python scripts/stage0_d740_floor_and_htf.py --selftest    # synthetic only
     uv run python scripts/stage0_d740_floor_and_htf.py --run         # once -> data/stage0_d740_floor_and_htf.json
@@ -187,7 +187,7 @@ def run() -> int:
         nd[sel], gd[sel], kd[sel] = b["net"][sel], b["gross"][sel], True
         return nd[win_day], gd[win_day], kd[win_day]
 
-    out: dict[str, Any] = {"spec": "D740-STAGE-0-PRE-REG-a-volatility-floor-and-higher-time-frame-agreement-on-the-nq-follow.md",
+    out: dict[str, Any] = {"spec": "D740-STAGE-0-PRE-REG-a-volatility-floor-and-trend-agreement.md",
                            "seal": f"nothing on or after {Z.CUT24}; aggregates only", "cost": cost, "floor_usd": FLOOR_USD,
                            "window": [str(days[ti[0]]), str(days[ti[-1]])], "window_trades": int(len(ti)),
                            "window_sessions": int(win_day.sum()), "trades_without_htf_state": int(((b["side"] != 0) & ~np.isfinite(state)).sum()),

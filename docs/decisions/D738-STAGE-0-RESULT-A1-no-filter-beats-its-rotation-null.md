@@ -1,11 +1,11 @@
 # D738 STAGE 0 RESULT (step 3, amendment A1) — the five expected-profit filters on the NQ follow: all NOT SUPPORTED; the best (volatility × IV/RV) lifts the mean to \$33 a trade and cuts the drawdown by a third, but no filter beats its rotation null after Holm
 
 *2026-10-01.*
-- *Design: [D738-A1](D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md#amendment-d738-a1-2026-10-01-step-2-the-candidate-filters-declared-with-the-principal-before-any-is-scored)
+- *Design: [D738-A1](D738-STAGE-0-PRE-REG-an-expected-profit-filter-on-the-nq-follow.md#amendment-d738-a1-2026-10-01-step-2-the-candidate-filters-declared-with-the-principal-before-any-is-scored)
   (9a98f75d), the principal's choices.*
 - *Scorer: `scripts/stage0_d738_step3_filters.py` (4b36d6e1), one run, 0.7 min.*
 - *Output: `data/stage0_d738_filters.json`, aggregates only.*
-- *Step 1: [the oracle and profile](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes-and-volatility-is-the-filter-axis.md).*
+- *Step 1: [the oracle and profile](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes.md).*
 
 ## 0. The audits
 

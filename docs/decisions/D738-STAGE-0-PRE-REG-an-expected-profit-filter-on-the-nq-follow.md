@@ -137,7 +137,7 @@ V8–V11 runs on that subset.
 ## Amendment D738-A1 (2026-10-01): step 2, the candidate filters, declared with the principal before any is scored
 
 **The principal's choices**, after step 1's result
-([D738 RESULT](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes-and-volatility-is-the-filter-axis.md)), given to the
+([D738 RESULT](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes.md)), given to the
 four design questions:
 - **Axes:** all four offered (volatility level in dollars, dealer gamma, IV relative to RV, relative volatility).
 - **Form:** the expected-profit template in dollars.

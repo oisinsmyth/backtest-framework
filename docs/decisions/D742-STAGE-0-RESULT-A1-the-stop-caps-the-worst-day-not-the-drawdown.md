@@ -1,7 +1,7 @@
 # D742 STAGE 0 RESULT (step 3, amendment A1) — the 1.0 σ_rem stop: NOT SUPPORTED as a drawdown filter. It reliably caps the worst day (−\$1,142 → −\$587; better in every bootstrap draw, p 0.0001 against random exits), but its Calmar and max-DD gains are not robust (random-exit p 0.24; P(ΔCalmar > 0) 0.47) and come from 2022–23 alone
 
 *2026-10-01.*
-- *Design: [D742-A1](D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md#amendment-d742-a1-2026-10-01-step-2-the-principals-stop-and-its-test-declared-before-it-is-scored)
+- *Design: [D742-A1](D742-STAGE-0-PRE-REG-a-protective-stop-for-the-floored-follow.md#amendment-d742-a1-2026-10-01-step-2-the-principals-stop-and-its-test-declared-before-it-is-scored)
   (c2cdfca1), the principal's choices.*
 - *Scorer: `scripts/stage0_d742_step3_stop.py` (fa8d91ae), one run, 0.1 min.*
 - *Output: `data/stage0_d742_stop_test.json`.*
@@ -235,7 +235,7 @@ free slot, on the principal's word.
 
 **What is closed.** D727's NQ follow is closed as a line, with D740's floor A and this record's 1.0 σ_rem stop. That
 covers [D738](D738-STAGE-0-RESULT-A1-no-filter-beats-its-rotation-null.md),
-[D740](D740-STAGE-0-RESULT-the-floor-picks-the-years-and-the-monthly-trend-adds-nothing.md),
+[D740](D740-STAGE-0-RESULT-the-floor-picks-years-the-trend-adds-nothing.md),
 [D741](D741-STAGE-0-RESULT-the-macd-agreement-drops-the-best-trades.md) and this record. No vault slot is taken.
 
 **Why:**

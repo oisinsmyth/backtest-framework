@@ -1,5 +1,5 @@
 """D738 Stage 0, step 1: the oracle of an expected-profit filter on D727's NQ follow, and a profile of where its winners
-sit (docs/decisions/D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md).
+sit (docs/decisions/D738-STAGE-0-PRE-REG-an-expected-profit-filter-on-the-nq-follow.md).
 
     uv run python scripts/stage0_d738_follow_oracle.py --selftest      # synthetic only
     uv run python scripts/stage0_d738_follow_oracle.py --run           # once -> data/stage0_d738_follow_oracle.json
@@ -346,7 +346,7 @@ def run() -> int:
     both = np.isfinite(late) & np.isfinite(joined["V9_size_tier"])
     audits["join_canary_changed_share"] = float((late[both] != joined["V9_size_tier"][both]).mean())
     audits["d691"] = d691_info
-    res: dict[str, Any] = {"spec": "D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md",
+    res: dict[str, Any] = {"spec": "D738-STAGE-0-PRE-REG-an-expected-profit-filter-on-the-nq-follow.md",
                            "seal": f"nothing on or after {CUT24}; aggregates only", "days": int(len(days)),
                            "window": [str(days[0]), str(days[-1])], "cost_usd": cost, "usd_per_point": usd_pt,
                            "audits": audits, "coverage_d691": int(np.isfinite(joined["V9_size_tier"]).sum()),

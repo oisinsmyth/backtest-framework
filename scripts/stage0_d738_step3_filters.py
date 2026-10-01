@@ -1,5 +1,5 @@
 """D738 step 3: the five expected-profit filters declared with the principal in D738-A1, scored on D727's k 1.5 NQ follow
-(docs/decisions/D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md, amendment A1).
+(docs/decisions/D738-STAGE-0-PRE-REG-an-expected-profit-filter-on-the-nq-follow.md, amendment A1).
 
     uv run python scripts/stage0_d738_step3_filters.py --selftest     # synthetic only
     uv run python scripts/stage0_d738_step3_filters.py --run          # once -> data/stage0_d738_filters.json

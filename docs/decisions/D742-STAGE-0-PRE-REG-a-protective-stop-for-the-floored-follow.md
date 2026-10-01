@@ -8,7 +8,7 @@
 
 ## 0. The book and the three steps
 
-**The book:** [D740](D740-STAGE-0-RESULT-the-floor-picks-the-years-and-the-monthly-trend-adds-nothing.md)'s A, kept by
+**The book:** [D740](D740-STAGE-0-RESULT-the-floor-picks-years-the-trend-adds-nothing.md)'s A, kept by
 the principal.
 - D727's k 1.5 NQ follow, only when σ\$ ≥ \$150.
 - 546 trades, +\$28.85 a trade, Sharpe 0.87 (Sortino 1.27).

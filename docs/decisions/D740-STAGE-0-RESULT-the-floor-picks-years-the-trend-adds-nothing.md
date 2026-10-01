@@ -1,7 +1,7 @@
 # D740 STAGE 0 RESULT — the volatility floor reads SUPPORTED, in-sample and post hoc, by choosing the years (within-year p 0.29); agreement with the 20-day SMA adds nothing (p 0.45); both together are NOT SUPPORTED and fail the principal's standard
 
 *2026-10-01.*
-- *Pre-registration: [D740](D740-STAGE-0-PRE-REG-a-volatility-floor-and-higher-time-frame-agreement-on-the-nq-follow.md) (76058f63).*
+- *Pre-registration: [D740](D740-STAGE-0-PRE-REG-a-volatility-floor-and-trend-agreement.md) (76058f63).*
 - *Runner: `scripts/stage0_d740_floor_and_htf.py` (6212ea0f), one run, 0.1 min.*
 - *Output: `data/stage0_d740_floor_and_htf.json`, aggregates only.*
 - *In-sample 2016-02-05 → 2023-12-29: 1,022 of D727's 1,024 k 1.5 trades. 2 had no 23-session history.*

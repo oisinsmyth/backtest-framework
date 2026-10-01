@@ -1,7 +1,7 @@
 # D741 STAGE 0 RESULT — NOT SUPPORTED: the 30-minute log-MACD agreement filter trims the floored follow's drawdown only by trading less, and halves its net; the trades it drops (histogram against the trade) are A's best
 
 *2026-10-01.*
-- *Pre-registration: [D741](D741-STAGE-0-PRE-REG-a-macd-histogram-agreement-filter-for-drawdown-on-the-floored-nq-follow.md) (05141b9a).*
+- *Pre-registration: [D741](D741-STAGE-0-PRE-REG-macd-agreement-for-the-follows-drawdown.md) (05141b9a).*
 - *Runner: `scripts/stage0_d741_macd_drawdown.py` (c7e27729), one run, 0.1 min.*
 - *Output: `data/stage0_d741_macd_drawdown.json`, aggregates only.*
 - *In-sample ≤ 2023-12-29; one MNQ, \$4.0671 a round trip.*

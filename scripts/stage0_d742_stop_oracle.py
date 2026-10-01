@@ -1,5 +1,5 @@
 """D742 Stage 0, step 1: the excursion profile and a descriptive volatility-scaled stop curve for D740's floor-A NQ follow
-(docs/decisions/D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md). No stop is chosen.
+(docs/decisions/D742-STAGE-0-PRE-REG-a-protective-stop-for-the-floored-follow.md). No stop is chosen.
 
     uv run python scripts/stage0_d742_stop_oracle.py --selftest    # synthetic only (incl. D735's e1_tables convention)
     uv run python scripts/stage0_d742_stop_oracle.py --run         # once -> data/stage0_d742_stop_oracle.json
@@ -133,7 +133,7 @@ def run() -> int:
     mae_min = np.array([e["mae_minute"] for e in ex])
     by12 = np.array([e["mae_by_noon_srem"] for e in ex])
     q = [0.1, 0.25, 0.5, 0.75, 0.9]
-    out: dict[str, Any] = {"spec": "D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md",
+    out: dict[str, Any] = {"spec": "D742-STAGE-0-PRE-REG-a-protective-stop-for-the-floored-follow.md",
                            "seal": f"nothing on or after {Z.CUT24}; aggregates only", "cost": cost, "a_trades": int(len(ai)),
                            "excursions": {
                                "mae_srem_quantiles": {"winners": dict(zip(map(str, q), np.quantile(mae[win], q).tolist())),

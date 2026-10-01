@@ -1,5 +1,5 @@
 """D741 Stage 0: a 30-minute log-MACD (12/26/9) histogram agreement filter for drawdown, on D740's floor-A NQ follow
-(docs/decisions/D741-STAGE-0-PRE-REG-a-macd-histogram-agreement-filter-for-drawdown-on-the-floored-nq-follow.md).
+(docs/decisions/D741-STAGE-0-PRE-REG-macd-agreement-for-the-follows-drawdown.md).
 
     uv run python scripts/stage0_d741_macd_drawdown.py --selftest    # synthetic only
     uv run python scripts/stage0_d741_macd_drawdown.py --run         # once -> data/stage0_d741_macd_drawdown.json
@@ -208,7 +208,7 @@ def run() -> int:
         need(math.isclose(dd, rep["max_dd"], rel_tol=1e-9, abs_tol=1e-6), "the trade-sequence DD is not the daily DD")
         return rep
 
-    out: dict[str, Any] = {"spec": "D741-STAGE-0-PRE-REG-a-macd-histogram-agreement-filter-for-drawdown-on-the-floored-nq-follow.md",
+    out: dict[str, Any] = {"spec": "D741-STAGE-0-PRE-REG-macd-agreement-for-the-follows-drawdown.md",
                            "seal": f"nothing on or after {Z.CUT24}; aggregates only", "cost": cost,
                            "a_trades": int(len(ai)), "kept": int(M.sum()), "kept_share": float(M.mean()),
                            "pit_canary_changed": fired, "gate1": g1,

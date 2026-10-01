@@ -1,7 +1,7 @@
 # D742 STAGE 0 RESULT (step 1) — the floored follow's losers go well against it and its winners do not (median adverse excursion 1.05 σ_rem against 0.27); a volatility-scaled stop cuts the drawdown and the worst day at every width, but the curve is not smooth; no width is chosen
 
 *2026-10-01.*
-- *Pre-registration: [D742](D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md) (cf3bb9d3).*
+- *Pre-registration: [D742](D742-STAGE-0-PRE-REG-a-protective-stop-for-the-floored-follow.md) (cf3bb9d3).*
 - *Runner: `scripts/stage0_d742_stop_oracle.py` (26388d3d, with a canary fix committed before any output), one run.*
 - *Output: `data/stage0_d742_stop_oracle.json`, aggregates only.*
 - *In-sample ≤ 2023-12-29; D740's A: 546 trades, one MNQ, \$4.0671.*
