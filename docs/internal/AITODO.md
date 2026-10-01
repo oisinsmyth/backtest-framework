@@ -25,7 +25,8 @@
       still a follow. D737 stays frozen.
     - **Monitor, not a test:** split D737's forward trades (`data/forward/d737_forward.csv`) by floor on and off at the
       open. Post hoc in-sample, D737 nets +\$2.66 a trade below the floor and 92 % of its total above it (D742,
-      addendum 2).
+      addendum 2). The ledger's `sigma_oc_usd` column (NQ's prior-20-session σ_oc × \$2, known at the open) carries the
+      split. It is readable once forward trades accumulate, from about 2026-11-09.
   - **D739 is this session's transfer test of D735's mechanism** (the principal: "Lets do 3. D735's mechanism on other
     roots"). The rule is D737's, unchanged, on 25 roots (metals, energy, rates, FX, grains; PA dropped by A1's coverage
     gate).
