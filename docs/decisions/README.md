@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 565 of these records carry neither field —
+**No Status or Category column, deliberately.** 566 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -822,6 +822,7 @@ would look like data. The tokens are what is shown.
 | D747 | D747 STAGE 0 RESULT — NOT SUPPORTED (and NO ROOM on ES): the night-break fade does not replicate on the data D744 never… | [PRE-REG](D747-STAGE-0-PRE-REG-the-night-break-fade.md) · [RESULT](D747-STAGE-0-RESULT-the-night-fade-does-not-replicate.md) |
 | D748 | D748 STAGE 0 RESULT — READY: the activity keeper is one M6E at 13:30, never worse than −\$41 a trade in-sample, and the… | [PRE-REG](D748-STAGE-0-PRE-REG-the-activity-keeper.md) · [RESULT](D748-STAGE-0-RESULT-the-keeper-is-ready-on-m6e.md) |
 | D749 | D749 STAGE 0 PRE-REG — the month-end London 4pm fix on M6E: do foreign holders of hedged US equities move EUR/USD into… | [PRE-REG](D749-STAGE-0-PRE-REG-the-month-end-london-fix-on-m6e.md) |
+| D750 | D750 STAGE 0 PRE-REGISTRATION — a positive-mean keeper: D748's index-micro keeper with a \$40 stop cap, held to mean ne… | [PRE-REG](D750-STAGE-0-PRE-REG-a-positive-mean-keeper.md) |
 
 <!-- REGISTER:END -->
 
