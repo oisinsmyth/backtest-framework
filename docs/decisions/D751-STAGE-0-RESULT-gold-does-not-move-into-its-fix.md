@@ -77,7 +77,14 @@ One MGC, cost \$5.93, so 2c = \$11.87.
 - **With D749:** both London-fix constructions on the micros are NOTHING. The fixes move prices, but not in a
   direction knowable from public price or equity information before the window.
 
-## 5. Next
+## 5. CLOSED
+
+*2026-10-01, the principal: "Close D751 and push it".*
+- **D751 is closed:** no gold-fix trade on MGC, into the auction or after it.
+- **Don't re-propose** a price-only proxy (gold's own US-morning move) for the gold ETF fix flow. A fund-flow-based
+  version would need ETF creation/redemption data, which is not on disk.
+
+## 5a. What stood at the result, before the closure
 
 - **The reading is NOTHING.** Closing it is the principal's call (R15).
 - **From the same brainstorm, still untested:**

@@ -14,7 +14,7 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 752.**
-  - **D751 (2026-10-01): NOTHING on both legs** (the principal: "Close D749 and pre-reg the gold fix as D751"). The
+  - **D751 (2026-10-01): NOTHING on both legs; CLOSED by the principal** ("Close D751 and push it"). The
     gold fix on MGC: the sign of gold's 09:30 → fix − 5 move, gated by a walk-forward median, 1,415 gated sessions
     2012–2023.
     - **A, into the fix:** +$0.81 gross (t 1.12), rotation p 0.12.
@@ -24,7 +24,7 @@
     - The room is there (the mean |move| is $18–23 against the $11.87 bar); the direction is not.
     - **A design error is disclosed:** the reported A15 sensitivity overlapped the signal window (look-ahead) and is
       void.
-    - Closing it is the principal's call.
+    - CLOSED.
   - **D750 (2026-10-01): NOT POSITIVE (E1, M1, K2).** A positive-mean keeper (the principal's request to scavenge a
     closed line with real gross edge): D748's index-micro keeper (13:30–14:00, the move since 09:00) with a \$40 stop
     cap.
