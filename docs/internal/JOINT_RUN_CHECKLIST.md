@@ -17,7 +17,32 @@ The D630 §8 path is `scripts/build_ledger_vault_inputs.py`. It needs no new dec
 Both were carried out on 2026-10-01 (§1, §2.4–2.5), with no vault read. D723, which pre-registers NG Stage A,
 records (a).
 
+## Independent verification pass, 2026-10-01 (read this first; it corrects §1–§3)
+
+An independent pass over this checklist was made on 2026-10-01: a Sonnet reader cross-checked every command against the
+code, the corrections below were each re-verified by hand, and §0 was re-run (results in §0). It read no vault data:
+only code, records, freezes, job records and DBN headers. **Nothing blocks the run if these corrections are followed.**
+
+| # | what | correction |
+|---|---|---|
+| V1 | **Run every step in the MAIN checkout** (`C:\Users\O\Desktop\Projects\Backtest Framework`). | `vault_d680_nq_compression.py:43`, `joint_d680_vault.py:69`, `build_ledger_vault_inputs.py:82` and `build_strip_vault.py:64` hard-code main's `data/`. Outputs and D716's fixtures are checkout-relative. In a worktree, the inputs would come from main and the outputs from the worktree. The fixtures are hardlinked across worktrees, so a D462 rebuild also writes them there. |
+| V2 | **A Saturday header gap: `--build-vault fixture` needs `--accept-hole 2026-09-12`.** | The top-up is split by day (`fetch_prelapse_topup.py:86`), and Databento writes no file for a day without records. This was checked on the daily mbo job `GLBX-20260911-NKFKU4AMHN`: it has no Saturday files, and each header spans exactly its own UTC day. So after the top-up, the ohlcv-1m headers leave [2026-09-12, 2026-09-13) uncovered. `holes()` (`joint_d680_vault.py:220`, `268-273`) refuses that unless it is named. CME is closed from Fri 17:00 ET to Sun 18:00 ET, and that UTC day is Fri 20:00 → Sat 20:00 ET, so no bar is lost. The wrapper asks for "the principal's word" on an accepted hole; get it before the run. The existing 26 headers have **no** gap from 2010-06-06 to 2026-09-10 (wrapper's own `holes()`, checked 2026-10-01). |
+| V3 | **`--spy` is mandatory, and the file exists.** | Pass `--spy data/raw/alphavantage/daily_refresh/SPY_20260930.json.gz` to both `--build-vault` steps of slot 9. It passes the wrapper's own `spy_keys` (flat `{date: {...}}`) and reaches 2026-09-18. Without `--spy`, `inputs` refuses (`joint_d680_vault.py:591`); the default raw cache ends 2026-08-26. §1's and §2.3's "refresh it" are done. |
+| V4 | **NG step 5 reads a `temp/` file after it writes its outputs.** | `--build-vault panels` writes `data/joint_run/ng/d630_trade_table.csv` (`build_ledger_vault_inputs.py:473`) and `d630_vault_trade_table.csv` (`:649`). Only then does it read `temp/ledger_vault_inputs/prove/d630_trade_table.csv` (`:654`), which only `--prove panels` writes. If that file is gone, step 5 raises after its writes, a re-run refuses (`:633`, "built once"), and there is no `panels_manifest.json`. D723 then cannot run (`vault_d723_ng_stage_a.py:655`). **So run NG step 1's proofs in the main checkout on the day of the run, do not clean `temp/` between step 1 and step 5, and check the file exists immediately before step 5.** The builder is hashed by D723's freeze, so this is fixed here, not in code. |
+| V5 | **The 2026-09-10 hole is closed.** | §1 rows 7/9, the "one Databento gap" block and the `--accept-hole 2026-09-10` fallbacks in §2.1 and §3 are superseded: the top-up starts ohlcv-1m at 09-10 (`JOB_START`). Use `--accept-hole 2026-09-10` only if that job was refused. |
+| V6 | **§2.6 is stale.** | D723 has a vault scorer and its freeze (`data/ledger_frozen_vault_h2_ng.json`, 2026-09-30) exists; see §3 step 7. |
+| V7 | **§2.1: check `downloaded_utc` too.** | Each job in `data/prelapse_topup_jobs.json` needs `downloaded_utc` as well as `start`. The ohlcv-1m job's `start` must be 2026-09-10, and the `statistics 41 roots` job must have downloaded (`build_strip_vault.py:146` raises otherwise). The record's top-level `start` is 2026-09-11, and a refused job records only `label` and `refused_usd`. `--discover` prints job, record and window, not `downloaded_utc`; a missing one raises. |
+| V8 | **Recommended order: rebuild D462 (§2.2) after D626's read on 10-10.** | `build_fut_index_1m.py --build` decodes the all-symbol ohlcv-1m files whole and drops other roots by symbol, so CL/NG/HO/RB records from 2026-09-19 pass through memory before D626's read. Nothing is output, but the seal is cleaner kept. The joint run reads only local files, so it does not need the subscription and can follow 10-10 at no cost. The principal's call. |
+| V9 | **NG step 5 writes more than §3 lists.** | It also writes `d630_trade_table.csv` (the full table step 7 reads) and the fut-share, calendar and flow panels. |
+| V10 | **The interpreters are right as written.** | The "SYSTEM python" steps need `databento`, which is only in system Python 3.14. The `uv` steps need scipy/statsmodels, which are only in `.venv`. **Run each from a shell.** A Python 3.14 parent that spawns `uv run` gives "No Python at …" (seen 2026-10-01; harness only, and no checklist step does this). |
+| V11 | Wording. | D734 reproduces only the D716 line its family result names (`parts.vault[B or A]`), and D680's C1 `trades`, `gross_bp` and `net_bp`. D716's `--selftest` stops before `load_root`, so §0's warning is conservative for `--selftest` but stands for `--known-answer`/`--power`. |
+
 ## 0. Before anything: verify (all must pass)
+
+**Re-run 2026-10-01 (independent pass): 11 of 11 pass.**
+- NG Stage A freeze VERIFIED; `freeze.py` 9 checks raise; D680, D649, D723 (30 checks) and D734 (6 canaries) self-tests OK; D680 input path 6 checks; NG inputs 19 checks; vault strip 12 checks.
+- A second hash implementation (LF-pinned sha256) matches every freeze: D716 (12 imports), D680 (4), D707 (5), D649, D723 (3 records, 32 imports, both builders, the Stage A freeze; also its own `check_freeze`) and D734 (5 hashed files).
+- D734's dry vault path verifies its own, D716's and D680's freezes and stops at `[ORDER]` with nothing written.
 
 | check | command | 2026-09-30, before / after this prep |
 |---|---|---|
@@ -96,7 +121,7 @@ evening from 18:00 ET. `mbo` has the same hole (not needed here).
    - The swap-free quarters are **extended to 2026-Q2** (done 2026-10-01, see §1).
    - The build refuses unless every fund's proof reaches `SWAP_Q_LAST`. It also refuses unless every fund's
      `LAST_ANCHOR` schedule was filed before the cut. All six were filed on 2026-08-07.
-6. **NG Stage A has no vault scorer.**
+6. **(STALE, see V6: D723's scorer and freeze now exist.)** NG Stage A has no vault scorer.
    - D630 §8 requires a freeze first, `data/ledger_frozen_vault_h2_ng.json` (runner, both builders, the record).
    - Neither that file nor a `--vault` mode in `run_h2_ng_stage_a.py` exists. The pass criteria are in the Stage A
      freeze's `vault_pass`.
@@ -112,11 +137,11 @@ answer before scoring.
 A 216 / +$25.578712 and the take-session hashes.
 
 **Slot 9, D680 NQ compression** (after §2.1–2.3):
-1. `python scripts/joint_d680_vault.py --build-vault fixture --principals-word "..." [--spy P] [--accept-hole 2026-09-10]`
-   (SYSTEM python). It refuses a hole in the ohlcv-1m headers that is not accepted, and a session table short of
-   09-18.
-2. `uv run python scripts/joint_d680_vault.py --build-vault inputs --principals-word "..." [--spy P]`. It refuses if
-   SPY ends before 09-18. It writes `data/joint_run/d680/` with bars, use and a manifest of sha256s.
+1. `python scripts/joint_d680_vault.py --build-vault fixture --principals-word "..." --spy data/raw/alphavantage/daily_refresh/SPY_20260930.json.gz --accept-hole 2026-09-12`
+   (SYSTEM python; **V2, V3**). It refuses a hole in the ohlcv-1m headers that is not accepted, and a session table
+   short of 09-18. Add `--accept-hole 2026-09-10` only if the top-up's ohlcv-1m job was refused (V5).
+2. `uv run python scripts/joint_d680_vault.py --build-vault inputs --principals-word "..." --spy data/raw/alphavantage/daily_refresh/SPY_20260930.json.gz`.
+   It refuses if SPY ends before 09-18. It writes `data/joint_run/d680/` with bars, use and a manifest of sha256s.
 3. `uv run python scripts/joint_d680_vault.py --run-vault --principals-word "..."`.
    - Before the call it checks the freeze and the manifest.
    - Before the call it runs a rehearsal on the vault files' own calendar with synthetic prices. That must show vault
@@ -159,7 +184,9 @@ files):
    - It writes `data/joint_run/ng/fut_settle_strip_vault.csv.gz`, its `.meta.json` and
      `fut_settle_strip_vault_manifest.json`. It builds once: a failed post-check leaves the files but no manifest,
      so step 5 refuses, and the principal decides.
-5. `uv run python scripts/build_ledger_vault_inputs.py --build-vault panels --principals-word "..."`
+5. **First (V4):** check that `temp/ledger_vault_inputs/prove/d630_trade_table.csv` exists from step 1's
+   `--prove panels` in this checkout. If not, re-run `--prove panels` before this step.
+   `uv run python scripts/build_ledger_vault_inputs.py --build-vault panels --principals-word "..."`
    - Its defaults are the principal's anchors (LAST_ANCHOR 2026-06-30, SWAP_Q_LAST 2026-Q2). Override them only as a
      pair: `--fut-share-anchor … --swap-q-last …`.
    - It refuses if the vault strip or its manifest is missing, or they disagree, or either lacks the word, the cut or
