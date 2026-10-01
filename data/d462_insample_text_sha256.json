@@ -1,0 +1,30 @@
+{
+ "cut": "2023-12-29",
+ "what": "sha256 of the decompressed text: the header plus every row dated <= cut",
+ "files": {
+  "fut_ES_rth_1m.csv.gz": {
+   "sha256": "99cad63105fc768df56931ac4c3aa67c89ce8a8ad0a78a70925f0b19e485446b",
+   "lines": 1125007
+  },
+  "fut_NQ_rth_1m.csv.gz": {
+   "sha256": "b1815e2527ad1f68e873819d9881f9b124ca447237795842143b8eb524ede1e8",
+   "lines": 1124878
+  },
+  "fut_YM_rth_1m.csv.gz": {
+   "sha256": "c537f7c425f5bea612968100386d375960e8766cd355e30f62f89b995c985e92",
+   "lines": 1124222
+  },
+  "fut_RTY_rth_1m.csv.gz": {
+   "sha256": "214fc8da318d37a98951b63bbea9d451d167878a25caac20c7cd66aa78f0be82",
+   "lines": 641532
+  },
+  "fut_index_sessions.csv.gz": {
+   "sha256": "6621718118f78769f5d13f0d7be91e1f19d8b8e76244d41e265c8537fbc0a2b5",
+   "lines": 10470
+  },
+  "fut_index_rolls.csv.gz": {
+   "sha256": "0532f5e11375e886f2fa09d84589a01e136bc5b772d8111bd60dc1fde920b00d",
+   "lines": 192
+  }
+ }
+}

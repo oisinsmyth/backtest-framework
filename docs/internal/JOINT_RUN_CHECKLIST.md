@@ -41,9 +41,14 @@ only code, records, freezes, job records and DBN headers. **Nothing blocks the r
 | V8 | **Recommended order: rebuild D462 (§2.2) after D626's read on 10-10.** | `build_fut_index_1m.py --build` decodes the all-symbol ohlcv-1m files whole and drops other roots by symbol, so CL/NG/HO/RB records from 2026-09-19 pass through memory before D626's read. Nothing is output, but the seal is cleaner kept. The joint run reads only local files, so it does not need the subscription and can follow 10-10 at no cost. The principal's call. |
 | V9 | **NG step 5 writes more than §3 lists.** | It also writes `d630_trade_table.csv` (the full table step 7 reads) and the fut-share, calendar and flow panels. |
 | V10 | **The interpreters are right as written.** | The "SYSTEM python" steps need `databento`, which is only in system Python 3.14. The `uv` steps need scipy/statsmodels, which are only in `.venv`. **Run each from a shell.** A Python 3.14 parent that spawns `uv run` gives "No Python at …" (seen 2026-10-01; harness only, and no checklist step does this). |
+| V12 | **D737 (slot 1), checked 2026-10-01 after its freeze.** | §3's D737 step matches `vault_d737_nq_leads_the_dow.py`: the word check comes first; then the freeze, the run-once output, the in-sample known answer (1,699), a load of 2023-09-01 → 2026-09-18 that refuses if NQ or **YM** ends earlier (the §2.2 rebuild writes both), the Nov–Dec 2023 overlap, and scoring. It reads D716's vault output only for a note, so it has **no order dependence** on D716. Its self-test (synthetic) passes, and its freeze verifies (29 imports). |
+| V13 | **The D462 rebuild keeps the in-sample rows.** | Proved 2026-10-01 (`scripts/prove_d462_rebuild.py --prove`, 3.2 min, SYSTEM python, output redirected to `temp/`; the real fixtures were never written). On the current archive all six files reproduce byte for byte, whole and ≤ 2023-12-29. The in-sample text hashes are recorded in `data/d462_insample_text_sha256.json`. After the real rebuild, `--check` re-hashes the in-sample rows (§2.2). |
 | V11 | Wording. | D734 reproduces only the D716 line its family result names (`parts.vault[B or A]`), and D680's C1 `trades`, `gross_bp` and `net_bp`. D716's `--selftest` stops before `load_root`, so §0's warning is conservative for `--selftest` but stands for `--known-answer`/`--power`. |
 
 ## 0. Before anything: verify (all must pass)
+
+**Re-run 2026-10-01, later, after D737's freeze: 12 of 12 pass.** D737's self-test and its own `check_freeze` were
+added. Every freeze verifies, D734's dry check stops at `[ORDER]`, and the D462 rebuild proof (V13) holds.
 
 **Re-run 2026-10-01 (independent pass): 11 of 11 pass.**
 - NG Stage A freeze VERIFIED; `freeze.py` 9 checks raise; D680, D649, D723 (30 checks) and D734 (6 canaries) self-tests OK; D680 input path 6 checks; NG inputs 19 checks; vault strip 12 checks.
@@ -105,6 +110,10 @@ evening from 18:00 ET. `mbo` has the same hole (not needed here).
    - It globs every job dir.
    - It writes `fut_{ES,NQ,YM,RTY}_rth_1m`, `fut_index_sessions` and `fut_index_rolls` in place, so the manifest shas
      move. D716 reads `data/fixtures/` of the checkout it runs in.
+   - **Then, before any vault step (V13):** `python scripts/prove_d462_rebuild.py --check` must print "the in-sample
+     rows are unchanged" for all six files. It compares their rows dated ≤ 2023-12-29 with
+     `data/d462_insample_text_sha256.json`. If anything prints CHANGED, stop: D716, D737 and D734 would refuse on their
+     known answers.
 3. Refresh SPY daily to ≥ 2026-09-18 into a separate path, for `--spy`.
 4. Extend the settlement strip to 2026-09-18. **Built: `scripts/build_strip_vault.py`** (the principal approved it,
    2026-09-30).
