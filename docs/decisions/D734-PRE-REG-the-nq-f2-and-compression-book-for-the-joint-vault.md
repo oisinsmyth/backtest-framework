@@ -124,3 +124,42 @@ partly real,** and a NOT ADMITTED is weak evidence against the book.
 - the first rehearsal's output stays as committed;
 - **no gate threshold moves.**
 
+## Amendment D734-A2 (2026-10-01), before the vault mode is built and frozen: the calendar, and the vault mode's mechanics
+
+**The principal:** "Ok finish this off and freeze".
+
+**1. The calendar.**
+- **The change:** the book's daily series runs on **the union of the two parts' own session frames**: D716's NQ frame
+  (`build`'s `sn`) and D680's `book()` sessions, inside the window. It is defined the same way in-sample and in the
+  vault.
+- **Why:** the rehearsals used `diag_d722_conditioners`' NQ panel (1,454 sessions), which is sealed at 2023 and cannot
+  reach the vault. D716's frame alone holds 1,373 in-sample sessions; it drops holidays, half days and roll days, on
+  which F cannot trade.
+- **What it touches:** only how many zero days the daily statistics carry. No trade and no gate threshold changes.
+- **The new known answer:** the in-sample rehearsal is re-run once on the final code, to
+  `data/rehearsal_d734_nq_book_frozen.json`. That is the known answer the freeze records. The two earlier rehearsal files
+  stay as committed.
+
+**2. The vault mode** (§3, made exact):
+- **Refusals first:**
+  - it refuses without the principal's word;
+  - it refuses unless this runner, D734 and every hashed import match the freeze;
+  - it refuses unless D716's and D680's own freezes still verify;
+  - it refuses unless both components' vault outputs exist (`vault_d716_nq_f2_result.json`, `vault_d680_vault.json`);
+  - it refuses if its own output exists.
+- **F:**
+  - `build(VAULT_END, vault_open=True)` and `masks(bd, 2025-03-01, 2026-09-18)`.
+  - **The line is chosen by D716's recorded family result:** "NQ F2" means book B; "THE AGREEMENT BOOK" means book A.
+    Any other result fails G1 for F, and B is used for the report only.
+  - **Reproduction:** D716's own `V.score` on the chosen line must equal the recorded `parts.vault` entry, trade count and
+    mean net exactly.
+- **C:**
+  - the joint wrapper's checked input files (`read_like_runner`);
+  - the frozen `book(bars, use, R, None)` under the wrapper's held cut;
+  - C1 = `ctier < 1/3` inside the vault, exactly as D680's `--vault` scores it.
+  - **Reproduction:** D680's `score` on those trades must equal the recorded `C1` entry (trades, gross bp, net bp)
+    exactly.
+- **G1** reads the two recorded verdicts.
+- **G2–G4** are computed on the book's daily net over the vault, as in the rehearsal (with D734-A1's P3b).
+
+
