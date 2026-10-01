@@ -98,3 +98,29 @@ partly real,** and a NOT ADMITTED is weak evidence against the book.
 | 2 | if G1 holds, G2 holds |
 | 3 | the book's vault Sharpe is below its in-sample 1.38 |
 | 4 | the reading is **NOT ADMITTED** |
+
+## Amendment D734-A1 (2026-10-01), after the in-sample rehearsal and before the vault: P3b when the account never dies
+
+**The principal:** "Yes write and do the re-run".
+
+**What the rehearsal found** (`data/rehearsal_d734_nq_book.json`, `efb1ee77`):
+- The in-sample book never reaches the \$2,000 trailing barrier in 1,454 sessions, and never has a −\$1,000 (2 %) day.
+- `hurdle_p.p3` then computes P3b, the share of the account's life lost to 2 % days, as 1 − 0/0 = NaN.
+- Its `p3b_pass` reads NaN as a fail, so G4, and with it the book, failed **for being too safe**.
+- **Nothing else failed:** G1, G2, G3, P2, P3a, P4 and P6 all held.
+
+**The rule from here** (G4's P3b, as the book's runner computes it; `hurdle_p` is not edited):
+- **The life that has not ended is censored at the window's end, not dropped.**
+  - Under each walker (the trailing drawdown alone; the drawdown or a 2 % day), the lives are the completed lives plus
+    the final unfinished spell, from the last restart to the window's end.
+  - P3b = 1 − mean life (either) / mean life (drawdown alone).
+- **When there are no deaths and no 2 % days,** this gives P3b = 0 exactly, and P3b passes.
+- **Where the module's value is finite** (the account dies at least once under the drawdown walker), the censored value
+  is reported beside it, and the module's value is the one read. The amendment changes only the 0/0 case.
+- **A NaN still fails.** Only a value computed by the censored rule can pass.
+
+**The re-run:**
+- the rehearsal is re-run once under this rule, to `data/rehearsal_d734_nq_book_a1.json`;
+- the first rehearsal's output stays as committed;
+- **no gate threshold moves.**
+
