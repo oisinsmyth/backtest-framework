@@ -286,6 +286,20 @@
     recorder prints MISSING until they do, and `--refresh` queues them.
   - **Later:** NQ F2 and the compression break (C1) can be added from the same bars (ES is recorded for F2's
     agreement book). C1 also needs prior-day levels and SPY, and its ctier inputs.
+- [ ] **Pre-lapse gap pulls (2026-10-01; the principal approved A, B, C and D).**
+  - **The record:** `scripts/fetch_prelapse_gaps.py`; jobs in `data/prelapse_gap_jobs.json`; quotes in
+    `data/prelapse_gap_quote.json`, all USD 0.00.
+  - **The pulls:**
+    - **A:** ohlcv-1s for NQ/ES/YM/RTY + MNQ/MES/MYM/M2K, 2010 →;
+    - **B:** statistics + definition for MGC/MCL/SIL/MHG/M6E;
+    - **C:** status / bbo-1m on the 41 roots and NQ + CL/NG options statistics/definition, from each archive's end;
+    - **D:** MBO for MNQ/MES/MYM/M2K, 2026-09-01 →.
+  - **Done 2026-10-01:** all ten submitted; A, B and C downloading.
+  - **Owed 2026-10-10 (task `prelapse-gaps-final`, 14:00):**
+    - C2 (C again, 10-01 → the lapse);
+    - downloading C2 and D after the 10-09 top-up, whose 90 GB free-space check D would otherwise threaten.
+  - **The principal's own action:** a backup of `data/raw/databento` (about 250 GB; no copy exists; after the lapse
+    the base pull alone re-costs about $7,719).
 - [ ] **AFTER THE JOINT RUN: state-based allocation** (the principal, 2026-10-01: "Add that to the AITODO for after the
   vault run if we still have components then (We will)").
   - **The source:** the principal's deposit `User-Doc-Deposit/STATE_BASED_ALLOCATION.md` and its review
