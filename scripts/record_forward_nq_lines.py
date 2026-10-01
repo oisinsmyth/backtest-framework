@@ -298,7 +298,7 @@ def record(refresh: bool) -> int:
     revised = 0
     new = rows.astype(str)
     if LEDGER.exists():
-        old = pd.read_csv(LEDGER, dtype=str, keep_default_na=False)
+        old = pd.read_csv(LEDGER, dtype=str, keep_default_na=False, encoding="utf-8")
         mm = old.merge(new, on="day", how="inner", suffixes=("_old", "_new"))
         ch = []
         for _, r in mm.iterrows():
@@ -313,7 +313,7 @@ def record(refresh: bool) -> int:
         lost = old[~old["day"].isin(new["day"])]             # a day the bars no longer reach keeps its recorded row
         new = pd.concat([new, lost], ignore_index=True).sort_values("day")
     new.to_csv(LEDGER, index=False, encoding="utf-8", lineterminator="\n")
-    led = pd.read_csv(LEDGER, dtype=str, keep_default_na=False)
+    led = pd.read_csv(LEDGER, dtype=str, keep_default_na=False, encoding="utf-8")
     tr = led[led["status"] == "trade"]
     burn = int(led["status"].str.startswith("burn-in").sum())
     nxt = [c for r in EXCH for c in candidates(r, today.isoformat())]
