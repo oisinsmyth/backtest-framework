@@ -151,3 +151,70 @@ has a year of forward trades (not before 2027-10).
 - **P(CONSISTENT or better) ≈ 0.35.**
 - **The likeliest failure:** F2 does not follow C1's ordering. F2 is a last-hour trade, and D720 found its weakest days
   were the forecast-big ones, which may sit in OLD as well as FRESH.
+
+## WITHDRAWN before its freeze (2026-10-01)
+
+*The principal: "Withdraw D745". It had been offered as the recommendation, after "Amend to a new state first" found
+no state to amend to. **No freeze was written; the vault was not read and is not spent on this record.***
+
+### Why: the declared state does not reproduce the in-sample pattern
+
+**The scorer's rehearsal** (`data/rehearsal_d745_abstention_principle.json`, in-sample ≤ 2023-12-29, POST HOC) was
+run on the exact declared definition:
+- **The state counts** reproduce §1 exactly: FRESH 366, OLD 447, NONE 878.
+- **The reading is NOT CONFIRMED.** P1 fails for C1 and for F2; P3 fails.
+- **P2:** pooled OLD − FRESH = −0.022 in y, p_high 0.665 over 1,464 offsets (null p50 −0.000, p95 0.093).
+- **By state,** mean y and mean \$ net:
+
+  | book | OLD | NONE | FRESH |
+  |---|---|---|---|
+  | C1 | 0.012, \$8.4 | **0.096**, \$19.8 | 0.014, \$21.7 |
+  | F2 | 0.053, \$19.8 | 0.021, \$5.3 | **0.059**, \$34.7 |
+
+**What it shows.** C1 does best with no recent shock, and F2 right after one. The round-2 diagnostics §0 drew on
+used other definitions: the largest move in absolute bp, the shock's direction, dollars. The "post-shock" edge was
+mostly dollar scale. **The predictions were declared without computing the declared statistic in-sample first.**
+That is my error; the memory `check-the-declared-state-reproduces-the-in-sample-finding` records it.
+
+### No candidate state sorts both continuation books
+
+**The search.** The principal's first choice was an amendment A1 to a state that does reproduce the pattern.
+`scripts/d745_candidate_states.py` → `data/d745_candidate_states.json` (POST HOC) searched the open-known candidates on
+the scorer's books, panel and units.
+
+**The candidates:**
+- **Shock recency and sessions since a shock are one split.** The JSON asserts it on every book; they sort C1 and F2
+  oppositely.
+- **Volatility level** (the walk-forward percentile of σ_oc / open) sorts F2 in y (low −0.025 → high 0.072) but not
+  C1 (0.048 / 0.079 / 0.044). In dollars every book rises with it, which is scale.
+- **Compression** (prior-5 against prior-20 open-to-close RMS) is the only one that orders C1 and F2 the same way.
+  Low minus high tercile, in y, against the exact rotation of the tercile labels:
+
+  | | Δ | p_high | null p50 / p95 | offsets | years positive |
+  |---|---|---|---|---|---|
+  | C1 | 0.139 | **0.022** | −0.002 / 0.108 | 1,464 | 3 of 6 (1–7 high-tercile trades a year) |
+  | F2 | 0.020 | 0.383 | 0.002 / 0.093 | 1,379 | 2 of 6 |
+  | D737 (contrast) | 0.023 | 0.340 | −0.001 / 0.094 | 1,941 | 5 of 7 |
+  | C1 + F2 pooled | 0.065 | 0.069 | −0.001 / 0.071 | 1,464 | |
+
+**What compression shows:**
+- **Only C1 is sorted, and its own gate selects on the same quantity** (rv5 / ATR20 low). That is why its trades bunch
+  in the low tercile (190 / 105 / 26).
+- **F2 is not sorted,** and the contrast book is sorted as much as F2.
+- **A C1-only amendment would confirm C1's construction, not a principle across books.** Per-book states would be
+  per-book filters, and F2's filter lines are closed (R15; D738, D740).
+
+### What this leaves (POST HOC, not evidence)
+
+**On the in-sample books, no single open-known state sorts the continuation books' payoff the same way.** Each
+abstention edge found so far stays with the construction it came from: C1's gate here; C1's skip days on D735's legs
+in D743. **The "underlying principle" is therefore unsupported in-sample, and §0's candidate is not carried
+forward.** A new candidate needs a new record. Its declared statistic must reproduce its in-sample pattern before it
+is declared.
+
+**The scorer** `scripts/vault_d745_abstention_principle.py`:
+- is committed as evidence;
+- its self-test passes;
+- `--freeze` and `--vault` refuse with exit 3.
+
+`JOINT_RUN_CHECKLIST.md` gets no D745 step. **Nothing changes a frozen vault rule.**

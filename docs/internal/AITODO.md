@@ -28,6 +28,13 @@
     - **C1's edge is a cash-session effect.**
     - **Only D743 and D744 are closed;** the C1 comparison line stays open (idea 3, FOMC 14:00, underpowered; anything
       further on the principal's word).
+  - **D745 (2026-10-01): WITHDRAWN before its freeze by the principal** ("Withdraw D745"). It was the abstention
+    principle (shock recency) on the joint vault.
+    - **The rehearsal is NOT CONFIRMED in-sample:** C1 is best with NONE, F2 with FRESH.
+    - **No candidate state sorts both continuation books** (`data/d745_candidate_states.json`). Compression sorts C1
+      only (p 0.022, its own gate's quantity); F2 has p 0.38.
+    - **The vault is not spent,** and there is no JOINT_RUN_CHECKLIST step.
+    - **Any new principle needs a new record,** whose declared statistic reproduces its in-sample pattern first.
   - **D736, D738, D740, D741, D742: the NQ follow's selectivity line (2026-10-01), CLOSED.**
     - **The records:**
       - D736 is the earn-when-trading screen;
