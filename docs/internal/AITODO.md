@@ -14,12 +14,12 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 751.**
-  - **D750 (2026-10-01): PRE-REGISTERED, Stage 0.** A positive-mean keeper (the principal's request to scavenge a
+  - **D750 (2026-10-01): NOT POSITIVE (E1, M1, K2).** A positive-mean keeper (the principal's request to scavenge a
     closed line with real gross edge): D748's index-micro keeper (13:30–14:00, the move since 09:00) with a \$40 stop
     cap.
-    - **The bars:** mean net > 0 at t ≥ 2, the direction-rotation null, median net ≥ 0, and D748's K1–K4.
-    - **A pass is a candidate only:** the evidence is contaminated, so it needs a forward read and the principal's
-      word before it replaces M6E.
+    - **The follow is real but small:** +\$1.12 gross on every session, direction-rotation p 0.008.
+    - **The fee swamps it:** net −\$2.68 (t −6.3), median −\$3.26, 0 of 8 years positive; the worst 30 days −\$229.
+    - **M6E stays the keeper.**
   - **D749 (2026-10-01): NOTHING** (the principal: "Pre-reg D749 and run the month-end fix oracle"). The month-end
     London 4pm fix on M6E (Melvin & Prins 2015), 152 month-ends 2011–2023.
     - **The room is there:** the mean |move| is $19.76, 2.3 × the bar.
