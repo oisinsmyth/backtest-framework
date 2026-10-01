@@ -92,7 +92,16 @@ Per session (zero on days a line did not trade), one MNQ each.
 - **What remains is the other-markets route:** a component whose quiet days are not equity-quiet days. That is a
   search, not a construction yet.
 
-## 4. Next
+## 4. CLOSED
+
+*2026-10-02, the principal: "Close D754, then lets go back to the other ideas that the agents found".*
+- **D754 is closed:** no calm-state abstention for the NQ lines, and no long-gamma Friday-afternoon drift on MES.
+- **Don't re-propose:**
+  - the calm-bull switch-off on the evidence of the three-variable label;
+  - the Friday charm-drift long.
+- The out-of-state Friday observation stays recorded and is not pursued.
+
+## 4a. What stood at the result, before the closure
 
 - **The readings are A NOT SUPPORTED and B NOTHING.** Closing them is the principal's call (R15).
 - **Superseded:** the chat claim that the book loses in the calm bull. On the walk-forward gate, calm sessions earn

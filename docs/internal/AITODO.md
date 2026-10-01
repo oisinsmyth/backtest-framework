@@ -14,7 +14,7 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 755.**
-  - **D754 (2026-10-02): (A) NOT SUPPORTED, (B) NOTHING** (the principal: "Pre-reg D754 and run both").
+  - **D754 (2026-10-02): (A) NOT SUPPORTED, (B) NOTHING; CLOSED by the principal** ("Close D754, then lets go back to the other ideas that the agents found").
     - **(A):** on the pre-registered single-variable walk-forward calm gate (NQ rv20 lowest third, 41% of sessions),
       the NQ book still EARNS when calm: +$5.11 a session against +$26.54 for the rest.
       - Within years, calm is no worse (Δ −$9.31, p 0.84; 2022 dominates).
@@ -24,7 +24,7 @@
       - It is not different from Mon–Thu (Welch t 1.01).
       - The mechanism's splits run backwards: monthly-expiry Fridays −$8.91, and out-of-state Fridays +$22.52
         (t 2.72, post hoc, not a lead).
-    - The calm regime remains under-earning, with no line of its own. Closing it is the principal's call.
+    - The calm regime remains under-earning, with no line of its own. CLOSED.
   - **D753 (2026-10-02): PRE-REGISTERED, Stage 0; NOT RUN.** The channel level rule carried to daily futures (the
     principal: "revisit the channel mean reversion idea … improve it … dont look at results just the construction";
     "B: daily futures"). Personal book, parked until real capital, so when it runs is the principal's call.
