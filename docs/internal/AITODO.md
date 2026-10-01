@@ -14,12 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 753.**
-  - **D752 (2026-10-01): PRE-REGISTERED, Stage 0** (the principal: "Pre-reg the YM open reversal fade, I am
+  - **D752 (2026-10-01): NOTHING on both brackets** (the principal: "Pre-reg the YM open reversal fade, I am
     sceptical"). At 11:00 ET, when |z| ≥ 1, fade YM's move since the open on one MYM.
-    - **The brackets:** B1 targets the open (1:1); B2 is the high-win-rate shape (target 0.5 m, stop 1.0 m).
-    - **The bars:** a side-rotation SIGNAL, then N1 net > 0 at t ≥ 2, N2 median ≥ 0, N3 skew ≥ −0.5, N4 D736's G1–G3.
-    - **The in-sample is heavily read** (D727's YM mirror; D746's fades and its E2 leg). It reopens the D746/D747
-      intraday mean-reversion closure for this construction only. P(GO) ≈ 0.05.
+    - **The direction carries nothing:** side-rotation p 0.66, Holm 1.00.
+    - **B1 (to the open):** net −\$5.03.
+    - **B2, the high-win-rate shape:** wins 59.5 % with a median of **+\$9.58**, but the mean is **−\$5.47**, skew −0.99
+      and payoff 0.53. That is a bought win rate.
+    - **The intraday mean-reversion closure (D746/D747) stands again.**
+    - D737 trades on 90 % of the fade's sessions, which would be a hedge conflict.
   - **D751 (2026-10-01): NOTHING on both legs; CLOSED by the principal** ("Close D751 and push it"). The
     gold fix on MGC: the sign of gold's 09:30 → fix − 5 move, gated by a walk-forward median, 1,415 gated sessions
     2012–2023.
