@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 570 of these records carry neither field —
+**No Status or Category column, deliberately.** 571 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -824,6 +824,7 @@ would look like data. The tokens are what is shown.
 | D749 | D749 STAGE 0 RESULT — NOTHING: EUR/USD moves enough into the month-end London fix to pay, but not in the direction the… | [PRE-REG](D749-STAGE-0-PRE-REG-the-month-end-london-fix-on-m6e.md) · [RESULT](D749-STAGE-0-RESULT-the-fix-flow-is-not-there-after-2015.md) |
 | D750 | D750 STAGE 0 RESULT — NOT POSITIVE: the 13:30 follow is a real edge (rotation p 0.008) but +\$1.12 gross against a \$3.… | [PRE-REG](D750-STAGE-0-PRE-REG-a-positive-mean-keeper.md) · [RESULT](D750-STAGE-0-RESULT-the-follow-is-real-and-too-small-for-the-fee.md) |
 | D751 | D751 STAGE 0 RESULT — NOTHING on both legs: gold moves enough around the LBMA PM auction to pay, but its first US half-… | [PRE-REG](D751-STAGE-0-PRE-REG-the-gold-fix-on-mgc.md) · [RESULT](D751-STAGE-0-RESULT-gold-does-not-move-into-its-fix.md) |
+| D752 | D752 STAGE 0 PRE-REGISTRATION — the YM open-reversal fade: at 11:00 ET, fade the Dow's move since the open on one MYM,… | [PRE-REG](D752-STAGE-0-PRE-REG-the-ym-open-reversal-fade.md) |
 
 <!-- REGISTER:END -->
 
