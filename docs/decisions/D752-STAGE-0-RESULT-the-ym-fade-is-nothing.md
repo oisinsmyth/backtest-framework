@@ -72,3 +72,14 @@ is the signature of a bought win rate.**
 - **What does not change:**
   - D727's YM reversal stays a description. Its held mirror nets −\$1.14 and its rotation rank is 0.76.
   - D737 (which trades the NQ–YM divergence, not YM's own reversal) is untouched.
+
+## 5. CLOSED
+
+*2026-10-01, the principal: "close D752".*
+- **D752 is closed:** no fade of YM's move since the open at 11:00, with either bracket.
+- **Don't re-propose** a bracketed fade of an index micro's move since the open, on any target or stop geometry. The
+  direction carries nothing (rotation p 0.66), and the brackets only trade the mean for the win rate.
+- **The closure of intraday mean reversion on the index micros for the prop book (D746, D747) stands.** The
+  multi-day ideas stay parked for the personal book.
+- **A survey of every mean-reversion study since the repo began was commissioned with this closure,** on the
+  principal's word. It is an inventory, not a reopening.

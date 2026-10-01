@@ -14,7 +14,7 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 753.**
-  - **D752 (2026-10-01): NOTHING on both brackets** (the principal: "Pre-reg the YM open reversal fade, I am
+  - **D752 (2026-10-01): NOTHING on both brackets; CLOSED by the principal** ("close D752"; pre-registered on "Pre-reg the YM open reversal fade, I am
     sceptical"). At 11:00 ET, when |z| ≥ 1, fade YM's move since the open on one MYM.
     - **The direction carries nothing:** side-rotation p 0.66, Holm 1.00.
     - **B1 (to the open):** net −\$5.03.
