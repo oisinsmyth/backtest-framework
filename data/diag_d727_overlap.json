@@ -1,0 +1,24 @@
+{
+ "post_hoc": true,
+ "sessions": 1941,
+ "window": [
+  "2016-02-02",
+  "2023-12-29"
+ ],
+ "rho": {
+  "first_k1.0": {
+   "macd_arm": 0.22094837710190934,
+   "nq_f2": -0.08872679416057333,
+   "same_day_share_with_arm": 0.8750830564784053,
+   "book_plus_arm_net_sharpe": 0.7389487654755581,
+   "arm_alone_net_sharpe_on_this_calendar": 0.6900377007016123
+  },
+  "first_k1.5": {
+   "macd_arm": 0.23547087500391636,
+   "nq_f2": -0.09979163291965067,
+   "same_day_share_with_arm": 0.8798828125,
+   "book_plus_arm_net_sharpe": 0.9605995409216214,
+   "arm_alone_net_sharpe_on_this_calendar": 0.6900377007016123
+  }
+ }
+}
