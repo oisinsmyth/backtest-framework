@@ -159,3 +159,7 @@ data/d382_scores.npz
 !/working/orb_premise_checks.py
 !/working/orb_check2_diagnostics.py
 !/working/orb_drift_control.py
+
+# The principal's local temp/ cleanup utility: not repo content (an executable is never tracked here).
+/cleanUp.exe
+/CLEANUP_USAGE.md
