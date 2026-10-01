@@ -1208,3 +1208,45 @@ minimum trade/activity requirements, and it can never\* (highly unlikely) cause 
 \$150+). Only the components can.
 
 **Changing or withdrawing it needs the principal's word and a written entry here,** like every other entry.
+
+### AMENDMENT, 2026-10-01 — an arm's call always takes precedence over the keeper
+
+> *"if an arm calls for capital while in a idle trade, we exit immediately and enter the real trade, if by any chance
+> the called capital will be using the same directional bet in the same root/contract then just resize the position
+> and follow that arms rules."* — the principal
+
+**This replaces the entry's line "If a component signals an entry while the keeper is open: the keeper flattens
+first",** which is kept above, unedited. The rule now has two cases.
+
+**1. Any other call: exit, then enter.** This covers every case except the same root, contract and direction: a
+different root (the usual M6E keeper against an index arm), the same root in the opposite direction, or a different
+contract month.
+- The keeper position is closed **immediately** at market.
+- **The exit is confirmed flat before the arm's order is sent.** The account never holds the keeper and the arm on
+  opposite sides at once. On the same or a correlated root that would be a hedge, which ends an Apex account.
+- The arm then enters exactly as its own rules say.
+
+**2. Same root, same contract month, same direction: resize and hand over.**
+- **The keeper's open contract is kept, not closed.** The position is resized to the arm's size, adding the
+  difference (or reducing it, if the arm calls for less).
+- **From that moment the whole position follows the arm's rules alone:** entry, size, stops and exit. The keeper's
+  4σ̂ stop and 14:00 exit no longer apply.
+- This saves one round trip (about \$4) and one crossing of the spread.
+
+**The ledger convention (so the arms' records stay comparable with their scored history):**
+- At the moment of the call, the keeper's trade is **closed in the ledger at the arm's signal price.** Its P&L runs
+  from its own entry to that price, net of its entry cost only.
+- The arm's trade is **opened in the ledger at the same price,** charged its normal round-trip cost.
+- The arm's record therefore looks exactly as if it had entered fresh. Any difference between that notional price
+  and a real fill on the added contracts is booked to the arm, as slippage on any entry would be.
+- In case 1 both trades carry their real fills and costs.
+
+**What this does to the keeper's risk:** it can only shorten a keeper trade. D748's worst-trade and worst-30-day
+figures remain upper bounds. A handed-over position carries the arm's risk under the arm's rules, not the keeper's.
+
+**How often it can arise:**
+- In D748's calendar, a call during the keeper's 13:30–14:00 window needs an arm that enters in that half hour.
+- D737 decides at 10:00, before the window, and F2 enters at 15:00, after it, so neither can trigger it.
+- The compression break's entry times are not in its in-sample book, so its frequency is not measured.
+- Case 2 needs the keeper to be on an index micro, which was 3 % of in-sample fires. With the usual M6E keeper only
+  case 1 can occur.
