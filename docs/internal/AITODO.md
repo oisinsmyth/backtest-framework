@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 743.**
+- **Next free number: 744.**
   - **D736, D738, D740, D741, D742: the NQ follow's selectivity line (2026-10-01), CLOSED.**
     - **The records:**
       - D736 is the earn-when-trading screen;
