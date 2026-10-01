@@ -309,8 +309,21 @@
   - **Burn-in:** σ needs about 35 forward sessions, so the first scoreable session is around 2026-11-09.
   - **Watch:** the March 2027 files (NQH27, YMH27, ESH27) must exist before the December roll (about 2026-12-10). The
     recorder prints MISSING until they do, and `--refresh` queues them.
-  - **Later:** NQ F2 and the compression break (C1) can be added from the same bars (ES is recorded for F2's
-    agreement book). C1 also needs prior-day levels and SPY, and its ctier inputs.
+  - **NQ F2 and C1 ADDED as inputs (2026-10-01; the principal: "yes add F2 and C1 to the recorder").**
+    - The recorder now also keeps each session's full Globex minutes, on the day session's front
+      (`data/raw/forward/fut_{NQ,YM,ES}_fwd_globex_1m.csv.gz`, fut_opening_globex_1m's layout; from 09-22, because
+      09-21's Globex opened on 09-20, before the seal).
+    - With the day-session bars, that is everything F2 (D716, slot 7) and C1 (D680, slot 9) read.
+    - **Validated in-sample** (2023-04 → 12, against D644's fixture): C1's overnight high and low are equal on all 192
+      NQ and ES sessions; minutes ≥ 99.85%.
+    - **Their ledgers are NOT computed yet, and cannot be before the joint run.** Both rank each day among the
+      previous 250 days, three times over (D671's `tiers`), so their first forward tier reads the vault window.
+    - **Owed AFTER the joint run:** each line's forward trades = its frozen code over the vault-built history
+      (D716's `build(VAULT_END)`; `joint_d680_vault.py`'s inputs), followed by the forward bars.
+      - Prove the splice first: in-sample, Databento history to 2023-06 + Sierra bars 2023-07 → 12 against
+        all-Databento, as D737's 118 trades were.
+      - C1 also needs its usable-session list (SPY's date keys and the CME calendar's half days), which can be
+        re-fetched at any time.
 - [ ] **Pre-lapse gap pulls (2026-10-01; the principal approved A, B, C and D).**
   - **The record:** `scripts/fetch_prelapse_gaps.py`; jobs in `data/prelapse_gap_jobs.json`; quotes in
     `data/prelapse_gap_quote.json`, all USD 0.00.

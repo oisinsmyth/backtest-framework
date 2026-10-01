@@ -51,5 +51,39 @@
   "gross_abs_diff_median": 0.0,
   "net_sum_sierra": 3158.0621419999993,
   "net_sum_databento": 3161.8773699999997
+ },
+ "globex": {
+  "NQ": {
+   "sessions_databento": 192,
+   "sessions_sierra": 192,
+   "minutes_databento": 263633,
+   "minutes_sierra": 263270,
+   "matched": 263270,
+   "single_contract_sessions_databento": 1.0,
+   "open_equal": 0.998541421354503,
+   "high_equal": 0.9998860485433205,
+   "low_equal": 0.999916435598435,
+   "close_equal": 0.9984578569529381,
+   "overnight_sessions_compared": 192,
+   "on_high_equal": 1.0,
+   "on_low_equal": 1.0,
+   "on_range_abs_diff_points_p99": 0.0
+  },
+  "ES": {
+   "sessions_databento": 192,
+   "sessions_sierra": 192,
+   "minutes_databento": 263436,
+   "minutes_sierra": 263080,
+   "matched": 263080,
+   "single_contract_sessions_databento": 1.0,
+   "open_equal": 0.9995894784856317,
+   "high_equal": 0.9999695909989357,
+   "low_equal": 0.9999657898738027,
+   "close_equal": 0.9995324616086362,
+   "overnight_sessions_compared": 192,
+   "on_high_equal": 1.0,
+   "on_low_equal": 1.0,
+   "on_range_abs_diff_points_p99": 0.0
+  }
  }
 }

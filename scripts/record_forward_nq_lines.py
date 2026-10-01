@@ -23,9 +23,21 @@ THE LINE. D737's own functions (`vault_d737_nq_leads_the_dow.cell` over D727's `
 sigma_oc needs 20 prior forward sessions and sigma_s 15 of the next 20, so the first scoreable day is about the 36th
 forward session (early November 2026). Earlier days are recorded as burn-in.
 
-OUTPUTS. data/raw/forward/fut_{NQ,YM,ES}_fwd_1m.csv.gz (the bars; gitignored cache, NOT disposable: a lost session
-cannot be re-fetched after ~5 months); data/forward/d737_forward.csv (one row a session; tracked);
-data/forward/d737_forward_revisions.csv (a recorded row that later changed is never overwritten silently).
+THE GLOBEX SESSIONS (2026-10-01, the principal: "yes add F2 and C1 to the recorder"). Each session's full Globex
+minutes, [the evening before 18:00, 17:00) ET, on the day session's front, in fut_opening_globex_1m's layout. With the
+day-session bars they are everything the two other NQ lines in the joint vault read: NQ F2 (D716, slot 7: NQ's
+15:30 day-session bars, ES's for the agreement book) and C1 (D680, slot 9: the day session plus D671's overnight high
+and low, 18:00 -> 09:29). Their LEDGERS are not computed here, and cannot be before the joint run: both rank each day
+among the previous 250 days three times over (D671's `tiers`), so their first forward tier reads the vault window
+(2024-01 -> 2026-09-18), which no one may read before the joint run. After it, each line's forward trades are its frozen
+code over the vault-built history followed by these bars. A session whose Globex open precedes FORWARD_FROM
+(2026-09-21's, opening 09-20) is skipped whole, never cut. Validated in-sample (2023-04 -> 2023-12) against D644's
+fixture: the overnight high and low are equal on all 192 NQ and ES sessions.
+
+OUTPUTS. data/raw/forward/fut_{NQ,YM,ES}_fwd_1m.csv.gz (the day-session bars) and fut_{NQ,YM,ES}_fwd_globex_1m.csv.gz
+(the Globex sessions); both gitignored caches, NOT disposable: a lost session cannot be re-fetched after ~5 months;
+data/forward/d737_forward.csv (one row a session; tracked); data/forward/d737_forward_revisions.csv (a recorded row
+that later changed is never overwritten silently).
 """
 from __future__ import annotations
 
@@ -110,14 +122,13 @@ def open_scid(name: str) -> np.memmap | None:
     return np.memmap(p, dtype=REC, mode="r", offset=hdr)
 
 
-def day_bars(mm: np.memmap, day: str, floor_us: int, cut_us: int) -> pd.DataFrame | None:
-    """09:30-16:00 ET minute bars of one session from one file. Reads only records in [floor, cut)."""
-    t0 = us(pd.Timestamp(f"{day} 09:30", tz=ET))
-    t1 = us(pd.Timestamp(f"{day} 16:00", tz=ET))
+def window_minutes(mm: np.memmap, t0: int, t1: int, floor_us: int, cut_us: int, what: str
+                   ) -> tuple[np.ndarray, dict[str, np.ndarray]] | None:
+    """Trade-price minute OHLCV over [t0, t1) from one file: (minute offsets from t0 that traded, their columns).
+    Reads only records in [floor, cut)."""
     if t0 < floor_us or t1 > cut_us:
-        raise RecorderError(f"seal: {day} lies outside the permitted span")
-    dt_all = mm["dt"]
-    i0, i1 = (int(x) for x in np.searchsorted(dt_all, [t0, t1]))
+        raise RecorderError(f"seal: {what} lies outside the permitted span")
+    i0, i1 = (int(x) for x in np.searchsorted(mm["dt"], [t0, t1]))
     if i1 <= i0:
         return None
     rec = np.asarray(mm[i0:i1])
@@ -126,23 +137,53 @@ def day_bars(mm: np.memmap, day: str, floor_us: int, cut_us: int) -> pd.DataFram
     rec = rec[rec["v"] > 0]
     if len(rec) == 0:
         return None
+    n = (t1 - t0) // 60_000_000
     k = ((rec["dt"] - t0) // 60_000_000).astype(np.int64)
-    if k.min() < 0 or k.max() > 389:
-        raise RecorderError(f"{day}: a trade falls outside 09:30-16:00")
+    if k.min() < 0 or k.max() > n - 1:
+        raise RecorderError(f"{what}: a trade falls outside the window")
     c = rec["c"].astype(np.float64)
-    first = np.full(390, len(k), np.int64)
-    last = np.full(390, -1, np.int64)
+    first = np.full(n, len(k), np.int64)
+    last = np.full(n, -1, np.int64)
     idx = np.arange(len(k))
     np.minimum.at(first, k, idx)
     np.maximum.at(last, k, idx)
-    hi = np.full(390, -np.inf)
-    lo = np.full(390, np.inf)
+    hi = np.full(n, -np.inf)
+    lo = np.full(n, np.inf)
     np.maximum.at(hi, k, c)
     np.minimum.at(lo, k, c)
-    vol = np.bincount(k, weights=rec["v"].astype(np.float64), minlength=390)
+    vol = np.bincount(k, weights=rec["v"].astype(np.float64), minlength=n)
     live = np.flatnonzero(last >= 0)
-    return pd.DataFrame({"day": day, "hhmm": [MINUTES[x] for x in live], "open": c[first[live]], "high": hi[live],
-                         "low": lo[live], "close": c[last[live]], "volume": vol[live].astype(np.int64)})
+    return live, {"open": c[first[live]], "high": hi[live], "low": lo[live], "close": c[last[live]],
+                  "volume": vol[live].astype(np.int64)}
+
+
+def day_bars(mm: np.memmap, day: str, floor_us: int, cut_us: int) -> pd.DataFrame | None:
+    """09:30-16:00 ET minute bars of one session from one file. Reads only records in [floor, cut)."""
+    t0 = us(pd.Timestamp(f"{day} 09:30", tz=ET))
+    t1 = us(pd.Timestamp(f"{day} 16:00", tz=ET))
+    w = window_minutes(mm, t0, t1, floor_us, cut_us, day)
+    if w is None:
+        return None
+    live, col = w
+    return pd.DataFrame({"day": day, "hhmm": [MINUTES[x] for x in live], **col})
+
+
+def globex_start(day: str) -> pd.Timestamp:
+    """A session's Globex open: 18:00 ET on the calendar day before (Sunday's for a Monday)."""
+    return pd.Timestamp(f"{(dt.date.fromisoformat(day) - dt.timedelta(days=1)).isoformat()} 18:00", tz=ET)
+
+
+def globex_bars(mm: np.memmap, root: str, day: str, floor_us: int, cut_us: int) -> pd.DataFrame | None:
+    """One session's Globex minute bars, [day-1 18:00, day 17:00) ET, in fut_opening_globex_1m's layout (root,
+    session, et, hhmm, OHLCV): the overnight that D671's `overnight` reads (18:00 -> 09:29) and the day session."""
+    s0 = globex_start(day)
+    w = window_minutes(mm, us(s0), us(pd.Timestamp(f"{day} 17:00", tz=ET)), floor_us, cut_us, f"{day} Globex")
+    if w is None:
+        return None
+    live, col = w
+    et = s0 + pd.to_timedelta(live, unit="min")
+    return pd.DataFrame({"root": root, "session": day, "et": et.strftime("%Y-%m-%d %H:%M"), "hhmm": et.strftime("%H:%M"),
+                         **col})
 
 
 def build_bars(root: str, days: list[str], floor: str, cut: str, contract_of: dict[str, str] | None = None) -> pd.DataFrame:
@@ -166,6 +207,27 @@ def build_bars(root: str, days: list[str], floor: str, cut: str, contract_of: di
     if not out:
         return pd.DataFrame(columns=["day", "hhmm", "open", "high", "low", "close", "volume", "contract"])
     return pd.concat(out, ignore_index=True)
+
+
+def build_globex(root: str, contract_of: dict[str, str], floor: str, cut: str) -> pd.DataFrame:
+    """One root's Globex sessions, each on the contract given for it (the day session's front), so the overnight and
+    the day are the same contract. A session whose Globex open falls before `floor` is skipped whole, never cut: a
+    partial overnight would understate its range (2026-09-21's opens on 09-20, before the forward seal)."""
+    floor_us, cut_us = us(pd.Timestamp(floor, tz=ET)), us(pd.Timestamp(cut, tz=ET))
+    cache: dict[str, np.memmap | None] = {}
+    out = []
+    for day, nm in sorted(contract_of.items()):
+        if us(globex_start(day)) < floor_us:
+            continue
+        if nm not in cache:
+            cache[nm] = open_scid(nm)
+        if cache[nm] is None:
+            continue
+        b = globex_bars(cache[nm], root, day, floor_us, cut_us)
+        if b is not None:
+            out.append(b.assign(contract=nm))
+    cols = ["root", "session", "et", "hhmm", "contract", "open", "high", "low", "close", "volume"]
+    return pd.concat(out, ignore_index=True)[cols] if out else pd.DataFrame(columns=cols)
 
 
 # ================================================================================ the line
@@ -247,10 +309,42 @@ def validate(data_root: Path) -> int:
                    "same_m0_and_side": float(((both["m0_s"] == both["m0_d"]) & (both["side_s"] == both["side_d"])).mean()) if len(both) else None,
                    "gross_abs_diff_median": float((both["gross_usd_s"].astype(float) - both["gross_usd_d"].astype(float)).abs().median()) if len(both) else None,
                    "net_sum_sierra": float(both["net_usd_s"].astype(float).sum()), "net_sum_databento": float(both["net_usd_d"].astype(float).sum())}
+    out["globex"] = validate_globex(data_root)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     VALIDATION.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(json.dumps(out, indent=1))
     return 0
+
+
+def validate_globex(data_root: Path) -> dict[str, Any]:
+    """In-sample only: Sierra Globex sessions against fut_opening_globex_1m (D644's fixture, ES and NQ; the fixture's
+    contract per session), 2023-04 -> 2023-12, minute by minute and on what C1 reads from them: D671's `overnight`
+    high and low over 18:00 -> 09:29."""
+    import stage0_d671_break_construction as C
+    fx = pd.read_csv(data_root / "fixtures" / "fut_opening_globex_1m.csv.gz", encoding="utf-8",
+                     dtype={"session": str, "et": str, "hhmm": str, "contract": str})
+    fx = fx[(fx["session"] > VAL_LO) & (fx["session"] <= VAL_HI)]   # VAL_LO's own Globex opens the day before
+    if (fx["et"] >= VAL_CUT).any():
+        raise RecorderError("seal: a Databento Globex row on or after 2024-01-01 in the validation")
+    res: dict[str, Any] = {}
+    for root in ("NQ", "ES"):
+        d = fx[fx["root"] == root]
+        con = d.groupby("session")["contract"].agg(lambda s: s.value_counts().index[0])
+        s = build_globex(root, {x: sierra_name(root, con[x], x) for x in con.index}, VAL_LO, VAL_CUT)
+        j = s.merge(d, on=["session", "et"], suffixes=("_s", "_d"))
+        on_s, on_d = C.overnight(s.assign(root=root), root), C.overnight(d, root)
+        C.overnight_audit(on_s)
+        o = on_s.join(on_d, lsuffix="_s", rsuffix="_d", how="inner")
+        res[root] = {"sessions_databento": int(d["session"].nunique()), "sessions_sierra": int(s["session"].nunique()),
+                     "minutes_databento": int(len(d)), "minutes_sierra": int(len(s)), "matched": int(len(j)),
+                     "single_contract_sessions_databento": float((d.groupby("session")["contract"].nunique() == 1).mean()),
+                     **{f"{c}_equal": float((j[f"{c}_s"] == j[f"{c}_d"]).mean()) for c in ("open", "high", "low", "close")},
+                     "overnight_sessions_compared": int(len(o)),
+                     "on_high_equal": float((o["on_high_s"] == o["on_high_d"]).mean()),
+                     "on_low_equal": float((o["on_low_s"] == o["on_low_d"]).mean()),
+                     "on_range_abs_diff_points_p99": float(((o["on_high_s"] - o["on_low_s"]) - (o["on_high_d"] - o["on_low_d"]))
+                                                           .abs().quantile(0.99))}
+    return res
 
 
 def sierra_name(root: str, contract: str, day: str) -> str:
@@ -263,15 +357,15 @@ def sierra_name(root: str, contract: str, day: str) -> str:
     return f"{root}{mon}{yy % 100:02d}-{EXCH[root]}"
 
 
-def merge_saved(b: pd.DataFrame, path: Path) -> pd.DataFrame:
+def merge_saved(b: pd.DataFrame, path: Path, key: str = "day", order: tuple[str, str] = ("day", "hhmm")) -> pd.DataFrame:
     """Saved bars are never lost: a day the new build lacks, or holds with fewer minutes, keeps its saved bars."""
     if not path.exists():
         return b
-    old = pd.read_csv(path, dtype={"day": str, "hhmm": str, "contract": str}, encoding="utf-8")
-    n_old, n_new = old.groupby("day").size(), b.groupby("day").size()
+    old = pd.read_csv(path, dtype={key: str, "et": str, "hhmm": str, "contract": str}, encoding="utf-8")
+    n_old, n_new = old.groupby(key).size(), b.groupby(key).size()
     keep_old = [d for d in n_old.index if n_new.get(d, 0) < n_old[d]]
-    out = pd.concat([b[~b["day"].isin(keep_old)], old[old["day"].isin(keep_old)]], ignore_index=True)
-    return out.sort_values(["day", "hhmm"]).reset_index(drop=True)
+    out = pd.concat([b[~b[key].isin(keep_old)], old[old[key].isin(keep_old)]], ignore_index=True)
+    return out.sort_values(list(order)).reset_index(drop=True)
 
 
 def record(refresh: bool) -> int:
@@ -288,7 +382,7 @@ def record(refresh: bool) -> int:
     cut = (today + dt.timedelta(days=1)).isoformat()
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    bars = {}
+    bars, globex = {}, {}
     for root in EXCH:
         b = build_bars(root, days, FORWARD_FROM, cut)
         if len(b) and b["day"].min() < FORWARD_FROM:
@@ -296,6 +390,13 @@ def record(refresh: bool) -> int:
         b = merge_saved(b, RAW_DIR / f"fut_{root}_fwd_1m.csv.gz")
         b.to_csv(RAW_DIR / f"fut_{root}_fwd_1m.csv.gz", index=False, encoding="utf-8")
         bars[root] = b
+        # the full Globex session on the day session's front: C1's overnight range (D680) and anything later
+        g = build_globex(root, b.groupby("day")["contract"].first().to_dict(), FORWARD_FROM, cut)
+        if len(g) and g["et"].min() < FORWARD_FROM:
+            raise RecorderError("seal: a forward Globex bar before 2026-09-21")
+        g = merge_saved(g, RAW_DIR / f"fut_{root}_fwd_globex_1m.csv.gz", key="session", order=("session", "et"))
+        g.to_csv(RAW_DIR / f"fut_{root}_fwd_globex_1m.csv.gz", index=False, encoding="utf-8")
+        globex[root] = g
     rows, info = d737_rows(bars["NQ"], bars["YM"], FORWARD_FROM)
     revised = 0
     new = rows.astype(str)
@@ -326,7 +427,8 @@ def record(refresh: bool) -> int:
     missing = [n for n in nxt if open_scid(n) is None]
     print(f"[forward] sessions {len(led)} (from {FORWARD_FROM}); bars NQ/YM/ES "
           f"{bars['NQ']['day'].nunique()}/{bars['YM']['day'].nunique()}/{bars['ES']['day'].nunique()}; "
-          f"burn-in {burn}; D737 trades {len(tr)}, net ${tr['net_usd'].astype(float).sum():.2f}; revisions {revised}"
+          f"Globex sessions NQ/YM/ES {globex['NQ']['session'].nunique()}/{globex['YM']['session'].nunique()}/"
+          f"{globex['ES']['session'].nunique()}; burn-in {burn}; D737 trades {len(tr)}, net ${tr['net_usd'].astype(float).sum():.2f}; revisions {revised}"
           + (f"; MISSING Sierra files for the current/next contracts: {missing}" if missing else ""))
     return 0
 
@@ -362,11 +464,31 @@ def selftest() -> int:
         fails.append("the seal did not raise for a vault-window day")
     except RecorderError:
         pass
+    # Globex: a Monday's session opens Sunday 18:00; labels in ET; the overnight and the day in one session
+    if globex_start("2026-10-05") != pd.Timestamp("2026-10-04 18:00", tz=ET):
+        fails.append(f"globex_start: {globex_start('2026-10-05')}")
+    s0 = us(pd.Timestamp("2026-10-04 18:00", tz=ET))
+    g = np.zeros(5, REC)
+    g["dt"] = [s0 - 1, s0 + 30_000_000, s0 + 359 * 60_000_000 + 999_999, us(pd.Timestamp("2026-10-05 09:29:59", tz=ET)),
+               us(pd.Timestamp("2026-10-05 16:59:59", tz=ET))]
+    g["c"], g["v"] = [99.0, 100.0, 101.0, 102.0, 103.0], [5, 1, 1, 1, 1]
+    gb = globex_bars(g[1:].view(MM), "NQ", "2026-10-05", us(pd.Timestamp(FORWARD_FROM, tz=ET)), us(pd.Timestamp("2026-10-06", tz=ET)))
+    got = list(gb[["session", "et", "hhmm", "close"]].itertuples(index=False, name=None))
+    want = [("2026-10-05", "2026-10-04 18:00", "18:00", 100.0), ("2026-10-05", "2026-10-04 23:59", "23:59", 101.0),
+            ("2026-10-05", "2026-10-05 09:29", "09:29", 102.0), ("2026-10-05", "2026-10-05 16:59", "16:59", 103.0)]
+    if got != want:
+        fails.append(f"globex_bars: {got}")
+    try:
+        globex_bars(g.view(MM), "NQ", "2026-09-21", us(pd.Timestamp(FORWARD_FROM, tz=ET)), us(pd.Timestamp("2026-10-06", tz=ET)))
+        fails.append("the seal did not raise for 2026-09-21's Globex session (it opens 09-20)")
+    except RecorderError:
+        pass
     if fails:
         print("SELFTEST FAILED:", fails)
         return 1
     print("SELFTEST OK: contract candidates and the December roll; Databento-to-Sierra names; minute bars from trade "
-          "prices (open/high/low/close/volume) on a synthetic tick array; the seal raises for a day before 2026-09-21")
+          "prices (open/high/low/close/volume) on a synthetic tick array; the seal raises for a day before 2026-09-21; "
+          "Globex sessions open the evening before, labelled in ET, and 2026-09-21's (opening 09-20) raises")
     return 0
 
 
