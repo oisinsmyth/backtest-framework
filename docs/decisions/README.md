@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 545 of these records carry neither field —
+**No Status or Category column, deliberately.** 547 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -810,8 +810,9 @@ would look like data. The tokens are what is shown.
 | D735 | D735 STAGE 0 RESULT — NQ breaking from the market beats its timing null, unlike D733: the equity legs rank 0.94–1.00 ag… | [PRE-REG](D735-STAGE-0-PRE-REG-nq-breaks-from-the-market.md) · [RESULT](D735-STAGE-0-RESULT-nq-breaking-from-the-market-beats-its-null.md) |
 | D736 | D736 STAGE 0 RESULT — only the NQ compression break both earns and abstains; NQ F2 is break-even by the principal's sta… | [PRE-REG](D736-STAGE-0-PRE-REG-which-es-nq-constructions-earn-when-they-trade.md) · [RESULT](D736-STAGE-0-RESULT-only-the-compression-break-earns-and-abstains.md) |
 | D737 | REGISTRATION — NQ's lead over the Dow (D735's YM k1.0 1σ_rem) for the joint vault run | [PRE-REG](D737-PRE-REG-nq-leads-the-dow-for-the-joint-vault.md) |
-| D738 | D738 STAGE 0 RESULT (step 1) — the NQ follow's prize is large and needs little accuracy; its winners thin out in calm r… | [PRE-REG](D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md) · [RESULT](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes-and-volatility-is-the-filter-axis.md) |
+| D738 | D738 STAGE 0 RESULT (step 3, amendment A1) — the five expected-profit filters on the NQ follow: all NOT SUPPORTED; the… | [PRE-REG](D738-STAGE-0-PRE-REG-the-oracle-of-an-expected-profit-filter-on-the-nq-follow.md) · [RESULT](D738-STAGE-0-RESULT-A1-no-filter-beats-its-rotation-null.md) · [RESULT](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes-and-volatility-is-the-filter-axis.md) |
 | D739 | D739 STAGE 0 RESULT — D735's mechanism does not transfer: no root in metals, energy, rates, FX or grains reads MECHANIS… | [PRE-REG](D739-STAGE-0-PRE-REG-does-breaking-from-the-group-transfer.md) · [RESULT](D739-STAGE-0-RESULT-the-group-break-is-nq-only.md) |
+| D740 | D740 STAGE 0 PRE-REGISTRATION — two filters on D727's NQ follow, designed by the principal: a fixed volatility floor, a… | [PRE-REG](D740-STAGE-0-PRE-REG-a-volatility-floor-and-higher-time-frame-agreement-on-the-nq-follow.md) |
 
 <!-- REGISTER:END -->
 
