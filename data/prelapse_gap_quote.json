@@ -1,0 +1,87 @@
+{
+ "what": "metadata-only quotes (get_cost / get_billable_size) of candidate pre-lapse pulls not in the 10-09 top-up; nothing submitted or downloaded",
+ "quoted": "2026-10-01 ~12:30Z",
+ "gb_is": "billable (uncompressed) size; on-disk dbn.zst is several times smaller",
+ "rows": [
+  {
+   "label": "A ohlcv-1s index+micro parents, full history",
+   "schema": "ohlcv-1s",
+   "start": "2010-06-06",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 44.301
+  },
+  {
+   "label": "B stats+def micros outside ROOTS_41 (statistics)",
+   "schema": "statistics",
+   "start": "2010-06-06",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 1.536
+  },
+  {
+   "label": "B stats+def micros outside ROOTS_41 (definition)",
+   "schema": "definition",
+   "start": "2010-06-06",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 1.936
+  },
+  {
+   "label": "C status 41 roots top-up",
+   "schema": "status",
+   "start": "2026-09-11",
+   "end": "2026-10-01T12:30",
+   "usd": 0.0,
+   "gb": 0.094
+  },
+  {
+   "label": "C bbo-1m 41 roots top-up",
+   "schema": "bbo-1m",
+   "start": "2026-09-11",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 1.993
+  },
+  {
+   "label": "C NQ options statistics top-up",
+   "schema": "statistics",
+   "start": "2026-09-27",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 0.446
+  },
+  {
+   "label": "C NQ options definition top-up",
+   "schema": "definition",
+   "start": "2026-09-27",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 0.048
+  },
+  {
+   "label": "C CL/NG options statistics top-up",
+   "schema": "statistics",
+   "start": "2026-09-27",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 0.26
+  },
+  {
+   "label": "C CL/NG options definition top-up",
+   "schema": "definition",
+   "start": "2026-09-27",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 0.101
+  },
+  {
+   "label": "D mbo micros MNQ/MES/MYM/M2K, last free month",
+   "schema": "mbo",
+   "start": "2026-09-01",
+   "end": "2026-10-01T12:30:00.000000000Z",
+   "usd": 0.0,
+   "gb": 90.8
+  }
+ ]
+}

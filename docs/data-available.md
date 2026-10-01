@@ -20,8 +20,15 @@ sha256 is the usable field** (D552).
 
 ## 1. CME futures — NEW, acquired 2026-09-11/12
 
-**111.0 GB, 129 files, `data/raw/databento/<job-id>/*.dbn.zst`.** Databento `GLBX.MDP3` under a
-one-month CME Standard subscription. Every job quoted **$0.00** against **$7,719** at
+**The base pull below is 111.0 GB in 129 files, under `data/raw/databento/<job-id>/*.dbn.zst`.** Databento `GLBX.MDP3`
+under a one-month CME Standard subscription.
+
+**The whole directory is now about 250 GB in 50 job directories (inventory, 2026-10-01).** Later pulls added:
+- ES, NQ and CL/NG options statistics + definition (2016 →);
+- CL/NG/HO/RB `ohlcv-1s` and trades;
+- the post-vault trades.
+
+Each has its job record in `data/*_jobs.json`. Every job quoted **$0.00** against **$7,719** at
 published per-schema rates; the only cost was the $199 subscription.
 
 | schema | scope | window | on disk | files |
