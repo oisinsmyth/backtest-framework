@@ -274,6 +274,18 @@
     α; the same holds for D716 and D680.
   - **When it runs:** after the D462 rebuild, in JOINT_RUN_CHECKLIST §3. It shares NQ's 2024+ sessions with D716.
   - **Ledger:** entry #6, PROVISIONAL.
+- [x] **The forward recorder is RUNNING (2026-10-01; the principal: "start with the recorder").**
+  - **What it is:** `scripts/record_forward_nq_lines.py`, run by the daily scheduled task `forward-nq-recorder`.
+    - It decodes Sierra's NQ / YM / ES tick files from 2026-09-21 only, into one-minute bars
+      (`data/raw/forward/`, irreplaceable after about five months).
+    - It computes D737's line on them with D737's own functions (`data/forward/d737_forward.csv`, one row a session;
+      revisions are logged, never silent).
+  - **Validated in-sample** against Databento: closes equal on 99.6–99.9% of minutes, and D737's 118 trades identical.
+  - **Burn-in:** σ needs about 35 forward sessions, so the first scoreable session is around 2026-11-09.
+  - **Watch:** the March 2027 files (NQH27, YMH27, ESH27) must exist before the December roll (about 2026-12-10). The
+    recorder prints MISSING until they do, and `--refresh` queues them.
+  - **Later:** NQ F2 and the compression break (C1) can be added from the same bars (ES is recorded for F2's
+    agreement book). C1 also needs prior-day levels and SPY, and its ctier inputs.
 - [ ] **AFTER THE JOINT RUN: state-based allocation** (the principal, 2026-10-01: "Add that to the AITODO for after the
   vault run if we still have components then (We will)").
   - **The source:** the principal's deposit `User-Doc-Deposit/STATE_BASED_ALLOCATION.md` and its review

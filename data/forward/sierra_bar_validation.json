@@ -1,0 +1,55 @@
+{
+ "window": [
+  "2023-04-03",
+  "2023-12-29"
+ ],
+ "cut": "2024-01-01",
+ "roots": {
+  "NQ": {
+   "days": 193,
+   "minutes_databento": 74040,
+   "minutes_sierra": 74040,
+   "matched": 74040,
+   "close_equal": 0.9955294435440303,
+   "open_equal": 0.9960561858454889,
+   "high_equal": 0.9997028633171259,
+   "low_equal": 0.9997974068071313,
+   "volume_ratio_median": 1.0,
+   "front_rule_agrees_with_databento": 1.0
+  },
+  "YM": {
+   "days": 193,
+   "minutes_databento": 74040,
+   "minutes_sierra": 74040,
+   "matched": 74040,
+   "close_equal": 0.9985143165856294,
+   "open_equal": 0.998730415991356,
+   "high_equal": 0.999837925445705,
+   "low_equal": 0.9998514316585629,
+   "volume_ratio_median": 1.0,
+   "front_rule_agrees_with_databento": 1.0
+  },
+  "ES": {
+   "days": 193,
+   "minutes_databento": 74040,
+   "minutes_sierra": 74040,
+   "matched": 74040,
+   "close_equal": 0.9986223662884927,
+   "open_equal": 0.9988519719070773,
+   "high_equal": 0.9998919502971367,
+   "low_equal": 0.9999594813614262,
+   "volume_ratio_median": 1.0,
+   "front_rule_agrees_with_databento": 1.0
+  }
+ },
+ "d737": {
+  "days_compared": 129,
+  "status_agree": 1.0,
+  "trades_sierra": 118,
+  "trades_databento": 118,
+  "same_m0_and_side": 1.0,
+  "gross_abs_diff_median": 0.0,
+  "net_sum_sierra": 3158.0621419999993,
+  "net_sum_databento": 3161.8773699999997
+ }
+}
