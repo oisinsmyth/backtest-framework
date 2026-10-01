@@ -1,0 +1,69 @@
+{
+ "expected_vault_trades": 595,
+ "trade_rate": 0.8753219989696033,
+ "sigma_usd_in_sample": 203.2639330418116,
+ "sigma_usd_2023": 271.9925932824482,
+ "g1_bootstrap": {
+  "in_sample_sigma_100pct": {
+   "mean_net": 13.976962611381529,
+   "pass_g1": 0.6275,
+   "mean_positive": 0.97875
+  },
+  "in_sample_sigma_75pct": {
+   "mean_net": 9.465941682008296,
+   "pass_g1": 0.36625,
+   "mean_positive": 0.92525
+  },
+  "in_sample_sigma_50pct": {
+   "mean_net": 4.9549207526350685,
+   "pass_g1": 0.16075,
+   "mean_positive": 0.76475
+  },
+  "in_sample_sigma_25pct": {
+   "mean_net": 0.44389982326184463,
+   "pass_g1": 0.0485,
+   "mean_positive": 0.52725
+  },
+  "in_sample_sigma_0pct": {
+   "mean_net": -4.067121106111384,
+   "pass_g1": 0.013,
+   "mean_positive": 0.2855
+  },
+  "sigma_2023_100pct": {
+   "mean_net": 20.078122224966666,
+   "pass_g1": 0.6835,
+   "mean_positive": 0.98775
+  },
+  "sigma_2023_75pct": {
+   "mean_net": 14.041811392197147,
+   "pass_g1": 0.416,
+   "mean_positive": 0.943
+  },
+  "sigma_2023_50pct": {
+   "mean_net": 8.005500559427638,
+   "pass_g1": 0.186,
+   "mean_positive": 0.8225
+  },
+  "sigma_2023_25pct": {
+   "mean_net": 1.9691897266581329,
+   "pass_g1": 0.06725,
+   "mean_positive": 0.591
+  },
+  "sigma_2023_0pct": {
+   "mean_net": -4.067121106111378,
+   "pass_g1": 0.01525,
+   "mean_positive": 0.33525
+  }
+ },
+ "full_gate_windows": {
+  "windows": 64,
+  "step": 20,
+  "length_sessions": 680,
+  "independent_approx": 2.85,
+  "share": {
+   "PASS": 0.609375,
+   "UNRESOLVED": 0.390625
+  }
+ },
+ "wall_s": 6.9
+}
