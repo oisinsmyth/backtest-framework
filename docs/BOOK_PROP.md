@@ -1152,3 +1152,59 @@ index roots in D670 and D673. It is a candidate exit for a new component's pre-r
    break-even.
 4. **Reopening needs the principal's word and a new pre-registration.** Re-tuning the arm's in-sample record is not a
    route.
+
+## ACCOUNT EXECUTION RULE, CONDITIONAL — the activity keeper (D748), 2026-10-01
+
+> *"Yes, append it to BOOK_PROP as conditional an execution rule"* — the principal
+
+**This is not an admission.** The book still admits no strategy (the ruling above, point 2):
+- the keeper is not an arm or a component, holds no slot, and is not tested against hurdle P;
+- it is a rule for keeping a prop account alive while the components abstain.
+
+**Why it does not breach point 3 above.** Point 3 says no trading without earning, even at break-even. The keeper
+trades only to meet a firm's activity rule, never for P&L. That is the principal's own exception, given for this
+purpose: *"breaking even on this strategy is ok, this is not a money making one … it's only requirement is to meet
+minimum trade/activity requirements, and it can never\* (highly unlikely) cause an account to die."*
+
+**The rule**
+([D748](decisions/D748-STAGE-0-PRE-REG-the-activity-keeper.md) with A1;
+[result](decisions/D748-STAGE-0-RESULT-the-keeper-is-ready-on-m6e.md): READY):
+- **When it fires:**
+  - only when the account's activity deadline would otherwise lapse, leaving one backup eligible session;
+  - only on a session where no component has opened a position by 13:30 ET;
+  - never on an FOMC day or an early close.
+- **What it trades:** one contract of whichever of **M6E, M2K, MYM, MES, MNQ** has the smallest forecast σ\$. The
+  forecast is the RMS of the previous 20 sessions' 13:30–14:00 move × the micro's dollars per point. In practice this
+  is M6E (97 % of in-sample fires).
+- **The trade:**
+  - enter at 13:30 ET, in the direction of the root's move since 09:00 (long on zero);
+  - stop at 4 × the forecast σ in points;
+  - exit at 14:00 ET.
+- **If a component signals an entry while the keeper is open:** the keeper flattens first. This is declared, not
+  scored.
+
+**Its in-sample risk** (2018-05-14 → 2023-12-29):
+- worst trade −\$40.55; worst 30 days −\$75; about −\$4 a trade (the fee; gross about zero);
+- correlation with the components' daily net 0.002;
+- with D737 in the book it fired about 0.4 times a year. On its own, under a 7-day rule, about 68 times a year,
+  ≤ \$268 a year.
+
+**The conditions. Until each holds for the account in question, the rule is NOT in force there:**
+1. **The firm's activity rule is confirmed at the firm's own source,** and the keeper's cadence is set to it.
+   - Primary sources (2026-09-08): MyFundedFutures, ≥ 1 trade per 7 calendar days (dormancy is a breach); Topstep
+     XFA/LFA, 30 days.
+   - Tradeify, Bulenox, Alpha and Lucid came from aggregators and are unverified.
+2. **The firm permits the instrument the keeper will trade.**
+   - **M6E is confirmed only at Topstep.**
+   - **At MyFundedFutures (the account the MACD arm was sized for) and Apex it is unconfirmed.**
+   - The index-only fallback (M2K, MYM, MES, MNQ) is **NOT READY** in D748 (worst trade −\$102, worst 30 days −\$175).
+     A firm without FX needs a new record, not this rule with M6E removed.
+3. **No hedge.** On an Apex-type account the keeper must never hold an index micro against an open index position.
+   With M6E this cannot arise.
+4. **The keeper's P&L is carried in the account.** When hurdle P is tested on an assembled book for a given account,
+   the keeper's fires and costs on that account's calendar are included.
+
+**What it does not do:** meet profit-day rules (Apex's two \$50 net-profit days per 30; payout "winning days" of
+\$150+). Only the components can.
+
+**Changing or withdrawing it needs the principal's word and a written entry here,** like every other entry.

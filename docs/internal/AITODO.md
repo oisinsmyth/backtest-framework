@@ -21,7 +21,8 @@
     - **The readings:** worst trade −\$40.55, worst 30 days −\$75, \$268 a year keeper-alone (C7), zero breaches.
     - **With D737 in the book it fires about 0.4 times a year;** without D737, about 33 a year (C7).
     - **The index-only fallback is NOT READY:** worst −\$102 and −\$175 over 30 days.
-    - **An execution rule, not a component.** Before it is relied on:
+    - **An execution rule, not a component.** It is appended to `docs/BOOK_PROP.md` as a CONDITIONAL account execution
+      rule (the principal, 2026-10-01). Before it is relied on:
       - confirm each firm's activity rule and permitted products at the source, especially M6E at Apex and
         MyFundedFutures;
       - a firm without FX needs a new record.
