@@ -14,13 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 750.**
-  - **D749 (2026-10-01): PRE-REGISTERED** (the principal: "Pre-reg D749 and run the month-end fix oracle"). The
-    month-end London 4pm fix on M6E (Melvin & Prins 2015). Both this session's and a Fable 5.1 agent's independent
-    lists ranked it first.
-    - **The trade:** long or short EUR/USD for the 30 minutes into the fix (11:00 ET, or 12:00 in DST-mismatch weeks),
-      signed by SPY's month-to-date return.
-    - **Controls:** an enumerated sign-rotation null, placebo days (−5 … −2), and the DST clock control.
-    - **Readings:** NO ROOM if the mean |move| < 2c ($8.76). In-sample 2011–2023 only.
+  - **D749 (2026-10-01): NOTHING** (the principal: "Pre-reg D749 and run the month-end fix oracle"). The month-end
+    London 4pm fix on M6E (Melvin & Prins 2015), 152 month-ends 2011–2023.
+    - **The room is there:** the mean |move| is $19.76, 2.3 × the bar.
+    - **The signed mean is not:** +$0.59 gross (t 0.28), inside the sign rotation (p 0.23), and equal to the placebo
+      days (Welch t 0.15). Net −$3.79; 5 of 13 years positive.
+    - **Eras:** pre-2015-reform +$4.47 (t 1.49, n 47); post-reform −$1.14 (n 105). The flow, if it existed here, went
+      with the reform.
+    - **Post hoc, not a lead:** the 30 minutes after the fix move against the month's sign (+$4.78 gross for the
+      fade, t 4.03). That is under the micro bar even if real.
+    - Closing it is the principal's call. Next from the same round, on the principal's word: the gold 10:00 fix
+      (MGC), and the London Metal Exchange official price on copper (MHG).
   - **D748 (2026-10-01): READY, Stage 0.** The activity keeper: one placeholder trade at 13:30–14:00 ET on the
     cash-settled financial micro with the smallest forecast σ\$ (the principal's "vol\*tick size, smallest root").
     It fires only when a firm's inactivity deadline would lapse.
