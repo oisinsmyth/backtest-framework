@@ -13,7 +13,19 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 753.**
+- **Next free number: 754.**
+  - **D753 (2026-10-02): PRE-REGISTERED, Stage 0; NOT RUN.** The channel level rule carried to daily futures (the
+    principal: "revisit the channel mean reversion idea … improve it … dont look at results just the construction";
+    "B: daily futures"). Personal book, parked until real capital, so when it runs is the principal's call.
+    - **The construction:** the hand-cell lines on 34 roots (≤ 2023), thresholds converted to volatility units by
+      the equity panel's median ATR%.
+    - **The rules:** fill at the next open; exit on H = 5 or a line break; a 3×-cost expected-profit gate; no trade
+      spans a roll.
+    - **The bars:** primary C1 (gross y above a shared-offset rotation), E1–E4, and X (lines beat a plain-range
+      control).
+    - **Blindness:** designed without the channel line's results (`docs/research/mean-reversion-inventory.md`
+      withholds them). Opus's prior knowledge of the headline verdicts is disclosed in §0.
+    - **Next:** the runner, built and self-tested, then the principal's word to run.
   - **D752 (2026-10-01): NOTHING on both brackets; CLOSED by the principal** ("close D752"; pre-registered on "Pre-reg the YM open reversal fade, I am
     sceptical"). At 11:00 ET, when |z| ≥ 1, fade YM's move since the open on one MYM.
     - **The direction carries nothing:** side-rotation p 0.66, Holm 1.00.
