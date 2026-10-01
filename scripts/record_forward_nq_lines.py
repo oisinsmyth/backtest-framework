@@ -61,7 +61,7 @@ OUT_DIR = REPO / "data" / "forward"
 LEDGER = OUT_DIR / "d737_forward.csv"
 REVISIONS = OUT_DIR / "d737_forward_revisions.csv"
 VALIDATION = OUT_DIR / "sierra_bar_validation.json"
-LEDGER_COLS = ["day", "nq_contract", "ym_contract", "status", "m0", "side", "entry", "exit", "stopped", "gross_usd",
+LEDGER_COLS = ["day", "nq_contract", "ym_contract", "sigma_oc_usd", "status", "m0", "side", "entry", "exit", "stopped", "gross_usd",
                "net_usd"]
 
 
@@ -188,6 +188,8 @@ def d737_rows(nq: pd.DataFrame, ym: pd.DataFrame, scored_from: str) -> tuple[pd.
         r = {"day": day, "nq_contract": nqc.get(day, ""), "ym_contract": ymc.get(day, ""), "m0": "", "side": "",
              "entry": "", "exit": "", "stopped": "", "gross_usd": "", "net_usd": ""}
         i = pos.get(day)
+        # informational, never a gate: NQ's sigma_oc in $ at one MNQ (D742's floor note reads the split from it)
+        r["sigma_oc_usd"] = round(float(pp["soc"][i]) * 2.0, 6) if i is not None else ""
         if i is None:
             r["status"] = "excluded (roll day, short session or no sigma_oc yet)"
         elif not sig_ok[i] or not np.isfinite(c["XL"][i, 30]):
@@ -299,10 +301,14 @@ def record(refresh: bool) -> int:
     new = rows.astype(str)
     if LEDGER.exists():
         old = pd.read_csv(LEDGER, dtype=str, keep_default_na=False, encoding="utf-8")
+        added = [col for col in LEDGER_COLS if col not in old.columns]
+        for col in added:                                    # a column added later is back-filled, not a revision
+            old[col] = ""
+        old = old[LEDGER_COLS]
         mm = old.merge(new, on="day", how="inner", suffixes=("_old", "_new"))
         ch = []
         for _, r in mm.iterrows():
-            diff = [c for c in LEDGER_COLS[1:] if r[f"{c}_old"] != r[f"{c}_new"]]
+            diff = [c for c in LEDGER_COLS[1:] if r[f"{c}_old"] != r[f"{c}_new"] and c not in added]
             if diff:
                 ch.append({"day": r["day"], "changed": ";".join(diff),
                            "recorded_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
