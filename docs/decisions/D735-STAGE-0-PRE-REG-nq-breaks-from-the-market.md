@@ -254,3 +254,21 @@ says so, and k, the stop and the clock window are NOT re-tuned.
   per cell). It is a run-once job, so no optimisation pass. The cells run in threads (numpy).
 
 **The output:** `data/stage0_d735_nq_breaks_from_the_market.json` (aggregates only; no per-date TICK series).
+
+## D735-A1 (before the runner exists; no outcome read): one correction and the runner-level details
+
+**The correction.** §2's "Reads that are NOT made" line is wrong about D711:
+- Every loader used here reads the rth fixture CSV and filters it in memory before any statistic is computed. That
+  includes D727's `load_root` (NQ, ES, YM, RTY) and D711's, which D720's `build_f2` reaches through D716's in-sample
+  `build`. D727, D733 and every in-sample study have done the same.
+- D716's in-sample `build` raises if a session on or after 2024-01-01 reaches it.
+- So the component line uses `build_f2` as D733 did. D680's C1 is still named missing, because its in-sample function
+  is not re-audited here.
+
+**The details:**
+- The 60-minute exit has no stop: the close of bar min(m0 + 59, 389).
+- The matched-row baseline is every 5-minute row in the cell, the trade days' rows included.
+- The year gate (D729) is applied to net per trade, with scale σ_NQ × $2.
+- In S1, e_j is the residual of x_L on (1, x_NQ) at clock j. O1 uses the per-clock fits' β̂_j and δ̂_j, without the
+  intercept.
+- TICK: minutes before a session's first record count 0, and later gaps are carried forward.
