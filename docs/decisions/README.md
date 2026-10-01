@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 551 of these records carry neither field —
+**No Status or Category column, deliberately.** 552 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -814,7 +814,7 @@ would look like data. The tokens are what is shown.
 | D739 | D739 STAGE 0 RESULT — D735's mechanism does not transfer: no root in metals, energy, rates, FX or grains reads MECHANIS… | [PRE-REG](D739-STAGE-0-PRE-REG-does-breaking-from-the-group-transfer.md) · [RESULT](D739-STAGE-0-RESULT-the-group-break-is-nq-only.md) |
 | D740 | D740 STAGE 0 RESULT — the volatility floor reads SUPPORTED, in-sample and post hoc, by choosing the years (within-year… | [PRE-REG](D740-STAGE-0-PRE-REG-a-volatility-floor-and-higher-time-frame-agreement-on-the-nq-follow.md) · [RESULT](D740-STAGE-0-RESULT-the-floor-picks-the-years-and-the-monthly-trend-adds-nothing.md) |
 | D741 | D741 STAGE 0 RESULT — NOT SUPPORTED: the 30-minute log-MACD agreement filter trims the floored follow's drawdown only b… | [PRE-REG](D741-STAGE-0-PRE-REG-a-macd-histogram-agreement-filter-for-drawdown-on-the-floored-nq-follow.md) · [RESULT](D741-STAGE-0-RESULT-the-macd-agreement-drops-the-best-trades.md) |
-| D742 | D742 STAGE 0 PRE-REGISTRATION — step 1 of a protective stop for the floored NQ follow's drawdown: how far the trades go… | [PRE-REG](D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md) |
+| D742 | D742 STAGE 0 RESULT (step 1) — the floored follow's losers go well against it and its winners do not (median adverse ex… | [PRE-REG](D742-STAGE-0-PRE-REG-the-oracle-of-a-protective-stop-on-the-floored-nq-follow.md) · [RESULT](D742-STAGE-0-RESULT-losers-go-far-against-winners-do-not.md) |
 
 <!-- REGISTER:END -->
 
