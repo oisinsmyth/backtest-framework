@@ -88,3 +88,64 @@ the principal.
 - **Its output** is `data/stage0_d742_stop_oracle.json`, run once, aggregates only.
 - **Its self-test** must show that the stop simulation agrees with D735's convention on a synthetic panel, and that its
   canaries fire.
+
+## Amendment D742-A1 (2026-10-01): step 2, the principal's stop and its test, declared before it is scored
+
+**The principal's choices**, after step 1's
+[result](D742-STAGE-0-RESULT-losers-go-far-against-winners-do-not.md):
+- **The stop:** **1.0 σ_rem**, D735's convention as in §1.
+- **The test:** "Random-exit null + bootstrap".
+
+**Disclosed:** step 1 already shows this stop's in-sample book:
+
+| book | Calmar | max DD | worst day | net / trade |
+|---|---:|---:|---:|---:|
+| the 1.0 σ_rem stop | 4.49 | \$2,872 | −\$587 | +\$23.60 |
+| no stop | 3.81 | \$4,131 | −\$1,142 | +\$28.85 |
+
+What is unknown is how these compare with the nulls below.
+
+**A1.1 The random-exit null (does the stop choose the right trades and moments?).**
+- **Each draw** picks **147 of A's 546 trades at random** (the stop's own count). Each picked trade exits at a minute
+  drawn uniformly from its entry minute to 15:59, at that minute's close less one tick against the trade. Every other
+  trade runs to 15:59.
+- **10,000 draws, seed 7421.**
+- **The statistics:**
+  - **R1** = Calmar (primary);
+  - **R2** = the worst day;
+  - **R3** = the max DD.
+- **p** = the share of draws at least as good as the stop.
+
+**A1.2 The paired block bootstrap (is the gain over no stop robust to the sample?).**
+- **Blocks:** calendar months of the session calendar, from A's first trade to 2023-12-29, drawn with replacement.
+  Each draw has as many months as the window, and the stopped and unstopped daily series are drawn together.
+- **10,000 draws, seed 7422.**
+- **Reported:** P(ΔCalmar > 0), P(Δworst day > 0) and P(Δmax DD < 0), where Δ means the stop minus no stop, and the
+  5th and 50th percentiles of each.
+
+**A1.3 The halves.** A's trades are split by count into two halves, and the Calmar is read with and without the stop
+in each.
+
+**The gates** (Gate 1, the mechanism, holds already: NW t 2.79 on A's gross, D741):
+
+| gate | standard |
+|---|---|
+| **Gate 2** | R1's random-exit p ≤ 0.05, **and** the bootstrap's P(ΔCalmar > 0) ≥ 0.90, **and** the stop's Calmar exceeds no stop's in **both** halves |
+| **Gate 3** | the principal's standard with abstention (D740) on the stopped book |
+
+**Readings:** SUPPORTED (Gates 2 and 3 hold) or NOT SUPPORTED (Gate 2 fails). If only Gate 3 fails, the reading is
+DRAWDOWN ONLY.
+
+**Predictions:**
+
+| # | prediction |
+|---|---|
+| 1 | R1's random-exit p ≤ 0.05: the stop chooses the losers, which random exits cannot |
+| 2 | the bootstrap's P(ΔCalmar > 0) is between 0.60 and 0.90. A drawdown is a single-path statistic, so its gain is noisy |
+| 3 | P(Δworst day > 0) ≥ 0.95 |
+| 4 | the reading is **NOT SUPPORTED**, on prediction 2 |
+
+**Mechanics.**
+- **The runner** is `scripts/stage0_d742_step3_stop.py`, using the step-1 runner's `stop_exit` and the trades.
+- **It re-proves step 1's 1.0 σ_rem total** (\$12,884; to \$0.01) before any null.
+- **Its output** is `data/stage0_d742_stop_test.json`, run once.
