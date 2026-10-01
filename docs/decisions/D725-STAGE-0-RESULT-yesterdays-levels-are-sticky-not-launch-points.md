@@ -92,6 +92,6 @@ A ceiling exists: crossings on days that turn out big are trend days and pay.
 3. **Of yesterday's levels, only the edge of the range breaks** (L4, with D668). Levels inside the range do not.
 4. **The evening-before size forecast does not reach the oracle's ceiling here either.** The days that pay are trend
    days, and no forecast in the record finds them in advance.
-5. **Proposed, not decided:** close level-crossing continuation at yesterday's close, VWAP and overnight midpoint
-   under R15, on the principal's word. Their stickiness is kept as structure: a level the price returns to is a
+5. **CLOSED under R15, 2026-10-01, on the principal's word** ("Yeah Close it"): level-crossing continuation at
+   yesterday's close, VWAP and overnight midpoint on NQ's day session, any horizon. Their stickiness is kept as structure: a level the price returns to is a
    candidate *target* for a trade already on, and a poor place for a stop.
