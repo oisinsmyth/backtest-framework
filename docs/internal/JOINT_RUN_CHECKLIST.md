@@ -124,6 +124,21 @@ A 216 / +$25.578712 and the take-session hashes.
    - It holds the cut and calls the frozen `main`. The frozen `main` re-proves 387 C1 trades, +6.93 / +7.56 bp,
      then scores.
 
+**D734, the assembled NQ book (F2 + compression, one MNQ each). No programme slot. FROZEN 2026-10-01 (06ca5451).**
+
+Run it only after slot 7's `--vault` and slot 9's `--run-vault` have both written their results, in the same checkout:
+`uv run python scripts/vault_d734_nq_book.py --vault --principals-word "..."`.
+- **What it does.** It verifies `data/FROZEN_vault_d734_nq_book.json`, then rebuilds both parts' vault trades through
+  their frozen functions.
+- **Where it stops.** It must reproduce exactly:
+  - `vault_d716_nq_f2_result.json` `parts.vault`;
+  - `vault_d680_vault.json` C1.
+
+  If it does not, it stops before scoring.
+- **What it scores.** It writes `data/vault_d734_nq_book.json`. The gates are G1–G4 (D734 with A1 and A2).
+- **The freeze** hashes `joint_d680_vault.py`, `vault_d716_nq_f2.py`, `vault_d680_nq_compression.py`, `hurdle_p.py` and
+  `data/prop_venues.json`. Any edit to them breaks it. Tell the documentation-review session before touching them.
+
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):
 1. In-sample references, each with no vault read. **All three must pass before any vault step.**
