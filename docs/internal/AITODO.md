@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 745.**
+- **Next free number: 746.**
   - **D743 (2026-10-01): NOT SUPPORTED, all six; CLOSED by the principal** ("Ok close that and look at idea 2").
     It tested skipping busy two-way nights and CPI / jobs days on D735's legs (YM k1.0 = D737's twin, EQ k1.5); idea 1
     of the C1 mechanism comparison.
