@@ -427,7 +427,7 @@ def unit_k1() -> tuple[pd.DataFrame, dict[str, Any]]:
     D484, D491, D495, D504 = R.D484, R.D491, R.D495, R.D504
     meta = json.loads(D495.META.read_text(encoding="utf-8"))
     spec = json.loads(D484.SPECS.read_text(encoding="utf-8"))
-    d_all = pd.read_csv(D495.FIX)
+    d_all = pd.read_csv(D495.FIX, encoding="utf-8")
     d_all = d_all[d_all["day"].astype(str) < SEAL].reset_index(drop=True)          # filtered before any computation
     if (d_all["day"].astype(str) >= SEAL).any():
         raise SealError("seal: an hourly row on or after 2024-01-01 reached D504's build")
@@ -611,7 +611,7 @@ def validate(df: pd.DataFrame) -> dict[str, Any]:
 
 # ================================================================================ build, cache, load
 def _to_csv_bytes(df: pd.DataFrame) -> bytes:
-    return df.to_csv(index=False, lineterminator="\n").encode("utf-8")
+    return df.to_csv(index=False, lineterminator="\n", encoding="utf-8").encode("utf-8")
 
 
 def _read_table(raw: bytes) -> pd.DataFrame:

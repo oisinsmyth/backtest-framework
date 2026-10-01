@@ -5296,3 +5296,30 @@ grains or natural gas. On the refined products the prior hour does continue into
 - **CLOSED by the principal, 2026-09-30** (with RB). Micro heating oil (MHO) exists, but it printed zero volume on 32
   of 32 sessions, so no sub-size HO contract can be traded
   ([D719 closure](decisions/D719-RESULT-none-transfers-ho-signal-at-unviable-size.md#closed-by-the-principal-2026-09-30-heating-oil)).
+
+## 102. Why 2022: no measured variable explains it; each line's 2022 is a different thing, and the index lines' 2022 was January to mid-May (D722)
+
+**The rule: 2022 is not one regime that the repo's surviving lines share and can detect. A line whose in-sample edge
+leans on 2022 should be sized on its ex-2022 figure, and a book built from such lines is a bet that a 2022-like stretch
+recurs, however low their daily correlations.**
+([D722](decisions/D722-DIAG-RESULT-no-variable-explains-2022.md), in-sample 2016 → 2023, ES F2, NQ F2, D699 V1, HO F2;
+the MACD arm and the unfiltered last half-hour as controls)
+- **No pre-trade variable explains 2022 out of year on any line.** The variables were realised and implied vol, dealer
+  gamma, rates vol, oil vol, trend, direction, macro days, stimulus windows, the micro share and the chip cycle. All six
+  objects read UNEXPLAINED.
+  - **Rates volatility** was high in 2022 and again in 2023, but carries nothing.
+  - **The trend variable points the wrong way:** a trendier prior 60 sessions predicts less last-half-hour continuation.
+- **The lines differ:**
+  - **heating oil and the MACD arm are SCALE** (bigger moves; per unit of vol, HO's best years are 2018–19);
+  - **NQ F2 is REGIME** (efficiency 0.49 against 0.12–0.17);
+  - **ES F2 is MIXED;**
+  - **D699 V1 is positive in volatility units only in 2022** (and faintly 2016–17).
+- **The index lines' 2022 is January → mid-May.**
+  - The unfiltered last half-hour earned all of 2022 before 2022-05-16 (the daily-0DTE date), and lost after.
+  - The F2 lines took 56 of their 65–66 2022 trades before then.
+  - The war's first ten weeks carry 76 % of the ES base's 2022.
+  - **Macro-event days carry nothing, and are negative on the base.**
+- **SEPARATE day to day** (F2–D699 ρ 0.15 in 2022, lower than the 0.30 elsewhere), **but the equal-weight index book
+  earns 77 % of its net in 2022.**
+- **A method note:** score a year-concentration gate in volatility units as well as dollars. HO's 2022 share falls from
+  62 % to 30 %; the F2 lines' barely move.

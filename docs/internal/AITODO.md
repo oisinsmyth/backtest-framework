@@ -22,7 +22,8 @@
   - **Concentration:** 2022 is 75% of the net.
   - **V2 (ROC) and V3 (OR)** are inside their nulls.
   - **Waiting on the principal** to choose: stop; the expected-profit filter on V1 (designed together, oracle first);
-    a vault pre-reg (count the vault's short-gamma days first); or the 2022 diagnosis.
+    a vault pre-reg (count the vault's short-gamma days first); or the 2022 diagnosis. **The 2022 diagnosis is done (D722):** V1 is positive in volatility units only in 2022 (ex-2022 +$3.55 net, Sharpe 0.25); no pre-trade variable identifies the 2022 state.
+  - **D722 (2026-10-01, the "Why 2022" diagnostic):** no pre-trade variable explains 2022 on any line (all UNEXPLAINED); HO and the MACD arm are SCALE, NQ F2 REGIME, ES F2 MIXED, D699 V1 positive in vol units only in 2022; the index lines' 2022 is January to mid-May (the base lost after 2022-05-16); SEPARATE day to day, but the ES F2 + NQ F2 + D699 book earns 77 % of its net in 2022 ([result](../decisions/D722-DIAG-RESULT-no-variable-explains-2022.md)).
 - **D700 RESULT (2026-09-30): the channel trend detector (D480's hand cell on rescaled ES bars) reads NEITHER on every
   clock.**
   - **No clock fades,** against my prediction.
