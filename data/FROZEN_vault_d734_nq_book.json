@@ -1,0 +1,34 @@
+{
+ "record": "D734 (09b7e2a0; A1 be558fb8; A2 b4169512)",
+ "runner": "scripts/vault_d734_nq_book.py",
+ "runner_sha256": "983f5c640d51a704ced731b481481cec058ce28b2efb468636cedd214a986317",
+ "prereg_sha256": "5c6c98f0deff58be2b454c685d22de1f785014a3a2a9a31af3f4d81a8f768cbd",
+ "hashed_unchanged": {
+  "scripts/vault_d716_nq_f2.py": "ca98b8f9104f68d2edbaad4d8e067a7499eb85c339e4e76a2a1a4932f9091d8c",
+  "scripts/vault_d680_nq_compression.py": "8bb8b98e6c5b5ebbcf55535ae29e5e14191319e113a68065dfdf9170b4ed7e8e",
+  "scripts/joint_d680_vault.py": "7eee33606f62c6c159ab639448323f5268783a8d7a7ed3b1f43421be70dc9ded",
+  "src/backtest_framework/validation/hurdle_p.py": "7b144578c34cef45b109f674d42c70bb1e6208eee8238af46f8ef4f5560a3cca",
+  "data/prop_venues.json": "147159e30f5bfc4c2c5c3c6244f389bc8b8ec5f47a405251e8f508d122a53d77"
+ },
+ "components_frozen": {
+  "D716": "data/FROZEN_vault_d716_nq_f2.json",
+  "D680": "data/FROZEN_vault_d680_nq_compression.json"
+ },
+ "known_answer_in_sample": {
+  "window": [
+   "2018-05-14",
+   "2023-12-29"
+  ],
+  "calendar_sessions": 1406,
+  "book_net": 10582.75782736471,
+  "book_sharpe": 1.400333315640667,
+  "F_trades": 271,
+  "F_net": 5628.310180243817,
+  "C_trades": 311,
+  "C_net": 4954.447647120894,
+  "reading": "ADMITTED"
+ },
+ "programme_slot": null,
+ "slot_note": "no slot: alpha stays with the components (slots 7 and 9); D734 s.0",
+ "frozen_utc": "2026-10-01T10:26:42Z"
+}

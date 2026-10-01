@@ -97,3 +97,11 @@
   MES, and D699 is closed.
 - **A declared book would have to state** its components (A, F, C), their sizes (whole micros, presumably one each), and
   its vault criterion. Its sizing should be read from the post hoc line, not the 1.22.
+
+## Correction (2026-10-01, found while freezing D734)
+
+**What was wrong:** §1 says "328 of its 387 trades fall in the window" for C. In fact 328 is the count to 2023-12-29,
+and 17 of those fall before the window opens on 2018-05-14.
+**The right count:** 311 C1 trades lie in the window.
+**What does not change:** every dollar figure, Sharpe and share above was computed on the windowed series, as the
+runner's daily aggregation filters to the window. Only the count in the sentence was wrong.
