@@ -213,7 +213,8 @@ def root_panel(raw: pd.DataFrame, root: str, a: int, L: int) -> dict[str, Any]:
 
 # ================================================================================ one root
 def score_root(ctx: dict[str, Any], g: str, root: str) -> dict[str, Any]:
-    roots, a, L = GROUPS[g]
+    _, a, L = GROUPS[g]
+    roots = ctx["groups"][g]
     mhi = L - TAIL
     pn = ctx["panels"][root]
     days, n = pn["days"], len(pn["days"])
@@ -330,9 +331,9 @@ def score_root(ctx: dict[str, Any], g: str, root: str) -> dict[str, Any]:
            "trades": int(len(d)), "in_market_share": float(len(d) / n), "mean_net": float(net.mean()) if len(d) else None,
            "mean_gross": float(gr.mean()) if len(d) else None, "gross_over_cost": float(gr.mean() / cost) if len(d) else None,
            "nw_t_net": B.nw_t(net) if len(d) >= 10 else None, "efficiency_gross": eff, "book": bk,
-           "C2a_mean": S.rot(float(net.mean()), c2a["mean_net"]), "C2a_eff": S.rot(eff, c2a["eff"]),
-           "C2b_mean": S.rot(float(net.mean()), c2b["mean_net"]), "by_abs_x": bins,
-           "S1": {"delta": dl, "beta": bt, "t_clustered": tcl, "rotation": S.rot(dl, null),
+           "C2a_mean": rot(float(net.mean()), c2a["mean_net"]), "C2a_eff": rot(eff, c2a["eff"]),
+           "C2b_mean": rot(float(net.mean()), c2b["mean_net"]), "by_abs_x": bins,
+           "S1": {"delta": dl, "beta": bt, "t_clustered": tcl, "rotation": rot(dl, null),
                   "delta_by_clock": [{"m": int(c), "beta": f[0], "delta": f[1]} for c, f in zip(clk, fits)]},
            "O1_room_gross": float(o1.mean()) if len(d) else None, "O2_drift_budget_gross": float(o2.mean()) if len(d) else None,
            "aligned": {"trades": int(aligned.sum()), "mean_net": float(net[aligned].mean()) if aligned.any() else None},
@@ -355,6 +356,7 @@ def readings(r: dict[str, Any], mech: bool, fam_p95: float) -> None:
     mr = r["matched_rows"] or {"gain": float("nan"), "t": float("nan")}
     ctr_ok = r["counter"]["trades"] < 30 or (r["counter"]["mean_gross"] or 0) >= 0
     tr = (mech and room and (r["mean_net"] or -1) > 0 and (r["nw_t_net"] or 0) >= 2
+          and r["C2a_mean"] is not None and r["C2a_eff"] is not None
           and r["C2a_mean"]["observed"] > r["C2a_mean"]["p95"] and r["C2a_eff"]["observed"] > r["C2a_eff"]["p95"]
           and mr["gain"] >= cost and (mr["t"] or 0) >= 2 and ctr_ok)
     yc = r["year_concentration"] or {}
@@ -377,18 +379,23 @@ def run(data_root: Path) -> int:
         for r in roots:
             panels[r] = root_panel(raw, r, a, L)
         P(f"[D739] {g}: days { {r: len(panels[r]['days']) for r in roots} }")
-    ctx = {"panels": panels}
-    jobs = [(g, r) for g, (roots, _, _) in GROUPS.items() for r in roots]
+    med = {g: float(np.median([len(panels[r]["days"]) for r in roots])) for g, (roots, _, _) in GROUPS.items()}
+    active = {g: tuple(r for r in roots if len(panels[r]["days"]) >= 0.5 * med[g]) for g, (roots, _, _) in GROUPS.items()}
+    dropped = {r: len(panels[r]["days"]) for g, (roots, _, _) in GROUPS.items() for r in roots if r not in active[g]}
+    P(f"[D739] A1 coverage gate: dropped {dropped}")
+    ctx = {"panels": panels, "groups": active}
+    jobs = [(g, r) for g, roots in active.items() for r in roots]
     with ThreadPoolExecutor(max_workers=6) as ex:
         res = dict(zip([r for _, r in jobs], ex.map(lambda a_: score_root(ctx, *a_), jobs)))
     P("[D739] roots scored; nulls ...")
-    hp = holm({r: v["S1"]["rotation"]["p_low"] for r, v in res.items()})
-    mech = {r: bool(v["S1"]["delta"] < 0 and v["S1"]["rotation"]["p_low"] <= 0.05 and v["S1"]["t_clustered"] <= -2
+    pl = {r: (v["S1"]["rotation"] or {"p_low": 1.0})["p_low"] for r, v in res.items()}
+    hp = holm(pl)
+    mech = {r: bool(v["S1"]["delta"] < 0 and pl[r] <= 0.05 and v["S1"]["t_clustered"] <= -2
                     and hp[r] <= 0.05) for r, v in res.items()}
     nmin = min(len(v["_null"]) for v in res.values())
     fam = np.nanmax(np.column_stack([v["_null"][:nmin] for v in res.values()]), axis=1)
     fam_p95 = float(np.nanquantile(fam, 0.95))
-    hc = holm({r: v["C2a_mean"]["p_high"] for r, v in res.items()})
+    hc = holm({r: (v["C2a_mean"] or {"p_high": 1.0})["p_high"] for r, v in res.items()})
     for r, v in res.items():
         v["S1"]["holm_p_low"] = hp[r]
         v["C2a_holm_p"] = hc[r]
@@ -411,12 +418,12 @@ def run(data_root: Path) -> int:
                   "transfers": [r for r in roots if res[r]["reading"].endswith("TRANSFERS")],
                   "go": [r for r in roots if res[r]["GO"]],
                   "delta_signs_negative": int(sum(res[r]["S1"]["delta"] < 0 for r in roots))}
-              for g, (roots, _, _) in GROUPS.items()}
+              for g, roots in active.items()}
     any_mech = any(mech.values())
     out = {"spec": "D739-STAGE-0-PRE-REG-does-breaking-from-the-group-transfer.md", "seal": f"nothing after {HI}",
            "family_p95": fam_p95, "groups": groups, "roots": res, "MECHANISM_anywhere": bool(any_mech),
            "GO_roots": [r for r in res if res[r]["GO"]],
-           "close_proposed": bool(not any_mech), "wall_min": (time.time() - t0) / 60}
+           "a1_dropped": dropped, "close_proposed": bool(not any_mech), "wall_min": (time.time() - t0) / 60}
     OUT.write_text(json.dumps(out, indent=1, default=Z._json) + "\n", encoding="utf-8", newline="\n")
     P(f"[D739] mechanism: { {g: v['mechanism'] for g, v in groups.items()} }; transfers "
       f"{ {g: v['transfers'] for g, v in groups.items()} }; GO {out['GO_roots']}; {out['wall_min']:.1f} min")
@@ -425,6 +432,11 @@ def run(data_root: Path) -> int:
 
 def holm(ps: dict[str, float]) -> dict[str, float]:
     return S.holm(ps)
+
+
+def rot(obs: float, null: np.ndarray) -> dict[str, Any] | None:
+    """D735's rot; a null with no finite draw reports None (D739-A1) instead of stopping the run."""
+    return S.rot(obs, null) if np.isfinite(np.asarray(null, float)).any() else None
 
 
 # ================================================================================ self-test (synthetic only)
