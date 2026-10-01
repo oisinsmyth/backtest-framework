@@ -1,0 +1,1031 @@
+{
+ "spec": "D738-A1",
+ "seal": "nothing on or after 2024-01-01; aggregates only",
+ "cost": 4.06712110611138,
+ "bar_usd": 8.13424221222276,
+ "burn_in_trades": 100,
+ "window_start": "2017-10-30",
+ "window_trades": 781,
+ "window_sessions": 1510,
+ "leak_canaries_fired": [
+  "F1_VOL",
+  "F2_VOL_GAMMA",
+  "F3_VOL_IVRV",
+  "F4_VOL_RELVOL",
+  "F5_ALL"
+ ],
+ "d691": {
+  "forecast_and_tier_canaries": [
+   "forecast leak",
+   "tier leak"
+  ],
+  "sessions": [
+   "2016-01-04",
+   "2023-12-29"
+  ],
+  "n": 1997
+ },
+ "gate1": {
+  "mean_gross": 25.071062740076826,
+  "nw_t": 2.959745788462499,
+  "holds": true
+ },
+ "take_all": {
+  "trades": 781,
+  "share": 0.5172185430463576,
+  "total_net": 16404.078416127017,
+  "mean_net": 21.00394163396545,
+  "mean_gross": 25.071062740076826,
+  "net_sharpe": 1.0012112687139976,
+  "net_sortino": 1.4504777023917756,
+  "gross_sharpe": 1.194139969834766,
+  "gross_sortino": 1.7504054923391428,
+  "max_dd": 4130.9766643344565,
+  "trade_distribution_net": {
+   "trades": 781,
+   "mean": 21.003941633965425,
+   "median": 13.43287889388862,
+   "win_rate": 0.5403329065300896,
+   "payoff": 1.0931111737867325,
+   "skew": -0.36032545584994885,
+   "kurtosis": 6.4142183730456805,
+   "trim_k_each_side": 7,
+   "mean_ex_top1pct": 13.744894397764583,
+   "mean_ex_bottom1pct": 29.547865973991993,
+   "mean_trimmed_both": 22.300545125961637
+  },
+  "net_by_year": {
+   "2017": 81.52333566554961,
+   "2018": 2132.482436115526,
+   "2019": -508.49422821892495,
+   "2020": 2731.6166783277495,
+   "2021": 3267.8345607199612,
+   "2022": 6324.6400139932975,
+   "2023": 2374.475619523855
+  },
+  "trades_by_year": {
+   "2017": 22,
+   "2018": 112,
+   "2019": 134,
+   "2020": 110,
+   "2021": 144,
+   "2022": 132,
+   "2023": 127
+  },
+  "standard_with_abstention": {
+   "traded_years": [
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023"
+   ],
+   "abstention_years": [],
+   "ex2": 6811.603841413756,
+   "ex2_per_year": 1362.320768282751,
+   "years_positive": 6,
+   "years_needed": 5,
+   "best_two": [
+    "2021",
+    "2022"
+   ],
+   "label": "EARNS"
+  }
+ },
+ "filters": {
+  "F1_VOL": {
+   "inputs": [
+    "sigma_usd"
+   ],
+   "missing_input_trades": 0,
+   "taken": 510,
+   "take_rate": 0.6530089628681178,
+   "book": {
+    "trades": 510,
+    "share": 0.33774834437086093,
+    "total_net": 14314.2682358832,
+    "mean_net": 28.06719261937882,
+    "mean_gross": 32.134313725490195,
+    "net_sharpe": 0.9156432711210679,
+    "net_sortino": 1.3193250443516495,
+    "gross_sharpe": 1.0472641408373473,
+    "gross_sortino": 1.5252119567184745,
+    "max_dd": 4130.976664334454,
+    "trade_distribution_net": {
+     "trades": 510,
+     "mean": 28.067192619378787,
+     "median": 43.93287889388862,
+     "win_rate": 0.5627450980392157,
+     "payoff": 1.0146328806956821,
+     "skew": -0.40724417835304966,
+     "kurtosis": 5.01054957557072,
+     "trim_k_each_side": 5,
+     "mean_ex_top1pct": 19.56060166616583,
+     "mean_ex_bottom1pct": 37.902185824581686,
+     "mean_trimmed_both": 29.408878893888613
+    },
+    "net_by_year": {
+     "2017": 0.0,
+     "2018": 616.0603045144406,
+     "2019": 361.2986366816658,
+     "2020": 1369.9591004499766,
+     "2021": 3267.8345607199612,
+     "2022": 6324.6400139932975,
+     "2023": 2374.475619523855
+    },
+    "trades_by_year": {
+     "2017": 0,
+     "2018": 14,
+     "2019": 3,
+     "2020": 90,
+     "2021": 144,
+     "2022": 132,
+     "2023": 127
+    },
+    "standard_with_abstention": {
+     "traded_years": [
+      "2018",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+     ],
+     "abstention_years": [
+      "2017",
+      "2019"
+     ],
+     "ex2": 4360.495024488272,
+     "ex2_per_year": 1453.4983414960907,
+     "years_positive": 5,
+     "years_needed": 4,
+     "best_two": [
+      "2021",
+      "2022"
+     ],
+     "label": "EARNS"
+    }
+   },
+   "rotation": {
+    "S1_mean_net": {
+     "observed": 28.06719261937882,
+     "p": 0.056338028169014086,
+     "null_p50": 21.376996540947445,
+     "null_p95": 28.339349482123918,
+     "offsets": 781
+    },
+    "S2_efficiency": {
+     "observed": 0.15145718101205577,
+     "p": 0.3866837387964149,
+     "null_p50": 0.14679906682372595,
+     "null_p95": 0.19245267843744746,
+     "offsets": 781
+    }
+   },
+   "calibration": {
+    "slope": 0.48606383565278105,
+    "intercept": 18.214923038298004,
+    "bins": [
+     {
+      "bin": 0,
+      "n": 78,
+      "mean_projected": -0.13181051241742275,
+      "mean_realized": 15.66025641025641
+     },
+     {
+      "bin": 1,
+      "n": 78,
+      "mean_projected": 2.4476116061219053,
+      "mean_realized": 16.935897435897434
+     },
+     {
+      "bin": 2,
+      "n": 79,
+      "mean_projected": 4.240434319941819,
+      "mean_realized": 2.6139240506329116
+     },
+     {
+      "bin": 3,
+      "n": 77,
+      "mean_projected": 8.728613044918253,
+      "mean_realized": 31.51948051948052
+     },
+     {
+      "bin": 4,
+      "n": 78,
+      "mean_projected": 13.358704279472231,
+      "mean_realized": 45.37820512820513
+     },
+     {
+      "bin": 5,
+      "n": 79,
+      "mean_projected": 15.544603580606147,
+      "mean_realized": 25.4873417721519
+     },
+     {
+      "bin": 6,
+      "n": 77,
+      "mean_projected": 18.233705459559918,
+      "mean_realized": 6.746753246753247
+     },
+     {
+      "bin": 7,
+      "n": 78,
+      "mean_projected": 21.42692911921385,
+      "mean_realized": 43.32692307692308
+     },
+     {
+      "bin": 8,
+      "n": 78,
+      "mean_projected": 25.43254348815947,
+      "mean_realized": 54.07692307692308
+     },
+     {
+      "bin": 9,
+      "n": 79,
+      "mean_projected": 31.640183524410375,
+      "mean_realized": 9.29746835443038
+     }
+    ]
+   },
+   "accuracy": {
+    "auc_vs_oracle": 0.5139341773488759,
+    "spearman_projection_gross": 0.06979364335347674,
+    "capture": {
+     "filter_net": 14314.268235883197,
+     "oracle_net": 73974.674893221,
+     "take_all_net": 16404.078416127017,
+     "trades": 510,
+     "mean_net_per_trade": 28.06719261937882,
+     "capture_of_oracle": 0.19350227975378298
+    },
+    "confusion": {
+     "tp": 287,
+     "fp": 223,
+     "fn": 135,
+     "tn": 136,
+     "precision": 0.5627450980392157,
+     "recall": 0.6800947867298578,
+     "f1": 0.6158798283261803,
+     "accuracy": 0.5416133162612036,
+     "balanced_accuracy": 0.5294624351476587,
+     "base_rate": 0.5403329065300896,
+     "take_rate": 0.6530089628681178
+    }
+   },
+   "holm_p_S1": 0.22535211267605634,
+   "gate2": false,
+   "gate3": true,
+   "size_carried": false,
+   "reading": "NOT SUPPORTED"
+  },
+  "F2_VOL_GAMMA": {
+   "inputs": [
+    "sigma_usd",
+    "gamma_pct"
+   ],
+   "missing_input_trades": 0,
+   "taken": 539,
+   "take_rate": 0.6901408450704225,
+   "book": {
+    "trades": 539,
+    "share": 0.356953642384106,
+    "total_net": 13984.82172380597,
+    "mean_net": 25.94586590687564,
+    "mean_gross": 30.01298701298701,
+    "net_sharpe": 0.9047355502155204,
+    "net_sortino": 1.301227285387749,
+    "gross_sharpe": 1.045522212204184,
+    "gross_sortino": 1.5202883829156857,
+    "max_dd": 4130.976664334454,
+    "trade_distribution_net": {
+     "trades": 539,
+     "mean": 25.945865906875618,
+     "median": 40.93287889388862,
+     "win_rate": 0.5658627087198516,
+     "payoff": 0.9941511903670078,
+     "skew": -0.39848600722259736,
+     "kurtosis": 5.224977623493866,
+     "trim_k_each_side": 5,
+     "mean_ex_top1pct": 18.071455672914823,
+     "mean_ex_bottom1pct": 35.16040698377624,
+     "mean_trimmed_both": 27.298663392943435
+    },
+    "net_by_year": {
+     "2017": 0.0,
+     "2018": -427.58757088112327,
+     "2019": -193.5574186239033,
+     "2020": 3345.8316748294246,
+     "2021": 3209.9153150094144,
+     "2022": 6324.6400139932975,
+     "2023": 1725.579709478857
+    },
+    "trades_by_year": {
+     "2017": 0,
+     "2018": 46,
+     "2019": 53,
+     "2020": 77,
+     "2021": 113,
+     "2022": 132,
+     "2023": 118
+    },
+    "standard_with_abstention": {
+     "traded_years": [
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+     ],
+     "abstention_years": [
+      "2017"
+     ],
+     "ex2": 4314.350034983245,
+     "ex2_per_year": 1078.5875087458112,
+     "years_positive": 4,
+     "years_needed": 4,
+     "best_two": [
+      "2020",
+      "2022"
+     ],
+     "label": "EARNS"
+    }
+   },
+   "rotation": {
+    "S1_mean_net": {
+     "observed": 25.94586590687564,
+     "p": 0.1882202304737516,
+     "null_p50": 21.000133068285656,
+     "null_p95": 29.69493826309085,
+     "offsets": 781
+    },
+    "S2_efficiency": {
+     "observed": 0.14862009407614288,
+     "p": 0.49551856594110116,
+     "null_p50": 0.14810246806987193,
+     "null_p95": 0.2005029355322166,
+     "offsets": 781
+    }
+   },
+   "calibration": {
+    "slope": -0.07003806970742563,
+    "intercept": 26.55073635995916,
+    "bins": [
+     {
+      "bin": 0,
+      "n": 78,
+      "mean_projected": -2.3702189020881352,
+      "mean_realized": 4.57051282051282
+     },
+     {
+      "bin": 1,
+      "n": 78,
+      "mean_projected": 2.091301643319029,
+      "mean_realized": 26.19871794871795
+     },
+     {
+      "bin": 2,
+      "n": 79,
+      "mean_projected": 5.985037121611603,
+      "mean_realized": 18.77848101265823
+     },
+     {
+      "bin": 3,
+      "n": 77,
+      "mean_projected": 9.437293087443102,
+      "mean_realized": -6.435064935064935
+     },
+     {
+      "bin": 4,
+      "n": 78,
+      "mean_projected": 12.766173974907101,
+      "mean_realized": 23.32051282051282
+     },
+     {
+      "bin": 5,
+      "n": 79,
+      "mean_projected": 18.433373196777385,
+      "mean_realized": 22.879746835443036
+     },
+     {
+      "bin": 6,
+      "n": 77,
+      "mean_projected": 25.38832258627394,
+      "mean_realized": 44.07142857142857
+     },
+     {
+      "bin": 7,
+      "n": 78,
+      "mean_projected": 33.008226837463916,
+      "mean_realized": 63.68589743589744
+     },
+     {
+      "bin": 8,
+      "n": 78,
+      "mean_projected": 43.226345569895855,
+      "mean_realized": 59.044871794871796
+     },
+     {
+      "bin": 9,
+      "n": 79,
+      "mean_projected": 62.89907487500215,
+      "mean_realized": -5.069620253164557
+     }
+    ]
+   },
+   "accuracy": {
+    "auc_vs_oracle": 0.5403899721448467,
+    "spearman_projection_gross": 0.09734186951329388,
+    "capture": {
+     "filter_net": 13984.82172380597,
+     "oracle_net": 73974.674893221,
+     "take_all_net": 16404.078416127017,
+     "trades": 539,
+     "mean_net_per_trade": 25.94586590687564,
+     "capture_of_oracle": 0.18904877573294385
+    },
+    "confusion": {
+     "tp": 305,
+     "fp": 234,
+     "fn": 117,
+     "tn": 125,
+     "precision": 0.5658627087198516,
+     "recall": 0.7227488151658767,
+     "f1": 0.6347554630593132,
+     "accuracy": 0.5505761843790012,
+     "balanced_accuracy": 0.5354691151038298,
+     "base_rate": 0.5403329065300896,
+     "take_rate": 0.6901408450704225
+    }
+   },
+   "holm_p_S1": 0.3764404609475032,
+   "gate2": false,
+   "gate3": true,
+   "size_carried": false,
+   "reading": "NOT SUPPORTED"
+  },
+  "F3_VOL_IVRV": {
+   "inputs": [
+    "sigma_usd",
+    "ivrv"
+   ],
+   "missing_input_trades": 16,
+   "taken": 491,
+   "take_rate": 0.6286811779769527,
+   "book": {
+    "trades": 491,
+    "share": 0.3251655629139073,
+    "total_net": 16227.543536899313,
+    "mean_net": 33.049986836862146,
+    "mean_gross": 37.117107942973526,
+    "net_sharpe": 1.1783376981508162,
+    "net_sortino": 1.7916898471884668,
+    "gross_sharpe": 1.3213699303932285,
+    "gross_sortino": 2.0348105966564236,
+    "max_dd": 2606.641058803898,
+    "trade_distribution_net": {
+     "trades": 491,
+     "mean": 33.04998683686216,
+     "median": 20.93287889388862,
+     "win_rate": 0.5458248472505092,
+     "payoff": 1.1903580363524386,
+     "skew": -0.24973046418584102,
+     "kurtosis": 5.51213033360291,
+     "trim_k_each_side": 4,
+     "mean_ex_top1pct": 26.327129407235653,
+     "mean_ex_bottom1pct": 40.707006203950236,
+     "mean_trimmed_both": 33.99188510506877
+    },
+    "net_by_year": {
+     "2017": -11.634242212222759,
+     "2018": 2031.0768235883197,
+     "2019": -361.8560553055692,
+     "2020": 3382.935764784427,
+     "2021": 2900.4289481927563,
+     "2022": 6286.281072797193,
+     "2023": 2000.3112250544123
+    },
+    "trades_by_year": {
+     "2017": 2,
+     "2018": 51,
+     "2019": 50,
+     "2020": 68,
+     "2021": 83,
+     "2022": 115,
+     "2023": 122
+    },
+    "standard_with_abstention": {
+     "traded_years": [
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+     ],
+     "abstention_years": [
+      "2017"
+     ],
+     "ex2": 6569.960941529919,
+     "ex2_per_year": 1642.4902353824798,
+     "years_positive": 5,
+     "years_needed": 4,
+     "best_two": [
+      "2020",
+      "2022"
+     ],
+     "label": "EARNS"
+    }
+   },
+   "rotation": {
+    "S1_mean_net": {
+     "observed": 33.049986836862146,
+     "p": 0.028169014084507043,
+     "null_p50": 21.072899260487407,
+     "null_p95": 31.519844270670692,
+     "offsets": 781
+    },
+    "S2_efficiency": {
+     "observed": 0.19852937171491597,
+     "p": 0.10243277848911651,
+     "null_p50": 0.1485700323875334,
+     "null_p95": 0.2108697960786128,
+     "offsets": 781
+    }
+   },
+   "calibration": {
+    "slope": 0.7129667444171502,
+    "intercept": 12.449259261886878,
+    "bins": [
+     {
+      "bin": 0,
+      "n": 77,
+      "mean_projected": -11.8238778043592,
+      "mean_realized": 10.766233766233766
+     },
+     {
+      "bin": 1,
+      "n": 76,
+      "mean_projected": -3.3825494521267707,
+      "mean_realized": 39.1578947368421
+     },
+     {
+      "bin": 2,
+      "n": 77,
+      "mean_projected": 2.35015576021569,
+      "mean_realized": 9.311688311688311
+     },
+     {
+      "bin": 3,
+      "n": 76,
+      "mean_projected": 8.12253263694621,
+      "mean_realized": -10.401315789473685
+     },
+     {
+      "bin": 4,
+      "n": 76,
+      "mean_projected": 13.919342909443655,
+      "mean_realized": 32.99342105263158
+     },
+     {
+      "bin": 5,
+      "n": 77,
+      "mean_projected": 18.397725515814745,
+      "mean_realized": 63.08441558441559
+     },
+     {
+      "bin": 6,
+      "n": 76,
+      "mean_projected": 24.474222232249662,
+      "mean_realized": -22.098684210526315
+     },
+     {
+      "bin": 7,
+      "n": 77,
+      "mean_projected": 34.403199008780895,
+      "mean_realized": 5.6103896103896105
+     },
+     {
+      "bin": 8,
+      "n": 76,
+      "mean_projected": 46.72217330075983,
+      "mean_realized": 89.72368421052632
+     },
+     {
+      "bin": 9,
+      "n": 77,
+      "mean_projected": 75.06308338455673,
+      "mean_realized": 54.857142857142854
+     }
+    ]
+   },
+   "accuracy": {
+    "auc_vs_oracle": 0.516254339991287,
+    "spearman_projection_gross": 0.07985642171266585,
+    "capture": {
+     "filter_net": 16227.543536899315,
+     "oracle_net": 73974.674893221,
+     "take_all_net": 16404.078416127017,
+     "trades": 491,
+     "mean_net_per_trade": 33.049986836862146,
+     "capture_of_oracle": 0.2193662028298606
+    },
+    "confusion": {
+     "tp": 268,
+     "fp": 223,
+     "fn": 154,
+     "tn": 136,
+     "precision": 0.5458248472505092,
+     "recall": 0.6350710900473934,
+     "f1": 0.5870755750273823,
+     "accuracy": 0.5172855313700384,
+     "balanced_accuracy": 0.5069505868064265,
+     "base_rate": 0.5403329065300896,
+     "take_rate": 0.6286811779769527
+    }
+   },
+   "holm_p_S1": 0.14084507042253522,
+   "gate2": false,
+   "gate3": true,
+   "size_carried": false,
+   "reading": "NOT SUPPORTED"
+  },
+  "F4_VOL_RELVOL": {
+   "inputs": [
+    "sigma_usd",
+    "relvol"
+   ],
+   "missing_input_trades": 0,
+   "taken": 589,
+   "take_rate": 0.7541613316261203,
+   "book": {
+    "trades": 589,
+    "share": 0.39006622516556294,
+    "total_net": 13255.965668500401,
+    "mean_net": 22.505883987267236,
+    "mean_gross": 26.573005093378608,
+    "net_sharpe": 0.8372909003313417,
+    "net_sortino": 1.2060433168668632,
+    "gross_sharpe": 0.9877539695874615,
+    "gross_sortino": 1.4385900784056274,
+    "max_dd": 4186.839536231709,
+    "trade_distribution_net": {
+     "trades": 589,
+     "mean": 22.50588398726722,
+     "median": 19.93287889388862,
+     "win_rate": 0.5382003395585738,
+     "payoff": 1.0828407690303823,
+     "skew": -0.3622974729336505,
+     "kurtosis": 5.467735111920459,
+     "trim_k_each_side": 5,
+     "mean_ex_top1pct": 15.102399441833818,
+     "mean_ex_bottom1pct": 30.962844647313283,
+     "mean_trimmed_both": 23.568457477653734
+    },
+    "net_by_year": {
+     "2017": 0.0,
+     "2018": 18.456214559438195,
+     "2019": -979.6615085789058,
+     "2020": 2369.6536471766394,
+     "2021": 3148.401681826073,
+     "2022": 6324.6400139932975,
+     "2023": 2374.475619523855
+    },
+    "trades_by_year": {
+     "2017": 0,
+     "2018": 23,
+     "2019": 62,
+     "2020": 102,
+     "2021": 143,
+     "2022": 132,
+     "2023": 127
+    },
+    "standard_with_abstention": {
+     "traded_years": [
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+     ],
+     "abstention_years": [
+      "2017"
+     ],
+     "ex2": 3782.923972681027,
+     "ex2_per_year": 945.7309931702567,
+     "years_positive": 5,
+     "years_needed": 4,
+     "best_two": [
+      "2021",
+      "2022"
+     ],
+     "label": "EARNS"
+    }
+   },
+   "rotation": {
+    "S1_mean_net": {
+     "observed": 22.505883987267236,
+     "p": 0.37772087067861715,
+     "null_p50": 21.33355801103633,
+     "null_p95": 27.126597060272328,
+     "offsets": 781
+    },
+    "S2_efficiency": {
+     "observed": 0.13650893328274702,
+     "p": 0.7221510883482715,
+     "null_p50": 0.14709275398369198,
+     "null_p95": 0.1910702836519001,
+     "offsets": 781
+    }
+   },
+   "calibration": {
+    "slope": -0.11477069908749195,
+    "intercept": 27.499574487253078,
+    "bins": [
+     {
+      "bin": 0,
+      "n": 78,
+      "mean_projected": -0.9752879634713255,
+      "mean_realized": 17.71794871794872
+     },
+     {
+      "bin": 1,
+      "n": 78,
+      "mean_projected": 5.443097627413599,
+      "mean_realized": 23.942307692307693
+     },
+     {
+      "bin": 2,
+      "n": 78,
+      "mean_projected": 8.375670096547937,
+      "mean_realized": 6.134615384615385
+     },
+     {
+      "bin": 3,
+      "n": 78,
+      "mean_projected": 12.422658273132019,
+      "mean_realized": 11.820512820512821
+     },
+     {
+      "bin": 4,
+      "n": 78,
+      "mean_projected": 17.201110637748727,
+      "mean_realized": 30.564102564102566
+     },
+     {
+      "bin": 5,
+      "n": 78,
+      "mean_projected": 22.334258482864744,
+      "mean_realized": 39.083333333333336
+     },
+     {
+      "bin": 6,
+      "n": 78,
+      "mean_projected": 26.913725913624564,
+      "mean_realized": 34.11538461538461
+     },
+     {
+      "bin": 7,
+      "n": 78,
+      "mean_projected": 31.461226254564263,
+      "mean_realized": 23.858974358974358
+     },
+     {
+      "bin": 8,
+      "n": 78,
+      "mean_projected": 37.332800596937496,
+      "mean_realized": 60.6025641025641
+     },
+     {
+      "bin": 9,
+      "n": 79,
+      "mean_projected": 50.708747850288105,
+      "mean_realized": 3.151898734177215
+     }
+    ]
+   },
+   "accuracy": {
+    "auc_vs_oracle": 0.5156239686332493,
+    "spearman_projection_gross": 0.06920985061182672,
+    "capture": {
+     "filter_net": 13255.965668500401,
+     "oracle_net": 73974.674893221,
+     "take_all_net": 16404.078416127017,
+     "trades": 589,
+     "mean_net_per_trade": 22.505883987267236,
+     "capture_of_oracle": 0.17919599765236913
+    },
+    "confusion": {
+     "tp": 317,
+     "fp": 272,
+     "fn": 105,
+     "tn": 87,
+     "precision": 0.5382003395585738,
+     "recall": 0.7511848341232228,
+     "f1": 0.6271018793273986,
+     "accuracy": 0.5172855313700384,
+     "balanced_accuracy": 0.4967623334961518,
+     "base_rate": 0.5403329065300896,
+     "take_rate": 0.7541613316261203
+    }
+   },
+   "holm_p_S1": 0.37772087067861715,
+   "gate2": false,
+   "gate3": true,
+   "size_carried": false,
+   "reading": "NOT SUPPORTED"
+  },
+  "F5_ALL": {
+   "inputs": [
+    "sigma_usd",
+    "gamma_pct",
+    "ivrv",
+    "relvol"
+   ],
+   "missing_input_trades": 16,
+   "taken": 566,
+   "take_rate": 0.7247119078104993,
+   "book": {
+    "trades": 566,
+    "share": 0.3748344370860927,
+    "total_net": 16095.509453940962,
+    "mean_net": 28.437295855019368,
+    "mean_gross": 32.504416961130744,
+    "net_sharpe": 1.0649791051656334,
+    "net_sortino": 1.5607451285387886,
+    "gross_sharpe": 1.2158942964127788,
+    "gross_sortino": 1.8026739957261808,
+    "max_dd": 3319.4095432283457,
+    "trade_distribution_net": {
+     "trades": 566,
+     "mean": 28.437295855019368,
+     "median": 33.68287889388862,
+     "win_rate": 0.5600706713780919,
+     "payoff": 1.062968181587769,
+     "skew": -0.3753307875319252,
+     "kurtosis": 5.714227899730653,
+     "trim_k_each_side": 5,
+     "mean_ex_top1pct": 20.964073189788813,
+     "mean_ex_bottom1pct": 37.2332354001275,
+     "mean_trimmed_both": 29.77190767086705
+    },
+    "net_by_year": {
+     "2017": 12.93287889388862,
+     "2018": 1577.0028858905375,
+     "2019": -576.1984774277969,
+     "2020": 2756.764553723313,
+     "2021": 3455.5495572216373,
+     "2022": 6922.2441039483,
+     "2023": 1947.2139516910802
+    },
+    "trades_by_year": {
+     "2017": 1,
+     "2018": 67,
+     "2019": 70,
+     "2020": 78,
+     "2021": 111,
+     "2022": 123,
+     "2023": 116
+    },
+    "standard_with_abstention": {
+     "traded_years": [
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+     ],
+     "abstention_years": [
+      "2017"
+     ],
+     "ex2": 5704.782913877134,
+     "ex2_per_year": 1426.1957284692835,
+     "years_positive": 5,
+     "years_needed": 4,
+     "best_two": [
+      "2021",
+      "2022"
+     ],
+     "label": "EARNS"
+    }
+   },
+   "rotation": {
+    "S1_mean_net": {
+     "observed": 28.437295855019368,
+     "p": 0.08194622279129321,
+     "null_p50": 20.96468101402997,
+     "null_p95": 29.44149196809357,
+     "offsets": 781
+    },
+    "S2_efficiency": {
+     "observed": 0.17112759574913378,
+     "p": 0.22535211267605634,
+     "null_p50": 0.1464886314160925,
+     "null_p95": 0.19906855006163657,
+     "offsets": 781
+    }
+   },
+   "calibration": {
+    "slope": 0.23328777145797394,
+    "intercept": 20.973868155678222,
+    "bins": [
+     {
+      "bin": 0,
+      "n": 77,
+      "mean_projected": -7.747263998964723,
+      "mean_realized": 26.0974025974026
+     },
+     {
+      "bin": 1,
+      "n": 76,
+      "mean_projected": 2.5783256561195413,
+      "mean_realized": 10.30921052631579
+     },
+     {
+      "bin": 2,
+      "n": 77,
+      "mean_projected": 7.837208436914542,
+      "mean_realized": -19.142857142857142
+     },
+     {
+      "bin": 3,
+      "n": 76,
+      "mean_projected": 12.467763832144103,
+      "mean_realized": 14.493421052631579
+     },
+     {
+      "bin": 4,
+      "n": 76,
+      "mean_projected": 17.97213575891735,
+      "mean_realized": 63.00657894736842
+     },
+     {
+      "bin": 5,
+      "n": 77,
+      "mean_projected": 23.655410192675276,
+      "mean_realized": 24.61038961038961
+     },
+     {
+      "bin": 6,
+      "n": 76,
+      "mean_projected": 32.66353753591794,
+      "mean_realized": 43.36184210526316
+     },
+     {
+      "bin": 7,
+      "n": 77,
+      "mean_projected": 42.04246006628728,
+      "mean_realized": 47.85064935064935
+     },
+     {
+      "bin": 8,
+      "n": 76,
+      "mean_projected": 56.6121975600468,
+      "mean_realized": 37.9078947368421
+     },
+     {
+      "bin": 9,
+      "n": 77,
+      "mean_projected": 83.33600334811746,
+      "mean_realized": 25.025974025974026
+     }
+    ]
+   },
+   "accuracy": {
+    "auc_vs_oracle": 0.5400038284333787,
+    "spearman_projection_gross": 0.10090078481078277,
+    "capture": {
+     "filter_net": 16095.509453940962,
+     "oracle_net": 73974.674893221,
+     "take_all_net": 16404.078416127017,
+     "trades": 566,
+     "mean_net_per_trade": 28.437295855019368,
+     "capture_of_oracle": 0.21758134763247125
+    },
+    "confusion": {
+     "tp": 317,
+     "fp": 249,
+     "fn": 105,
+     "tn": 110,
+     "precision": 0.5600706713780919,
+     "recall": 0.7511848341232228,
+     "f1": 0.6417004048582996,
+     "accuracy": 0.5467349551856594,
+     "balanced_accuracy": 0.5287957596799958,
+     "base_rate": 0.5403329065300896,
+     "take_rate": 0.7247119078104993
+    }
+   },
+   "holm_p_S1": 0.24583866837387963,
+   "gate2": false,
+   "gate3": true,
+   "size_carried": false,
+   "reading": "NOT SUPPORTED"
+  }
+ },
+ "wall_min": 0.7218911051750183
+}
