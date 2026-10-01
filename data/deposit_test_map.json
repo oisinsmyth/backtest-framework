@@ -1172,7 +1172,7 @@
       "claim": {
         "kind": "banner",
         "file": "tests/unit/test_programme.py",
-        "line": 276,
+        "line": 280,
         "symbol": null
       },
       "covered_via": null,
@@ -1189,7 +1189,7 @@
       "claim": {
         "kind": "banner",
         "file": "tests/unit/test_programme.py",
-        "line": 458,
+        "line": 462,
         "symbol": null
       },
       "covered_via": null,

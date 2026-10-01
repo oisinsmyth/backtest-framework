@@ -265,6 +265,26 @@
     α; the same holds for D716 and D680.
   - **When it runs:** after the D462 rebuild, in JOINT_RUN_CHECKLIST §3. It shares NQ's 2024+ sessions with D716.
   - **Ledger:** entry #6, PROVISIONAL.
+- [ ] **AFTER THE JOINT RUN: state-based allocation** (the principal, 2026-10-01: "Add that to the AITODO for after the
+  vault run if we still have components then (We will)").
+  - **The source:** the principal's deposit `User-Doc-Deposit/STATE_BASED_ALLOCATION.md` and its review
+    `docs/internal/STATE_BASED_ALLOCATION_REVIEW.md`. Follow the review's §5.
+  - **Step 0, the binding-constraint check** (in-sample, no model):
+    - put the surviving components' daily P&L on one calendar;
+    - count the overlaps;
+    - run hurdle P on the one-MNQ-each book (P2, P3a, P3b at $50k);
+    - verify each venue's contract limit.
+    - **If P3b holds, there is nothing to allocate.**
+  - **Step 1, per-component gates** (with the principal, oracle first):
+    - the realised-volatility percentile + trend-strength baseline before any HMM;
+    - HMM: filtered probabilities only, 2–3 states, refit stability checked;
+    - the label is expected net or day-risk, not P(win);
+    - nulls by Σg/Σ|g| (D711-A1).
+  - **Step 2, a book risk rule against the fixed "all on, one MNQ each" rule** on P(pass) / P3b, only if step 0 says
+    the barrier binds.
+  - **Step 3, confirmation on forward sessions only** (after 2026-09-18), because the 2024+ NQ slice is spent by D716
+    and D737.
+  - **Dropped from the deposit's plan:** RL, exit modulation as the first step, and P(win) as the label.
 - **Frozen and waiting:** the settlement ledger's NG Stage A (`data/FROZEN_ledger_stage_a_ng.json`), and **D649's
   NG projected-profit line** (`data/FROZEN_ledger_vault_pp_ng.json`, programme slot 8): one MNG when the projected
   move clears 2 × $5, scored on D630's vault trade table (`scripts/ledger_vault_pp_ng.py --vault`, on the principal's
