@@ -38,8 +38,9 @@ Per session (zero on days a line did not trade), one MNQ each.
   years earn less.
 - **Within years, calm sessions are no worse.** In 2022 they were far better (Δ −\$93). Without 2022 the contrast is
   small and of either sign (−\$2.6 to +\$11.7).
-- **The correction this record makes:** the earlier split (2026-10-01, in chat and on the vault portfolio page) said
-  the book loses −\$3.44 a day in the "calm bull". That figure came from a three-variable label (volatility cut over
+- **The correction this record makes:** the earlier split (2026-10-01, in chat) said the book loses −\$3.44 a day in
+  the "calm bull". (The vault portfolio page says only that low-volatility days carry 3% of the money, a whole-sample
+  tercile, which stands.) That figure came from a three-variable label (volatility cut over
   the whole sample, the S&P above its 200-day average, long gamma above its median) chosen after looking. On the
   pre-registered single-variable walk-forward gate, the book is positive in calm markets. The calm bull is
   under-earning, not losing, and **standing aside would cost money**.
@@ -94,5 +95,5 @@ Per session (zero on days a line did not trade), one MNQ each.
 ## 4. Next
 
 - **The readings are A NOT SUPPORTED and B NOTHING.** Closing them is the principal's call (R15).
-- **To correct:** the vault portfolio page's "the book loses in the calm bull" line is superseded by A1: the calm
-  sessions earn +\$5.11 each.
+- **Superseded:** the chat claim that the book loses in the calm bull. On the walk-forward gate, calm sessions earn
+  +\$5.11 each.
