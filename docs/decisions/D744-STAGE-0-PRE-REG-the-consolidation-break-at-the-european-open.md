@@ -178,3 +178,17 @@ minutes, run-once. Nothing is fanned out.
   the explicit word). Nothing is admitted.
 - **NOT SUPPORTED:** recorded. The C1 comparison's ideas are then spent; idea 3 (FOMC 14:00) was described by its
   own author as underpowered.
+
+## A1 — the C1 known answer (2026-10-01, committed before the scored run)
+
+**What happened.** The first `--run` stopped inside its loader, at the first assertion, before any D744 trade was
+built or scored, and wrote no output.
+- `V.known_answer` compares against D672's own window, which runs to 2025-02-28 (387 trades).
+- Under D720's 2024-01-01 cut, the chain correctly holds 328.
+
+**The fix.** The known answer becomes:
+- **D672's published per-year C1 net** (its RESULT §3, the fill-tick line, to one decimal): +5.3 / +0.7 / +5.8 /
+  +10.0 / +12.0 / +4.1 for 2018–2023;
+- **plus the 328-trade count.**
+
+It was checked to match exactly on the C1 diagnostic's saved frame before this amendment. Nothing else changes.
