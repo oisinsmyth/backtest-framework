@@ -13,7 +13,17 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 738.**
+- **Next free number: 740.**
+  - D738 is the other session's.
+  - **D739 is this session's transfer test of D735's mechanism** (the principal: "Lets do 3. D735's mechanism on other
+    roots"). The rule is D737's, unchanged, on 25 roots (metals, energy, rates, FX, grains; PA dropped by A1's coverage
+    gate).
+  - **No root reads MECHANISM:** δ < 0 on 12 of 25, which is chance; the only p_low < 0.05 is RB's 0.027, at Holm
+    0.67.
+  - **None TRANSFERS, none reaches GO.** All five micros (GC, SI, HG, CL, 6E) net negative.
+  - **Most of these markets revert intraday from the window open:** C2a's p50 is negative on metals, rates, FX and
+    grains.
+  - **Proposed:** close the cross-group extension under R15, on the principal's word. D737 is unaffected.
   - D736 is the other session's screen.
   - **D737 is this session's vault pre-registration of D735's YM k1.0 1σ_rem, FROZEN, programme slot 1** (the
     principal: "Yes write it into slot 110 and freeze"; the registry gave the lowest free slot). See the programme
