@@ -765,3 +765,21 @@ Component lines come from the runner's own output (`data/diag_d721_quiet_day_f2.
 | ES, 1 MES | D721 | +0.98 (+2.16); $168 | G1 rank 0.11, NOT SIMILAR; 48 trades; 3 of 6 years positive |
 | YM, 1 MYM | D721 | +0.94 (+2.36); $142 | G1 rank 0.27, NOT SIMILAR; 59 trades |
 | RTY, 1 M2K | D721 | +0.15 (+0.20); $22 | G1 rank 0.13; F2 itself barely pays on RTY |
+
+## NOTE — the 2022 dependence of the lines, 2026-10-01 ([D722](decisions/D722-DIAG-RESULT-no-variable-explains-2022.md))
+
+No construction is scored or entered here. This is a reading note on entries #5 (NQ F2, PROVISIONAL) and the scored
+lines D699, D707/D705 and D719.
+- **No pre-trade variable explains 2022 on any line** (all UNEXPLAINED).
+- **The ex-2022 figures** (net a trade; net Sharpe and Sortino):
+
+  | line | ex-2022 |
+  |---|---|
+  | NQ F2 | +$9.01; 0.50 (0.79) |
+  | ES F2 | +$7.17; 0.54 (0.88) |
+  | D699 V1 | +$3.55; 0.25 (0.39) |
+  | HO F2 (closed) | +$50.08; 0.78 (1.21) |
+
+- **ρ is honest day to day, but not over years.** The daily correlations in this ledger are body statistics that hold
+  up in 2022 (F2–D699 0.15, lower than elsewhere). But the equal-weight ES F2 + NQ F2 + D699 book earns **77 % of its
+  net in 2022**, so assembling these components does not diversify the year.
