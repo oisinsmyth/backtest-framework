@@ -62,7 +62,12 @@
 3. **The volume line is exhausted for detection.** Neither the level (D730) nor the shape (D731) of participation
    picks out continuing days in the predicted direction. The reverse direction is post hoc on both, and inside its
    rotations.
-4. **Proposed, not decided:**
+4. **CLOSED under R15, 2026-10-01, on the principal's word** ("Close the volume-profile detector"). This covers
+   D730's and D731's volume-profile trend detectors on NQ, YM and RTY: the level and the shape of intraday
+   participation, as a detector, filter or size term for continuation. The principal also declined D727's plain
+   follow as a strategy ("I don't want a dumb follow type strategy. I would like an entry signal?"), so no slot-10
+   pre-registration of it is proposed. The quiet-tape observation is kept as structure only.
+5. **Superseded proposals, kept for the record:**
    - close the volume-profile trend detector (D730 and D731) under R15;
    - the trend line then rests on D727's plain NQ follow, whose confirmation needs the principal's explicit word for
      a slot-10 vault pre-registration;

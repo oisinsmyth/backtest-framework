@@ -69,7 +69,9 @@ null rotates the volume profile across days.
    - volume (D730).
 3. **What does stand is D727's plain follow on NQ.** It needs no detector: net Sharpe 0.47–0.83 in-sample, ρ 0.24 with
    the arm. It is NQ-only and unconfirmed.
-4. **Proposed, not decided:**
+4. **CLOSED under R15, 2026-10-01, on the principal's word,** with D731 ("Close the volume-profile detector"). See
+   D731 §3.
+5. **Superseded proposals, kept for the record:**
    - close the volume-profile detector under R15;
    - the remaining choices for the trend line are the principal's: the slot-10 vault pre-registration of D727's NQ
      follow (which needs their explicit word), or closing the line here.
