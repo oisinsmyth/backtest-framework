@@ -13,13 +13,13 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 744.**
+- **Next free number: 745.**
   - **D743 (2026-10-01): NOT SUPPORTED, all six; CLOSED by the principal** ("Ok close that and look at idea 2").
     It tested skipping busy two-way nights and CPI / jobs days on D735's legs (YM k1.0 = D737's twin, EQ k1.5); idea 1
     of the C1 mechanism comparison.
     - The skips do not select; on EQ the skipped trades earn more (\$29–42 against \$11–16).
     - D737 is unchanged.
-    - Next: idea 2 (the consolidation break at the European open), being designed with the principal.
+    - Next: idea 2, the consolidation break at the European open, is D744.
   - **D736, D738, D740, D741, D742: the NQ follow's selectivity line (2026-10-01), CLOSED.**
     - **The records:**
       - D736 is the earn-when-trading screen;
