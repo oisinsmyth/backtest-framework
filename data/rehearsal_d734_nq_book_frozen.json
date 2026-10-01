@@ -1,0 +1,145 @@
+{
+ "window": [
+  "2018-05-14",
+  "2023-12-29"
+ ],
+ "calendar_sessions": 1406,
+ "parts": {
+  "F": {
+   "trades": 271,
+   "net": 5628.310180243817,
+   "sharpe": 1.0718162836982912,
+   "label": "NQ F2 (in-sample primary: PASS)"
+  },
+  "C": {
+   "trades": 311,
+   "net": 4954.447647120894,
+   "sharpe": 0.9278651113529152,
+   "label": "C1 (in-sample score: PASS)"
+  }
+ },
+ "book": {
+  "net": 10582.75782736471,
+  "net_per_year": 1896.7674057581132,
+  "sharpe": 1.400333315640667,
+  "sortino": 2.6879762064255566,
+  "max_dd_closed_usd": 1360.4746760436633,
+  "trade_days": 537,
+  "by_year": {
+   "2018": 237.61135252860208,
+   "2019": 123.0548492519153,
+   "2020": 1605.458240695973,
+   "2021": 2045.748727705269,
+   "2022": 5701.751261779429,
+   "2023": 869.1333954035206
+  }
+ },
+ "gates": {
+  "G1": {
+   "F": "NQ F2 (in-sample primary: PASS)",
+   "C": "C1 (in-sample score: PASS)",
+   "holds": true
+  },
+  "G2": {
+   "net": 10582.75782736471,
+   "holds": true
+  },
+  "G3": {
+   "first_half_net": 1773.2217338909215,
+   "second_half_net": 8809.536093473787,
+   "holds": true
+  },
+  "G4": {
+   "P2": {
+    "topstep_50k": true,
+    "mffu_rapid_50k": true
+   },
+   "P2_pass": true,
+   "P3": {
+    "p3a_breaches": 0,
+    "p3a_breaches_per_year": 0.0,
+    "p3a_pass": true,
+    "p3c_worst_day_usd": -445.56712110611136,
+    "p3c_share_of_loss_budget": 0.22278356055305568,
+    "daily_sigma_usd": 85.32619638137727,
+    "life_dd_only_sessions": 0.0
+   },
+   "P3b_A1": {
+    "module_p3b": NaN,
+    "censored_p3b": 0.0,
+    "read_p3b": 0.0,
+    "read_from": "censored (A1)",
+    "lives_dd": 1,
+    "lives_either": 1,
+    "pass": true
+   },
+   "P3_pass": true,
+   "P4": {
+    "expected_profit_before_breach_usd": 27748.326594401824,
+    "expected_life_days": 3686.57658317068,
+    "account_cost_usd": 209.0,
+    "cost_venue": "mffu_rapid_50k"
+   },
+   "P4_pass": true,
+   "P1_reported": {
+    "cap_usd": 2000.0,
+    "max_trailing_dd_usd": 1360.4746760436633,
+    "size_multiplier": 1.4700751401092684,
+    "usd_per_year_at_traded_size": 1896.7674057581132,
+    "post_sizing_usd_per_year": 2788.390609774552,
+    "n_sessions": 1406,
+    "basis": "closed equity (daily closes); R11 P1 measures OPEN equity, which is deeper -- so the multiplier and the post-sizing return are UPPER bounds"
+   },
+   "P5_reported": {
+    "by_year": {
+     "2018": 1.024273301635284,
+     "2019": 2.5737199518439513,
+     "2020": 0.4798834746146388,
+     "2021": 0.15712529253067792,
+     "2022": 0.10745070871685779,
+     "2023": 0.3900458433863686
+    },
+    "max": 2.5737199518439513,
+    "operative_haircut": 0.3
+   },
+   "P6": {
+    "topstep_50k": true,
+    "mffu_rapid_50k": true
+   },
+   "holds": true
+  },
+  "reading": "ADMITTED"
+ },
+ "mode": "IN-SAMPLE REHEARSAL on the final code (D734-A2): the freeze's known answer",
+ "runner_sha256": "983f5c640d51a704ced731b481481cec058ce28b2efb468636cedd214a986317",
+ "prereg_sha256": "5c6c98f0deff58be2b454c685d22de1f785014a3a2a9a31af3f4d81a8f768cbd",
+ "d680_known_answer": {
+  "trades": 387,
+  "net_prereg": 6.9339375340996625,
+  "net_single": 7.557843970553623,
+  "gross_level": 9.418892754919655,
+  "window": [
+   "2018-01-09",
+   "2025-02-28"
+  ]
+ },
+ "f_criterion": {
+  "trades": 271,
+  "mean_net": 20.768672251822206,
+  "t_net_hac": 2.9288115928024023,
+  "se": 7.091160217632819,
+  "verdict": "PASS",
+  "programme_promotion": true,
+  "programme_promotion_two_sided_2807": true
+ },
+ "c_criterion": {
+  "trades": 328,
+  "gross_bp": 8.895153865293468,
+  "t_gross_hac": 2.89197354942633,
+  "net_bp": 6.889089330544962,
+  "p_one_sided": 0.0019141508790296148,
+  "programme_promotion_p_le_0.005": true,
+  "verdict": "PASS"
+ },
+ "wall_s": 30.7
+}
