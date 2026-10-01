@@ -171,3 +171,25 @@ no slot. Before it is relied on:
 - M6E especially.
 
 **NOT READY:** the failing K says what to change, under a new record.
+
+## A1 (2026-10-01, committed before the scored run): the crossing line is `d508_exec`, not `d507_exec`
+
+**What happened.** The first `--run` stopped at the cost lookup with a `KeyError`. It read no bars, calendar or books,
+and wrote no output.
+- §1 named `crossing_ticks_rt.d507_exec` for each micro.
+- That line does not exist for M6E. It is in any case the wrong statistic: a QUOTED spread, which is a floor.
+- `data/futures_costs.json`'s own rule (`conventions.default_line_rule`) charges `d508_exec`: the EFFECTIVE crossing an
+  aggressor paid, measured over the execution hours 10–15 ET. It is never to be replaced by a fallback to D507.
+
+**The amendment:**
+- §1's cost is **`commission_rt_usd` + `crossing_ticks_rt.d508_exec` × `tick_usd`**, each micro's `default_line`
+  (asserted by the runner).
+- The ticks a round trip:
+
+  | M6E | M2K | MYM | MES | MNQ |
+  |---|---|---|---|---|
+  | 1.106 | 1.514 | 1.594 | 1.135 | 2.134 |
+
+- Measured 2025-09 → 2026-09, so optimistic on the older window (the table's `window_caveat`).
+
+Nothing else changes. The scratch sizing quoted in §0 used the same wrong lookup; its cost column is superseded.
