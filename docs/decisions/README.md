@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 530 of these records carry neither field —
+**No Status or Category column, deliberately.** 531 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -803,7 +803,7 @@ would look like data. The tokens are what is shown.
 | D728 | D728 STAGE 0 RESULT — cross-asset agreement does not sharpen NQ's continuation (all three groups NOTHING); if anything… | [PRE-REG](D728-STAGE-0-PRE-REG-does-cross-asset-agreement-sharpen-nq.md) · [RESULT](D728-STAGE-0-RESULT-agreement-does-not-sharpen-nq-leads-the-dow.md) |
 | D729 | the volatility-unit year-concentration report: informational, binds nothing; applied in-sample to the four lines queued… | [record](D729-METHOD-the-volatility-unit-year-concentration-report.md) |
 | D730 | D730 STAGE 0 RESULT — the volume profile does not detect continuation (NOTHING on NQ, YM and RTY). A heavy open, if any… | [PRE-REG](D730-STAGE-0-PRE-REG-volume-profile-as-the-trend-detector.md) · [RESULT](D730-STAGE-0-RESULT-volume-finds-big-days-not-continuation.md) |
-| D731 | D731 STAGE 0 PRE-REG — the flatness of NQ's volume U: the higher the midday trough against the morning peak, the more t… | [PRE-REG](D731-STAGE-0-PRE-REG-a-flatter-u-continues-more.md) |
+| D731 | D731 STAGE 0 RESULT — NOTHING by the declared rule, and the dose runs the other way: on NQ, the flatter the volume U (a… | [PRE-REG](D731-STAGE-0-PRE-REG-a-flatter-u-continues-more.md) · [RESULT](D731-STAGE-0-RESULT-a-flatter-u-continues-less.md) |
 
 <!-- REGISTER:END -->
 
