@@ -21,7 +21,7 @@
   - **Gate (b):** its gross beats the time-matched drift at NW t 1.64, not 2.
   - **Concentration:** 2022 is 75% of the net.
   - **V2 (ROC) and V3 (OR)** are inside their nulls.
-  - **Waiting on the principal** to choose: stop; the expected-profit filter on V1 (designed together, oracle first);
+  - **CLOSED by the principal, 2026-10-01 ("Close D699"),** after D722: V1 is positive in volatility units only in 2022 (ex-2022 +$3.55 net, Sharpe 0.25). The options were:
     a vault pre-reg (count the vault's short-gamma days first); or the 2022 diagnosis. **The 2022 diagnosis is done (D722):** V1 is positive in volatility units only in 2022 (ex-2022 +$3.55 net, Sharpe 0.25); no pre-trade variable identifies the 2022 state.
   - **D722 (2026-10-01, the "Why 2022" diagnostic):** no pre-trade variable explains 2022 on any line (all UNEXPLAINED); HO and the MACD arm are SCALE, NQ F2 REGIME, ES F2 MIXED, D699 V1 positive in vol units only in 2022; the index lines' 2022 is January to mid-May (the base lost after 2022-05-16); SEPARATE day to day, but the ES F2 + NQ F2 + D699 book earns 77 % of its net in 2022 ([result](../decisions/D722-DIAG-RESULT-no-variable-explains-2022.md)).
   - **D726 (2026-10-01): did daily 0DTE end the last-half-hour continuation? NOT SUPPORTED** on ES and NQ; **CLOSED by the principal ("Close, Move on"); reopen only with SPX 0DTE volume, on their word.** Every sign points the 0DTE way (era delta e -0.07, z -0.80; the Tue/Thu DiD +0.17, z +0.95), but nothing clears 2 SE, and the day's 0DTE dose carries nothing (rho +0.03). A larger test would need SPX 0DTE volume, which is not on disk ([result](../decisions/D726-STAGE-0-RESULT-0dte-not-supported-direction-only.md)).

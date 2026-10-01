@@ -5313,7 +5313,7 @@ the MACD arm and the unfiltered last half-hour as controls)
   - **heating oil and the MACD arm are SCALE** (bigger moves; per unit of vol, HO's best years are 2018–19);
   - **NQ F2 is REGIME** (efficiency 0.49 against 0.12–0.17);
   - **ES F2 is MIXED;**
-  - **D699 V1 is positive in volatility units only in 2022** (and faintly 2016–17).
+  - **D699 V1 is positive in volatility units only in 2022** (and faintly 2016–17). D699 was CLOSED by the principal on 2026-10-01.
 - **The index lines' 2022 is January → mid-May.**
   - The unfiltered last half-hour earned all of 2022 before 2022-05-16 (the daily-0DTE date), and lost after.
   - The F2 lines took 56 of their 65–66 2022 trades before then.

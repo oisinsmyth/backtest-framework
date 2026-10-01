@@ -783,3 +783,7 @@ lines D699, D707/D705 and D719.
 - **ρ is honest day to day, but not over years.** The daily correlations in this ledger are body statistics that hold
   up in 2022 (F2–D699 0.15, lower than elsewhere). But the equal-weight ES F2 + NQ F2 + D699 book earns **77 % of its
   net in 2022**, so assembling these components does not diversify the year.
+
+**D699 CLOSED by the principal, 2026-10-01** ("Close D699";
+[closure](decisions/D699-STAGE-0-RESULT-hist-clears-the-timing-null-not-the-drift.md#closed-by-the-principal-2026-10-01)).
+V1 is positive in volatility units only in 2022 (D722). Not entered.

@@ -187,3 +187,19 @@ same signal family, and ρ +0.15 is the overlap. **In-sample only, and not a can
    selloffs at the same rate per short-gamma day?
 
 For contrast: 2018 is +$223 on 89 trades and 2020 is +$439 on 44.
+
+## CLOSED by the principal, 2026-10-01
+
+**The principal:** "Close D699", after [D722](D722-DIAG-RESULT-no-variable-explains-2022.md) diagnosed the 2022 dependence (option 4 above).
+
+**Why:**
+- D722 found that V1 is positive in volatility units only in 2022 (and faintly in 2016–17). Per unit of risk it loses in
+  2018, 2019, 2020, 2021 and 2023.
+- **Its ex-2022 figure** is +$3.55 net a MES trade, net Sharpe 0.25 (Sortino 0.39).
+- No pre-trade variable identifies the 2022 state.
+
+**What follows:**
+- None of the four options above is taken: no expiry-hour profile, no expected-profit filter, no vault pre-registration.
+- V2 and V3 close with it.
+- ES's vault holds no look for this line, and no slot was spent.
+- **Reopening needs the principal's word and a new pre-registration.** Re-tuning the in-sample result is not a route.
