@@ -133,3 +133,106 @@ V8–V11 runs on that subset.
   - it does not change the follow's entry, so it stays a follow;
   - a filter that sits out whole calm years needs D736's G2 read with a zero year counted as an abstention. That reading
     would itself need the principal's word.
+
+## Amendment D738-A1 (2026-10-01): step 2, the candidate filters, declared with the principal before any is scored
+
+**The principal's choices**, after step 1's result
+([D738 RESULT](D738-STAGE-0-RESULT-the-follow-loses-in-calm-regimes-and-volatility-is-the-filter-axis.md)), given to the
+four design questions:
+- **Axes:** all four offered (volatility level in dollars, dealer gamma, IV relative to RV, relative volatility).
+- **Form:** the expected-profit template in dollars.
+- **Pool:** the k 1.5 book.
+- **Zero years:** a year in which the filter does not trade counts as **abstention**, not as a loss.
+
+**Disclosed selection:** the axes were chosen after step 1's profile on the same in-sample trades. Every reading below is
+in-sample. Any filter that survives needs data it has not seen before it is believed.
+
+### A1.1 The template (one form for every filter)
+
+For each k 1.5 trade *i*, in session order:
+- σ\$ᵢ = σ_ocᵢ × \$2 (V1);
+- yᵢ = grossᵢ / σ\$ᵢ, the trade's **pass-through** of a day's typical move.
+
+The pass-through is projected from **earlier trades only**:
+- p̂ᵢ = xᵢ · b̂ᵢ, where b̂ᵢ is the OLS of y on x over the trades of sessions before *i*'s session (an expanding window);
+- **projected gross = p̂ᵢ × σ\$ᵢ**;
+- **take the trade iff projected gross ≥ 2 × \$4.0671 = \$8.1342.**
+
+**The burn-in:** no filter decides before 100 earlier trades with every input of that filter defined. Before that, the
+session is **outside the evaluation window** for every filter and for take-all alike.
+
+**The common evaluation window** starts at the first session at which **all five** filters can decide. It runs to
+2023-12-29. A trade whose input is missing inside the window is not taken by the filters that need that input; take-all
+keeps it. The count is reported.
+
+### A1.2 The five filters (the state vector x)
+
+| filter | x | what it asks |
+|---|---|---|
+| **F1 VOL** | [1] | a constant pass-through, so it trades iff σ\$ ≥ 2c / b̂: the volatility level alone |
+| **F2 VOL+GAMMA** | [1, γ%] | γ% = the prior-day dealer gamma's (V10) percentile in its own trailing 252 sessions (prior values only) |
+| **F3 VOL+IV/RV** | [1, ln IV/RV20] | V8 |
+| **F4 VOL+RELVOL** | [1, σ_oc's 252-session percentile] | V7 |
+| **F5 ALL** | [1, γ%, ln IV/RV20, σ_oc percentile] | all four axes together |
+
+### A1.3 What is reported, per filter and for take-all on the same window
+
+- **All four groups** (CLAUDE.md):
+  - net and gross side by side, Sharpe and Sortino, max DD;
+  - share of sessions in the market;
+  - the trade distribution, with both-tail trims;
+  - by year;
+  - the null distribution.
+- The accuracy against the oracle (`filter_oracle.assess`): AUC, Spearman of the projection with gross, capture.
+- The **calibration** (realised gross on projected gross): its slope and bins.
+
+### A1.4 The null and the gates
+
+**The null.** The filter's take mask is **rotated in time** over the window's k 1.5 trades: every circular offset,
+**enumerated** (exact; the SE is 0). This keeps its take count and its clustering, and breaks its alignment with the
+outcomes.
+- **Statistic S1:** the mean net per kept trade.
+- **Statistic S2:** the efficiency, Σgross / Σ|gross| of the kept trades, beside S1. A filter that selects on size
+  raises S1 mechanically when the edge scales with volatility, and D711-A1 showed S1 is the anti-conservative one.
+- **p-value:** the share of offsets whose statistic is ≥ the filter's.
+- **Holm** across the five filters, on S1's p-values.
+
+| gate | standard |
+|---|---|
+| **Gate 1 (mechanism, gross)** | the take-all k 1.5 book on the window has mean gross > 0 with Newey–West t ≥ 2 (5 lags) |
+| **Gate 2 (the filter, net)** | the filtered book's mean net per trade > take-all's; its S1 beats the rotation null at Holm-adjusted p ≤ 0.05; and the calibration slope is > 0 |
+| **Gate 3 (the principal's standard, with abstention)** | on the filtered book's daily net, D736's G1–G3, counted over **traded years only**. A traded year is a calendar year with ≥ 10 filtered trades; others are abstention years, excluded from G1–G3 though their net stays in every total. Fewer than four traded years reads UNDEFINED |
+
+**Readings, per filter:**
+
+| reading | when |
+|---|---|
+| **SUPPORTED** | Gates 1, 2 and 3 all hold |
+| **FILTER ONLY** | Gates 1 and 2 hold, and Gate 3 fails |
+| **NOT SUPPORTED** | Gate 2 fails |
+| **NO MECHANISM** | Gate 1 fails |
+
+S2 is reported, not gated. A filter that passes S1 while S2 sits inside its null is **flagged SIZE-CARRIED**.
+
+### A1.5 Predictions (before the scorer exists)
+
+| # | prediction |
+|---|---|
+| 1 | F1 VOL raises the mean net per kept trade above take-all's, and abstains (fewer than 10 trades) in at least one of 2016, 2017 or 2019 |
+| 2 | F1 is SIZE-CARRIED: S1 beats its null, S2 does not |
+| 3 | F2 VOL+GAMMA has the highest S1 of the five |
+| 4 | at least one filter reads SUPPORTED |
+| 5 | F5 ALL does not beat the best single-axis filter on S1 (more inputs, more noise) |
+
+### A1.6 Mechanics
+
+- **The runner** is `scripts/stage0_d738_step3_filters.py`.
+  - It rebuilds the trades and variables through step 1's own functions (`read_cut`, `book`, `full_day_arrays`,
+    `d691_frame`), with step 1's audits.
+  - It re-proves step 1's k 1.5 known answer.
+- **Its self-test** must show four things:
+  - the walk-forward fit never uses the trade's own session; a leak canary that includes it must raise;
+  - the rotation null of a random mask sits near p = 0.5;
+  - a planted filter is found;
+  - the take rule's threshold is applied in dollars.
+- **Its output** is `data/stage0_d738_filters.json`, run once, aggregates only.
