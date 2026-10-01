@@ -136,5 +136,46 @@ YM k1.0 1σ_rem cell, slot 1): MNQ, entries 10:00–14:30, the same stop, held t
    - **POST HOC:** it suggests an agreement book (D737 traded only when the floored follow agrees), like D716's
      ES-agreement book. It was seen here, on the in-sample data. Only the vault, which is unseen for both, could test it,
      through its own pre-registration in a free slot on the principal's word. D737 itself stays frozen as it is.
+
+## Addendum 2 (2026-10-01): the agreement lead recomputed point in time — declared before its script runs
+
+**The principal:** "Run step 1".
+
+**Why.** The split above labels a day "same" or "opposite" by the follow's **eventual** trade. On 40 % of the shared
+days, D737 entered first. And a follow trigger opposite to D737 after D737's entry means the price had already moved
+against D737. So the split is partly the outcome. The two forms below use only what is known at each entry.
+
+**The script and the data.**
+- **The script:** `scripts/diag_d742_agreement_pit.py`, with output `data/diag_d742_agreement_pit.json`.
+- **D737's trades:** rebuilt with its own frozen functions (1,699 re-proved).
+- **The follow's trigger:** at half-hours from 10:00, with the floor (σ\$ ≥ \$150, known before the open) and the
+  1.0 σ_rem stop.
+- **The window:** all of D737's in-sample, 2016-02 → 2023-12.
+
+**PIT-1, the state at D737's entry** (D737 enters at its bar m₀'s open; the follow's trigger at t is known from minute
+t). Each D737 trade falls into one of four classes:
+
+| class | when |
+|---|---|
+| **floor off** | σ\$ < \$150, known at the open |
+| **already agreed** | the floor is on, and the follow triggered at t ≤ m₀ in D737's direction |
+| **already opposed** | the floor is on, and the follow triggered at t ≤ m₀ against D737's direction |
+| **not yet** | the floor is on, and the follow has not triggered by m₀ |
+
+For each class: the count, D737's mean and total net, and its win rate.
+
+**PIT-2, wait for agreement.**
+- Trade D737's direction only on days when both trigger the same way. Enter at the **later** of the two triggers:
+  D737's own entry if the follow had already agreed; otherwise the open of the bar at the follow's trigger clock.
+- One MNQ, D735's convention: the 1 σ_rem stop from that entry, else the 15:59 close, \$4.0671.
+- Reported: the trades, the mean and total net, Sharpe and Sortino, the max DD, the worst day, and by year. D737 is
+  given beside, on the same window.
+
+**The decision rule, fixed now.** The lead **survives** only if both hold:
+- **(a)** PIT-2's mean net per trade is ≥ D737's in-sample mean (+\$14.87) + \$10;
+- **(b)** in PIT-1, D737's mean on **already agreed** exceeds its mean on **not yet** by ≥ \$10.
+
+If both hold, step 2 follows: the power and a pre-registration on the principal's word. Otherwise the lead is closed.
+Either way this is in-sample and post hoc, and nothing here is evidence for a vault claim.
    - The drawdown is the cost of a regime-shaped edge traded at one micro. The options are the account size (\$150k), or
      accepting it.
