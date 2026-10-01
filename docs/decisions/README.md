@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 561 of these records carry neither field —
+**No Status or Category column, deliberately.** 562 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -820,6 +820,7 @@ would look like data. The tokens are what is shown.
 | D745 | REGISTRATION — the abstention principle on the joint vault: where C1's, NQ F2's and D737's money falls by shock recency | [PRE-REG](D745-PRE-REG-the-abstention-principle-on-the-joint-vault.md) |
 | D746 | D746 STAGE 0 RESULT — NO ROOM on all four primary cells: on ES and YM, neither a 2.5σ stretch faded to the VWAP nor an… | [PRE-REG](D746-STAGE-0-PRE-REG-intraday-fades-stretch-and-gap.md) · [RESULT](D746-STAGE-0-RESULT-no-room-to-fade-on-es-or-ym.md) |
 | D747 | D747 STAGE 0 PRE-REG — the night-break fade: does a break of yesterday's range ± 0.25 ATR20 between 03:00 and 08:29 ET… | [PRE-REG](D747-STAGE-0-PRE-REG-the-night-break-fade.md) |
+| D748 | D748 STAGE 0 PRE-REGISTRATION — the activity keeper: one placeholder trade on the financial micro with the smallest for… | [PRE-REG](D748-STAGE-0-PRE-REG-the-activity-keeper.md) |
 
 <!-- REGISTER:END -->
 

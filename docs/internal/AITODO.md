@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 748.**
+- **Next free number: 749.**
+  - **D748 (2026-10-01): PRE-REGISTERED, Stage 0.** The activity keeper: one placeholder trade at 13:30–14:00 ET on
+    the cash-settled financial micro with the smallest forecast σ\$ (the principal's "vol\*tick size, smallest root";
+    "Financial micros only"). It fires only when a firm's inactivity window would otherwise lapse.
+    - **The standard:** it may break even, and it must never threaten the account.
+    - **Readings:** K1 worst trade ≥ −\$50; K2 worst 30 days ≥ −\$150; K3 ≤ \$300 a year; K4 zero breaches.
+    - **Next:** the runner, `scripts/stage0_d748_activity_keeper.py`, runs on the system interpreter (`fut_day5m`
+      needs pyarrow).
   - **D747 (2026-10-01): PRE-REGISTERED** (the principal: "Close D746 and pre-reg C as D747"). The night-break fade:
     resting limits at yesterday's RTH high + 0.25 ATR20 (or low − 0.25 ATR20), 03:00–08:29 ET, with a 1:1 bracket of
     b·ATR20 (primary b 0.25, which targets yesterday's extreme), flat at 09:29.
