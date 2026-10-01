@@ -25,7 +25,16 @@
       - The mechanism's splits run backwards: monthly-expiry Fridays −$8.91, and out-of-state Fridays +$22.52
         (t 2.72, post hoc, not a lead).
     - The calm regime remains under-earning, with no line of its own. CLOSED.
-  - **D753 (2026-10-02): PRE-REGISTERED, Stage 0; NOT RUN.** The channel level rule carried to daily futures (the
+  - **D753 (2026-10-02): SIGNAL, NOT THE LINES (run on the principal's "build the runner, and run it").**
+    - **C1 holds narrowly:** y 0.176, rotation p 0.039. It is event-carried: the SNB unpeg (6S, +30σ) and HO's 2022
+      short (+\$63,952, 70 % of net). Without the top 1 % of trades, y is 0.06.
+    - **It does not earn:** net t 1.07, median −\$86, 6 of 12 years positive.
+    - **The lines are unresolved:** X fails on the declared paired test (n 90, +0.18 SE 0.145), while the unpaired
+      difference is +0.249 (3.5 SE) and the plain-range control loses (y −0.073).
+    - **Other reported points:** the gate never bound; rates are negative.
+    - **Status:** personal book, parked. A resolving test needs a new record and the held slice, on the principal's
+      word.
+  - **D753 (2026-10-02): PRE-REGISTERED, Stage 0 (the entry below, kept).** The channel level rule carried to daily futures (the
     principal: "revisit the channel mean reversion idea … improve it … dont look at results just the construction";
     "B: daily futures"). Personal book, parked until real capital, so when it runs is the principal's call.
     - **The construction:** the hand-cell lines on 34 roots (≤ 2023), thresholds converted to volatility units by
