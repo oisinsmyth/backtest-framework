@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 532 of these records carry neither field —
+**No Status or Category column, deliberately.** 536 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -804,7 +804,9 @@ would look like data. The tokens are what is shown.
 | D729 | the volatility-unit year-concentration report: informational, binds nothing; applied in-sample to the four lines queued… | [record](D729-METHOD-the-volatility-unit-year-concentration-report.md) |
 | D730 | D730 STAGE 0 RESULT — the volume profile does not detect continuation (NOTHING on NQ, YM and RTY). A heavy open, if any… | [PRE-REG](D730-STAGE-0-PRE-REG-volume-profile-as-the-trend-detector.md) · [RESULT](D730-STAGE-0-RESULT-volume-finds-big-days-not-continuation.md) |
 | D731 | D731 STAGE 0 RESULT — NOTHING by the declared rule, and the dose runs the other way: on NQ, the flatter the volume U (a… | [PRE-REG](D731-STAGE-0-PRE-REG-a-flatter-u-continues-more.md) · [RESULT](D731-STAGE-0-RESULT-a-flatter-u-continues-less.md) |
-| D732 | D732 STAGE 0 PRE-REGISTRATION — is there an ES/NQ book at one micro that does not rest on one year? A premise check bef… | [PRE-REG](D732-STAGE-0-PRE-REG-a-book-that-does-not-rest-on-one-year.md) |
+| D732 | D732 STAGE 0 RESULT — GO by the declared rule (no single year over half; Sharpe 0.95 without 2022), but POST HOC the bo… | [PRE-REG](D732-STAGE-0-PRE-REG-a-book-that-does-not-rest-on-one-year.md) · [RESULT](D732-STAGE-0-RESULT-go-but-the-book-is-two-years-and-compression.md) |
+| D733 | D733 STAGE 0 RESULT — DRIFT ONLY. The pullback entry adds nothing beyond the drift at the same moment (C2 rank 0.74, ma… | [PRE-REG](D733-STAGE-0-PRE-REG-the-nq-pullback-entry.md) · [RESULT](D733-STAGE-0-RESULT-the-pullback-entry-is-drift-only.md) |
+| D734 | REGISTRATION — the assembled book NQ F2 + the NQ compression break, one MNQ each, scored once in the joint vault run af… | [PRE-REG](D734-PRE-REG-the-nq-f2-and-compression-book-for-the-joint-vault.md) |
 
 <!-- REGISTER:END -->
 
