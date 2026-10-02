@@ -14,7 +14,18 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 776.**
-  - **D775 (2026-10-02): PRE-REGISTERED, runner not yet written** (Stage 0, prop book; D772's Opus Lead 1).
+  - **D775 RESULT (2026-10-02): SUPPORTED on MNQ, GO true** (in-sample; the in-sample was read before the record).
+    - **The book:** +\$34.88 gross / +\$30.81 net, t 2.73 (net t 2.41); exact rotation rank 0.9995 (p95 +\$17.26);
+      net Sharpe 0.84 / Sortino 1.50, max drawdown \$1,036; ρ ≈ 0 with D737's twin, NQ F2, C1.
+    - **The principal's Y passed only on the win-rate branch, at the boundary** (6 of 8 years ≥ 50%; 2016 exactly 50%).
+      The volatility-adjusted branch failed: 2016–19 +0.09σ against 2020–23 +0.33σ.
+    - **Where it lives:** down impulses (+\$50.52) and the high-|impulse| tercile (+\$75.55). The give-back is after
+      the 09:30 open (+\$29.55, t 2.47). Equally large non-release moves continue (matched null p50 −\$13.96).
+    - **Transfers:** MES NO PRIZE (net t 1.60), MYM and M2K NO EFFECT.
+    - **Confirmation needs the principal's word:** a vault slot (2 or 10; 64 release days; power about 0.63 at the
+      full effect, 0.81 at the 2020–23 effect, 0.29 at the 2016–19 effect) or the forward recorder.
+    - The first launch crashed in reporting before any output; the fix `2158a8ea` was committed before the run.
+  - **D775 (2026-10-02): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 1).
     - **The construction:** fade the 08:30 CPI/jobs-report impulse on MNQ (close of the 08:29 bar → close of the
       08:34 bar, faded to the close of the 11:00 bar), \$4.07.
     - **The gates:** G1; N (the exact rotation of the release labels); Y, the principal's test (an even win rate, or
