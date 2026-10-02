@@ -100,8 +100,13 @@ def load() -> pd.DataFrame:
             parts.append(ch)
     b = pd.concat(parts, ignore_index=True)
     seal_check(b)
-    b["tm"] = (pd.to_datetime(b["ts_utc"], utc=True).astype("int64") // 60_000_000_000).astype(np.int64)
+    b["tm"] = to_minutes(b["ts_utc"])
     return b.sort_values(["day", "tm"]).reset_index(drop=True)
+
+
+def to_minutes(ts: pd.Series) -> np.ndarray:
+    """Minutes since the epoch, by subtraction (an int64 view of a datetime is not always nanoseconds)."""
+    return ((pd.to_datetime(ts, utc=True) - pd.Timestamp("1970-01-01", tz="UTC")) // pd.Timedelta(minutes=1)).to_numpy(np.int64)
 
 
 def price_at(tm: np.ndarray, cl: np.ndarray, t: int, at_or_before: bool = False) -> float:
@@ -257,6 +262,9 @@ def selftest() -> int:
     if hhmm_utc("2019-01-25", 15).hour != 15 or hhmm_utc("2019-07-26", 15).hour != 14 or \
             hhmm_utc("2018-03-23", 15).astimezone(ET).hour != 11 or hhmm_utc("2019-07-26", 15).astimezone(ET).hour != 10:
         fails.append("clock")
+    # the timestamp unit: a fixture-format string maps to utc_min's minute exactly
+    if int(to_minutes(pd.Series(["2019-07-26 15:00:00+00:00"]))[0]) != utc_min("2019-07-26", 16):
+        fails.append("to_minutes")
     # the lag audit on synthetic raw rows: passes on the truth; the at-t bar (the break) must raise
     day = "2019-07-26"
     t1 = utc_min(day, 16)
