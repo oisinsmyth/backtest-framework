@@ -47,7 +47,7 @@ DATASET = "GLBX.MDP3"
 NY = ZoneInfo("America/New_York")
 SEAL_UTC = dt.datetime(2024, 1, 1, tzinfo=dt.timezone.utc)
 APPROVED_USD = 98.0
-CAP_USD = 110.0
+CAP_USD = 120.0                     # raised from 110 by the principal, 2026-10-02 ("Keep going raise the cap")
 THREADS = 4
 MAX_ERRORS = 20
 JOBS = [("GC.v.0", "tbbo", "2016-01-04"), ("GC.v.0", "bbo-1m", "2016-01-04"),
@@ -219,6 +219,16 @@ def fetch(accepted: float | None) -> int:
             out = DEST / rel_path(sym, sch, day)
             out.parent.mkdir(parents=True, exist_ok=True)
             tmp = out.with_suffix(".part")
+            if out.exists():                                        # finished by an earlier run but not yet in its
+                recs = count_records(out, s, e)                     # manifest: adopt it, never buy it again
+                row = {"path": str(rel_path(sym, sch, day)).replace("\\", "/"), "symbol": sym, "schema": sch, "day": day,
+                       "start_utc": s, "end_utc": e, "bytes": str(out.stat().st_size), "usd": f"{usd:.6f}",
+                       "records": str(recs), "sha256": sha256(out),
+                       "fetched_at": dt.datetime.fromtimestamp(out.stat().st_mtime, dt.timezone.utc).isoformat(timespec="seconds")}
+                with lock:
+                    new_rows.append(row)
+                    state["n"] += 1
+                return
             recs = salvage(tmp, s, e) if tmp.exists() else None    # a window already paid for (the first run)
             if recs is None:
                 store = retry(c.timeseries.get_range, **kw)        # in memory: no open handle on Windows
