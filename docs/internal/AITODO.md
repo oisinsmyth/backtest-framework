@@ -13,7 +13,19 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 761.**
+- **Next free number: 762.**
+  - **D761 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "a strategy or two that can trade on
+    the outside the US hours"; "I like #1 …"; "Put MBT in also"). Round-number stop cascades (Osler 2003/2005).
+    - **The trade:** a resting stop 1 tick beyond a spot-equivalent round level, live only on a fast approach; with
+      the crossing; 30-minute clock or a re-cross exit.
+    - **The cells:** M6E (50-pip grid) and MBT (\$1,000 grid), Asia 18:30–02:00 ET primary; MGC, London and NY
+      reported.
+    - **The controls:** the half-round grid, and an exact offset enumeration excluding the stop band.
+    - **The order of readings:** a bounce premise gate first, then NO PROFILE / SIZE FAILURE / CASCADE, Holm over
+      the two cells.
+    - **The design:** a Fable 5.1 design merged with Opus's; Lens A's filter re-timed to completed bars, so nothing
+      is read after the fill.
+    - Not yet built or run.
   - **D760 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Arm a reversal style trade for Quiet
     long-gamma days then Require a Volume spike to validate the reversal. Or a order flow?"; chose order flow, with
     YM built).
