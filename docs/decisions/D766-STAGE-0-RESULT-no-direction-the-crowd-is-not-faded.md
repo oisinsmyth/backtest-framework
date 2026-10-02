@@ -165,3 +165,8 @@ carries (D720: a day-size forecast is a volatility forecast). No trading pre-reg
 - or **a post-hoc lead,** written as a new pre-registration: the L-and-flat-OI continuation (−$40, t −2.4 on 28 days)
   as a long-with-the-crowd trade. It is one split of a small sample, found after the run, and its prior should be
   low.
+
+## 8. CLOSED (2026-10-02)
+
+**The principal: "Close this".** The perpetual-swap funding-level line is closed for the prop book. The post-hoc
+flat-OI lead is not pre-registered.
