@@ -1,0 +1,115 @@
+{
+ "mode": "IN-SAMPLE REHEARSAL (2016-01-01 -> 2023-12-31): the vault scorer on the in-sample window",
+ "spec": "docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md",
+ "known_answer": {
+  "trades": 186,
+  "mean_gross": 34.87903225806452
+ },
+ "known_answer_d775_json_2dp": 34.88,
+ "counts": {
+  "read": 192,
+  "used": 186,
+  "no_session": 4,
+  "two_contracts": 0,
+  "missing_bar": 0,
+  "zero_impulse": 2
+ },
+ "vault_reader_reproduces": {
+  "trades": 186,
+  "mean_gross": 34.87903225806452
+ },
+ "score": {
+  "window": [
+   "2016-01-01",
+   "2023-12-31"
+  ],
+  "trades": 186,
+  "mean_gross": 34.87903225806452,
+  "mean_net": 30.809032258064523,
+  "t_net": 2.40767158971816,
+  "rotation_p50": 0.26881720430107525,
+  "rotation_p95": 17.26236559139785,
+  "rotation_rank": 0.9995022399203584,
+  "gate": {
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  "stats": {
+   "n": 186,
+   "mean_gross": 34.88,
+   "mean_net": 30.81,
+   "median_gross": 12.75,
+   "median_net": 8.68,
+   "t_gross": 2.73,
+   "t_net": 2.41,
+   "win_gross": 0.559,
+   "payoff_net": 1.42,
+   "skew": 0.48,
+   "kurtosis": 3.12,
+   "net_ex_top1pct": 23.5,
+   "net_ex_bottom1pct": 37.12,
+   "net_trimmed": 29.8,
+   "mean_abs_gross": 115.83,
+   "breakeven_cost": 34.88
+  },
+  "book": {
+   "sharpe_net": 0.84,
+   "sortino_net": 1.5,
+   "sharpe_gross": 0.95,
+   "max_drawdown": 1036.0,
+   "total_net": 5730.0,
+   "exposure_share_of_days": 0.0925
+  },
+  "leg_0930_1101": {
+   "mean": 29.55,
+   "t": 2.47,
+   "n": 186
+  },
+  "by_sign": {
+   "down": 50.52,
+   "up": 22.55
+  },
+  "by_event": {
+   "CPI": 33.55,
+   "EMPSIT": 36.21
+  },
+  "by_year": {
+   "2016": [
+    22,
+    -1.57
+   ],
+   "2017": [
+    23,
+    0.35
+   ],
+   "2018": [
+    24,
+    21.79
+   ],
+   "2019": [
+    24,
+    11.08
+   ],
+   "2020": [
+    23,
+    45.41
+   ],
+   "2021": [
+    23,
+    42.91
+   ],
+   "2022": [
+    24,
+    35.85
+   ],
+   "2023": [
+    23,
+    123.17
+   ]
+  },
+  "va_mean": 0.21
+ },
+ "wall_s": 13.6
+}
