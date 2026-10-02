@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 585 of these records carry neither field —
+**No Status or Category column, deliberately.** 586 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -831,7 +831,7 @@ would look like data. The tokens are what is shown.
 | D756 | D756 STAGE 0 RESULT — RECOGNISABLE, NOT WORTH IT: a reverting day is worth +\$34 to a 10:00 fade if known, but the best… | [PRE-REG](D756-STAGE-0-PRE-REG-mean-reverting-days.md) · [RESULT](D756-STAGE-0-RESULT-recognisable-not-worth-it.md) |
 | D757 | D757 STAGE 0 RESULT — NOT A DETECTOR: impulse days are trend starts (24 % reverting against a 33 % base), and strong lo… | [PRE-REG](D757-STAGE-0-PRE-REG-gamma-and-impulse-reverting-days.md) · [RESULT](D757-STAGE-0-RESULT-not-a-detector.md) |
 | D758 | D758 STAGE 0 RESULT — NOTHING: CME bitcoin's weekend gap does not fill; Monday's path reaches the mirror level more oft… | [PRE-REG](D758-STAGE-0-PRE-REG-the-cme-bitcoin-weekend-gap.md) · [RESULT](D758-STAGE-0-RESULT-the-gap-does-not-fill.md) |
-| D759 | D759 STAGE 0 PRE-REGISTRATION — the premise check for quiet long-gamma days: is the reverting rate seen in D757 above t… | [PRE-REG](D759-STAGE-0-PRE-REG-quiet-long-gamma-premise.md) |
+| D759 | D759 STAGE 0 RESULT — NO ROOM: quiet long-gamma days revert 39.3 % of the time, but a 10:30 fade on a quiet morning nee… | [PRE-REG](D759-STAGE-0-PRE-REG-quiet-long-gamma-premise.md) · [RESULT](D759-STAGE-0-RESULT-no-room.md) |
 
 <!-- REGISTER:END -->
 

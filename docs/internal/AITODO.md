@@ -14,7 +14,12 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 760.**
-  - **D759 (2026-10-02): PRE-REGISTERED, Stage 0 premise check, prop book** (the principal: "Strong long-gamma days
+  - **D759 (2026-10-02): NO ROOM.**
+    - **Quiet long-gamma days revert q 0.393** (seen, n 1,360), but the 10:30 fade on non-impulse days needs
+      **p\* 0.451**: +\$23.68 on RD days against −\$19.48 on the others.
+    - **NO ROOM on every root;** YM is nearest (0.404 against 0.411).
+    - **The line stops.** The reverting-day line (D756/D757/D759) is measured; closing it is the principal's call.
+  - **D759 (2026-10-02): PRE-REGISTERED, Stage 0 premise check, prop book (the entry below, kept)** (the principal: "Strong long-gamma days
     without an early impulse premise check first").
     - **What it computes:** the 10:30 fade's prize and p\* on non-impulse days, against the seen post hoc rate
       q ≈ 0.393 (G ∧ ¬I, ES/YM/RTY).
