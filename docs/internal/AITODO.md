@@ -13,7 +13,12 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 778.**
+- **Next free number: 779.**
+  - **D778 (2026-10-03): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 4 with a trend filter).
+    - **The construction:** fade M2K's closing-auction move (15:50 → 16:00, gated at q80) from the 18:05 reopen to
+      10:00, skipping fall-side buys while M2K's back-adjusted 16:00 index is below its 200-session average.
+    - **Gates:** G1; N; F (the removed trades lose, AND the gain beats a rotated trend flag); Y; G2.
+    - **The filter was proposed after seeing 2022's split**, so a pass is weak evidence. Prior about 30%.
   - **D777 RESULT (2026-10-02): MNQ CONCENTRATED; MES, M2K, MYM NO EFFECT; GO false. CLOSED by the principal ("Close
     D777"); the mechanism finding stands as a measurement.**
     - **MNQ:** +\$24.99 gross / +\$20.92 net (t 2.41 gross, 2.02 net), exact rotation rank 0.998, b_m −0.39
