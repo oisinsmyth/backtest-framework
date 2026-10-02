@@ -123,7 +123,9 @@ def count_records(p: Path, s: str, e: str) -> int:
     n = 0
     for a in st.to_ndarray(count=1 << 20):
         if len(a):
-            ts = a["ts_event"].astype("int64") if "ts_event" in a.dtype.names else a["ts_recv"].astype("int64")
+            # ts_recv: the record's own stamp (bbo-1m: the interval; tbbo: the trade's receipt). bbo-1m's ts_event is
+            # the last quote change, which in a quiet minute can precede the window (the first run's false alarm).
+            ts = a["ts_recv"].astype("int64") if "ts_recv" in a.dtype.names else a["ts_event"].astype("int64")
             if not ((ts >= lo - 60_000_000_000) & (ts < hi + 60_000_000_000)).all():
                 raise ValueError(f"{p.name}: a record outside its window")
         n += len(a)
