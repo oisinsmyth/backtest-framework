@@ -14,6 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 779.**
+  - **D778 RESULT (2026-10-03): NO EFFECT on every root; the filter adds nothing; GO false.**
+    - **M2K:** the filter removed 72 trades with a mean of +\$33.19: they were winners in every year but 2022
+      (−\$32.79). The filtered book is +\$9.84 (t 1.38) against the base's +\$15.84 (t 2.47).
+    - **F(b):** Δ −\$6.00, rank 0.20 against the rotated DOWN flag. The same on MNQ, MES and MYM.
+    - **So "closing selling in a downtrend persists" is refuted in-sample.** Buying closing-auction drops in downtrends
+      paid most; 2022 was the exception.
+    - The first launch stopped on its own lag audit (a missing-16:00-bar convention); fixed `ff0a50be` before the run.
+    - Recommend closing the filtered construction; base L4 stays an open lead with 2022 as its known failure mode.
   - **D778 (2026-10-03): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 4 with a trend filter).
     - **The construction:** fade M2K's closing-auction move (15:50 → 16:00, gated at q80) from the 18:05 reopen to
       10:00, skipping fall-side buys while M2K's back-adjusted 16:00 index is below its 200-session average.
