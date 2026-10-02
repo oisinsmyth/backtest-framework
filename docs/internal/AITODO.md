@@ -22,8 +22,8 @@
     - **The predictors:** seven pre-open variables (overnight range, gap, previous E, previous range, volatility
       level, event day, GEX sign) against the label by an exact rotation, Holm over the seven.
     - **The readings:** NO PRIZE / PREDICTABLE AND WORTH IT / RECOGNISABLE, NOT WORTH IT / NOT PREDICTABLE.
-  - **D755 (2026-10-02): NOTHING** (run on the principal's "build the ECB calendar and the runner, then run"). The ECB
-    press-conference drift on M6E.
+  - **D755 (2026-10-02): NOTHING; CLOSED by the principal** ("Close D755 and push it"). Run on the principal's "build
+    the ECB calendar and the runner, then run". The ECB press-conference drift on M6E.
     - **The size is there:** the conference hour's mean |move| is \$56.54 against \$17.24 on placebo Thursdays
       (Welch t 9.06), 6.5× the \$8.76 bar.
     - **The direction is not:** sign(J) through the hour makes −\$5.98 gross (t −0.89, n 117). That is below the
@@ -32,7 +32,7 @@
       ECB's published schedule.
     - **Not used:** E-pre is VOID (the pre-reg scored the window J is measured on). A Draghi-era lean toward reversal
       (−\$13.80, t −1.54) is POST HOC.
-    - Closing is the principal's call.
+    - CLOSED: the size fact and the calendar fixture stay recorded and reusable.
   - **The hot-root premise table (2026-10-02, descriptive, no record):** on calm-NQ days (D754's gate), every micro's
     09:00 → 15:00 |move| is 3–15× its 2c, with NQ the largest (14.7×). Calm days lack direction, not size. Metals
     and BTC keep their activity when NQ is calm (0.94–1.25×); M6E is the weakest (3.0×).

@@ -107,3 +107,16 @@ C1.
   high-|move| window on M6E (\$56 against \$17). Under the standing memory, confluences can predict size and not
   direction: this is one more case.
 - GO is false. Nothing is admitted; the result is the principal's to close (R15).
+
+## 5. CLOSED
+
+*2026-10-02, the principal: "Close D755 and push it".*
+- **D755 is closed:** the statement-to-conference move does not set the direction of the ECB press-conference hour
+  on M6E.
+- **Don't re-propose:**
+  - the continuation trade on sign(J);
+  - its gated (|J| ≥ 25 pips) and 30-minute variants.
+- **What stays recorded:**
+  - **the size fact:** a scheduled hour 3.3 times an ordinary Thursday's, and 6.5 times 2c;
+  - **the calendar fixture:** it is reusable;
+  - **the post hoc Draghi-era reversal lean:** recorded, not pursued.
