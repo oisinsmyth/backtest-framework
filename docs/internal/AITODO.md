@@ -14,7 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 757.**
-  - **D756 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Can we find mean reverting days?";
+  - **D756 (2026-10-02): RECOGNISABLE, NOT WORTH IT.**
+    - **The prize is real:** the 10:00 fade on known reverting days +\$34.19 (t 24.6, win 75 %); other days −\$26.33;
+      p\* 0.435.
+    - **A small gap lifts the RD rate from 33 % to 36.4 %** (Holm 0.043, all four roots), short of 43.5 %.
+    - **The previous day's E is significant but WRONG SIGN:** day types alternate, so an RD is more likely after a
+      trending day.
+    - **No trading rule.** Gap × previous-trend is a POST HOC lead for a new record, on the held slice only.
+  - **D756 (2026-10-02): PRE-REGISTERED, Stage 0, prop book (the entry below, kept)** (the principal: "Can we find mean reverting days?";
     "Yes, index micros"; "for the prop book"). Classification only, with intraday mean reversion reopened for that
     purpose alone.
     - **The label:** the bottom third of the year's day efficiency, |C − O| / (H − L).
