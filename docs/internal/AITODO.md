@@ -35,8 +35,8 @@
     - **The readings:** NO REVERSAL / GENERIC / UNRESOLVED / NO PRIZE / PREMISE HOLDS.
     - **Next:** the fixture `fut_index_close_1m` (15:30–16:14, 2016–2023 only, `scripts/build_fut_index_close_1m.py`,
       V1/V2 declared), then the runner, each committed before its run.
-  - **D761 (2026-10-02): NO PROFILE on M6E and MBT** (declared); M6E on clean data (2016 on, POST HOC) would be SIZE
-    FAILURE. GO false. Round-number stop cascades outside US hours.
+  - **D761 (2026-10-02): CLOSED** (the principal: "Close this"). **NO PROFILE on M6E and MBT** (declared); M6E on
+    clean data (2016 on, POST HOC) would be SIZE FAILURE. GO false. Round-number stop cascades outside US hours.
     - **Net a trade (Asia, Lens A s = 2, fast):**
       - M6E −\$7.64 (gross −\$3.26, 425 trades), and from 2016 −\$5.77 (gross −\$1.39);
       - MBT −\$5.79 (gross −\$1.49, 210 trades).
@@ -52,7 +52,7 @@
       ~4,500 off-market closes; from 2016 it is near zero. M6E's declared reading is on contaminated data. BTC and
       GC are clean.
     - First `--run` stopped before any statistic (BTC microsecond timestamps; fixed in `1d3519e4`).
-    - Recommend closing; the principal's call.
+    - Closed 2026-10-02; the 6E print defect stays recorded.
   - **D760 (2026-10-02): NO TEST.**
     - **Absorption fires only 129 times** (ES 33, NQ 22, YM 74) against the 150-trade gate: 0.7–2.3% of windows.
     - **V nets +$3.83** (clustered t 0.44), but one NQ FOMC trade (2023-02-01, +$592) is 120% of the net; ex-top 1%

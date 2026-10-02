@@ -205,3 +205,18 @@ Lens A s = 2 mean signed gross per trade, Asia, fast approach.
   5. **6E's raw minute bars before 2016 are unusable for high, low or stop logic** without a print filter (§1).
 - **Recommendation:** close D761's line, since no rule built on round-number crossings can pay a micro's round trip
   out of a \$1–1.5 relative effect on a negative base. Closing it is the principal's call.
+
+## 8. CLOSED
+
+*2026-10-02, the principal: "Close this we need more ideas here what do you think?"*
+- **D761 is closed:** round-number stop cascades give no trade on M6E, MBT or MGC at micro size, in any session.
+- **Don't re-propose:**
+  - the stop entry beyond a round level (with or without the speed filter);
+  - the market entry after the crossing bar;
+  - the bounce or fade at round levels;
+  - a shift of the level into the stop band. The best in-band offset is still gross-negative on M6E, and +\$1.20
+    on MBT against a \$4.31 cost.
+- **What stays recorded:**
+  - the POST HOC mechanism facts: the round-number profile follows the spot level, at about \$1–1.5 a crossing;
+  - round levels are not walls at 15 minutes;
+  - 6E's pre-2016 off-market prints (§1).
