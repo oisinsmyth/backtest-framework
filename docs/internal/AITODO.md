@@ -13,7 +13,25 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 768.**
+- **Next free number: 769.**
+  - **D768 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Can we take advantage of demand
+    economies like chinas effects on markets? They should have a different type of footprint"; chose USDA China sales
+    and approved the download). China's demand footprint on the CBOT day.
+    - **The event:** USDA FAS's 09:00 ET daily export-sales announcements of soybean (ZS) or corn (ZC) sales to China
+      or unknown destinations. They land in the CBOT break (08:45 → 09:30 ET).
+    - **The question:** does the day session 09:30 → 14:15 ET carry the purchase on?
+    - **G1:** the event-day mean y against the exact rotation of the event label, two-sided, Holm over the two cells.
+    - **G2:** gross ≥ $5.50 at one micro (MZS/MZC, cash-settled, listed 2025-02) with NW t ≥ 2.
+    - **G3:** ≥ 5 of 8 years, positive ex-best year, no month above 25%.
+    - **Reported:** the break gap g_break and the overnight g_night (is the sale news?), China against unknown, the
+      placebo destinations, cancellations, the fade, size, the eras, Thursdays and WASDE days.
+    - **The fixture:** `data/fixtures/usda_daily_export_sales.csv`, 920 announcements from 2016 to 2023, giving 493
+      ZS and 175 ZC event days.
+      - The Python builder is byte-identical to the browser parser.
+      - Of the 200 full pages, 82 were read in the browser before FAS's bot protection refused it, and 118 were fetched
+        by the principal's own script. The raw cache is in `data/raw/usda/daily_sales/`.
+    - **Next:** the runner, with `--extract` of the ZS/ZC minutes from the raw Databento archive, committed before its
+      one run.
   - **D767 (2026-10-02): MGC NOT ABOVE NULL; SIL and MHG NO MECHANISM** (Stage 0, prop book; the unconfirmed China
     open). GO false.
     - **The filter U** (the AUD and the other metals not confirming the metal's opening move) has NEGATIVE accuracy on
