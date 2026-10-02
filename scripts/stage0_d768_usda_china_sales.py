@@ -193,7 +193,7 @@ def session_quantities(b: pd.DataFrame, root: str) -> pd.DataFrame:
         p1415 = float(C[a + i]) if i >= 0 and s[i] >= t1415 - 10 else float("nan")
         i8 = int(np.searchsorted(s, t0845, side="left")) - 1
         p0845 = float(C[a + i8]) if i8 >= 0 and s[i8] >= t0845 - 60 else float("nan")
-        brk = int(((s >= t0845) & (s < t0930)).sum())
+        brk = int(((s > t0845) & (s < t0930)).sum())      # the pre-registration's OPEN interval: the 08:45 bar is the overnight's close
         pprev = float("nan")
         if prev is not None and prev[1] == str(K[a]):
             pprev = prev[0]
@@ -216,7 +216,7 @@ def check_units(q: pd.DataFrame, root: str) -> float:
 def check_break(q: pd.DataFrame, root: str) -> float:
     fq = q[(q["day"] >= FIRST) & (q["day"] <= LAST)]
     share = float((fq["brk"] == 0).mean())
-    need(share >= 0.99, f"the break: only {share:.3f} of {root} sessions have no bar in [08:45, 09:30) ET")
+    need(share >= 0.99, f"the break: only {share:.3f} of {root} sessions have no bar starting in (08:45, 09:30) ET")
     return share
 
 
@@ -570,6 +570,11 @@ def selftest() -> int:
     expect_raise(lambda: check_units(q.assign(P1415=q["P1415"] / 100), "ZS"), "the units guard on dollars-a-bushel prices")
     with_bar = bars("2021-03-01", [(20, 0, 1400, 1401), (8, 44, 1402, 1403), (9, 0, 1404, 1405), (9, 30, 1410, 1411), (14, 14, 1420, 1425)])
     expect_raise(lambda: check_break(session_quantities(with_bar, "ZS"), "ZS"), "the break guard on a bar at 09:00 ET")
+    close_bar = bars("2021-03-01", [(20, 0, 1400, 1401), (8, 45, 1402, 1403), (9, 30, 1410, 1411), (14, 14, 1420, 1425)])
+    try:
+        check_break(session_quantities(close_bar, "ZS"), "ZS")
+    except D768Error:
+        fails.append("the break guard counted the overnight's closing bar at 08:45:00 (the interval is open at 08:45)")
     expect_raise(lambda: check_delivery(m.assign(contract="ZSH1"), "ZS"), "the delivery guard on a March contract traded in March")
     # the lag audit: the fixture text against flags; flags shifted to the next release must raise
     tmp = TMP / "selftest_fixture.csv"
