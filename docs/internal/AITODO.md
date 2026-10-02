@@ -14,13 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 772.**
-  - **D771 (2026-10-02): PHASE P — PREMISE FAILS; phase 2 not run** (Stage 0, prop book; the queue imbalance at the
+  - **D771 (2026-10-02): PHASE P — PREMISE FAILS; phase 2 not run; CLOSED by the principal ("Close D771, keep the
+    line open")** (Stage 0, prop book; the queue imbalance at the
     touch, GC `bbo-1m` sizes, on gold's China-open fade). Amendment A1 (the principal: "Premise test first no
     prices") ran the premise alone on the book cut at 09:31.
     - ρ(I(09:30), the 09:31 mid change) = +0.034 (t 1.47, 1,918 GC sessions); MGC +0.073 (t 1.59).
     - The lean does not persist a minute (ρ(I(09:29), I(09:30)) +0.016), and GC and MGC lean independently (+0.014).
     - The timestamp convention is checked (post hoc): the 09:30 record is the book 2.4 s (median) after its last change.
-    - Phase 2 (the decay curve, Q1, Q2) runs only on the principal's word. Recommend closing D771; the principal's call.
+    - Phase 2 (the decay curve, Q1, Q2) never ran.
     - **The principal is not closing the gold China-open line (D765, D767, D770) yet.**
   - **D770 (2026-10-02): Q2 NOT ABOVE NULL; Q3 UNBALANCED (net negative)** (Stage 0, prop book; real order flow and
     a passive entry on gold's China-open fade, the paid GC/MGC `tbbo` window). GO false.

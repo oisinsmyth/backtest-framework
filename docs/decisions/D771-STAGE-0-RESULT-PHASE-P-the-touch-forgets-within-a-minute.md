@@ -80,3 +80,10 @@
   touch is not in this data.
 - **Recommendation:** close D771 without phase 2. Closing it is the principal's call. The gold China-open line (D765,
   D767, D770) stays open by the principal's word.
+
+## 4. CLOSED (2026-10-02)
+
+**The principal: "Close D771, keep the line open".**
+- D771 is closed without phase 2. The decay curve beyond 09:31, Q1 and Q2 never ran.
+- The gold China-open line (D765, D767, D770) stays open.
+- The runner, its JSON and the paid window remain available (the window read-only).
