@@ -152,3 +152,54 @@
     hold is M2K's and MYM's 2024+.
 - **Recommendation:** close the post-close fade as a construction, and keep the mechanism finding. Closing is the
   principal's call.
+
+## ADDENDUM, 2026-10-02 — the breakdowns NET of cost
+
+*The principal: "Are those all gross figures? No net?"; "Add the net breakdown to D777 as an addendum".*
+
+- **Where the numbers come from:** §1–§3's splits are gross. Each figure below is derived from
+  `data/stage0_d777_post_close_fade.json` with no new run.
+  - net = gross − the root's fixed round trip (MNQ \$4.07, M2K \$3.76, MES \$4.42, MYM \$3.80).
+  - Each net t = gross t × (mean − cost) / mean. That is exact, because a fixed cost leaves the standard deviation
+    unchanged.
+- **Already net in §1 and §4:** G2, the Sharpe and Sortino, the drawdown and the totals.
+- **The hold split (§2) is not netted:** the cost is paid once per trade, not per leg.
+
+**Headline (one micro a trade):**
+
+| root | mean net (t) | median net | trimmed net | net Sharpe / Sortino | total net 2016–23 | max drawdown |
+|---|---|---|---|---|---|---|
+| **MNQ** | **+\$20.92 (2.02)** | +\$4.93 | +\$20.56 | 0.74 / 1.21 | +\$8,556 | \$2,054 |
+| M2K | +\$7.14 (1.24) | +\$1.99 | +\$7.32 | 0.53 / 0.79 | +\$2,100 | \$992 |
+| MES | +\$6.48 (0.94) | +\$6.83 | +\$6.59 | 0.35 / 0.51 | +\$2,639 | \$2,709 |
+| MYM | +\$4.68 (0.72) | −\$2.05 | +\$4.28 | 0.27 / 0.41 | +\$1,855 | \$1,989 |
+
+**MNQ by year, net (t):** 2016 (partial) +\$4.24 (0.29); 2017 −\$8.03 (−1.03); 2018 +\$6.50 (0.54); 2019 +\$18.38
+(1.01); 2020 −\$3.56 (−0.14); 2021 +\$34.51 (0.93); 2022 +\$88.89 (2.21); 2023 +\$30.50 (0.93).
+
+**The splits, net (t):**
+
+| split | MNQ | M2K | MES | MYM |
+|---|---|---|---|---|
+| fading a post-close FALL | **+\$54.25 (3.02)** | **+\$21.23 (2.46)** | +\$16.94 (1.46) | +\$11.58 (1.02) |
+| fading a post-close rise | −\$3.27 (−0.29) | −\$4.66 (−0.62) | −\$2.14 (−0.26) | +\$0.48 (0.06) |
+| \|m\| top tercile | **+\$66.82 (2.89)** | **+\$28.80 (2.80)** | +\$22.69 (1.38) | +\$19.11 (1.33) |
+| \|m\| low / mid terciles | +\$1.70 / −\$5.62 | +\$2.45 / −\$9.82 | +\$0.64 / −\$3.97 | −\$9.08 / +\$4.03 |
+| before 2020-10-26 | +\$8.05 (0.78) | +\$8.84 (1.19) | +\$1.27 (0.16) | +\$0.67 (0.08) |
+| 2020-10-26 → 2021-06-25 | −\$24.43 (−0.44) | +\$0.12 (0.01) | −\$45.54 (−1.58) | −\$36.73 (−1.07) |
+| after 2021-06-25 | **+\$61.56 (2.55)** | +\$7.04 (0.70) | **+\$31.12 (2.21)** | +\$21.88 (1.96) |
+| first half / second half | +\$4.96 (0.71) / +\$35.60 (1.89) | +\$9.41 (1.69) / +\$6.08 (0.75) | +\$6.36 (1.26) / +\$6.60 (0.52) | −\$1.78 (−0.39) / +\$11.22 (0.92) |
+| Tuesday / Thursday nights | +\$48.73 (2.03) / +\$37.05 (1.96) | +\$3.44 / +\$15.71 | +\$7.56 / **+\$32.49 (2.29)** | +\$0.33 / **+\$29.59 (2.45)** |
+| Monday / Wednesday / Friday nights | −\$8.59 / +\$1.01 / +\$8.04 | −\$17.25 / +\$14.89 / +\$12.58 | −\$19.84 / +\$4.76 / −\$6.56 | −\$1.74 / +\$11.36 / −\$17.82 |
+| the q90 gate | +\$38.86 (2.54) | +\$15.50 (1.99) | +\$18.68 (1.64) | +\$7.08 (0.71) |
+| leg B (09:30 → 11:00) alone | +\$4.48 (0.54) | −\$3.22 (−0.72) | +\$2.03 (0.43) | −\$2.86 (−0.73) |
+| the 18:05 → 20:00 placebo | −\$1.16 | −\$3.58 | −\$4.74 | −\$6.06 |
+
+**What net adds to §5's reading:**
+- **Fading a post-close rise loses after cost** on MNQ, M2K and MES, and is about zero on MYM. The tradeable side is the
+  fall alone: +\$54.25 a trade on MNQ, +\$21.23 on M2K.
+- **The lower two |m| terciles net about zero or less on every root.** All the net is in the top third.
+- **Before 2020-10 the net is thin on the index roots** (MNQ +\$8.05; MES and MYM about \$1). After 2021-06 it is
+  +\$22 to +\$62 on three of the four roots.
+- **Each of these splits was seen in this run,** so a rule built on any of them would be chosen on this data. The
+  reading (CONCENTRATED, GO false) and the recommendation are unchanged.
