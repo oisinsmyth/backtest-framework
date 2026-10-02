@@ -1,0 +1,45 @@
+{
+ "built": "2026-10-02",
+ "record": "D755 (step 1: the sourced ECB calendar, committed before the runner's run)",
+ "file": "data/calendar/ecb_meetings.csv",
+ "sha256": "e9eb5814a28a0af33fab7c216e120849262f5b9e34d3d4fb1f0148cb0c8e87f9",
+ "contents": "dates and clock times only (and the decision's direction); no price, no surprise measure, no expectation",
+ "span": {"from": "2011-01-13", "to": "2023-12-14"},
+ "rows": 120,
+ "rows_per_year": {"2011": 12, "2012": 12, "2013": 12, "2014": 12, "2015": 8, "2016": 8, "2017": 8, "2018": 8,
+                   "2019": 8, "2020": 8, "2021": 8, "2022": 8, "2023": 8},
+ "times": {"13:45 / 14:30 CET": 108, "14:15 / 14:45 CET": 12},
+ "non_thursday_meetings": ["2012-04-04", "2012-06-06", "2013-10-02", "2015-04-15", "2015-06-03", "2019-04-10"],
+ "sources": {
+  "meeting_lists": [
+   "https://www.ecb.europa.eu/press/govcdec/mopo/{YYYY}/html/index_include.en.html",
+   "https://www.ecb.europa.eu/press/pressconf/{YYYY}/html/index_include.en.html"
+  ],
+  "per_row": "source_url: that meeting's 'Monetary policy decisions' press release, fetched 2026-10-02. Its date, its decision and its sentence 'press conference starting at X CET today' (written '2.30 p.m.' up to 2015-03-05, '14.30'/'14:30'/'14:45' after) are the row's date, decision and press_conference_start_cet.",
+  "decision_release_time": {
+   "how": "NOT stated on any per-meeting page. It is the ECB's published schedule: 13:45 CET up to 2022-06-09 and 14:15 CET from 2022-07-21.",
+   "source": "https://www.ecb.europa.eu/press/pr/date/2022/html/ecb.pr220627~73acedf868.en.html (27 June 2022, 'New times for ECB's monetary policy decisions and press conference': from 21 July decisions are published at 14:15 CET instead of 13:45, press conferences begin at 14:45 CET instead of 14:30)",
+   "corroboration": "a contemporaneous report of the 2011-12-08 cut published 12:50 GMT (13:50 CET) that day, before the 13:30 GMT press conference: https://investinglive.com/news/!/ecb-cuts-refi-rate-to-1-00-surprising-some-20111208/",
+   "note": "Applying 13:45 to every meeting before 2022-07-21 is the one inference in the file; it is disclosed in every row's time_source."
+  }
+ },
+ "decision_coding": {
+  "rule": "hike / cut / no change on the main refinancing rate, except where only the deposit rate moved",
+  "flagged": {
+   "2015-12-03": "main refinancing rate unchanged at 0.05%; deposit rate cut to -0.30%; coded cut",
+   "2019-09-12": "main refinancing rate unchanged at 0.00%; deposit rate cut to -0.50%; coded cut"
+  },
+  "hikes": 12,
+  "cuts": 10
+ },
+ "excluded": {
+  "2020-03-18": "PEPP announcement: an evening press release with no press conference; not in the monetary policy decisions list",
+  "2014-10-26": "the comprehensive-assessment press conference, not a monetary policy meeting",
+  "2021-07-08": "the strategy-review press conference; no monetary policy decisions release (2021-07-22 is the meeting)"
+ },
+ "unsourced_rows": [],
+ "verification": {
+  "compiler": "a Sonnet agent fetched all 120 press releases (WebFetch, verbatim quotes requested)",
+  "second_pass": "independent re-fetch on 2026-10-02 of 6 rows (seeded random sample, seed 755: 2011-09-08, 2014-03-06, 2014-07-03, 2015-06-03, 2017-04-27, 2022-12-15) and of the 2022-06-27 timing release: date, press-conference time and decision all match; the per-year date list and the 22 rate changes match the known 2011-2023 ECB record"
+ }
+}

@@ -119,6 +119,15 @@ break.
 | G5 | 08:30 ET → 13:30 UTC in January, 12:30 UTC in July, asserted in code and over the rows | 22 / 22 |
 | G6 | no duplicate `(event, datetime_et)` | 0 |
 
+## `ecb_meetings.csv` (D755)
+
+120 ECB Governing Council monetary-policy meetings with a press conference, 2011-01-13 → 2023-12-14
+(12 a year to 2014, 8 after). Each row's date, decision and press-conference clock come from that
+meeting's own "Monetary policy decisions" release (`source_url`). **The decision-release clock is the
+one inferred column:** no per-meeting page states it, so it is the ECB's published schedule (13:45 CET,
+14:15 CET from 2022-07-21, per the ECB release of 27 June 2022), and every row's `time_source` says so.
+Exclusions, the two deposit-rate-only cuts and the verification pass are in `ecb_meetings.meta.json`.
+
 ## Not this file
 
 `data/macro_release_calendar.json` is a different, older artifact (recorded 2026-09-12) and is read
