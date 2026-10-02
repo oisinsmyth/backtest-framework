@@ -14,6 +14,13 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 765.**
+  - **D764 (2026-10-02): EFFECT, NO PRIZE.** The CME bitcoin expiry window reverses relative to other Fridays.
+    - **E1:** Δρ −0.296 (ρ_E −0.18 against ρ_C +0.12; p 0.023 on the full rotation).
+    - **E2:** the fade grosses $2.96 against $4.31.
+    - **Expiry windows are busier:** volume +41%, \|x\| +14%.
+    - **It faded:** ρ_E −0.41 / −0.72 / −0.59 in 2018–20, about 0 since 2021 (the MBT era).
+    - **Multiplicity:** about one pass in 13 primary tests in this line.
+    - **The principal's call:** close, or an ETF-era read (low power).
   - **D764 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets look at MBT, are there any data
     sources that could move it?"; chose the CME expiry window).
     - **The question:** on CME bitcoin expiry days (the last Friday of the month; CF Bitcoin Reference Rate 15:00–16:00
