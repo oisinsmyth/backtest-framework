@@ -13,7 +13,21 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 769.**
+- **Next free number: 770.**
+  - **D769 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "how about traces of no-public actions?";
+    chose the yuan fix residual and approved the downloads). The PBOC's hidden lean, seen through the 09:15 Beijing
+    fix.
+    - **The residual:** r = log(fix / FRED noon-NY rate), minus a walk-forward 250-day OLS on the overnight CME basket
+      moves (6E/6J/6B/6A/6C/6S).
+    - **The signal:** the surprise s = r − its 20-day mean.
+    - **G1:** Spearman ρ(s, the fix → 03:00 ET move) on M6A and MHG, exact rotation, two-sided, Holm over two.
+    - **G2:** the top third of \|s\|, gross ≥ $4.00 / $4.25 at NW t ≥ 2.
+    - **G3:** ≥ 5 of 9 years, positive ex-best year.
+    - **Reported:** the immediate 15-minute reaction (is it news?), model R², the stance level, the CCF regimes, ex
+      Aug-2015.
+    - **The fixtures:** `cny_central_parity.csv` (SAFE, 2,091 fixes) and `fred_dexchus.csv`. CFETS refused with 403,
+      not retried. The 16:30 onshore close is not free, so the FRED noon rate stands in.
+    - **Next:** the runner, with `--extract` of seven roots, committed before its one run.
   - **D768 (2026-10-02): NO DIRECTION on ZS and ZC; the construction CLOSED by the principal** (Stage 0, prop book; the demand-economy line stays open). China's purchases are news, and the 09:30
     open prices them.
     - **The break gap on sale days:** +$1.44 per micro on ZS (p 0.001), +$1.00 on ZC (p 0.001). It is absent for
