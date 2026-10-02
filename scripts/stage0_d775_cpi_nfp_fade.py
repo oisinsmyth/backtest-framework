@@ -283,6 +283,7 @@ def study(b: pd.DataFrame, root: str, rel: dict[str, str], primary: bool) -> dic
     out["N_rotation"]["exact"] = True
     U["absx"] = U["x"].abs() * mult
     U["dec"] = U.groupby("year")["absx"].transform(lambda v: pd.qcut(v.rank(method="first"), 10, labels=False))
+    R = U[U["is_rel"]]                                          # re-taken: it must carry absx and dec
     out["draws_year_weekday"] = null_summary(obs, matched_draws(U, ["year", "wd"]), boot=True)
     out["draws_year_impulse_decile"] = null_summary(obs, matched_draws(U, ["year", "dec"]), boot=True)
     yr = by(R, R["year"], cost)
@@ -413,7 +414,25 @@ def selftest() -> int:
     whole, chunk = rotation(f, pos, workers=1), rotation(f, pos, workers=4)
     need(bool(np.array_equal(whole, chunk)), "chunk != whole")
     need(abs(whole[0] - f[pos].mean()) < 1e-12, "offset 0 must be the observed")
-    print("selftest OK: synthetic fades, exclusions, the second implementation raises on a broken side, chunk == whole")
+    # the whole study end to end on a synthetic random-walk panel (catches reporting-path errors before the run)
+    global N_DRAWS
+    keep = N_DRAWS
+    N_DRAWS = 200
+    days = [d.strftime("%Y-%m-%d") for d in pd.bdate_range("2016-01-04", "2023-12-29")][::5]
+    rows = []
+    for d in days:
+        p = 100.0 + rng.normal(0, 1)
+        for h in BARS:
+            p += rng.normal(0, 0.5)
+            rows.append({"root": "NQ", "session": d, "et": f"{d} {h}", "hhmm": h, "contract": "NQZ9", "close": round(p, 2)})
+    syn = pd.DataFrame(rows)
+    rel_syn = {d: ("CPI" if i % 2 else "EMPSIT") for i, d in enumerate(days[::8])}
+    res = study(syn, "NQ", rel_syn, primary=False)
+    N_DRAWS = keep
+    need(res["counts"]["used"] == len(rel_syn), "synthetic study: every release day should be used")
+    need(res["reading"] in {"NO EFFECT", "NOT ABOVE NULL", "CONCENTRATED", "NO PRIZE", "SUPPORTED"}, "synthetic reading")
+    print("selftest OK: synthetic fades, exclusions, the second implementation raises on a broken side, chunk == whole,"
+          f" the whole study on a synthetic panel ({res['counts']['used']} release days, reading {res['reading']})")
     return 0
 
 
