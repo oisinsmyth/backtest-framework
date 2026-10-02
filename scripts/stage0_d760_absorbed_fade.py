@@ -417,7 +417,7 @@ def run() -> int:
     rho = {}
     for b, g in bk.groupby("book"):
         sb = g.groupby("session")["net"].sum()
-        lo, hi = max(cal.min(), sb.index.min()), min(cal.max(), sb.index.max())
+        lo, hi = max(min(cal), min(sb.index)), min(max(cal), max(sb.index))
         span = cal[(cal >= lo) & (cal <= hi)]
         rho[b] = float(np.corrcoef(dn.reindex(span).to_numpy(), sb.reindex(span, fill_value=0.0).to_numpy())[0, 1]) if span.size > 30 else None
     q_all = {r: float(x["RD"][(x["G"] == 1) & ~x["I"] & np.isfinite(x["th"]) & (x["d"] != 0)].mean()) for r, x in R.items()}
