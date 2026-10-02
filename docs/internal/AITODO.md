@@ -13,7 +13,19 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 762.**
+- **Next free number: 763.**
+  - **D762 (2026-10-02): PRE-REGISTERED, Stage 0 premise check, prop book** (the principal: "Lets do some premise
+    checks for the cash close?").
+    - **The question:** does the closing auction's pressure x = P16:00 − P15:50 reverse in the futures between 16:00
+      and 16:10 (y)? ES, NQ, YM, RTY.
+    - **The checks:**
+      - C1 size;
+      - C2 Spearman ρ(x, y) below the exact rotation's p05, Holm over four roots;
+      - C3 more negative than the 15:00 and 12:00 placebos by > 2 SE;
+      - C4 the walk-forward top-third fade's gross ≥ cost at t ≥ 2.
+    - **The readings:** NO REVERSAL / GENERIC / UNRESOLVED / NO PRIZE / PREMISE HOLDS.
+    - **Next:** the fixture `fut_index_close_1m` (15:30–16:14, 2016–2023 only, `scripts/build_fut_index_close_1m.py`,
+      V1/V2 declared), then the runner, each committed before its run.
   - **D761 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "a strategy or two that can trade on
     the outside the US hours"; "I like #1 …"; "Put MBT in also"). Round-number stop cascades (Osler 2003/2005).
     - **The trade:** a resting stop 1 tick beyond a spot-equivalent round level, live only on a fast approach; with
