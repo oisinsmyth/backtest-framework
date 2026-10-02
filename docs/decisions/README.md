@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 590 of these records carry neither field —
+**No Status or Category column, deliberately.** 591 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -833,7 +833,7 @@ would look like data. The tokens are what is shown.
 | D758 | D758 STAGE 0 RESULT — NOTHING: CME bitcoin's weekend gap does not fill; Monday's path reaches the mirror level more oft… | [PRE-REG](D758-STAGE-0-PRE-REG-the-cme-bitcoin-weekend-gap.md) · [RESULT](D758-STAGE-0-RESULT-the-gap-does-not-fill.md) |
 | D759 | D759 STAGE 0 RESULT — NO ROOM: quiet long-gamma days revert 39.3 % of the time, but a 10:30 fade on a quiet morning nee… | [PRE-REG](D759-STAGE-0-PRE-REG-quiet-long-gamma-premise.md) · [RESULT](D759-STAGE-0-RESULT-no-room.md) |
 | D760 | D760 STAGE 0 RESULT — NO TEST: absorption on quiet long-gamma days fires only 129 times in eight years, below the 150-t… | [PRE-REG](D760-STAGE-0-PRE-REG-flow-validated-quiet-gamma-fade.md) · [RESULT](D760-STAGE-0-RESULT-no-test-absorption-is-rare.md) |
-| D761 | D761 STAGE 0 PRE-REG — round-number stop cascades outside US hours, on M6E and MBT: does crossing a round level in a th… | [PRE-REG](D761-STAGE-0-PRE-REG-round-number-stop-cascades.md) |
+| D761 | D761 STAGE 0 RESULT — NO PROFILE on M6E and MBT as declared; on clean 6E data (POST HOC) round levels do carry the stop… | [PRE-REG](D761-STAGE-0-PRE-REG-round-number-stop-cascades.md) · [RESULT](D761-STAGE-0-RESULT-round-numbers-steer-but-do-not-pay.md) |
 | D762 | D762 STAGE 0 PRE-REGISTRATION — does the cash close reverse? A premise check on whether the closing auction's pressure… | [PRE-REG](D762-STAGE-0-PRE-REG-does-the-cash-close-reverse.md) |
 
 <!-- REGISTER:END -->

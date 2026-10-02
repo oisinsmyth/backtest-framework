@@ -26,18 +26,24 @@
     - **The readings:** NO REVERSAL / GENERIC / UNRESOLVED / NO PRIZE / PREMISE HOLDS.
     - **Next:** the fixture `fut_index_close_1m` (15:30–16:14, 2016–2023 only, `scripts/build_fut_index_close_1m.py`,
       V1/V2 declared), then the runner, each committed before its run.
-  - **D761 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "a strategy or two that can trade on
-    the outside the US hours"; "I like #1 …"; "Put MBT in also"). Round-number stop cascades (Osler 2003/2005).
-    - **The trade:** a resting stop 1 tick beyond a spot-equivalent round level, live only on a fast approach; with
-      the crossing; 30-minute clock or a re-cross exit.
-    - **The cells:** M6E (50-pip grid) and MBT (\$1,000 grid), Asia 18:30–02:00 ET primary; MGC, London and NY
-      reported.
-    - **The controls:** the half-round grid, and an exact offset enumeration excluding the stop band.
-    - **The order of readings:** a bounce premise gate first, then NO PROFILE / SIZE FAILURE / CASCADE, Holm over
-      the two cells.
-    - **The design:** a Fable 5.1 design merged with Opus's; Lens A's filter re-timed to completed bars, so nothing
-      is read after the fill.
-    - Not yet built or run.
+  - **D761 (2026-10-02): NO PROFILE on M6E and MBT** (declared); M6E on clean data (2016 on, POST HOC) would be SIZE
+    FAILURE. GO false. Round-number stop cascades outside US hours.
+    - **Net a trade (Asia, Lens A s = 2, fast):**
+      - M6E −\$7.64 (gross −\$3.26, 425 trades), and from 2016 −\$5.77 (gross −\$1.39);
+      - MBT −\$5.79 (gross −\$1.49, 210 trades).
+      - 0 profitable years in either. ρ with the ledger is about 0.
+    - **The rank among eligible offsets:** M6E 0.66, MBT 0.78.
+    - **POST HOC, the stop-band profile is real but tiny:**
+      - on clean 6E the spot-equivalent round grid ranks 1.00 of 29, and gold's \$10 grid ranks 1.00 of 79 in both
+        periods;
+      - 6E's futures-round grid ranks 0.10, so the effect follows the spot level;
+      - the size is about \$1–1.5 a crossing; M6E's mean move over the hold is \$6 against a \$17.52 bar.
+    - **The bounce gate is negative in all four cells:** round levels are crossed slightly more than half-round ones.
+    - **A data defect found:** 6E one-minute bars 2010–15 carry about 47,000 isolated off-market highs and lows, and
+      ~4,500 off-market closes; from 2016 it is near zero. M6E's declared reading is on contaminated data. BTC and
+      GC are clean.
+    - First `--run` stopped before any statistic (BTC microsecond timestamps; fixed in `1d3519e4`).
+    - Recommend closing; the principal's call.
   - **D760 (2026-10-02): NO TEST.**
     - **Absorption fires only 129 times** (ES 33, NQ 22, YM 74) against the 150-trade gate: 0.7–2.3% of windows.
     - **V nets +$3.83** (clustered t 0.44), but one NQ FOMC trade (2023-02-01, +$592) is 120% of the net; ex-top 1%
