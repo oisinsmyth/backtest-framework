@@ -13,7 +13,15 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 757.**
+- **Next free number: 758.**
+  - **D757 (2026-10-02): PRE-REGISTERED, Stage 0, prop book.** A reverting-day detector (the principal: "Long-Gamma
+    Days OR'd with large Impulse moves outside of predicted Vol"; then "AND, strong gamma", "Prior-20 realised").
+    - **The detector:** GEX at the prior close in its top tercile AND \|z₁₀:₃₀\| ≥ 1.5.
+    - **The trade:** a fade at 10:30; p\* measured on impulse days.
+    - **The tests:** T1, gamma adds to the impulse (exact rotation of G); T2, precision ≥ p\*; T3, at least 150
+      days. Pooled over ES, YM and RTY; NQ reported only (D727).
+    - **Status:** development only, with confirmation on the held slice. It does not read the gap or the previous
+      day's type, so D756's lead is untouched.
   - **D756 (2026-10-02): RECOGNISABLE, NOT WORTH IT.**
     - **The prize is real:** the 10:00 fade on known reverting days +\$34.19 (t 24.6, win 75 %); other days −\$26.33;
       p\* 0.435.
