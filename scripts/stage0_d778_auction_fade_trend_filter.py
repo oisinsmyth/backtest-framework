@@ -71,9 +71,14 @@ def load_bars() -> pd.DataFrame:
 # ================================================================================ the frame
 def trend_state(p16: pd.Series, contract: pd.Series) -> pd.DataFrame:
     """The back-adjusted 16:00 index (returns zeroed across a change of front), its 200-session average (including
-    S), DOWN, and F2's rising-volatility flag. Uses prices up to S only."""
-    r = np.log(p16 / p16.shift(1))
-    r = r.where(contract == contract.shift(1), 0.0).fillna(0.0)
+    S), DOWN, and F2's rising-volatility flag. Uses prices up to S only. A session with no 16:00 price adds 0; the next
+    priced session's return runs from the last priced close (fixed after the first launch's lag audit, §0 of the
+    result)."""
+    have = p16.notna()
+    prev_p = p16.where(have).ffill().shift(1)
+    prev_k = contract.where(have).ffill().shift(1)
+    r = np.log(p16 / prev_p)
+    r = r.where(have & (contract == prev_k), 0.0).fillna(0.0)
     idx = r.cumsum()
     ma = idx.rolling(MA_N, min_periods=MA_N).mean()
     rv = r.rolling(RV_N, min_periods=RV_N).std()
@@ -256,6 +261,7 @@ def audit(b: pd.DataFrame, root: str, D: pd.DataFrame, n: int = AUDIT_N) -> None
         i = sess.index(s)
         c = close[(s, "15:59")] - close[(s, "15:49")]
         need(abs(c - float(D.at[s, "c"])) < 1e-9, f"lag audit: c differs on {s}")
+        need(abs(idx[s] - float(D.at[s, "idx"])) < 1e-9, f"lag audit: the trend index differs on {s}")
         window = [idx[sess[j]] for j in range(i - MA_N + 1, i + 1)]
         down = idx[s] < sum(window) / len(window)
         keep = not (c < 0 and down)
@@ -362,8 +368,11 @@ def selftest() -> int:
     D2 = frame(b2, "RTY")
     early = [s for s in sessions[:800] if s in D.index]
     need(D.loc[early, "down"].equals(D2.loc[early, "down"]), "the trend state used a later price")
-    # 4) the second implementation agrees, and raises on a broken decision
+    # 4) the second implementation agrees (including across sessions with a missing 16:00 bar), and raises on a broken
+    #    decision
     audit(b, "RTY", D, n=50)
+    bm = b[~((b["hhmm"] == "15:59") & b["session"].isin(sessions[300:900:37]))]
+    audit(bm, "RTY", frame(bm, "RTY"), n=10_000)
     Dx = D.copy()
     s0 = Dx[Dx["removed"]].index[0]
     Dx.loc[s0, "keep"] = True
