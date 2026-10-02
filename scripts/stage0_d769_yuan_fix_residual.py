@@ -283,6 +283,16 @@ def surprise(r: np.ndarray, n: int = SURP) -> np.ndarray:
 
 
 # ================================================================================ statistics
+def spearman(a, b) -> float:
+    """Pearson of ranks over the pairs where both are finite. The system python has no scipy, which pandas' spearman
+    needs (the D763 lesson)."""
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    ok = np.isfinite(a) & np.isfinite(b)
+    if ok.sum() < 5:
+        return float("nan")
+    return float(np.corrcoef(ranks(a[ok]), ranks(b[ok]))[0, 1])
+
+
 def ranks(x: np.ndarray) -> np.ndarray:
     return pd.Series(x).rank().to_numpy(float)
 
@@ -471,7 +481,7 @@ def run() -> int:
         for nm, a, b_ in REGIMES:
             mm = np.array([a <= d <= b_ for d in days])
             if mm.sum() > 30:
-                reg[nm] = {"n": int(mm.sum()), "rho": float(pd.Series(s[mm]).corr(pd.Series(y[mm]), method="spearman")),
+                reg[nm] = {"n": int(mm.sum()), "rho": spearman(s[mm], y[mm]),
                            "trade_net": float(net[mm[tt]].sum()) if (mm & tt).any() else 0.0, "trades": int((mm & tt).sum())}
         ex_aug = np.array([not d.startswith("2015-08") for d in days])
         res["cells"][cell] = {
@@ -489,10 +499,10 @@ def run() -> int:
                       "bottom5": [(str(d_tt[i]), float(net[i])) for i in order[:5]], "rho_books": rho_b},
             "reported": {
                 "is_it_news_imm": rot_spearman(s[imm_ok], D["y_imm"].to_numpy()[imm_ok]),
-                "is_it_news_imm_top_third": float(pd.Series(s[imm_ok & tt]).corr(pd.Series(D["y_imm"].to_numpy()[imm_ok & tt]), method="spearman")),
-                "stance_level_rho": float(pd.Series(rr).corr(pd.Series(y), method="spearman")),
-                "rest_of_day_rho": float(pd.Series(s[day_ok]).corr(pd.Series(D["y_day"].to_numpy()[day_ok]), method="spearman")),
-                "ex_aug_2015_rho": float(pd.Series(s[ex_aug]).corr(pd.Series(y[ex_aug]), method="spearman")),
+                "is_it_news_imm_top_third": spearman(s[imm_ok & tt], D["y_imm"].to_numpy()[imm_ok & tt]),
+                "stance_level_rho": spearman(rr, y),
+                "rest_of_day_rho": spearman(s[day_ok], D["y_day"].to_numpy()[day_ok]),
+                "ex_aug_2015_rho": spearman(s[ex_aug], y[ex_aug]),
                 "size_abs_y_top_third_vs_other": [float(np.abs(y[tt]).mean()), float(np.abs(y[~tt]).mean())],
                 "regimes": reg, "all_days_y": dist(y),
                 "min_business_days_to_last_day": int(min(gaps))}}
@@ -582,6 +592,10 @@ def selftest() -> int:
     g = rot_spearman(s, y)
     if not math.isclose(g["offset0"], g["rho"], abs_tol=1e-12):
         fails.append("rotation offset 0 != rho")
+    if not math.isclose(spearman(s, y), g["rho"], abs_tol=1e-12):
+        fails.append("the local spearman disagrees with the rotation's observed rho")
+    if not math.isclose(spearman(np.array([1, 2, 3, 4, 5, np.nan]), np.array([2, 4, 6, 8, 11, 3])), 1.0):
+        fails.append("the local spearman does not drop non-finite pairs or rank correctly")
     planted = rot_spearman(s, -0.12 * s + y)
     if planted["p_two_sided"] >= 0.05:
         fails.append(f"a planted rho -0.12 did not pass (p {planted['p_two_sided']:.3f})")
