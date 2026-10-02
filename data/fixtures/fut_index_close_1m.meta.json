@@ -1,0 +1,135 @@
+{
+ "record": "D762",
+ "builder": "scripts/build_fut_index_close_1m.py",
+ "reuses": "scripts/build_fut_index_1m.py (D462)",
+ "window_et": [
+  "15:30",
+  "16:14"
+ ],
+ "span_rule": [
+  "2016-01-01",
+  "2024-01-01"
+ ],
+ "front_rule": "fut_index_sessions (D462), not re-derived",
+ "files": [
+  {
+   "file": "glbx-mdp3-20160101-20161231.ohlcv-1m.dbn.zst",
+   "rows_in": 50604555,
+   "rows_kept": 46787,
+   "secs": 53.0
+  },
+  {
+   "file": "glbx-mdp3-20170101-20171231.ohlcv-1m.dbn.zst",
+   "rows_in": 49989121,
+   "rows_kept": 54139,
+   "secs": 50.9
+  },
+  {
+   "file": "glbx-mdp3-20180101-20180723.ohlcv-1m.dbn.zst",
+   "rows_in": 32153793,
+   "rows_kept": 35328,
+   "secs": 27.7
+  },
+  {
+   "file": "glbx-mdp3-20180724-20181231.ohlcv-1m.dbn.zst",
+   "rows_in": 24713186,
+   "rows_kept": 28863,
+   "secs": 21.5
+  },
+  {
+   "file": "glbx-mdp3-20190101-20191231.ohlcv-1m.dbn.zst",
+   "rows_in": 58051976,
+   "rows_kept": 61057,
+   "secs": 77.9
+  },
+  {
+   "file": "glbx-mdp3-20200101-20201231.ohlcv-1m.dbn.zst",
+   "rows_in": 67058153,
+   "rows_kept": 62456,
+   "secs": 83.2
+  },
+  {
+   "file": "glbx-mdp3-20210101-20211231.ohlcv-1m.dbn.zst",
+   "rows_in": 68752439,
+   "rows_kept": 60932,
+   "secs": 88.3
+  },
+  {
+   "file": "glbx-mdp3-20220101-20220816.ohlcv-1m.dbn.zst",
+   "rows_in": 55424065,
+   "rows_kept": 38917,
+   "secs": 61.2
+  },
+  {
+   "file": "glbx-mdp3-20220817-20221231.ohlcv-1m.dbn.zst",
+   "rows_in": 33062368,
+   "rows_kept": 23574,
+   "secs": 34.7
+  },
+  {
+   "file": "glbx-mdp3-20230101-20230822.ohlcv-1m.dbn.zst",
+   "rows_in": 55951485,
+   "rows_kept": 38344,
+   "secs": 62.4
+  },
+  {
+   "file": "glbx-mdp3-20230823-20231231.ohlcv-1m.dbn.zst",
+   "rows_in": 31602486,
+   "rows_kept": 22498,
+   "secs": 33.3
+  }
+ ],
+ "rows": 342270,
+ "validation": {
+  "ES": {
+   "V1_overlap_bars": 59910,
+   "V1_identical_share": 1.0,
+   "V2_sessions_with_1559": 1997,
+   "V2_post_close_share": 1.0,
+   "sessions": 1997,
+   "span": [
+    "2016-01-04",
+    "2023-12-29"
+   ],
+   "pass": true
+  },
+  "NQ": {
+   "V1_overlap_bars": 59910,
+   "V1_identical_share": 1.0,
+   "V2_sessions_with_1559": 1997,
+   "V2_post_close_share": 1.0,
+   "sessions": 1997,
+   "span": [
+    "2016-01-04",
+    "2023-12-29"
+   ],
+   "pass": true
+  },
+  "YM": {
+   "V1_overlap_bars": 59850,
+   "V1_identical_share": 1.0,
+   "V2_sessions_with_1559": 1995,
+   "V2_post_close_share": 1.0,
+   "sessions": 1995,
+   "span": [
+    "2016-01-04",
+    "2023-12-29"
+   ],
+   "pass": true
+  },
+  "RTY": {
+   "V1_overlap_bars": 48512,
+   "V1_identical_share": 1.0,
+   "V2_sessions_with_1559": 1618,
+   "V2_post_close_share": 1.0,
+   "sessions": 1618,
+   "span": [
+    "2017-07-10",
+    "2023-12-29"
+   ],
+   "pass": true
+  }
+ },
+ "all_pass": true,
+ "built_seconds": 114.5
+}
