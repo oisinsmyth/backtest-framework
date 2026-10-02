@@ -14,6 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 769.**
+  - **D768 (2026-10-02): NO DIRECTION on ZS and ZC** (Stage 0, prop book). China's purchases are news, and the 09:30
+    open prices them.
+    - **The break gap on sale days:** +$1.44 per micro on ZS (p 0.001), +$1.00 on ZC (p 0.001). It is absent for
+      other destinations and reversed on cancellations.
+    - **The day session adds nothing:** ZS +$0.41 (p 0.16), ZC −$0.09 (p 0.93), against $5.50; net Sharpe −0.72 /
+      −0.76.
+    - **Corn is anticipated overnight** (Δ +$4.38, p 0.03).
+    - **Post hoc:** corn sold to China by name, and the large sales, fell on the day.
+    - **The first run** stopped on the break guard (a closed interval against the pre-registration's open one); fixed in
+      `c44adfe4`.
+    - **The principal's call:** close the USDA line, or test the corn overnight or the China-holiday calendar.
   - **D768 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Can we take advantage of demand
     economies like chinas effects on markets? They should have a different type of footprint"; chose USDA China sales
     and approved the download). China's demand footprint on the CBOT day.

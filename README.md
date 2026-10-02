@@ -57,7 +57,7 @@ The inventory, measured from the git index rather than typed:
 
 | | |
 |---|---|
-| **1107 decision records** | D1 → D768, over **725** decision numbers — a pre-registration and its result share one number |
+| **1108 decision records** | D1 → D768, over **725** decision numbers — a pre-registration and its result share one number |
 | **81 library modules** | across 15 packages, plus 25 in `research/`, which is study code rather than framework |
 | **71 documents** | in [`docs/results/`](docs/results/README.md), five of them featured |
 | **4,239 tests** | 421 golden · 234 property · 159 integration · 3,425 unit, across 237 files |
