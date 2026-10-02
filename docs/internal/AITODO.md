@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 764.**
+- **Next free number: 765.**
+  - **D764 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets look at MBT, are there any data
+    sources that could move it?"; chose the CME expiry window).
+    - **The question:** on CME bitcoin expiry days (the last Friday of the month; CF Bitcoin Reference Rate 15:00–16:00
+      London), does the window's move x reverse over 16:00–17:00 London (y), more than on other Fridays? BTC prices
+      from `fut_btc_1m`, 2018–2023, scored at one MBT ($4.31).
+    - **The checks:** E1, Δρ against the full exact rotation of the expiry label; E2, the fade's gross ≥ cost at t ≥ 2.
+    - **The era:** pre-ETF in-sample, and the record says so.
   - **D763 (2026-10-02): NO EFFECT on every root.** The expiry open does not reverse.
     - **Δρ is positive everywhere** (+0.007 to +0.217): the opening move continues at least as much as on other
       Fridays.
