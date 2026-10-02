@@ -14,6 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 767.**
+  - **D766 (2026-10-02): NO DIRECTION** (Stage 0, prop book). Crowded perpetual-swap leverage does not set the MBT
+    day's direction.
+    - **G1:** the contrarian mean is +$6.96 per MBT against a rotation p95 of +$10.27 (p 0.133; 840 sessions; L 65, S
+      83).
+    - **The sides:** L-short −$8.32 (the 2021-02 boom episode lost $602); S-long +$18.93, all from the 2022 short
+      squeezes (+$844; ex-2022 −$451).
+    - **Bybit's longer sample** (a disclosed supplement, prices from 2018-11, since the runner had capped them at
+      2019-09): −$7.50, p 0.905, negative every year.
+    - **Size:** ratio 1.26, inside the null (p95 1.38).
+    - **Post hoc:** L days with flat or falling OI continue up (−$40 to the contrarian, t −2.4, n 28).
+    - **The principal's call:** close the funding-level line, or pre-register the post-hoc lead.
   - **D766 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Close the MBT expiry idea, any other
     MBT ideas?"; chose crowded leverage). Crowded perpetual-swap leverage and the MBT day.
     - **The signal:** F_d is the mean of the three Binance BTCUSDT fundings settled at 16:00 UTC on d−1 and at 00:00
