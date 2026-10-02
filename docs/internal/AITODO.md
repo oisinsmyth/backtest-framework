@@ -14,13 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 778.**
-  - **D777 RESULT (2026-10-02): MNQ CONCENTRATED; MES, M2K, MYM NO EFFECT; GO false.**
-    - **MNQ:** +\$24.99 gross / +\$20.92 net (t 2.41), exact rotation rank 0.998, b_m −0.39 (t −3.25), G2 pass. It fails
+  - **D777 RESULT (2026-10-02): MNQ CONCENTRATED; MES, M2K, MYM NO EFFECT; GO false. CLOSED by the principal ("Close
+    D777"); the mechanism finding stands as a measurement.**
+    - **MNQ:** +$24.99 gross / +$20.92 net (t 2.41 gross, 2.02 net), exact rotation rank 0.998, b_m −0.39 (t −3.25), G2 pass. It fails
       Y by one year on each branch (2017, 2020).
     - **M2K:** t 1.89 (it passes N and M). **MYM:** t 1.30. No confirmable root passes G1.
     - **The effect is real on every root** (rank 0.97–0.998, a placebo of 0). It is in large post-close FALLS, held
       overnight, mostly after the 16:15 halt ended (2021-06).
-    - The same down-move asymmetry appeared in D775. Recommend closing the construction; the principal's call.
+    - The same down-move asymmetry appeared in D775.
   - **D777 (2026-10-02): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 2).
     - **The construction:** fade the index futures' 16:00 → 17:00 move (gated at the trailing q80 of |m|) from the
       18:05 reopen to 10:00, on MNQ, MES, M2K and MYM.

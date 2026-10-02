@@ -203,3 +203,13 @@
   +\$22 to +\$62 on three of the four roots.
 - **Each of these splits was seen in this run,** so a rule built on any of them would be chosen on this data. The
   reading (CONCENTRATED, GO false) and the recommendation are unchanged.
+
+## CLOSED (2026-10-02)
+
+**The principal: "Close D777".**
+- The post-close-hour fade (D772's Opus Lead 2) is closed as a construction for the prop book, on every root.
+- **The mechanism finding stands as a measurement:**
+  - the index futures' 16:00 → 17:00 move gives back overnight (exact null ranks 0.97–0.998, b_m negative on all four
+    roots, a placebo of zero);
+  - its net is in large post-close falls, mostly after 2021-06.
+- M2K's and MYM's 2024+ data stays unread.
