@@ -33,6 +33,13 @@ sys.path.insert(0, str(REPO / "scripts"))
 MAIN_DATA = Path("C:/Users/O/Desktop/Projects/Backtest Framework/data")
 SPEC = REPO / "docs" / "decisions" / "D761-STAGE-0-PRE-REG-round-number-stop-cascades.md"
 OUT = REPO / "data" / "stage0_d761_round_number_cascades.json"
+# POST HOC (added after the one declared run): 6E's one-minute bars before 2016 carry ~47,000 isolated off-market
+# prints (an extreme 20+ pips beyond both neighbouring closes). D761_SINCE=2016-01-01 re-runs every cell on sessions
+# from that date only, into a separate file; the declared output above is untouched.
+SINCE = os.environ.get("D761_SINCE")
+SINCE_DN = (pd.Timestamp(SINCE) - pd.Timestamp("1970-01-01")).days if SINCE else None
+if SINCE:
+    OUT = REPO / "data" / f"stage0_d761_round_number_cascades_posthoc_since{SINCE[:4]}.json"
 TMP = Path(os.environ.get("D761_TMP", str(REPO / "temp" / "d761")))     # the override is for the synthetic smoke test
 SEAL = "2024-01-01"
 SEAL_NS = int(pd.Timestamp(SEAL, tz="UTC").value)
@@ -422,7 +429,7 @@ def run_offset(args: tuple[str, int, bool]) -> dict[str, Any]:
     touches: dict[str, list[int]] = {w: [0, 0] for w in WINDOWS}
     for i, d in enumerate(X["days"]):
         d = int(d)
-        if d not in X["basis"] or d in X["roll"]:
+        if d not in X["basis"] or d in X["roll"] or (SINCE_DN is not None and d < SINCE_DN):
             continue
         a, z = int(X["starts"][i]), int(X["ends"][i])
         g = (o + X["basis"][d]) % S
@@ -580,6 +587,8 @@ def run(lines: Path | None) -> int:
     t0 = time.time()
     sign_audit()
     res: dict[str, Any] = {"spec": SPEC.name, "seal": f"nothing on or after {SEAL}", "cells": {}}
+    if SINCE:
+        res["post_hoc"] = f"sessions from {SINCE} only (6E off-market prints before 2016); session counts below are all sessions"
     for cell in CELLS:
         X = build_cell(cell)
         save_cell(X)
