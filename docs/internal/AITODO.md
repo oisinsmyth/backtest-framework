@@ -13,7 +13,19 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 766.**
+- **Next free number: 767.**
+  - **D766 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Close the MBT expiry idea, any other
+    MBT ideas?"; chose crowded leverage). Crowded perpetual-swap leverage and the MBT day.
+    - **The signal:** F_d is the mean of the three Binance BTCUSDT fundings settled at 16:00 UTC on d−1 and at 00:00
+      and 08:00 UTC on d. L: F above the prior 250-session 90th percentile; S: below the 10th.
+    - **The trade:** contrarian on the 09:30–16:00 ET move, short on L and long on S, at one MBT ($4.31).
+    - **The gates:**
+      - G1: the contrarian mean against the exact rotation p95 of the flags;
+      - G2: gross ≥ $4.31 at NW(5) t ≥ 2;
+      - G3: ≥ 8 episodes, net positive ex-2021 and ex-2022, no episode above half the net.
+    - **Reported:** Bybit OI rising or not, the Bybit inverse sample from 2018-11, L and S separately, and quintiles.
+    - **P(PREMISE HOLDS) ≈ 0.07.**
+    - **Next:** the runner `scripts/stage0_d766_crowded_leverage.py`, committed before its one run.
   - **D765 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets look at copper and silver at the
     china open?"; "Yes to all three questions"). Copper and silver at the China open.
     - **The question:** does MHG's / SIL's first half hour after 09:00 Beijing (x) carry on or reverse into the
