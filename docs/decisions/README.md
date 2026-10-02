@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 597 of these records carry neither field —
+**No Status or Category column, deliberately.** 600 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -837,7 +837,8 @@ would look like data. The tokens are what is shown.
 | D762 | D762 STAGE 0 RESULT — the cash close barely reverses: NO REVERSAL on ES, NQ and RTY; YM reverses (ρ −0.084) but no more… | [PRE-REG](D762-STAGE-0-PRE-REG-does-the-cash-close-reverse.md) · [RESULT](D762-STAGE-0-RESULT-the-close-barely-reverses.md) |
 | D763 | D763 STAGE 0 RESULT — NO EFFECT on every root: the expiry open does not reverse. If anything it continues, and expiry-d… | [PRE-REG](D763-STAGE-0-PRE-REG-the-expiry-open-fade.md) · [RESULT](D763-STAGE-0-RESULT-the-expiry-open-does-not-reverse.md) |
 | D764 | D764 STAGE 0 RESULT — EFFECT, NO PRIZE: the CME bitcoin expiry window does reverse relative to other Fridays (Δρ −0.30,… | [PRE-REG](D764-STAGE-0-PRE-REG-the-bitcoin-expiry-window.md) · [RESULT](D764-STAGE-0-RESULT-reverts-faded-too-small.md) |
-| D765 | D765 STAGE 0 PRE-REG — copper and silver at the China open: does the first half hour after Shanghai's 09:00 open on MHG… | [PRE-REG](D765-STAGE-0-PRE-REG-copper-and-silver-at-the-china-open.md) |
+| D765 | D765 STAGE 0 RESULT — NO DIRECTION on MHG and SIL: the China open is real size, but its first half hour does not carry… | [PRE-REG](D765-STAGE-0-PRE-REG-copper-and-silver-at-the-china-open.md) · [RESULT](D765-STAGE-0-RESULT-the-china-open-is-real-but-does-not-carry-on.md) |
+| D766 | D766 STAGE 0 RESULT — NO DIRECTION: after an extreme-funding night the CME bitcoin day does not lean against the crowd… | [PRE-REG](D766-STAGE-0-PRE-REG-crowded-leverage-and-the-mbt-day.md) · [RESULT](D766-STAGE-0-RESULT-no-direction-the-crowd-is-not-faded.md) |
 
 <!-- REGISTER:END -->
 

@@ -13,22 +13,45 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 766.**
-  - **D765 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets look at copper and silver at the
-    china open?"; "Yes to all three questions"). Copper and silver at the China open.
-    - **The question:** does MHG's / SIL's first half hour after 09:00 Beijing (x) carry on or reverse into the
-      SHFE close at 15:00 Beijing (y)?
-    - **The trade:** the walk-forward top third of |x|, from 2016 to 2023.
-    - **The checks:**
-      - C1 size;
-      - C2 two-sided ρ against the exact rotation, Holm over the two cells;
-      - C3 China's open: the holiday |x| drop, and the daylight-saving ET-fixed placebo (> 2 SE);
-      - C4 the Tokyo-open and post-break placebos;
-      - C5 net t ≥ 2, Holm, ex-best-two-years.
-    - **Reported:** the US-afternoon catch-up, MGC, and 6A.
-    - **The calendar** `data/calendar/china_exchange_holidays.csv` was built: 141 closures.
-    - **The design:** Fable and Opus in parallel, merged (§9).
-    - **Next:** the extraction plus the runner, committed before its run.
+- **Next free number: 767.**
+  - **D766 (2026-10-02): NO DIRECTION** (Stage 0, prop book). Crowded perpetual-swap leverage does not set the MBT
+    day's direction.
+    - **G1:** the contrarian mean is +$6.96 per MBT against a rotation p95 of +$10.27 (p 0.133; 840 sessions; L 65, S
+      83).
+    - **The sides:** L-short −$8.32 (the 2021-02 boom episode lost $602); S-long +$18.93, all from the 2022 short
+      squeezes (+$844; ex-2022 −$451).
+    - **Bybit's longer sample** (a disclosed supplement, prices from 2018-11, since the runner had capped them at
+      2019-09): −$7.50, p 0.905, negative every year.
+    - **Size:** ratio 1.26, inside the null (p95 1.38).
+    - **Post hoc:** L days with flat or falling OI continue up (−$40 to the contrarian, t −2.4, n 28).
+    - **The principal's call:** close the funding-level line, or pre-register the post-hoc lead.
+  - **D766 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Close the MBT expiry idea, any other
+    MBT ideas?"; chose crowded leverage). Crowded perpetual-swap leverage and the MBT day.
+    - **The signal:** F_d is the mean of the three Binance BTCUSDT fundings settled at 16:00 UTC on d−1 and at 00:00
+      and 08:00 UTC on d. L: F above the prior 250-session 90th percentile; S: below the 10th.
+    - **The trade:** contrarian on the 09:30–16:00 ET move, short on L and long on S, at one MBT ($4.31).
+    - **The gates:**
+      - G1: the contrarian mean against the exact rotation p95 of the flags;
+      - G2: gross ≥ $4.31 at NW(5) t ≥ 2;
+      - G3: ≥ 8 episodes, net positive ex-2021 and ex-2022, no episode above half the net.
+    - **Reported:** Bybit OI rising or not, the Bybit inverse sample from 2018-11, L and S separately, and quintiles.
+    - **P(PREMISE HOLDS) ≈ 0.07.**
+    - **Next:** the runner `scripts/stage0_d766_crowded_leverage.py`, committed before its one run.
+  - **D765 (2026-10-02): NO DIRECTION on MHG and SIL** (Stage 0, prop book; "Lets look at copper and silver at the
+    china open?"). GO false.
+    - **The China open is real size:** the opening half-hour is 34–59% larger when Shanghai trades (Welch t 3.5–6.3
+      against China's holidays) and 1.5–1.8× after the long holidays; it co-moves with the AUD (ρ 0.30–0.35).
+    - **No carry-on:** ρ(x, y to 15:00 Beijing) is MHG −0.026 and SIL −0.046 (p 0.054, inside the band).
+    - **The continuation books lose:** MHG −\$5.53 net (499 trades), SIL −\$24.61 (456).
+    - **The sign that shows is reversal:**
+      - gold (reported only) ρ −0.063, p 0.007, beats the daylight-saving and Tokyo placebos by more than 3 SE and the
+        post-break placebo by 1.84 SE (would read UNRESOLVED);
+      - the gold fade grosses \$4.25 against \$5.93.
+    - **The catch-up runs backwards:** the open leans against the CME move since SHFE's last close (SIL p 0.018,
+      MGC p 0.001).
+    - **POST HOC leads:** the reversal sits in the EST months; the silver fade's mirror arithmetic (+\$8.61 net) is
+      −\$1.64 without its top 1%.
+    - Recommend closing; the principal's call.
   - **D764 (2026-10-02): EFFECT, NO PRIZE; CLOSED by the principal** ("Close the MBT expiry idea"). The CME bitcoin expiry window reverses relative to other Fridays.
     - **E1:** Δρ −0.296 (ρ_E −0.18 against ρ_C +0.12; p 0.023 on the full rotation).
     - **E2:** the fade grosses $2.96 against $4.31.
