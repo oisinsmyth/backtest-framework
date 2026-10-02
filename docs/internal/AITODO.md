@@ -13,7 +13,15 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 763.**
+- **Next free number: 764.**
+  - **D763 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "try the option expiry"; chose the
+    expiry-open fade).
+    - **The question:** on monthly expiry Fridays (AM-settled index options; quarterly futures), does the opening move
+      x = P09:40 − P09:30 (pre-cash) reverse by 10:40 more than on other Fridays? ES, NQ, YM, RTY, from
+      `fut_day1m`.
+    - **The checks:** E1, Δρ = ρ(expiry) − ρ(other Fridays) against the exact rotation of the expiry label, Holm over
+      four roots; E2, the fade's gross ≥ cost at t ≥ 2. VIX Wednesdays reported as a separate family.
+    - **Next:** the runner (system python), committed before its run.
   - **D762 (2026-10-02): the cash close barely reverses. CLOSED by the principal** ("Ok lets close that idea and try the option expiry").
     - **The readings:** NO REVERSAL on ES, NQ and RTY; YM UNRESOLVED (ρ −0.084, Holm p 0.002, beats 15:00 but not
       noon's generic reversal).

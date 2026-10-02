@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 592 of these records carry neither field —
+**No Status or Category column, deliberately.** 593 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -835,6 +835,7 @@ would look like data. The tokens are what is shown.
 | D760 | D760 STAGE 0 RESULT — NO TEST: absorption on quiet long-gamma days fires only 129 times in eight years, below the 150-t… | [PRE-REG](D760-STAGE-0-PRE-REG-flow-validated-quiet-gamma-fade.md) · [RESULT](D760-STAGE-0-RESULT-no-test-absorption-is-rare.md) |
 | D761 | D761 STAGE 0 RESULT — NO PROFILE on M6E and MBT as declared; on clean 6E data (POST HOC) round levels do carry the stop… | [PRE-REG](D761-STAGE-0-PRE-REG-round-number-stop-cascades.md) · [RESULT](D761-STAGE-0-RESULT-round-numbers-steer-but-do-not-pay.md) |
 | D762 | D762 STAGE 0 RESULT — the cash close barely reverses: NO REVERSAL on ES, NQ and RTY; YM reverses (ρ −0.084) but no more… | [PRE-REG](D762-STAGE-0-PRE-REG-does-the-cash-close-reverse.md) · [RESULT](D762-STAGE-0-RESULT-the-close-barely-reverses.md) |
+| D763 | D763 STAGE 0 PRE-REGISTRATION — the expiry-open fade: on monthly option-expiry Fridays, when index options (and, quarte… | [PRE-REG](D763-STAGE-0-PRE-REG-the-expiry-open-fade.md) |
 
 <!-- REGISTER:END -->
 
