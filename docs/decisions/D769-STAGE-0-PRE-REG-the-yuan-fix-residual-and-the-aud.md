@@ -105,6 +105,15 @@ book's rule.
 **What follows a PREMISE HOLDS:** a trading pre-registration read on the held slice and forward, on the principal's
 word.
 
+**Amendment 1 (2026-10-02, while writing the runner, before any price was read or any run).**
+- **The error:** G2's position rule above reads "position = −sign(ρ) × sign(s_t)". That is a sign error. With y ≈ ρ s,
+  the position that earns is **sign(ρ) × sign(s_t)**. The expected case confirms it: ρ < 0 and a stronger-yuan
+  surprise (s < 0) means **long** the AUD.
+- **The runner uses sign(ρ) × sign(s_t):**
+  - with the observed ρ when G1 passes;
+  - with the expected sign (ρ < 0) when G1 fails, for the reported trade.
+- **A self-test** checks that a planted negative ρ makes a strong-yuan day a long that pays.
+
 ## 3. Reported, never gating
 
 1. **Is the residual news?** ρ(s_t, y_imm) on each cell, and on the trade's top third, with the same rotation. If the
