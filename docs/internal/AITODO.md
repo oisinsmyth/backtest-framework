@@ -29,7 +29,7 @@
     - **The calendar** `data/calendar/china_exchange_holidays.csv` was built: 141 closures.
     - **The design:** Fable and Opus in parallel, merged (§9).
     - **Next:** the extraction plus the runner, committed before its run.
-  - **D764 (2026-10-02): EFFECT, NO PRIZE.** The CME bitcoin expiry window reverses relative to other Fridays.
+  - **D764 (2026-10-02): EFFECT, NO PRIZE; CLOSED by the principal** ("Close the MBT expiry idea"). The CME bitcoin expiry window reverses relative to other Fridays.
     - **E1:** Δρ −0.296 (ρ_E −0.18 against ρ_C +0.12; p 0.023 on the full rotation).
     - **E2:** the fade grosses $2.96 against $4.31.
     - **Expiry windows are busier:** volume +41%, \|x\| +14%.
