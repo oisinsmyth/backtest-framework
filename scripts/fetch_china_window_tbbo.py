@@ -176,7 +176,7 @@ def fetch(accepted: float | None) -> int:
         c = db.Historical(api_key())
         done = load_manifest()
         spent = sum(float(r["usd"]) for r in done.values())
-        todo = [r for r in plan_rows() if str(rel_path(*r)) not in done]
+        todo = [r for r in plan_rows() if rel_path(*r).as_posix() not in done]
         print(f"{len(todo)} windows to fetch; spent so far USD {spent:.2f}", flush=True)
         lock = threading.Lock()
         state = {"spent": spent, "stop": False, "n": 0, "empty": 0}
@@ -221,7 +221,7 @@ def fetch(accepted: float | None) -> int:
             tmp = out.with_suffix(".part")
             if out.exists():                                        # finished by an earlier run but not yet in its
                 recs = count_records(out, s, e)                     # manifest: adopt it, never buy it again
-                row = {"path": str(rel_path(sym, sch, day)).replace("\\", "/"), "symbol": sym, "schema": sch, "day": day,
+                row = {"path": rel_path(sym, sch, day).as_posix(), "symbol": sym, "schema": sch, "day": day,
                        "start_utc": s, "end_utc": e, "bytes": str(out.stat().st_size), "usd": f"{usd:.6f}",
                        "records": str(recs), "sha256": sha256(out),
                        "fetched_at": dt.datetime.fromtimestamp(out.stat().st_mtime, dt.timezone.utc).isoformat(timespec="seconds")}
@@ -238,7 +238,7 @@ def fetch(accepted: float | None) -> int:
                 del store
             os.replace(tmp, out)
             os.chmod(out, stat.S_IREAD | stat.S_IRGRP | stat.S_IROTH)
-            row = {"path": str(rel_path(sym, sch, day)).replace("\\", "/"), "symbol": sym, "schema": sch, "day": day,
+            row = {"path": rel_path(sym, sch, day).as_posix(), "symbol": sym, "schema": sch, "day": day,
                    "start_utc": s, "end_utc": e, "bytes": str(out.stat().st_size), "usd": f"{usd:.6f}", "records": str(recs),
                    "sha256": sha256(out), "fetched_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
             with lock:
