@@ -130,3 +130,8 @@ the first two years, the fading shape of D685's month-end flow.
 - **The fixture `fut_index_close_1m` stays** (15:30–16:14, 2016–2023, validated) for any later post-close question.
 - **The other scheduled-flow candidates from the reasoning** remain untested: the FOMC overshoot and expiry-day hedging.
   They are for the principal to choose.
+
+## 7. CLOSED (2026-10-02)
+
+**The principal: "Ok lets close that idea and try the option expiry".** The cash-close reversal is closed for the prop
+book. The fixture `fut_index_close_1m` stays.

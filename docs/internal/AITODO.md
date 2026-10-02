@@ -14,7 +14,7 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 763.**
-  - **D762 (2026-10-02): the cash close barely reverses.**
+  - **D762 (2026-10-02): the cash close barely reverses. CLOSED by the principal** ("Ok lets close that idea and try the option expiry").
     - **The readings:** NO REVERSAL on ES, NQ and RTY; YM UNRESOLVED (ρ −0.084, Holm p 0.002, beats 15:00 but not
       noon's generic reversal).
     - **C4 fails everywhere:** the top-third fade grosses $0.31–1.50 against $3.76–4.42.
