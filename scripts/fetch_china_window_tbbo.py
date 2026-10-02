@@ -48,7 +48,7 @@ NY = ZoneInfo("America/New_York")
 SEAL_UTC = dt.datetime(2024, 1, 1, tzinfo=dt.timezone.utc)
 APPROVED_USD = 98.0
 CAP_USD = 120.0                     # raised from 110 by the principal, 2026-10-02 ("Keep going raise the cap")
-THREADS = 4
+THREADS = 8
 MAX_ERRORS = 20
 JOBS = [("GC.v.0", "tbbo", "2016-01-04"), ("GC.v.0", "bbo-1m", "2016-01-04"),
         ("MGC.v.0", "tbbo", "2022-01-03"), ("MGC.v.0", "bbo-1m", "2022-01-03")]
@@ -110,7 +110,7 @@ def retry(f, **kw):
             msg = str(ex)
             if "symbology_invalid_request" in msg:
                 raise
-            if k == 6 or not any(s in msg for s in ("504", "502", "503", "500", "timed out", "Timeout", "Connection")):
+            if k == 6 or not any(s in msg for s in ("504", "502", "503", "500", "timed out", "Timeout", "Connection", "ended prematurely")):
                 raise
             time.sleep(2 * 2 ** k)
 
