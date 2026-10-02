@@ -416,10 +416,16 @@ def run() -> int:
         oc = outcomes(E, B, c["mult"])
         D = pd.concat([E, oc], axis=1)
         D = D[np.isfinite(D["s"]) & np.isfinite(D["y"])].reset_index(drop=True)
-        gaps = []
-        for d, k in zip(D["date"], D["contract"]):
-            gaps.append(business_days_between(dt.date.fromisoformat(d), last_day(k, c["root"], d)))
-        need(min(gaps) > (2 if c["root"] != "HG" else 0), f"delivery: a {c['root']} front within its last-day window")
+        # the pre-registration excludes an FX front within 2 business days of its last trading day (and an HG front on or
+        # after first notice): such days are ineligible for the cell, never traded; every kept day must clear the guard
+        floor = 2 if c["root"] != "HG" else 0
+        gap_all = np.array([business_days_between(dt.date.fromisoformat(d), last_day(k, c["root"], d))
+                            for d, k in zip(D["date"], D["contract"])])
+        excluded = D.loc[gap_all <= floor, "date"].tolist()
+        D = D[gap_all > floor].reset_index(drop=True)
+        gaps = list(gap_all[gap_all > floor])
+        need(min(gaps) > floor, f"delivery: a {c['root']} front within its last-day window")
+        res["checks"][f"{cell}_excluded_near_last_day"] = excluded
         need(bool((D["entry_lag_min"] >= 1).all()), "lag: an entry at or before the fix minute")
         s, y = D["s"].to_numpy(), D["y"].to_numpy()
         g1 = rot_spearman(s, y)
