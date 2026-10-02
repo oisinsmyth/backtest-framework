@@ -153,6 +153,18 @@
     - **Not used:** E-pre is VOID (the pre-reg scored the window J is measured on). A Draghi-era lean toward reversal
       (−\$13.80, t −1.54) is POST HOC.
     - CLOSED: the size fact and the calendar fixture stay recorded and reusable.
+  - **The off-hours size table (2026-10-02, descriptive, no record; scratchpad `offhours_size.py`):**
+    - **What it is:** mean |move| / 2c at one micro, from fixed ET start hours, 2016–2023, `fut_breadth_hourly`.
+    - **1-hour holds clear 2× only on SIL and MHG:**
+      - SIL in most hours, 1.6–3.2;
+      - MHG at the China open (21:00, 2.33) and London (01:00–04:00, 2.0–2.65).
+    - **2-hour holds:** London (02:00–08:00) clears for MGC, SIL, MHG, MCL and MNG (2.4–4.2); Asia only for SIL and
+      MHG.
+    - **M6E never reaches 2× in any off-hour** (best 1.53 at 03:00; its US day hours are 1.1–1.8). MBT's off-hours are
+      1.0–1.5, below its own US hours.
+    - **Holds of 5–14 hours clear everywhere (2.0–9.2×):** size is not the wall there, direction is (D468, D678).
+    - **The size sits at other markets' opens:** China 21:00, London 03:00. 08:00 is US data, not off-hours.
+    - **Caveat:** the cost model's crossing ticks may understate SIL and MHG spreads overnight.
   - **The hot-root premise table (2026-10-02, descriptive, no record):** on calm-NQ days (D754's gate), every micro's
     09:00 → 15:00 |move| is 3–15× its 2c, with NQ the largest (14.7×). Calm days lack direction, not size. Metals
     and BTC keep their activity when NQ is calm (0.94–1.25×); M6E is the weakest (3.0×).
