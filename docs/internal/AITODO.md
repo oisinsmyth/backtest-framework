@@ -13,7 +13,62 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 768.**
+- **Next free number: 770.**
+  - **D769 (2026-10-02): NO DIRECTION on the AUD and copper; CLOSED by the principal** (Stage 0, prop book). The PBOC's hidden lean is visible
+    and is news, and it is priced in minutes.
+    - **The model:** OOS R² 0.21, residual AR(1) 0.80. It recovers 2019's defence of 7 and 2023's record strong bias
+      (−30 bp mean).
+    - **The immediate reaction:** ρ(surprise, 15-minute move) = −0.083 on the AUD (p 0.001) and −0.050 on copper (p
+      0.039).
+    - **The fix → 03:00 ET window:** ρ +0.022 (p 0.38) and +0.002 (p 0.93).
+    - **The expected-sign trade:** the AUD grosses −$1.65 (net −$5.65), copper +$1.64 (net −$2.61).
+    - **Two launches stopped before any result** (the FX near-expiry exclusion and the scipy-free Spearman), both fixed
+      and disclosed.
+    - **The pattern with D768:** demand-economy actions, public or inferred, are priced at the first print.
+    - **CLOSED:** the yuan-fix construction is closed.
+  - **D769 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "how about traces of no-public actions?";
+    chose the yuan fix residual and approved the downloads). The PBOC's hidden lean, seen through the 09:15 Beijing
+    fix.
+    - **The residual:** r = log(fix / FRED noon-NY rate), minus a walk-forward 250-day OLS on the overnight CME basket
+      moves (6E/6J/6B/6A/6C/6S).
+    - **The signal:** the surprise s = r − its 20-day mean.
+    - **G1:** Spearman ρ(s, the fix → 03:00 ET move) on M6A and MHG, exact rotation, two-sided, Holm over two.
+    - **G2:** the top third of \|s\|, gross ≥ $4.00 / $4.25 at NW t ≥ 2.
+    - **G3:** ≥ 5 of 9 years, positive ex-best year.
+    - **Reported:** the immediate 15-minute reaction (is it news?), model R², the stance level, the CCF regimes, ex
+      Aug-2015.
+    - **The fixtures:** `cny_central_parity.csv` (SAFE, 2,091 fixes) and `fred_dexchus.csv`. CFETS refused with 403,
+      not retried. The 16:30 onshore close is not free, so the FRED noon rate stands in.
+    - **Next:** the runner, with `--extract` of seven roots, committed before its one run.
+  - **D768 (2026-10-02): NO DIRECTION on ZS and ZC; the construction CLOSED by the principal** (Stage 0, prop book; the demand-economy line stays open). China's purchases are news, and the 09:30
+    open prices them.
+    - **The break gap on sale days:** +$1.44 per micro on ZS (p 0.001), +$1.00 on ZC (p 0.001). It is absent for
+      other destinations and reversed on cancellations.
+    - **The day session adds nothing:** ZS +$0.41 (p 0.16), ZC −$0.09 (p 0.93), against $5.50; net Sharpe −0.72 /
+      −0.76.
+    - **Corn is anticipated overnight** (Δ +$4.38, p 0.03).
+    - **Post hoc:** corn sold to China by name, and the large sales, fell on the day.
+    - **The first run** stopped on the break guard (a closed interval against the pre-registration's open one); fixed in
+      `c44adfe4`.
+    - **CLOSED:** the USDA daily-sales construction is closed. The demand-economy line continues.
+  - **D768 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Can we take advantage of demand
+    economies like chinas effects on markets? They should have a different type of footprint"; chose USDA China sales
+    and approved the download). China's demand footprint on the CBOT day.
+    - **The event:** USDA FAS's 09:00 ET daily export-sales announcements of soybean (ZS) or corn (ZC) sales to China
+      or unknown destinations. They land in the CBOT break (08:45 → 09:30 ET).
+    - **The question:** does the day session 09:30 → 14:15 ET carry the purchase on?
+    - **G1:** the event-day mean y against the exact rotation of the event label, two-sided, Holm over the two cells.
+    - **G2:** gross ≥ $5.50 at one micro (MZS/MZC, cash-settled, listed 2025-02) with NW t ≥ 2.
+    - **G3:** ≥ 5 of 8 years, positive ex-best year, no month above 25%.
+    - **Reported:** the break gap g_break and the overnight g_night (is the sale news?), China against unknown, the
+      placebo destinations, cancellations, the fade, size, the eras, Thursdays and WASDE days.
+    - **The fixture:** `data/fixtures/usda_daily_export_sales.csv`, 920 announcements from 2016 to 2023, giving 493
+      ZS and 175 ZC event days.
+      - The Python builder is byte-identical to the browser parser.
+      - Of the 200 full pages, 82 were read in the browser before FAS's bot protection refused it, and 118 were fetched
+        by the principal's own script. The raw cache is in `data/raw/usda/daily_sales/`.
+    - **Next:** the runner, with `--extract` of the ZS/ZC minutes from the raw Databento archive, committed before its
+      one run.
   - **D767 (2026-10-02): MGC NOT ABOVE NULL; SIL and MHG NO MECHANISM** (Stage 0, prop book; the unconfirmed China
     open). GO false.
     - **The filter U** (the AUD and the other metals not confirming the metal's opening move) has NEGATIVE accuracy on
