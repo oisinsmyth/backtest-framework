@@ -105,3 +105,16 @@ on the Monday trade dates (287) is +0.07 with D737's twin, −0.01 with NQ F2 an
   weekend move tends to keep going briefly, not where Monday ends. A path trade on it (for example a stop-entry at
   the mirror) would be a new construction, and its own pre-registration on held data.
 - GO is false. Nothing is admitted; the result is the principal's to close (R15).
+
+## 5. CLOSED
+
+*2026-10-02, the principal: "Close, merge and push".*
+- **D758 is closed:** CME bitcoin's weekend gap gives no intraday trade on MBT. It neither fills nor continues to
+  Monday 09:30 or 16:00.
+- **Don't re-propose:**
+  - the gap fade, with or without a target at Friday's close;
+  - the follow;
+  - the day-session fade of the gap left at 09:30.
+- **What stays recorded:**
+  - the size facts: the weekend gap is about four times a weekday reopen's; calm-NQ Mondays move more;
+  - the POST HOC touch asymmetry (the mirror reached more often than the fill), which is not pursued.
