@@ -13,7 +13,18 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 770.**
+- **Next free number: 771.**
+  - **D770 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Draft D770, pre-reg it, build and run
+    it"). Gold's China-open fade with real order flow and a passive entry, on the paid GC/MGC `tbbo` window.
+    - **Q1 (reported):** the quoted taker cost at the China open.
+    - **Q2:** the flow-alignment filter A = sign(x)(B − S)/(B + S) over 09:00–09:30 Beijing, its walk-forward top
+      third, with D767's gates.
+    - **Q3:** a resting fade at the touch from 09:30, filled on a trade-through, the exit at the 15:00 touch, \$3
+      commission.
+      - The null is the exact rotation of the fade side over two-sided outcomes.
+      - The MGC calibration (2022–23) gates it on fill agreement ≥ 85%.
+    - **Holm over Q2 and Q3.**
+    - **Next:** the runner, committed before its run.
   - **D769 (2026-10-02): NO DIRECTION on the AUD and copper; CLOSED by the principal** (Stage 0, prop book). The PBOC's hidden lean is visible
     and is news, and it is priced in minutes.
     - **The model:** OOS R² 0.21, residual AR(1) 0.80. It recovers 2019's defence of 7 and 2023's record strong bias
