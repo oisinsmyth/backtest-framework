@@ -13,7 +13,13 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 759.**
+- **Next free number: 760.**
+  - **D759 (2026-10-02): PRE-REGISTERED, Stage 0 premise check, prop book** (the principal: "Strong long-gamma days
+    without an early impulse premise check first").
+    - **What it computes:** the 10:30 fade's prize and p\* on non-impulse days, against the seen post hoc rate
+      q ≈ 0.393 (G ∧ ¬I, ES/YM/RTY).
+    - **The readings:** NO PRIZE / NO ROOM / THIN / ROOM.
+    - **What it does not compute:** the net on G ∧ ¬I days, which is reserved for the held slice.
   - **D758 (2026-10-02): NOTHING** (run on the principal's "Test the weekend gap, assume it does allow MBT").
     - **The gap does not fill, and the folklore runs backwards:** by Monday 09:30 the path reaches Friday's close on
       43.6% of weekends and the level beyond the gap on 53.7% (52 against 81, p 0.015; the placebo reopens lean the
