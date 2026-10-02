@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 777.**
+- **Next free number: 778.**
+  - **D777 (2026-10-02): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 2).
+    - **The construction:** fade the index futures' 16:00 → 17:00 move (gated at the trailing q80 of |m|) from the
+      18:05 reopen to 10:00, on MNQ, MES, M2K and MYM.
+    - **Gates per root:** G1; N (the exact time rotation); M (b_m < 0, HC1 t ≤ −2, with the day and afternoon
+      controls); Y (the principal's test); G2 (net t ≥ 2, ex-best-two > 0, ex-2022 and trimmed means ≥ 2 × cost).
+    - **GO** = MNQ SUPPORTED and M2K or MYM passing G1, N and M. NQ/ES leg A cannot be confirmed: the 2024+ overnight
+      slice is spent. The in-sample was read (D772). Prior: MNQ SUPPORTED about 45%, GO about 30%.
   - **D776 (2026-10-02): FROZEN, programme slot 2** — D775's CPI/jobs-report fade for the joint vault (the principal:
     "Put D775 in the next slot and freeze it").
     - **The vault:** NQ release days 2024-01-01 → 2026-09-18 (64 in the calendar).
