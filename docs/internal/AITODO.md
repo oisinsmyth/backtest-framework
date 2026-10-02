@@ -13,7 +13,18 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 760.**
+- **Next free number: 761.**
+  - **D760 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Arm a reversal style trade for Quiet
+    long-gamma days then Require a Volume spike to validate the reversal. Or a order flow?"; chose order flow, with
+    YM built).
+    - **The trade:** armed on D757's G ∧ ¬I days (ES, NQ, YM); fade the morning at the first 30-minute window
+      (11:00–14:00) where aggressive flow in the morning's direction is in the top third and the price makes no
+      progress (absorption); hold to 15:59, one micro.
+    - **The gates:** T ≥ 150 trades; G1 mean net > 0 at t ≥ 2 with median ≥ 0; G2 efficiency above the exact flow
+      rotation's p95; G3 above arming alone (A0); G4 episodes; G5 2 of 3 roots.
+    - **It spends the in-sample G ∧ ¬I net** that D759 reserved: the held slice has no power (SE ≈ $9).
+    - **Next:** the YM signed-1m fixture (`scripts/build_fut_ym_signed_1m.py`, validation V1–V4 declared), then the
+      runner, each committed before its run.
   - **D759 (2026-10-02): NO ROOM.**
     - **Quiet long-gamma days revert q 0.393** (seen, n 1,360), but the 10:30 fade on non-impulse days needs
       **p\* 0.451**: +\$23.68 on RD days against −\$19.48 on the others.
