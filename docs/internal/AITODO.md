@@ -14,7 +14,13 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 758.**
-  - **D757 (2026-10-02): PRE-REGISTERED, Stage 0, prop book.** A reverting-day detector (the principal: "Long-Gamma
+  - **D757 (2026-10-02): NOT A DETECTOR.**
+    - **Impulse days are trend starts:** the RD rate is 0.23–0.25 against a 0.333 base.
+    - **Strong gamma adds +0.016 (p 0.26).**
+    - **The prize on reverting impulse days is +\$65 (p\* 0.296), but nothing finds them.**
+    - **A POST HOC pattern:** strong gamma WITHOUT an impulse reverts 0.375–0.406 on all four roots. Its own prize
+      and p\* are unknown; the held slice only, on the principal's word.
+  - **D757 (2026-10-02): PRE-REGISTERED, Stage 0, prop book (the entry below, kept).** A reverting-day detector (the principal: "Long-Gamma
     Days OR'd with large Impulse moves outside of predicted Vol"; then "AND, strong gamma", "Prior-20 realised").
     - **The detector:** GEX at the prior close in its top tercile AND \|z₁₀:₃₀\| ≥ 1.5.
     - **The trade:** a fade at 10:30; p\* measured on impulse days.

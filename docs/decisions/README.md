@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 581 of these records carry neither field —
+**No Status or Category column, deliberately.** 582 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -829,7 +829,7 @@ would look like data. The tokens are what is shown.
 | D754 | D754 STAGE 0 RESULT — (A) NOT SUPPORTED: on the pre-registered single-variable gate, the NQ book still earns in calm ma… | [PRE-REG](D754-STAGE-0-PRE-REG-calm-bull-abstention-and-charm-drift.md) · [RESULT](D754-STAGE-0-RESULT-calm-is-not-a-loss-and-no-charm-drift.md) |
 | D755 | D755 STAGE 0 RESULT — NOTHING: ECB press-conference hours are three times an ordinary Thursday's on M6E, but the statem… | [PRE-REG](D755-STAGE-0-PRE-REG-the-ecb-press-conference-drift.md) · [RESULT](D755-STAGE-0-RESULT-ecb-hours-are-big-not-directional.md) |
 | D756 | D756 STAGE 0 RESULT — RECOGNISABLE, NOT WORTH IT: a reverting day is worth +\$34 to a 10:00 fade if known, but the best… | [PRE-REG](D756-STAGE-0-PRE-REG-mean-reverting-days.md) · [RESULT](D756-STAGE-0-RESULT-recognisable-not-worth-it.md) |
-| D757 | D757 STAGE 0 PRE-REGISTRATION — a reverting-day detector: strong long gamma AND a 10:30 impulse beyond realised volatil… | [PRE-REG](D757-STAGE-0-PRE-REG-gamma-and-impulse-reverting-days.md) |
+| D757 | D757 STAGE 0 RESULT — NOT A DETECTOR: impulse days are trend starts (24 % reverting against a 33 % base), and strong lo… | [PRE-REG](D757-STAGE-0-PRE-REG-gamma-and-impulse-reverting-days.md) · [RESULT](D757-STAGE-0-RESULT-not-a-detector.md) |
 
 <!-- REGISTER:END -->
 
