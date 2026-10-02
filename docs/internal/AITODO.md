@@ -14,7 +14,7 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 770.**
-  - **D769 (2026-10-02): NO DIRECTION on the AUD and copper** (Stage 0, prop book). The PBOC's hidden lean is visible
+  - **D769 (2026-10-02): NO DIRECTION on the AUD and copper; CLOSED by the principal** (Stage 0, prop book). The PBOC's hidden lean is visible
     and is news, and it is priced in minutes.
     - **The model:** OOS R² 0.21, residual AR(1) 0.80. It recovers 2019's defence of 7 and 2023's record strong bias
       (−30 bp mean).
@@ -25,7 +25,7 @@
     - **Two launches stopped before any result** (the FX near-expiry exclusion and the scipy-free Spearman), both fixed
       and disclosed.
     - **The pattern with D768:** demand-economy actions, public or inferred, are priced at the first print.
-    - **The principal's call:** close the construction, and decide whether the line continues.
+    - **CLOSED:** the yuan-fix construction is closed.
   - **D769 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "how about traces of no-public actions?";
     chose the yuan fix residual and approved the downloads). The PBOC's hidden lean, seen through the 09:15 Beijing
     fix.

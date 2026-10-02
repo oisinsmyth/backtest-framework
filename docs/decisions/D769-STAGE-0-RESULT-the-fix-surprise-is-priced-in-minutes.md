@@ -132,3 +132,9 @@ trace the market cannot see when it appears. These two constructions found none.
 **What follows:**
 - No trading pre-registration in-sample.
 - **The principal's call:** close the yuan-fix construction, and decide whether the demand-economy line continues.
+
+## 7. CLOSED (2026-10-02)
+
+**The principal: "Close that".**
+- The yuan-fix residual construction is closed for the prop book.
+- The fixtures `cny_central_parity.csv` and `fred_dexchus.csv` remain available.
