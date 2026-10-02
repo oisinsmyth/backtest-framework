@@ -14,6 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 764.**
+  - **D763 (2026-10-02): NO EFFECT on every root.** The expiry open does not reverse.
+    - **Δρ is positive everywhere** (+0.007 to +0.217): the opening move continues at least as much as on other
+      Fridays.
+    - **The fade's gross is −$2.69 to −$7.21.**
+    - **Expiry opens are quieter** (smaller \|x\| and sd(y)), not more pressured.
+    - **Post hoc, not pursued:** VIX Wednesdays continue (ES and NQ Δ above p95); RTY's quarterly expiry reverses
+      (ρ −0.30, about 26 days, as in D762).
+    - **Closing the expiry line is the principal's call.**
   - **D763 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "try the option expiry"; chose the
     expiry-open fade).
     - **The question:** on monthly expiry Fridays (AM-settled index options; quarterly futures), does the opening move
