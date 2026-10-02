@@ -119,3 +119,8 @@ since) makes chance less likely than a real effect that decayed, but neither rea
 - **An ETF-era read** (the held slice holds about 14 expiries; forward about 12 a year) would test whether a larger
   basis trade revived it. It would have little power, and it is the principal's call.
 - **The principal's call:** whether to close the MBT expiry line.
+
+## 7. CLOSED (2026-10-02)
+
+**The principal: "Close the MBT expiry idea, any other MBT ideas?".** The CME bitcoin expiry-window line is closed for
+the prop book. No ETF-era read follows.
