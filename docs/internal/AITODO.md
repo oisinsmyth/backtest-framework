@@ -13,7 +13,16 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 775.**
+- **Next free number: 776.**
+  - **D775 (2026-10-02): PRE-REGISTERED, runner not yet written** (Stage 0, prop book; D772's Opus Lead 1).
+    - **The construction:** fade the 08:30 CPI/jobs-report impulse on MNQ (close of the 08:29 bar → close of the
+      08:34 bar, faded to the close of the 11:00 bar), \$4.07.
+    - **The gates:** G1; N (the exact rotation of the release labels); Y, the principal's test (an even win rate, or
+      a volatility-adjusted return holding in the 2016–19 half); G2.
+    - **Already known:** the in-sample was read (+\$34.88, t 2.73, but 2016–17 about zero), so CONCENTRATED is the
+      expected failure. Prior SUPPORTED about 40%.
+    - **The confirmation is designed but needs the principal's word:** a vault slot (2 or 10; 64 NQ release days
+      2024-01 → 2026-09, power about 0.63 at the full effect) or the forward recorder (about 4.5 years).
   - **D774 (2026-10-02): DIAG, POST HOC — the MNG flow-sized post-settlement fade (D772's Fable R1) is the vault NG
     trade's second leg** (prop book; the principal's question).
     - **Overlap:** 91% of its trades fall on the vault's NG signal days (slots 3 and 8), on the same |I| predictor;

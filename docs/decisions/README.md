@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 614 of these records carry neither field —
+**No Status or Category column, deliberately.** 615 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -847,6 +847,7 @@ would look like data. The tokens are what is shown.
 | D772 | new reversion predictors at micro size: two debating agent pairs; five leads on two mechanisms (Opus), none at a strict… | [record](D772-LEADS-new-reversion-predictors-from-two-agent-pairs.md) |
 | D773 | D773 STAGE 0 RESULT — NO DIRECTION: GLD creations do coincide with rising gold (same-day ρ +0.126) and the flow persist… | [PRE-REG](D773-STAGE-0-PRE-REG-gld-flow-and-the-london-gold-morning.md) · [RESULT](D773-STAGE-0-RESULT-gld-flow-moves-gold-the-same-day-only.md) |
 | D774 | the MNG flow-sized post-settlement fade (D772's Fable R1) is the vault NG trade's second leg: same days, same predictor… | [record](D774-DIAG-the-mng-flow-sized-fade-is-the-vault-trades-second-leg.md) |
+| D775 | D775 STAGE 0 PRE-REG — fade the 08:30 CPI and jobs-report impulse on MNQ: does the cash open reprice a US tier-1 headli… | [PRE-REG](D775-STAGE-0-PRE-REG-fade-the-cpi-and-jobs-report-impulse-on-mnq.md) |
 
 <!-- REGISTER:END -->
 
