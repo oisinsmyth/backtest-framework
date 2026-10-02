@@ -150,3 +150,34 @@
 - It reads D765's extraction cache (`temp/d765/`), D770's functions, and the paid window (read-only, never
   modified).
 - The result is a separate record.
+
+## 9. Amendment A1: the premise runs first, on the book alone (before the runner exists)
+
+*2026-10-02. The principal: "Premise test first no prices". Committed before any runner code.*
+
+- **Phase P runs alone, first.** It reads only:
+  - the GC and MGC `bbo-1m` records stamped 09:20 → 09:31 Beijing (each file is decoded, then cut at 09:31 before
+    any field is used, and the cut is asserted);
+  - the China calendar and the manifest.
+- **It reads none of:** `tbbo`, D765's bars or any price series built from them, x or the fade's side, any fill,
+  exit or P&L, and nothing stamped after 09:31.
+- **Where 09:31 sits:** before the taker fade's entry (the open of D765's 09:31 bar), and in the first minute of the
+  passive order's 30-minute life.
+- **P's sample:** every GC `bbo-1m` session, 2016–2023, on a Shanghai trading day (a weekday not in
+  `data/calendar/china_exchange_holidays.csv`). D770's candidate list depends on D765's prices, so phase P does not
+  use it.
+  - **Dropped (and counted):** no valid snapshot at 09:30 or 09:31 (within 3 minutes, finite, ask > bid, both sizes
+    > 0), or more than one instrument among the records stamped 09:20–09:31.
+- **P's gate is unchanged:** ρ(I(09:30), mid(09:31) − mid(09:30)) > 0 at t ≥ 3.
+- **Reported in phase P (all from the book up to 09:31):**
+  - the hit rate (sign agreement where I ≠ 0 and the mid moved) and the share of minutes with no mid change;
+  - the mean mid change in ticks for the top and bottom thirds of I;
+  - ρ by year and by EDT against EST;
+  - the order-count version, and the ten-snapshot mean of I (on sessions with at least 8 valid);
+  - the lean's persistence: ρ(I(09:29), I(09:30)) and ρ(I(09:21), I(09:30));
+  - the MGC version (2022–2023) and ρ(I_GC(09:30), I_MGC(09:30)) on the shared sessions.
+- **Phase 2 (§3's decay curve beyond 09:31, Q1 and Q2) runs only on the principal's word after P is reported.**
+  The decay points from 09:35 on fall inside the fade's holding period, so they are outcome reads and belong to
+  phase 2. If P fails, phase 2 does not run unless the principal says otherwise.
+- **The runner:** `--premise` now; the phase-2 code is added and committed before phase 2 runs. Phase P writes
+  `data/stage0_d771_china_open_queue_imbalance_premise.json` (statistics only).
