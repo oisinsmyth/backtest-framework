@@ -1250,3 +1250,19 @@ figures remain upper bounds. A handed-over position carries the arm's risk under
 - The compression break's entry times are not in its in-sample book, so its frequency is not measured.
 - Case 2 needs the keeper to be on an index micro, which was 3 % of in-sample fires. With the usual M6E keeper only
   case 1 can occur.
+
+---
+
+## RULING, 2026-10-02 — the scope of the 2026-09-12 overnight closure: SIGNED fades on the index overnight leg are NOT inside it
+
+*The principal was asked in D772 whether signed index overnight fades fall under the closure of 2026-09-12. The
+answer: **"No"**.*
+
+- **What the 2026-09-12 closure covers is unchanged:** "any gate, window or size on the index overnight leg at micro
+  cost", that is, constructions that collect the overnight drift.
+- **What this ruling places outside it:** constructions whose P&L is −sign(trigger) × the overnight return. They
+  fade a measured move and do not collect the long drift. D772's Leads 2, 4 and 5 (the post-close hour, the closing
+  auction and the closing-cross imbalance) are of that kind and stay open as leads.
+- **What still binds:** the spent 2024+ slice of the NQ and ES 18:00 → 09:00 leg (both sides). A signed overnight
+  fade on NQ or ES cannot be confirmed there. It needs another root (M2K, MYM), the day leg, or the vault.
+- **Nothing is admitted by this ruling.** Admitted arms: none.

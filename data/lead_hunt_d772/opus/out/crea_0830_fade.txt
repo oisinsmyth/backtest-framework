@@ -1,0 +1,96 @@
+<ArrowStringArray>
+['EIA_WPSR', 'EIA_NGSR', 'EMPSIT', 'CPI', 'FOMC', 'FOMC_UNSCHEDULED']
+Length: 6, dtype: str 131 131
+
+==== ES (usd/pt 5.0, RT $4.42)  sessions 2062
+ t0 08:30 K1 exit 09:00 :: CPI:n91 $-9.77/med-6.25 |x|51 big n64 $-12.19 | EMPSIT:n93 $+2.18/med-5.00 |x|36 big n81 $+2.08 | THU:n345 $+1.08/med+0.00 |x|8 big n162 $-0.59 | OTHER:n1229 $-0.02/med+0.00 |x|6 big n408 $+0.36
+ t0 08:30 K1 exit 09:29 :: CPI:n91 $-14.55/med-7.50 |x|51 big n64 $-19.34 | EMPSIT:n93 $+6.71/med-2.50 |x|36 big n81 $+7.50 | THU:n345 $+1.46/med+0.00 |x|8 big n162 $+0.28 | OTHER:n1229 $+0.11/med+0.00 |x|6 big n408 $-0.24
+ t0 08:30 K1 exit 10:00 :: CPI:n91 $-4.27/med+1.25 |x|51 big n64 $-8.11 | EMPSIT:n93 $+4.62/med+0.00 |x|36 big n81 $+6.51 | THU:n345 $-0.36/med-1.25 |x|8 big n162 $-1.84 | OTHER:n1229 $+0.90/med+0.00 |x|6 big n408 $+2.25
+ t0 08:30 K3 exit 09:00 :: CPI:n89 $-5.81/med-3.75 |x|59 big n57 $-10.86 | EMPSIT:n91 $+2.82/med-2.50 |x|41 big n74 $+4.29 | THU:n357 $+0.41/med+0.00 |x|10 big n133 $+0.52 | OTHER:n1307 $+0.54/med+0.00 |x|8 big n349 $-1.29
+ t0 08:30 K3 exit 09:29 :: CPI:n89 $-1.97/med-1.25 |x|59 big n57 $-6.78 | EMPSIT:n91 $+8.13/med+0.00 |x|41 big n74 $+10.86 | THU:n357 $+1.67/med+1.25 |x|10 big n133 $+3.76 | OTHER:n1307 $-0.53/med+0.00 |x|8 big n349 $-4.05
+ t0 08:30 K3 exit 10:00 :: CPI:n89 $+2.39/med+3.75 |x|59 big n57 $-1.05 | EMPSIT:n91 $+13.09/med+3.75 |x|41 big n74 $+16.74 | THU:n357 $-1.43/med+0.00 |x|10 big n133 $-2.57 | OTHER:n1307 $+1.32/med+0.00 |x|8 big n349 $+1.40
+ t0 08:10 K1 exit 09:00 :: CPI:n67 $-35.39/med-7.50 |x|3 big n41 $-64.79 | EMPSIT:n72 $+1.23/med+8.75 |x|3 big n39 $+2.60 | THU:n304 $-0.51/med+1.25 |x|3 big n167 $+2.49 | OTHER:n1157 $-1.56/med+0.00 |x|3 big n646 $-2.11
+ t0 08:10 K1 exit 09:29 :: CPI:n67 $-35.99/med-6.25 |x|3 big n41 $-66.55 | EMPSIT:n72 $+2.80/med+8.12 |x|3 big n39 $+8.21 | THU:n304 $+0.29/med+1.25 |x|3 big n167 $+4.74 | OTHER:n1157 $-2.22/med-1.25 |x|3 big n646 $-3.62
+ t0 08:10 K1 exit 10:00 :: CPI:n67 $-36.18/med-15.00 |x|3 big n41 $-70.40 | EMPSIT:n72 $+3.40/med+1.25 |x|3 big n39 $+2.15 | THU:n304 $+3.15/med+2.50 |x|3 big n167 $+8.91 | OTHER:n1157 $-1.00/med-1.25 |x|3 big n646 $-2.85
+ t0 08:10 K3 exit 09:00 :: CPI:n79 $-21.87/med+1.25 |x|5 big n24 $-81.88 | EMPSIT:n81 $+0.94/med+10.00 |x|5 big n31 $-19.44 | THU:n332 $-2.09/med-2.50 |x|5 big n127 $-3.38 | OTHER:n1259 $-0.02/med+0.00 |x|5 big n437 $-3.59
+ t0 08:10 K3 exit 09:29 :: CPI:n79 $-22.12/med+3.75 |x|5 big n24 $-87.50 | EMPSIT:n81 $+4.66/med+7.50 |x|5 big n31 $-8.51 | THU:n332 $-1.62/med-1.25 |x|5 big n127 $-1.33 | OTHER:n1259 $+0.05/med+0.00 |x|5 big n437 $-2.79
+ t0 08:10 K3 exit 10:00 :: CPI:n79 $-16.27/med+1.25 |x|5 big n24 $-85.16 | EMPSIT:n81 $+2.73/med+3.75 |x|5 big n31 $-8.43 | THU:n332 $+4.48/med+1.88 |x|5 big n127 $+6.94 | OTHER:n1259 $+0.25/med+1.25 |x|5 big n437 $-0.14
+ t0 08:50 K1 exit 09:00 :: CPI:n83 $+0.23/med-1.25 |x|5 big n44 $-0.62 | EMPSIT:n83 $+1.52/med+2.50 |x|7 big n58 $+0.95 | THU:n320 $+1.26/med+1.25 |x|4 big n143 $+3.10 | OTHER:n1152 $+0.32/med+0.00 |x|4 big n422 $+0.52
+ t0 08:50 K1 exit 09:29 :: CPI:n83 $+7.91/med+2.50 |x|5 big n44 $+13.64 | EMPSIT:n83 $+2.42/med+3.75 |x|7 big n58 $+3.73 | THU:n320 $+1.40/med+1.25 |x|4 big n143 $+3.45 | OTHER:n1152 $-0.25/med+0.00 |x|4 big n422 $-0.26
+ t0 08:50 K1 exit 10:00 :: CPI:n83 $+13.15/med+7.50 |x|5 big n44 $+19.18 | EMPSIT:n83 $+0.39/med+1.25 |x|7 big n58 $-1.70 | THU:n320 $+1.76/med+0.62 |x|4 big n143 $+2.79 | OTHER:n1152 $-0.47/med+0.00 |x|4 big n422 $-0.97
+ t0 08:50 K3 exit 09:00 :: CPI:n83 $-1.78/med+0.00 |x|9 big n41 $-3.84 | EMPSIT:n85 $+1.81/med+1.25 |x|10 big n46 $+3.29 | THU:n355 $+1.02/med+1.25 |x|6 big n125 $+0.32 | OTHER:n1272 $+0.32/med+0.00 |x|5 big n399 $+1.30
+ t0 08:50 K3 exit 09:29 :: CPI:n83 $+6.90/med+5.00 |x|9 big n41 $+12.65 | EMPSIT:n85 $+5.66/med+1.25 |x|10 big n46 $+8.97 | THU:n355 $-0.27/med+1.25 |x|6 big n125 $-1.94 | OTHER:n1272 $+0.34/med+0.00 |x|5 big n399 $+0.81
+ t0 08:50 K3 exit 10:00 :: CPI:n83 $+6.30/med+5.00 |x|9 big n41 $+19.05 | EMPSIT:n85 $-1.69/med+2.50 |x|10 big n46 $+4.24 | THU:n355 $-2.45/med-3.75 |x|6 big n125 $-10.02 | OTHER:n1272 $+0.86/med+1.25 |x|5 big n399 $-0.29
+ main cell by year (fade $ mean):
+g       CPI  EMPSIT  OTHER   THU
+yr                              
+2016  -2.95    1.88  -0.89  0.66
+2017  -0.45   -2.71  -0.71 -2.82
+2018  -7.16    0.00  -0.28  0.86
+2019   9.20   -5.42   0.20 -5.61
+2020 -13.75    1.04   2.28  0.47
+2021  -4.90   18.98   0.31  5.56
+2022 -92.81   37.19   0.60  2.97
+2023   1.25    2.84  -1.11  8.07
+
+==== NQ (usd/pt 2.0, RT $4.07)  sessions 2062
+ t0 08:30 K1 exit 09:00 :: CPI:n92 $-20.28/med-9.50 |x|86 big n58 $-28.02 | EMPSIT:n94 $+3.13/med+1.75 |x|54 big n76 $+4.01 | THU:n372 $-0.57/med+0.50 |x|12 big n149 $-1.61 | OTHER:n1389 $+0.66/med+0.50 |x|8 big n367 $-0.61
+ t0 08:30 K1 exit 09:29 :: CPI:n92 $-29.41/med-12.25 |x|86 big n58 $-38.00 | EMPSIT:n94 $+12.50/med+0.25 |x|54 big n76 $+15.32 | THU:n372 $-0.05/med+0.00 |x|12 big n149 $+0.83 | OTHER:n1389 $+0.65/med+1.00 |x|8 big n367 $-0.69
+ t0 08:30 K1 exit 10:00 :: CPI:n92 $-11.42/med-5.75 |x|86 big n58 $-10.26 | EMPSIT:n94 $+24.31/med-4.00 |x|54 big n76 $+24.10 | THU:n372 $-2.72/med-4.00 |x|12 big n149 $-8.19 | OTHER:n1389 $+1.54/med+2.50 |x|8 big n367 $-6.73
+ t0 08:30 K3 exit 09:00 :: CPI:n94 $-19.59/med-6.00 |x|93 big n56 $-26.72 | EMPSIT:n94 $+6.90/med+2.25 |x|62 big n72 $+8.31 | THU:n381 $+3.45/med+2.00 |x|15 big n144 $+1.05 | OTHER:n1417 $+0.54/med+0.00 |x|11 big n393 $-0.93
+ t0 08:30 K3 exit 09:29 :: CPI:n94 $-14.81/med-9.00 |x|93 big n56 $-21.62 | EMPSIT:n94 $+16.43/med+6.50 |x|62 big n72 $+20.61 | THU:n381 $+5.14/med+1.00 |x|15 big n144 $+6.94 | OTHER:n1417 $-1.32/med+0.00 |x|11 big n393 $-5.27
+ t0 08:30 K3 exit 10:00 :: CPI:n94 $+7.82/med+5.50 |x|93 big n56 $+9.09 | EMPSIT:n94 $+30.79/med+13.00 |x|62 big n72 $+37.27 | THU:n381 $-3.52/med-4.50 |x|15 big n144 $-16.31 | OTHER:n1417 $-1.71/med-0.50 |x|11 big n393 $-1.19
+ t0 08:10 K1 exit 09:00 :: CPI:n87 $-41.76/med-8.00 |x|4 big n32 $-144.92 | EMPSIT:n86 $+0.81/med+3.00 |x|3 big n23 $-37.26 | THU:n368 $+2.44/med+2.00 |x|4 big n126 $+0.10 | OTHER:n1343 $-0.47/med-0.50 |x|4 big n454 $-0.74
+ t0 08:10 K1 exit 09:29 :: CPI:n87 $-44.25/med-4.50 |x|4 big n32 $-145.41 | EMPSIT:n86 $+4.53/med+1.25 |x|3 big n23 $-21.72 | THU:n368 $+2.69/med+3.00 |x|4 big n126 $+2.49 | OTHER:n1343 $-0.85/med-0.50 |x|4 big n454 $+0.13
+ t0 08:10 K1 exit 10:00 :: CPI:n87 $-38.89/med-1.50 |x|4 big n32 $-130.17 | EMPSIT:n86 $-3.56/med-11.00 |x|3 big n23 $-27.76 | THU:n368 $+5.34/med+4.75 |x|4 big n126 $+3.32 | OTHER:n1343 $+0.55/med-0.50 |x|4 big n454 $+4.49
+ t0 08:10 K3 exit 09:00 :: CPI:n88 $-46.18/med-6.00 |x|7 big n33 $-113.08 | EMPSIT:n92 $+13.51/med+11.75 |x|5 big n22 $+10.16 | THU:n368 $-3.25/med-1.75 |x|7 big n135 $-0.51 | OTHER:n1403 $-1.62/med-1.50 |x|6 big n462 $-1.10
+ t0 08:10 K3 exit 09:29 :: CPI:n88 $-50.34/med-6.25 |x|7 big n33 $-124.73 | EMPSIT:n92 $+15.08/med+12.75 |x|5 big n22 $+28.64 | THU:n368 $-1.12/med-2.25 |x|7 big n135 $+1.93 | OTHER:n1403 $-1.30/med+0.00 |x|6 big n462 $-1.79
+ t0 08:10 K3 exit 10:00 :: CPI:n88 $-48.34/med-7.75 |x|7 big n33 $-103.68 | EMPSIT:n92 $+7.67/med+12.75 |x|5 big n22 $-5.70 | THU:n368 $+5.55/med+5.00 |x|7 big n135 $+23.60 | OTHER:n1403 $-0.71/med-2.50 |x|6 big n462 $-3.46
+ t0 08:50 K1 exit 09:00 :: CPI:n87 $-2.79/med-0.50 |x|9 big n44 $-4.10 | EMPSIT:n93 $-1.05/med+3.00 |x|8 big n52 $-0.70 | THU:n378 $+2.63/med+0.50 |x|5 big n144 $+6.03 | OTHER:n1339 $+0.52/med+0.00 |x|4 big n444 $+0.50
+ t0 08:50 K1 exit 09:29 :: CPI:n87 $+7.27/med+0.50 |x|9 big n44 $+12.11 | EMPSIT:n93 $+5.19/med+2.00 |x|8 big n52 $+9.73 | THU:n378 $+3.27/med+1.75 |x|5 big n144 $+9.10 | OTHER:n1339 $+0.43/med+0.50 |x|4 big n444 $+2.23
+ t0 08:50 K1 exit 10:00 :: CPI:n87 $+5.23/med-7.00 |x|9 big n44 $+11.69 | EMPSIT:n93 $+5.20/med+9.50 |x|8 big n52 $+5.93 | THU:n378 $+2.38/med-4.00 |x|5 big n144 $+10.12 | OTHER:n1339 $+2.67/med+0.50 |x|4 big n444 $+6.80
+ t0 08:50 K3 exit 09:00 :: CPI:n93 $-3.63/med+0.50 |x|13 big n47 $-8.53 | EMPSIT:n94 $+2.48/med+3.75 |x|14 big n44 $+1.78 | THU:n373 $+0.32/med+0.50 |x|8 big n128 $+0.16 | OTHER:n1396 $+0.48/med+0.50 |x|7 big n439 $+2.26
+ t0 08:50 K3 exit 09:29 :: CPI:n93 $+3.06/med+3.00 |x|13 big n47 $+0.82 | EMPSIT:n94 $+8.15/med+0.25 |x|14 big n44 $+17.80 | THU:n373 $+1.07/med+1.00 |x|8 big n128 $+3.05 | OTHER:n1396 $+0.27/med+1.00 |x|7 big n439 $+0.57
+ t0 08:50 K3 exit 10:00 :: CPI:n93 $+13.60/med-2.00 |x|13 big n47 $+24.14 | EMPSIT:n94 $-10.48/med-12.50 |x|14 big n44 $-8.59 | THU:n373 $-5.63/med-5.50 |x|8 big n128 $-6.24 | OTHER:n1396 $+0.83/med+4.00 |x|7 big n439 $+2.95
+ main cell by year (fade $ mean):
+g        CPI  EMPSIT  OTHER   THU
+yr                               
+2016   -2.73    1.21   0.39  0.80
+2017  -10.64   -4.50  -1.06  0.73
+2018  -19.32    5.38  -0.75  5.17
+2019   11.29   -5.62   0.69 -8.14
+2020  -25.18   12.29   2.03  6.62
+2021  -46.50   50.41   1.05  1.47
+2022 -130.71   45.17   1.85  1.27
+2023   -6.54   -2.41   0.77 -8.06
+
+==== GC (usd/pt 10.0, RT $5.93)  sessions 2063
+ t0 08:30 K1 exit 09:00 :: CPI:n93 $+8.81/med+2.00 |x|36 big n69 $+10.06 | EMPSIT:n93 $-2.28/med+4.00 |x|47 big n82 $-4.87 | THU:n378 $-3.40/med-1.00 |x|11 big n178 $-6.40 | OTHER:n1373 $+0.27/med+0.00 |x|7 big n326 $+2.16
+ t0 08:30 K1 exit 09:29 :: CPI:n93 $+7.43/med+9.00 |x|36 big n69 $+7.61 | EMPSIT:n93 $-5.80/med-2.00 |x|47 big n82 $-7.99 | THU:n378 $-4.07/med+0.00 |x|11 big n178 $-6.83 | OTHER:n1373 $+0.62/med+0.00 |x|7 big n326 $+2.06
+ t0 08:30 K1 exit 10:00 :: CPI:n93 $+9.37/med+4.00 |x|36 big n69 $+17.97 | EMPSIT:n93 $-17.49/med-8.00 |x|47 big n82 $-21.54 | THU:n378 $-4.17/med+1.50 |x|11 big n178 $-9.83 | OTHER:n1373 $+1.68/med+1.00 |x|7 big n326 $+6.45
+ t0 08:30 K3 exit 09:00 :: CPI:n91 $+5.31/med+2.00 |x|42 big n65 $+4.46 | EMPSIT:n94 $-2.95/med+2.00 |x|53 big n74 $-4.92 | THU:n387 $-2.64/med+0.00 |x|15 big n163 $-4.25 | OTHER:n1403 $-1.27/med+0.00 |x|11 big n358 $-0.45
+ t0 08:30 K3 exit 09:29 :: CPI:n91 $+7.44/med+9.00 |x|42 big n65 $+9.35 | EMPSIT:n94 $-5.82/med+0.00 |x|53 big n74 $-4.78 | THU:n387 $-2.28/med+1.00 |x|15 big n163 $-3.44 | OTHER:n1403 $-2.11/med+0.00 |x|11 big n358 $-1.55
+ t0 08:30 K3 exit 10:00 :: CPI:n91 $+10.46/med+10.00 |x|42 big n65 $+19.22 | EMPSIT:n94 $-14.63/med-1.00 |x|53 big n74 $-17.23 | THU:n387 $-4.39/med+1.00 |x|15 big n163 $-10.01 | OTHER:n1403 $-0.94/med+0.00 |x|11 big n358 $+4.35
+ t0 08:10 K1 exit 09:00 :: CPI:n73 $-7.34/med-7.00 |x|4 big n26 $-7.92 | EMPSIT:n81 $+5.42/med-10.00 |x|3 big n23 $+8.43 | THU:n348 $+0.52/med+1.50 |x|4 big n128 $-1.94 | OTHER:n1275 $+0.91/med+2.00 |x|4 big n414 $-0.11
+ t0 08:10 K1 exit 09:29 :: CPI:n73 $-9.74/med+8.00 |x|4 big n26 $-7.00 | EMPSIT:n81 $+3.21/med-6.00 |x|3 big n23 $+7.09 | THU:n348 $+1.30/med+1.00 |x|4 big n128 $+1.27 | OTHER:n1275 $+2.82/med+4.00 |x|4 big n414 $+1.81
+ t0 08:10 K1 exit 10:00 :: CPI:n73 $-6.44/med+3.00 |x|4 big n26 $+3.92 | EMPSIT:n81 $+10.23/med+5.00 |x|3 big n23 $+29.39 | THU:n348 $+1.73/med+4.50 |x|4 big n128 $-2.99 | OTHER:n1275 $+0.32/med+2.00 |x|4 big n414 $-6.50
+ t0 08:10 K3 exit 09:00 :: CPI:n85 $-12.56/med-6.00 |x|7 big n32 $-13.34 | EMPSIT:n88 $-3.28/med-14.00 |x|6 big n32 $+3.75 | THU:n366 $-2.49/med-2.00 |x|6 big n126 $+2.26 | OTHER:n1377 $+1.90/med+1.00 |x|6 big n480 $+2.23
+ t0 08:10 K3 exit 09:29 :: CPI:n85 $-9.53/med+5.00 |x|7 big n32 $-13.16 | EMPSIT:n88 $+1.42/med+11.50 |x|6 big n32 $+16.25 | THU:n366 $-0.47/med-1.00 |x|6 big n126 $+3.52 | OTHER:n1377 $+2.52/med+2.00 |x|6 big n480 $+4.86
+ t0 08:10 K3 exit 10:00 :: CPI:n85 $-12.53/med+1.00 |x|7 big n32 $-5.03 | EMPSIT:n88 $+2.82/med+12.50 |x|6 big n32 $+30.13 | THU:n366 $-2.59/med-1.00 |x|6 big n126 $+2.20 | OTHER:n1377 $+0.49/med+1.00 |x|6 big n480 $+1.61
+ t0 08:50 K1 exit 09:00 :: CPI:n85 $-0.33/med+1.00 |x|7 big n47 $+0.96 | EMPSIT:n91 $-4.03/med-1.00 |x|8 big n56 $-5.95 | THU:n350 $+0.27/med+1.00 |x|5 big n128 $+0.41 | OTHER:n1309 $+0.35/med+0.00 |x|4 big n449 $+0.50
+ t0 08:50 K1 exit 09:29 :: CPI:n85 $+5.53/med+6.00 |x|7 big n47 $+15.64 | EMPSIT:n91 $-3.37/med-1.00 |x|8 big n56 $-6.66 | THU:n350 $+0.83/med+0.00 |x|5 big n128 $+5.29 | OTHER:n1309 $+0.75/med+0.00 |x|4 big n449 $+0.72
+ t0 08:50 K1 exit 10:00 :: CPI:n85 $+8.28/med+1.00 |x|7 big n47 $+24.72 | EMPSIT:n91 $-12.04/med-7.00 |x|8 big n56 $-13.43 | THU:n350 $-0.61/med+3.00 |x|5 big n128 $+0.95 | OTHER:n1309 $+1.67/med+1.00 |x|4 big n449 $+4.29
+ t0 08:50 K3 exit 09:00 :: CPI:n93 $-1.65/med+0.00 |x|11 big n44 $-4.73 | EMPSIT:n93 $-2.32/med-2.00 |x|14 big n58 $-4.41 | THU:n375 $+0.17/med+1.00 |x|7 big n134 $-1.71 | OTHER:n1381 $+0.20/med+0.00 |x|7 big n426 $-0.30
+ t0 08:50 K3 exit 09:29 :: CPI:n93 $+7.40/med+7.00 |x|11 big n44 $+5.43 | EMPSIT:n93 $-0.58/med-2.00 |x|14 big n58 $-1.55 | THU:n375 $-0.51/med+1.00 |x|7 big n134 $-5.40 | OTHER:n1381 $-0.29/med+0.00 |x|7 big n426 $-0.77
+ t0 08:50 K3 exit 10:00 :: CPI:n93 $+5.23/med+5.00 |x|11 big n44 $+6.55 | EMPSIT:n93 $-1.56/med+0.00 |x|14 big n58 $-4.02 | THU:n375 $-0.23/med+3.00 |x|7 big n134 $-4.04 | OTHER:n1381 $+1.56/med+0.00 |x|7 big n426 $+2.52
+ main cell by year (fade $ mean):
+g       CPI  EMPSIT  OTHER    THU
+yr                               
+2016   3.17   11.92  -0.42   8.87
+2017  -4.40   -4.58  -0.51   3.06
+2018  -2.17    0.18  -1.69  -4.59
+2019   7.25  -19.33  -2.77   2.87
+2020  29.91   -4.42   1.03 -11.96
+2021  42.50    6.91   0.37  -7.31
+2022 -40.92    6.42   1.09 -17.09
+2023  24.00  -45.18   7.36  -6.00

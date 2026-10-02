@@ -1,0 +1,18 @@
+m 16:29->16:59 exit 10:29 API       : n402 |m| $22.2 mean -6.53 med -8.00 t -1.17 ex20 -7.02 16-19 -6.22 20-23 -6.85 posyrs 0/8
+m 16:29->16:59 exit 10:29 API top50 : n0 |m| $nan mean nan med nan t nan ex20 nan 16-19 nan 20-23 nan posyrs 0/8
+m 16:29->16:59 exit 10:29 PLACEBO   : n1478 |m| $7.5 mean -1.47 med 1.00 t -0.46 ex20 -2.02 16-19 0.62 20-23 -3.50 posyrs 4/8
+m 16:29->16:59 exit 11:00 API       : n402 |m| $22.2 mean -6.49 med -5.00 t -1.02 ex20 -5.25 16-19 -4.27 20-23 -8.74 posyrs 2/8
+m 16:29->16:59 exit 11:00 API top50 : n0 |m| $nan mean nan med nan t nan ex20 nan 16-19 nan 20-23 nan posyrs 0/8
+m 16:29->16:59 exit 11:00 PLACEBO   : n1479 |m| $7.5 mean -1.38 med 2.00 t -0.41 ex20 -1.36 16-19 2.02 20-23 -4.67 posyrs 3/8
+m 16:29->16:59 exit 12:00 API       : n402 |m| $22.2 mean -6.70 med -6.00 t -0.93 ex20 -7.35 16-19 -7.74 20-23 -5.65 posyrs 2/8
+m 16:29->16:59 exit 12:00 API top50 : n0 |m| $nan mean nan med nan t nan ex20 nan 16-19 nan 20-23 nan posyrs 0/8
+m 16:29->16:59 exit 12:00 PLACEBO   : n1479 |m| $7.5 mean -1.25 med -2.00 t -0.36 ex20 -1.07 16-19 1.23 20-23 -3.65 posyrs 3/8
+m 16:29->16:34 exit 10:29 API       : n409 |m| $18.3 mean -0.73 med 3.00 t -0.13 ex20 -1.47 16-19 -7.68 20-23 6.40 posyrs 3/8
+m 16:29->16:34 exit 10:29 API top50 : n0 |m| $nan mean nan med nan t nan ex20 nan 16-19 nan 20-23 nan posyrs 0/8
+m 16:29->16:34 exit 10:29 PLACEBO   : n1312 |m| $3.5 mean -6.29 med -1.00 t -1.80 ex20 -5.37 16-19 -1.93 20-23 -10.47 posyrs 2/8
+m 16:29->16:34 exit 11:00 API       : n409 |m| $18.3 mean 0.23 med -4.00 t 0.04 ex20 1.08 16-19 -6.19 20-23 6.82 posyrs 4/8
+m 16:29->16:34 exit 11:00 API top50 : n0 |m| $nan mean nan med nan t nan ex20 nan 16-19 nan 20-23 nan posyrs 0/8
+m 16:29->16:34 exit 11:00 PLACEBO   : n1313 |m| $3.5 mean -5.73 med -1.00 t -1.57 ex20 -4.09 16-19 -0.33 20-23 -10.90 posyrs 3/8
+m 16:29->16:34 exit 12:00 API       : n409 |m| $18.3 mean -0.52 med -1.00 t -0.07 ex20 -1.69 16-19 -12.66 20-23 11.92 posyrs 5/8
+m 16:29->16:34 exit 12:00 API top50 : n0 |m| $nan mean nan med nan t nan ex20 nan 16-19 nan 20-23 nan posyrs 0/8
+m 16:29->16:34 exit 12:00 PLACEBO   : n1313 |m| $3.5 mean -9.35 med -6.00 t -2.47 ex20 -7.92 16-19 -3.99 20-23 -14.49 posyrs 2/8

@@ -1,0 +1,11 @@
+Main session's independent check of the Opus pair's Lead 1 (verify_lead1.py, system python, 2026-10-02).
+Data: data/fixtures/fut_opening_globex_1m.csv.gz (NQ, sessions 2016-01-01 .. 2023-12-31), events from
+data/calendar/events.csv (CPI, EMPSIT at 08:30 ET). One contract per session window. $2 per NQ point (MNQ), RT $4.07.
+
+EVENTS   n 186, mean +34.88, median +12.75, t 2.73, net +30.81, trimmed1% +34.43
+PLACEBO  n 1824, mean -3.32, median +0.00, t -0.97, net -7.39, trimmed1% -2.44
+by year  {2016: -1.57, 2017: 0.35, 2018: 21.79, 2019: 11.08, 2020: 45.41, 2021: 42.91, 2022: 35.85, 2023: 123.17}
+CPI      n 93, mean +33.55, median +20.00, t 1.94, net +29.48, trimmed1% +33.55
+EMPSIT   n 93, mean +36.21, median +7.00, t 1.91, net +32.14, trimmed1% +36.21
+top trade 2021-12-03 735.0 | worst 2022-09-13 -583.5
+11:00 close agreement with fut_NQ_rth_1m: 186 of 186

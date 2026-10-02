@@ -1,0 +1,2 @@
+ES: score 16.69 n 185 | random-day null p50 -0.83 p95 8.82 (SE 0.21) rank 0.9985 | matched-|impulse| null p50 -6.31 p95 9.13 rank 0.9960
+NQ: score 34.88 n 186 | random-day null p50 -3.26 p95 13.41 (SE 0.35) rank 1.0000 | matched-|impulse| null p50 -11.79 p95 11.65 rank 0.9995

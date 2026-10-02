@@ -1,0 +1,51 @@
+root: large_string
+contract: large_string
+day: large_string
+bar: int16
+high: double
+low: double
+volume: int64
+n: int64
+open: double
+close: double
+same_front: bool
+present: bool
+-- schema metadata --
+pandas: '{"index_columns": [], "column_indexes": [], "columns": [{"name":' + 1382
+      min  max
+root          
+ZC      5   64
+ZL      5   64
+ZM      5   64
+ZS      5   64
+ZW      5   64
+ZC (RT $4.25) exit 11:00 all: n1864 |m| $17.9 mean 0.70 med 0.00 t 1.79 rank 0.976 posyrs 5/8
+ZC (RT $4.25) exit 11:00 q80: n430 |m| $44.2 mean 0.86 med 0.00 t 0.89 rank 0.868 posyrs 5/8
+ZC (RT $4.25) exit 12:00 all: n1864 |m| $17.9 mean 0.44 med 0.00 t 0.90 rank 0.841 posyrs 4/8
+ZC (RT $4.25) exit 12:00 q80: n430 |m| $44.2 mean 0.24 med 0.00 t 0.18 rank 0.583 posyrs 3/8
+ZC (RT $4.25) exit 14:15 all: n1850 |m| $17.8 mean -0.15 med 0.00 t -0.22 rank 0.410 posyrs 4/8
+ZC (RT $4.25) exit 14:15 q80: n425 |m| $44.2 mean -0.99 med 0.00 t -0.57 rank 0.214 posyrs 2/8
+ZS (RT $4.25) exit 11:00 all: n1937 |m| $38.0 mean 1.21 med 0.00 t 1.65 rank 0.955 posyrs 7/8
+ZS (RT $4.25) exit 11:00 q80: n443 |m| $88.0 mean -1.95 med -1.25 t -1.05 rank 0.084 posyrs 4/8
+ZS (RT $4.25) exit 12:00 all: n1937 |m| $38.0 mean 0.68 med 1.25 t 0.74 rank 0.746 posyrs 4/8
+ZS (RT $4.25) exit 12:00 q80: n443 |m| $88.0 mean -3.26 med -1.25 t -1.38 rank 0.033 posyrs 3/8
+ZS (RT $4.25) exit 14:15 all: n1920 |m| $38.0 mean -0.12 med 0.00 t -0.10 rank 0.414 posyrs 4/8
+ZS (RT $4.25) exit 14:15 q80: n439 |m| $88.1 mean -4.82 med -5.00 t -1.52 rank 0.015 posyrs 2/8
+ZW (RT $4.25) exit 11:00 all: n1912 |m| $31.0 mean 0.67 med 0.00 t 0.93 rank 0.844 posyrs 4/8
+ZW (RT $4.25) exit 11:00 q80: n445 |m| $69.1 mean -0.71 med 0.00 t -0.35 rank 0.289 posyrs 4/8
+ZW (RT $4.25) exit 12:00 all: n1912 |m| $31.0 mean -0.10 med 0.00 t -0.11 rank 0.457 posyrs 3/8
+ZW (RT $4.25) exit 12:00 q80: n445 |m| $69.1 mean -2.53 med 0.00 t -1.07 rank 0.064 posyrs 4/8
+ZW (RT $4.25) exit 14:15 all: n1895 |m| $31.1 mean -0.79 med -1.25 t -0.73 rank 0.221 posyrs 5/8
+ZW (RT $4.25) exit 14:15 q80: n442 |m| $69.1 mean -3.76 med -1.25 t -1.36 rank 0.036 posyrs 3/8
+ZL (RT $3.60) exit 11:00 all: n1928 |m| $23.4 mean -0.12 med -0.60 t -0.22 rank 0.377 posyrs 4/8
+ZL (RT $3.60) exit 11:00 q80: n463 |m| $51.4 mean 0.31 med 0.00 t 0.24 rank 0.611 posyrs 4/8
+ZL (RT $3.60) exit 12:00 all: n1928 |m| $23.4 mean 0.08 med -0.60 t 0.12 rank 0.525 posyrs 5/8
+ZL (RT $3.60) exit 12:00 q80: n463 |m| $51.4 mean 0.40 med -0.60 t 0.24 rank 0.627 posyrs 3/8
+ZL (RT $3.60) exit 14:15 all: n1913 |m| $23.4 mean -0.32 med -0.60 t -0.38 rank 0.324 posyrs 2/8
+ZL (RT $3.60) exit 14:15 q80: n460 |m| $51.3 mean -0.35 med -0.60 t -0.19 rank 0.402 posyrs 4/8
+ZM (RT $4.00) exit 11:00 all: n1935 |m| $26.6 mean 1.17 med 0.00 t 1.96 rank 0.982 posyrs 6/8
+ZM (RT $4.00) exit 11:00 q80: n436 |m| $60.7 mean 1.68 med 0.50 t 1.18 rank 0.908 posyrs 5/8
+ZM (RT $4.00) exit 12:00 all: n1935 |m| $26.6 mean 1.10 med 1.00 t 1.51 rank 0.940 posyrs 6/8
+ZM (RT $4.00) exit 12:00 q80: n436 |m| $60.7 mean 1.48 med 1.00 t 0.83 rank 0.823 posyrs 5/8
+ZM (RT $4.00) exit 14:15 all: n1919 |m| $26.6 mean 0.07 med 0.00 t 0.07 rank 0.515 posyrs 4/8
+ZM (RT $4.00) exit 14:15 q80: n433 |m| $60.7 mean 0.25 med 0.00 t 0.11 rank 0.511 posyrs 5/8

@@ -13,7 +13,28 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 772.**
+- **Next free number: 773** (reserved for the documentation session's Stage 0 on GLD creation/redemption flow and
+  MGC into the LBMA PM auction; then 774).
+  - **D772 (2026-10-02): LEADS — new reversion predictors from two debating agent pairs** (prop book; nothing
+    pre-registered, nothing closed or admitted). Records in `docs/research/reversion-lead-hunt/`, evidence in
+    `data/lead_hunt_d772/`.
+    - **Opus pair: five leads on two mechanisms.** The mechanisms: a price set while the cash venue is shut is
+      repriced at its open; closing-auction flow reverts overnight.
+      - L1, the CPI/NFP 08:30 fade on MNQ: +\$34.88 (t 2.73, n 186), reproduced exactly by the main session. It
+        earned nothing in 2016–17.
+      - L2, the post-16:00 hour faded overnight. L3, gold's weekend reopen. L4, the M2K closing auction faded
+        overnight.
+      - L5, the Nasdaq closing-cross imbalance: USD 128 of data.
+    - **Fable pair: none at its stricter bar (≥ 50 a year).** Its best: the MNG settlement fade sized by the
+      leveraged-fund flow (a 2022 book) and the LETF 16:00–16:05 fade on MES (every year positive, 0.77× cost).
+    - **The principal's rulings:**
+      - signed index overnight fades are NOT inside the 2026-09-12 closure (appended to `BOOK_PROP.md`);
+      - no data purchase "without a real pay-off";
+      - a volatility-gated book is judged on its other years (an even win rate or a volatility-adjusted return), not
+        exempted;
+      - "the next step is to record these leads".
+    - **Next (the principal):** how the MNG flow-sized fade relates to the vault's strategies, and how it performs
+      without 2022.
   - **D771 (2026-10-02): PHASE P — PREMISE FAILS; phase 2 not run; CLOSED by the principal ("Close D771, keep the
     line open")** (Stage 0, prop book; the queue imbalance at the
     touch, GC `bbo-1m` sizes, on gold's China-open fade). Amendment A1 (the principal: "Premise test first no

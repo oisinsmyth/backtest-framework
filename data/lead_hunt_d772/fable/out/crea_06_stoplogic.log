@@ -1,0 +1,99 @@
+== ES: n=18 (2/yr) median secs 7 mean|pre3| $111.9 rho(pre3,y5) +0.197 rho(pre3,y15) +0.153
+   ES all H5                n=   18 gross=$-3.82 t=-0.3 med=$+3.75 net=$-8.24 win=0.56 trim=$+2.03 top=61
+   ES delay1 H5             n=   18 gross=$+7.99 t=+0.5 med=$-3.12 net=$+3.57 win=0.39 trim=$+3.36 top=185
+   ES placebo H5            n=   18 gross=$-3.06 t=-0.5 med=$-3.12 net=$-7.48 win=0.44 trim=$-1.56 top=36
+   ES OFF H5                n=   13 gross=$-13.27 t=-0.9 med=$+1.25 net=$-17.69 win=0.54 trim=$-4.43 top=39
+   ES non-news H5           n=   16 gross=$-2.73 t=-0.2 med=$+6.25 net=$-7.15 win=0.62 trim=$+4.11 top=61
+   ES all H15               n=   18 gross=$-6.11 t=-0.4 med=$-14.38 net=$-10.53 win=0.44 trim=$-5.86 top=104
+   ES delay1 H15            n=   18 gross=$+5.83 t=+0.4 med=$+1.88 net=$+1.41 win=0.50 trim=$+3.59 top=164
+   ES placebo H15           n=   18 gross=$+2.36 t=+0.2 med=$+5.00 net=$-2.06 win=0.61 trim=$+2.27 top=81
+   ES OFF H15               n=   13 gross=$-13.46 t=-0.8 med=$-21.25 net=$-17.88 win=0.46 trim=$-14.43 top=104
+   ES non-news H15          n=   16 gross=$+2.58 t=+0.2 med=$-0.62 net=$-1.84 win=0.50 trim=$+4.11 top=104
+   ES all H30               n=   18 gross=$-27.08 t=-1.1 med=$+0.62 net=$-31.50 win=0.50 trim=$-20.78 top=126
+   ES delay1 H30            n=   18 gross=$-22.43 t=-0.8 med=$-11.88 net=$-26.85 win=0.39 trim=$-23.75 top=229
+   ES placebo H30           n=   18 gross=$-27.99 t=-1.5 med=$-4.38 net=$-32.41 win=0.50 trim=$-17.27 top=54
+   ES OFF H30               n=   13 gross=$-20.96 t=-0.7 med=$+5.00 net=$-25.38 win=0.62 trim=$-10.68 top=126
+   ES non-news H30          n=   16 gross=$-23.20 t=-0.9 med=$+4.38 net=$-27.62 win=0.56 trim=$-15.45 top=126
+   years g15: {2016: [2, 22.5, 45.0], 2018: [1, -50.0, -50.0], 2020: [3, -8.75, -26.0], 2021: [2, -5.0, -10.0], 2022: [5, 37.25, 186.0], 2023: [5, -51.0, -255.0]}
+   top: {'day': '2022-12-23', 'hhmm': '08:29', 'side': 1, 'g15': 103.75, 'pre3': -13.75, 'secs': 9.999262}
+   by hour g15: {}
+== NQ: n=35 (4/yr) median secs 10 mean|pre3| $222.1 rho(pre3,y5) -0.354 rho(pre3,y15) -0.309
+   NQ all H5                n=   34 gross=$+6.43 t=+0.4 med=$-1.75 net=$+2.36 win=0.44 trim=$+0.03 top=373
+   NQ delay1 H5             n=   34 gross=$+17.65 t=+1.3 med=$+6.75 net=$+13.58 win=0.56 trim=$+11.78 top=373
+   NQ placebo H5            n=   34 gross=$+1.87 t=+0.3 med=$+3.25 net=$-2.20 win=0.53 trim=$+1.17 top=94
+   NQ OFF H5                n=   32 gross=$+6.86 t=+0.4 med=$-1.75 net=$+2.79 win=0.44 trim=$+0.07 top=373
+   NQ non-news H5           n=   31 gross=$-5.03 t=-0.5 med=$-3.00 net=$-9.10 win=0.42 trim=$-3.40 top=98
+   NQ big|pre3| H5          n=   17 gross=$+12.59 t=+0.5 med=$+15.50 net=$+8.52 win=0.59 trim=$-0.23 top=373
+   NQ all H15               n=   34 gross=$+16.29 t=+0.8 med=$-0.50 net=$+12.22 win=0.50 trim=$+18.22 top=287
+   NQ delay1 H15            n=   34 gross=$+17.26 t=+1.0 med=$-6.00 net=$+13.19 win=0.41 trim=$+17.27 top=206
+   NQ placebo H15           n=   34 gross=$+5.35 t=+0.6 med=$+6.50 net=$+1.28 win=0.59 trim=$+4.39 top=162
+   NQ OFF H15               n=   32 gross=$+7.44 t=+0.4 med=$-5.75 net=$+3.37 win=0.47 trim=$+11.58 top=206
+   NQ non-news H15          n=   31 gross=$+7.24 t=+0.4 med=$-3.50 net=$+3.17 win=0.48 trim=$+11.52 top=206
+   NQ big|pre3| H15         n=   17 gross=$+31.32 t=+0.9 med=$-3.50 net=$+27.25 win=0.47 trim=$+37.43 top=287
+   NQ all H30               n=   34 gross=$-9.09 t=-0.4 med=$+10.00 net=$-13.16 win=0.56 trim=$-6.39 top=231
+   NQ delay1 H30            n=   34 gross=$-1.62 t=-0.1 med=$+9.00 net=$-5.69 win=0.56 trim=$+1.94 top=264
+   NQ placebo H30           n=   34 gross=$-2.10 t=-0.2 med=$-6.75 net=$-6.17 win=0.44 trim=$-2.31 top=162
+   NQ OFF H30               n=   32 gross=$-13.39 t=-0.6 med=$+4.75 net=$-17.46 win=0.53 trim=$-10.80 top=231
+   NQ non-news H30          n=   31 gross=$-17.44 t=-0.7 med=$+4.50 net=$-21.51 win=0.52 trim=$-15.03 top=231
+   NQ big|pre3| H30         n=   17 gross=$+3.79 t=+0.1 med=$+15.00 net=$-0.28 win=0.53 trim=$+11.27 top=231
+   years g15: {2018: [9, 35.22, 317.0], 2020: [15, 3.9, 58.0], 2021: [2, -6.25, -12.0], 2022: [5, 54.4, 272.0], 2023: [3, -27.0, -81.0]}
+   top: {'day': '2020-03-03', 'hhmm': '10:00', 'side': -1, 'g15': 287.0, 'pre3': 205.25, 'secs': 4.9991520000000005}
+   by hour g15: {}
+== YM: n=18 (2/yr) median secs 7 mean|pre3| $109.0 rho(pre3,y5) -0.067 rho(pre3,y15) -0.204
+   YM all H5                n=   18 gross=$-10.61 t=-0.7 med=$+0.25 net=$-14.41 win=0.50 trim=$-1.56 top=96
+   YM delay1 H5             n=   18 gross=$-6.14 t=-0.5 med=$-5.75 net=$-9.94 win=0.44 trim=$-9.78 top=152
+   YM placebo H5            n=   18 gross=$+1.94 t=+0.7 med=$+0.75 net=$-1.86 win=0.50 trim=$+1.91 top=26
+   YM OFF H5                n=   16 gross=$+4.81 t=+0.7 med=$+1.50 net=$+1.01 win=0.56 trim=$+1.11 top=96
+   YM non-news H5           n=   14 gross=$-21.21 t=-1.1 med=$-0.75 net=$-25.01 win=0.43 trim=$-5.29 top=28
+   YM all H15               n=   18 gross=$-2.89 t=-0.2 med=$+3.00 net=$-6.69 win=0.56 trim=$+6.94 top=99
+   YM delay1 H15            n=   18 gross=$-7.72 t=-0.4 med=$-2.50 net=$-11.52 win=0.39 trim=$-1.78 top=99
+   YM placebo H15           n=   18 gross=$+1.19 t=+0.2 med=$-2.00 net=$-2.61 win=0.44 trim=$+1.59 top=44
+   YM OFF H15               n=   16 gross=$+14.81 t=+1.3 med=$+5.75 net=$+11.01 win=0.62 trim=$+15.39 top=99
+   YM non-news H15          n=   14 gross=$-0.46 t=-0.0 med=$+3.75 net=$-4.26 win=0.57 trim=$+13.04 top=99
+   YM all H30               n=   18 gross=$-4.03 t=-0.3 med=$+5.50 net=$-7.83 win=0.61 trim=$+1.94 top=98
+   YM delay1 H30            n=   18 gross=$-3.64 t=-0.3 med=$-9.75 net=$-7.44 win=0.39 trim=$-2.62 top=95
+   YM placebo H30           n=   18 gross=$+1.19 t=+0.2 med=$+1.25 net=$-2.61 win=0.56 trim=$+1.84 top=58
+   YM OFF H30               n=   16 gross=$+8.84 t=+0.8 med=$+10.50 net=$+5.04 win=0.69 trim=$+10.25 top=98
+   YM non-news H30          n=   14 gross=$+0.25 t=+0.0 med=$+5.50 net=$-3.55 win=0.64 trim=$+8.92 top=98
+   years g15: {2016: [1, -27.0, -27.0], 2018: [7, -27.29, -191.0], 2019: [1, -2.5, -2.0], 2020: [2, 79.0, 158.0], 2022: [2, 61.0, 122.0], 2023: [5, -22.3, -112.0]}
+   top: {'day': '2020-03-02', 'hhmm': '18:01', 'side': 1, 'g15': 99.0, 'pre3': -756.0, 'secs': 9.999076}
+   by hour g15: {}
+== RTY: n=15 (2/yr) median secs 5 mean|pre3| $77.1 rho(pre3,y5) +0.421 rho(pre3,y15) +0.417
+   RTY all H5               n=   15 gross=$-12.57 t=-0.9 med=$-1.00 net=$-16.33 win=0.47 trim=$-11.00 top=76
+   RTY delay1 H5            n=   15 gross=$-5.03 t=-0.4 med=$+9.00 net=$-8.79 win=0.60 trim=$-5.81 top=92
+   RTY placebo H5           n=   15 gross=$-0.03 t=-0.0 med=$-1.00 net=$-3.79 win=0.40 trim=$-0.31 top=19
+   RTY OFF H5               n=   13 gross=$-5.08 t=-0.4 med=$+1.50 net=$-8.84 win=0.54 trim=$-3.27 top=76
+   RTY all H15              n=   15 gross=$-6.53 t=-0.5 med=$-4.50 net=$-10.29 win=0.47 trim=$-5.35 top=70
+   RTY delay1 H15           n=   15 gross=$-0.07 t=-0.0 med=$-1.00 net=$-3.83 win=0.47 trim=$+1.00 top=65
+   RTY placebo H15          n=   15 gross=$-3.37 t=-0.9 med=$-1.00 net=$-7.13 win=0.47 trim=$-3.46 top=30
+   RTY OFF H15              n=   13 gross=$-5.46 t=-0.4 med=$-4.50 net=$-9.22 win=0.46 trim=$-3.86 top=70
+   RTY all H30              n=   15 gross=$-3.40 t=-0.3 med=$-1.00 net=$-7.16 win=0.47 trim=$-1.85 top=82
+   RTY delay1 H30           n=   15 gross=$-2.30 t=-0.2 med=$-5.50 net=$-6.06 win=0.47 trim=$-5.08 top=126
+   RTY placebo H30          n=   15 gross=$-2.00 t=-0.3 med=$-2.50 net=$-5.76 win=0.33 trim=$-3.81 top=63
+   RTY OFF H30              n=   13 gross=$-4.92 t=-0.3 med=$-6.00 net=$-8.68 win=0.46 trim=$-3.36 top=82
+   years g15: {2018: [2, -11.75, -23.0], 2020: [3, -72.0, -216.0], 2022: [4, 35.5, 142.0], 2023: [6, -0.08, -0.0]}
+   top: {'day': '2022-12-23', 'hhmm': '08:29', 'side': 1, 'g15': 69.50000000000045, 'pre3': -8.799999999999955, 'secs': 4.999628}
+   by hour g15: {}
+C:\Users\O\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\lib\_function_base_impl.py:3028: RuntimeWarning: Degrees of freedom <= 0 for slice
+  c = cov(x, y, rowvar, dtype=dtype)
+C:\Users\O\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\lib\_function_base_impl.py:2901: RuntimeWarning: divide by zero encountered in divide
+  c *= np.true_divide(1, fact)
+C:\Users\O\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\lib\_function_base_impl.py:2901: RuntimeWarning: invalid value encountered in multiply
+  c *= np.true_divide(1, fact)
+== CL: n=1 (0/yr) median secs 10 mean|pre3| $35.0 rho(pre3,y5) +nan rho(pre3,y15) +nan
+   years g15: {2018: [1, 7.0, 7.0]}
+   top: {'day': '2018-07-04', 'hhmm': '18:01', 'side': -1, 'g15': 7.000000000000739, 'pre3': 0.3499999999999943, 'secs': 9.999987}
+   by hour g15: {}
+C:\Users\O\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\lib\_function_base_impl.py:3028: RuntimeWarning: Degrees of freedom <= 0 for slice
+  c = cov(x, y, rowvar, dtype=dtype)
+C:\Users\O\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\lib\_function_base_impl.py:2901: RuntimeWarning: divide by zero encountered in divide
+  c *= np.true_divide(1, fact)
+C:\Users\O\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\numpy\lib\_function_base_impl.py:2901: RuntimeWarning: invalid value encountered in multiply
+  c *= np.true_divide(1, fact)
+NG no events
+GC no events
+== SI: n=1 (0/yr) median secs 5 mean|pre3| $145.0 rho(pre3,y5) +nan rho(pre3,y15) +nan
+   years g15: {2023: [1, -175.0, -175.0]}
+   top: {'day': '2023-08-29', 'hhmm': '10:00', 'side': -1, 'g15': -175.0000000000007, 'pre3': 0.14499999999999957, 'secs': 4.99955}
+   by hour g15: {}
+HG no events
