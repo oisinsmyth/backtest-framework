@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 779.**
+- **Next free number: 780.**
+  - **D779 (2026-10-03): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 4 with a rates filter).
+    - **The construction:** D778's base L4 book exactly (M2K, 280 trades), skipping fall-side buys on sessions the
+      10-year Treasury future (ZN, `fut_day1m`) fell from 09:30 to 16:00.
+    - **Gates:** G1; N; F (the removed trades lose; the gain beats a rotated ZN flag; AND outside 2022 the removed
+      fall-side buys did worse than the kept ones); Y; G2.
+    - **The filter was proposed after seeing 2022**, but the ZN–outcome relation was never computed and the window
+      was chosen on resolution alone. Prior about 15%. GO would need the last free slot (10).
   - **D778 RESULT (2026-10-03): NO EFFECT on every root; the filter adds nothing; GO false.**
     - **M2K:** the filter removed 72 trades with a mean of +\$33.19: they were winners in every year but 2022
       (−\$32.79). The filtered book is +\$9.84 (t 1.38) against the base's +\$15.84 (t 2.47).

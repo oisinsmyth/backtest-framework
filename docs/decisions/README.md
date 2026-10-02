@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 621 of these records carry neither field —
+**No Status or Category column, deliberately.** 622 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -851,6 +851,7 @@ would look like data. The tokens are what is shown.
 | D776 | REG — D775's CPI and jobs-report fade on MNQ for the joint vault run: the vault scorer, the freeze and programme slot 2 | [PRE-REG](D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md) |
 | D777 | D777 STAGE 0 RESULT — CONCENTRATED on MNQ, NO EFFECT on MES, M2K and MYM; GO false: the post-close hour does give back… | [PRE-REG](D777-STAGE-0-PRE-REG-fade-the-post-close-hour-of-the-index-futures.md) · [RESULT](D777-STAGE-0-RESULT-the-post-close-fade-is-concentrated-on-mnq.md) |
 | D778 | D778 STAGE 0 RESULT — NO EFFECT, and the filter adds nothing: skipping the closing-auction fall-side buys in a downtren… | [PRE-REG](D778-STAGE-0-PRE-REG-the-closing-auction-fade-with-a-trend-filter.md) · [RESULT](D778-STAGE-0-RESULT-the-trend-filter-removes-the-best-trades.md) |
+| D779 | D779 STAGE 0 PRE-REG — the M2K closing-auction fade (D772's Lead 4) with a rates filter: does skipping the fall-side bu… | [PRE-REG](D779-STAGE-0-PRE-REG-the-closing-auction-fade-with-a-rates-filter.md) |
 
 <!-- REGISTER:END -->
 
