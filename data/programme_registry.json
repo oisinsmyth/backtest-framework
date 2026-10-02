@@ -16,6 +16,15 @@
    "note": "Vault line: D735's YM k1.0 1 sigma_rem on NQ, one MNQ, $4.07, 2024-01-01 -> 2026-09-18; PASS with >= 100 trades, mean net > 0 and one-sided NW(5) t >= 1.645, and mean net above the vault-window timing null's p95; FAIL if mean net <= 0; else UNRESOLVED"
   },
   {
+   "name": "CPI/jobs-report fade (NQ, D775)",
+   "doc": "D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md",
+   "registered_utc": "2026-10-02",
+   "slot": 2,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line: D775's fade of the 08:30 CPI/jobs-report impulse (08:29 -> 08:34 bar closes) to the 11:00 close, one MNQ, $4.07, release days 2024-01-01 -> 2026-09-18; PASS with >= 40 trades, mean net > 0 and one-sided t >= 1.2816, and mean gross above the vault-window exact rotation p95; FAIL if mean net <= 0; else UNRESOLVED"
+  },
+  {
    "name": "ledger H2",
    "doc": "SETTLEMENT_FLOW_LEDGER_PREREG.md",
    "registered_utc": "2026-09-21",

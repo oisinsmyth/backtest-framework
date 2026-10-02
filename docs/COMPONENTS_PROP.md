@@ -833,3 +833,26 @@ This is the in-sample premise check.
 - Largest year: 51 % in dollars, 35 % in volatility units. Without 2022 it nets +$8.52 a trade.
 - About 96 % of entries fall in the 10:00 hour.
 - The drawdown exceeds a $50k account's $2,000 trailing barrier at one MNQ.
+
+## ENTRY #7, PROVISIONAL, 2026-10-02 — the CPI/jobs-report fade on MNQ ([D775](decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md), [D776](decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md))
+
+*The principal: "Pre-reg the CPI/NFP fade as D775"; "Put D775 in the next slot and freeze it".*
+
+| # | component | window | net Sharpe; Sortino; gross | hit | skew | ρ with prior | entered |
+|---|---|---|---|---|---|---|---|
+| **7** | **The CPI/jobs-report fade** (D775): on each 08:30 CPI and Employment Situation release, one MNQ against the 08:29 → 08:34 bar-close impulse, entered at the 08:34 close and held to the 11:00 close; \$4.07; about 24 trades a year | 2016-01 → 2023-12 | **+0.84**; Sortino +1.50; gross Sharpe +0.95; per trade +\$30.81 net / +\$34.88 gross (t 2.73; net t 2.41); max drawdown \$1,036 | 55.9 % | +0.48 (per trade) | **−0.042 with #5** (NQ F2), **−0.010 with #6** (D737's twin), −0.016 with C1 | **PROVISIONAL.** The joint run's D776 look (slot 2) confirms or removes it |
+
+**Disclosures:**
+- **The in-sample was read before D775 was registered** (D772's lead hunt found it in a search). D775 fixed the
+  construction and passed its exact rotation null (rank 0.9995) and the principal's year test, the latter only on the
+  win-rate branch at its boundary.
+- **Largest year:** 2023, 48 % of the net in dollars. 2016–19 is +0.09σ against +0.33σ in 2020–23, volatility-adjusted.
+  The five worst trades are all 2022.
+- **It lives in large and downward impulses,** and after the 09:30 cash open (+\$29.55 of the +\$34.88).
+- **Vault power at 64 release days:** 0.57 at the in-sample edge, 0.77 at 2020–23's, 0.16 at 2016–19's.
+
+**The ledger's live entries now:**
+- #5 NQ F2 (slot 7);
+- #6 NQ leads the Dow (slot 1);
+- #7 the CPI/jobs-report fade (slot 2).
+- The NQ compression break (D680, slot 9) is scored as a component line, not an entry.

@@ -1,0 +1,71 @@
+{
+ "name": "FROZEN_vault_d776_cpi_nfp_fade",
+ "record": "docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md",
+ "instruction": "the principal, 2026-10-02: \"Put D775 in the next slot and freeze it\"",
+ "programme_slot": 2,
+ "programme_family": "CPI/jobs-report fade (NQ, D775)",
+ "alpha": 0.005,
+ "runner": {
+  "path": "scripts/vault_d776_cpi_nfp_fade.py",
+  "sha256": "b4df3be5e0ff9a6ea6a9fdc3e15c928a3f6325608710fadd6306140e0d390874"
+ },
+ "records": {
+  "docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md": "a7c8b20bcd51228d4eef234ace5a94a34e0c66e064f70a2d1c65bcc71cf8ffdb",
+  "docs/decisions/D775-STAGE-0-PRE-REG-fade-the-cpi-and-jobs-report-impulse-on-mnq.md": "00b4862dbb9d5f624afa3f8443b3d0b3a16fbbf0426a60eba2fd487c0527edc2",
+  "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md": "a59e57d37c1d5d560ce87ebb058f2b0e88c17c0f4d6848c100d1e21ee545e9d3"
+ },
+ "imported_unchanged": {
+  "scripts/stage0_d775_cpi_nfp_fade.py": "1f124c0f835b7395ea15265cdc589716b9017028befb817d824bfb99727399ca",
+  "src/backtest_framework/__init__.py": "aae867d2cba6fa88baffd37737016da88f4a6021f790c6b0be19f3ab74a52020",
+  "src/backtest_framework/validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/validation/programme.py": "1d48d5cb513a05e19f4c01556805b9ba8ee7da4ae5711609d862d57b76d6654d"
+ },
+ "files": {
+  "data/stage0_d775_cpi_nfp_fade.json": "a86c4bde8ebf5e78dc0d94f0a191f45b9e383ee083b83a1f47c65df29f4fd964",
+  "data/rehearsal_vault_d776.json": "460a983911717842b395b97bb884bb1bc67c42c90c7e148fa6aa6be617692a36",
+  "data/vault_d776_power.json": "4e0beeb8dcf9bb0bdbf9f01b7d69fcbb67c8a0ff1d0f0c6415b0e98a729e2d2e"
+ },
+ "params": {
+  "root": "NQ",
+  "fixture": "fut_opening_globex_1m.csv.gz",
+  "mult": 2.0,
+  "cost": 4.07,
+  "bars": [
+   "08:29",
+   "08:30",
+   "08:32",
+   "08:34",
+   "08:39",
+   "08:44",
+   "08:59",
+   "09:29",
+   "10:30",
+   "11:00",
+   "11:30",
+   "12:00"
+  ],
+  "in_sample": [
+   "2016-01-01",
+   "2023-12-31"
+  ],
+  "vault": [
+   "2024-01-01",
+   "2026-09-18"
+  ],
+  "joint_fixture": "data/joint_run/d680/fut_opening_globex_1m.csv.gz",
+  "known_trades": 186,
+  "gate": {
+   "G0": ">= 40 trades",
+   "G1": "mean net > 0 and one-sided t >= 1.2816",
+   "G2": "mean gross > the vault-window exact rotation p95",
+   "FAIL": "mean net <= 0",
+   "else": "UNRESOLVED"
+  },
+  "seed": 776,
+  "programme_family": "CPI/jobs-report fade (NQ, D775)"
+ },
+ "known_answer": {
+  "trades": 186,
+  "mean_gross": 34.87903225806452
+ }
+}

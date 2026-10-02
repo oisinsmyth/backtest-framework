@@ -1,4 +1,4 @@
-# Joint vault run: checklist (programme slots 1, 3, 7, 8, 9)
+# Joint vault run: checklist (programme slots 1, 2, 3, 7, 8, 9)
 
 *Prepared 2026-09-30, before the Databento CME subscription lapses (~2026-10-11). Nothing here opened the vault.
 The vault is 2025-03-01 → 2026-09-18. The principal calls the run (A10).*
@@ -197,6 +197,26 @@ checkout holding the rebuilt fixtures:
   whose window is the last hour.
 - **Its freeze** hashes `stage0_d735_nq_breaks_from_the_market.py` and its imports (D727, D733, D731, D720, D711's
   `cost_line` and others). Do not edit those before the run.
+
+**D776, the CPI/jobs-report fade (D775's construction, one MNQ). FROZEN 2026-10-02; programme slot 2** (the principal:
+"Put D775 in the next slot and freeze it"; the lowest free slot).
+
+Run it **after slot 9's `joint_d680_vault.py --build-vault fixture`** (§3, slot 9 step 1). That step writes
+`data/joint_run/d680/fut_opening_globex_1m.csv.gz` through 2026-09-18, and D776 reads it. Run it in the main
+checkout (V1):
+`uv run python scripts/vault_d776_cpi_nfp_fade.py --vault --principals-word "..."`.
+- **In order, it:**
+  - verifies `data/FROZEN_vault_d776_cpi_nfp_fade.json`;
+  - refuses a second opening;
+  - re-proves D775's in-sample known answer (186 trades, mean gross +\$34.879032…) through D775's own loader on the
+    committed fixture;
+  - re-proves it again on the vault fixture's own 2016–2023 rows;
+  - scores the release days 2024-01-01 → 2026-09-18.
+- **It refuses** if the vault fixture is missing, or ends before 2026-09-18. `--accept-end DATE` is the principal's
+  call.
+- **Independent of the other lines' outputs:** it reads only NQ's bars between 08:29 and 12:00, on every session
+  (the rotation null uses the non-release days). It shares NQ's 2024+ sessions with D737 (slot 1) and D716 (slot 7), on a different clock.
+- **Its freeze** hashes `stage0_d775_cpi_nfp_fade.py` and the programme module. Do not edit them before the run.
 
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):

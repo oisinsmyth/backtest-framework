@@ -14,10 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 777.**
-  - **D776 (2026-10-02): PRE-REGISTERED** — D775's CPI/jobs-report fade for the joint vault (the principal: "Put D775
-    in the next slot and freeze it"). Programme slot 2 at the freeze. NQ 2024-01-01 → 2026-09-18, 64 release days.
-    PASS = at least 40 trades, mean net > 0 with one-sided t ≥ 1.2816, and above the vault-window rotation p95. It reads
-    slot 9's vault opening fixture.
+  - **D776 (2026-10-02): FROZEN, programme slot 2** — D775's CPI/jobs-report fade for the joint vault (the principal:
+    "Put D775 in the next slot and freeze it").
+    - **The vault:** NQ release days 2024-01-01 → 2026-09-18 (64 in the calendar).
+    - **PASS** = at least 40 trades, mean net > 0 with one-sided t ≥ 1.2816, and mean gross above the vault-window
+      exact rotation p95. FAIL = mean net ≤ 0; else UNRESOLVED. Promotion also needs the programme-adjusted
+      p ≤ 0.005.
+    - **The rehearsal reproduces 186 / +\$34.879032… exactly** on both input paths. Power at 64 release days: 0.57 at
+      the in-sample edge, 0.77 at 2020–23's, 0.16 at 2016–19's.
+    - **The joint-run step is in `JOINT_RUN_CHECKLIST.md` §3:** run after slot 9's vault fixture build.
+    - **COMPONENTS_PROP entry #7, PROVISIONAL.**
+    - **Registry:** 9 of 10 slots, α 0.045 allocated; slot 10 free.
   - **D775 RESULT (2026-10-02): SUPPORTED on MNQ, GO true** (in-sample; the in-sample was read before the record).
     - **The book:** +\$34.88 gross / +\$30.81 net, t 2.73 (net t 2.41); exact rotation rank 0.9995 (p95 +\$17.26);
       net Sharpe 0.84 / Sortino 1.50, max drawdown \$1,036; ρ ≈ 0 with D737's twin, NQ F2, C1.
