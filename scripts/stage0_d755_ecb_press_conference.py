@@ -129,7 +129,7 @@ def extract() -> int:
     sys.path.insert(0, str(REPO / "scripts"))
     import forward_f2_c1_ledgers as FW
     bh = pd.read_csv(io.BytesIO(FW.restrict_text(MAIN_DATA / "fixtures" / "fut_breadth_hourly.csv.gz", 1, SEAL)),
-                     usecols=["root", "day", "contract"], dtype={"day": str})
+                     usecols=["root", "day", "contract"], dtype={"day": str}, encoding="utf-8")
     front = bh[bh["root"] == "6E"].set_index("day")["contract"]
     df = df[df["contract"].to_numpy() == front.reindex(df["day"]).to_numpy()]
     need(not df.duplicated(["day", "minute"]).any(), "duplicate front-contract minutes")
