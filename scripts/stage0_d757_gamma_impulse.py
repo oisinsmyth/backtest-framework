@@ -127,7 +127,7 @@ def run() -> int:
         NET10[r] = V.fade(P["O"], P["P10"], P["C"], UNIT[r]["upp"], UNIT[r]["cost"])[1]
         NET1030[r] = V.fade(P["O"], PN[r]["P1030"], P["C"], UNIT[r]["upp"], UNIT[r]["cost"])[1]
     # the known answer: D756's label and prize
-    rd_n = sum(int(RD[r].sum()) for r in V.ROOTS)
+    rd_n = sum(int(np.isfinite(NET10[r][RD[r]]).sum()) for r in V.ROOTS)     # traded RD days (D756's stats count)
     rd_mean = float(np.nanmean(np.concatenate([NET10[r][RD[r]] for r in V.ROOTS])))
     need(rd_n == d756["prize"]["RD_days"]["n"] and math.isclose(rd_mean, d756["prize"]["RD_days"]["mean"], rel_tol=1e-9),
          f"known answer: RD {rd_n} mean {rd_mean}")
