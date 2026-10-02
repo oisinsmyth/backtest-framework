@@ -14,6 +14,16 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 774.**
+  - **D773 (2026-10-02): NO DIRECTION** (Stage 0, prop book). GLD flow moves gold the same day only.
+    - **The premise holds:**
+      - flow AR(1) +0.26;
+      - the same-day flow against the London morning, ρ +0.126 (look-ahead, about 6 SE).
+    - **The tradable signal fails:**
+      - yesterday's flow against today's 08:00 → 15:00 London, ρ +0.007 (p 0.70);
+      - the top-third trade grosses −$1.92 and nets −$7.85 per MGC;
+      - the auction, fade and US-morning windows are all within ±0.04.
+    - **The London PM auction has now been tried with price (D751), premium (D772) and metal (D773).**
+    - **The principal's call:** close the construction.
   - **D773 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Let's look at gold, what moves it
     intraday?"; chose ETF flow into the PM auction and approved the download). GLD creation and redemption flow and the
     London gold morning.
