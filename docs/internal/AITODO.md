@@ -14,6 +14,13 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 780.**
+  - **D779 RESULT (2026-10-03): NO EFFECT on every root; the filter fails F(a) and F(b); GO false.**
+    - **M2K:** the filter removed 69 trades with a mean of +\$27.21 (winners). The filtered book is +\$12.13 (t 1.62)
+      against the base's +\$15.84. F(b): Δ −\$3.72, rank 0.48 against the rotated ZN flag. The same on MES, MNQ, MYM.
+    - **In 2022 itself, the rising-yield-day buys lost \$5 a trade (13); the four others lost \$123.** The rates story
+      for 2022 is refuted in-sample.
+    - Recommend closing the filtered construction and keeping base L4 open, not frozen. Forward recording needs RTY
+      added to the forward recorder.
   - **D779 (2026-10-03): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 4 with a rates filter).
     - **The construction:** D778's base L4 book exactly (M2K, 280 trades), skipping fall-side buys on sessions the
       10-year Treasury future (ZN, `fut_day1m`) fell from 09:30 to 16:00.
