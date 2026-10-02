@@ -233,7 +233,7 @@ def run() -> int:
     for r, n in KNOWN_DAYS.items():
         need(len(PN[r]["days"]) == n == d727[r]["days"], f"known answer: {r} {len(PN[r]['days'])} days")
     for r in ROOTS:
-        need(PN[r]["days"].max() < SEAL, f"the seal: {r}")
+        need(max(PN[r]["days"]) < SEAL, f"the seal: {r}")
         E = PN[r]["E"]
         need(np.nanmin(E) >= 0 and np.nanmax(E) <= 1 + 1e-12, f"{r}: E outside [0, 1]")
     ON = overnight(ROOTS, PN)
