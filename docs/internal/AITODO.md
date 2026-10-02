@@ -14,6 +14,15 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 763.**
+  - **D762 (2026-10-02): the cash close barely reverses.**
+    - **The readings:** NO REVERSAL on ES, NQ and RTY; YM UNRESOLVED (ρ −0.084, Holm p 0.002, beats 15:00 but not
+      noon's generic reversal).
+    - **C4 fails everywhere:** the top-third fade grosses $0.31–1.50 against $3.76–4.42.
+    - **The placebos:** 15:00 continues (ρ +0.05 to +0.07), noon reverses (−0.04 to −0.07).
+    - **Reported:** the longer pressure (15:30 → 16:00, open → 16:00) reverses at ρ about −0.04 to −0.14 on every root,
+      still about $1–2 gross. The Russell reconstitution day reverses on all four (n 6–8).
+    - **NQ's extremes are megacap earnings evenings** (POST HOC).
+    - **Fixture `fut_index_close_1m` kept.** No trading pre-registration follows.
   - **D762 (2026-10-02): PRE-REGISTERED, Stage 0 premise check, prop book** (the principal: "Lets do some premise
     checks for the cash close?").
     - **The question:** does the closing auction's pressure x = P16:00 − P15:50 reverse in the futures between 16:00
