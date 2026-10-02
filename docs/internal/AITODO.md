@@ -13,7 +13,11 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 776.**
+- **Next free number: 777.**
+  - **D776 (2026-10-02): PRE-REGISTERED** — D775's CPI/jobs-report fade for the joint vault (the principal: "Put D775
+    in the next slot and freeze it"). Programme slot 2 at the freeze. NQ 2024-01-01 → 2026-09-18, 64 release days.
+    PASS = at least 40 trades, mean net > 0 with one-sided t ≥ 1.2816, and above the vault-window rotation p95. It reads
+    slot 9's vault opening fixture.
   - **D775 RESULT (2026-10-02): SUPPORTED on MNQ, GO true** (in-sample; the in-sample was read before the record).
     - **The book:** +\$34.88 gross / +\$30.81 net, t 2.73 (net t 2.41); exact rotation rank 0.9995 (p95 +\$17.26);
       net Sharpe 0.84 / Sortino 1.50, max drawdown \$1,036; ρ ≈ 0 with D737's twin, NQ F2, C1.
