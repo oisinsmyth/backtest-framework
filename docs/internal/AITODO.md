@@ -13,7 +13,11 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 771.**
+- **Next free number: 772.**
+  - **D771 (2026-10-02): PRE-REGISTERED, runner not yet written** (Stage 0, prop book; the queue imbalance at the
+    touch, GC `bbo-1m` sizes, on gold's China-open fade). P: the 09:30 imbalance predicts the 09:31 mid (t ≥ 3), with
+    the decay curve to 15:00 reported. Q1: Q's top third on the taker fade; Q2: on D770's passive fade. Holm over Q1
+    and Q2. **The principal is not closing the gold China-open line (D765, D767, D770) yet.**
   - **D770 (2026-10-02): Q2 NOT ABOVE NULL; Q3 UNBALANCED (net negative)** (Stage 0, prop book; real order flow and
     a passive entry on gold's China-open fade, the paid GC/MGC `tbbo` window). GO false.
     - **Q1, the cost:** GC is 1 tick wide (median) in 2016–19 and 1.5–2.5 after; MGC is quoted within 0.2 ticks of GC.
