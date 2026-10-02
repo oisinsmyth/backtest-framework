@@ -14,17 +14,18 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 771.**
-  - **D770 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Draft D770, pre-reg it, build and run
-    it"). Gold's China-open fade with real order flow and a passive entry, on the paid GC/MGC `tbbo` window.
-    - **Q1 (reported):** the quoted taker cost at the China open.
-    - **Q2:** the flow-alignment filter A = sign(x)(B − S)/(B + S) over 09:00–09:30 Beijing, its walk-forward top
-      third, with D767's gates.
-    - **Q3:** a resting fade at the touch from 09:30, filled on a trade-through, the exit at the 15:00 touch, \$3
-      commission.
-      - The null is the exact rotation of the fade side over two-sided outcomes.
-      - The MGC calibration (2022–23) gates it on fill agreement ≥ 85%.
-    - **Holm over Q2 and Q3.**
-    - **Next:** the runner, committed before its run.
+  - **D770 (2026-10-02): Q2 NOT ABOVE NULL; Q3 UNBALANCED (net negative)** (Stage 0, prop book; real order flow and
+    a passive entry on gold's China-open fade, the paid GC/MGC `tbbo` window). GO false.
+    - **Q1, the cost:** GC is 1 tick wide (median) in 2016–19 and 1.5–2.5 after; MGC is quoted within 0.2 ticks of GC.
+      The 2.93-tick cost line is about right (MGC 3.8 in 2022–23).
+    - **Q2, true aggressor flow does not sort the reversals:** ρ(A, gross) +0.016. A's third nets +\$0.49, rank 0.905
+      in the exact rotation.
+    - **Q3, the passive fade:** 92% filled; it nets −\$0.92 against the taker's −\$2.75, so it recovers about \$1.80.
+      - It beats the side rotation (rank 0.996), so the direction matters.
+      - Adverse selection: the unfilled 8% were the best reversals (+\$10.44 against +\$2.56).
+      - It earns only Dec–Mar (+\$3.77 against −\$3.11).
+    - **The MGC calibration passed** (fill agreement 97.5%).
+    - Recommend closing the gold China-open line (D765, D767, D770); the principal's call. The paid data stays.
   - **D769 (2026-10-02): NO DIRECTION on the AUD and copper; CLOSED by the principal** (Stage 0, prop book). The PBOC's hidden lean is visible
     and is news, and it is priced in minutes.
     - **The model:** OOS R² 0.21, residual AR(1) 0.80. It recovers 2019's defence of 7 and 2023's record strong bias

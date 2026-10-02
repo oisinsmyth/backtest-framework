@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 607 of these records carry neither field —
+**No Status or Category column, deliberately.** 608 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -842,7 +842,7 @@ would look like data. The tokens are what is shown.
 | D767 | D767 STAGE 0 RESULT — MGC NOT ABOVE NULL, SIL and MHG NO MECHANISM: the unconfirmed China open does not reverse more; t… | [PRE-REG](D767-STAGE-0-PRE-REG-fade-the-unconfirmed-china-open.md) · [RESULT](D767-STAGE-0-RESULT-the-unconfirmed-open-does-not-reverse-more.md) |
 | D768 | D768 STAGE 0 RESULT — NO DIRECTION on ZS and ZC: China's purchases are news, and the 09:30 open prices them (the break… | [PRE-REG](D768-STAGE-0-PRE-REG-china-buys-soybeans-and-the-cbot-day.md) · [RESULT](D768-STAGE-0-RESULT-the-open-prices-chinas-purchases.md) |
 | D769 | D769 STAGE 0 RESULT — NO DIRECTION on the AUD and copper: the PBOC's hidden lean is visible and is news, since a strong… | [PRE-REG](D769-STAGE-0-PRE-REG-the-yuan-fix-residual-and-the-aud.md) · [RESULT](D769-STAGE-0-RESULT-the-fix-surprise-is-priced-in-minutes.md) |
-| D770 | D770 STAGE 0 PRE-REG — gold's China-open fade with real order flow and a passive entry: does aggressive one-sided flow… | [PRE-REG](D770-STAGE-0-PRE-REG-real-flow-and-passive-entry-at-the-china-open.md) |
+| D770 | D770 STAGE 0 RESULT — Q2 NOT ABOVE NULL, Q3 UNBALANCED (and net negative): real order flow does not mark the reversals,… | [PRE-REG](D770-STAGE-0-PRE-REG-real-flow-and-passive-entry-at-the-china-open.md) · [RESULT](D770-STAGE-0-RESULT-real-flow-and-passive-entry-do-not-pay.md) |
 
 <!-- REGISTER:END -->
 
