@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 605 of these records carry neither field —
+**No Status or Category column, deliberately.** 606 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -841,7 +841,7 @@ would look like data. The tokens are what is shown.
 | D766 | D766 STAGE 0 RESULT — NO DIRECTION: after an extreme-funding night the CME bitcoin day does not lean against the crowd… | [PRE-REG](D766-STAGE-0-PRE-REG-crowded-leverage-and-the-mbt-day.md) · [RESULT](D766-STAGE-0-RESULT-no-direction-the-crowd-is-not-faded.md) |
 | D767 | D767 STAGE 0 RESULT — MGC NOT ABOVE NULL, SIL and MHG NO MECHANISM: the unconfirmed China open does not reverse more; t… | [PRE-REG](D767-STAGE-0-PRE-REG-fade-the-unconfirmed-china-open.md) · [RESULT](D767-STAGE-0-RESULT-the-unconfirmed-open-does-not-reverse-more.md) |
 | D768 | D768 STAGE 0 RESULT — NO DIRECTION on ZS and ZC: China's purchases are news, and the 09:30 open prices them (the break… | [PRE-REG](D768-STAGE-0-PRE-REG-china-buys-soybeans-and-the-cbot-day.md) · [RESULT](D768-STAGE-0-RESULT-the-open-prices-chinas-purchases.md) |
-| D769 | D769 STAGE 0 PRE-REGISTRATION — a hidden hand with a public trace: when the PBOC's 09:15 yuan fix comes in stronger or… | [PRE-REG](D769-STAGE-0-PRE-REG-the-yuan-fix-residual-and-the-aud.md) |
+| D769 | D769 STAGE 0 RESULT — NO DIRECTION on the AUD and copper: the PBOC's hidden lean is visible and is news, since a strong… | [PRE-REG](D769-STAGE-0-PRE-REG-the-yuan-fix-residual-and-the-aud.md) · [RESULT](D769-STAGE-0-RESULT-the-fix-surprise-is-priced-in-minutes.md) |
 
 <!-- REGISTER:END -->
 
