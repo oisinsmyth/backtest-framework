@@ -49,6 +49,7 @@ SEAL_UTC = dt.datetime(2024, 1, 1, tzinfo=dt.timezone.utc)
 APPROVED_USD = 98.0
 CAP_USD = 110.0
 THREADS = 4
+MAX_ERRORS = 20
 JOBS = [("GC.v.0", "tbbo", "2016-01-04"), ("GC.v.0", "bbo-1m", "2016-01-04"),
         ("MGC.v.0", "tbbo", "2022-01-03"), ("MGC.v.0", "bbo-1m", "2022-01-03")]
 LAST_DAY = "2023-12-29"
@@ -114,6 +115,36 @@ def retry(f, **kw):
             time.sleep(2 * 2 ** k)
 
 
+def count_records(p: Path, s: str, e: str) -> int:
+    """Decode the whole file; every record's ts_event inside the window, or raise."""
+    import databento as db
+    st = db.DBNStore.from_bytes(p.read_bytes())
+    lo, hi = pd.Timestamp(s).value, pd.Timestamp(e).value
+    n = 0
+    for a in st.to_ndarray(count=1 << 20):
+        if len(a):
+            ts = a["ts_event"].astype("int64") if "ts_event" in a.dtype.names else a["ts_recv"].astype("int64")
+            if not ((ts >= lo - 60_000_000_000) & (ts < hi + 60_000_000_000)).all():
+                raise ValueError(f"{p.name}: a record outside its window")
+        n += len(a)
+    return n
+
+
+def salvage(p: Path, s: str, e: str) -> int | None:
+    """A .part left by the first run (paid, downloaded, never renamed): keep it if it decodes cleanly."""
+    try:
+        import databento as db
+        n = count_records(p, s, e)
+        idx = db.DBNStore.from_bytes(p.read_bytes()).to_df().index
+        if n == 0 or idx.max() < pd.Timestamp(e) - pd.Timedelta(minutes=30):
+            raise ValueError("it does not reach the window's end (a truncated stream?)")
+        return n
+    except Exception as ex:  # noqa: BLE001
+        print(f"  salvage refused {p.name}: {type(ex).__name__}: {str(ex)[:120]}; re-fetching", flush=True)
+        p.unlink(missing_ok=True)
+        return None
+
+
 def sha256(p: Path) -> str:
     h = hashlib.sha256()
     with open(p, "rb") as fh:
@@ -156,9 +187,14 @@ def fetch(accepted: float | None) -> int:
         def one(r: tuple[str, str, str]) -> None:
             try:
                 _one(r)
-            except Exception as ex:  # noqa: BLE001  (listed and left for a resumed run; never silent)
+            except Exception as ex:  # noqa: BLE001  (printed at once; MAX_ERRORS stops the run so it cannot keep spending)
+                msg = f"{r}: {type(ex).__name__}: {str(ex)[:200]}"
                 with lock:
-                    errors.append(f"{r}: {type(ex).__name__}: {str(ex)[:200]}")
+                    errors.append(msg)
+                    print("ERROR", msg, flush=True)
+                    if len(errors) >= MAX_ERRORS:
+                        state["stop"] = True
+                        print(f"STOP: {MAX_ERRORS} errors", flush=True)
 
         def _one(r: tuple[str, str, str]) -> None:
             sym, sch, day = r
@@ -183,8 +219,13 @@ def fetch(accepted: float | None) -> int:
             out = DEST / rel_path(sym, sch, day)
             out.parent.mkdir(parents=True, exist_ok=True)
             tmp = out.with_suffix(".part")
-            store = retry(c.timeseries.get_range, **kw, path=str(tmp))
-            recs = sum(len(a) for a in store.to_ndarray(count=1 << 20)) if tmp.stat().st_size else 0
+            recs = salvage(tmp, s, e) if tmp.exists() else None    # a window already paid for (the first run)
+            if recs is None:
+                store = retry(c.timeseries.get_range, **kw)        # in memory: no open handle on Windows
+                tmp.unlink(missing_ok=True)
+                store.to_file(str(tmp))
+                recs = count_records(tmp, s, e)
+                del store
             os.replace(tmp, out)
             os.chmod(out, stat.S_IREAD | stat.S_IRGRP | stat.S_IROTH)
             row = {"path": str(rel_path(sym, sch, day)).replace("\\", "/"), "symbol": sym, "schema": sch, "day": day,
@@ -193,6 +234,8 @@ def fetch(accepted: float | None) -> int:
             with lock:
                 new_rows.append(row)
                 state["n"] += 1
+                if state["n"] % 25 == 0:
+                    print(f"  {state['n']} fetched, USD {state['spent']:.2f}, last {day} {sym} {sch}", flush=True)
                 if state["n"] % 200 == 0:
                     print(f"  {state['n']} fetched, USD {state['spent']:.2f}", flush=True)
                     _write_manifest(done, new_rows)
