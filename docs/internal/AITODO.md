@@ -14,9 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 759.**
-  - **D758 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets do #5"; "Test the weekend gap,
-    assume it does allow MBT"). The CME bitcoin weekend gap on one MBT: fade G = P(Sun 18:05 ET) − Friday's close
-    from 18:06 to Monday 09:30 ET.
+  - **D758 (2026-10-02): NOTHING** (run on the principal's "Test the weekend gap, assume it does allow MBT").
+    - **The gap does not fill, and the folklore runs backwards:** by Monday 09:30 the path reaches Friday's close on
+      43.6% of weekends and the level beyond the gap on 53.7% (52 against 81, p 0.015; the placebo reopens lean the
+      other way).
+    - **No trade pays:** the fade makes −\$4.24 gross (t −0.65, n 287), below the rotation's p50, and equals the
+      placebo. The folklore's target trade wins 57% but averages −\$9.90.
+    - **Room exists:** \$59.99 against the \$8.62 bar. Calm-NQ Mondays move more (\$80 against \$48) but have no
+      direction.
+    - **The touch asymmetry is POST HOC.** Closing is the principal's call.
+  - **D758, the pre-registration entry (kept):** the CME bitcoin weekend gap on one MBT: fade G = P(Sun 18:05 ET) −
+    Friday's close from 18:06 to Monday 09:30 ET.
     - **The readings:** FILL, CONTINUATION or NOTHING.
     - **The mechanism read:** a touch test, fill level against the mirror level.
     - **The controls:** an enumerated sign rotation, and Mon–Thu reopens after the daily halt as placebos.

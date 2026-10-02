@@ -1,0 +1,203 @@
+{
+ "spec": "D758-STAGE-0-PRE-REG-the-cme-bitcoin-weekend-gap.md",
+ "seal": "nothing on or after 2024-01-01",
+ "cost": 4.308058436320886,
+ "two_c": 8.616116872641772,
+ "weekends_read": 302,
+ "events_scored": 287,
+ "excluded": {
+  "no bar in the first five minutes": 13,
+  "zero gap": 2
+ },
+ "placebo_reopens": 1028,
+ "holiday_reopens": 15,
+ "first_bar_late_min_median": 0.0,
+ "first_bar_at_1800_share": 0.9128919860627178,
+ "entry_late_min_median": 0.0,
+ "O1_mean_abs_move_weekend": 59.98606271777003,
+ "O1_mean_abs_move_placebo": 46.259727626459146,
+ "O1_welch_abs": 2.3141655544196444,
+ "O2_mean_abs_gap_usd": 50.7404181184669,
+ "O2_mean_abs_gap_usd_placebo": 12.267996108949417,
+ "O2_gap_over_friday_range_median": 0.340625,
+ "O2_gap_over_prev_range_median_placebo": 0.06837606837606838,
+ "P": {
+  "trades": 287,
+  "mean_gross": -4.2439024390243905,
+  "t_gross": -0.6461806730788595,
+  "mean_net": -8.551960875345275,
+  "median_net": -5.308058436320886,
+  "sharpe_net": -0.5315922648532567,
+  "sortino_net": -0.7363605304768648,
+  "sharpe_gross": -0.26380215511523275,
+  "max_dd": 2881.694486431615,
+  "total_net": -2454.412771224094,
+  "win_rate": 0.40418118466898956,
+  "payoff": 1.108859995880165,
+  "skew": 0.46327793492314295,
+  "kurtosis": 9.948389738535065,
+  "mean_abs_gross": 59.98606271777003,
+  "mean_abs_vs_2c": 6.962076258301475,
+  "breakeven_cost": -4.2439024390243905,
+  "mean_ex_top1pct": -14.160171112377208,
+  "mean_ex_bottom1pct": -3.6531288588560873,
+  "mean_trimmed1pct": -9.268912528847569,
+  "years": {
+   "2018": -82.13,
+   "2019": -284.79,
+   "2020": -303.59,
+   "2021": 663.6,
+   "2022": -1125.4,
+   "2023": -1322.09
+  },
+  "positive_years": "1 of 6",
+  "largest_year_share": null
+ },
+ "P_net_at_1p5x": -10.70599009350572,
+ "P_net_at_2x": -12.860019311666163,
+ "N1_rotation": {
+  "offsets": 286,
+  "p05": -9.425087108013937,
+  "p50": -0.4407665505226481,
+  "p95": 12.118466898954704,
+  "p_up": 0.7377622377622378
+ },
+ "N2_placebo": {
+  "n": 1028,
+  "mean_gross": -3.7441634241245136,
+  "t": -1.4534201654096954,
+  "welch_t": -0.07083643457519319
+ },
+ "touch": {
+  "fill_rate": 0.4355400696864111,
+  "mirror_rate": 0.5365853658536586,
+  "fill_only": 52,
+  "mirror_only": 81,
+  "sign_test_p": 0.014872597092642104,
+  "placebo_fill_rate": 0.8589494163424124,
+  "placebo_mirror_rate": 0.8336575875486382,
+  "placebo_fill_only": 156,
+  "placebo_mirror_only": 130,
+  "difference": -0.10104529616724744,
+  "placebo_difference": 0.02529182879377423
+ },
+ "exit_1600": {
+  "mean_gross": -4.433797909407666,
+  "t": -0.5921183127585319
+ },
+ "target_trade": {
+  "mean_gross": -9.900696864111499,
+  "t": -1.9166921331963127,
+  "win_rate": 0.5714285714285714,
+  "median": 2.5
+ },
+ "day_session": {
+  "n": 284,
+  "mean_gross": 3.061619718309859,
+  "t": 0.8065611908261339
+ },
+ "gap_terciles": {
+  "small": {
+   "n": 96,
+   "mean_gross": -0.9166666666666666,
+   "fill_rate": 0.6770833333333334,
+   "mirror_rate": 0.7916666666666666
+  },
+  "mid": {
+   "n": 95,
+   "mean_gross": -2.4368421052631577,
+   "fill_rate": 0.4,
+   "mirror_rate": 0.5368421052631579
+  },
+  "large": {
+   "n": 96,
+   "mean_gross": -9.359375,
+   "fill_rate": 0.22916666666666666,
+   "mirror_rate": 0.28125
+  }
+ },
+ "eras": {
+  "pre_mbt": {
+   "n": 154,
+   "mean_gross": 0.6753246753246753,
+   "t": 0.0788285071083834
+  },
+  "mbt": {
+   "n": 133,
+   "mean_gross": -9.93984962406015,
+   "t": -0.9807759452512504
+  }
+ },
+ "holiday_reopens_scored": {
+  "n": 13,
+  "mean_gross": -0.23076923076923078
+ },
+ "calm_split": {
+  "calm": {
+   "n": 109,
+   "mean_gross": 0.22477064220183487,
+   "mean_abs": 79.61926605504587
+  },
+  "other": {
+   "n": 178,
+   "mean_gross": -6.980337078651686,
+   "mean_abs": 47.96348314606742
+  },
+  "ungated": 0
+ },
+ "component_corr": {
+  "d737_twin": 0.06620757953869343,
+  "nq_f2": -0.011959623233389385,
+  "c1": 0.03790323554528253
+ },
+ "component_corr_span": [
+  "2016-02-24",
+  "2023-12-29",
+  287
+ ],
+ "largest_trades": {
+  "losers": [
+   {
+    "day": "2021-01-11",
+    "G": -176.5,
+    "g": -514.0
+   },
+   {
+    "day": "2021-02-08",
+    "G": 111.0,
+    "g": -503.5
+   },
+   {
+    "day": "2021-07-26",
+    "G": 195.5,
+    "g": -386.5
+   }
+  ],
+  "winners": [
+   {
+    "day": "2021-09-20",
+    "G": 58.0,
+    "g": 380.5
+   },
+   {
+    "day": "2021-04-26",
+    "G": -256.5,
+    "g": 575.5
+   },
+   {
+    "day": "2021-02-22",
+    "G": 157.0,
+    "g": 624.0
+   }
+  ]
+ },
+ "readings": {
+  "NO_ROOM": false,
+  "NOT_SPECIAL": false,
+  "FILL": false,
+  "CONTINUATION": false,
+  "GO": false,
+  "reading": "NOTHING"
+ },
+ "runtime_min": 0.24
+}
