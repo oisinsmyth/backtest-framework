@@ -13,7 +13,17 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 774.**
+- **Next free number: 775.**
+  - **D774 (2026-10-02): DIAG, POST HOC — the MNG flow-sized post-settlement fade (D772's Fable R1) is the vault NG
+    trade's second leg** (prop book; the principal's question).
+    - **Overlap:** 91% of its trades fall on the vault's NG signal days (slots 3 and 8), on the same |I| predictor;
+      ρ with the H2 leg is +0.13 to +0.16; with the index lines about 0.
+    - **Without 2022:** 93 trades (about 19 a year), +\$9.17 gross / +\$5.17 net, win 57%, +0.22σ volatility-adjusted
+      (t 2.25), net Sharpe 0.68 / Sortino 1.11. But five spike trades (late 2018, October 2021) are 96% of the net,
+      and the trimmed mean is +\$4.84.
+    - **Ungated:** positive in volatility units in 6 of 7 years, but never \$4 in dollars outside 2022.
+    - **Against the principal's test:** the volatility-adjusted return holds weakly, and the win rate is not even. A
+      volatility-spike book. Nothing proposed; whether to pre-register it is the principal's call.
   - **D773 (2026-10-02): NO DIRECTION** (Stage 0, prop book). GLD flow moves gold the same day only.
     - **The premise holds:**
       - flow AR(1) +0.26;
