@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 601 of these records carry neither field —
+**No Status or Category column, deliberately.** 602 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -839,7 +839,7 @@ would look like data. The tokens are what is shown.
 | D764 | D764 STAGE 0 RESULT — EFFECT, NO PRIZE: the CME bitcoin expiry window does reverse relative to other Fridays (Δρ −0.30,… | [PRE-REG](D764-STAGE-0-PRE-REG-the-bitcoin-expiry-window.md) · [RESULT](D764-STAGE-0-RESULT-reverts-faded-too-small.md) |
 | D765 | D765 STAGE 0 RESULT — NO DIRECTION on MHG and SIL: the China open is real size, but its first half hour does not carry… | [PRE-REG](D765-STAGE-0-PRE-REG-copper-and-silver-at-the-china-open.md) · [RESULT](D765-STAGE-0-RESULT-the-china-open-is-real-but-does-not-carry-on.md) |
 | D766 | D766 STAGE 0 RESULT — NO DIRECTION: after an extreme-funding night the CME bitcoin day does not lean against the crowd… | [PRE-REG](D766-STAGE-0-PRE-REG-crowded-leverage-and-the-mbt-day.md) · [RESULT](D766-STAGE-0-RESULT-no-direction-the-crowd-is-not-faded.md) |
-| D767 | D767 STAGE 0 PRE-REG — fade the unconfirmed China open: does a filter that keeps the opening moves the AUD and the othe… | [PRE-REG](D767-STAGE-0-PRE-REG-fade-the-unconfirmed-china-open.md) |
+| D767 | D767 STAGE 0 RESULT — MGC NOT ABOVE NULL, SIL and MHG NO MECHANISM: the unconfirmed China open does not reverse more; t… | [PRE-REG](D767-STAGE-0-PRE-REG-fade-the-unconfirmed-china-open.md) · [RESULT](D767-STAGE-0-RESULT-the-unconfirmed-open-does-not-reverse-more.md) |
 
 <!-- REGISTER:END -->
 

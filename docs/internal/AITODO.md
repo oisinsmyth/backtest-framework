@@ -14,15 +14,17 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 768.**
-  - **D767 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Pre-reg that, build and run it").
-    Fade the unconfirmed China open: D765's fade (09:00 → 09:30 Beijing, held to 15:00) on MGC, SIL and MHG.
-    - **The filter:** U = mean of F3 (the AUD not confirming) and F4 (the other metals not confirming), its
-      walk-forward top third. The secondary is D765's |x| third ∩ U.
-    - **The gates:** G1 the gross mechanism; N the exact rotation null of U; B the principal's balance tests (months
-      within 5 points, net > 0 outside Dec–Mar); G2 net t ≥ 2 with Holm over three, ex-best-two-years.
-    - **Context:** the oracle's winners sit evenly across months and years. In-sample, with the sign chosen from
-      D765; a pass earns only a confirmation slot.
-    - **Next:** the runner, committed before its run.
+  - **D767 (2026-10-02): MGC NOT ABOVE NULL; SIL and MHG NO MECHANISM** (Stage 0, prop book; the unconfirmed China
+    open). GO false.
+    - **The filter U** (the AUD and the other metals not confirming the metal's opening move) has NEGATIVE accuracy on
+      all three: ρ(U, gross) −0.042 / −0.033 / −0.028, AUC 0.47–0.48.
+    - **The AUD half carries the sign** (MGC −0.052): unconfirmed opens reverse slightly LESS. The metals half is
+      about 0.
+    - **The filtered fades net** −\$2.96 / −\$3.40 / −\$3.93, ranks 0.21–0.36 in the exact rotation null.
+    - **Only gold's unfiltered fade shows a gross mechanism** (+\$3.14, t 2.49).
+    - **The principal's balance design held:** month shares within 1.4–2.1 points. B2 failed on gold's
+      season (EST +\$4.90, EDT −\$6.72).
+    - Recommend closing the China-open line (D765, D767); the principal's call.
   - **D766 (2026-10-02): NO DIRECTION; CLOSED by the principal** ("Close this"; Stage 0, prop book). Crowded perpetual-swap leverage does not set the MBT
     day's direction.
     - **G1:** the contrarian mean is +$6.96 per MBT against a rotation p95 of +$10.27 (p 0.133; 840 sessions; L 65, S
