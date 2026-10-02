@@ -26,6 +26,15 @@
     - **The design:** a Fable 5.1 design merged with Opus's; Lens A's filter re-timed to completed bars, so nothing
       is read after the fill.
     - Not yet built or run.
+  - **D760 (2026-10-02): NO TEST.**
+    - **Absorption fires only 129 times** (ES 33, NQ 22, YM 74) against the 150-trade gate: 0.7–2.3% of windows.
+    - **V nets +$3.83** (clustered t 0.44), but one NQ FOMC trade (2023-02-01, +$592) is 120% of the net; ex-top 1%
+      −$0.76.
+    - **G2's pass is a mis-sized null:** rotated books fire about 700 trades; count-matched p95 0.209 against 0.159
+      (POST HOC).
+    - **Arming alone (A0) loses $4.39 a trade in-sample.**
+    - **YM signed-1m fixture built and validated.** Recommend closing the reverting-day line (D756/D757/D759/D760);
+      the principal's call.
   - **D760 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Arm a reversal style trade for Quiet
     long-gamma days then Require a Volume spike to validate the reversal. Or a order flow?"; chose order flow, with
     YM built).
