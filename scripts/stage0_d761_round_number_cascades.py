@@ -219,9 +219,10 @@ def _bars(cell: str) -> pd.DataFrame:
         b = pd.read_csv(io.BytesIO(FW.restrict_text(MAIN_DATA / "fixtures" / "fut_btc_1m.csv.gz", 1, SEAL)),
                         dtype={"day": str}, encoding="utf-8")
         b = b[(b["root"] == "BTC") & (b["day"] < SEAL)]
-        b = b.assign(ts=pd.to_datetime(b["ts_utc"], utc=True).astype("int64"), leg="front")
+        b = b.assign(ts=pd.to_datetime(b["ts_utc"], utc=True).dt.as_unit("ns").astype("int64"), leg="front")
     else:
         b = pd.read_parquet(TMP / f"raw_{c['root']}.parquet")
+    need(bool((b["ts"] > 10**18).all()), "units: a timestamp is not in nanoseconds")      # the D761 first-run bug
     need(bool((b["ts"] < SEAL_NS).all()), "seal: a bar on or after 2024")
     return b
 
@@ -243,11 +244,13 @@ def build_cell(cell: str) -> dict[str, Any]:
     days = np.unique(dn)
     # the basis per session, from the PRIOR session only
     basis = {}
+    basis_src = {"measured": 0, "carried": 0}
     if c["basis"] == "calendar":
         nx = b[b["leg"] == "next"].sort_values("ts")
         mn = to_wall(nx["ts"].to_numpy())
         dnn = trade_day(mn)
         nxv = np.rint(nx["close"].to_numpy(float) / u)
+        carry: dict[str, float] = {}
         need(bool(np.all(np.diff(mn) > 0)) and bool(np.all(np.diff(m) > 0)), "basis: minutes not strictly increasing")
         prev = None
         for d in days:
@@ -259,20 +262,28 @@ def build_cell(cell: str) -> dict[str, Any]:
                 common, fi, ni = np.intersect1d(m[fa0:fa1], mn[na0:na1], return_indices=True)
                 fc = con[fa0] if fa0 < len(m) else ""
                 cur = con[int(np.searchsorted(dn, d))]
-                if len(common) >= 10 and fc and fc == cur:              # a basis never spans a roll
-                    sp = float(np.median(nxv[na0:na1][ni] - C[fa0:fa1][fi]))
-                    near = dt.date.fromisoformat(day_str(d))
+                near = dt.date.fromisoformat(day_str(d))
+                if fc and fc == cur:                                    # a basis never spans a roll
                     e1, e2 = expiry_6e(fc, near), expiry_6e(next_6e(fc), near)
                     T1, T2 = (e1 - near).days, (e2 - near).days
-                    if T2 > T1 > 0:
-                        basis[int(d)] = int(round(sp * T1 / (T2 - T1)))
+                    if len(common) >= 10 and T2 > T1 > 0:
+                        sp = float(np.median(nxv[na0:na1][ni] - C[fa0:fa1][fi]))
+                        carry[fc] = sp / (T2 - T1)                      # units per day of carry
+                        basis[int(d)] = int(round(carry[fc] * T1))
+                        basis_src["measured"] += 1
+                    elif fc in carry and T1 > 0:
+                        # the next contract barely traded: carry the same contract's latest measured carry rate
+                        basis[int(d)] = int(round(carry[fc] * T1))
+                        basis_src["carried"] += 1
             prev = d
     elif c["basis"] == "binance":
         sp = pd.read_csv(MAIN_DATA / "fixtures" / "crypto_binance_15m_raw.csv.gz", encoding="utf-8",
                          usecols=["timestamp", "symbol", "close"])
         sp = sp[(sp["symbol"] == "BTCUSDT") & (sp["timestamp"] < SEAL)]
         st = pd.to_datetime(sp["timestamp"]).dt.tz_localize("UTC") + pd.Timedelta(minutes=15)   # the bar's close time
-        sm = to_wall(st.astype("int64").to_numpy())
+        sn = st.dt.as_unit("ns").astype("int64").to_numpy()
+        need(bool((sn > 10**18).all()), "units: a spot timestamp is not in nanoseconds")
+        sm = to_wall(sn)
         order = np.argsort(sm, kind="stable")
         sm, sv_all = sm[order], (sp["close"].to_numpy(float) / u)[order]
         prev = None
@@ -311,7 +322,7 @@ def build_cell(cell: str) -> dict[str, Any]:
     starts = np.searchsorted(dn, days, side="left")
     ends = np.searchsorted(dn, days, side="right")
     return {"cell": cell, "m": m, "dn": dn, "O": O, "H": H, "L": L, "C": C, "days": days, "starts": starts, "ends": ends,
-            "basis": basis, "roll": roll, "appr_r": appr_r, "appr_v": appr_v, "appr_r_canary": appr_r_canary,
+            "basis": basis, "basis_src": basis_src, "roll": roll, "appr_r": appr_r, "appr_v": appr_v, "appr_r_canary": appr_r_canary,
             "bar_r": bar_r, "bar_v": bar_v}
 
 
@@ -573,7 +584,7 @@ def run(lines: Path | None) -> int:
         X = build_cell(cell)
         save_cell(X)
         res["cells"][cell] = {"sessions": int(len(X["days"])), "sessions_with_basis": int(sum(int(d) in X["basis"] for d in X["days"])),
-                              "roll_excluded": len(X["roll"]), "bars": int(len(X["m"])),
+                              "roll_excluded": len(X["roll"]), "bars": int(len(X["m"])), "basis_src": X.get("basis_src"),
                               "basis_units_median": float(np.median(list(X["basis"].values()))) if X["basis"] else None}
         print(f"[{cell}] built: {res['cells'][cell]}", flush=True)
     # lag audit: the vectorised detector against the loop on a sample of sessions (round grid)
