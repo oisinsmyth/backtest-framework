@@ -23,7 +23,13 @@
     - **The window:** in-sample 2018–2023, MBT dollars at \$4.31.
     - **Why it was chosen:** a 2026-10-02 survey found metals, energy and FX intraday mined out (about 25 studies,
       nothing nets at micro size); BTC was the one untouched root.
-  - **D757 (2026-10-02): PRE-REGISTERED, Stage 0, prop book.** A reverting-day detector (the principal: "Long-Gamma
+  - **D757 (2026-10-02): NOT A DETECTOR.**
+    - **Impulse days are trend starts:** the RD rate is 0.23–0.25 against a 0.333 base.
+    - **Strong gamma adds +0.016 (p 0.26).**
+    - **The prize on reverting impulse days is +\$65 (p\* 0.296), but nothing finds them.**
+    - **A POST HOC pattern:** strong gamma WITHOUT an impulse reverts 0.375–0.406 on all four roots. Its own prize
+      and p\* are unknown; the held slice only, on the principal's word.
+  - **D757 (2026-10-02): PRE-REGISTERED, Stage 0, prop book (the entry below, kept).** A reverting-day detector (the principal: "Long-Gamma
     Days OR'd with large Impulse moves outside of predicted Vol"; then "AND, strong gamma", "Prior-20 realised").
     - **The detector:** GEX at the prior close in its top tercile AND \|z₁₀:₃₀\| ≥ 1.5.
     - **The trade:** a fade at 10:30; p\* measured on impulse days.
