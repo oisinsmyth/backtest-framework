@@ -13,8 +13,20 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 773** (reserved for the documentation session's Stage 0 on GLD creation/redemption flow and
-  MGC into the LBMA PM auction; then 774).
+- **Next free number: 774.**
+  - **D773 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Let's look at gold, what moves it
+    intraday?"; chose ETF flow into the PM auction and approved the download). GLD creation and redemption flow and the
+    London gold morning.
+    - **The signal:** yesterday's published change in GLD tonnes.
+    - **The window:** 08:00 London → the 15:00 London PM auction, on GC scored at one MGC ($5.93).
+    - **G1:** Spearman, exact rotation, two-sided.
+    - **G2:** the walk-forward top third of \|flow\|, gross ≥ $5.93 at NW t ≥ 2.
+    - **G3:** ≥ 5 of 8 years, positive ex-best year.
+    - **Reported:** the same-day diagnostic, the auction and fade windows, the US morning, the premium-to-NAV proxy
+      (D772 withdrew it at ρ 0.00), and the daylight-saving clock control.
+    - **The fixture:** `gld_holdings_daily.csv` (SPDR's official archive; 2,243 days 2015-06 → 2023-12; 2024+ dropped
+      unread). Flow AR(1) is +0.23.
+    - **Next:** the runner, with a GC extraction, committed before its one run.
   - **D772 (2026-10-02): LEADS — new reversion predictors from two debating agent pairs** (prop book; nothing
     pre-registered, nothing closed or admitted). Records in `docs/research/reversion-lead-hunt/`, evidence in
     `data/lead_hunt_d772/`.

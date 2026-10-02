@@ -1,0 +1,27 @@
+{
+ "built_utc": "2026-10-02T19:54:36Z",
+ "builder": "scripts/build_gld_holdings.py",
+ "source": "https://api.spdrgoldshares.com/api/v1/historical-archive?product=gld&exchange=NYSE&lang=en (US_GLD_Archive_EN.xlsx)",
+ "raw_sha256": "5cff24592bf949c0293556ea4f4feb396526ff2b5b346883a05cccb54a62c2e6",
+ "rows": 2243,
+ "first": "2015-06-01",
+ "last": "2023-12-29",
+ "dropped_2024_or_later_unread": 719,
+ "dropped_before_2015_06": 2743,
+ "columns": {
+  "date": "Date",
+  "close_usd": "Closing Price",
+  "oz_per_share": "Ounces of Gold per Share",
+  "nav_per_share_1030": "NAV/Share at 10:30am NYT",
+  "premium_pct": "Premium/Discount of GLD Mid Point vs Indicative Value of GLD at 4:15pm NYT",
+  "share_volume": "Daily Share Volume",
+  "total_oz": "Total Ounces of Gold in the Trust",
+  "tonnes": "Tonnes of Gold",
+  "nav_total_usd": "Total Net Asset Value in the Trust"
+ },
+ "what_bites": [
+  "tonnes / total_oz are the trust's holdings as of each date; the daily change is net creations minus redemptions (and the small daily sponsor-fee accrual on ounces per share)",
+  "the publication time of a date's holdings is not stated in the file; a study must lag it a full day before trading on it",
+  "blank cells are holidays or missing values"
+ ]
+}
