@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 578 of these records carry neither field —
+**No Status or Category column, deliberately.** 579 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -827,7 +827,7 @@ would look like data. The tokens are what is shown.
 | D752 | D752 STAGE 0 RESULT — NOTHING on both brackets: YM's open reversal does not carry a fade, and the high-win-rate bracket… | [PRE-REG](D752-STAGE-0-PRE-REG-the-ym-open-reversal-fade.md) · [RESULT](D752-STAGE-0-RESULT-the-ym-fade-is-nothing.md) |
 | D753 | D753 STAGE 0 RESULT — SIGNAL, NOT THE LINES: the channel level rule on daily futures clears its timing null narrowly (p… | [PRE-REG](D753-STAGE-0-PRE-REG-the-channel-level-rule-on-daily-futures.md) · [RESULT](D753-STAGE-0-RESULT-signal-not-the-lines.md) |
 | D754 | D754 STAGE 0 RESULT — (A) NOT SUPPORTED: on the pre-registered single-variable gate, the NQ book still earns in calm ma… | [PRE-REG](D754-STAGE-0-PRE-REG-calm-bull-abstention-and-charm-drift.md) · [RESULT](D754-STAGE-0-RESULT-calm-is-not-a-loss-and-no-charm-drift.md) |
-| D755 | D755 STAGE 0 PRE-REG — the ECB press-conference drift on M6E: does EUR/USD keep moving through the press conference in… | [PRE-REG](D755-STAGE-0-PRE-REG-the-ecb-press-conference-drift.md) |
+| D755 | D755 STAGE 0 RESULT — NOTHING: ECB press-conference hours are three times an ordinary Thursday's on M6E, but the statem… | [PRE-REG](D755-STAGE-0-PRE-REG-the-ecb-press-conference-drift.md) · [RESULT](D755-STAGE-0-RESULT-ecb-hours-are-big-not-directional.md) |
 | D756 | D756 STAGE 0 PRE-REGISTRATION — mean-reverting days on the index micros: the prize if they were known, then whether any… | [PRE-REG](D756-STAGE-0-PRE-REG-mean-reverting-days.md) |
 
 <!-- REGISTER:END -->
