@@ -128,6 +128,21 @@ one inferred column:** no per-meeting page states it, so it is the ECB's publish
 14:15 CET from 2022-07-21, per the ECB release of 27 June 2022), and every row's `time_source` says so.
 Exclusions, the two deposit-rate-only cuts and the verification pass are in `ecb_meetings.meta.json`.
 
+## `china_exchange_holidays.csv` (D765)
+
+141 weekday closures of the Shanghai exchanges, 2016-01-01 → 2023-10-06, in 53 holiday blocks: Spring Festival,
+Golden Week and the shorter national holidays.
+- **The source:** the `precomputed_shanghai_holidays` list of the open-source `exchange_calendars` XSHG calendar,
+  read as source text through the GitHub API at commit `20ed4736`. Nothing was installed.
+- **The assumption:** SHFE closes on the same national-holiday weekdays as the SSE; both follow the State Council's
+  annual notice.
+- **Checked against official notices for three years:**
+  - 2018, with its bridge days;
+  - 2020, the COVID-extended Spring Festival (SHFE reopened 2020-02-03);
+  - 2023.
+- The details are in `china_exchange_holidays.meta.json`.
+- **Its use:** the China-closed control for the 09:00 Beijing open. CME trades; China does not.
+
 ## Not this file
 
 `data/macro_release_calendar.json` is a different, older artifact (recorded 2026-09-12) and is read

@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 596 of these records carry neither field —
+**No Status or Category column, deliberately.** 597 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -837,6 +837,7 @@ would look like data. The tokens are what is shown.
 | D762 | D762 STAGE 0 RESULT — the cash close barely reverses: NO REVERSAL on ES, NQ and RTY; YM reverses (ρ −0.084) but no more… | [PRE-REG](D762-STAGE-0-PRE-REG-does-the-cash-close-reverse.md) · [RESULT](D762-STAGE-0-RESULT-the-close-barely-reverses.md) |
 | D763 | D763 STAGE 0 RESULT — NO EFFECT on every root: the expiry open does not reverse. If anything it continues, and expiry-d… | [PRE-REG](D763-STAGE-0-PRE-REG-the-expiry-open-fade.md) · [RESULT](D763-STAGE-0-RESULT-the-expiry-open-does-not-reverse.md) |
 | D764 | D764 STAGE 0 RESULT — EFFECT, NO PRIZE: the CME bitcoin expiry window does reverse relative to other Fridays (Δρ −0.30,… | [PRE-REG](D764-STAGE-0-PRE-REG-the-bitcoin-expiry-window.md) · [RESULT](D764-STAGE-0-RESULT-reverts-faded-too-small.md) |
+| D765 | D765 STAGE 0 PRE-REG — copper and silver at the China open: does the first half hour after Shanghai's 09:00 open on MHG… | [PRE-REG](D765-STAGE-0-PRE-REG-copper-and-silver-at-the-china-open.md) |
 
 <!-- REGISTER:END -->
 

@@ -1,0 +1,34 @@
+{
+ "built": "2026-10-02",
+ "record": "D765 (the China open on MHG and SIL): the holiday control, built before the pre-registration's runner",
+ "file": "data/calendar/china_exchange_holidays.csv",
+ "sha256": "f3e3fa84aac19e0714de3a249a663530928cdba9370e15b1e32a7e2e20cccefa",
+ "contents": "weekday dates on which the Shanghai exchanges (SSE; SHFE keeps the same national-holiday closures) did not trade; no price",
+ "span": {
+  "from": "2016-01-01",
+  "to": "2023-10-06"
+ },
+ "rows": 141,
+ "rows_per_year": {
+  "2016": 17,
+  "2017": 16,
+  "2018": 18,
+  "2019": 17,
+  "2020": 19,
+  "2021": 18,
+  "2022": 18,
+  "2023": 18
+ },
+ "blocks": 53,
+ "source": {
+  "primary": "https://github.com/gerrymanoim/exchange_calendars/blob/20ed473663277e15285d8433c0c80b580aa4c4c8/exchange_calendars/exchange_calendar_xshg.py",
+  "how": "the precomputed_shanghai_holidays list of exchange_calendars' XSHG calendar, read as source text via the GitHub API (contents endpoint, commit 20ed4736, 2026-01-07); nothing installed",
+  "assumption": "SHFE's day session closes on the same national-holiday weekdays as the SSE; both follow the State Council's annual holiday notice"
+ },
+ "verification": {
+  "2020": "the Spring Festival closure extended to 2020-01-31 (State Council, 27 Jan 2020); SHFE, INE and ZCE reopened 2020-02-03 (Yicai Global, 'Commodity Exchanges in China Postpone Trading for One More Day'; ISDA guidance of 3 Feb 2020). The list has 01-24, 01-27..01-31.",
+  "2023": "State Council 2023 notice: Dragon Boat 22-24 June; Mid-Autumn and National Day 29 Sep - 6 Oct (china-briefing.com, 'China Public Holiday 2023 Schedule'). The list has 06-22, 06-23, 09-29, 10-02..10-06.",
+  "2018": "State Council notice of 30 Nov 2017: Spring Festival 15-21 Feb, Labour Day 29 Apr - 1 May, National Day 1-7 Oct; New Year 30 Dec 2018 - 1 Jan 2019 (china-briefing.com, 'China's 2018 Holiday Schedule'). The list has 02-15, 02-16, 02-19..02-21, 04-30, 05-01, 10-01..10-05, 12-31."
+ },
+ "not_covered": "SHFE night-session suspensions before holidays (not needed: the control is the 09:00 Beijing day open); weekend make-up workdays (exchanges do not trade on weekends)"
+}

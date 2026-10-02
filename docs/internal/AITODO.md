@@ -13,7 +13,22 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 765.**
+- **Next free number: 766.**
+  - **D765 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets look at copper and silver at the
+    china open?"; "Yes to all three questions"). Copper and silver at the China open.
+    - **The question:** does MHG's / SIL's first half hour after 09:00 Beijing (x) carry on or reverse into the
+      SHFE close at 15:00 Beijing (y)?
+    - **The trade:** the walk-forward top third of |x|, from 2016 to 2023.
+    - **The checks:**
+      - C1 size;
+      - C2 two-sided ρ against the exact rotation, Holm over the two cells;
+      - C3 China's open: the holiday |x| drop, and the daylight-saving ET-fixed placebo (> 2 SE);
+      - C4 the Tokyo-open and post-break placebos;
+      - C5 net t ≥ 2, Holm, ex-best-two-years.
+    - **Reported:** the US-afternoon catch-up, MGC, and 6A.
+    - **The calendar** `data/calendar/china_exchange_holidays.csv` was built: 141 closures.
+    - **The design:** Fable and Opus in parallel, merged (§9).
+    - **Next:** the extraction plus the runner, committed before its run.
   - **D764 (2026-10-02): EFFECT, NO PRIZE.** The CME bitcoin expiry window reverses relative to other Fridays.
     - **E1:** Δρ −0.296 (ρ_E −0.18 against ρ_C +0.12; p 0.023 on the full rotation).
     - **E2:** the fade grosses $2.96 against $4.31.
