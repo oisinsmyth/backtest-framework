@@ -137,3 +137,10 @@ priced in a single print. The tradable part would have to come before publicatio
   - the Chinese holiday calendar (the buyer absent).
 - **POST HOC, not a finding:** corn sold to China by name, and the large sales, fell on the day (n 55 and 34). It would
   need its own pre-registration and a low prior.
+
+## 7. CLOSED (2026-10-02)
+
+**The principal: "Close that construction. Lets continue on this demand economy line."**
+- The USDA daily-sales construction is closed for the prop book.
+- The demand-economy line stays open.
+- The fixture `usda_daily_export_sales.csv` remains available.
