@@ -13,7 +13,16 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 758.**
+- **Next free number: 759.**
+  - **D758 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Lets do #5"; "Test the weekend gap,
+    assume it does allow MBT"). The CME bitcoin weekend gap on one MBT: fade G = P(Sun 18:05 ET) − Friday's close
+    from 18:06 to Monday 09:30 ET.
+    - **The readings:** FILL, CONTINUATION or NOTHING.
+    - **The mechanism read:** a touch test, fill level against the mirror level.
+    - **The controls:** an enumerated sign rotation, and Mon–Thu reopens after the daily halt as placebos.
+    - **The window:** in-sample 2018–2023, MBT dollars at \$4.31.
+    - **Why it was chosen:** a 2026-10-02 survey found metals, energy and FX intraday mined out (about 25 studies,
+      nothing nets at micro size); BTC was the one untouched root.
   - **D757 (2026-10-02): PRE-REGISTERED, Stage 0, prop book.** A reverting-day detector (the principal: "Long-Gamma
     Days OR'd with large Impulse moves outside of predicted Vol"; then "AND, strong gamma", "Prior-20 realised").
     - **The detector:** GEX at the prior close in its top tercile AND \|z₁₀:₃₀\| ≥ 1.5.
