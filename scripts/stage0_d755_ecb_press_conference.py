@@ -257,7 +257,7 @@ def run(lines: Path | None) -> int:
     # placebo Thursdays: the most recent meeting's Frankfurt clock
     cal_sorted = cal.sort_values("date")
     plc = []
-    for d in X["days"]:
+    for d in map(str, X["days"]):
         if not (LO <= d <= HI) or d in ecb_days or pd.Timestamp(d).weekday() != 3:
             continue
         prev = cal_sorted[cal_sorted["date"] < d]
