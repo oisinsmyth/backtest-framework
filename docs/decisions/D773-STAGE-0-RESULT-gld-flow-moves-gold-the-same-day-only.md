@@ -108,3 +108,10 @@
 **What follows:**
 - No trading pre-registration in-sample.
 - **The principal's call:** close the GLD-flow construction.
+
+## 6. CLOSED (2026-10-02)
+
+**The principal: "Close that".**
+- The GLD creation/redemption-flow construction is closed for the prop book.
+- The fixture `gld_holdings_daily.csv` remains available.
+- The gold line continues with a two-agent mechanism debate.

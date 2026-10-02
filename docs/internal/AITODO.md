@@ -24,7 +24,7 @@
     - **Ungated:** positive in volatility units in 6 of 7 years, but never \$4 in dollars outside 2022.
     - **Against the principal's test:** the volatility-adjusted return holds weakly, and the win rate is not even. A
       volatility-spike book. Nothing proposed; whether to pre-register it is the principal's call.
-  - **D773 (2026-10-02): NO DIRECTION** (Stage 0, prop book). GLD flow moves gold the same day only.
+  - **D773 (2026-10-02): NO DIRECTION; CLOSED by the principal** (Stage 0, prop book). GLD flow moves gold the same day only.
     - **The premise holds:**
       - flow AR(1) +0.26;
       - the same-day flow against the London morning, ρ +0.126 (look-ahead, about 6 SE).
@@ -33,7 +33,7 @@
       - the top-third trade grosses −$1.92 and nets −$7.85 per MGC;
       - the auction, fade and US-morning windows are all within ±0.04.
     - **The London PM auction has now been tried with price (D751), premium (D772) and metal (D773).**
-    - **The principal's call:** close the construction.
+    - **CLOSED:** the GLD-flow construction is closed; the gold line continues.
   - **D773 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Let's look at gold, what moves it
     intraday?"; chose ETF flow into the PM auction and approved the download). GLD creation and redemption flow and the
     London gold morning.
