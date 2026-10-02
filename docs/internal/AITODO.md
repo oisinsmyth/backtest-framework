@@ -16,7 +16,8 @@
 - **Next free number: 778.**
   - **D777 RESULT (2026-10-02): MNQ CONCENTRATED; MES, M2K, MYM NO EFFECT; GO false. CLOSED by the principal ("Close
     D777"); the mechanism finding stands as a measurement.**
-    - **MNQ:** +$24.99 gross / +$20.92 net (t 2.41 gross, 2.02 net), exact rotation rank 0.998, b_m −0.39 (t −3.25), G2 pass. It fails
+    - **MNQ:** +\$24.99 gross / +\$20.92 net (t 2.41 gross, 2.02 net), exact rotation rank 0.998, b_m −0.39
+      (t −3.25), G2 pass. It fails
       Y by one year on each branch (2017, 2020).
     - **M2K:** t 1.89 (it passes N and M). **MYM:** t 1.30. No confirmable root passes G1.
     - **The effect is real on every root** (rank 0.97–0.998, a placebo of 0). It is in large post-close FALLS, held
