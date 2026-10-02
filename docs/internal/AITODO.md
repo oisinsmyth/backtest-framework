@@ -13,7 +13,16 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 767.**
+- **Next free number: 768.**
+  - **D767 (2026-10-02): PRE-REGISTERED, Stage 0, prop book** (the principal: "Pre-reg that, build and run it").
+    Fade the unconfirmed China open: D765's fade (09:00 → 09:30 Beijing, held to 15:00) on MGC, SIL and MHG.
+    - **The filter:** U = mean of F3 (the AUD not confirming) and F4 (the other metals not confirming), its
+      walk-forward top third. The secondary is D765's |x| third ∩ U.
+    - **The gates:** G1 the gross mechanism; N the exact rotation null of U; B the principal's balance tests (months
+      within 5 points, net > 0 outside Dec–Mar); G2 net t ≥ 2 with Holm over three, ex-best-two-years.
+    - **Context:** the oracle's winners sit evenly across months and years. In-sample, with the sign chosen from
+      D765; a pass earns only a confirmation slot.
+    - **Next:** the runner, committed before its run.
   - **D766 (2026-10-02): NO DIRECTION; CLOSED by the principal** ("Close this"; Stage 0, prop book). Crowded perpetual-swap leverage does not set the MBT
     day's direction.
     - **G1:** the contrarian mean is +$6.96 per MBT against a rotation p95 of +$10.27 (p 0.133; 840 sessions; L 65, S
