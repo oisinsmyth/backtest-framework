@@ -1,0 +1,168 @@
+{
+ "n_vault": 133,
+ "draws": 4000,
+ "g0_g1": {
+  "all": {
+   "trades": 280,
+   "mean_gross": 15.84,
+   "pass": {
+    "100%": 0.515,
+    "75%": 0.337,
+    "50%": 0.195,
+    "25%": 0.105,
+    "0%": 0.044
+   }
+  },
+  "2018-19": {
+   "trades": 78,
+   "mean_gross": 6.9,
+   "pass": {
+    "100%": 0.272,
+    "75%": 0.161,
+    "50%": 0.089,
+    "25%": 0.038,
+    "0%": 0.016
+   }
+  },
+  "2020-23": {
+   "trades": 202,
+   "mean_gross": 19.3,
+   "pass": {
+    "100%": 0.579,
+    "75%": 0.396,
+    "50%": 0.234,
+    "25%": 0.118,
+    "0%": 0.055
+   }
+  }
+ },
+ "full_gate_windows": [
+  {
+   "from": "2018-04-25",
+   "to": "2020-06-17",
+   "trades": 133,
+   "mean_net": 15.47,
+   "t_net": 1.73,
+   "rotation_p95": 12.32,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2018-10-26",
+   "to": "2020-11-02",
+   "trades": 133,
+   "mean_net": 17.73,
+   "t_net": 1.92,
+   "rotation_p95": 12.54,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2018-12-31",
+   "to": "2021-03-16",
+   "trades": 133,
+   "mean_net": 22.1,
+   "t_net": 2.31,
+   "rotation_p95": 13.93,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2019-05-07",
+   "to": "2021-05-24",
+   "trades": 133,
+   "mean_net": 23.95,
+   "t_net": 2.44,
+   "rotation_p95": 14.69,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2019-08-27",
+   "to": "2021-11-23",
+   "trades": 133,
+   "mean_net": 22.69,
+   "t_net": 2.24,
+   "rotation_p95": 16.78,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2020-01-13",
+   "to": "2022-01-25",
+   "trades": 133,
+   "mean_net": 26.87,
+   "t_net": 2.54,
+   "rotation_p95": 18.66,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2020-03-12",
+   "to": "2022-05-13",
+   "trades": 133,
+   "mean_net": 20.24,
+   "t_net": 1.87,
+   "rotation_p95": 15.61,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "verdict": "PASS"
+  },
+  {
+   "from": "2020-04-07",
+   "to": "2022-09-27",
+   "trades": 133,
+   "mean_net": 11.52,
+   "t_net": 1.2,
+   "rotation_p95": 15.08,
+   "G0": true,
+   "G1": false,
+   "G2": true,
+   "verdict": "UNRESOLVED"
+  },
+  {
+   "from": "2020-06-03",
+   "to": "2023-03-16",
+   "trades": 133,
+   "mean_net": 9.33,
+   "t_net": 0.94,
+   "rotation_p95": 15.58,
+   "G0": true,
+   "G1": false,
+   "G2": false,
+   "verdict": "UNRESOLVED"
+  },
+  {
+   "from": "2020-09-23",
+   "to": "2023-12-14",
+   "trades": 133,
+   "mean_net": 6.19,
+   "t_net": 0.63,
+   "rotation_p95": 14.51,
+   "G0": true,
+   "G1": false,
+   "G2": false,
+   "verdict": "UNRESOLVED"
+  }
+ ],
+ "full_gate_summary": {
+  "PASS": 7,
+  "UNRESOLVED": 3,
+  "FAIL": 0
+ },
+ "independent_windows": 2.11,
+ "wall_s": 17.2
+}
