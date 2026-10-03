@@ -162,3 +162,43 @@
   book, with the 2024+ slice as its only clean test. It would face the SHFE auction change (95 reads −0.008 on the 132
   post-auction sessions here, too few to mean anything).
 - **Whether to spend data on it is the principal's call.**
+
+## Addendum (2026-10-03): the primary book should have been passive. The principal's ruling for this line
+
+*The principal: "why is the taker there? surely we should use a passive entry?", then "Yes, append the addendum and
+make passive primary".*
+
+- **Why taker was primary:** the analyst carried over the filter debate's convention without testing it against the
+  account.
+  - The debate scored its requirement 5 and most of its bars on D767's taker pool.
+  - The prop book is fully algorithmic, so resting at the 09:30 touch is executable. D770 already models it.
+  - Taker costs \$5.93 a round trip against \$3.03 passive, on a trade that grosses \$3–8. The taker primary mostly
+    measured a cost this book would not pay.
+- **The result is unchanged under a passive primary.** This is computed from the committed JSON, with no new outcome
+  read:
+
+  | | passive ρ (rotation p95) | third: net t | passive reading |
+  |---|---|---|---|
+  | 2 B-US (post hoc) | +0.044 (+0.047) | 1.13 | NO EFFECT |
+  | 21 A-INVAUD (post hoc) | +0.043 (+0.044) | 1.17 | NO EFFECT |
+  | 3 A-PREM | +0.052 (+0.039) | 0.31 | BELOW THE BAR |
+  | 95 A-CLIENTELE | +0.056 (+0.049) | **1.81** | BELOW THE BAR |
+  | 117 A-TRANSIENT | +0.023 (+0.047) | −0.24 | NO EFFECT |
+
+  - **Holm on the passive rotation p** of the three unread candidates: 3 is 0.053, 95 is 0.057 and 117 is 0.212.
+    None is at 0.05.
+  - G2 fails on every candidate, so there is still no nomination, under either execution.
+- **The original order stands.** The taker primary is the registered reading. Swapping it after seeing both would be
+  selection, so this addendum states the passive reading beside it rather than in place of it.
+  - Under a passive primary, 95 would have been the headline: ρ above its p95, +\$4.80 net, 7 of 7 years, and net t
+    1.81 against G2's 2.
+- **The ruling, standing from today: every new China-open fade pre-registration takes D770's passive book as its
+  primary.**
+  - That is: rest at the 09:30 touch; fill on a trade-through within 30 minutes; exit at the 15:00 touch; cost \$3.00
+    plus D770's MGC exit adjustment; filled sessions only.
+  - The taker book is reported beside it as the fill-failure bound.
+  - **Two caveats travel with it:**
+    - D770's adverse selection: the 8% of sessions that never fill are the best ones, so passive recovers about
+      two-thirds of the crossing, not the edge;
+    - the passive cost is a model: GC's queue with an MGC adjustment from 394 sessions. It is not traded MGC fills.
+  - The forward recorder's MGC tape is the way to check it.
