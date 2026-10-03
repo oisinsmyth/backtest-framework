@@ -20,8 +20,13 @@
     - **The window:** 2024-01-01 → 2026-09-18, with C1 counted only from 2025-03-01.
     - **The gates:** book net > 0, net > 0 in each half, and hurdle P.
     - **A forward read** of the same members over 2026-09-21 → 2027-09-30 confirms the book or retires it.
-    - **Next:** the runner (`--selftest`, a once-only in-sample `--rehearse`, `--freeze`, `--vault`, `--forward`), then
-      the freeze before the joint run.
+    - **Runner built (c3bf19b7) and rehearsed (a5c75509):** `scripts/vault_d792_prop_book.py`.
+      - All five members' known answers are reproduced, and all six upstream freezes verify.
+      - In-sample, all five members (2018-05 → 2023): net \$45,757, Sharpe 2.03, reading ADMITTED.
+      - **But one micro each breaches the \$2,000 trailing barrier 4 times** (max DD \$2,817); hurdle P passes anyway (P3,
+        P4).
+      - D737 carries 57% of the P&L, and 2022 41%.
+    - **Next:** the freeze, on the principal's word, before the joint run.
   - **Numbers renumbered 2026-10-03:** another session (the China-open line) committed D786 and D787 to main first.
     The abstention oracle and signal strength became **D788** and **D789**; their scripts and data keep the old numbers.
   - **THE ABSTENTION FORMATION IS PAUSED (2026-10-03, the principal: "Record and pause").**
