@@ -13,7 +13,13 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 786.**
+- **Next free number: 787.**
+  - **D786 DIAG (2026-10-03): PRE-REGISTERED, the abstention oracle across six books** (the principal: "Start on the
+    abstention principle"; in-sample formation first; all four families; the index books and NG).
+    - **The books:** D737, NQ F2, C1, D776, L4 and NG (D723), 2016–2023, at micro.
+    - **The states:** A, own payoff versus cost; B, self-referential trailing net; C, mechanism-typed; D, shared
+      volatility and trend.
+    - **Descriptive only.** The oracle is shown to the principal before any rule is designed together.
   - **D785 (2026-10-03): D776's forward ledger built, proved in-sample, and run** (`scripts/forward_d776_ledger.py`).
     - It needs no history, so it runs now.
     - **The proofs:**
