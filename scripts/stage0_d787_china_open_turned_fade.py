@@ -45,7 +45,7 @@ TAKER_COST = 5.93
 WINTER = (12, 1, 2, 3)
 AUCTION_FROM = "2023-05-26"
 VOL_N, VOL_MIN = 60, 40
-WORKERS, AUDIT_N, SEED = 14, 40, 787
+WORKERS, AUDIT_N, SEED = 8, 40, 787      # 14 ran out of memory on the tape reads (first launch, before any output)
 
 
 class D787Error(AssertionError):
