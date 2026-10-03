@@ -1,7 +1,9 @@
-# D786 DIAG RESULT — no state is a candidate by the declared rule, but one family points the same way in all six books, with and without 2020/2022: a book's own projected payoff against its cost. The self-referential gate and the shared trend do not, and volatility level is mostly 2020/2022
+# D788 DIAG RESULT — no state is a candidate by the declared rule, but one family points the same way in all six books, with and without 2020/2022: a book's own projected payoff against its cost. The self-referential gate and the shared trend do not, and volatility level is mostly 2020/2022
+
+> **Renumbered from D786 on 2026-10-03.** Another session committed the China-open five-filter read (D786-STAGE-0-...) to main under D786 first. Commit messages, the script names (`scripts/diag_d786_*.py`) and the data outputs (`data/diag_d786_*.json`) keep the old number.
 
 *2026-10-03. One completed run of `scripts/diag_d786_abstention_oracle.py --run` (273 seconds).*
-- **The order:** the [pre-registration](D786-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md) (`510fd96e`)
+- **The order:** the [pre-registration](D788-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md) (`510fd96e`)
   came before the runner (`8df27240`).
 - **The first launch stopped on its own guard while loading the books,** before any profile was computed. D737's
   gross − net differed in the sixth decimal (float noise). The fix, rounding to 4 dp, is `a0550bab`.
@@ -89,7 +91,7 @@
 ## A1 (2026-10-03) — for the index books, family A's dollar form is the price level: it skips nothing from 2021 on
 
 *The principal chose: both forms side by side, a fixed 2 × cost bar, confirmed on the joint vault. Before that
-pre-registration, one in-sample check (already-read data, D786's own functions; scratch
+pre-registration, one in-sample check (already-read data, D788's own functions; scratch
 `d786_skip_by_year.py`).*
 
 **The dollar form's skip share by year** (trades whose projected payoff was below 2 × the round trip):
@@ -105,7 +107,7 @@ pre-registration, one in-sample check (already-read data, D786's own functions; 
 - **Every skip falls in the early, low-price years.**
   - The projection is β × σ\$, and σ\$ is a dollar volatility, so it rose with the index's price.
   - Against a fixed micro round trip, the dollar form becomes "trade from the year the dollar moves outgrew the fee".
-- **So D786 §2's consistency across the index books is the price level, not a state that comes and goes.** It
+- **So D788 §2's consistency across the index books is the price level, not a state that comes and goes.** It
   matches the repo's standing finding that a fixed fee binds at low price × volatility.
   - In NG (§2), the skips are spread across years, and D649 (slot 8) already tests that form in the vault.
 - **On the vault the dollar form cannot be tested.** At 2024–2026 index prices it would skip nothing; its take/skip

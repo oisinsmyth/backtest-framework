@@ -1,4 +1,4 @@
-"""Scratch, in-sample (already read by D786): family A's skip share by year per index book, dollar form, to see
+"""Scratch, in-sample (already read by D788, formerly D786): family A's skip share by year per index book, dollar form, to see
 whether the dollar bar still skips anything at late-sample prices (the vault's NQ is higher still)."""
 import sys
 from pathlib import Path

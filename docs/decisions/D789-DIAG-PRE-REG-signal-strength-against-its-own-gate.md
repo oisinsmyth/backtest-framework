@@ -1,17 +1,19 @@
-# D787 DIAG PRE-REG — signal strength against its own gate: do the six books earn more on the trades whose trigger is far past its threshold than on those just over it?
+# D789 DIAG PRE-REG — signal strength against its own gate: do the six books earn more on the trades whose trigger is far past its threshold than on those just over it?
 
-*2026-10-03. The principal, after D786: "Signal strength vs its own gate".*
+> **Renumbered from D787 on 2026-10-03.** Another session committed the China-open turned fade (D787-STAGE-0-...) to main under D787 first. Commit messages, the script names (`scripts/diag_d787_*.py`) and the data outputs (`data/diag_d787_*.json`) keep the old number.
+
+*2026-10-03. The principal, after D788: "Signal strength vs its own gate".*
 
 - **What it is:** step 2 of the abstention-principle formation. It is descriptive and in-sample (already read),
-  like [D786](D786-DIAG-RESULT-the-abstention-oracle-across-six-books.md). No filter is built and nothing is gated or
+  like [D788](D788-DIAG-RESULT-the-abstention-oracle-across-six-books.md). No filter is built and nothing is gated or
   promoted.
 - **The candidate principle:** a strategy trades only when its own trigger is well past the threshold that fires it.
   - It is general (one rule for every book), but the input is each book's own signal.
-  - It is a property of the trade, not of the market. D786 found no market state that survives without 2020/2022.
+  - It is a property of the trade, not of the market. D788 found no market state that survives without 2020/2022.
 - **The order:** this record is committed before the runner exists. The output is shown to the principal before
   any rule is designed.
 
-## 1. The books and their trigger magnitudes (2016–2023, as D786; each known answer reproduced first)
+## 1. The books and their trigger magnitudes (2016–2023, as D788; each known answer reproduced first)
 
 | book | trigger magnitude m (larger = further past the gate) | the book's gate | source |
 |---|---|---|---|
@@ -34,8 +36,8 @@
   - strength terciles (n, mean net ± 2 SE, win, total, share of losers);
   - the strong half against the weak half (strength ≥ 0.5 against < 0.5), with their spread and z;
   - all of it again without 2020 and 2022;
-  - **the weak half's share by year,** the calendar check that exposed family A (D786 A1/A2);
-  - **the correlation of strength with D786's NQ volatility percentile,** to show whether strength is volatility in
+  - **the weak half's share by year,** the calendar check that exposed family A (D788 A1/A2);
+  - **the correlation of strength with D788's NQ volatility percentile,** to show whether strength is volatility in
     disguise.
 - **The cross-book table:** the strong-minus-weak spread and its z for all six books, with and without 2020/2022.
 - **The reading rules (declared, not gates):**
@@ -48,7 +50,7 @@
 
 ## 3. Runner assertions
 
-- **Each book's known answer first** (D786's counts; D737 1,699 trades on D735's cell).
+- **Each book's known answer first** (D788's counts; D737 1,699 trades on D735's cell).
 - **Strength uses earlier trades only:** an explicit loop recomputes it for 20 sampled trades per book.
 - **The magnitude matches its trade:** for 20 sampled trades per book, m is re-derived from the book's own row or
   frame.

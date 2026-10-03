@@ -1,5 +1,5 @@
-"""D786 DIAG: the abstention oracle across six books (descriptive; no filter, no gate).
-Spec: docs/decisions/D786-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md.
+"""D788 DIAG (renumbered from D786; this file keeps its old name): the abstention oracle across six books (descriptive; no filter, no gate).
+Spec: docs/decisions/D788-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md.
 
     uv run --no-sync python scripts/diag_d786_abstention_oracle.py --selftest
     uv run --no-sync python scripts/diag_d786_abstention_oracle.py --run
@@ -30,7 +30,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "scripts"))
 
-SPEC = REPO / "docs" / "decisions" / "D786-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md"
+SPEC = REPO / "docs" / "decisions" / "D788-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md"
 OUT = REPO / "data" / "diag_d786_abstention_oracle.json"
 LO, HI = "2016-01-01", "2023-12-31"
 BOOKS = ("D737", "NQ_F2", "C1", "D776", "L4", "NG")

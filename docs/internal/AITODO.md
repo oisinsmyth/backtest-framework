@@ -13,16 +13,18 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 788.**
+- **Next free number: 791** (D790 is claimed by the China-open session for its anatomy exploration, to commit on main).
+  - **Numbers renumbered 2026-10-03:** another session (the China-open line) committed D786 and D787 to main first.
+    The abstention oracle and signal strength became **D788** and **D789**; their scripts and data keep the old numbers.
   - **THE ABSTENTION FORMATION IS PAUSED (2026-10-03, the principal: "Record and pause").**
-    - In-sample (D786, D787 and their addenda), no general principle across the six books.
+    - In-sample (D788, D789 and their addenda), no general principle across the six books.
     - **Every cross-book pattern was one of three things:**
-      - the price level (family A; D776's and L4's strength in points: D787 A1);
+      - the price level (family A; D776's and L4's strength in points: D789 A1);
       - 2020/2022 (shared volatility and trend);
       - a book's own gate tightened (NQ F2's tier, NG's flow, which D649 already uses).
     - **Nothing was filed for the vault.** Revisit after the joint run, when the books' vault trades are new
       evidence.
-  - **D787 DIAG RESULT (2026-10-03): not a candidate by the declared rule.** Without 2020/22 the sign holds in
+  - **D789 DIAG RESULT (2026-10-03): not a candidate by the declared rule.** Without 2020/22 the sign holds in
     four of six books, not five.
     - Strength sorts the size-triggered books: NQ F2 (a price-free tier; the weak half −\$12.64 without 2020/22, z
       2.04) and NG (z 4.85).
@@ -30,24 +32,24 @@
       re-check is owed.
     - It is absent for D737 (a first crossing) and C1 (a rank of quiet).
     - Next is the principal's design.
-  - **D787 DIAG (2026-10-03): PRE-REGISTERED, signal strength against its own gate** (the principal's choice after
-    D786).
+  - **D789 DIAG (2026-10-03): PRE-REGISTERED, signal strength against its own gate** (the principal's choice after
+    D788).
     - **Strength:** each trade's trigger magnitude as a percentile of the book's own earlier trades.
     - **The six books' magnitudes:** D737 |Z|, F2 tc, C1 −ctier, D776 |x|, L4 |c|, NG |I|.
     - **Profiles:** strong against weak, with and without 2020/22, the weak half's years, and strength's correlation
       with volatility.
     - **The candidate rule:** > 2 SE in ≥ 2 books, the same sign in ≥ 5 of 6 with and without 2020/22, and no
       year holding more than 60% of the weak half.
-  - **D786 A1/A2 (2026-10-03): family A is closed for the index books.** In either form it is the fixed micro fee
+  - **D788 A1/A2 (2026-10-03): family A is closed for the index books.** In either form it is the fixed micro fee
     binding in the early, cheap years, and it never abstains at today's prices. NG's form stays with D649.
-  - **D786 DIAG RESULT (2026-10-03): no candidate by the declared rule.**
+  - **D788 DIAG RESULT (2026-10-03): no candidate by the declared rule.**
     - **Family A (own projected payoff ≥ 2 × cost) has the same sign in all six books,** with and without 2020/2022.
       It is significant only in NG (D649 already uses it).
     - Families B (self-referential), C (mechanism-typed) and D (shared volatility or trend) are not supported;
       volatility level is mostly 2020/2022.
     - **Open:** the dollar-versus-basis-point confound (σ\$ rises with NQ's price). The next design is the
       principal's.
-  - **D786 DIAG (2026-10-03): PRE-REGISTERED, the abstention oracle across six books** (the principal: "Start on the
+  - **D788 DIAG (2026-10-03): PRE-REGISTERED, the abstention oracle across six books** (the principal: "Start on the
     abstention principle"; in-sample formation first; all four families; the index books and NG).
     - **The books:** D737, NQ F2, C1, D776, L4 and NG (D723), 2016–2023, at micro.
     - **The states:** A, own payoff versus cost; B, self-referential trailing net; C, mechanism-typed; D, shared

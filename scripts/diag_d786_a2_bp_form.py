@@ -1,4 +1,4 @@
-"""Scratch formation look (in-sample, already read by D786; the principal: "Profile the bp form, then decide").
+"""Scratch formation look (in-sample, already read by D788, formerly D786; the principal: "Profile the bp form, then decide").
 Family A in basis points, with the bar FIXED in bp so it moves with volatility, not with the index's price:
 - sigma_bp: 20-session sd of daily log returns x 1e4, through the state's cut (L4 through S, the others through S-1);
 - gross_bp: the trade's gross $ / (the cut session's close x $ per point) x 1e4;

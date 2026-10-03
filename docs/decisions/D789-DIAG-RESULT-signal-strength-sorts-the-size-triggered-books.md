@@ -1,7 +1,9 @@
-# D787 DIAG RESULT — not a candidate by the declared rule (four of six books, not five, keep the sign without 2020/2022), but signal strength is the first trade-level sort that survives those years where it can: NQ F2 (a tier, so not the price level) and NG. It does nothing for the two books whose trigger is a crossing or a rank. D776's and L4's magnitudes are in index points, which carry the price level
+# D789 DIAG RESULT — not a candidate by the declared rule (four of six books, not five, keep the sign without 2020/2022), but signal strength is the first trade-level sort that survives those years where it can: NQ F2 (a tier, so not the price level) and NG. It does nothing for the two books whose trigger is a crossing or a rank. D776's and L4's magnitudes are in index points, which carry the price level
+
+> **Renumbered from D787 on 2026-10-03.** Another session committed the China-open turned fade (D787-STAGE-0-...) to main under D787 first. Commit messages, the script names (`scripts/diag_d787_*.py`) and the data outputs (`data/diag_d787_*.json`) keep the old number.
 
 *2026-10-03. One run of `scripts/diag_d787_signal_strength.py --run` (271 seconds).*
-- **The order:** the [pre-registration](D787-DIAG-PRE-REG-signal-strength-against-its-own-gate.md) (`68f5742a`) came
+- **The order:** the [pre-registration](D789-DIAG-PRE-REG-signal-strength-against-its-own-gate.md) (`68f5742a`) came
   before the runner (`299d1260`).
 - **Output:** `data/diag_d787_signal_strength.json`. Descriptive only.
 
@@ -50,7 +52,7 @@
     information.
   - **C1's** strength is how compressed the day was, a rank of a quiet state, not the size of what it trades.
 - **The caution: D776's \|x\| and L4's \|c\| are in index points, and points grow with the index's price.** The
-  expanding percentile then calls later trades "strong", the same confound that undid family A (D786 A1/A2):
+  expanding percentile then calls later trades "strong", the same confound that undid family A (D788 A1/A2):
   - D776's weak half sits mostly in 2017–2020;
   - L4's sits in 2019 (38%) and 2023 (36%).
   - A price-neutral magnitude separates the two: \|x\| and \|c\| in units of each book's own trailing volatility.
@@ -81,13 +83,13 @@
     prior 250 sessions, so m is free of price.
   - **D776:** m = \|x\| ÷ the standard deviation of the same 08:29 → 08:34 move over the 60 prior weekday sessions
     (at least 40).
-  - Strength and the profile are D787's.
+  - Strength and the profile are D789's.
 
 | book | form | strong: n, mean | weak: n, mean | z | without 2020/2022: strong / weak (z) | ρ(strength, year) |
 |---|---|---|---|---|---|---|
-| D776 | points (D787) | 123, +\$47.28 | 29, +\$2.02 | 2.01 | +\$51.41 / −\$2.40 (2.21) | +0.26 |
+| D776 | points (D789) | 123, +\$47.28 | 29, +\$2.02 | 2.01 | +\$51.41 / −\$2.40 (2.21) | +0.26 |
 | D776 | **price-neutral** | 78, +\$20.58 | 74, **+\$57.69** | **−1.20** | +\$41.17 / +\$37.78 (0.11) | +0.06 |
-| L4 | points (D787) | 194, +\$16.84 | 56, +\$1.95 | 1.09 | +\$20.20 / +\$3.68 (1.08) | −0.05 |
+| L4 | points (D789) | 194, +\$16.84 | 56, +\$1.95 | 1.09 | +\$20.20 / +\$3.68 (1.08) | −0.05 |
 | L4 | **price-neutral** | 115, +\$18.07 | 135, +\$9.61 | 0.58 | +\$15.34 / +\$13.70 (0.11) | −0.12 |
 
 - **D776's sort was the price level.** Price-neutral, it reverses: the "weak" impulses earn more. Without 2020/2022
@@ -99,7 +101,7 @@
   - **NG,** where strength is the size of the predicted flow, the input D649 (slot 8) already projects.
   - In both, "strength" restates the book's own gate more strictly. It is not a rule found outside the
     construction.
-- **Reading: the formation (D786, D787) has found no general abstention principle across these books in-sample.**
+- **Reading: the formation (D788, D789) has found no general abstention principle across these books in-sample.**
   - Every cross-book pattern was the price level, 2020/2022, or a book's own gate tightened.
   - The last is D743's finding again: a veto travels with its construction.
   - What to file, if anything, is the principal's call.

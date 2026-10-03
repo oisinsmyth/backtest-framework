@@ -1,5 +1,5 @@
-"""D787 DIAG: signal strength against its own gate across the six books (descriptive; no filter, no gate).
-Spec: docs/decisions/D787-DIAG-PRE-REG-signal-strength-against-its-own-gate.md.
+"""D789 DIAG (renumbered from D787; this file keeps its old name): signal strength against its own gate across the six books (descriptive; no filter, no gate).
+Spec: docs/decisions/D789-DIAG-PRE-REG-signal-strength-against-its-own-gate.md.
 
     uv run --no-sync python scripts/diag_d787_signal_strength.py --selftest
     uv run --no-sync python scripts/diag_d787_signal_strength.py --run
@@ -27,7 +27,7 @@ sys.path.insert(0, str(REPO / "src"))
 sys.path.insert(0, str(REPO / "scripts"))
 import diag_d786_abstention_oracle as A  # noqa: E402
 
-SPEC = REPO / "docs" / "decisions" / "D787-DIAG-PRE-REG-signal-strength-against-its-own-gate.md"
+SPEC = REPO / "docs" / "decisions" / "D789-DIAG-PRE-REG-signal-strength-against-its-own-gate.md"
 OUT = REPO / "data" / "diag_d787_signal_strength.json"
 BOOKS = A.BOOKS
 MIN_PRIOR, AUDIT_N, SEED = 30, 20, 787

@@ -1,4 +1,6 @@
-# D786 DIAG PRE-REG — the abstention oracle across six books: where each book's losing trades sit, on four families of pre-trade state, before any abstention rule is designed
+# D788 DIAG PRE-REG — the abstention oracle across six books: where each book's losing trades sit, on four families of pre-trade state, before any abstention rule is designed
+
+> **Renumbered from D786 on 2026-10-03.** Another session committed the China-open five-filter read (D786-STAGE-0-...) to main under D786 first. Commit messages, the script names (`scripts/diag_d786_*.py`) and the data outputs (`data/diag_d786_*.json`) keep the old number.
 
 *2026-10-03. The principal: "Start on the abstention principle"; then "In-sample formation first", all four families
 of principle, and the index books plus the NG line.*

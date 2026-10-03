@@ -1,4 +1,4 @@
-"""D787 A1: the price-neutral re-check of signal strength for D776 and L4 (in-sample, already read; the principal:
+"""D789 A1 (renumbered from D787 A1; this file keeps its old name): the price-neutral re-check of signal strength for D776 and L4 (in-sample, already read; the principal:
 "Price-neutral re-check, then decide"). Definitions fixed before the look:
 - L4: m = |c| / its own trailing q80 threshold (cthr), i.e. how far past its own gate; the gate is a rank of the
   prior 250 sessions' |c|, so m is free of the price level;
@@ -52,7 +52,7 @@ def books() -> dict[str, pd.DataFrame]:
 
 def main() -> int:
     stq = A.state_frame(A.daily_closes("NQ"), A.MULT["NQ"])
-    res = {"spec": "D787 A1 (docs/decisions/D787-DIAG-RESULT-signal-strength-sorts-the-size-triggered-books.md)", "books": {}}
+    res = {"spec": "D789 A1 (docs/decisions/D789-DIAG-RESULT-signal-strength-sorts-the-size-triggered-books.md)", "books": {}}
     for b, y in books().items():
         res["books"][b] = {}
         for form, col in (("points (D787)", "m_points"), ("price-neutral", "m")):
