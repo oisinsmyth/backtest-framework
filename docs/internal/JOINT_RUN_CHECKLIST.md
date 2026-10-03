@@ -256,6 +256,11 @@ Its build is independent of slot 9's fixture.
   - The runner's own `identity()` passes.
   - Wall time about 10 minutes on 6 workers (45%); it is a run-once step.
   - Nothing after 2023-12-29 was built or read.
+- **After D781's vault step: the forward ledger (D784).** `python scripts/forward_l4_ledger.py --ledger` splices the
+  rebuilt fixture's history onto the recorder's RTY Globex sessions. It refuses until D781's vault output exists.
+  - It is proved in-sample: the splice reproduces D778's base book exactly, and Sierra's 2023 bars give a ledger
+    identical to Databento's.
+  - Then add it to the daily recorder task.
 
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):

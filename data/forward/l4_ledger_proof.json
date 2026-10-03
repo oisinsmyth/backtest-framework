@@ -1,0 +1,28 @@
+{
+ "tool": "scripts/forward_l4_ledger.py --prove",
+ "in_sample_only": true,
+ "splice": {
+  "history_through": "2022-12-30",
+  "first_scored": "2023-01-03",
+  "sessions": 257,
+  "trades": 28,
+  "equal_to_d778_base_book": true,
+  "equal_to_unspliced_ledger": true,
+  "net_sum": 315.22
+ },
+ "sierra_2023": {
+  "first_scored": "2023-04-04",
+  "last_session": "2023-12-29",
+  "sessions": 192,
+  "status_agree": 1.0,
+  "trades_a": 18,
+  "trades_b": 18,
+  "trades_both": 18,
+  "side_agree": 1.0,
+  "gross_abs_diff_max": 0.0,
+  "gross_equal_share": 1.0,
+  "net_sum_a": -288.68,
+  "net_sum_b": -288.68
+ },
+ "wall_s": 58.2
+}
