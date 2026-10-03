@@ -1,4 +1,4 @@
-"""The forward recorder: one-minute NQ / YM / ES day-session bars from Sierra Chart's tick files, from 2026-09-21 only,
+"""The forward recorder: one-minute NQ / YM / ES / RTY day-session bars from Sierra Chart's tick files, from 2026-09-21 only,
 and D737's line (D735's YM k1.0 1 sigma_rem, frozen in programme slot 1) computed on them, day by day.
 
     uv run python scripts/record_forward_nq_lines.py --selftest
@@ -34,7 +34,14 @@ code over the vault-built history followed by these bars. A session whose Globex
 (2026-09-21's, opening 09-20) is skipped whole, never cut. Validated in-sample (2023-04 -> 2023-12) against D644's
 fixture: the overnight high and low are equal on all 192 NQ and ES sessions.
 
-OUTPUTS. data/raw/forward/fut_{NQ,YM,ES}_fwd_1m.csv.gz (the day-session bars) and fut_{NQ,YM,ES}_fwd_globex_1m.csv.gz
+RTY (2026-10-03, the principal, on D779: base L4 kept open and recorded forward). RTY's day-session and Globex bars
+are recorded under the same seal; they are everything base L4 (D778's base book: the 15:50 -> 16:00 closing move, faded
+from the next 18:05 to 10:00) reads. Its LEDGER is not computed here: its q80 gate ranks |c| among the 250 prior sessions
+(at least 120), so its first forward gate reads the vault window unless it waits ~120 forward sessions. It is owed after
+the joint run (over vault-built history), or on forward history alone from about April 2027. Validated in-sample like
+the others (day bars against fut_RTY_rth_1m; Globex against fut_opening_globex_1m_ym_rty).
+
+OUTPUTS. data/raw/forward/fut_{NQ,YM,ES,RTY}_fwd_1m.csv.gz (the day-session bars) and fut_{NQ,YM,ES}_fwd_globex_1m.csv.gz
 (the Globex sessions); both gitignored caches, NOT disposable: a lost session cannot be re-fetched after ~5 months;
 data/forward/d737_forward.csv (one row a session; tracked); data/forward/d737_forward_revisions.csv (a recorded row
 that later changed is never overwritten silently).
@@ -62,7 +69,8 @@ REC = np.dtype([("dt", "<i8"), ("o", "<f4"), ("h", "<f4"), ("l", "<f4"), ("c", "
                 ("v", "<u4"), ("bv", "<u4"), ("av", "<u4")])
 ORIGIN = pd.Timestamp("1899-12-30", tz="UTC")
 ET = "America/New_York"
-EXCH = {"NQ": "CME", "ES": "CME", "YM": "CBOT"}
+EXCH = {"NQ": "CME", "ES": "CME", "YM": "CBOT", "RTY": "CME"}     # RTY: 2026-10-03, base L4's inputs (D779)
+PRICE_DECIMALS = {"RTY": 1}                                          # a tick that float32 cannot hold exactly (to_tick)
 MONTHS = {3: "H", 6: "M", 9: "U", 12: "Z"}
 FORWARD_FROM = "2026-09-21"
 VAL_LO, VAL_HI, VAL_CUT = "2023-04-03", "2023-12-29", "2024-01-01"
@@ -206,7 +214,18 @@ def build_bars(root: str, days: list[str], floor: str, cut: str, contract_of: di
             out.append(best)
     if not out:
         return pd.DataFrame(columns=["day", "hhmm", "open", "high", "low", "close", "volume", "contract"])
-    return pd.concat(out, ignore_index=True)
+    return to_tick(pd.concat(out, ignore_index=True), root)
+
+
+def to_tick(b: pd.DataFrame, root: str) -> pd.DataFrame:
+    """Sierra stores prices as float32. A tick that is a binary fraction (NQ/ES 0.25, YM 1) survives exactly. RTY's 0.1
+    does not: unrounded, 80% of 2023's minutes differ from Databento's by ~1e-4 (the validation, 2026-10-03). Rounding to
+    the tick's decimals gives the same double as parsing the price's text. Monotone, so it commutes with high/low."""
+    if root in PRICE_DECIMALS:
+        b = b.copy()
+        for c in ("open", "high", "low", "close"):
+            b[c] = b[c].astype(float).round(PRICE_DECIMALS[root])
+    return b
 
 
 def build_globex(root: str, contract_of: dict[str, str], floor: str, cut: str) -> pd.DataFrame:
@@ -227,7 +246,7 @@ def build_globex(root: str, contract_of: dict[str, str], floor: str, cut: str) -
         if b is not None:
             out.append(b.assign(contract=nm))
     cols = ["root", "session", "et", "hhmm", "contract", "open", "high", "low", "close", "volume"]
-    return pd.concat(out, ignore_index=True)[cols] if out else pd.DataFrame(columns=cols)
+    return to_tick(pd.concat(out, ignore_index=True)[cols], root) if out else pd.DataFrame(columns=cols)
 
 
 # ================================================================================ the line
@@ -278,7 +297,7 @@ def validate(data_root: Path) -> int:
     import stage0_d727_trend_curve as T
     out: dict[str, Any] = {"window": [VAL_LO, VAL_HI], "cut": VAL_CUT, "roots": {}}
     bars = {}
-    for root in ("NQ", "YM", "ES"):
+    for root in ("NQ", "YM", "ES", "RTY"):
         b = pd.read_csv(data_root / "fixtures" / f"fut_{root}_rth_1m.csv.gz", dtype={"day": str, "hhmm": str, "contract": str},
                         encoding="utf-8")
         b = b[(b["day"] >= VAL_LO) & (b["day"] <= VAL_HI)]
@@ -317,17 +336,20 @@ def validate(data_root: Path) -> int:
 
 
 def validate_globex(data_root: Path) -> dict[str, Any]:
-    """In-sample only: Sierra Globex sessions against fut_opening_globex_1m (D644's fixture, ES and NQ; the fixture's
-    contract per session), 2023-04 -> 2023-12, minute by minute and on what C1 reads from them: D671's `overnight`
-    high and low over 18:00 -> 09:29."""
+    """In-sample only: Sierra Globex sessions against fut_opening_globex_1m (D644's fixture, ES and NQ) and
+    fut_opening_globex_1m_ym_rty (RTY; added 2026-10-03), the fixture's contract per session, 2023-04 -> 2023-12,
+    minute by minute and on what C1 reads from them: D671's `overnight` high and low over 18:00 -> 09:29."""
     import stage0_d671_break_construction as C
-    fx = pd.read_csv(data_root / "fixtures" / "fut_opening_globex_1m.csv.gz", encoding="utf-8",
-                     dtype={"session": str, "et": str, "hhmm": str, "contract": str})
-    fx = fx[(fx["session"] > VAL_LO) & (fx["session"] <= VAL_HI)]   # VAL_LO's own Globex opens the day before
+    parts = []
+    for fn, roots in (("fut_opening_globex_1m.csv.gz", ("NQ", "ES")), ("fut_opening_globex_1m_ym_rty.csv.gz", ("RTY",))):
+        for ch in pd.read_csv(data_root / "fixtures" / fn, encoding="utf-8", chunksize=2_000_000,
+                              dtype={"session": str, "et": str, "hhmm": str, "contract": str}):
+            parts.append(ch[ch["root"].isin(roots) & (ch["session"] > VAL_LO) & (ch["session"] <= VAL_HI)])
+    fx = pd.concat(parts, ignore_index=True)                       # VAL_LO's own Globex opens the day before
     if (fx["et"] >= VAL_CUT).any():
         raise RecorderError("seal: a Databento Globex row on or after 2024-01-01 in the validation")
     res: dict[str, Any] = {}
-    for root in ("NQ", "ES"):
+    for root in ("NQ", "ES", "RTY"):
         d = fx[fx["root"] == root]
         con = d.groupby("session")["contract"].agg(lambda s: s.value_counts().index[0])
         s = build_globex(root, {x: sierra_name(root, con[x], x) for x in con.index}, VAL_LO, VAL_CUT)
@@ -425,10 +447,10 @@ def record(refresh: bool) -> int:
     burn = int(led["status"].str.startswith("burn-in").sum())
     nxt = [c for r in EXCH for c in candidates(r, today.isoformat())]
     missing = [n for n in nxt if open_scid(n) is None]
-    print(f"[forward] sessions {len(led)} (from {FORWARD_FROM}); bars NQ/YM/ES "
-          f"{bars['NQ']['day'].nunique()}/{bars['YM']['day'].nunique()}/{bars['ES']['day'].nunique()}; "
-          f"Globex sessions NQ/YM/ES {globex['NQ']['session'].nunique()}/{globex['YM']['session'].nunique()}/"
-          f"{globex['ES']['session'].nunique()}; burn-in {burn}; D737 trades {len(tr)}, net ${tr['net_usd'].astype(float).sum():.2f}; revisions {revised}"
+    print(f"[forward] sessions {len(led)} (from {FORWARD_FROM}); bars NQ/YM/ES/RTY "
+          f"{'/'.join(str(bars[r]['day'].nunique()) for r in ('NQ', 'YM', 'ES', 'RTY'))}; "
+          f"Globex sessions NQ/YM/ES/RTY {'/'.join(str(globex[r]['session'].nunique()) for r in ('NQ', 'YM', 'ES', 'RTY'))}"
+          f"; burn-in {burn}; D737 trades {len(tr)}, net ${tr['net_usd'].astype(float).sum():.2f}; revisions {revised}"
           + (f"; MISSING Sierra files for the current/next contracts: {missing}" if missing else ""))
     return 0
 
@@ -442,6 +464,13 @@ def selftest() -> int:
         fails.append("candidates around the December expiry")
     if sierra_name("NQ", "NQZ3", "2023-11-15") != "NQZ23-CME" or sierra_name("YM", "YMH4", "2023-12-20") != "YMH24-CBOT":
         fails.append("Databento-to-Sierra contract names")
+    if (sierra_name("RTY", "RTYZ3", "2023-11-15") != "RTYZ23-CME"
+            or candidates("RTY", "2026-09-21") != ["RTYZ26-CME", "RTYH27-CME"]):
+        fails.append("RTY's contract names and candidates")
+    f32 = pd.DataFrame({c: [float(np.float32(2412.3))] for c in ("open", "high", "low", "close")})
+    if f32["close"].iloc[0] == 2412.3 or to_tick(f32, "RTY")["close"].iloc[0] != 2412.3 or \
+            to_tick(f32, "NQ")["close"].iloc[0] != f32["close"].iloc[0]:
+        fails.append("RTY's float32 prices are not rounded to the tick (or another root's are touched)")
     # a synthetic tick array: bars from trade prices, the seal raises outside the span
     t0 = us(pd.Timestamp("2026-10-05 09:30", tz=ET))
     rec = np.zeros(6, REC)

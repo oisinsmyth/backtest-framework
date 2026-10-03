@@ -40,6 +40,18 @@
    "low_equal": 0.9999594813614262,
    "volume_ratio_median": 1.0,
    "front_rule_agrees_with_databento": 1.0
+  },
+  "RTY": {
+   "days": 193,
+   "minutes_databento": 74029,
+   "minutes_sierra": 74029,
+   "matched": 74029,
+   "close_equal": 0.9990409163976279,
+   "open_equal": 0.9990274081778763,
+   "high_equal": 0.9999189506814897,
+   "low_equal": 0.999905442461738,
+   "volume_ratio_median": 1.0,
+   "front_rule_agrees_with_databento": 1.0
   }
  },
  "d737": {
@@ -80,6 +92,22 @@
    "high_equal": 0.9999695909989357,
    "low_equal": 0.9999657898738027,
    "close_equal": 0.9995324616086362,
+   "overnight_sessions_compared": 192,
+   "on_high_equal": 1.0,
+   "on_low_equal": 1.0,
+   "on_range_abs_diff_points_p99": 0.0
+  },
+  "RTY": {
+   "sessions_databento": 192,
+   "sessions_sierra": 192,
+   "minutes_databento": 256475,
+   "minutes_sierra": 256220,
+   "matched": 256220,
+   "single_contract_sessions_databento": 1.0,
+   "open_equal": 0.9995238466942471,
+   "high_equal": 0.9999531652486144,
+   "low_equal": 0.9999375536648193,
+   "close_equal": 0.9995784872375303,
    "overnight_sessions_compared": 192,
    "on_high_equal": 1.0,
    "on_low_equal": 1.0,
