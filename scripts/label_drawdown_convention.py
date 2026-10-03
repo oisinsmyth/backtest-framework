@@ -53,6 +53,11 @@ LEVEL = re.compile(r"(?i)(max_?draw_?down|max_?dd|maxdd)$")
 # A key naming a DIFFERENCE of two drawdowns. Checked first: `d_maxdd` also matches LEVEL.
 DIFFERENCE = re.compile(r"(?i)(^|_)d_(max_?draw_?down|max_?dd|maxdd)$")
 
+# A key whose whole SUBTREE holds differences: D720 writes `delta_vs_R0: {"max_dd": ...}`.
+# There the drawdown key is a plain `max_dd` and only its parent says it is a difference, so
+# counting it as a level made that file read as holding both signs.
+DIFFERENCE_SUBTREE = re.compile(r"(?i)^delta(_|$)")
+
 NEGATIVE_NOTE = (
     "Drawdown LEVELS in this file are NEGATIVE fractions of peak (a -0.25 is a 25% "
     "decline). Arithmetic is analytics.metrics.max_drawdown, which returns the positive "
@@ -81,6 +86,8 @@ def levels(node: object) -> list[float]:
             numeric = isinstance(value, (int, float)) and not isinstance(value, bool)
             if numeric and LEVEL.search(key) and not DIFFERENCE.search(key):
                 found.append(float(value))
+            elif DIFFERENCE_SUBTREE.search(str(key)):
+                continue
             else:
                 found.extend(levels(value))
     elif isinstance(node, list):
@@ -180,11 +187,12 @@ def cmd_status() -> int:
 
 def cmd_write() -> int:
     written = 0
+    frozen = frozen_files()
     for rel, convention, existing in census():
         if convention == "MIXED":
             print(f"REFUSED  {rel} — holds both signs; one marker cannot describe it")
             return 1
-        if existing is not None:
+        if existing is not None or rel in frozen:
             continue
         insert(rel, convention)
         written += 1
@@ -192,13 +200,32 @@ def cmd_write() -> int:
     return 0
 
 
+def frozen_files() -> set[str]:
+    """Paths hashed in a vault freeze manifest (`data/FROZEN_*.json`, its `files` map).
+
+    Their bytes cannot change without breaking the freeze, so the marker cannot be inserted.
+    They are exempt from the missing-marker check only; a MIXED or contradicted marker in one
+    still fails, and `--write` skips them.
+    """
+    out: set[str] = set()
+    for manifest in sorted((REPO / "data").glob("FROZEN_*.json")):
+        parsed = payload_of(str(manifest.relative_to(REPO)).replace("\\", "/"))
+        if parsed and isinstance(parsed.get("files"), dict):
+            out.update(parsed["files"])
+    return out
+
+
 def cmd_check() -> int:
     """A marker that no longer matches the values it describes is worse than no marker."""
     problems = []
     rows = census()
+    frozen = frozen_files()
+    exempt = []
     for rel, convention, existing in rows:
         if convention == "MIXED":
             problems.append(f"{rel}: holds both signs")
+        elif existing is None and rel in frozen:
+            exempt.append(rel)
         elif existing is None:
             problems.append(f"{rel}: no {MARKER} — run --write")
         elif existing.get("sign") != convention:
@@ -208,6 +235,8 @@ def cmd_check() -> int:
             print(f"  {line}")
         print(f"{len(problems)} problem(s) of {len(rows)} artifact(s)")
         return 1
+    for rel in exempt:
+        print(f"  exempt (hashed in a freeze manifest, cannot be labelled): {rel}")
     print(f"{len(rows)} artifact(s), every marker agrees with its own values")
     return 0
 

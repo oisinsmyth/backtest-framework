@@ -66,6 +66,41 @@ def test_differences_are_not_counted_as_levels():
     assert L.convention_of(L.levels(payload)) == "positive"
 
 
+def test_a_delta_subtree_holds_differences_not_levels():
+    """D720 writes `delta_vs_R0: {"max_dd": -1098.3}`: the key is a plain level name and only
+    its parent marks it as a difference. Counted as a level, it made the file read MIXED."""
+    payload = {"R2": {"max_dd": 5971.4, "delta_vs_R0": {"max_dd": -1098.3}}}
+    assert L.levels(payload) == [5971.4]
+    assert L.convention_of(L.levels(payload)) == "positive"
+    # The parent must be named as a delta: an ordinary nested block still counts.
+    assert L.levels({"R2": {"inner": {"max_dd": -0.2}}}) == [-0.2]
+
+
+def test_a_frozen_file_is_exempt_from_the_missing_marker_only(tmp_path, monkeypatch):
+    """A file hashed in a freeze manifest cannot take the marker, so its ABSENCE is exempt.
+    A contradicted marker in a frozen file must still fail: the exemption covers the one
+    thing the freeze forbids, not the thing the gate exists to catch."""
+    sandbox = tmp_path / "repo"
+    (sandbox / "data").mkdir(parents=True)
+    subprocess.run(["git", "init", "-q"], cwd=sandbox, check=True)
+    bare = {"max_drawdown": -0.25}
+    lying = {"max_drawdown_convention": {"sign": "positive"}, "max_drawdown": -0.25}
+    (sandbox / "data" / "frozen_bare.json").write_text(json.dumps(bare), encoding="utf-8")
+    (sandbox / "data" / "FROZEN_x.json").write_text(
+        json.dumps({"files": {"data/frozen_bare.json": "abc"}}), encoding="utf-8"
+    )
+    subprocess.run(["git", "add", "data"], cwd=sandbox, check=True)
+    monkeypatch.setattr(L, "REPO", sandbox)
+    assert L.frozen_files() == {"data/frozen_bare.json"}
+    assert L.cmd_check() == 0
+    before = (sandbox / "data" / "frozen_bare.json").read_bytes()
+    assert L.cmd_write() == 0
+    assert (sandbox / "data" / "frozen_bare.json").read_bytes() == before
+
+    (sandbox / "data" / "frozen_bare.json").write_text(json.dumps(lying), encoding="utf-8")
+    assert L.cmd_check() == 1
+
+
 def test_a_file_holding_both_signs_is_refused_not_labelled():
     """One marker cannot describe two conventions, and half a disclosure is worse than
     none — it would tell a reader the file is safe to read one way when it is not."""
