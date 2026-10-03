@@ -1,0 +1,3794 @@
+{
+ "spec": "D786-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md",
+ "window": [
+  "2016-01-01",
+  "2023-12-31"
+ ],
+ "books": {
+  "D737": {
+   "type": "continuation",
+   "root": "NQ",
+   "trades": 1699,
+   "cost": 4.0671,
+   "market_time_share": 0.824,
+   "mean_gross": 18.94,
+   "mean_net": 14.87,
+   "t_net": 3.07,
+   "total_net": 25264.0,
+   "net_without_best_two_years": 6933.0,
+   "best_two_years": [
+    "2021",
+    "2022"
+   ],
+   "share_2020": 0.01,
+   "share_2022": 0.506,
+   "oracle_take_winners_total": 128643.0,
+   "oracle_take_winners_trades": 855,
+   "worst_decile_share_of_gross_loss": 0.518,
+   "by_year": {
+    "2016": [
+     183,
+     394.25,
+     2.15
+    ],
+    "2017": [
+     210,
+     -820.71,
+     -3.91
+    ],
+    "2018": [
+     205,
+     4158.58,
+     20.29
+    ],
+    "2019": [
+     207,
+     8.61,
+     0.04
+    ],
+    "2020": [
+     208,
+     246.51,
+     1.19
+    ],
+    "2021": [
+     216,
+     5536.62,
+     25.63
+    ],
+    "2022": [
+     235,
+     12793.45,
+     54.44
+    ],
+    "2023": [
+     235,
+     2946.23,
+     12.54
+    ]
+   }
+  },
+  "NQ_F2": {
+   "type": "continuation",
+   "root": "NQ",
+   "trades": 274,
+   "cost": 4.0671,
+   "market_time_share": 0.133,
+   "mean_gross": 24.74,
+   "mean_net": 20.67,
+   "t_net": 2.57,
+   "total_net": 5664.0,
+   "net_without_best_two_years": 671.0,
+   "best_two_years": [
+    "2020",
+    "2022"
+   ],
+   "share_2020": 0.215,
+   "share_2022": 0.666,
+   "oracle_take_winners_total": 15465.0,
+   "oracle_take_winners_trades": 152,
+   "worst_decile_share_of_gross_loss": 0.61,
+   "by_year": {
+    "2018": [
+     26,
+     22.25,
+     0.86
+    ],
+    "2019": [
+     19,
+     -29.28,
+     -1.54
+    ],
+    "2020": [
+     79,
+     1220.2,
+     15.45
+    ],
+    "2021": [
+     50,
+     509.14,
+     10.18
+    ],
+    "2022": [
+     65,
+     3772.14,
+     58.03
+    ],
+    "2023": [
+     35,
+     169.15,
+     4.83
+    ]
+   }
+  },
+  "C1": {
+   "type": "continuation",
+   "root": "NQ",
+   "trades": 328,
+   "cost": 4.0671,
+   "market_time_share": 0.159,
+   "mean_gross": 19.73,
+   "mean_net": 15.66,
+   "t_net": 2.26,
+   "total_net": 5138.0,
+   "net_without_best_two_years": 1672.0,
+   "best_two_years": [
+    "2021",
+    "2022"
+   ],
+   "share_2020": 0.075,
+   "share_2022": 0.376,
+   "oracle_take_winners_total": 17882.0,
+   "oracle_take_winners_trades": 138,
+   "worst_decile_share_of_gross_loss": 0.383,
+   "by_year": {
+    "2018": [
+     47,
+     434.35,
+     9.24
+    ],
+    "2019": [
+     64,
+     152.34,
+     2.38
+    ],
+    "2020": [
+     52,
+     385.26,
+     7.41
+    ],
+    "2021": [
+     52,
+     1536.57,
+     29.55
+    ],
+    "2022": [
+     58,
+     1929.61,
+     33.27
+    ],
+    "2023": [
+     55,
+     699.96,
+     12.73
+    ]
+   }
+  },
+  "D776": {
+   "type": "reversion",
+   "root": "NQ",
+   "trades": 186,
+   "cost": 4.07,
+   "market_time_share": 0.09,
+   "mean_gross": 34.88,
+   "mean_net": 30.81,
+   "t_net": 2.41,
+   "total_net": 5730.0,
+   "net_without_best_two_years": 2040.0,
+   "best_two_years": [
+    "2020",
+    "2023"
+   ],
+   "share_2020": 0.166,
+   "share_2022": 0.133,
+   "oracle_take_winners_total": 13596.0,
+   "oracle_take_winners_trades": 102,
+   "worst_decile_share_of_gross_loss": 0.666,
+   "by_year": {
+    "2016": [
+     22,
+     -124.04,
+     -5.64
+    ],
+    "2017": [
+     23,
+     -85.61,
+     -3.72
+    ],
+    "2018": [
+     24,
+     425.32,
+     17.72
+    ],
+    "2019": [
+     24,
+     168.32,
+     7.01
+    ],
+    "2020": [
+     23,
+     950.89,
+     41.34
+    ],
+    "2021": [
+     23,
+     893.39,
+     38.84
+    ],
+    "2022": [
+     24,
+     762.82,
+     31.78
+    ],
+    "2023": [
+     23,
+     2739.39,
+     119.1
+    ]
+   }
+  },
+  "L4": {
+   "type": "reversion",
+   "root": "RTY",
+   "trades": 280,
+   "cost": 3.76,
+   "market_time_share": 0.168,
+   "mean_gross": 15.84,
+   "mean_net": 12.08,
+   "t_net": 1.88,
+   "total_net": 3384.0,
+   "net_without_best_two_years": -14.0,
+   "best_two_years": [
+    "2021",
+    "2020"
+   ],
+   "share_2020": 0.623,
+   "share_2022": -0.17,
+   "oracle_take_winners_total": 12766.0,
+   "oracle_take_winners_trades": 152,
+   "worst_decile_share_of_gross_loss": 0.56,
+   "by_year": {
+    "2018": [
+     33,
+     147.42,
+     4.47
+    ],
+    "2019": [
+     45,
+     97.3,
+     2.16
+    ],
+    "2020": [
+     78,
+     2107.72,
+     27.02
+    ],
+    "2021": [
+     52,
+     1290.48,
+     24.82
+    ],
+    "2022": [
+     44,
+     -574.44,
+     -13.06
+    ],
+    "2023": [
+     28,
+     315.22,
+     11.26
+    ]
+   }
+  },
+  "NG": {
+   "type": "flow",
+   "root": "NG",
+   "trades": 770,
+   "cost": 5.0,
+   "market_time_share": 0.373,
+   "mean_gross": 7.37,
+   "mean_net": 2.37,
+   "t_net": 1.39,
+   "total_net": 1825.0,
+   "net_without_best_two_years": -1404.0,
+   "best_two_years": [
+    "2018",
+    "2022"
+   ],
+   "share_2020": -0.227,
+   "share_2022": 1.758,
+   "oracle_take_winners_total": 12604.0,
+   "oracle_take_winners_trades": 370,
+   "worst_decile_share_of_gross_loss": 0.549,
+   "by_year": {
+    "2017": [
+     14,
+     -127.0,
+     -9.07
+    ],
+    "2018": [
+     32,
+     20.0,
+     0.63
+    ],
+    "2019": [
+     20,
+     -139.0,
+     -6.95
+    ],
+    "2020": [
+     117,
+     -414.0,
+     -3.54
+    ],
+    "2021": [
+     169,
+     -38.0,
+     -0.22
+    ],
+    "2022": [
+     205,
+     3209.0,
+     15.65
+    ],
+    "2023": [
+     213,
+     -686.0,
+     -3.22
+    ]
+   }
+  }
+ },
+ "profiles": {
+  "D737": {
+   "A_proj_over_cost": {
+    "n": 1669,
+    "cells": {
+     "low": {
+      "n": 557,
+      "mean_net": 5.62,
+      "se": 3.71,
+      "win": 0.485,
+      "total": 3131.0,
+      "losers": 287,
+      "share_of_losers": 0.347
+     },
+     "mid": {
+      "n": 556,
+      "mean_net": 10.95,
+      "se": 7.42,
+      "win": 0.509,
+      "total": 6089.0,
+      "losers": 273,
+      "share_of_losers": 0.33
+     },
+     "high": {
+      "n": 556,
+      "mean_net": 28.45,
+      "se": 12.23,
+      "win": 0.518,
+      "total": 15816.0,
+      "losers": 268,
+      "share_of_losers": 0.324
+     }
+    },
+    "spread": 22.82,
+    "spread_se": 12.78,
+    "spread_over_se": 1.79
+   },
+   "A_proj_ge_2c": {
+    "n": 1669,
+    "cells": {
+     "true": {
+      "n": 1146,
+      "mean_net": 19.52,
+      "se": 6.99,
+      "win": 0.515,
+      "total": 22369.0,
+      "losers": 556,
+      "share_of_losers": 0.671
+     },
+     "false": {
+      "n": 523,
+      "mean_net": 5.1,
+      "se": 3.56,
+      "win": 0.48,
+      "total": 2666.0,
+      "losers": 272,
+      "share_of_losers": 0.329
+     }
+    },
+    "spread": 14.42,
+    "spread_se": 7.84,
+    "spread_over_se": 1.84
+   },
+   "B_trail20_net": {
+    "n": 1689,
+    "cells": {
+     "low": {
+      "n": 563,
+      "mean_net": 13.39,
+      "se": 7.04,
+      "win": 0.501,
+      "total": 7541.0,
+      "losers": 281,
+      "share_of_losers": 0.337
+     },
+     "mid": {
+      "n": 563,
+      "mean_net": 8.61,
+      "se": 5.7,
+      "win": 0.513,
+      "total": 4848.0,
+      "losers": 274,
+      "share_of_losers": 0.328
+     },
+     "high": {
+      "n": 563,
+      "mean_net": 23.34,
+      "se": 11.47,
+      "win": 0.503,
+      "total": 13139.0,
+      "losers": 280,
+      "share_of_losers": 0.335
+     }
+    },
+    "spread": 9.94,
+    "spread_se": 13.46,
+    "spread_over_se": 0.74
+   },
+   "B_trail20_pos": {
+    "n": 1689,
+    "cells": {
+     "true": {
+      "n": 996,
+      "mean_net": 18.62,
+      "se": 7.14,
+      "win": 0.512,
+      "total": 18545.0,
+      "losers": 486,
+      "share_of_losers": 0.582
+     },
+     "false": {
+      "n": 693,
+      "mean_net": 10.08,
+      "se": 5.98,
+      "win": 0.496,
+      "total": 6983.0,
+      "losers": 349,
+      "share_of_losers": 0.418
+     }
+    },
+    "spread": 8.54,
+    "spread_se": 9.31,
+    "spread_over_se": 0.92
+   },
+   "D_nq_volpct": {
+    "n": 1682,
+    "cells": {
+     "low": {
+      "n": 561,
+      "mean_net": 1.07,
+      "se": 6.28,
+      "win": 0.472,
+      "total": 603.0,
+      "losers": 296,
+      "share_of_losers": 0.356
+     },
+     "mid": {
+      "n": 560,
+      "mean_net": 18.49,
+      "se": 7.61,
+      "win": 0.53,
+      "total": 10353.0,
+      "losers": 263,
+      "share_of_losers": 0.316
+     },
+     "high": {
+      "n": 561,
+      "mean_net": 25.95,
+      "se": 10.85,
+      "win": 0.513,
+      "total": 14557.0,
+      "losers": 273,
+      "share_of_losers": 0.328
+     }
+    },
+    "spread": 24.87,
+    "spread_se": 12.53,
+    "spread_over_se": 1.98
+   },
+   "D_nq_down": {
+    "n": 1621,
+    "cells": {
+     "true": {
+      "n": 318,
+      "mean_net": 37.48,
+      "se": 17.91,
+      "win": 0.538,
+      "total": 11918.0,
+      "losers": 147,
+      "share_of_losers": 0.183
+     },
+     "false": {
+      "n": 1303,
+      "mean_net": 10.08,
+      "se": 4.54,
+      "win": 0.496,
+      "total": 13129.0,
+      "losers": 657,
+      "share_of_losers": 0.817
+     }
+    },
+    "spread": 27.4,
+    "spread_se": 18.48,
+    "spread_over_se": 1.48
+   },
+   "D_own_volpct": {
+    "n": 1682,
+    "cells": {
+     "low": {
+      "n": 561,
+      "mean_net": 1.07,
+      "se": 6.28,
+      "win": 0.472,
+      "total": 603.0,
+      "losers": 296,
+      "share_of_losers": 0.356
+     },
+     "mid": {
+      "n": 560,
+      "mean_net": 18.49,
+      "se": 7.61,
+      "win": 0.53,
+      "total": 10353.0,
+      "losers": 263,
+      "share_of_losers": 0.316
+     },
+     "high": {
+      "n": 561,
+      "mean_net": 25.95,
+      "se": 10.85,
+      "win": 0.513,
+      "total": 14557.0,
+      "losers": 273,
+      "share_of_losers": 0.328
+     }
+    },
+    "spread": 24.87,
+    "spread_se": 12.53,
+    "spread_over_se": 1.98
+   },
+   "D_own_down": {
+    "n": 1621,
+    "cells": {
+     "true": {
+      "n": 318,
+      "mean_net": 37.48,
+      "se": 17.91,
+      "win": 0.538,
+      "total": 11918.0,
+      "losers": 147,
+      "share_of_losers": 0.183
+     },
+     "false": {
+      "n": 1303,
+      "mean_net": 10.08,
+      "se": 4.54,
+      "win": 0.496,
+      "total": 13129.0,
+      "losers": 657,
+      "share_of_losers": 0.817
+     }
+    },
+    "spread": 27.4,
+    "spread_se": 18.48,
+    "spread_over_se": 1.48
+   }
+  },
+  "NQ_F2": {
+   "A_proj_over_cost": {
+    "n": 244,
+    "cells": {
+     "low": {
+      "n": 82,
+      "mean_net": 7.76,
+      "se": 16.4,
+      "win": 0.451,
+      "total": 636.0,
+      "losers": 45,
+      "share_of_losers": 0.429
+     },
+     "mid": {
+      "n": 81,
+      "mean_net": 29.52,
+      "se": 12.73,
+      "win": 0.63,
+      "total": 2391.0,
+      "losers": 30,
+      "share_of_losers": 0.286
+     },
+     "high": {
+      "n": 81,
+      "mean_net": 32.69,
+      "se": 16.56,
+      "win": 0.63,
+      "total": 2648.0,
+      "losers": 30,
+      "share_of_losers": 0.286
+     }
+    },
+    "spread": 24.93,
+    "spread_se": 23.31,
+    "spread_over_se": 1.07
+   },
+   "A_proj_ge_2c": {
+    "n": 244,
+    "cells": {
+     "true": {
+      "n": 195,
+      "mean_net": 28.26,
+      "se": 9.41,
+      "win": 0.621,
+      "total": 5511.0,
+      "losers": 74,
+      "share_of_losers": 0.705
+     },
+     "false": {
+      "n": 49,
+      "mean_net": 3.33,
+      "se": 23.26,
+      "win": 0.367,
+      "total": 163.0,
+      "losers": 31,
+      "share_of_losers": 0.295
+     }
+    },
+    "spread": 24.93,
+    "spread_se": 25.09,
+    "spread_over_se": 0.99
+   },
+   "B_trail20_net": {
+    "n": 264,
+    "cells": {
+     "low": {
+      "n": 88,
+      "mean_net": 23.61,
+      "se": 15.29,
+      "win": 0.5,
+      "total": 2078.0,
+      "losers": 44,
+      "share_of_losers": 0.376
+     },
+     "mid": {
+      "n": 88,
+      "mean_net": -1.98,
+      "se": 12.59,
+      "win": 0.477,
+      "total": -174.0,
+      "losers": 46,
+      "share_of_losers": 0.393
+     },
+     "high": {
+      "n": 88,
+      "mean_net": 42.04,
+      "se": 14.89,
+      "win": 0.693,
+      "total": 3700.0,
+      "losers": 27,
+      "share_of_losers": 0.231
+     }
+    },
+    "spread": 18.43,
+    "spread_se": 21.34,
+    "spread_over_se": 0.86
+   },
+   "B_trail20_pos": {
+    "n": 264,
+    "cells": {
+     "true": {
+      "n": 182,
+      "mean_net": 20.75,
+      "se": 9.72,
+      "win": 0.582,
+      "total": 3776.0,
+      "losers": 76,
+      "share_of_losers": 0.65
+     },
+     "false": {
+      "n": 82,
+      "mean_net": 22.27,
+      "se": 15.89,
+      "win": 0.5,
+      "total": 1826.0,
+      "losers": 41,
+      "share_of_losers": 0.35
+     }
+    },
+    "spread": -1.53,
+    "spread_se": 18.63,
+    "spread_over_se": -0.08
+   },
+   "D_nq_volpct": {
+    "n": 274,
+    "cells": {
+     "low": {
+      "n": 92,
+      "mean_net": 3.42,
+      "se": 9.68,
+      "win": 0.511,
+      "total": 315.0,
+      "losers": 45,
+      "share_of_losers": 0.369
+     },
+     "mid": {
+      "n": 91,
+      "mean_net": 19.41,
+      "se": 11.63,
+      "win": 0.527,
+      "total": 1766.0,
+      "losers": 43,
+      "share_of_losers": 0.352
+     },
+     "high": {
+      "n": 91,
+      "mean_net": 39.37,
+      "se": 18.79,
+      "win": 0.626,
+      "total": 3582.0,
+      "losers": 34,
+      "share_of_losers": 0.279
+     }
+    },
+    "spread": 35.94,
+    "spread_se": 21.14,
+    "spread_over_se": 1.7
+   },
+   "D_nq_down": {
+    "n": 274,
+    "cells": {
+     "true": {
+      "n": 85,
+      "mean_net": 46.0,
+      "se": 18.35,
+      "win": 0.612,
+      "total": 3910.0,
+      "losers": 33,
+      "share_of_losers": 0.27
+     },
+     "false": {
+      "n": 189,
+      "mean_net": 9.28,
+      "se": 8.15,
+      "win": 0.529,
+      "total": 1753.0,
+      "losers": 89,
+      "share_of_losers": 0.73
+     }
+    },
+    "spread": 36.73,
+    "spread_se": 20.08,
+    "spread_over_se": 1.83
+   },
+   "D_own_volpct": {
+    "n": 274,
+    "cells": {
+     "low": {
+      "n": 92,
+      "mean_net": 3.42,
+      "se": 9.68,
+      "win": 0.511,
+      "total": 315.0,
+      "losers": 45,
+      "share_of_losers": 0.369
+     },
+     "mid": {
+      "n": 91,
+      "mean_net": 19.41,
+      "se": 11.63,
+      "win": 0.527,
+      "total": 1766.0,
+      "losers": 43,
+      "share_of_losers": 0.352
+     },
+     "high": {
+      "n": 91,
+      "mean_net": 39.37,
+      "se": 18.79,
+      "win": 0.626,
+      "total": 3582.0,
+      "losers": 34,
+      "share_of_losers": 0.279
+     }
+    },
+    "spread": 35.94,
+    "spread_se": 21.14,
+    "spread_over_se": 1.7
+   },
+   "D_own_down": {
+    "n": 274,
+    "cells": {
+     "true": {
+      "n": 85,
+      "mean_net": 46.0,
+      "se": 18.35,
+      "win": 0.612,
+      "total": 3910.0,
+      "losers": 33,
+      "share_of_losers": 0.27
+     },
+     "false": {
+      "n": 189,
+      "mean_net": 9.28,
+      "se": 8.15,
+      "win": 0.529,
+      "total": 1753.0,
+      "losers": 89,
+      "share_of_losers": 0.73
+     }
+    },
+    "spread": 36.73,
+    "spread_se": 20.08,
+    "spread_over_se": 1.83
+   }
+  },
+  "C1": {
+   "A_proj_over_cost": {
+    "n": 298,
+    "cells": {
+     "low": {
+      "n": 100,
+      "mean_net": 11.45,
+      "se": 7.56,
+      "win": 0.4,
+      "total": 1145.0,
+      "losers": 60,
+      "share_of_losers": 0.347
+     },
+     "mid": {
+      "n": 99,
+      "mean_net": 19.33,
+      "se": 11.91,
+      "win": 0.444,
+      "total": 1913.0,
+      "losers": 55,
+      "share_of_losers": 0.318
+     },
+     "high": {
+      "n": 99,
+      "mean_net": 19.0,
+      "se": 17.74,
+      "win": 0.414,
+      "total": 1881.0,
+      "losers": 58,
+      "share_of_losers": 0.335
+     }
+    },
+    "spread": 7.55,
+    "spread_se": 19.29,
+    "spread_over_se": 0.39
+   },
+   "A_proj_ge_2c": {
+    "n": 298,
+    "cells": {
+     "true": {
+      "n": 258,
+      "mean_net": 17.79,
+      "se": 8.54,
+      "win": 0.43,
+      "total": 4589.0,
+      "losers": 147,
+      "share_of_losers": 0.85
+     },
+     "false": {
+      "n": 40,
+      "mean_net": 8.76,
+      "se": 10.06,
+      "win": 0.35,
+      "total": 351.0,
+      "losers": 26,
+      "share_of_losers": 0.15
+     }
+    },
+    "spread": 9.02,
+    "spread_se": 13.19,
+    "spread_over_se": 0.68
+   },
+   "B_trail20_net": {
+    "n": 318,
+    "cells": {
+     "low": {
+      "n": 106,
+      "mean_net": 14.71,
+      "se": 10.88,
+      "win": 0.415,
+      "total": 1559.0,
+      "losers": 62,
+      "share_of_losers": 0.337
+     },
+     "mid": {
+      "n": 106,
+      "mean_net": 24.02,
+      "se": 11.58,
+      "win": 0.434,
+      "total": 2546.0,
+      "losers": 60,
+      "share_of_losers": 0.326
+     },
+     "high": {
+      "n": 106,
+      "mean_net": 8.83,
+      "se": 14.22,
+      "win": 0.415,
+      "total": 936.0,
+      "losers": 62,
+      "share_of_losers": 0.337
+     }
+    },
+    "spread": -5.88,
+    "spread_se": 17.91,
+    "spread_over_se": -0.33
+   },
+   "B_trail20_pos": {
+    "n": 318,
+    "cells": {
+     "true": {
+      "n": 229,
+      "mean_net": 18.4,
+      "se": 8.74,
+      "win": 0.428,
+      "total": 4214.0,
+      "losers": 131,
+      "share_of_losers": 0.712
+     },
+     "false": {
+      "n": 89,
+      "mean_net": 9.28,
+      "se": 11.72,
+      "win": 0.404,
+      "total": 826.0,
+      "losers": 53,
+      "share_of_losers": 0.288
+     }
+    },
+    "spread": 9.12,
+    "spread_se": 14.62,
+    "spread_over_se": 0.62
+   },
+   "D_nq_volpct": {
+    "n": 328,
+    "cells": {
+     "low": {
+      "n": 110,
+      "mean_net": 12.94,
+      "se": 9.84,
+      "win": 0.391,
+      "total": 1424.0,
+      "losers": 67,
+      "share_of_losers": 0.353
+     },
+     "mid": {
+      "n": 109,
+      "mean_net": 15.75,
+      "se": 9.22,
+      "win": 0.468,
+      "total": 1717.0,
+      "losers": 58,
+      "share_of_losers": 0.305
+     },
+     "high": {
+      "n": 109,
+      "mean_net": 18.32,
+      "se": 15.95,
+      "win": 0.404,
+      "total": 1997.0,
+      "losers": 65,
+      "share_of_losers": 0.342
+     }
+    },
+    "spread": 5.38,
+    "spread_se": 18.74,
+    "spread_over_se": 0.29
+   },
+   "D_nq_down": {
+    "n": 328,
+    "cells": {
+     "true": {
+      "n": 81,
+      "mean_net": 23.46,
+      "se": 18.55,
+      "win": 0.432,
+      "total": 1900.0,
+      "losers": 46,
+      "share_of_losers": 0.242
+     },
+     "false": {
+      "n": 247,
+      "mean_net": 13.11,
+      "se": 6.93,
+      "win": 0.417,
+      "total": 3238.0,
+      "losers": 144,
+      "share_of_losers": 0.758
+     }
+    },
+    "spread": 10.35,
+    "spread_se": 19.81,
+    "spread_over_se": 0.52
+   },
+   "D_own_volpct": {
+    "n": 328,
+    "cells": {
+     "low": {
+      "n": 110,
+      "mean_net": 12.94,
+      "se": 9.84,
+      "win": 0.391,
+      "total": 1424.0,
+      "losers": 67,
+      "share_of_losers": 0.353
+     },
+     "mid": {
+      "n": 109,
+      "mean_net": 15.75,
+      "se": 9.22,
+      "win": 0.468,
+      "total": 1717.0,
+      "losers": 58,
+      "share_of_losers": 0.305
+     },
+     "high": {
+      "n": 109,
+      "mean_net": 18.32,
+      "se": 15.95,
+      "win": 0.404,
+      "total": 1997.0,
+      "losers": 65,
+      "share_of_losers": 0.342
+     }
+    },
+    "spread": 5.38,
+    "spread_se": 18.74,
+    "spread_over_se": 0.29
+   },
+   "D_own_down": {
+    "n": 328,
+    "cells": {
+     "true": {
+      "n": 81,
+      "mean_net": 23.46,
+      "se": 18.55,
+      "win": 0.432,
+      "total": 1900.0,
+      "losers": 46,
+      "share_of_losers": 0.242
+     },
+     "false": {
+      "n": 247,
+      "mean_net": 13.11,
+      "se": 6.93,
+      "win": 0.417,
+      "total": 3238.0,
+      "losers": 144,
+      "share_of_losers": 0.758
+     }
+    },
+    "spread": 10.35,
+    "spread_se": 19.81,
+    "spread_over_se": 0.52
+   }
+  },
+  "D776": {
+   "A_proj_over_cost": {
+    "n": 156,
+    "cells": {
+     "low": {
+      "n": 52,
+      "mean_net": 3.31,
+      "se": 13.07,
+      "win": 0.442,
+      "total": 172.0,
+      "losers": 29,
+      "share_of_losers": 0.414
+     },
+     "mid": {
+      "n": 52,
+      "mean_net": 60.65,
+      "se": 29.38,
+      "win": 0.558,
+      "total": 3154.0,
+      "losers": 23,
+      "share_of_losers": 0.329
+     },
+     "high": {
+      "n": 52,
+      "mean_net": 48.67,
+      "se": 31.84,
+      "win": 0.654,
+      "total": 2531.0,
+      "losers": 18,
+      "share_of_losers": 0.257
+     }
+    },
+    "spread": 45.37,
+    "spread_se": 34.42,
+    "spread_over_se": 1.32
+   },
+   "A_proj_ge_2c": {
+    "n": 156,
+    "cells": {
+     "true": {
+      "n": 129,
+      "mean_net": 40.93,
+      "se": 18.07,
+      "win": 0.566,
+      "total": 5280.0,
+      "losers": 56,
+      "share_of_losers": 0.8
+     },
+     "false": {
+      "n": 27,
+      "mean_net": 21.36,
+      "se": 13.5,
+      "win": 0.481,
+      "total": 577.0,
+      "losers": 14,
+      "share_of_losers": 0.2
+     }
+    },
+    "spread": 19.57,
+    "spread_se": 22.55,
+    "spread_over_se": 0.87
+   },
+   "B_trail20_net": {
+    "n": 176,
+    "cells": {
+     "low": {
+      "n": 59,
+      "mean_net": 27.92,
+      "se": 19.51,
+      "win": 0.542,
+      "total": 1647.0,
+      "losers": 27,
+      "share_of_losers": 0.342
+     },
+     "mid": {
+      "n": 58,
+      "mean_net": 45.41,
+      "se": 18.58,
+      "win": 0.552,
+      "total": 2634.0,
+      "losers": 26,
+      "share_of_losers": 0.329
+     },
+     "high": {
+      "n": 59,
+      "mean_net": 23.97,
+      "se": 30.21,
+      "win": 0.559,
+      "total": 1414.0,
+      "losers": 26,
+      "share_of_losers": 0.329
+     }
+    },
+    "spread": -3.95,
+    "spread_se": 35.96,
+    "spread_over_se": -0.11
+   },
+   "B_trail20_pos": {
+    "n": 176,
+    "cells": {
+     "true": {
+      "n": 124,
+      "mean_net": 32.41,
+      "se": 16.8,
+      "win": 0.54,
+      "total": 4018.0,
+      "losers": 57,
+      "share_of_losers": 0.722
+     },
+     "false": {
+      "n": 52,
+      "mean_net": 32.26,
+      "se": 21.94,
+      "win": 0.577,
+      "total": 1677.0,
+      "losers": 22,
+      "share_of_losers": 0.278
+     }
+    },
+    "spread": 0.15,
+    "spread_se": 27.64,
+    "spread_over_se": 0.01
+   },
+   "D_nq_volpct": {
+    "n": 180,
+    "cells": {
+     "low": {
+      "n": 60,
+      "mean_net": 38.6,
+      "se": 17.74,
+      "win": 0.55,
+      "total": 2316.0,
+      "losers": 27,
+      "share_of_losers": 0.325
+     },
+     "mid": {
+      "n": 60,
+      "mean_net": -3.65,
+      "se": 20.77,
+      "win": 0.467,
+      "total": -219.0,
+      "losers": 32,
+      "share_of_losers": 0.386
+     },
+     "high": {
+      "n": 60,
+      "mean_net": 58.2,
+      "se": 28.31,
+      "win": 0.6,
+      "total": 3492.0,
+      "losers": 24,
+      "share_of_losers": 0.289
+     }
+    },
+    "spread": 19.61,
+    "spread_se": 33.41,
+    "spread_over_se": 0.59
+   },
+   "D_nq_down": {
+    "n": 174,
+    "cells": {
+     "true": {
+      "n": 33,
+      "mean_net": 56.23,
+      "se": 45.32,
+      "win": 0.697,
+      "total": 1856.0,
+      "losers": 10,
+      "share_of_losers": 0.128
+     },
+     "false": {
+      "n": 141,
+      "mean_net": 27.31,
+      "se": 13.1,
+      "win": 0.518,
+      "total": 3850.0,
+      "losers": 68,
+      "share_of_losers": 0.872
+     }
+    },
+    "spread": 28.93,
+    "spread_se": 47.17,
+    "spread_over_se": 0.61
+   },
+   "D_own_volpct": {
+    "n": 180,
+    "cells": {
+     "low": {
+      "n": 60,
+      "mean_net": 38.6,
+      "se": 17.74,
+      "win": 0.55,
+      "total": 2316.0,
+      "losers": 27,
+      "share_of_losers": 0.325
+     },
+     "mid": {
+      "n": 60,
+      "mean_net": -3.65,
+      "se": 20.77,
+      "win": 0.467,
+      "total": -219.0,
+      "losers": 32,
+      "share_of_losers": 0.386
+     },
+     "high": {
+      "n": 60,
+      "mean_net": 58.2,
+      "se": 28.31,
+      "win": 0.6,
+      "total": 3492.0,
+      "losers": 24,
+      "share_of_losers": 0.289
+     }
+    },
+    "spread": 19.61,
+    "spread_se": 33.41,
+    "spread_over_se": 0.59
+   },
+   "D_own_down": {
+    "n": 174,
+    "cells": {
+     "true": {
+      "n": 33,
+      "mean_net": 56.23,
+      "se": 45.32,
+      "win": 0.697,
+      "total": 1856.0,
+      "losers": 10,
+      "share_of_losers": 0.128
+     },
+     "false": {
+      "n": 141,
+      "mean_net": 27.31,
+      "se": 13.1,
+      "win": 0.518,
+      "total": 3850.0,
+      "losers": 68,
+      "share_of_losers": 0.872
+     }
+    },
+    "spread": 28.93,
+    "spread_se": 47.17,
+    "spread_over_se": 0.61
+   }
+  },
+  "L4": {
+   "A_proj_over_cost": {
+    "n": 250,
+    "cells": {
+     "low": {
+      "n": 84,
+      "mean_net": 6.85,
+      "se": 8.58,
+      "win": 0.536,
+      "total": 576.0,
+      "losers": 39,
+      "share_of_losers": 0.348
+     },
+     "mid": {
+      "n": 83,
+      "mean_net": 5.32,
+      "se": 13.02,
+      "win": 0.506,
+      "total": 442.0,
+      "losers": 41,
+      "share_of_losers": 0.366
+     },
+     "high": {
+      "n": 83,
+      "mean_net": 28.41,
+      "se": 14.58,
+      "win": 0.614,
+      "total": 2358.0,
+      "losers": 32,
+      "share_of_losers": 0.286
+     }
+    },
+    "spread": 21.56,
+    "spread_se": 16.92,
+    "spread_over_se": 1.27
+   },
+   "A_proj_ge_2c": {
+    "n": 250,
+    "cells": {
+     "true": {
+      "n": 231,
+      "mean_net": 14.1,
+      "se": 7.6,
+      "win": 0.554,
+      "total": 3257.0,
+      "losers": 103,
+      "share_of_losers": 0.92
+     },
+     "false": {
+      "n": 19,
+      "mean_net": 6.21,
+      "se": 14.7,
+      "win": 0.526,
+      "total": 118.0,
+      "losers": 9,
+      "share_of_losers": 0.08
+     }
+    },
+    "spread": 7.89,
+    "spread_se": 16.54,
+    "spread_over_se": 0.48
+   },
+   "B_trail20_net": {
+    "n": 270,
+    "cells": {
+     "low": {
+      "n": 90,
+      "mean_net": 19.81,
+      "se": 11.08,
+      "win": 0.611,
+      "total": 1783.0,
+      "losers": 35,
+      "share_of_losers": 0.292
+     },
+     "mid": {
+      "n": 90,
+      "mean_net": 4.61,
+      "se": 8.73,
+      "win": 0.511,
+      "total": 415.0,
+      "losers": 44,
+      "share_of_losers": 0.367
+     },
+     "high": {
+      "n": 90,
+      "mean_net": 14.96,
+      "se": 14.12,
+      "win": 0.544,
+      "total": 1347.0,
+      "losers": 41,
+      "share_of_losers": 0.342
+     }
+    },
+    "spread": -4.85,
+    "spread_se": 17.94,
+    "spread_over_se": -0.27
+   },
+   "B_trail20_pos": {
+    "n": 270,
+    "cells": {
+     "true": {
+      "n": 201,
+      "mean_net": 11.08,
+      "se": 7.82,
+      "win": 0.547,
+      "total": 2227.0,
+      "losers": 91,
+      "share_of_losers": 0.758
+     },
+     "false": {
+      "n": 69,
+      "mean_net": 19.1,
+      "se": 12.54,
+      "win": 0.58,
+      "total": 1318.0,
+      "losers": 29,
+      "share_of_losers": 0.242
+     }
+    },
+    "spread": -8.01,
+    "spread_se": 14.78,
+    "spread_over_se": -0.54
+   },
+   "D_nq_volpct": {
+    "n": 280,
+    "cells": {
+     "low": {
+      "n": 94,
+      "mean_net": 7.3,
+      "se": 9.29,
+      "win": 0.532,
+      "total": 686.0,
+      "losers": 44,
+      "share_of_losers": 0.344
+     },
+     "mid": {
+      "n": 93,
+      "mean_net": 3.98,
+      "se": 10.26,
+      "win": 0.527,
+      "total": 370.0,
+      "losers": 44,
+      "share_of_losers": 0.344
+     },
+     "high": {
+      "n": 93,
+      "mean_net": 25.02,
+      "se": 13.4,
+      "win": 0.57,
+      "total": 2327.0,
+      "losers": 40,
+      "share_of_losers": 0.312
+     }
+    },
+    "spread": 17.73,
+    "spread_se": 16.31,
+    "spread_over_se": 1.09
+   },
+   "D_nq_down": {
+    "n": 280,
+    "cells": {
+     "true": {
+      "n": 79,
+      "mean_net": 13.21,
+      "se": 15.84,
+      "win": 0.519,
+      "total": 1043.0,
+      "losers": 38,
+      "share_of_losers": 0.297
+     },
+     "false": {
+      "n": 201,
+      "mean_net": 11.64,
+      "se": 6.44,
+      "win": 0.552,
+      "total": 2340.0,
+      "losers": 90,
+      "share_of_losers": 0.703
+     }
+    },
+    "spread": 1.57,
+    "spread_se": 17.1,
+    "spread_over_se": 0.09
+   },
+   "D_own_volpct": {
+    "n": 280,
+    "cells": {
+     "low": {
+      "n": 94,
+      "mean_net": 7.27,
+      "se": 9.04,
+      "win": 0.511,
+      "total": 684.0,
+      "losers": 46,
+      "share_of_losers": 0.359
+     },
+     "mid": {
+      "n": 93,
+      "mean_net": 5.54,
+      "se": 10.3,
+      "win": 0.559,
+      "total": 515.0,
+      "losers": 41,
+      "share_of_losers": 0.32
+     },
+     "high": {
+      "n": 93,
+      "mean_net": 23.5,
+      "se": 13.56,
+      "win": 0.559,
+      "total": 2185.0,
+      "losers": 41,
+      "share_of_losers": 0.32
+     }
+    },
+    "spread": 16.23,
+    "spread_se": 16.3,
+    "spread_over_se": 1.0
+   },
+   "D_own_down": {
+    "n": 280,
+    "cells": {
+     "true": {
+      "n": 150,
+      "mean_net": 19.7,
+      "se": 9.96,
+      "win": 0.573,
+      "total": 2955.0,
+      "losers": 64,
+      "share_of_losers": 0.5
+     },
+     "false": {
+      "n": 130,
+      "mean_net": 3.3,
+      "se": 7.64,
+      "win": 0.508,
+      "total": 429.0,
+      "losers": 64,
+      "share_of_losers": 0.5
+     }
+    },
+    "spread": 16.4,
+    "spread_se": 12.55,
+    "spread_over_se": 1.31
+   }
+  },
+  "NG": {
+   "A_proj_over_cost": {
+    "n": 740,
+    "cells": {
+     "low": {
+      "n": 247,
+      "mean_net": -2.76,
+      "se": 1.66,
+      "win": 0.457,
+      "total": -682.0,
+      "losers": 134,
+      "share_of_losers": 0.354
+     },
+     "mid": {
+      "n": 246,
+      "mean_net": -1.46,
+      "se": 2.07,
+      "win": 0.415,
+      "total": -360.0,
+      "losers": 144,
+      "share_of_losers": 0.381
+     },
+     "high": {
+      "n": 247,
+      "mean_net": 12.26,
+      "se": 4.32,
+      "win": 0.595,
+      "total": 3028.0,
+      "losers": 100,
+      "share_of_losers": 0.265
+     }
+    },
+    "spread": 15.02,
+    "spread_se": 4.63,
+    "spread_over_se": 3.24
+   },
+   "A_proj_ge_2c": {
+    "n": 740,
+    "cells": {
+     "true": {
+      "n": 146,
+      "mean_net": 22.23,
+      "se": 6.56,
+      "win": 0.644,
+      "total": 3245.0,
+      "losers": 52,
+      "share_of_losers": 0.138
+     },
+     "false": {
+      "n": 594,
+      "mean_net": -2.12,
+      "se": 1.32,
+      "win": 0.451,
+      "total": -1259.0,
+      "losers": 326,
+      "share_of_losers": 0.862
+     }
+    },
+    "spread": 24.35,
+    "spread_se": 6.69,
+    "spread_over_se": 3.64
+   },
+   "B_trail20_net": {
+    "n": 760,
+    "cells": {
+     "low": {
+      "n": 254,
+      "mean_net": -2.81,
+      "se": 2.28,
+      "win": 0.417,
+      "total": -714.0,
+      "losers": 148,
+      "share_of_losers": 0.378
+     },
+     "mid": {
+      "n": 253,
+      "mean_net": -1.62,
+      "se": 2.3,
+      "win": 0.455,
+      "total": -411.0,
+      "losers": 138,
+      "share_of_losers": 0.352
+     },
+     "high": {
+      "n": 253,
+      "mean_net": 11.89,
+      "se": 3.97,
+      "win": 0.581,
+      "total": 3009.0,
+      "losers": 106,
+      "share_of_losers": 0.27
+     }
+    },
+    "spread": 14.7,
+    "spread_se": 4.58,
+    "spread_over_se": 3.21
+   },
+   "B_trail20_pos": {
+    "n": 760,
+    "cells": {
+     "true": {
+      "n": 327,
+      "mean_net": 8.56,
+      "se": 3.29,
+      "win": 0.563,
+      "total": 2799.0,
+      "losers": 143,
+      "share_of_losers": 0.365
+     },
+     "false": {
+      "n": 433,
+      "mean_net": -2.11,
+      "se": 1.69,
+      "win": 0.425,
+      "total": -915.0,
+      "losers": 249,
+      "share_of_losers": 0.635
+     }
+    },
+    "spread": 10.67,
+    "spread_se": 3.7,
+    "spread_over_se": 2.88
+   },
+   "D_nq_volpct": {
+    "n": 770,
+    "cells": {
+     "low": {
+      "n": 257,
+      "mean_net": -3.16,
+      "se": 1.84,
+      "win": 0.405,
+      "total": -811.0,
+      "losers": 153,
+      "share_of_losers": 0.383
+     },
+     "mid": {
+      "n": 256,
+      "mean_net": 2.73,
+      "se": 2.44,
+      "win": 0.5,
+      "total": 700.0,
+      "losers": 128,
+      "share_of_losers": 0.32
+     },
+     "high": {
+      "n": 257,
+      "mean_net": 7.53,
+      "se": 4.07,
+      "win": 0.537,
+      "total": 1936.0,
+      "losers": 119,
+      "share_of_losers": 0.297
+     }
+    },
+    "spread": 10.69,
+    "spread_se": 4.46,
+    "spread_over_se": 2.39
+   },
+   "D_nq_down": {
+    "n": 770,
+    "cells": {
+     "true": {
+      "n": 258,
+      "mean_net": 11.84,
+      "se": 4.36,
+      "win": 0.578,
+      "total": 3055.0,
+      "losers": 109,
+      "share_of_losers": 0.273
+     },
+     "false": {
+      "n": 512,
+      "mean_net": -2.4,
+      "se": 1.27,
+      "win": 0.432,
+      "total": -1230.0,
+      "losers": 291,
+      "share_of_losers": 0.728
+     }
+    },
+    "spread": 14.24,
+    "spread_se": 4.54,
+    "spread_over_se": 3.14
+   },
+   "D_own_volpct": {
+    "n": 770,
+    "cells": {
+     "low": {
+      "n": 257,
+      "mean_net": 0.19,
+      "se": 2.12,
+      "win": 0.416,
+      "total": 48.0,
+      "losers": 150,
+      "share_of_losers": 0.375
+     },
+     "mid": {
+      "n": 256,
+      "mean_net": 2.07,
+      "se": 3.41,
+      "win": 0.508,
+      "total": 531.0,
+      "losers": 126,
+      "share_of_losers": 0.315
+     },
+     "high": {
+      "n": 257,
+      "mean_net": 4.85,
+      "se": 3.16,
+      "win": 0.518,
+      "total": 1246.0,
+      "losers": 124,
+      "share_of_losers": 0.31
+     }
+    },
+    "spread": 4.66,
+    "spread_se": 3.81,
+    "spread_over_se": 1.22
+   },
+   "D_own_down": {
+    "n": 770,
+    "cells": {
+     "true": {
+      "n": 444,
+      "mean_net": -2.67,
+      "se": 1.76,
+      "win": 0.437,
+      "total": -1187.0,
+      "losers": 250,
+      "share_of_losers": 0.625
+     },
+     "false": {
+      "n": 326,
+      "mean_net": 9.24,
+      "se": 3.19,
+      "win": 0.54,
+      "total": 3012.0,
+      "losers": 150,
+      "share_of_losers": 0.375
+     }
+    },
+    "spread": -11.91,
+    "spread_se": 3.65,
+    "spread_over_se": -3.27
+   }
+  }
+ },
+ "profiles_ex_2020_2022": {
+  "D737": {
+   "A_proj_over_cost": {
+    "n": 1226,
+    "cells": {
+     "low": {
+      "n": 409,
+      "mean_net": 2.5,
+      "se": 2.85,
+      "win": 0.484,
+      "total": 1024.0,
+      "losers": 211,
+      "share_of_losers": 0.338
+     },
+     "mid": {
+      "n": 408,
+      "mean_net": 8.0,
+      "se": 7.07,
+      "win": 0.48,
+      "total": 3263.0,
+      "losers": 212,
+      "share_of_losers": 0.339
+     },
+     "high": {
+      "n": 409,
+      "mean_net": 18.85,
+      "se": 10.34,
+      "win": 0.506,
+      "total": 7709.0,
+      "losers": 202,
+      "share_of_losers": 0.323
+     }
+    },
+    "spread": 16.34,
+    "spread_se": 10.73,
+    "spread_over_se": 1.52
+   },
+   "A_proj_ge_2c": {
+    "n": 1226,
+    "cells": {
+     "true": {
+      "n": 727,
+      "mean_net": 12.55,
+      "se": 6.91,
+      "win": 0.494,
+      "total": 9122.0,
+      "losers": 368,
+      "share_of_losers": 0.589
+     },
+     "false": {
+      "n": 499,
+      "mean_net": 5.76,
+      "se": 3.07,
+      "win": 0.485,
+      "total": 2873.0,
+      "losers": 257,
+      "share_of_losers": 0.411
+     }
+    },
+    "spread": 6.79,
+    "spread_se": 7.56,
+    "spread_over_se": 0.9
+   },
+   "B_trail20_net": {
+    "n": 1246,
+    "cells": {
+     "low": {
+      "n": 416,
+      "mean_net": 6.72,
+      "se": 6.68,
+      "win": 0.483,
+      "total": 2796.0,
+      "losers": 215,
+      "share_of_losers": 0.34
+     },
+     "mid": {
+      "n": 415,
+      "mean_net": 9.06,
+      "se": 5.5,
+      "win": 0.499,
+      "total": 3762.0,
+      "losers": 208,
+      "share_of_losers": 0.329
+     },
+     "high": {
+      "n": 415,
+      "mean_net": 14.29,
+      "se": 9.26,
+      "win": 0.496,
+      "total": 5931.0,
+      "losers": 209,
+      "share_of_losers": 0.331
+     }
+    },
+    "spread": 7.57,
+    "spread_se": 11.42,
+    "spread_over_se": 0.66
+   },
+   "B_trail20_pos": {
+    "n": 1246,
+    "cells": {
+     "true": {
+      "n": 692,
+      "mean_net": 14.17,
+      "se": 6.26,
+      "win": 0.503,
+      "total": 9803.0,
+      "losers": 344,
+      "share_of_losers": 0.544
+     },
+     "false": {
+      "n": 554,
+      "mean_net": 4.85,
+      "se": 5.39,
+      "win": 0.48,
+      "total": 2684.0,
+      "losers": 288,
+      "share_of_losers": 0.456
+     }
+    },
+    "spread": 9.32,
+    "spread_se": 8.26,
+    "spread_over_se": 1.13
+   },
+   "D_nq_volpct": {
+    "n": 1239,
+    "cells": {
+     "low": {
+      "n": 413,
+      "mean_net": 3.1,
+      "se": 7.44,
+      "win": 0.482,
+      "total": 1280.0,
+      "losers": 214,
+      "share_of_losers": 0.34
+     },
+     "mid": {
+      "n": 413,
+      "mean_net": 10.8,
+      "se": 7.21,
+      "win": 0.499,
+      "total": 4460.0,
+      "losers": 207,
+      "share_of_losers": 0.329
+     },
+     "high": {
+      "n": 413,
+      "mean_net": 16.3,
+      "se": 7.41,
+      "win": 0.496,
+      "total": 6732.0,
+      "losers": 208,
+      "share_of_losers": 0.331
+     }
+    },
+    "spread": 13.2,
+    "spread_se": 10.5,
+    "spread_over_se": 1.26
+   },
+   "D_nq_down": {
+    "n": 1178,
+    "cells": {
+     "true": {
+      "n": 100,
+      "mean_net": 42.18,
+      "se": 19.68,
+      "win": 0.56,
+      "total": 4218.0,
+      "losers": 44,
+      "share_of_losers": 0.073
+     },
+     "false": {
+      "n": 1078,
+      "mean_net": 7.23,
+      "se": 4.5,
+      "win": 0.483,
+      "total": 7789.0,
+      "losers": 557,
+      "share_of_losers": 0.927
+     }
+    },
+    "spread": 34.96,
+    "spread_se": 20.19,
+    "spread_over_se": 1.73
+   },
+   "D_own_volpct": {
+    "n": 1239,
+    "cells": {
+     "low": {
+      "n": 413,
+      "mean_net": 3.1,
+      "se": 7.44,
+      "win": 0.482,
+      "total": 1280.0,
+      "losers": 214,
+      "share_of_losers": 0.34
+     },
+     "mid": {
+      "n": 413,
+      "mean_net": 10.8,
+      "se": 7.21,
+      "win": 0.499,
+      "total": 4460.0,
+      "losers": 207,
+      "share_of_losers": 0.329
+     },
+     "high": {
+      "n": 413,
+      "mean_net": 16.3,
+      "se": 7.41,
+      "win": 0.496,
+      "total": 6732.0,
+      "losers": 208,
+      "share_of_losers": 0.331
+     }
+    },
+    "spread": 13.2,
+    "spread_se": 10.5,
+    "spread_over_se": 1.26
+   },
+   "D_own_down": {
+    "n": 1178,
+    "cells": {
+     "true": {
+      "n": 100,
+      "mean_net": 42.18,
+      "se": 19.68,
+      "win": 0.56,
+      "total": 4218.0,
+      "losers": 44,
+      "share_of_losers": 0.073
+     },
+     "false": {
+      "n": 1078,
+      "mean_net": 7.23,
+      "se": 4.5,
+      "win": 0.483,
+      "total": 7789.0,
+      "losers": 557,
+      "share_of_losers": 0.927
+     }
+    },
+    "spread": 34.96,
+    "spread_se": 20.19,
+    "spread_over_se": 1.73
+   }
+  },
+  "NQ_F2": {
+   "A_proj_over_cost": {
+    "n": 100,
+    "cells": {
+     "low": {
+      "n": 34,
+      "mean_net": 1.82,
+      "se": 17.32,
+      "win": 0.471,
+      "total": 62.0,
+      "losers": 18,
+      "share_of_losers": 0.375
+     },
+     "mid": {
+      "n": 33,
+      "mean_net": 0.19,
+      "se": 16.49,
+      "win": 0.485,
+      "total": 6.0,
+      "losers": 17,
+      "share_of_losers": 0.354
+     },
+     "high": {
+      "n": 33,
+      "mean_net": 18.61,
+      "se": 13.06,
+      "win": 0.606,
+      "total": 614.0,
+      "losers": 13,
+      "share_of_losers": 0.271
+     }
+    },
+    "spread": 16.8,
+    "spread_se": 21.69,
+    "spread_over_se": 0.77
+   },
+   "A_proj_ge_2c": {
+    "n": 100,
+    "cells": {
+     "true": {
+      "n": 85,
+      "mean_net": 7.98,
+      "se": 10.55,
+      "win": 0.541,
+      "total": 678.0,
+      "losers": 39,
+      "share_of_losers": 0.812
+     },
+     "false": {
+      "n": 15,
+      "mean_net": 0.27,
+      "se": 8.61,
+      "win": 0.4,
+      "total": 4.0,
+      "losers": 9,
+      "share_of_losers": 0.188
+     }
+    },
+    "spread": 7.71,
+    "spread_se": 13.61,
+    "spread_over_se": 0.57
+   },
+   "B_trail20_net": {
+    "n": 120,
+    "cells": {
+     "low": {
+      "n": 40,
+      "mean_net": 36.75,
+      "se": 14.6,
+      "win": 0.65,
+      "total": 1470.0,
+      "losers": 14,
+      "share_of_losers": 0.233
+     },
+     "mid": {
+      "n": 40,
+      "mean_net": -8.2,
+      "se": 10.68,
+      "win": 0.375,
+      "total": -328.0,
+      "losers": 25,
+      "share_of_losers": 0.417
+     },
+     "high": {
+      "n": 40,
+      "mean_net": -13.28,
+      "se": 15.41,
+      "win": 0.475,
+      "total": -531.0,
+      "losers": 21,
+      "share_of_losers": 0.35
+     }
+    },
+    "spread": -50.03,
+    "spread_se": 21.23,
+    "spread_over_se": -2.36
+   },
+   "B_trail20_pos": {
+    "n": 120,
+    "cells": {
+     "true": {
+      "n": 71,
+      "mean_net": -13.69,
+      "se": 9.66,
+      "win": 0.437,
+      "total": -972.0,
+      "losers": 40,
+      "share_of_losers": 0.667
+     },
+     "false": {
+      "n": 49,
+      "mean_net": 32.3,
+      "se": 13.31,
+      "win": 0.592,
+      "total": 1583.0,
+      "losers": 20,
+      "share_of_losers": 0.333
+     }
+    },
+    "spread": -45.99,
+    "spread_se": 16.44,
+    "spread_over_se": -2.8
+   },
+   "D_nq_volpct": {
+    "n": 130,
+    "cells": {
+     "low": {
+      "n": 44,
+      "mean_net": 1.56,
+      "se": 14.78,
+      "win": 0.477,
+      "total": 69.0,
+      "losers": 23,
+      "share_of_losers": 0.354
+     },
+     "mid": {
+      "n": 43,
+      "mean_net": 9.37,
+      "se": 14.07,
+      "win": 0.558,
+      "total": 403.0,
+      "losers": 19,
+      "share_of_losers": 0.292
+     },
+     "high": {
+      "n": 43,
+      "mean_net": 4.64,
+      "se": 11.16,
+      "win": 0.465,
+      "total": 200.0,
+      "losers": 23,
+      "share_of_losers": 0.354
+     }
+    },
+    "spread": 3.08,
+    "spread_se": 18.52,
+    "spread_over_se": 0.17
+   },
+   "D_nq_down": {
+    "n": 130,
+    "cells": {
+     "true": {
+      "n": 23,
+      "mean_net": -13.74,
+      "se": 15.51,
+      "win": 0.435,
+      "total": -316.0,
+      "losers": 13,
+      "share_of_losers": 0.2
+     },
+     "false": {
+      "n": 107,
+      "mean_net": 9.23,
+      "se": 8.74,
+      "win": 0.514,
+      "total": 987.0,
+      "losers": 52,
+      "share_of_losers": 0.8
+     }
+    },
+    "spread": -22.97,
+    "spread_se": 17.8,
+    "spread_over_se": -1.29
+   },
+   "D_own_volpct": {
+    "n": 130,
+    "cells": {
+     "low": {
+      "n": 44,
+      "mean_net": 1.56,
+      "se": 14.78,
+      "win": 0.477,
+      "total": 69.0,
+      "losers": 23,
+      "share_of_losers": 0.354
+     },
+     "mid": {
+      "n": 43,
+      "mean_net": 9.37,
+      "se": 14.07,
+      "win": 0.558,
+      "total": 403.0,
+      "losers": 19,
+      "share_of_losers": 0.292
+     },
+     "high": {
+      "n": 43,
+      "mean_net": 4.64,
+      "se": 11.16,
+      "win": 0.465,
+      "total": 200.0,
+      "losers": 23,
+      "share_of_losers": 0.354
+     }
+    },
+    "spread": 3.08,
+    "spread_se": 18.52,
+    "spread_over_se": 0.17
+   },
+   "D_own_down": {
+    "n": 130,
+    "cells": {
+     "true": {
+      "n": 23,
+      "mean_net": -13.74,
+      "se": 15.51,
+      "win": 0.435,
+      "total": -316.0,
+      "losers": 13,
+      "share_of_losers": 0.2
+     },
+     "false": {
+      "n": 107,
+      "mean_net": 9.23,
+      "se": 8.74,
+      "win": 0.514,
+      "total": 987.0,
+      "losers": 52,
+      "share_of_losers": 0.8
+     }
+    },
+    "spread": -22.97,
+    "spread_se": 17.8,
+    "spread_over_se": -1.29
+   }
+  },
+  "C1": {
+   "A_proj_over_cost": {
+    "n": 188,
+    "cells": {
+     "low": {
+      "n": 63,
+      "mean_net": 8.13,
+      "se": 7.75,
+      "win": 0.381,
+      "total": 512.0,
+      "losers": 39,
+      "share_of_losers": 0.368
+     },
+     "mid": {
+      "n": 62,
+      "mean_net": 18.34,
+      "se": 13.33,
+      "win": 0.468,
+      "total": 1137.0,
+      "losers": 33,
+      "share_of_losers": 0.311
+     },
+     "high": {
+      "n": 63,
+      "mean_net": 15.48,
+      "se": 15.62,
+      "win": 0.46,
+      "total": 975.0,
+      "losers": 34,
+      "share_of_losers": 0.321
+     }
+    },
+    "spread": 7.35,
+    "spread_se": 17.44,
+    "spread_over_se": 0.42
+   },
+   "A_proj_ge_2c": {
+    "n": 188,
+    "cells": {
+     "true": {
+      "n": 150,
+      "mean_net": 14.85,
+      "se": 8.74,
+      "win": 0.453,
+      "total": 2228.0,
+      "losers": 82,
+      "share_of_losers": 0.774
+     },
+     "false": {
+      "n": 38,
+      "mean_net": 10.43,
+      "se": 10.52,
+      "win": 0.368,
+      "total": 396.0,
+      "losers": 24,
+      "share_of_losers": 0.226
+     }
+    },
+    "spread": 4.42,
+    "spread_se": 13.68,
+    "spread_over_se": 0.32
+   },
+   "B_trail20_net": {
+    "n": 208,
+    "cells": {
+     "low": {
+      "n": 70,
+      "mean_net": 21.26,
+      "se": 12.38,
+      "win": 0.471,
+      "total": 1489.0,
+      "losers": 37,
+      "share_of_losers": 0.316
+     },
+     "mid": {
+      "n": 69,
+      "mean_net": 10.92,
+      "se": 9.31,
+      "win": 0.435,
+      "total": 753.0,
+      "losers": 39,
+      "share_of_losers": 0.333
+     },
+     "high": {
+      "n": 69,
+      "mean_net": 7.01,
+      "se": 12.89,
+      "win": 0.406,
+      "total": 484.0,
+      "losers": 41,
+      "share_of_losers": 0.35
+     }
+    },
+    "spread": -14.25,
+    "spread_se": 17.87,
+    "spread_over_se": -0.8
+   },
+   "B_trail20_pos": {
+    "n": 208,
+    "cells": {
+     "true": {
+      "n": 143,
+      "mean_net": 10.7,
+      "se": 7.76,
+      "win": 0.427,
+      "total": 1530.0,
+      "losers": 82,
+      "share_of_losers": 0.701
+     },
+     "false": {
+      "n": 65,
+      "mean_net": 18.39,
+      "se": 13.04,
+      "win": 0.462,
+      "total": 1195.0,
+      "losers": 35,
+      "share_of_losers": 0.299
+     }
+    },
+    "spread": -7.69,
+    "spread_se": 15.18,
+    "spread_over_se": -0.51
+   },
+   "D_nq_volpct": {
+    "n": 218,
+    "cells": {
+     "low": {
+      "n": 73,
+      "mean_net": 21.87,
+      "se": 12.81,
+      "win": 0.438,
+      "total": 1597.0,
+      "losers": 41,
+      "share_of_losers": 0.333
+     },
+     "mid": {
+      "n": 72,
+      "mean_net": -6.27,
+      "se": 8.68,
+      "win": 0.375,
+      "total": -452.0,
+      "losers": 45,
+      "share_of_losers": 0.366
+     },
+     "high": {
+      "n": 73,
+      "mean_net": 22.99,
+      "se": 11.79,
+      "win": 0.493,
+      "total": 1678.0,
+      "losers": 37,
+      "share_of_losers": 0.301
+     }
+    },
+    "spread": 1.12,
+    "spread_se": 17.41,
+    "spread_over_se": 0.06
+   },
+   "D_nq_down": {
+    "n": 218,
+    "cells": {
+     "true": {
+      "n": 28,
+      "mean_net": 0.78,
+      "se": 22.31,
+      "win": 0.393,
+      "total": 22.0,
+      "losers": 17,
+      "share_of_losers": 0.138
+     },
+     "false": {
+      "n": 190,
+      "mean_net": 14.74,
+      "se": 6.75,
+      "win": 0.442,
+      "total": 2801.0,
+      "losers": 106,
+      "share_of_losers": 0.862
+     }
+    },
+    "spread": -13.96,
+    "spread_se": 23.31,
+    "spread_over_se": -0.6
+   },
+   "D_own_volpct": {
+    "n": 218,
+    "cells": {
+     "low": {
+      "n": 73,
+      "mean_net": 21.87,
+      "se": 12.81,
+      "win": 0.438,
+      "total": 1597.0,
+      "losers": 41,
+      "share_of_losers": 0.333
+     },
+     "mid": {
+      "n": 72,
+      "mean_net": -6.27,
+      "se": 8.68,
+      "win": 0.375,
+      "total": -452.0,
+      "losers": 45,
+      "share_of_losers": 0.366
+     },
+     "high": {
+      "n": 73,
+      "mean_net": 22.99,
+      "se": 11.79,
+      "win": 0.493,
+      "total": 1678.0,
+      "losers": 37,
+      "share_of_losers": 0.301
+     }
+    },
+    "spread": 1.12,
+    "spread_se": 17.41,
+    "spread_over_se": 0.06
+   },
+   "D_own_down": {
+    "n": 218,
+    "cells": {
+     "true": {
+      "n": 28,
+      "mean_net": 0.78,
+      "se": 22.31,
+      "win": 0.393,
+      "total": 22.0,
+      "losers": 17,
+      "share_of_losers": 0.138
+     },
+     "false": {
+      "n": 190,
+      "mean_net": 14.74,
+      "se": 6.75,
+      "win": 0.442,
+      "total": 2801.0,
+      "losers": 106,
+      "share_of_losers": 0.862
+     }
+    },
+    "spread": -13.96,
+    "spread_se": 23.31,
+    "spread_over_se": -0.6
+   }
+  },
+  "D776": {
+   "A_proj_over_cost": {
+    "n": 109,
+    "cells": {
+     "low": {
+      "n": 37,
+      "mean_net": 12.08,
+      "se": 11.6,
+      "win": 0.432,
+      "total": 447.0,
+      "losers": 21,
+      "share_of_losers": 0.396
+     },
+     "mid": {
+      "n": 36,
+      "mean_net": 36.74,
+      "se": 24.72,
+      "win": 0.528,
+      "total": 1322.0,
+      "losers": 17,
+      "share_of_losers": 0.321
+     },
+     "high": {
+      "n": 36,
+      "mean_net": 65.93,
+      "se": 36.57,
+      "win": 0.583,
+      "total": 2373.0,
+      "losers": 15,
+      "share_of_losers": 0.283
+     }
+    },
+    "spread": 53.85,
+    "spread_se": 38.36,
+    "spread_over_se": 1.4
+   },
+   "A_proj_ge_2c": {
+    "n": 109,
+    "cells": {
+     "true": {
+      "n": 82,
+      "mean_net": 43.49,
+      "se": 19.59,
+      "win": 0.524,
+      "total": 3566.0,
+      "losers": 39,
+      "share_of_losers": 0.736
+     },
+     "false": {
+      "n": 27,
+      "mean_net": 21.36,
+      "se": 13.5,
+      "win": 0.481,
+      "total": 577.0,
+      "losers": 14,
+      "share_of_losers": 0.264
+     }
+    },
+    "spread": 22.14,
+    "spread_se": 23.79,
+    "spread_over_se": 0.93
+   },
+   "B_trail20_net": {
+    "n": 129,
+    "cells": {
+     "low": {
+      "n": 43,
+      "mean_net": 21.65,
+      "se": 18.67,
+      "win": 0.512,
+      "total": 931.0,
+      "losers": 21,
+      "share_of_losers": 0.339
+     },
+     "mid": {
+      "n": 43,
+      "mean_net": 40.84,
+      "se": 19.39,
+      "win": 0.535,
+      "total": 1756.0,
+      "losers": 20,
+      "share_of_losers": 0.323
+     },
+     "high": {
+      "n": 43,
+      "mean_net": 30.12,
+      "se": 28.11,
+      "win": 0.512,
+      "total": 1295.0,
+      "losers": 21,
+      "share_of_losers": 0.339
+     }
+    },
+    "spread": 8.47,
+    "spread_se": 33.75,
+    "spread_over_se": 0.25
+   },
+   "B_trail20_pos": {
+    "n": 129,
+    "cells": {
+     "true": {
+      "n": 90,
+      "mean_net": 32.99,
+      "se": 16.28,
+      "win": 0.511,
+      "total": 2969.0,
+      "losers": 44,
+      "share_of_losers": 0.71
+     },
+     "false": {
+      "n": 39,
+      "mean_net": 25.97,
+      "se": 20.45,
+      "win": 0.538,
+      "total": 1013.0,
+      "losers": 18,
+      "share_of_losers": 0.29
+     }
+    },
+    "spread": 7.02,
+    "spread_se": 26.14,
+    "spread_over_se": 0.27
+   },
+   "D_nq_volpct": {
+    "n": 133,
+    "cells": {
+     "low": {
+      "n": 45,
+      "mean_net": 44.75,
+      "se": 21.46,
+      "win": 0.511,
+      "total": 2014.0,
+      "losers": 22,
+      "share_of_losers": 0.333
+     },
+     "mid": {
+      "n": 44,
+      "mean_net": -3.42,
+      "se": 17.76,
+      "win": 0.477,
+      "total": -151.0,
+      "losers": 23,
+      "share_of_losers": 0.348
+     },
+     "high": {
+      "n": 44,
+      "mean_net": 45.74,
+      "se": 24.98,
+      "win": 0.523,
+      "total": 2012.0,
+      "losers": 21,
+      "share_of_losers": 0.318
+     }
+    },
+    "spread": 0.98,
+    "spread_se": 32.94,
+    "spread_over_se": 0.03
+   },
+   "D_nq_down": {
+    "n": 127,
+    "cells": {
+     "true": {
+      "n": 11,
+      "mean_net": 72.07,
+      "se": 52.38,
+      "win": 0.727,
+      "total": 793.0,
+      "losers": 3,
+      "share_of_losers": 0.049
+     },
+     "false": {
+      "n": 116,
+      "mean_net": 27.58,
+      "se": 13.46,
+      "win": 0.5,
+      "total": 3199.0,
+      "losers": 58,
+      "share_of_losers": 0.951
+     }
+    },
+    "spread": 44.49,
+    "spread_se": 54.08,
+    "spread_over_se": 0.82
+   },
+   "D_own_volpct": {
+    "n": 133,
+    "cells": {
+     "low": {
+      "n": 45,
+      "mean_net": 44.75,
+      "se": 21.46,
+      "win": 0.511,
+      "total": 2014.0,
+      "losers": 22,
+      "share_of_losers": 0.333
+     },
+     "mid": {
+      "n": 44,
+      "mean_net": -3.42,
+      "se": 17.76,
+      "win": 0.477,
+      "total": -151.0,
+      "losers": 23,
+      "share_of_losers": 0.348
+     },
+     "high": {
+      "n": 44,
+      "mean_net": 45.74,
+      "se": 24.98,
+      "win": 0.523,
+      "total": 2012.0,
+      "losers": 21,
+      "share_of_losers": 0.318
+     }
+    },
+    "spread": 0.98,
+    "spread_se": 32.94,
+    "spread_over_se": 0.03
+   },
+   "D_own_down": {
+    "n": 127,
+    "cells": {
+     "true": {
+      "n": 11,
+      "mean_net": 72.07,
+      "se": 52.38,
+      "win": 0.727,
+      "total": 793.0,
+      "losers": 3,
+      "share_of_losers": 0.049
+     },
+     "false": {
+      "n": 116,
+      "mean_net": 27.58,
+      "se": 13.46,
+      "win": 0.5,
+      "total": 3199.0,
+      "losers": 58,
+      "share_of_losers": 0.951
+     }
+    },
+    "spread": 44.49,
+    "spread_se": 54.08,
+    "spread_over_se": 0.82
+   }
+  },
+  "L4": {
+   "A_proj_over_cost": {
+    "n": 128,
+    "cells": {
+     "low": {
+      "n": 43,
+      "mean_net": 4.21,
+      "se": 8.99,
+      "win": 0.581,
+      "total": 181.0,
+      "losers": 18,
+      "share_of_losers": 0.31
+     },
+     "mid": {
+      "n": 42,
+      "mean_net": 16.31,
+      "se": 14.8,
+      "win": 0.524,
+      "total": 685.0,
+      "losers": 20,
+      "share_of_losers": 0.345
+     },
+     "high": {
+      "n": 43,
+      "mean_net": 22.71,
+      "se": 14.76,
+      "win": 0.535,
+      "total": 976.0,
+      "losers": 20,
+      "share_of_losers": 0.345
+     }
+    },
+    "spread": 18.5,
+    "spread_se": 17.28,
+    "spread_over_se": 1.07
+   },
+   "A_proj_ge_2c": {
+    "n": 128,
+    "cells": {
+     "true": {
+      "n": 119,
+      "mean_net": 15.27,
+      "se": 7.99,
+      "win": 0.546,
+      "total": 1817.0,
+      "losers": 54,
+      "share_of_losers": 0.931
+     },
+     "false": {
+      "n": 9,
+      "mean_net": 2.85,
+      "se": 19.03,
+      "win": 0.556,
+      "total": 26.0,
+      "losers": 4,
+      "share_of_losers": 0.069
+     }
+    },
+    "spread": 12.41,
+    "spread_se": 20.64,
+    "spread_over_se": 0.6
+   },
+   "B_trail20_net": {
+    "n": 148,
+    "cells": {
+     "low": {
+      "n": 50,
+      "mean_net": 35.15,
+      "se": 9.96,
+      "win": 0.72,
+      "total": 1757.0,
+      "losers": 14,
+      "share_of_losers": 0.212
+     },
+     "mid": {
+      "n": 49,
+      "mean_net": 11.74,
+      "se": 10.55,
+      "win": 0.469,
+      "total": 575.0,
+      "losers": 26,
+      "share_of_losers": 0.394
+     },
+     "high": {
+      "n": 49,
+      "mean_net": -6.56,
+      "se": 13.59,
+      "win": 0.469,
+      "total": -321.0,
+      "losers": 26,
+      "share_of_losers": 0.394
+     }
+    },
+    "spread": -41.71,
+    "spread_se": 16.85,
+    "spread_over_se": -2.48
+   },
+   "B_trail20_pos": {
+    "n": 148,
+    "cells": {
+     "true": {
+      "n": 123,
+      "mean_net": 6.02,
+      "se": 7.15,
+      "win": 0.52,
+      "total": 741.0,
+      "losers": 59,
+      "share_of_losers": 0.894
+     },
+     "false": {
+      "n": 25,
+      "mean_net": 50.84,
+      "se": 17.03,
+      "win": 0.72,
+      "total": 1271.0,
+      "losers": 7,
+      "share_of_losers": 0.106
+     }
+    },
+    "spread": -44.82,
+    "spread_se": 18.47,
+    "spread_over_se": -2.43
+   },
+   "D_nq_volpct": {
+    "n": 158,
+    "cells": {
+     "low": {
+      "n": 53,
+      "mean_net": 9.58,
+      "se": 13.18,
+      "win": 0.491,
+      "total": 508.0,
+      "losers": 27,
+      "share_of_losers": 0.365
+     },
+     "mid": {
+      "n": 52,
+      "mean_net": 18.15,
+      "se": 10.53,
+      "win": 0.615,
+      "total": 944.0,
+      "losers": 20,
+      "share_of_losers": 0.27
+     },
+     "high": {
+      "n": 53,
+      "mean_net": 7.52,
+      "se": 8.95,
+      "win": 0.491,
+      "total": 399.0,
+      "losers": 27,
+      "share_of_losers": 0.365
+     }
+    },
+    "spread": -2.06,
+    "spread_se": 15.93,
+    "spread_over_se": -0.13
+   },
+   "D_nq_down": {
+    "n": 158,
+    "cells": {
+     "true": {
+      "n": 29,
+      "mean_net": 25.21,
+      "se": 16.08,
+      "win": 0.517,
+      "total": 731.0,
+      "losers": 14,
+      "share_of_losers": 0.189
+     },
+     "false": {
+      "n": 129,
+      "mean_net": 8.68,
+      "se": 6.87,
+      "win": 0.535,
+      "total": 1119.0,
+      "losers": 60,
+      "share_of_losers": 0.811
+     }
+    },
+    "spread": 16.53,
+    "spread_se": 17.49,
+    "spread_over_se": 0.94
+   },
+   "D_own_volpct": {
+    "n": 158,
+    "cells": {
+     "low": {
+      "n": 53,
+      "mean_net": 13.06,
+      "se": 12.29,
+      "win": 0.491,
+      "total": 692.0,
+      "losers": 27,
+      "share_of_losers": 0.365
+     },
+     "mid": {
+      "n": 52,
+      "mean_net": 13.15,
+      "se": 11.57,
+      "win": 0.577,
+      "total": 684.0,
+      "losers": 22,
+      "share_of_losers": 0.297
+     },
+     "high": {
+      "n": 53,
+      "mean_net": 8.95,
+      "se": 9.03,
+      "win": 0.528,
+      "total": 474.0,
+      "losers": 25,
+      "share_of_losers": 0.338
+     }
+    },
+    "spread": -4.11,
+    "spread_se": 15.25,
+    "spread_over_se": -0.27
+   },
+   "D_own_down": {
+    "n": 158,
+    "cells": {
+     "true": {
+      "n": 72,
+      "mean_net": 16.96,
+      "se": 8.52,
+      "win": 0.542,
+      "total": 1221.0,
+      "losers": 33,
+      "share_of_losers": 0.446
+     },
+     "false": {
+      "n": 86,
+      "mean_net": 7.32,
+      "se": 9.22,
+      "win": 0.523,
+      "total": 630.0,
+      "losers": 41,
+      "share_of_losers": 0.554
+     }
+    },
+    "spread": 9.63,
+    "spread_se": 12.56,
+    "spread_over_se": 0.77
+   }
+  },
+  "NG": {
+   "A_proj_over_cost": {
+    "n": 418,
+    "cells": {
+     "low": {
+      "n": 140,
+      "mean_net": -4.68,
+      "se": 2.39,
+      "win": 0.421,
+      "total": -655.0,
+      "losers": 81,
+      "share_of_losers": 0.355
+     },
+     "mid": {
+      "n": 139,
+      "mean_net": -3.68,
+      "se": 2.32,
+      "win": 0.403,
+      "total": -512.0,
+      "losers": 83,
+      "share_of_losers": 0.364
+     },
+     "high": {
+      "n": 139,
+      "mean_net": 2.58,
+      "se": 3.17,
+      "win": 0.54,
+      "total": 358.0,
+      "losers": 64,
+      "share_of_losers": 0.281
+     }
+    },
+    "spread": 7.25,
+    "spread_se": 3.97,
+    "spread_over_se": 1.83
+   },
+   "A_proj_ge_2c": {
+    "n": 418,
+    "cells": {
+     "true": {
+      "n": 16,
+      "mean_net": 7.69,
+      "se": 12.99,
+      "win": 0.688,
+      "total": 123.0,
+      "losers": 5,
+      "share_of_losers": 0.022
+     },
+     "false": {
+      "n": 402,
+      "mean_net": -2.32,
+      "se": 1.51,
+      "win": 0.445,
+      "total": -932.0,
+      "losers": 223,
+      "share_of_losers": 0.978
+     }
+    },
+    "spread": 10.01,
+    "spread_se": 13.08,
+    "spread_over_se": 0.77
+   },
+   "B_trail20_net": {
+    "n": 438,
+    "cells": {
+     "low": {
+      "n": 146,
+      "mean_net": -5.16,
+      "se": 2.51,
+      "win": 0.384,
+      "total": -753.0,
+      "losers": 90,
+      "share_of_losers": 0.372
+     },
+     "mid": {
+      "n": 146,
+      "mean_net": -3.36,
+      "se": 2.79,
+      "win": 0.418,
+      "total": -491.0,
+      "losers": 85,
+      "share_of_losers": 0.351
+     },
+     "high": {
+      "n": 146,
+      "mean_net": 2.28,
+      "se": 3.27,
+      "win": 0.541,
+      "total": 333.0,
+      "losers": 67,
+      "share_of_losers": 0.277
+     }
+    },
+    "spread": 7.44,
+    "spread_se": 4.13,
+    "spread_over_se": 1.8
+   },
+   "B_trail20_pos": {
+    "n": 438,
+    "cells": {
+     "true": {
+      "n": 149,
+      "mean_net": 0.77,
+      "se": 3.51,
+      "win": 0.537,
+      "total": 115.0,
+      "losers": 69,
+      "share_of_losers": 0.285
+     },
+     "false": {
+      "n": 289,
+      "mean_net": -3.55,
+      "se": 1.75,
+      "win": 0.401,
+      "total": -1026.0,
+      "losers": 173,
+      "share_of_losers": 0.715
+     }
+    },
+    "spread": 4.32,
+    "spread_se": 3.92,
+    "spread_over_se": 1.1
+   },
+   "D_nq_volpct": {
+    "n": 448,
+    "cells": {
+     "low": {
+      "n": 150,
+      "mean_net": -2.8,
+      "se": 2.17,
+      "win": 0.433,
+      "total": -420.0,
+      "losers": 85,
+      "share_of_losers": 0.34
+     },
+     "mid": {
+      "n": 149,
+      "mean_net": -3.25,
+      "se": 2.6,
+      "win": 0.43,
+      "total": -484.0,
+      "losers": 85,
+      "share_of_losers": 0.34
+     },
+     "high": {
+      "n": 149,
+      "mean_net": -0.44,
+      "se": 3.54,
+      "win": 0.463,
+      "total": -66.0,
+      "losers": 80,
+      "share_of_losers": 0.32
+     }
+    },
+    "spread": 2.36,
+    "spread_se": 4.15,
+    "spread_over_se": 0.57
+   },
+   "D_nq_down": {
+    "n": 448,
+    "cells": {
+     "true": {
+      "n": 67,
+      "mean_net": 0.49,
+      "se": 7.11,
+      "win": 0.552,
+      "total": 33.0,
+      "losers": 30,
+      "share_of_losers": 0.12
+     },
+     "false": {
+      "n": 381,
+      "mean_net": -2.63,
+      "se": 1.46,
+      "win": 0.423,
+      "total": -1003.0,
+      "losers": 220,
+      "share_of_losers": 0.88
+     }
+    },
+    "spread": 3.13,
+    "spread_se": 7.26,
+    "spread_over_se": 0.43
+   },
+   "D_own_volpct": {
+    "n": 448,
+    "cells": {
+     "low": {
+      "n": 150,
+      "mean_net": -5.93,
+      "se": 1.69,
+      "win": 0.353,
+      "total": -890.0,
+      "losers": 97,
+      "share_of_losers": 0.388
+     },
+     "mid": {
+      "n": 149,
+      "mean_net": -4.34,
+      "se": 2.16,
+      "win": 0.423,
+      "total": -646.0,
+      "losers": 86,
+      "share_of_losers": 0.344
+     },
+     "high": {
+      "n": 149,
+      "mean_net": 3.8,
+      "se": 4.02,
+      "win": 0.55,
+      "total": 566.0,
+      "losers": 67,
+      "share_of_losers": 0.268
+     }
+    },
+    "spread": 9.73,
+    "spread_se": 4.36,
+    "spread_over_se": 2.23
+   },
+   "D_own_down": {
+    "n": 448,
+    "cells": {
+     "true": {
+      "n": 281,
+      "mean_net": -3.01,
+      "se": 1.7,
+      "win": 0.416,
+      "total": -845.0,
+      "losers": 164,
+      "share_of_losers": 0.656
+     },
+     "false": {
+      "n": 167,
+      "mean_net": -0.75,
+      "se": 3.3,
+      "win": 0.485,
+      "total": -125.0,
+      "losers": 86,
+      "share_of_losers": 0.344
+     }
+    },
+    "spread": -2.26,
+    "spread_se": 3.72,
+    "spread_over_se": -0.61
+   }
+  }
+ },
+ "cross_book": {
+  "A_proj_over_cost": {
+   "D737": {
+    "spread": 22.82,
+    "spread_over_se": 1.79,
+    "spread_ex2020_22": 16.34
+   },
+   "NQ_F2": {
+    "spread": 24.93,
+    "spread_over_se": 1.07,
+    "spread_ex2020_22": 16.8
+   },
+   "C1": {
+    "spread": 7.55,
+    "spread_over_se": 0.39,
+    "spread_ex2020_22": 7.35
+   },
+   "D776": {
+    "spread": 45.37,
+    "spread_over_se": 1.32,
+    "spread_ex2020_22": 53.85
+   },
+   "L4": {
+    "spread": 21.56,
+    "spread_over_se": 1.27,
+    "spread_ex2020_22": 18.5
+   },
+   "NG": {
+    "spread": 15.02,
+    "spread_over_se": 3.24,
+    "spread_ex2020_22": 7.25
+   }
+  },
+  "A_proj_ge_2c": {
+   "D737": {
+    "spread": 14.42,
+    "spread_over_se": 1.84,
+    "spread_ex2020_22": 6.79
+   },
+   "NQ_F2": {
+    "spread": 24.93,
+    "spread_over_se": 0.99,
+    "spread_ex2020_22": 7.71
+   },
+   "C1": {
+    "spread": 9.02,
+    "spread_over_se": 0.68,
+    "spread_ex2020_22": 4.42
+   },
+   "D776": {
+    "spread": 19.57,
+    "spread_over_se": 0.87,
+    "spread_ex2020_22": 22.14
+   },
+   "L4": {
+    "spread": 7.89,
+    "spread_over_se": 0.48,
+    "spread_ex2020_22": 12.41
+   },
+   "NG": {
+    "spread": 24.35,
+    "spread_over_se": 3.64,
+    "spread_ex2020_22": 10.01
+   }
+  },
+  "B_trail20_net": {
+   "D737": {
+    "spread": 9.94,
+    "spread_over_se": 0.74,
+    "spread_ex2020_22": 7.57
+   },
+   "NQ_F2": {
+    "spread": 18.43,
+    "spread_over_se": 0.86,
+    "spread_ex2020_22": -50.03
+   },
+   "C1": {
+    "spread": -5.88,
+    "spread_over_se": -0.33,
+    "spread_ex2020_22": -14.25
+   },
+   "D776": {
+    "spread": -3.95,
+    "spread_over_se": -0.11,
+    "spread_ex2020_22": 8.47
+   },
+   "L4": {
+    "spread": -4.85,
+    "spread_over_se": -0.27,
+    "spread_ex2020_22": -41.71
+   },
+   "NG": {
+    "spread": 14.7,
+    "spread_over_se": 3.21,
+    "spread_ex2020_22": 7.44
+   }
+  },
+  "B_trail20_pos": {
+   "D737": {
+    "spread": 8.54,
+    "spread_over_se": 0.92,
+    "spread_ex2020_22": 9.32
+   },
+   "NQ_F2": {
+    "spread": -1.53,
+    "spread_over_se": -0.08,
+    "spread_ex2020_22": -45.99
+   },
+   "C1": {
+    "spread": 9.12,
+    "spread_over_se": 0.62,
+    "spread_ex2020_22": -7.69
+   },
+   "D776": {
+    "spread": 0.15,
+    "spread_over_se": 0.01,
+    "spread_ex2020_22": 7.02
+   },
+   "L4": {
+    "spread": -8.01,
+    "spread_over_se": -0.54,
+    "spread_ex2020_22": -44.82
+   },
+   "NG": {
+    "spread": 10.67,
+    "spread_over_se": 2.88,
+    "spread_ex2020_22": 4.32
+   }
+  },
+  "D_nq_volpct": {
+   "D737": {
+    "spread": 24.87,
+    "spread_over_se": 1.98,
+    "spread_ex2020_22": 13.2
+   },
+   "NQ_F2": {
+    "spread": 35.94,
+    "spread_over_se": 1.7,
+    "spread_ex2020_22": 3.08
+   },
+   "C1": {
+    "spread": 5.38,
+    "spread_over_se": 0.29,
+    "spread_ex2020_22": 1.12
+   },
+   "D776": {
+    "spread": 19.61,
+    "spread_over_se": 0.59,
+    "spread_ex2020_22": 0.98
+   },
+   "L4": {
+    "spread": 17.73,
+    "spread_over_se": 1.09,
+    "spread_ex2020_22": -2.06
+   },
+   "NG": {
+    "spread": 10.69,
+    "spread_over_se": 2.39,
+    "spread_ex2020_22": 2.36
+   }
+  },
+  "D_nq_down": {
+   "D737": {
+    "spread": 27.4,
+    "spread_over_se": 1.48,
+    "spread_ex2020_22": 34.96
+   },
+   "NQ_F2": {
+    "spread": 36.73,
+    "spread_over_se": 1.83,
+    "spread_ex2020_22": -22.97
+   },
+   "C1": {
+    "spread": 10.35,
+    "spread_over_se": 0.52,
+    "spread_ex2020_22": -13.96
+   },
+   "D776": {
+    "spread": 28.93,
+    "spread_over_se": 0.61,
+    "spread_ex2020_22": 44.49
+   },
+   "L4": {
+    "spread": 1.57,
+    "spread_over_se": 0.09,
+    "spread_ex2020_22": 16.53
+   },
+   "NG": {
+    "spread": 14.24,
+    "spread_over_se": 3.14,
+    "spread_ex2020_22": 3.13
+   }
+  },
+  "D_own_volpct": {
+   "D737": {
+    "spread": 24.87,
+    "spread_over_se": 1.98,
+    "spread_ex2020_22": 13.2
+   },
+   "NQ_F2": {
+    "spread": 35.94,
+    "spread_over_se": 1.7,
+    "spread_ex2020_22": 3.08
+   },
+   "C1": {
+    "spread": 5.38,
+    "spread_over_se": 0.29,
+    "spread_ex2020_22": 1.12
+   },
+   "D776": {
+    "spread": 19.61,
+    "spread_over_se": 0.59,
+    "spread_ex2020_22": 0.98
+   },
+   "L4": {
+    "spread": 16.23,
+    "spread_over_se": 1.0,
+    "spread_ex2020_22": -4.11
+   },
+   "NG": {
+    "spread": 4.66,
+    "spread_over_se": 1.22,
+    "spread_ex2020_22": 9.73
+   }
+  },
+  "D_own_down": {
+   "D737": {
+    "spread": 27.4,
+    "spread_over_se": 1.48,
+    "spread_ex2020_22": 34.96
+   },
+   "NQ_F2": {
+    "spread": 36.73,
+    "spread_over_se": 1.83,
+    "spread_ex2020_22": -22.97
+   },
+   "C1": {
+    "spread": 10.35,
+    "spread_over_se": 0.52,
+    "spread_ex2020_22": -13.96
+   },
+   "D776": {
+    "spread": 28.93,
+    "spread_over_se": 0.61,
+    "spread_ex2020_22": 44.49
+   },
+   "L4": {
+    "spread": 16.4,
+    "spread_over_se": 1.31,
+    "spread_ex2020_22": 9.63
+   },
+   "NG": {
+    "spread": -11.91,
+    "spread_over_se": -3.27,
+    "spread_ex2020_22": -2.26
+   }
+  }
+ },
+ "candidates": {
+  "A_proj_over_cost": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": 1,
+    "D776": 1,
+    "L4": 1,
+    "NG": 1
+   }
+  },
+  "A_proj_ge_2c": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": 1,
+    "D776": 1,
+    "L4": 1,
+    "NG": 1
+   }
+  },
+  "B_trail20_net": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": -1,
+    "D776": -1,
+    "L4": -1,
+    "NG": 1
+   }
+  },
+  "B_trail20_pos": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": -1,
+    "C1": 1,
+    "D776": 1,
+    "L4": -1,
+    "NG": 1
+   }
+  },
+  "D_nq_volpct": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": 1,
+    "D776": 1,
+    "L4": 1,
+    "NG": 1
+   }
+  },
+  "D_nq_down": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": 1,
+    "D776": 1,
+    "L4": 1,
+    "NG": 1
+   }
+  },
+  "D_own_volpct": {
+   "books_over_2se_same_sign_ex2020_22": [],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": 1,
+    "D776": 1,
+    "L4": 1,
+    "NG": 1
+   }
+  },
+  "D_own_down": {
+   "books_over_2se_same_sign_ex2020_22": [
+    "NG"
+   ],
+   "candidate": false,
+   "signs": {
+    "D737": 1,
+    "NQ_F2": 1,
+    "C1": 1,
+    "D776": 1,
+    "L4": 1,
+    "NG": -1
+   }
+  }
+ },
+ "mechanism_typed_signs": {
+  "A_proj_over_cost": {
+   "continuation": [
+    1,
+    1,
+    1
+   ],
+   "reversion": [
+    1,
+    1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "A_proj_ge_2c": {
+   "continuation": [
+    1,
+    1,
+    1
+   ],
+   "reversion": [
+    1,
+    1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "B_trail20_net": {
+   "continuation": [
+    1,
+    1,
+    -1
+   ],
+   "reversion": [
+    -1,
+    -1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "B_trail20_pos": {
+   "continuation": [
+    1,
+    -1,
+    1
+   ],
+   "reversion": [
+    1,
+    -1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "D_nq_volpct": {
+   "continuation": [
+    1,
+    1,
+    1
+   ],
+   "reversion": [
+    1,
+    1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "D_nq_down": {
+   "continuation": [
+    1,
+    1,
+    1
+   ],
+   "reversion": [
+    1,
+    1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "D_own_volpct": {
+   "continuation": [
+    1,
+    1,
+    1
+   ],
+   "reversion": [
+    1,
+    1
+   ],
+   "flow": [
+    1
+   ]
+  },
+  "D_own_down": {
+   "continuation": [
+    1,
+    1,
+    1
+   ],
+   "reversion": [
+    1,
+    1
+   ],
+   "flow": [
+    -1
+   ]
+  }
+ },
+ "d649_note": "NG's projected-profit line (D649, slot 8) is family A on D630's trades: its own projection rule",
+ "wall_s": 273.4
+}

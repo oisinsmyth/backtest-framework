@@ -14,6 +14,13 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 787.**
+  - **D786 DIAG RESULT (2026-10-03): no candidate by the declared rule.**
+    - **Family A (own projected payoff ≥ 2 × cost) has the same sign in all six books,** with and without 2020/2022.
+      It is significant only in NG (D649 already uses it).
+    - Families B (self-referential), C (mechanism-typed) and D (shared volatility or trend) are not supported;
+      volatility level is mostly 2020/2022.
+    - **Open:** the dollar-versus-basis-point confound (σ\$ rises with NQ's price). The next design is the
+      principal's.
   - **D786 DIAG (2026-10-03): PRE-REGISTERED, the abstention oracle across six books** (the principal: "Start on the
     abstention principle"; in-sample formation first; all four families; the index books and NG).
     - **The books:** D737, NQ F2, C1, D776, L4 and NG (D723), 2016–2023, at micro.

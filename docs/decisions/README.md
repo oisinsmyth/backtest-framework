@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 632 of these records carry neither field —
+**No Status or Category column, deliberately.** 633 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -858,7 +858,7 @@ would look like data. The tokens are what is shown.
 | D783 | D783 STAGE 0 RESULT — NO EFFECT in every cell: the other BLS releases at 08:30 do not revert like CPI and the jobs repo… | [PRE-REG](D783-STAGE-0-PRE-REG-fade-the-other-bls-0830-releases.md) · [RESULT](D783-STAGE-0-RESULT-the-other-bls-releases-do-not-revert.md) |
 | D784 | the forward ledger for base L4 (D781's frozen line), built now and proved in-sample, to run after the joint run | [record](D784-the-forward-ledger-for-base-l4.md) |
 | D785 | the forward ledger for D776 (the CPI and jobs-report fade, slot 2), built, proved in-sample and run: its first forward… | [record](D785-the-forward-ledger-for-d776.md) |
-| D786 | D786 DIAG PRE-REG — the abstention oracle across six books: where each book's losing trades sit, on four families of pr… | [PRE-REG](D786-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md) |
+| D786 | D786 DIAG RESULT — no state is a candidate by the declared rule, but one family points the same way in all six books, w… | [PRE-REG](D786-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md) · [RESULT](D786-DIAG-RESULT-the-abstention-oracle-across-six-books.md) |
 
 <!-- REGISTER:END -->
 
