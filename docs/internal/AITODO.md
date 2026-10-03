@@ -26,7 +26,10 @@
       - **But one micro each breaches the \$2,000 trailing barrier 4 times** (max DD \$2,817); hurdle P passes anyway (P3,
         P4).
       - D737 carries 57% of the P&L, and 2022 41%.
-    - **Next:** the freeze, on the principal's word, before the joint run.
+    - **FROZEN 2026-10-04** (the principal: "Freeze it"): `data/FROZEN_vault_d792_prop_book.json`.
+      - It hashes 9 files and the six member freezes (D716, D680, D737, D776, D781, D734).
+      - The dry check stops at `[ORDER]`.
+      - The last step of the joint run (JOINT_RUN_CHECKLIST §3); the forward read is on or after 2027-09-30.
   - **Numbers renumbered 2026-10-03:** another session (the China-open line) committed D786 and D787 to main first.
     The abstention oracle and signal strength became **D788** and **D789**; their scripts and data keep the old numbers.
   - **THE ABSTENTION FORMATION IS PAUSED (2026-10-03, the principal: "Record and pause").**

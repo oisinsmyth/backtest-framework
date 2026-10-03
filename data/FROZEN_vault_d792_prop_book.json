@@ -1,0 +1,85 @@
+{
+ "record": "docs/decisions/D792-PRE-REG-the-assembled-prop-book-for-the-joint-vault.md",
+ "runner": "scripts/vault_d792_prop_book.py",
+ "runner_sha256": "08afdbd2a6b63f0288e3ed9ab82f1d74634c87568520429246bc12ccae9e1822",
+ "prereg_sha256": "49b2dafbea83361d9f20f2c9f261276e713589a603dffa63a71ed977d75346cb",
+ "hashed_unchanged": {
+  "scripts/vault_d734_nq_book.py": "983f5c640d51a704ced731b481481cec058ce28b2efb468636cedd214a986317",
+  "scripts/vault_d716_nq_f2.py": "ca98b8f9104f68d2edbaad4d8e067a7499eb85c339e4e76a2a1a4932f9091d8c",
+  "scripts/vault_d680_nq_compression.py": "8bb8b98e6c5b5ebbcf55535ae29e5e14191319e113a68065dfdf9170b4ed7e8e",
+  "scripts/joint_d680_vault.py": "7eee33606f62c6c159ab639448323f5268783a8d7a7ed3b1f43421be70dc9ded",
+  "scripts/vault_d737_nq_leads_the_dow.py": "0575ef40af061eb446486d140004304a1c6b41bb15067b7553b2baea27f84f2a",
+  "scripts/vault_d776_cpi_nfp_fade.py": "b0b5453c787f786c14e1f3272ed1afc912dd992101d3d0c0d0ebf79ea782fcf0",
+  "scripts/vault_d781_l4_auction_fade.py": "c38c8acf1aecdb297e8e090997d8bb8b3d8203d12e7175332824a52edd0bfa0f",
+  "src/backtest_framework/validation/hurdle_p.py": "7b144578c34cef45b109f674d42c70bb1e6208eee8238af46f8ef4f5560a3cca",
+  "data/prop_venues.json": "147159e30f5bfc4c2c5c3c6244f389bc8b8ec5f47a405251e8f508d122a53d77"
+ },
+ "member_freezes": {
+  "D716": {
+   "path": "data/FROZEN_vault_d716_nq_f2.json",
+   "sha256": "1699a2c577e00ded367c816d1e5ec845b0369c65a31e61db549298bcaa3ac2b8"
+  },
+  "D680": {
+   "path": "data/FROZEN_vault_d680_nq_compression.json",
+   "sha256": "439b955b75a9ecaa26bbd3ef0c3d0775328dd58d605382fe898a4c59f9b1b1a2"
+  },
+  "D737": {
+   "path": "data/FROZEN_vault_d737_nq_leads_the_dow.json",
+   "sha256": "fcd01a060dbc8debad67f5230db3b8ee45422e16034bb8cdba1573771aa25e5d"
+  },
+  "D776": {
+   "path": "data/FROZEN_vault_d776_cpi_nfp_fade.json",
+   "sha256": "cffdbdf7aae5006cdd2a9b08685ad31a6859fe74d62954a251e731a219c91057"
+  },
+  "D781": {
+   "path": "data/FROZEN_vault_d781_l4_auction_fade.json",
+   "sha256": "a3d24e609ba55fef9c7bf2662d13c8aaef28e731e7949e59fd2cfe8de8e9c659"
+  },
+  "D734": {
+   "path": "data/FROZEN_vault_d734_nq_book.json",
+   "sha256": "f1c7e8e541ddf32dc7bfcbd8b79bb6ae321c731e29d58c4475fbd9c85a1031b8"
+  }
+ },
+ "forward_writers_reported": {
+  "scripts/record_forward_nq_lines.py": "48c486409a9f16c70c34e841a23a1da6a9003a0a3b2200c70a78fb3d8744c6e6",
+  "scripts/forward_d776_ledger.py": "f76e30c114072fb9a12cbd8541674b6116e11f1842be98ed95aac4de35dd764e",
+  "scripts/forward_f2_c1_ledgers.py": "1adb5352ef9431669e7bad6e343d6d08bda59d044c648039bcb7a15c76bfec58",
+  "scripts/forward_l4_ledger.py": "5eacda1480c20c4f5ffa177856a8ab848131f72b36a4b04eab8e82f3f721147e"
+ },
+ "rehearsal_sha256": "5cf26630d60fab94f7d9d79a7fa9ad5863b68941f71d80fc7ac793388d6c129c",
+ "known_answer_in_sample": {
+  "window": [
+   "2018-05-14",
+   "2023-12-29"
+  ],
+  "calendar_sessions": 1454,
+  "book_net": 45756.61226816412,
+  "book_sharpe": 2.0256187674802644,
+  "parts": {
+   "F": [
+    271,
+    5628.310180243816
+   ],
+   "D": [
+    1235,
+    25921.30444079941
+   ],
+   "R": [
+    131,
+    5841.830000000002
+   ],
+   "C": [
+    311,
+    4954.4476471208945
+   ],
+   "L": [
+    278,
+    3410.720000000003
+   ]
+  },
+  "reading": "ADMITTED"
+ },
+ "programme_slot": null,
+ "slot_note": "no slot: alpha stays with the members' lines (slots 1, 2, 7, 9, 10); D792 s.0",
+ "frozen_utc": "2026-10-03T23:29:18Z"
+}

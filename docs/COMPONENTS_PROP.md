@@ -883,3 +883,29 @@ This is the in-sample premise check.
 - #7 the CPI/jobs-report fade (slot 2);
 - #8 base L4 (slot 10).
 - The NQ compression break (D680, slot 9) is scored as a component line, not an entry.
+
+## DECLARED — the assembled prop book for the joint run, 2026-10-04 ([D792](decisions/D792-PRE-REG-the-assembled-prop-book-for-the-joint-vault.md))
+
+*The principal: "Pre-reg the assembled book"; "Build it"; "Freeze it".*
+
+**Not an admission.** The assembly rule is fixed before any member's vault is read.
+
+**The members:** the five live components above (#5, #6, #7, #8 and C1), one micro each. **Only the members that PASS
+their own vault lines enter.**
+
+**The window:** 2024-01-01 → 2026-09-18, with C1 counted from 2025-03-01.
+
+**The gates:** at least two members PASS; the book's net is > 0; its net is > 0 in each half; and hurdle P holds.
+
+**The confirmation:** a forward read of the same members on 2026-09-21 → 2027-09-30.
+
+**The in-sample rehearsal** (all five, 2018-05 → 2023; machinery, not evidence):
+
+| book | net Sharpe (Sortino) | gross Sharpe (Sortino) | net | max DD | largest year | share of net |
+|---|---|---|---:|---:|---|---|
+| F2 + D737 + D776 + C1 + L4, one micro each | **2.03 (3.75)** | 2.42 (4.60) | \$45,757 | \$2,817 | 2022, 41 % | D737 57 %, D776 13 %, F2 12 %, C1 11 %, L4 7 % |
+
+- **The account dies 4 times:** the max drawdown passes the \$2,000 trailing barrier, and P1's multiplier is 0.71.
+- **Hurdle P passes anyway:** no 2 % days, and \$4,689 expected profit before a breach against a \$209 fee.
+- **Daily ρ** between members is −0.04 to +0.06.
+- **D734's NQ pair** stays frozen and is read beside. When both books read ADMITTED, D792's is the candidate.

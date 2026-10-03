@@ -311,6 +311,34 @@ files):
      - `--accept-a6-tail-moves` is permitted by the principal (D723-A1). Rows through 2024-12-31 must still match
        D630 row for row.
 
+**D792, the assembled prop book (the five live components, one micro each, passes only). No programme slot. FROZEN
+2026-10-04. The LAST step of the run.**
+
+Run it only after all of these have written their results, in the same checkout:
+- D716's `--vault` (slot 7);
+- D680's `--run-vault` (slot 9);
+- D737 (slot 1), D776 (slot 2) and D781 (slot 10);
+- D734.
+
+`uv run --no-sync python scripts/vault_d792_prop_book.py --vault --principals-word "..."`
+- **In order, it:**
+  - verifies `data/FROZEN_vault_d792_prop_book.json`: its runner, D792, 9 hashed files (the five member runners,
+    `joint_d680_vault.py`, `vault_d734_nq_book.py`, `hurdle_p.py`, `data/prop_venues.json`) and the six member freeze
+    files;
+  - refuses a second opening, or any missing member output (`[ORDER]`);
+  - rebuilds each member's vault trades through its own frozen functions. It stops unless each matches the member's
+    recorded result exactly:
+    - D716's `parts.held_slice` and `parts.vault` for the line its family result names;
+    - D680's C1;
+    - D737's, D776's and D781's trade count and mean net;
+  - scores the passes-only book on 2024-01-01 → 2026-09-18 (C from 2025-03-01), with the fixed five and the 2025-03-01
+    sub-window beside. It writes `data/vault_d792_prop_book.json`.
+- **The dry check (2026-10-04):** with a word and no member outputs, it verifies its freeze and stops at
+  `[ORDER] D734's --vault has not run`, with nothing written.
+- **Do not edit** any file its freeze hashes before the run.
+- **The forward read:** `--forward --principals-word "..."` refuses before 2027-09-30. It reads `data/forward/`'s five
+  ledgers; the L4, F2 and C1 ledgers start only after the joint run.
+
 ## 4. Proofs on record (in-sample, 2026-09-30; scratch in `temp/`)
 
 **D680.** ES/NQ sessions before 2024-01-01 only, under D716's seal. D680's own window runs to 2025-02-28, so its
