@@ -1,4 +1,9 @@
 {
+  "max_drawdown_convention": {
+    "sign": "positive",
+    "note": "Drawdown LEVELS in this file are POSITIVE fractions of peak (a 0.25 is a 25% decline) \u2014 analytics.metrics.max_drawdown's own convention (D80, D542). Keys matching d_*: differences of two drawdowns, signed by definition.",
+    "record": "D542"
+  },
  "spec": "docs/decisions/D736-STAGE-0-PRE-REG-which-es-nq-constructions-earn-when-they-trade.md",
  "reads": "committed result JSONs only; years <= 2023",
  "g3_floor": 209.0,
