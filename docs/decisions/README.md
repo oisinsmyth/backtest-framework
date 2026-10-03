@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 628 of these records carry neither field —
+**No Status or Category column, deliberately.** 629 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -855,7 +855,7 @@ would look like data. The tokens are what is shown.
 | D780 | D780 STAGE 0 RESULT — NO PRIZE: gold's weekend reopen fade passes the principal's year test, but without 2020 it nets +… | [PRE-REG](D780-STAGE-0-PRE-REG-fade-gold-s-weekend-reopen-on-mgc.md) · [RESULT](D780-STAGE-0-RESULT-gold-s-weekend-reopen-is-a-2020-book.md) |
 | D781 | REG — base L4, the M2K closing-auction fade, for the joint vault run: the vault scorer, the freeze and programme slot 10 | [PRE-REG](D781-PRE-REG-the-m2k-closing-auction-fade-for-the-joint-vault.md) |
 | D782 | the other BLS releases at 08:30 ET (PPI, import and export prices, the Employment Cost Index, productivity), sourced fr… | [record](D782-FIXTURE-the-other-bls-releases-at-0830.md) |
-| D783 | D783 STAGE 0 PRE-REG — D775's fade on the other BLS releases at 08:30 (PPI primary): is "the cash open reprices a headl… | [PRE-REG](D783-STAGE-0-PRE-REG-fade-the-other-bls-0830-releases.md) |
+| D783 | D783 STAGE 0 RESULT — NO EFFECT in every cell: the other BLS releases at 08:30 do not revert like CPI and the jobs repo… | [PRE-REG](D783-STAGE-0-PRE-REG-fade-the-other-bls-0830-releases.md) · [RESULT](D783-STAGE-0-RESULT-the-other-bls-releases-do-not-revert.md) |
 
 <!-- REGISTER:END -->
 
