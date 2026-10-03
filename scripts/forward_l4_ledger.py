@@ -266,7 +266,7 @@ def selftest() -> int:
                                                                        ("RTY", "2026-09-22 12:00", "12:00"),
                                                                        ("YM", "2026-09-22 15:59", "15:59"),
                                                                        ("RTY", "2026-09-10 15:59", "15:59"))]
-        pd.DataFrame(rows).to_csv(p, index=False)
+        pd.DataFrame(rows).to_csv(p, index=False, encoding="utf-8")
         got = read_bars(p, "2026-09-21", "2099-12-31")
         need(list(got["hhmm"]) == ["18:04"] and list(got["contract"]) == ["RTYZ6"],
              f"read_bars keeps RTY rows of D778's bars within the stamp lag and normalises the name: {got.to_dict('records')}")

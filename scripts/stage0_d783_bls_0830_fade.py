@@ -114,7 +114,7 @@ def selftest() -> int:
         p = Path(td) / "cal.csv"
         pd.DataFrame({"datetime_et": ["2015-12-15T08:30:00-05:00", "2016-03-15T08:30:00-04:00", "2016-03-16T10:00:00-04:00",
                                       "2019-05-01T08:30:00-04:00", "2024-01-11T08:30:00-05:00"],
-                      "event": ["PPI", "PPI", "PPI", "IMPEXP", "PPI"]}).to_csv(p, index=False)
+                      "event": ["PPI", "PPI", "PPI", "IMPEXP", "PPI"]}).to_csv(p, index=False, encoding="utf-8")
         got = load_cal(p, ("PPI",))
         need(got == {"2016-03-15": "PPI"}, f"load_cal keeps only in-window 08:30 rows of the cell: {got}")
         need(load_cal(p, ("PPI", "IMPEXP")) == {"2016-03-15": "PPI", "2019-05-01": "IMPEXP"}, "load_cal pooled")
