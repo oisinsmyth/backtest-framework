@@ -1,0 +1,26 @@
+{
+ "tool": "scripts/forward_d776_ledger.py --prove",
+ "in_sample_only": true,
+ "reader": {
+  "trades": 186,
+  "mean_gross": 34.879032,
+  "equal_to_d775": true,
+  "non_trade_statuses": {
+   "pending or missing (no bars recorded for the session)": 4,
+   "zero impulse": 2
+  }
+ },
+ "sierra_2023": {
+  "from": "2023-04-04",
+  "to": "2023-12-29",
+  "release_days": 18,
+  "status_agree": 1.0,
+  "trades_sierra": 17,
+  "trades_databento": 17,
+  "side_agree": 1.0,
+  "gross_abs_diff_max": 0.0,
+  "net_sum_sierra": 1877.31,
+  "net_sum_databento": 1877.31
+ },
+ "wall_s": 60.7
+}

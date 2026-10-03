@@ -13,7 +13,15 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 785.**
+- **Next free number: 786.**
+  - **D785 (2026-10-03): D776's forward ledger built, proved in-sample, and run** (`scripts/forward_d776_ledger.py`).
+    - It needs no history, so it runs now.
+    - **The proofs:**
+      - the reader gives D775's 186 trades at +\$34.879032 exactly;
+      - Sierra's 2023 NQ bars give a ledger identical to Databento's (18 release days, 17 of 17 trades to the cent).
+    - **First forward trade:** the 2026-10-02 jobs report, −\$95.07 net (the impulse continued). Next is CPI on
+      10-14.
+    - Adding `--ledger` to the daily recorder task waits on the principal's word.
   - **D784 (2026-10-03): base L4's forward ledger built and proved in-sample** (`scripts/forward_l4_ledger.py`).
     - It imports D778's frame unchanged and splices the joint run's rebuilt history onto the recorder's RTY Globex
       sessions. It refuses (OWED) until D781's vault output exists.
