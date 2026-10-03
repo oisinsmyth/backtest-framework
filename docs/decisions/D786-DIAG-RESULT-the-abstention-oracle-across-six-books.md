@@ -113,3 +113,38 @@ pre-registration, one in-sample check (already-read data, D786's own functions; 
 - **The basis-point form, with a bar held at a fixed number of basis points, is the version that varies with a state
   rather than the calendar.** It is close to family D's volatility level, which was mostly 2020/2022 in-sample (§2).
   Whether to take it to the vault is the principal's call.
+- The script is `scripts/diag_d786_a1_skip_by_year.py`.
+
+## A2 (2026-10-03) — the basis-point form does not rescue family A for the index books
+
+*The principal: "Profile the bp form, then decide".*
+
+- **The definition** (fixed before the look; in-sample, already read; `scripts/diag_d786_a2_bp_form.py` →
+  `data/diag_d786_a2_bp_form.json`):
+  - σ_bp is the 20-session standard deviation of daily log returns.
+  - Each trade's gross is in basis points of the cut session's contract value.
+  - β_bp is the expanding through-origin slope over earlier trades only.
+  - **The bar is fixed** at 2 × the book's median round trip in basis points, so it moves with volatility, not price.
+
+| book | bar | take: n, mean net | skip: n, mean net | spread (z) | without 2020/2022 (z) |
+|---|---|---|---|---|---|
+| D737 | 4.47 bp | 1,149, +\$19.63 | 520, +\$4.76 | +\$14.87 (1.81) | +\$8.38 (1.06) |
+| NQ F2 | 3.26 bp | 204, +\$24.65 | 40, +\$16.13 | +\$8.52 (0.31) | +\$1.11 (0.06) |
+| C1 | 3.49 bp | 279, +\$17.14 | 19, +\$8.26 | +\$8.88 (0.47) | +\$2.23 (0.11) |
+| D776 | 4.88 bp | 129, +\$40.93 | 27, +\$21.36 | +\$19.57 (0.87) | +\$22.14 (0.93) |
+| L4 | 9.01 bp | 236, +\$13.90 | 14, +\$6.81 | +\$7.09 (0.38) | +\$29.27 (1.35) |
+
+- **The skips still sit in the early years:**
+  - D737 2016–2018, and 2021 (a genuine low-volatility stretch: 57% skipped);
+  - NQ F2 2019–2020; C1 2018–2019; D776 2017–2018; L4 2019–2020.
+  - From 2022 on, almost nothing is skipped (D737 0–5%, the others 0%).
+  - Part of this is the projection itself: β is learned from each book's own earlier trades, and those earned
+    little in the early years.
+- **Without 2020/2022 every spread is weak** (z 0.06–1.35), and the skipped trades still earn.
+- **On the vault the skip arm would be near-empty** for NQ F2, C1, D776 and L4. A pre-registered test would be
+  close to a test of D737 alone, with very little power.
+- **Reading:**
+  - For the index books, family A, in either form, is mainly the fixed micro fee binding in the early, cheap,
+    short-history years. It does not abstain at today's prices.
+  - In NG it is a live profit instrument, which D649 tests in the vault.
+  - The next step is the principal's.
