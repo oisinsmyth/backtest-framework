@@ -57,6 +57,12 @@ KNOWN = {"intercept_round4": -0.0041, "threshold_round4": 0.0117, "wf_oos_rho": 
          "wf_passive_net_round2": 4.80, "n_candidates": 1697}
 FAMILY = "gold China-open model (MGC, D791 ridge)"
 AMENDMENT = 'D793 §0: an eleventh family by amendment (the principal: "Put it in slot 11")'
+REGISTERED = "2026-10-04"
+PAGE_DATE = "2026-09-21"                                     # the page's pinned render date (as D776 and D781)
+NOTE = ("Vault line: D791's 36-feature no-calendar ridge (alpha 100, frozen on 2016-2023) on D765's MGC China-open "
+        "fade, passive at the 09:30 touch ($3.03), trade dates 2024-01-02 -> 2026-09-18; PASS with >= 60 trades, mean "
+        "net > 0 and one-sided t >= 1.2816, and mean gross above the vault-window take-flag rotation p95; FAIL if mean "
+        "net <= 0; else UNRESOLVED. Slot 11 by amendment: the programme's allocated alpha becomes 0.055")
 SEED, N_BOOT = 793, 5000
 
 
@@ -431,7 +437,7 @@ def frozen_files() -> list[Path]:
             s / "stage0_d765_china_open.py", s / "stage0_d767_china_open_fade_filter.py",
             s / "stage0_d769_yuan_fix_residual.py", s / "stage0_d770_china_open_flow_passive.py",
             s / "stage0_d786_china_open_five_filters.py", s / "explore_d790_china_open_anatomy.py",
-            s / "explore_d791_oracle_patterns.py"]
+            s / "explore_d791_oracle_patterns.py", REPO / "src" / "backtest_framework" / "validation" / "programme.py"]
 
 
 def lf_sha(p: Path) -> str:
@@ -447,7 +453,13 @@ def write_freeze() -> int:
     with open(REHEARSAL, encoding="utf-8") as fh:
         reh = json.load(fh)
     need(abs(m["intercept"] - reh["full_fit"]["intercept"]) < 1e-12, "the freeze's fit differs from the rehearsal's")
-    out = {"spec": SPEC.name, "family": FAMILY, "slot": 11, "amendment": AMENDMENT,
+    from backtest_framework.validation.programme import Registry
+    reg = Registry()
+    need(reg.free_slots() == () and len(list(reg)) == 10, f"the registry is not the full ten ({reg.free_slots()})")
+    fam = reg.register(FAMILY, SPEC.name, amendment=AMENDMENT, registered_utc=REGISTERED, note=NOTE)
+    need(fam.slot == 11 and fam.amendment == AMENDMENT, f"registered in slot {fam.slot}, not 11 by amendment")
+    reg.render_md(date=PAGE_DATE)
+    out = {"spec": SPEC.name, "family": FAMILY, "slot": fam.slot, "alpha": fam.alpha, "amendment": AMENDMENT,
            "frozen_utc": pd.Timestamp.now(tz="UTC").isoformat(), "vault": [VAULT_START, VAULT_END],
            "features": m["features"], "coef": [float(v) for v in m["coef"]], "intercept": m["intercept"],
            "threshold": m["threshold"], "sorted_training": [[float(v) for v in s] for s in m["sorted"]],
