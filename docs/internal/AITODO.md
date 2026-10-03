@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 780.**
+- **Next free number: 781.**
+  - **D780 (2026-10-03): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 3, gold's weekend reopen on MGC).
+    - **The construction:** m = Sunday's 19:00 print − the previous session's 17:00 price; fade it to Monday 11:00,
+      all Mondays, with roll weekends dropped.
+    - **Gates:** G1; N; Y; G2 (whose third item drops the best year, since L3's concentration is 2020).
+    - **It re-measures seen numbers** (the pair's and the gold debate's). The result also gives L3's and base L4's
+      vault power side by side for slot 10. Prior SUPPORTED about 5%; NO PRIZE expected (net t about 1.45).
+    - **C10** (the debate's 19:00–20:59 breach fade) was **CLOSED by the principal**: "11 a year is too small".
   - **D776 A1 (2026-10-03): RE-FROZEN, slot 2 kept** (the principal: "re-freeze"). D775's result record was renamed to
     meet the 85-character path limit, content unchanged. The first freeze is kept as
     `data/FROZEN_vault_d776_cpi_nfp_fade_v1.json`.
