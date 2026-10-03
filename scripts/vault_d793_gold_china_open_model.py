@@ -394,7 +394,8 @@ def power() -> int:
 class tempfile_dir:
     def __enter__(self) -> str:
         import tempfile
-        self._d = tempfile.mkdtemp(prefix="d793_")
+        (REPO / "temp").mkdir(exist_ok=True)
+        self._d = tempfile.mkdtemp(prefix="d793_", dir=REPO / "temp")     # D791's build prints its path relative to REPO
         return self._d
 
     def __exit__(self, *a: Any) -> None:
