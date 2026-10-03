@@ -81,6 +81,21 @@ def bar_extremes(R: dict[str, Any], day: str) -> tuple[float, float, set[int]]:
             set(int(k) for k in R["K"][i0:i1]))
 
 
+def window_closes(R: dict[str, Any], day: str, limit: int) -> tuple[list[float], set[int]]:
+    """P(t) for t = 09:01 .. 09:30 Beijing, skipping an isolated print rather than voiding the session (D765 voids only
+    on the prices a trade uses). Never reads past `limit`."""
+    t0 = C.bj(day, "09:00")
+    out, ks = [], set()
+    for m in range(1, 31):
+        need(t0 + m <= limit, "outcome-blind: a window close after the check time was requested")
+        i = C.p_at(R, t0 + m)
+        if i is None or R["iso_c"][i]:
+            continue
+        out.append(float(R["C"][i]))
+        ks.add(int(R["K"][i]))
+    return out, ks
+
+
 def flags_from(sx: float, closes: list[float], hi: float, lo: float, p30: float, pT: float) -> dict[str, bool]:
     """The three conditions from prices stamped no later than T. sx = sign(x): +1 an up-open (the fade sells)."""
     if sx > 0:
@@ -98,13 +113,13 @@ def path_table(R: dict[str, Any], e: pd.DataFrame) -> pd.DataFrame:
         for L in DELAYS:
             T = C.bj(day, "09:30") + L
             bl = Blind(R, T)
-            closes = [bl.p(t0 + m) for m in range(1, 31)]
-            p30, pT = bl.p(t0 + 30), bl.p(T)
+            p00, p30, pT = bl.p(t0), bl.p(t0 + 30), bl.p(T)          # the trade's own reference prices (voiding)
+            closes, kc = window_closes(R, day, T)                      # the extreme: spikes skipped, not voiding
             q = C.Px(R)
             ent, p15 = q.o(T + 1), q.p(C.bj(day, "15:00"))
             ks = bl.q.k | q.k
-            ok = (len(ks) == 1 and not bl.q.void and not q.void and all(np.isfinite(closes))
-                  and all(np.isfinite(v) for v in (p30, pT, ent, p15)))
+            ok = (len(ks) == 1 and kc <= ks and not bl.q.void and not q.void and len(closes) >= 20
+                  and all(np.isfinite(v) for v in (p00, p30, pT, ent, p15)))
             okh = ok and np.isfinite(hi) and np.isfinite(lo) and kb == ks
             f = flags_from(sx, closes, hi, lo, p30, pT) if ok else {k: False for k in CONDS}
             if not okh:
