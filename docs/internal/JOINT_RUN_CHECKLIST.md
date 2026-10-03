@@ -248,6 +248,14 @@ Its build is independent of slot 9's fixture.
   programme module. Do not edit them before the run.
 - **In-sample power** (`data/vault_d781_power.json`): P(PASS) about 0.52 at the in-sample edge. The three latest
   in-sample 133-trade windows, all holding 2022, were UNRESOLVED.
+- **The build is proved in-sample (dry run, 2026-10-03).** A scratch script called the frozen runner's own build
+  functions (`restrict_csv`, `ts_cut_ns`, `holes`, `_fixture_worker` over D644's `load_front`), with the cut at
+  2023-12-29 and output to `temp/`.
+  - 18 of 26 ohlcv-1m files; no hole before the cut; 49 records past the cut dropped.
+  - **The rebuilt rows equal the committed fixture's as text, row for row:** YM 2,890,823 and RTY 2,109,787.
+  - The runner's own `identity()` passes.
+  - Wall time about 10 minutes on 6 workers (45%); it is a run-once step.
+  - Nothing after 2023-12-29 was built or read.
 
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):

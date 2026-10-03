@@ -23,6 +23,8 @@
     - **The joint run gains two D781 steps** (`JOINT_RUN_CHECKLIST`): the YM/RTY fixture build (system python, after the
       top-up and the D462 rebuild), then the vault.
     - COMPONENTS_PROP entry #8, PROVISIONAL.
+    - **The vault-fixture build is proved in-sample** (a dry run to 2023-12-29 with the frozen runner's own functions).
+      The rows equal the committed fixture's: YM 2,890,823, RTY 2,109,787.
   - **D781 (2026-10-03): PRE-REGISTERED** — base L4's freeze into programme slot 10, the last free slot (the
     principal: "Pre-reg L4's freeze for slot 10").
     - **What is scored:** D778's base book, imported unchanged (known answer 280 trades, +\$15.84).
