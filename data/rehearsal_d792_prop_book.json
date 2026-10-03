@@ -1,0 +1,326 @@
+{
+ "mode": "IN-SAMPLE REHEARSAL (2018-05-14 -> 2023-12-29), all five members in: the gates' machinery proved, not evidence (D792 s.4)",
+ "spec": "docs/decisions/D792-PRE-REG-the-assembled-prop-book-for-the-joint-vault.md",
+ "runner_sha256": "08afdbd2a6b63f0288e3ed9ab82f1d74634c87568520429246bc12ccae9e1822",
+ "prereg_sha256": "49b2dafbea83361d9f20f2c9f261276e713589a603dffa63a71ed977d75346cb",
+ "known_answers": "every member's reproduced exactly before scoring",
+ "member_walls_s": {
+  "F": 11.3,
+  "D": 10.0,
+  "R": 15.0,
+  "C": 55.5,
+  "L": 13.0
+ },
+ "costs": {
+  "F": "D716's cost line, $4.067121",
+  "D": "D711 cost_line('NQ')",
+  "R": "D775's NQ line, $4.07",
+  "C": "D680's single-count cost line (bp at the level)",
+  "L": "D777's RTY line, $3.76"
+ },
+ "score": {
+  "window": [
+   "2018-05-14",
+   "2023-12-29"
+  ],
+  "members": [
+   "F",
+   "D",
+   "R",
+   "C",
+   "L"
+  ],
+  "calendar_sessions": 1454,
+  "parts": {
+   "F": {
+    "name": "NQ F2 (D716, slot 7)",
+    "trades": 271,
+    "net": 5628.310180243816,
+    "gross": 6730.5,
+    "mean_net": 20.768672251822206,
+    "mean_gross": 24.83579335793358,
+    "sharpe": 1.0539092348694543,
+    "sortino": 1.7893220945383945,
+    "from": "2018-05-14"
+   },
+   "D": {
+    "name": "NQ leads the Dow (D737, slot 1)",
+    "trades": 1235,
+    "net": 25921.30444079941,
+    "gross": 30944.199006846957,
+    "mean_net": 20.988910478380088,
+    "mean_gross": 25.056031584491464,
+    "sharpe": 1.3334239083702906,
+    "sortino": 2.2386470730905983,
+    "from": "2018-05-14"
+   },
+   "R": {
+    "name": "the CPI/jobs-report fade (D776, slot 2)",
+    "trades": 131,
+    "net": 5841.830000000002,
+    "gross": 6375.0,
+    "mean_net": 44.5941221374046,
+    "mean_gross": 48.66412213740458,
+    "sharpe": 1.0281612935229578,
+    "sortino": 1.8387740780774993,
+    "from": "2018-05-14"
+   },
+   "C": {
+    "name": "the NQ compression break C1 (D680, slot 9)",
+    "trades": 311,
+    "net": 4954.4476471208945,
+    "gross": 6219.32954748271,
+    "mean_net": 15.930699829970719,
+    "mean_gross": 19.99784420412447,
+    "sharpe": 0.91238029610273,
+    "sortino": 1.8630245214006127,
+    "from": "2018-05-14"
+   },
+   "L": {
+    "name": "base L4, the M2K closing-auction fade (D781, slot 10)",
+    "trades": 278,
+    "net": 3410.720000000003,
+    "gross": 4456.000000000002,
+    "mean_net": 12.268776978417279,
+    "mean_gross": 16.028776978417273,
+    "sharpe": 0.7876980842442758,
+    "sortino": 1.222739242059442,
+    "from": "2018-05-14"
+   }
+  },
+  "book": {
+   "net": 45756.61226816412,
+   "gross": 54725.02855432966,
+   "net_per_year": 7930.3069405621445,
+   "sharpe_net": 2.0256187674802644,
+   "sortino_net": 3.745031402968606,
+   "sharpe_gross": 2.418528067535498,
+   "sortino_gross": 4.604079876969073,
+   "daily_sd_usd": 246.62211301483967,
+   "exposure_trade_day_share": 0.9154057771664375,
+   "max_dd_closed_usd": 2816.908633345227,
+   "trade_days": 1331,
+   "by_year": {
+    "2018": 5032.71620162299,
+    "2019": 516.2831600163212,
+    "2020": 4887.820400911787,
+    "2021": 9706.995238849206,
+    "2022": 18742.819643715808,
+    "2023": 6869.977623048007
+   },
+   "by_member_share": {
+    "F": 0.12300539531331957,
+    "D": 0.5665040123356021,
+    "R": 0.12767182075812344,
+    "C": 0.10827828813209646,
+    "L": 0.07454048346085851
+   },
+   "largest_days": [
+    [
+     "2022-01-28",
+     1418.865757787777
+    ],
+    [
+     "2022-02-24",
+     1348.8400095112127
+    ],
+    [
+     "2022-06-09",
+     1301.0900928993265
+    ],
+    [
+     "2021-12-01",
+     1284.6057577877755
+    ],
+    [
+     "2022-01-20",
+     1233.1057577877773
+    ]
+   ],
+   "worst_days": [
+    [
+     "2020-02-28",
+     -579.3271211061113
+    ],
+    [
+     "2022-03-01",
+     -633.4155532558736
+    ],
+    [
+     "2022-02-25",
+     -651.7217145939109
+    ],
+    [
+     "2022-02-22",
+     -664.3514508683777
+    ],
+    [
+     "2022-06-15",
+     -772.8557108411158
+    ]
+   ],
+   "top5_days_share": 0.14394656967112346,
+   "max_concurrent_mnq_days": 4
+  },
+  "rho_daily": {
+   "F": {
+    "F": 1.0,
+    "D": 0.0506,
+    "R": -0.0413,
+    "C": 0.0184,
+    "L": 0.0063
+   },
+   "D": {
+    "F": 0.0506,
+    "D": 1.0,
+    "R": -0.0127,
+    "C": 0.063,
+    "L": 0.0025
+   },
+   "R": {
+    "F": -0.0413,
+    "D": -0.0127,
+    "R": 1.0,
+    "C": -0.0138,
+    "L": 0.0321
+   },
+   "C": {
+    "F": 0.0184,
+    "D": 0.063,
+    "R": -0.0138,
+    "C": 1.0,
+    "L": 0.0498
+   },
+   "L": {
+    "F": 0.0063,
+    "D": 0.0025,
+    "R": 0.0321,
+    "C": 0.0498,
+    "L": 1.0
+   }
+  },
+  "trades_pooled": {
+   "n": 2226,
+   "mean": 20.55553111777363,
+   "median": 4.43287889388862,
+   "win_rate": 0.5157232704402516,
+   "payoff": 1.2693682860237345,
+   "skew": 0.808552249975159,
+   "kurtosis_excess": 3.2561962252178507,
+   "trim_k_each_tail": 22,
+   "mean_ex_top": 12.602809351811459,
+   "mean_ex_bottom": 25.802577497003284,
+   "mean_trimmed": 17.822575777554352,
+   "mean_below_median": false
+  },
+  "trade_days_dist": {
+   "n": 1331,
+   "mean": 34.377620036186414,
+   "median": 4.43287889388862,
+   "win_rate": 0.5138993238166792,
+   "payoff": 1.3834706581007734,
+   "skew": 1.05837746283261,
+   "kurtosis_excess": 3.0519069360425854,
+   "trim_k_each_tail": 13,
+   "mean_ex_top": 24.090487907942638,
+   "mean_ex_bottom": 40.43170506689533,
+   "mean_trimmed": 30.102404653388756,
+   "mean_below_median": false
+  }
+ },
+ "gates": {
+  "G1": {
+   "verdicts": {
+    "F": "PASS",
+    "D": "PASS",
+    "R": "PASS",
+    "C": "PASS",
+    "L": "PASS"
+   },
+   "passing": [
+    "F",
+    "D",
+    "R",
+    "C",
+    "L"
+   ],
+   "holds": true
+  },
+  "G2": {
+   "net": 45756.61226816412,
+   "holds": true
+  },
+  "G3": {
+   "first_half_net": 12314.576164844135,
+   "second_half_net": 33442.03610331999,
+   "holds": true
+  },
+  "G4": {
+   "exits_et": [
+    "10:00",
+    "11:00",
+    "16:00"
+   ],
+   "P2": {
+    "topstep_50k": true,
+    "mffu_rapid_50k": true
+   },
+   "P2_pass": true,
+   "P3": {
+    "p3a_breaches": 0,
+    "p3a_breaches_per_year": 0.0,
+    "p3a_pass": true,
+    "p3c_worst_day_usd": -772.8557108411158,
+    "p3c_share_of_loss_budget": 0.38642785542055785,
+    "daily_sigma_usd": 246.62211301483967,
+    "life_dd_only_sessions": 380.0
+   },
+   "P3b_A1": {
+    "module_p3b": 0.0,
+    "censored_p3b": 0.0,
+    "read_p3b": 0.0,
+    "read_from": "module",
+    "lives_dd": 4,
+    "lives_either": 4,
+    "pass": true
+   },
+   "P3_pass": true,
+   "P4": {
+    "expected_profit_before_breach_usd": 4688.859755205261,
+    "expected_life_days": 148.99709017164068,
+    "account_cost_usd": 209.0,
+    "cost_venue": "mffu_rapid_50k"
+   },
+   "P4_pass": true,
+   "P1_reported": {
+    "cap_usd": 2000.0,
+    "max_trailing_dd_usd": 2816.908633345227,
+    "size_multiplier": 0.7099981789700062,
+    "usd_per_year_at_traded_size": 7930.3069405621445,
+    "post_sizing_usd_per_year": 5630.503486472324,
+    "n_sessions": 1454,
+    "basis": "closed equity (daily closes); R11 P1 measures OPEN equity, which is deeper -- so the multiplier and the post-sizing return are UPPER bounds"
+   },
+   "P5_reported": {
+    "by_year": {
+     "2018": 0.14730927159149085,
+     "2019": 1.2624897891840459,
+     "2020": 0.20022684931535636,
+     "2021": 0.13233814647879333,
+     "2022": 0.07570183060815516,
+     "2023": 0.1622076431741678
+    },
+    "max": 1.2624897891840459,
+    "operative_haircut": 0.3
+   },
+   "P6": {
+    "topstep_50k": true,
+    "mffu_rapid_50k": true
+   },
+   "holds": true
+  },
+  "failing": [],
+  "reading": "ADMITTED"
+ },
+ "wall_s": 104.8
+}
