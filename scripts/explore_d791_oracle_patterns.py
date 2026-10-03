@@ -25,7 +25,7 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 SCOPE = REPO / "docs" / "decisions" / "D791-EXPLORE-patterns-in-the-oracle-s-china-open-trades-scope.md"
 CACHE = REPO / "temp" / "d791"
-FEAT = CACHE / "features.parquet"
+FEAT = CACHE / "features.csv.gz"                               # CSV: the uv environment has no parquet engine
 META = CACHE / "meta.json"
 OUT = REPO / "data" / "explore_d791_oracle_patterns.json"
 SEAL = "2024-01-01"
@@ -133,7 +133,7 @@ def build() -> int:
     X["year"] = [d[:4] for d in days]
     need(bool((X["day"] < SEAL).all()), "seal")
     CACHE.mkdir(parents=True, exist_ok=True)
-    X.reset_index(drop=True).to_parquet(FEAT, index=False)
+    X.reset_index(drop=True).to_csv(FEAT, index=False, encoding="utf-8")
     with open(META, "w", encoding="utf-8") as fh:
         json.dump({"cost_p": B["cost_p"], "reproduced_d786": rep, "n": len(X), "built_s": round(time.time() - t0, 1),
                    "rstar_split_half": C.spearman(rs["R1"].to_numpy(float), rs["R2"].to_numpy(float))}, fh, indent=1,
@@ -325,7 +325,7 @@ def run() -> int:
     need(not OUT.exists(), f"{OUT.name} exists: D791 is run-once")
     need(FEAT.exists(), "run --build first (system interpreter)")
     t0 = time.time()
-    X = pd.read_parquet(FEAT)
+    X = pd.read_csv(FEAT, dtype={"day": str, "year": str}, encoding="utf-8")
     meta = json.load(open(META, encoding="utf-8"))
     need(bool((X["day"] < SEAL).all()), "seal")
     need(len(X) == 1697 and round(float(X["gross"].mean()), 2) == 3.14, "right quantity: the cache is not D767's pool")
