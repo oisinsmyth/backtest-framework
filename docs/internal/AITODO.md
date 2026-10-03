@@ -14,7 +14,7 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 784.**
-  - **D783 RESULT (2026-10-03): NO EFFECT in every cell; GO false.**
+  - **D783 RESULT (2026-10-03): NO EFFECT in every cell; GO false. CLOSED by the principal ("Close it").**
     - PPI × MNQ +\$15.51 (t 1.22, rotation rank 0.89) is 2022 alone (+\$148.62); without 2022 it is −\$3.73.
     - MES/MYM/M2K, IMPEXP, PROD, ECI and the pool are all NO EFFECT.
     - **By the pre-registered rule, Census/BEA/DOL are not fetched:** the fade is CPI/jobs-report specific, plus PPI in

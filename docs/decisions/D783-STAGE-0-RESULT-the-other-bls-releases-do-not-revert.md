@@ -93,3 +93,13 @@
   - It does not weaken D775's in-sample result, and D776's vault read is unchanged. Nothing after 2023 was read.
 - **Recommendation:** close the BLS-extension construction, and do not source the Census, BEA or DOL schedules for
   this line. Both are the principal's call.
+
+## CLOSED (2026-10-03)
+
+**The principal: "Close it".**
+- The fade of D775's construction on the other BLS 08:30 releases (PPI, import and export prices, productivity, the
+  ECI) is closed for the prop book, on every root.
+- The Census, BEA and DOL schedules are not sourced for this line.
+- **The finding stands as a measurement:** the 08:30 fade is specific to CPI and the jobs report (and PPI in 2022).
+  D775 and D776 are unchanged.
+- D782's calendar stays on disk as a fixture.
