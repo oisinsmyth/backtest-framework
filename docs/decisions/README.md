@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 641 of these records carry neither field —
+**No Status or Category column, deliberately.** 643 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -863,6 +863,7 @@ would look like data. The tokens are what is shown.
 | D788 | D788 DIAG RESULT — no state is a candidate by the declared rule, but one family points the same way in all six books, w… | [PRE-REG](D788-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md) · [RESULT](D788-DIAG-RESULT-the-abstention-oracle-across-six-books.md) |
 | D789 | D789 DIAG RESULT — not a candidate by the declared rule (four of six books, not five, keep the sign without 2020/2022),… | [PRE-REG](D789-DIAG-PRE-REG-signal-strength-against-its-own-gate.md) · [RESULT](D789-DIAG-RESULT-signal-strength-sorts-the-size-triggered-books.md) |
 | D790 | D790 EXPLORE RESULT: gold does not rise at the China open, the open's shape carries nothing, and the one new channel is… | [record](D790-EXPLORE-anatomy-of-gold-s-china-open-scope.md) · [RESULT](D790-EXPLORE-RESULT-asian-session-leans-toward-the-200-day-sma.md) |
+| D791 | D791 EXPLORE RESULT: the oracle's winners share no single visible trait, but a linear model trained only on earlier yea… | [record](D791-EXPLORE-patterns-in-the-oracle-s-china-open-trades-scope.md) · [RESULT](D791-EXPLORE-RESULT-a-walk-forward-model-picks-the-winners.md) |
 
 <!-- REGISTER:END -->
 
