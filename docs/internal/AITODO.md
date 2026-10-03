@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 783.**
+- **Next free number: 784.**
+  - **D783 (2026-10-03): PRE-REGISTERED** — D775's fade on the other BLS 08:30 releases (PPI primary).
+    - **The design:** D775's `study` imported unchanged; only the release days differ. CPI/EMPSIT sessions are
+      dropped from the panel.
+    - **The cells:** PPI on four roots; IMPEXP, PROD, ECI and the pool on MNQ.
+    - **The decision it feeds:** fetch the Census/BEA/DOL schedules only if PPI passes G1 and N, or the pool passes N
+      at ≥ 2 × cost.
+    - Prior SUPPORTED about 10%.
   - **D782 FIXTURE (2026-10-03): the other BLS releases at 08:30** (the principal: "Lets go with option 1"; "BLS
     first, then decide").
     - `data/calendar/events_bls_0830.csv`: PPI and IMPEXP (131 each), ECI, PROD_P and PROD_R (44 each), all 08:30 ET,
