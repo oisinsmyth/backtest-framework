@@ -95,7 +95,7 @@ def load_books() -> tuple[dict[str, pd.DataFrame], dict[str, float]]:
     cost["NG"] = float(V723._R().MNG_COST)
     out["NG"] = pd.DataFrame({"gross": g, "net": g - cost["NG"]}, index=tt.index)
     for k in ("D737", "NQ_F2", "C1"):
-        c = (out[k]["gross"] - out[k]["net"]).round(6).unique()
+        c = (out[k]["gross"] - out[k]["net"]).round(4).unique()   # 4 dp: D737's differs in the 6th (float noise)
         need(len(c) == 1, f"{k}: more than one cost per trade: {c[:5]}")
         cost[k] = float(c[0])
     for k, n in KNOWN.items():
