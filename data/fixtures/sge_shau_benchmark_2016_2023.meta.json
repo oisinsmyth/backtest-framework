@@ -1,0 +1,45 @@
+{
+  "source": "https://en.sge.com.cn/graph/DayilyJzj?start=2016-01-01&end=2023-12-31",
+  "source_page": "https://en.sge.com.cn/data_BenchmarkPrice",
+  "publisher": "Shanghai Gold Exchange (official, free)",
+  "fetched_by": "the debate orchestrator, on the principal's instruction (2026-10-03)",
+  "fetched_at_local": "2026-10-03T00:19:48",
+  "client": "curl with its default user agent (Python's default client was refused 403; no browser UA was faked)",
+  "series": {
+    "zp": "AM benchmark (shau_am)",
+    "wp": "PM benchmark (shau_pm)"
+  },
+  "units": "CNY per gram, as published (unit inferred from the SGE page; not re-verified)",
+  "timestamps": "epoch ms; converted to Beijing (UTC+8) dates",
+  "timestamp_time_of_day_beijing_AM": {
+    "00:00": 1875
+  },
+  "timestamp_time_of_day_beijing_PM": {
+    "00:00": 1875
+  },
+  "seal": "rows with Beijing date >= 2024-01-01 were discarded at decode, before storage; asserted on disk",
+  "rows_discarded_2024_plus": {
+    "AM": 666,
+    "PM": 666
+  },
+  "rows_written": 1875,
+  "first_date": "2016-04-19",
+  "last_date": "2023-12-29",
+  "dates_with_AM_only": [],
+  "dates_with_PM_only": [],
+  "zero_or_null_values": {
+    "AM": 0,
+    "PM": 0
+  },
+  "rows_per_year": {
+    "2016": 174,
+    "2017": 244,
+    "2018": 243,
+    "2019": 244,
+    "2020": 243,
+    "2021": 243,
+    "2022": 242,
+    "2023": 242
+  },
+  "note": "The endpoint ignores `end` and returns history to the present; the cut is enforced here, not by the request."
+}
