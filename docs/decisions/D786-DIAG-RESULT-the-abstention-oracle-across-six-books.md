@@ -85,3 +85,31 @@
 - **Its next step is the principal's to design:** the form of the projection (dollar or basis point), the bar (2 ×
   cost or another), and where it is confirmed (the joint vault's frozen-line trades, pre-registered before the run,
   or the forward recorder).
+
+## A1 (2026-10-03) — for the index books, family A's dollar form is the price level: it skips nothing from 2021 on
+
+*The principal chose: both forms side by side, a fixed 2 × cost bar, confirmed on the joint vault. Before that
+pre-registration, one in-sample check (already-read data, D786's own functions; scratch
+`d786_skip_by_year.py`).*
+
+**The dollar form's skip share by year** (trades whose projected payoff was below 2 × the round trip):
+
+| book | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 |
+|---|---|---|---|---|---|---|---|---|
+| D737 | 93% | 100% | 56% | 7% | 12% | 9% | 0% | 0% |
+| NQ F2 | — | — | — | 100% | 43% | 0% | 0% | 0% |
+| C1 | — | — | 53% | 45% | 4% | 0% | 0% | 0% |
+| D776 | — | 100% | 50% | 0% | 0% | 0% | 0% | 0% |
+| L4 | — | — | 33% | 18% | 13% | 0% | 0% | 0% |
+
+- **Every skip falls in the early, low-price years.**
+  - The projection is β × σ\$, and σ\$ is a dollar volatility, so it rose with the index's price.
+  - Against a fixed micro round trip, the dollar form becomes "trade from the year the dollar moves outgrew the fee".
+- **So D786 §2's consistency across the index books is the price level, not a state that comes and goes.** It
+  matches the repo's standing finding that a fixed fee binds at low price × volatility.
+  - In NG (§2), the skips are spread across years, and D649 (slot 8) already tests that form in the vault.
+- **On the vault the dollar form cannot be tested.** At 2024–2026 index prices it would skip nothing; its take/skip
+  split would have an empty arm.
+- **The basis-point form, with a bar held at a fixed number of basis points, is the version that varies with a state
+  rather than the calendar.** It is close to family D's volatility level, which was mostly 2020/2022 in-sample (§2).
+  Whether to take it to the vault is the principal's call.
