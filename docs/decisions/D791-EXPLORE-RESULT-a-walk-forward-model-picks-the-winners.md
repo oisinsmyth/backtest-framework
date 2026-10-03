@@ -103,3 +103,50 @@ committed before it (`9861ee31`).*
   - **The alternative is the forward recorder:** freeze the model now, let it trade on paper from today, and read it
     when the power is there. That spends nothing.
 - **Nothing is admitted.**
+
+## Addendum (2026-10-04): the overfit, measured. Partly overfit, with weights that hold their signs, but fragile
+
+*The principal: "That looks like a severe overfit? How did in perform out of the training data?". The looks were taken
+after D791. Script `scripts/explore_d791_followup_overfit.py`; output `data/explore_d791_followup_overfit.json`. The
+36-feature no-calendar ridge, as above.*
+
+- **Every performance figure above was already out of sample** (each test year predicted by a model fitted only on
+  earlier years). The full-sample weights were descriptive only.
+- **The training fit against the next year:**
+
+  | test year | trained on | ρ on its training years | ρ on the test year | passive net in the test year (n) |
+  |---|---|---|---|---|
+  | 2018 | 2016–17 | +0.234 | **−0.060** | −\$0.88 (74) |
+  | 2019 | 2016–18 | +0.214 | +0.092 | −\$4.00 (103) |
+  | 2020 | 2016–19 | +0.183 | +0.061 | +\$10.67 (89) |
+  | 2021 | 2016–20 | +0.168 | +0.131 | +\$13.05 (49) |
+  | 2022 | 2016–21 | +0.172 | **−0.007** | +\$1.94 (85) |
+  | 2023 | 2016–22 | +0.162 | +0.108 | +\$12.94 (79) |
+
+  - **The fit is overfit by about two-thirds:** about 0.17–0.23 in training against 0.059 out of sample. The
+    full-sample fit is 0.162.
+  - **Three years carry the book** (2020, 2021, 2023). Two lose or barely earn, and 2018 is negative.
+- **The weights are not noise.** 23 of the 36 keep the same sign in all six folds, and 30 in at least five. The top 12
+  by weight hold their sign in 5–6 of 6, with steady magnitudes: the US day session 0.020–0.028 in every fold; the
+  Tokyo half-hour −0.013 to −0.024.
+  - Fitted noise would flip signs from fold to fold. These features carry a stable, weak relation.
+- **The sensitivity is the warning:**
+
+  | | expanding window (all prior years) | rolling 3-year window |
+  |---|---|---|
+  | α 10 | ρ +0.048; passive +\$3.81, t 1.55 | ρ −0.005; +\$0.94, t 0.40 |
+  | **α 100 (the registered setting)** | **ρ +0.059; +\$4.80, t 2.00** | ρ +0.002; +\$0.82, t 0.35 |
+  | α 1000 | ρ +0.057; +\$3.95, t 1.58 | ρ −0.004; +\$0.59, t 0.26 |
+
+  - **α = 100 happens to be the best of the three.** It was fixed in the scope note before the run, but the margin over
+    its neighbours shows how much of t 2.00 is that luck.
+  - **A 3-year rolling window has no edge at all.** Either the weak weights need five or more years of sessions to be
+    estimated, or the relation lives mainly in the older years. Both mean a live model fitted on recent data alone
+    would not work.
+- **The reading:**
+  - the out-of-sample edge is real in the narrow sense: a stable-signed, weak, additive relation, worth about
+    ρ 0.05–0.06 with an expanding window;
+  - it is fragile: lumpy by year, sensitive to the window, and its best number sits on the luckiest setting;
+  - combined with the pseudo-out-of-sample feature list (§4.1), the honest expectation forward is below the in-sample
+    +\$4.80. Somewhere between 0 and about +\$3 a trade, passive, is a fair prior.
+  - **The test it needs is forward or 2024+, and the paper-trading route remains the right one. Nothing is admitted.**
