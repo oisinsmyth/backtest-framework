@@ -86,6 +86,15 @@
    "alpha": 0.005,
    "amendment": null,
    "note": "Vault line: D672's C1 on NQ (the plain break of yesterday's RTH range, E4, on the compressed third), one MNQ, friction once; PASS with >= 30 C1 trades, one-sided HAC t >= 1.2816 on the gross and a positive net"
+  },
+  {
+   "name": "closing-auction fade (M2K, base L4)",
+   "doc": "D781-PRE-REG-the-m2k-closing-auction-fade-for-the-joint-vault.md",
+   "registered_utc": "2026-10-03",
+   "slot": 10,
+   "alpha": 0.005,
+   "amendment": null,
+   "note": "Vault line: D778's base book (D772 L4), the M2K 15:50 -> 16:00 closing-auction move in its trailing top fifth, faded from the next 18:05 reopen to 10:00, one M2K, $3.76, sessions 2024-01-01 -> 2026-09-18; PASS with >= 40 trades, mean net > 0 and one-sided t >= 1.2816, and mean gross above the vault-window exact rotation p95; FAIL if mean net <= 0; else UNRESOLVED"
   }
  ],
  "released": [

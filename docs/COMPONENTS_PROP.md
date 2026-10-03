@@ -856,3 +856,30 @@ This is the in-sample premise check.
 - #6 NQ leads the Dow (slot 1);
 - #7 the CPI/jobs-report fade (slot 2).
 - The NQ compression break (D680, slot 9) is scored as a component line, not an entry.
+
+## ENTRY #8, PROVISIONAL, 2026-10-03 — base L4, the M2K closing-auction fade ([D778](decisions/D778-STAGE-0-RESULT-the-trend-filter-removes-the-best-trades.md), [D781](decisions/D781-PRE-REG-the-m2k-closing-auction-fade-for-the-joint-vault.md))
+
+*The principal: "Pre-reg L4's freeze for slot 10"; "build it"; "Freeze it".*
+
+| # | component | window | net Sharpe; Sortino; gross | hit | skew | ρ with prior | entered |
+|---|---|---|---|---|---|---|---|
+| **8** | **Base L4** (D772's Lead 4, D778's base book): when M2K's 15:50 → 16:00 move is in its trailing top fifth, one M2K against it, entered at the next 18:05 reopen and held to 10:00; \$3.76; about 47 trades a year | 2018-01 → 2023-12 | **+0.81**; Sortino +1.25; gross Sharpe +1.05; per trade +\$12.08 net / +\$15.84 gross (t 2.47; net t 1.88); max drawdown \$1,167 | 55.7 % | +0.04 (per trade) | **+0.032 with #7** (D775), **+0.006 with #5** (NQ F2), **+0.002 with #6** (D737's twin), +0.054 with C1 | **PROVISIONAL.** The joint run's D781 look (slot 10) confirms or removes it |
+
+**Disclosures:**
+- **The in-sample was read before the line was registered** (D772's lead hunt found it in a search, and D777–D780
+  read it again). It fails the G2 bar D775 cleared: net t 1.88, and −\$15 in total without 2020–21.
+- **2022 lost** (−\$13.06 net a trade). Neither a trend filter (D778) nor a rates filter (D779) separates it; the
+  closing move gave back 2.5% of its size by 10:00 that year, against 52–72% in every other period.
+- **The edge is in buying closing-auction falls** (+\$19 to +\$41 net a trade in every period but 2022). Fading rises
+  earns about nothing.
+- **The ρ above is the base book's**, computed for this entry (in-sample, scratch, read-only). D781's record quotes
+  "−0.06 to +0.03" from D778's filtered book. That record is hashed in the freeze and is not edited.
+- **Vault power at about 133 trades** (`data/vault_d781_power.json`): 0.52 at the in-sample edge, 0.27 at 2018–19's,
+  0.04 at zero. The three latest in-sample 133-trade windows, all holding 2022, were UNRESOLVED.
+
+**The ledger's live entries now:**
+- #5 NQ F2 (slot 7);
+- #6 NQ leads the Dow (slot 1);
+- #7 the CPI/jobs-report fade (slot 2);
+- #8 base L4 (slot 10).
+- The NQ compression break (D680, slot 9) is scored as a component line, not an entry.

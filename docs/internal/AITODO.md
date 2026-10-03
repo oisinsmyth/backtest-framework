@@ -14,6 +14,15 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 782.**
+  - **D781 FROZEN (2026-10-03): base L4 in programme slot 10, the last.** The programme's α is fully allocated (0.05);
+    a new line needs an amendment.
+    - The rehearsal reproduces D778's base book (280 trades, +\$15.844642…); in-sample it reads PASS (net t 1.88,
+      rotation rank 0.994).
+    - **Power:** 0.52 at the in-sample edge, 0.27 at 2018–19's, 0.04 at zero. The three latest in-sample 133-trade
+      windows (all holding 2022) were UNRESOLVED.
+    - **The joint run gains two D781 steps** (`JOINT_RUN_CHECKLIST`): the YM/RTY fixture build (system python, after the
+      top-up and the D462 rebuild), then the vault.
+    - COMPONENTS_PROP entry #8, PROVISIONAL.
   - **D781 (2026-10-03): PRE-REGISTERED** — base L4's freeze into programme slot 10, the last free slot (the
     principal: "Pre-reg L4's freeze for slot 10").
     - **What is scored:** D778's base book, imported unchanged (known answer 280 trades, +\$15.84).

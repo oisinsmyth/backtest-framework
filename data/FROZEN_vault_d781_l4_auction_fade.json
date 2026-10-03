@@ -1,0 +1,88 @@
+{
+ "name": "FROZEN_vault_d781_l4_auction_fade",
+ "record": "docs/decisions/D781-PRE-REG-the-m2k-closing-auction-fade-for-the-joint-vault.md",
+ "instruction": "the principal, 2026-10-03: \"Pre-reg L4's freeze for slot 10\"; \"build it\"",
+ "programme_slot": 10,
+ "programme_family": "closing-auction fade (M2K, base L4)",
+ "alpha": 0.005,
+ "runner": {
+  "path": "scripts/vault_d781_l4_auction_fade.py",
+  "sha256": "c38c8acf1aecdb297e8e090997d8bb8b3d8203d12e7175332824a52edd0bfa0f"
+ },
+ "records": {
+  "docs/decisions/D781-PRE-REG-the-m2k-closing-auction-fade-for-the-joint-vault.md": "2659e3f5ab405ce2140e752155e6fc54180a6c7b1e3357332eb2420e3363082f",
+  "docs/decisions/D778-STAGE-0-PRE-REG-the-closing-auction-fade-with-a-trend-filter.md": "1f198da036aa98f04a0edf3d644caabd2157ed1e17487f4ba0919d6f1d9f2548",
+  "docs/decisions/D778-STAGE-0-RESULT-the-trend-filter-removes-the-best-trades.md": "0244396527f7fd0d0fec36769eacf2ce782b8e73914bacdc4ce6191d60662c07"
+ },
+ "imported_unchanged": {
+  "scripts/build_fut_index_1m.py": "082028554cdb972b218d5999945fbdb89ce92dc6caba1a5d4a9cdf1b3a369b07",
+  "scripts/build_fut_opening_1m.py": "30cef2b9088d297b86a51fb89747b4df979f60e25ac6544095b6f998f73494cc",
+  "scripts/stage0_d775_cpi_nfp_fade.py": "1f124c0f835b7395ea15265cdc589716b9017028befb817d824bfb99727399ca",
+  "scripts/stage0_d777_post_close_fade.py": "dc8023ce10c32a92f75e3fa13ef2d7b601aa76df216f6b792d4f592a9af588ed",
+  "scripts/stage0_d778_auction_fade_trend_filter.py": "65cfc886453a2084de2e7f63ec46f355de19df7459c6c114af8969c29a817a78",
+  "src/backtest_framework/__init__.py": "aae867d2cba6fa88baffd37737016da88f4a6021f790c6b0be19f3ab74a52020",
+  "src/backtest_framework/validation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backtest_framework/validation/programme.py": "1d48d5cb513a05e19f4c01556805b9ba8ee7da4ae5711609d862d57b76d6654d"
+ },
+ "files": {
+  "data/stage0_d778_auction_fade_trend_filter.json": "342c45b71d92333b9f6f7b97d111332c134cb46ac8281e53e7afbdc133379513",
+  "data/rehearsal_vault_d781.json": "00a1fb32dd5cf349063878def8a317523fe0bfb78d103a36760285c47d0e30bf",
+  "data/vault_d781_power.json": "6ae67d1142ca76271ba88da89cddc6d3bdedbe6af56512e7b518a73015f81413"
+ },
+ "params": {
+  "root": "RTY",
+  "fixture": "fut_opening_globex_1m_ym_rty.csv.gz",
+  "mult": 5.0,
+  "cost": 3.76,
+  "bars": [
+   "08:29",
+   "08:34",
+   "09:29",
+   "09:59",
+   "10:59",
+   "11:00",
+   "12:59",
+   "15:49",
+   "15:59",
+   "16:58",
+   "16:59",
+   "18:04",
+   "19:59"
+  ],
+  "q": 0.8,
+  "win": 250,
+  "win_min": 120,
+  "ma_n": 200,
+  "max_gap": 4,
+  "in_sample": [
+   "2016-01-01",
+   "2023-12-31"
+  ],
+  "vault": [
+   "2024-01-01",
+   "2026-09-18"
+  ],
+  "split_from": "2025-03-01",
+  "joint_fixture": "data/joint_run/d781/fut_opening_globex_1m_ym_rty.csv.gz",
+  "build_roots": [
+   "YM",
+   "RTY"
+  ],
+  "identity_to": "2025-02-28",
+  "known_trades": 280,
+  "gate": {
+   "G0": ">= 40 trades",
+   "G1": "mean net > 0 and one-sided t >= 1.2816",
+   "G2": "mean gross > the vault-window exact rotation p95",
+   "FAIL": "mean net <= 0",
+   "else": "UNRESOLVED"
+  },
+  "seed": 781,
+  "programme_family": "closing-auction fade (M2K, base L4)",
+  "slot": 10
+ },
+ "known_answer": {
+  "trades": 280,
+  "mean_gross": 15.844642857142867
+ }
+}

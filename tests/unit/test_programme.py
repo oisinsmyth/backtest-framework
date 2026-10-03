@@ -162,13 +162,15 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     the LETF close flow (killed in-sample, D640) and the shock classifier (failed Gate 1, D643). On 2026-10-01 D737's
     vault line, NQ leads the Dow (D735's YM k1.0), took the lowest free slot, 1 (the principal said "slot 10"; the
     registry allocates the lowest). On 2026-10-02 D776's vault line, D775's CPI/jobs-report fade on NQ, took the
-    lowest free slot, 2 ("Put D775 in the next slot and freeze it"). Slot 10 is free."""
+    lowest free slot, 2 ("Put D775 in the next slot and freeze it"). On 2026-10-03 D781's vault line, base L4 (D778's
+    M2K closing-auction fade), took slot 10, the last ("Pre-reg L4's freeze for slot 10"; "Freeze it"). No slot is
+    free and the programme's whole α is allocated."""
     registry = Registry(path=DEFAULT_REGISTRY_PATH)
     seeded = [f for f in registry if f.slot <= 7 and f.registered_utc == SEALED_DATE]
     released_at_seal = {"opening H-O2", "LETF close flow H1", "shock classifier H1"}
     assert [f.name for f in seeded] == [name for name, _, _ in SEED_FAMILIES if name not in released_at_seal]
-    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    assert registry.free_slots() == (10,)
+    assert [f.slot for f in registry] == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    assert registry.free_slots() == ()
     first = registry.get("NQ leads the Dow (D735 YM k1.0)")
     assert (first.slot, first.registered_utc, first.amendment) == (1, "2026-10-01", None)
     assert (REPO / "docs" / "decisions" / first.doc).exists()
@@ -190,11 +192,14 @@ def test_the_committed_registry_holds_the_seven_families_the_docs_name():
     ninth = registry.get("opening compression break (NQ)")
     assert (ninth.slot, ninth.registered_utc, ninth.amendment) == (9, "2026-09-29", None)
     assert (REPO / "docs" / "decisions" / ninth.doc).exists()
+    tenth = registry.get("closing-auction fade (M2K, base L4)")
+    assert (tenth.slot, tenth.registered_utc, tenth.amendment) == (10, "2026-10-03", None)
+    assert (REPO / "docs" / "decisions" / tenth.doc).exists()
     assert all(f.alpha == SLOT_ALPHA for f in registry)
     seventh = registry.get("last-hour F2 (NQ)")
     assert (seventh.slot, seventh.registered_utc, seventh.amendment) == (7, "2026-09-30", None)
     assert (REPO / "docs" / "decisions" / seventh.doc).exists()
-    assert registry.alpha_total() == pytest.approx(0.045)
+    assert registry.alpha_total() == pytest.approx(0.05)
     docs = {f.doc for f in seeded} | {r["doc"] for r in registry.released if r["registered_utc"] == SEALED_DATE}
     assert docs == {
         "LETF_CLOSE_FLOW_PREREG.md",
@@ -222,9 +227,11 @@ def test_the_rendered_page_exists_and_says_where_the_deposits_path_maps_to():
     assert "data/programme_registry.json" in page
     for name, _, _ in SEED_FAMILIES:
         assert f"`{name}`" in page
-    assert page.count("*(reserved)*") == 1  # slot 8 allocated to D649 on 2026-09-28, slot 9 to D680 on 2026-09-29
+    assert page.count("*(reserved)*") == 0  # slot 8 to D649 (09-28), slot 9 to D680 (09-29), slot 10 to D781 (10-03)
     assert page.count("*(released)*") == 0  # slots 1 and 2, released 2026-09-30, went to D737 (10-01) and D776 (10-02); slot 7's releases were re-allocated
     assert "`CPI/jobs-report fade (NQ, D775)`" in page
+    assert "`closing-auction fade (M2K, base L4)`" in page
+    assert "**10 of 10 slots allocated; 0 reserved for future models.**" in page
     assert "**Released slots.**" in page
     assert "`ledger H2 projected-profit (NG)`" in page
     assert "`opening compression break (NQ)`" in page

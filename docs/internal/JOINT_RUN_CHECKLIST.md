@@ -220,6 +220,35 @@ checkout (V1):
   (the rotation null uses the non-release days). It shares NQ's 2024+ sessions with D737 (slot 1) and D716 (slot 7), on a different clock.
 - **Its freeze** hashes `stage0_d775_cpi_nfp_fade.py` and the programme module. Do not edit them before the run.
 
+**D781, base L4: the M2K closing-auction fade (D778's base book, one M2K). FROZEN 2026-10-03; programme slot 10, the
+last** (the principal: "Pre-reg L4's freeze for slot 10"; "build it"; "Freeze it").
+
+Two steps, in the main checkout (V1), after the 10-09 top-up (V5) and the D462 rebuild through 2026-09-18 (§2.2).
+Its build is independent of slot 9's fixture.
+1. **Build the YM/RTY vault fixture** (SYSTEM python, databento):
+   `python scripts/vault_d781_l4_auction_fade.py --build-vault-fixture --principals-word "..." --accept-hole 2026-09-12`.
+   - It runs D644's functions unchanged for YM and RTY, with slot 9's per-record cut and hole check, into
+     `data/joint_run/d781/fut_opening_globex_1m_ym_rty.csv.gz`. It never writes the committed fixture.
+   - The `--accept-hole` is V2's Saturday gap, on the same word as slot 9's.
+   - It refuses if `fut_index_sessions` ends before 2026-09-18, or if the fixture already exists.
+2. **Score the vault:**
+   `uv run python scripts/vault_d781_l4_auction_fade.py --vault --principals-word "..."`.
+   - **In order, it:**
+     - verifies `data/FROZEN_vault_d781_l4_auction_fade.json`;
+     - refuses a second opening;
+     - **refuses unless the rebuilt file's RTY rows through 2025-02-28 equal the committed fixture's, as text, row
+       for row;**
+     - re-proves D778's base book (280 trades, mean gross +\$15.844642…) on the committed in-sample path, and again on
+       the rebuilt file's own 2016–2023 rows;
+     - scores sessions 2024-01-01 → 2026-09-18 (S+1 within it).
+   - **It refuses** if the fixture is missing, or ends before 2026-09-18. `--accept-end DATE` is the principal's call.
+- **Independent of the other lines' outputs:** it reads only RTY. D682 read RTY through 2025-02-28 for a different
+  construction (D781 §2); no other frozen line reads RTY.
+- **Its freeze** hashes D778's, D777's and D775's runners, `build_fut_opening_1m.py`, `build_fut_index_1m.py` and the
+  programme module. Do not edit them before the run.
+- **In-sample power** (`data/vault_d781_power.json`): P(PASS) about 0.52 at the in-sample edge. The three latest
+  in-sample 133-trade windows, all holding 2022, were UNRESOLVED.
+
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):
 1. In-sample references, each with no vault read. **All three must pass before any vault step.**
