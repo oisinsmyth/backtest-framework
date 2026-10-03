@@ -13,7 +13,17 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 787.**
+- **Next free number: 788.**
+  - **D787 DIAG (2026-10-03): PRE-REGISTERED, signal strength against its own gate** (the principal's choice after
+    D786).
+    - **Strength:** each trade's trigger magnitude as a percentile of the book's own earlier trades.
+    - **The six books' magnitudes:** D737 |Z|, F2 tc, C1 −ctier, D776 |x|, L4 |c|, NG |I|.
+    - **Profiles:** strong against weak, with and without 2020/22, the weak half's years, and strength's correlation
+      with volatility.
+    - **The candidate rule:** > 2 SE in ≥ 2 books, the same sign in ≥ 5 of 6 with and without 2020/22, and no
+      year holding more than 60% of the weak half.
+  - **D786 A1/A2 (2026-10-03): family A is closed for the index books.** In either form it is the fixed micro fee
+    binding in the early, cheap years, and it never abstains at today's prices. NG's form stays with D649.
   - **D786 DIAG RESULT (2026-10-03): no candidate by the declared rule.**
     - **Family A (own projected payoff ≥ 2 × cost) has the same sign in all six books,** with and without 2020/2022.
       It is significant only in NG (D649 already uses it).
