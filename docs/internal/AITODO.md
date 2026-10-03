@@ -21,7 +21,10 @@
       - the splice reproduces D778's 2023 base book exactly (28 trades);
       - Sierra's 2023 bars give a ledger identical to Databento's (192 sessions, 18 of 18 trades to the cent).
     - **After the joint run:** run `--ledger`, then add it to the daily recorder task.
-    - **Next ledgers owed:** NQ F2 (D716) and C1 (D680).
+    - **The other frozen lines' forward ledgers:**
+      - D737's runs inside the recorder;
+      - NQ F2 (D716) and C1 (D680) are `scripts/forward_f2_c1_ledgers.py`, built and proved in-sample (42b507d5);
+      - **D776 (the CPI/jobs-report fade) has none yet.**
   - **D783 RESULT (2026-10-03): NO EFFECT in every cell; GO false. CLOSED by the principal ("Close it").**
     - PPI × MNQ +\$15.51 (t 1.22, rotation rank 0.89) is 2022 alone (+\$148.62); without 2022 it is −\$3.73.
     - MES/MYM/M2K, IMPEXP, PROD, ECI and the pool are all NO EFFECT.
