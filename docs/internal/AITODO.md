@@ -14,6 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 781.**
+  - **D780 RESULT (2026-10-03): NO PRIZE; GO false.**
+    - L3 is +\$15.47 gross / +\$9.54 net (t 2.21, net t 1.37), rotation rank 0.995. Y passes (7/8 win, 8/8
+      volatility-adjusted).
+    - **Without 2020 it nets +\$2.73 (net t 0.44); five Mondays are 91% of the net.** The London/NY leg is +\$0.10
+      without 2020.
+    - **Slot 10:** vault pass probability L3 31% / 15% against base L4 51% / 27% (in-sample edge / without the best
+      year).
+    - Recommend L3 stays an open lead; base L4 is the slot-10 candidate. The principal's call.
   - **D780 (2026-10-03): PRE-REGISTERED** (Stage 0, prop book; D772's Opus Lead 3, gold's weekend reopen on MGC).
     - **The construction:** m = Sunday's 19:00 print − the previous session's 17:00 price; fade it to Monday 11:00,
       all Mondays, with roll weekends dropped.

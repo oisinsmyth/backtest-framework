@@ -1,0 +1,422 @@
+{
+ "spec": "D780-STAGE-0-PRE-REG-fade-gold-s-weekend-reopen-on-mgc.md",
+ "window": [
+  "2016-01-01",
+  "2023-12-31"
+ ],
+ "root": "GC (MGC terms)",
+ "stats": {
+  "n": 384,
+  "mean_gross": 15.47,
+  "mean_net": 9.54,
+  "median_gross": 8.0,
+  "median_net": 2.07,
+  "t_gross": 2.21,
+  "t_net": 1.37,
+  "win_gross": 0.544,
+  "payoff_net": 1.18,
+  "skew": 1.9,
+  "kurtosis": 13.86,
+  "net_ex_top1pct": 1.94,
+  "net_ex_bottom1pct": 13.87,
+  "net_trimmed": 6.23,
+  "mean_abs_gross": 84.43,
+  "breakeven_cost": 15.47
+ },
+ "N_rotation": {
+  "obs": 15.47,
+  "p50": -0.28,
+  "p95": 10.57,
+  "rank": 0.9948,
+  "n": 383
+ },
+ "by_year": {
+  "2016": {
+   "n": 49,
+   "mean_gross": 7.0,
+   "mean_net": 1.07,
+   "win": 0.51,
+   "va": 0.153,
+   "t": 0.51
+  },
+  "2017": {
+   "n": 44,
+   "mean_gross": 3.98,
+   "mean_net": -1.95,
+   "win": 0.568,
+   "va": 0.127,
+   "t": 0.45
+  },
+  "2018": {
+   "n": 48,
+   "mean_gross": 3.17,
+   "mean_net": -2.76,
+   "win": 0.5,
+   "va": 0.02,
+   "t": 0.36
+  },
+  "2019": {
+   "n": 48,
+   "mean_gross": 16.98,
+   "mean_net": 11.05,
+   "win": 0.604,
+   "va": 0.201,
+   "t": 1.57
+  },
+  "2020": {
+   "n": 49,
+   "mean_gross": 62.04,
+   "mean_net": 56.11,
+   "win": 0.612,
+   "va": 0.443,
+   "t": 1.85
+  },
+  "2021": {
+   "n": 49,
+   "mean_gross": 12.59,
+   "mean_net": 6.66,
+   "win": 0.551,
+   "va": 0.086,
+   "t": 0.69
+  },
+  "2022": {
+   "n": 50,
+   "mean_gross": 7.08,
+   "mean_net": 1.15,
+   "win": 0.54,
+   "va": 0.032,
+   "t": 0.32
+  },
+  "2023": {
+   "n": 47,
+   "mean_gross": 9.49,
+   "mean_net": 3.56,
+   "win": 0.468,
+   "va": 0.214,
+   "t": 0.38
+  }
+ },
+ "gates": {
+  "G1": true,
+  "N": true,
+  "Y": {
+   "pass": true,
+   "full_years": [
+    "2016",
+    "2017",
+    "2018",
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023"
+   ],
+   "need": 6,
+   "i_win_years": 7,
+   "ii_va_years": 8,
+   "va_first": 0.123,
+   "va_second": 0.193,
+   "i": true,
+   "ii": true
+  },
+  "G2": {
+   "pass": false,
+   "t_net": 1.37,
+   "best_two_years": [
+    "2019",
+    "2020"
+   ],
+   "net_ex_best2": 385.0,
+   "best_year": "2020",
+   "mean_gross_ex_best_year": 8.66,
+   "trimmed_gross": 12.16,
+   "bar_2x": 11.86
+  }
+ },
+ "reading": "NO PRIZE",
+ "counts": {
+  "mondays": 410,
+  "scored": 384,
+  "roll_weekends_dropped": 6,
+  "missing_or_flat": 20
+ },
+ "pair_version_rolls_kept": {
+  "n": 390,
+  "mean_gross": 15.93,
+  "mean_net": 10.0,
+  "median_gross": 8.0,
+  "median_net": 2.07,
+  "t_gross": 2.31,
+  "t_net": 1.45,
+  "win_gross": 0.544,
+  "payoff_net": 1.19,
+  "skew": 1.89,
+  "kurtosis": 13.86,
+  "net_ex_top1pct": 2.52,
+  "net_ex_bottom1pct": 14.26,
+  "net_trimmed": 6.75,
+  "mean_abs_gross": 84.24,
+  "breakeven_cost": 15.93
+ },
+ "exit_0929": {
+  "n": 384,
+  "mean_gross": 12.67,
+  "mean_net": 6.74,
+  "median_gross": 6.5,
+  "median_net": 0.57,
+  "t_gross": 2.06,
+  "t_net": 1.1,
+  "win_gross": 0.542,
+  "payoff_net": 1.18,
+  "skew": 2.11,
+  "kurtosis": 13.58,
+  "net_ex_top1pct": -0.48,
+  "net_ex_bottom1pct": 10.1,
+  "net_trimmed": 2.84,
+  "mean_abs_gross": 76.24,
+  "breakeven_cost": 12.67
+ },
+ "gated_q80": {
+  "n": 151,
+  "mean_gross": 39.42,
+  "mean_net": 33.49,
+  "median_gross": 18.0,
+  "median_net": 12.07,
+  "t_gross": 2.77,
+  "t_net": 2.36,
+  "win_gross": 0.583,
+  "payoff_net": 1.51,
+  "skew": 2.31,
+  "kurtosis": 10.5,
+  "net_ex_top1pct": 20.87,
+  "net_ex_bottom1pct": 38.26,
+  "net_trimmed": 25.53,
+  "mean_abs_gross": 109.19,
+  "breakeven_cost": 39.42
+ },
+ "legs": {
+  "n": 384,
+  "all": {
+   "leg_a": 3.01,
+   "leg_b": 6.65,
+   "leg_c": 5.81
+  },
+  "t": {
+   "leg_a": 1.5,
+   "leg_b": 2.25,
+   "leg_c": 1.0
+  },
+  "ex2020": {
+   "leg_a": 2.64,
+   "leg_b": 5.92,
+   "leg_c": 0.1
+  },
+  "by_year": {
+   "2016": {
+    "leg_a": 1.59,
+    "leg_b": -5.04,
+    "leg_c": 10.45
+   },
+   "2017": {
+    "leg_a": 3.05,
+    "leg_b": 0.34,
+    "leg_c": 0.59
+   },
+   "2018": {
+    "leg_a": 0.46,
+    "leg_b": 5.06,
+    "leg_c": -2.35
+   },
+   "2019": {
+    "leg_a": 4.19,
+    "leg_b": 8.02,
+    "leg_c": 4.77
+   },
+   "2020": {
+    "leg_a": 5.51,
+    "leg_b": 11.69,
+    "leg_c": 44.84
+   },
+   "2021": {
+    "leg_a": 6.96,
+    "leg_b": 8.57,
+    "leg_c": -2.94
+   },
+   "2022": {
+    "leg_a": -1.36,
+    "leg_b": 3.72,
+    "leg_c": 4.72
+   },
+   "2023": {
+    "leg_a": 3.77,
+    "leg_b": 20.85,
+    "leg_c": -15.13
+   }
+  }
+ },
+ "ex2020": {
+  "n": 335,
+  "mean_gross": 8.66,
+  "mean_net": 2.73,
+  "median_gross": 6.0,
+  "median_net": 0.07,
+  "t_gross": 1.38,
+  "t_net": 0.44,
+  "win_gross": 0.534,
+  "payoff_net": 1.07,
+  "skew": 1.84,
+  "kurtosis": 14.82,
+  "net_ex_top1pct": -2.69,
+  "net_ex_bottom1pct": 5.63,
+  "net_trimmed": 0.19,
+  "mean_abs_gross": 73.24,
+  "breakeven_cost": 8.66
+ },
+ "sides": {
+  "fade a weekend fall (long)": {
+   "n": 196,
+   "mean_gross": 6.56,
+   "mean_net": 0.63,
+   "win": 0.546,
+   "va": 0.035,
+   "t": 0.78
+  },
+  "fade a weekend rise (short)": {
+   "n": 188,
+   "mean_gross": 24.77,
+   "mean_net": 18.84,
+   "win": 0.543,
+   "va": 0.291,
+   "t": 2.2
+  }
+ },
+ "abs_m_terciles": {
+  "low": {
+   "n": 128,
+   "mean_gross": 0.45,
+   "mean_net": -5.48,
+   "win": 0.539,
+   "va": 0.014,
+   "t": 0.06
+  },
+  "mid": {
+   "n": 128,
+   "mean_gross": 9.73,
+   "mean_net": 3.8,
+   "win": 0.547,
+   "va": 0.124,
+   "t": 1.01
+  },
+  "high": {
+   "n": 128,
+   "mean_gross": 36.23,
+   "mean_net": 30.3,
+   "win": 0.547,
+   "va": 0.337,
+   "t": 2.17
+  }
+ },
+ "book": {
+  "sharpe_net": 0.48,
+  "sortino_net": 0.83,
+  "sharpe_gross": 0.77,
+  "max_drawdown": 1517.0,
+  "total_net": 3665.0,
+  "exposure_share": 0.186
+ },
+ "drift": -8.78,
+ "top5": [
+  [
+   "2020-11-09",
+   1001.07
+  ],
+  [
+   "2023-12-04",
+   947.07
+  ],
+  [
+   "2022-06-13",
+   503.07
+  ],
+  [
+   "2020-03-16",
+   475.07
+  ],
+  [
+   "2020-04-06",
+   425.07
+  ]
+ ],
+ "bottom5": [
+  [
+   "2020-09-21",
+   -563.93
+  ],
+  [
+   "2022-04-25",
+   -360.93
+  ],
+  [
+   "2020-08-17",
+   -340.93
+  ],
+  [
+   "2020-07-27",
+   -338.93
+  ],
+  [
+   "2021-01-04",
+   -304.93
+  ]
+ ],
+ "top5_share_of_total_net": 0.914,
+ "slot10_power": {
+  "gate": ">= 40 trades, mean net > 0 and one-sided t >= 1.2816 (normal approx; D776's rotation-p95 gate not modelled)",
+  "vault": [
+   "2024-01-01",
+   "2026-09-18"
+  ],
+  "L3": {
+   "in_sample_trades": 384,
+   "per_trade_sd": 137.0,
+   "vault_trades_est": 131.0,
+   "pass_probability": {
+    "in_sample_net": 0.314,
+    "net_without_best_year": 0.146,
+    "zero": 0.1
+   },
+   "edges": {
+    "in_sample_net": 9.54,
+    "net_without_best_year": 2.73,
+    "zero": 0.0
+   },
+   "best_year": "2020"
+  },
+  "L4_base": {
+   "in_sample_trades": 280,
+   "per_trade_sd": 107.36,
+   "vault_trades_est": 133.0,
+   "pass_probability": {
+    "in_sample_net": 0.507,
+    "net_without_best_year": 0.274,
+    "zero": 0.1
+   },
+   "edges": {
+    "in_sample_net": 12.08,
+    "net_without_best_year": 6.32,
+    "zero": 0.0
+   },
+   "best_year": "2020"
+  }
+ },
+ "component_rho": {
+  "l4_base": 0.026,
+  "d775": -0.002,
+  "d777_mnq": -0.014,
+  "d737_twin": -0.045,
+  "nq_f2": -0.003,
+  "c1": 0.038
+ },
+ "GO": false,
+ "wall_s": 34.2
+}
