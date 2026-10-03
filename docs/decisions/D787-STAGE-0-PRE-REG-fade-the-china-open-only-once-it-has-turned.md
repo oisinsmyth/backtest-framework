@@ -165,3 +165,53 @@ the open the price is lower than that?", then "Ok prereg it".*
   with its power stated. The principal decides.
 - **Otherwise:** the confirmation entry is recorded at its measured size, and the China-open fade's in-sample stays
   where D770 left it: positive gross, negative net at micro cost.
+
+## Amendment (2026-10-03, before any runner or data read): reworked into a disclosed in-sample exploration grid
+
+*The principal: "Why is anything froxen?", then "Yes, rework it into the grid and run it".*
+
+- **Why:** RULES.md (the correction to R14 at lines 751–772): "in-sample numbers are free for SELECTION and expensive
+  as EVIDENCE", and the ledger counts holdout reads, not in-sample looks.
+  - R8 binds the withheld data only. This slice has already been read for this fade, so a single frozen cell buys
+    nothing. Freezing belongs to the one 2024+ read, if any.
+  - This record therefore becomes TRIAGE: does any cell deserve a holdout read?
+- **Superseded:** the single primary, the nomination rule and the four-look restriction (§3 "Nomination") are
+  withdrawn.
+- **Kept:** the construction, the gates as readings, the controls, the null, the safeguards (§6) and the seal.
+- **The grid, every cell reported (no cell is dropped after seeing):**
+  - **delay L after 09:30:** 5, 10, 15, 20, 30 minutes. The check is at T = 09:30 + L; the taker enters at the open of
+    the bar at T + 1; the passive book rests at the touch at T, filled on a trade-through within 30 minutes, exit at
+    the 15:00 touch;
+  - **the condition:**
+    - K1c: back inside the extreme, with the extreme the maximum (minimum) one-minute close, 09:01–09:30;
+    - K1h: the same, with the extreme the 1-minute bar high (low) over the bars 09:00–09:29;
+    - K2: past the 09:30 price;
+  - **the book:** passive and taker.
+  - That is 5 × 3 × 2 = 30 cells.
+- **The controls:** each delay × book unconditionally, on the same valid sessions (10 control rows). L = 0 is run
+  too, as a reproduction check only: unconditional, it must reproduce D767's taker book and D770's passive book
+  exactly.
+- **Per cell:**
+  - the kept count and share;
+  - kept, skipped and control: mean gross, mean net, t;
+  - kept minus control;
+  - the gates as readings (G1, N, Y, G2);
+  - B1 and the net outside Dec–Mar.
+- **The null:**
+  - each cell's flag is rotated exactly over the candidate sequence (all n − 1 offsets);
+  - the cell's statistic is Σgross / Σ|gross| over kept ∩ valid, with its p95 and rank;
+  - **a family-max null across the 30 cells:** the same offset rotates every cell's flag. For each offset, the
+    largest within-cell percentile across cells forms the distribution that the observed best rank is compared
+    against. This is the grid's own multiplicity, stated in the result.
+- **For the best passive cell and the best taker cell (by family-adjusted rank):**
+  - the four groups;
+  - kept against skipped within |x| terciles;
+  - the EST/EDT, season, year and SHFE-auction splits;
+  - the component line.
+- **What a cell needs to justify a 2024+ read (stated now, a triage bar, not admission):**
+  - passive, N above its own p95 AND the family-max p95;
+  - G2's net t ≥ 2;
+  - Y passes.
+  - If a cell clears it, the result recommends one frozen cell for a separately pre-registered holdout read, with the
+    grid disclosed. The principal decides.
+- **Output:** as §7.
