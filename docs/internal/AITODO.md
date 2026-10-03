@@ -14,7 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 780.**
-  - **D779 RESULT (2026-10-03): NO EFFECT on every root; the filter fails F(a) and F(b); GO false.**
+  - **D776 A1 (2026-10-03): RE-FROZEN, slot 2 kept** (the principal: "re-freeze"). D775's result record was renamed to
+    meet the 85-character path limit, content unchanged. The first freeze is kept as
+    `data/FROZEN_vault_d776_cpi_nfp_fade_v1.json`.
+  - **Base L4 (2026-10-03): OPEN, not frozen; recorded forward.** RTY was added to `record_forward_nq_lines.py` (day
+    and Globex bars from 2026-09-21). The ledger is owed after the joint run, or on forward history from about
+    April 2027.
+  - **D779 RESULT (2026-10-03): NO EFFECT on every root; the filter fails F(a) and F(b); GO false. CLOSED by the
+    principal ("1 and 2 close").**
     - **M2K:** the filter removed 69 trades with a mean of +\$27.21 (winners). The filtered book is +\$12.13 (t 1.62)
       against the base's +\$15.84. F(b): Δ −\$3.72, rank 0.48 against the rotated ZN flag. The same on MES, MNQ, MYM.
     - **In 2022 itself, the rising-yield-day buys lost \$5 a trade (13); the four others lost \$123.** The rates story
@@ -28,7 +35,8 @@
       fall-side buys did worse than the kept ones); Y; G2.
     - **The filter was proposed after seeing 2022**, but the ZN–outcome relation was never computed and the window
       was chosen on resolution alone. Prior about 15%. GO would need the last free slot (10).
-  - **D778 RESULT (2026-10-03): NO EFFECT on every root; the filter adds nothing; GO false.**
+  - **D778 RESULT (2026-10-03): NO EFFECT on every root; the filter adds nothing; GO false. CLOSED by the principal
+    ("1 and 2 close").**
     - **M2K:** the filter removed 72 trades with a mean of +\$33.19: they were winners in every year but 2022
       (−\$32.79). The filtered book is +\$9.84 (t 1.38) against the base's +\$15.84 (t 2.47).
     - **F(b):** Δ −\$6.00, rank 0.20 against the rotated DOWN flag. The same on MNQ, MES and MYM.

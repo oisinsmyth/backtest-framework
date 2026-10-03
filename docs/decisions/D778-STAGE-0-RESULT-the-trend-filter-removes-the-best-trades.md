@@ -115,3 +115,13 @@
   - leave L4's base construction as an open lead, with 2022 as its known failure mode. It would only become a
     pre-registration with a reason for 2022 that can be stated in advance.
   - Both are the principal's call.
+
+## CLOSED (2026-10-03)
+
+**The principal, on D778 and D779: "1 and 2 close".**
+- The trend-filtered construction is closed for the prop book, on every root.
+- **The finding stands as a measurement:** buying closing-auction falls in a downtrend paid most in every year of the
+  sample except 2022.
+- Base L4 is not closed. After [D779](D779-STAGE-0-RESULT-the-rates-filter-removes-winners-too.md) it stays an open
+  lead, not frozen, and RTY is added to the forward recorder.
+- M2K's 2024+ data stays unread.

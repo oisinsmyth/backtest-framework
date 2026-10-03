@@ -115,3 +115,17 @@
   - keep base L4 as an open lead, not frozen.
   - **Forward recording needs RTY added to the forward recorder, which does not carry it today.**
   - All three are the principal's call.
+
+## CLOSED (2026-10-03)
+
+**The principal: "1 and 2 close. 3. yes".**
+- The rates-filtered construction is closed for the prop book, on every root.
+- **The finding stands as a measurement:** in-sample, a 16:00-known rates state does not mark the closing-auction
+  drops that continue overnight, in 2022 or in other years.
+- **Base L4 stays an open lead, not frozen, and is recorded forward:**
+  - `scripts/record_forward_nq_lines.py` now records RTY's day-session and Globex bars from 2026-09-21, under the same
+    seal;
+  - it is validated in-sample like the other roots;
+  - its ledger is owed after the joint run, or on forward history alone from about April 2027 (its q80 gate needs 120
+    prior sessions).
+- M2K's 2024+ data stays unread.
