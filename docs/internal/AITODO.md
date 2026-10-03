@@ -14,6 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 788.**
+  - **D787 DIAG RESULT (2026-10-03): not a candidate by the declared rule.** Without 2020/22 the sign holds in
+    four of six books, not five.
+    - Strength sorts the size-triggered books: NQ F2 (a price-free tier; the weak half −\$12.64 without 2020/22, z
+      2.04) and NG (z 4.85).
+    - D776 and L4 are suggestive, but their magnitudes are index points (the price confound), so a price-neutral
+      re-check is owed.
+    - It is absent for D737 (a first crossing) and C1 (a rank of quiet).
+    - Next is the principal's design.
   - **D787 DIAG (2026-10-03): PRE-REGISTERED, signal strength against its own gate** (the principal's choice after
     D786).
     - **Strength:** each trade's trigger magnitude as a percentile of the book's own earlier trades.

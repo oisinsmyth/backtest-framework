@@ -1,0 +1,652 @@
+{
+ "spec": "D787-DIAG-PRE-REG-signal-strength-against-its-own-gate.md",
+ "window": [
+  "2016-01-01",
+  "2023-12-31"
+ ],
+ "books": {
+  "D737": {
+   "type": "continuation",
+   "trades": 1699,
+   "trades_scored": 1669,
+   "terciles": {
+    "low": {
+     "n": 557,
+     "mean_net": 17.98,
+     "se": 8.1,
+     "win": 0.497,
+     "total": 10016.0,
+     "losers": 280
+    },
+    "mid": {
+     "n": 556,
+     "mean_net": -5.0,
+     "se": 7.76,
+     "win": 0.493,
+     "total": -2781.0,
+     "losers": 282
+    },
+    "high": {
+     "n": 556,
+     "mean_net": 32.01,
+     "se": 9.58,
+     "win": 0.522,
+     "total": 17800.0,
+     "losers": 266
+    }
+   },
+   "strong_vs_weak": {
+    "strong": {
+     "n": 851,
+     "mean_net": 18.12,
+     "se": 7.26,
+     "win": 0.506,
+     "total": 15420.0,
+     "losers": 420
+    },
+    "weak": {
+     "n": 818,
+     "mean_net": 11.76,
+     "se": 6.64,
+     "win": 0.501,
+     "total": 9616.0,
+     "losers": 408
+    },
+    "spread": 6.36,
+    "spread_se": 9.84,
+    "z": 0.65
+   },
+   "strong_vs_weak_ex_2020_2022": {
+    "strong": {
+     "n": 621,
+     "mean_net": 9.33,
+     "se": 6.22,
+     "win": 0.49,
+     "total": 5793.0,
+     "losers": 317
+    },
+    "weak": {
+     "n": 605,
+     "mean_net": 10.25,
+     "se": 5.89,
+     "win": 0.491,
+     "total": 6202.0,
+     "losers": 308
+    },
+    "spread": -0.92,
+    "spread_se": 8.57,
+    "z": -0.11
+   },
+   "weak_half_by_year": {
+    "2016": 0.1,
+    "2017": 0.125,
+    "2018": 0.141,
+    "2019": 0.134,
+    "2020": 0.13,
+    "2021": 0.117,
+    "2022": 0.131,
+    "2023": 0.122
+   },
+   "weak_half_max_year_share": 0.141,
+   "corr_strength_nq_volpct": -0.07,
+   "earliness": {
+    "trades_scored": 1669,
+    "terciles": {
+     "low": {
+      "n": 557,
+      "mean_net": 14.75,
+      "se": 7.89,
+      "win": 0.506,
+      "total": 8213.0,
+      "losers": 275
+     },
+     "mid": {
+      "n": 556,
+      "mean_net": 13.53,
+      "se": 6.73,
+      "win": 0.48,
+      "total": 7522.0,
+      "losers": 289
+     },
+     "high": {
+      "n": 556,
+      "mean_net": 16.73,
+      "se": 10.55,
+      "win": 0.525,
+      "total": 9300.0,
+      "losers": 264
+     }
+    },
+    "strong_vs_weak": {
+     "strong": {
+      "n": 1122,
+      "mean_net": 15.04,
+      "se": 6.2,
+      "win": 0.503,
+      "total": 16870.0,
+      "losers": 558
+     },
+     "weak": {
+      "n": 547,
+      "mean_net": 14.93,
+      "se": 8.03,
+      "win": 0.506,
+      "total": 8165.0,
+      "losers": 270
+     },
+     "spread": 0.11,
+     "spread_se": 10.14,
+     "z": 0.01
+    },
+    "strong_vs_weak_ex_2020_2022": {
+     "strong": {
+      "n": 830,
+      "mean_net": 9.28,
+      "se": 5.22,
+      "win": 0.488,
+      "total": 7701.0,
+      "losers": 425
+     },
+     "weak": {
+      "n": 396,
+      "mean_net": 10.84,
+      "se": 7.53,
+      "win": 0.495,
+      "total": 4294.0,
+      "losers": 200
+     },
+     "spread": -1.57,
+     "spread_se": 9.16,
+     "z": -0.17
+    },
+    "weak_half_by_year": {
+     "2016": 0.082,
+     "2017": 0.119,
+     "2018": 0.137,
+     "2019": 0.132,
+     "2020": 0.135,
+     "2021": 0.121,
+     "2022": 0.141,
+     "2023": 0.133
+    },
+    "weak_half_max_year_share": 0.141,
+    "corr_strength_nq_volpct": -0.049
+   }
+  },
+  "NQ_F2": {
+   "type": "continuation",
+   "trades": 274,
+   "trades_scored": 244,
+   "terciles": {
+    "low": {
+     "n": 82,
+     "mean_net": 6.98,
+     "se": 12.61,
+     "win": 0.549,
+     "total": 572.0,
+     "losers": 37
+    },
+    "mid": {
+     "n": 81,
+     "mean_net": 22.05,
+     "se": 12.67,
+     "win": 0.605,
+     "total": 1786.0,
+     "losers": 32
+    },
+    "high": {
+     "n": 81,
+     "mean_net": 40.94,
+     "se": 19.65,
+     "win": 0.556,
+     "total": 3316.0,
+     "losers": 36
+    }
+   },
+   "strong_vs_weak": {
+    "strong": {
+     "n": 136,
+     "mean_net": 31.83,
+     "se": 13.36,
+     "win": 0.566,
+     "total": 4328.0,
+     "losers": 59
+    },
+    "weak": {
+     "n": 108,
+     "mean_net": 12.47,
+     "se": 10.8,
+     "win": 0.574,
+     "total": 1346.0,
+     "losers": 46
+    },
+    "spread": 19.36,
+    "spread_se": 17.17,
+    "z": 1.13
+   },
+   "strong_vs_weak_ex_2020_2022": {
+    "strong": {
+     "n": 53,
+     "mean_net": 24.08,
+     "se": 11.37,
+     "win": 0.566,
+     "total": 1276.0,
+     "losers": 23
+    },
+    "weak": {
+     "n": 47,
+     "mean_net": -12.64,
+     "se": 13.95,
+     "win": 0.468,
+     "total": -594.0,
+     "losers": 25
+    },
+    "spread": 36.73,
+    "spread_se": 17.99,
+    "z": 2.04
+   },
+   "weak_half_by_year": {
+    "2019": 0.083,
+    "2020": 0.333,
+    "2021": 0.213,
+    "2022": 0.231,
+    "2023": 0.139
+   },
+   "weak_half_max_year_share": 0.333,
+   "corr_strength_nq_volpct": 0.068
+  },
+  "C1": {
+   "type": "continuation",
+   "trades": 328,
+   "trades_scored": 298,
+   "terciles": {
+    "low": {
+     "n": 100,
+     "mean_net": 12.04,
+     "se": 12.02,
+     "win": 0.42,
+     "total": 1204.0,
+     "losers": 58
+    },
+    "mid": {
+     "n": 99,
+     "mean_net": 28.98,
+     "se": 12.89,
+     "win": 0.444,
+     "total": 2869.0,
+     "losers": 55
+    },
+    "high": {
+     "n": 99,
+     "mean_net": 8.74,
+     "se": 14.12,
+     "win": 0.394,
+     "total": 866.0,
+     "losers": 60
+    }
+   },
+   "strong_vs_weak": {
+    "strong": {
+     "n": 149,
+     "mean_net": 17.02,
+     "se": 10.76,
+     "win": 0.436,
+     "total": 2536.0,
+     "losers": 84
+    },
+    "weak": {
+     "n": 149,
+     "mean_net": 16.13,
+     "se": 10.54,
+     "win": 0.403,
+     "total": 2403.0,
+     "losers": 89
+    },
+    "spread": 0.9,
+    "spread_se": 15.06,
+    "z": 0.06
+   },
+   "strong_vs_weak_ex_2020_2022": {
+    "strong": {
+     "n": 95,
+     "mean_net": 11.74,
+     "se": 9.94,
+     "win": 0.432,
+     "total": 1115.0,
+     "losers": 54
+    },
+    "weak": {
+     "n": 93,
+     "mean_net": 16.23,
+     "se": 10.7,
+     "win": 0.441,
+     "total": 1509.0,
+     "losers": 52
+    },
+    "spread": -4.49,
+    "spread_se": 14.6,
+    "z": -0.31
+   },
+   "weak_half_by_year": {
+    "2018": 0.06,
+    "2019": 0.221,
+    "2020": 0.181,
+    "2021": 0.148,
+    "2022": 0.195,
+    "2023": 0.195
+   },
+   "weak_half_max_year_share": 0.221,
+   "corr_strength_nq_volpct": 0.103
+  },
+  "D776": {
+   "type": "reversion",
+   "trades": 186,
+   "trades_scored": 156,
+   "terciles": {
+    "low": {
+     "n": 52,
+     "mean_net": 28.81,
+     "se": 18.5,
+     "win": 0.558,
+     "total": 1498.0,
+     "losers": 23
+    },
+    "mid": {
+     "n": 52,
+     "mean_net": 41.36,
+     "se": 24.1,
+     "win": 0.5,
+     "total": 2151.0,
+     "losers": 26
+    },
+    "high": {
+     "n": 52,
+     "mean_net": 42.45,
+     "se": 34.03,
+     "win": 0.596,
+     "total": 2207.0,
+     "losers": 21
+    }
+   },
+   "strong_vs_weak": {
+    "strong": {
+     "n": 125,
+     "mean_net": 46.56,
+     "se": 18.58,
+     "win": 0.568,
+     "total": 5820.0,
+     "losers": 54
+    },
+    "weak": {
+     "n": 31,
+     "mean_net": 1.17,
+     "se": 11.42,
+     "win": 0.484,
+     "total": 36.0,
+     "losers": 16
+    },
+    "spread": 45.39,
+    "spread_se": 21.81,
+    "z": 2.08
+   },
+   "strong_vs_weak_ex_2020_2022": {
+    "strong": {
+     "n": 84,
+     "mean_net": 50.24,
+     "se": 19.03,
+     "win": 0.536,
+     "total": 4220.0,
+     "losers": 39
+    },
+    "weak": {
+     "n": 25,
+     "mean_net": -3.09,
+     "se": 13.4,
+     "win": 0.44,
+     "total": -77.0,
+     "losers": 14
+    },
+    "spread": 53.33,
+    "spread_se": 23.28,
+    "z": 2.29
+   },
+   "weak_half_by_year": {
+    "2017": 0.097,
+    "2018": 0.258,
+    "2019": 0.323,
+    "2020": 0.194,
+    "2021": 0.032,
+    "2023": 0.097
+   },
+   "weak_half_max_year_share": 0.323,
+   "corr_strength_nq_volpct": 0.067
+  },
+  "L4": {
+   "type": "reversion",
+   "trades": 280,
+   "trades_scored": 250,
+   "terciles": {
+    "low": {
+     "n": 84,
+     "mean_net": 8.96,
+     "se": 9.79,
+     "win": 0.56,
+     "total": 753.0,
+     "losers": 37
+    },
+    "mid": {
+     "n": 83,
+     "mean_net": 21.58,
+     "se": 11.48,
+     "win": 0.566,
+     "total": 1791.0,
+     "losers": 36
+    },
+    "high": {
+     "n": 83,
+     "mean_net": 10.02,
+     "se": 15.19,
+     "win": 0.53,
+     "total": 831.0,
+     "losers": 39
+    }
+   },
+   "strong_vs_weak": {
+    "strong": {
+     "n": 194,
+     "mean_net": 16.84,
+     "se": 8.63,
+     "win": 0.552,
+     "total": 3267.0,
+     "losers": 87
+    },
+    "weak": {
+     "n": 56,
+     "mean_net": 1.95,
+     "se": 10.62,
+     "win": 0.554,
+     "total": 109.0,
+     "losers": 25
+    },
+    "spread": 14.89,
+    "spread_se": 13.68,
+    "z": 1.09
+   },
+   "strong_vs_weak_ex_2020_2022": {
+    "strong": {
+     "n": 83,
+     "mean_net": 20.2,
+     "se": 9.7,
+     "win": 0.542,
+     "total": 1676.0,
+     "losers": 38
+    },
+    "weak": {
+     "n": 45,
+     "mean_net": 3.68,
+     "se": 11.81,
+     "win": 0.556,
+     "total": 166.0,
+     "losers": 20
+    },
+    "spread": 16.51,
+    "spread_se": 15.28,
+    "z": 1.08
+   },
+   "weak_half_by_year": {
+    "2018": 0.018,
+    "2019": 0.375,
+    "2020": 0.161,
+    "2021": 0.054,
+    "2022": 0.036,
+    "2023": 0.357
+   },
+   "weak_half_max_year_share": 0.375,
+   "corr_strength_nq_volpct": 0.336
+  },
+  "NG": {
+   "type": "flow",
+   "trades": 770,
+   "trades_scored": 740,
+   "terciles": {
+    "low": {
+     "n": 247,
+     "mean_net": -6.04,
+     "se": 1.38,
+     "win": 0.401,
+     "total": -1492.0,
+     "losers": 148
+    },
+    "mid": {
+     "n": 246,
+     "mean_net": -0.91,
+     "se": 2.94,
+     "win": 0.488,
+     "total": -225.0,
+     "losers": 126
+    },
+    "high": {
+     "n": 247,
+     "mean_net": 14.99,
+     "se": 3.84,
+     "win": 0.579,
+     "total": 3703.0,
+     "losers": 104
+    }
+   },
+   "strong_vs_weak": {
+    "strong": {
+     "n": 521,
+     "mean_net": 6.63,
+     "se": 2.32,
+     "win": 0.532,
+     "total": 3455.0,
+     "losers": 244
+    },
+    "weak": {
+     "n": 219,
+     "mean_net": -6.71,
+     "se": 1.47,
+     "win": 0.388,
+     "total": -1469.0,
+     "losers": 134
+    },
+    "spread": 13.34,
+    "spread_se": 2.75,
+    "z": 4.85
+   },
+   "strong_vs_weak_ex_2020_2022": {
+    "strong": {
+     "n": 249,
+     "mean_net": 2.2,
+     "se": 2.31,
+     "win": 0.518,
+     "total": 548.0,
+     "losers": 120
+    },
+    "weak": {
+     "n": 169,
+     "mean_net": -8.03,
+     "se": 1.6,
+     "win": 0.361,
+     "total": -1357.0,
+     "losers": 108
+    },
+    "spread": 10.23,
+    "spread_se": 2.81,
+    "z": 3.65
+   },
+   "weak_half_by_year": {
+    "2018": 0.005,
+    "2019": 0.078,
+    "2020": 0.219,
+    "2021": 0.205,
+    "2022": 0.009,
+    "2023": 0.484
+   },
+   "weak_half_max_year_share": 0.484,
+   "corr_strength_nq_volpct": 0.257
+  }
+ },
+ "cross_book": {
+  "D737": {
+   "spread": 6.36,
+   "z": 0.65,
+   "spread_ex": -0.92,
+   "z_ex": -0.11
+  },
+  "NQ_F2": {
+   "spread": 19.36,
+   "z": 1.13,
+   "spread_ex": 36.73,
+   "z_ex": 2.04
+  },
+  "C1": {
+   "spread": 0.9,
+   "z": 0.06,
+   "spread_ex": -4.49,
+   "z_ex": -0.31
+  },
+  "D776": {
+   "spread": 45.39,
+   "z": 2.08,
+   "spread_ex": 53.33,
+   "z_ex": 2.29
+  },
+  "L4": {
+   "spread": 14.89,
+   "z": 1.09,
+   "spread_ex": 16.51,
+   "z_ex": 1.08
+  },
+  "NG": {
+   "spread": 13.34,
+   "z": 4.85,
+   "spread_ex": 10.23,
+   "z_ex": 3.65
+  }
+ },
+ "candidate": {
+  "books_over_2se": [
+   "D776",
+   "NG"
+  ],
+  "positive_spread": [
+   "D737",
+   "NQ_F2",
+   "C1",
+   "D776",
+   "L4",
+   "NG"
+  ],
+  "positive_spread_ex_2020_2022": [
+   "NQ_F2",
+   "D776",
+   "L4",
+   "NG"
+  ],
+  "books_failing_the_calendar_check": [],
+  "candidate": false
+ },
+ "wall_s": 270.8
+}
