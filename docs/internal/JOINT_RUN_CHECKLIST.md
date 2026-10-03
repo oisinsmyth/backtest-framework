@@ -199,7 +199,9 @@ checkout holding the rebuilt fixtures:
   `cost_line` and others). Do not edit those before the run.
 
 **D776, the CPI/jobs-report fade (D775's construction, one MNQ). FROZEN 2026-10-02; programme slot 2** (the principal:
-"Put D775 in the next slot and freeze it"; the lowest free slot).
+"Put D775 in the next slot and freeze it"; the lowest free slot). **RE-FROZEN 2026-10-03 (D776 A1):** D775's
+result record was renamed to meet the 85-character path limit, with its content unchanged. The first freeze is kept as
+`data/FROZEN_vault_d776_cpi_nfp_fade_v1.json`. The vault verifies the current `data/FROZEN_vault_d776_cpi_nfp_fade.json`.
 
 Run it **after slot 9's `joint_d680_vault.py --build-vault fixture`** (§3, slot 9 step 1). That step writes
 `data/joint_run/d680/fut_opening_globex_1m.csv.gz` through 2026-09-18, and D776 reads it. Run it in the main

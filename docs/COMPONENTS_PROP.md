@@ -834,7 +834,7 @@ This is the in-sample premise check.
 - About 96 % of entries fall in the 10:00 hour.
 - The drawdown exceeds a $50k account's $2,000 trailing barrier at one MNQ.
 
-## ENTRY #7, PROVISIONAL, 2026-10-02 — the CPI/jobs-report fade on MNQ ([D775](decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md), [D776](decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md))
+## ENTRY #7, PROVISIONAL, 2026-10-02 — the CPI/jobs-report fade on MNQ ([D775](decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample.md), [D776](decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md))
 
 *The principal: "Pre-reg the CPI/NFP fade as D775"; "Put D775 in the next slot and freeze it".*
 

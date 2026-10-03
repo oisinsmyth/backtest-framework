@@ -103,3 +103,39 @@
 - `scripts/vault_d776_cpi_nfp_fade.py`;
 - `data/rehearsal_vault_d776.json`, `data/vault_d776_power.json`, `data/FROZEN_vault_d776_cpi_nfp_fade.json`;
 - at the joint run, `data/vault_d776_cpi_nfp_fade.json`. The vault result is a separate record.
+
+## A1 (2026-10-03) — the re-freeze: D775's result record renamed to meet the 85-character path limit
+
+*The principal, on the long path: "re-freeze".*
+
+- **Why:**
+  - D775's result record was `docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md`,
+    90 characters.
+  - The tracked-path limit is 85 (D540; `tests/unit/test_public_cut.py`). The documentation session found it failing.
+  - The record is one of the three this freeze hashes, so a rename needs a re-freeze.
+- **What moved:**
+  - **The record's path, not its content.** It is now
+    `docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample.md`, and its sha256 is unchanged
+    (`a59e57d3…`).
+  - **This runner:** the new path constant, and a `--refreeze` mode (below).
+  - **This record:** this addendum.
+  - The link in `docs/COMPONENTS_PROP.md` entry #7 now points to the new path. `docs/internal/JOINT_RUN_CHECKLIST.md`
+    notes the re-freeze.
+- **What did not move, and the re-freeze refuses otherwise:**
+  - D775's pre-registration;
+  - D775's runner and every imported file (including `programme.py`);
+  - D775's JSON, the rehearsal and the power files;
+  - the parameters, the gate and the known answer (186 trades, mean gross +\$34.879…);
+  - the programme slot (2), family and α (0.005). The registry is not touched, and `--refreeze` checks it still holds
+    slot 2 for this record.
+- **The mechanism:**
+  - The first freeze (runner sha256 `b4df3be5…`; the manifest file's own sha256 `2035f669…`) is kept unchanged as
+    `data/FROZEN_vault_d776_cpi_nfp_fade_v1.json`.
+  - `--refreeze` writes `data/FROZEN_vault_d776_cpi_nfp_fade.json` once. It copies the first freeze's slot, family, α,
+    instruction and known answer onto the current manifest, and adds a `refrozen` block (date, instruction, reason,
+    the rename, the previous file and its hash, what moved).
+  - It raises if the renamed record's content moved, if any other record, data file, parameter or imported file
+    moved, or if the registry disagrees.
+  - **The self-test** shows it accepts the declared moves, and fires on a renamed record whose content moved, an
+    undeclared record move and a moved data file.
+- **No price was read.** The vault is unopened, and `--vault` verifies the new freeze exactly as before.

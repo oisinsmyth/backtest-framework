@@ -7,12 +7,12 @@
  "alpha": 0.005,
  "runner": {
   "path": "scripts/vault_d776_cpi_nfp_fade.py",
-  "sha256": "b0b5453c787f786c14e1f3272ed1afc912dd992101d3d0c0d0ebf79ea782fcf0"
+  "sha256": "b4df3be5e0ff9a6ea6a9fdc3e15c928a3f6325608710fadd6306140e0d390874"
  },
  "records": {
-  "docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md": "f78afbebb31d38f6aa7aa3d38a4bbb62c4130fcfd93c533ca34cb636c5bc6017",
+  "docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md": "a7c8b20bcd51228d4eef234ace5a94a34e0c66e064f70a2d1c65bcc71cf8ffdb",
   "docs/decisions/D775-STAGE-0-PRE-REG-fade-the-cpi-and-jobs-report-impulse-on-mnq.md": "00b4862dbb9d5f624afa3f8443b3d0b3a16fbbf0426a60eba2fd487c0527edc2",
-  "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample.md": "a59e57d37c1d5d560ce87ebb058f2b0e88c17c0f4d6848c100d1e21ee545e9d3"
+  "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md": "a59e57d37c1d5d560ce87ebb058f2b0e88c17c0f4d6848c100d1e21ee545e9d3"
  },
  "imported_unchanged": {
   "scripts/stage0_d775_cpi_nfp_fade.py": "1f124c0f835b7395ea15265cdc589716b9017028befb817d824bfb99727399ca",
@@ -67,19 +67,5 @@
  "known_answer": {
   "trades": 186,
   "mean_gross": 34.87903225806452
- },
- "refrozen": {
-  "date": "2026-10-03",
-  "instruction": "the principal, 2026-10-03 (on the 85-character path limit): \"re-freeze\"",
-  "reason": "D775's result filename was 90 characters, over the 85-character tracked-path limit (D540); renamed, content unchanged",
-  "renamed": {
-   "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md": "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample.md"
-  },
-  "previous": "data/FROZEN_vault_d776_cpi_nfp_fade_v1.json",
-  "previous_sha256": "2035f6699ec933e0b939f8f47453190ac152aef2af1811813fbd1f72a09341e7",
-  "moved": [
-   "runner",
-   "records/docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md"
-  ]
  }
 }

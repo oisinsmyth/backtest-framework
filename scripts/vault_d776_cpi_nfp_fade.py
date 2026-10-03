@@ -5,6 +5,8 @@ docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md,
     uv run --no-sync python scripts/vault_d776_cpi_nfp_fade.py --rehearse        # in-sample (2016-2023), once
     uv run --no-sync python scripts/vault_d776_cpi_nfp_fade.py --power           # in-sample, once
     uv run --no-sync python scripts/vault_d776_cpi_nfp_fade.py --freeze          # once, after both
+    uv run --no-sync python scripts/vault_d776_cpi_nfp_fade.py --refreeze        # once (D776 A1, 2026-10-03): the
+                                                                                 # first freeze kept as _v1; slot kept
     uv run --no-sync python scripts/vault_d776_cpi_nfp_fade.py --vault --principals-word "..." [--accept-end D]
                                                                                  # the joint run ONLY, after slot 9's
                                                                                  # --build-vault fixture
@@ -39,11 +41,13 @@ import stage0_d775_cpi_nfp_fade as S  # noqa: E402
 RUNNER_REL = "scripts/vault_d776_cpi_nfp_fade.py"
 SPEC_REL = "docs/decisions/D776-PRE-REG-the-cpi-and-jobs-report-fade-for-the-joint-vault.md"
 D775_PRE_REL = "docs/decisions/D775-STAGE-0-PRE-REG-fade-the-cpi-and-jobs-report-impulse-on-mnq.md"
-D775_RES_REL = "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md"
+D775_RES_REL = "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample.md"
+D775_RES_REL_V1 = "docs/decisions/D775-STAGE-0-RESULT-the-cpi-and-jobs-report-fade-passes-in-sample-on-mnq.md"
 D775_JSON = REPO / "data" / "stage0_d775_cpi_nfp_fade.json"
 REHEARSAL = REPO / "data" / "rehearsal_vault_d776.json"
 POWER = REPO / "data" / "vault_d776_power.json"
 FROZEN = REPO / "data" / "FROZEN_vault_d776_cpi_nfp_fade.json"
+FROZEN_V1 = REPO / "data" / "FROZEN_vault_d776_cpi_nfp_fade_v1.json"   # the first freeze, kept (D776 A1)
 OUT = REPO / "data" / "vault_d776_cpi_nfp_fade.json"
 JOINT_FIX = S.MAIN / "data" / "joint_run" / "d680" / "fut_opening_globex_1m.csv.gz"
 
@@ -59,6 +63,13 @@ PROGRAMME_FAMILY = "CPI/jobs-report fade (NQ, D775)"
 REGISTERED = "2026-10-02"
 PAGE_DATE = "2026-09-21"                                     # the page's pinned render date
 INSTRUCTION = 'the principal, 2026-10-02: "Put D775 in the next slot and freeze it"'
+REFREEZE = {"date": "2026-10-03", "instruction": 'the principal, 2026-10-03 (on the 85-character path limit): "re-freeze"',
+            "reason": "D775's result filename was 90 characters, over the 85-character tracked-path limit (D540); "
+                      "renamed, content unchanged",
+            "renamed": {D775_RES_REL_V1: D775_RES_REL},
+            # what a re-freeze may move: the renamed record's PATH, this runner (the new path and this mode), and
+            # D776's record (its addendum A1). Everything else must hash as it did in the first freeze.
+            "may_move": ["runner", f"records/{SPEC_REL}"]}
 NOTE = ("Vault line: D775's fade of the 08:30 CPI/jobs-report impulse (08:29 -> 08:34 bar closes) to the 11:00 close, "
         "one MNQ, $4.07, release days 2024-01-01 -> 2026-09-18; PASS with >= 40 trades, mean net > 0 and one-sided t "
         ">= 1.2816, and mean gross above the vault-window exact rotation p95; FAIL if mean net <= 0; else UNRESOLVED")
@@ -313,6 +324,58 @@ def freeze() -> int:
     return 0
 
 
+def refreeze_doc(v1: dict[str, Any], now: dict[str, Any], v1_sha: str) -> dict[str, Any]:
+    """The re-freeze (D776 A1): the first freeze's slot, family, alpha, instruction and known answer, over the current
+    manifest. Raises unless the only moves are the declared ones: the renamed record keeps its content hash under its
+    new path, and nothing outside REFREEZE['may_move'] changed."""
+    bad = []
+    old_rec = dict(v1["records"])
+    for a, b in REFREEZE["renamed"].items():
+        if a not in old_rec or b not in now["records"]:
+            bad.append(f"rename {a} -> {b} not in the manifests")
+            continue
+        if old_rec.pop(a) != now["records"][b]:
+            bad.append(f"the renamed record's content moved ({b})")
+        old_rec[b] = now["records"][b]
+    for p, h in now["records"].items():
+        if old_rec.get(p) != h and f"records/{p}" not in REFREEZE["may_move"]:
+            bad.append(f"record {p}")
+    if set(old_rec) != set(now["records"]):
+        bad.append("the record set")
+    if v1["runner"]["path"] != now["runner"]["path"]:
+        bad.append("the runner's path")
+    for k in ("files", "params", "imported_unchanged"):
+        if v1[k] != now[k]:
+            bad.append(k)
+    if bad:
+        raise VaultError(f"re-freeze: undeclared moves since the first freeze: {bad}")
+    doc = {k: v1[k] for k in ("name", "record", "instruction", "programme_slot", "programme_family", "alpha")}
+    doc.update(now)
+    doc["known_answer"] = v1["known_answer"]
+    doc["refrozen"] = {**{k: v for k, v in REFREEZE.items() if k != "may_move"}, "previous": FROZEN_V1.relative_to(REPO).as_posix(),
+                       "previous_sha256": v1_sha,
+                       "moved": ["runner"] + [k for k in REFREEZE["may_move"] if k.startswith("records/")
+                                              and v1["records"].get(k[8:]) != now["records"].get(k[8:])]}
+    return doc
+
+
+def refreeze() -> int:
+    if FROZEN.exists():
+        raise VaultError(f"{FROZEN.name} exists: the re-freeze is written once, after the first freeze is moved to _v1")
+    if not FROZEN_V1.exists():
+        raise VaultError(f"{FROZEN_V1.name} is missing: nothing to re-freeze")
+    v1 = json.loads(FROZEN_V1.read_text(encoding="utf-8"))
+    from backtest_framework.validation.programme import Registry
+    fam = Registry().get(PROGRAMME_FAMILY)
+    if (fam.slot, fam.alpha, fam.doc) != (v1["programme_slot"], v1["alpha"], Path(SPEC_REL).name):
+        raise VaultError(f"re-freeze: the registry's {fam} differs from the first freeze")
+    doc = refreeze_doc(v1, manifest(REPO), sha_text(FROZEN_V1))
+    write_once(FROZEN, doc)
+    check_freeze(doc)
+    P(f"[D776] RE-FROZEN; programme slot {doc['programme_slot']} kept; moved: {doc['refrozen']['moved']}")
+    return 0
+
+
 def refuse(word: str | None) -> bool:
     return not (word and word.strip())
 
@@ -423,11 +486,29 @@ def selftest() -> int:
         k = next(iter(doc3["imported_unchanged"]))
         doc3["imported_unchanged"][k] = "0" * 64
         expect(lambda: check_freeze(doc3), "a moved imported file")
+        # 7) the re-freeze (D776 A1) accepts only the declared moves
+        v1 = json.loads(json.dumps(doc))
+        v1["records"][D775_RES_REL_V1] = v1["records"].pop(D775_RES_REL)
+        v1.update({"name": "x", "record": SPEC_REL, "instruction": "x", "programme_slot": 2, "programme_family": "x",
+                   "alpha": 0.005, "known_answer": {}})
+        v1["runner"] = {**v1["runner"], "sha256": "0" * 64}
+        refreeze_doc(v1, doc, "0" * 64)
+        v4 = json.loads(json.dumps(v1))
+        v4["records"][D775_RES_REL_V1] = "0" * 64
+        expect(lambda: refreeze_doc(v4, doc, "0" * 64), "a re-freeze over a renamed record whose content moved")
+        v5 = json.loads(json.dumps(v1))
+        v5["records"][D775_PRE_REL] = "0" * 64
+        expect(lambda: refreeze_doc(v5, doc, "0" * 64), "a re-freeze over an undeclared record move")
+        v6 = json.loads(json.dumps(v1))
+        v6["files"][next(iter(v6["files"]))] = "0" * 64
+        expect(lambda: refreeze_doc(v6, doc, "0" * 64), "a re-freeze over a moved data file")
     if fails:
         raise VaultError("; ".join(fails))
     P("[D776] selftest OK: the gate's readings, the window seal, the refusal without a word, a planted reversal "
       "passes and a continuation fails, the reader's filters"
-      + ("; the freeze check fires on a moved parameter and a moved import" if REHEARSAL.exists() and POWER.exists()
+      + ("; the freeze check fires on a moved parameter and a moved import; the re-freeze accepts the declared moves "
+         "and fires on a moved renamed record, an undeclared record and a moved data file"
+         if REHEARSAL.exists() and POWER.exists()
          else " (the freeze-drift check runs once the rehearsal and power files exist)"))
     return 0
 
@@ -435,7 +516,7 @@ def selftest() -> int:
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     g = ap.add_mutually_exclusive_group(required=True)
-    for m in ("selftest", "rehearse", "power", "freeze", "vault"):
+    for m in ("selftest", "rehearse", "power", "freeze", "refreeze", "vault"):
         g.add_argument(f"--{m}", action="store_true")
     ap.add_argument("--principals-word")
     ap.add_argument("--accept-end")
@@ -448,6 +529,8 @@ def main(argv: list[str] | None = None) -> int:
         return do_power()
     if a.freeze:
         return freeze()
+    if a.refreeze:
+        return refreeze()
     return vault(a.principals_word, a.accept_end)
 
 
