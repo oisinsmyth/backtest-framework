@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 625 of these records carry neither field —
+**No Status or Category column, deliberately.** 626 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -853,6 +853,7 @@ would look like data. The tokens are what is shown.
 | D778 | D778 STAGE 0 RESULT — NO EFFECT, and the filter adds nothing: skipping the closing-auction fall-side buys in a downtren… | [PRE-REG](D778-STAGE-0-PRE-REG-the-closing-auction-fade-with-a-trend-filter.md) · [RESULT](D778-STAGE-0-RESULT-the-trend-filter-removes-the-best-trades.md) |
 | D779 | D779 STAGE 0 RESULT — NO EFFECT on every root: skipping the closing-auction fall-side buys on days the 10-year Treasury… | [PRE-REG](D779-STAGE-0-PRE-REG-the-closing-auction-fade-with-a-rates-filter.md) · [RESULT](D779-STAGE-0-RESULT-the-rates-filter-removes-winners-too.md) |
 | D780 | D780 STAGE 0 RESULT — NO PRIZE: gold's weekend reopen fade passes the principal's year test, but without 2020 it nets +… | [PRE-REG](D780-STAGE-0-PRE-REG-fade-gold-s-weekend-reopen-on-mgc.md) · [RESULT](D780-STAGE-0-RESULT-gold-s-weekend-reopen-is-a-2020-book.md) |
+| D781 | REG — base L4, the M2K closing-auction fade, for the joint vault run: the vault scorer, the freeze and programme slot 10 | [PRE-REG](D781-PRE-REG-the-m2k-closing-auction-fade-for-the-joint-vault.md) |
 
 <!-- REGISTER:END -->
 

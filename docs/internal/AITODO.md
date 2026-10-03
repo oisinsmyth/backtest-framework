@@ -13,7 +13,17 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 781.**
+- **Next free number: 782.**
+  - **D781 (2026-10-03): PRE-REGISTERED** — base L4's freeze into programme slot 10, the last free slot (the
+    principal: "Pre-reg L4's freeze for slot 10").
+    - **What is scored:** D778's base book, imported unchanged (known answer 280 trades, +\$15.84).
+    - **The vault:** M2K sessions 2024-01-01 → 2026-09-18, about 133 trades. 2024-01 → 2025-02 was read by D682 for a
+      different construction; it is unseen by L4 under the per-line ruling.
+    - **The gate:** G0 ≥ 40; G1 net > 0 and one-sided t ≥ 1.2816; G2 above the rotation p95.
+    - **The input:** a YM/RTY opening fixture rebuilt through 2026-09-18 at the joint run, identity-checked against the
+      committed rows.
+    - **Next:** the runner with its self-test, then the rehearsal, the power run and the freeze. The freeze registers
+      slot 10, after which no α is left.
   - **D780 RESULT (2026-10-03): NO PRIZE; GO false.**
     - L3 is +\$15.47 gross / +\$9.54 net (t 2.21, net t 1.37), rotation rank 0.995. Y passes (7/8 win, 8/8
       volatility-adjusted).
