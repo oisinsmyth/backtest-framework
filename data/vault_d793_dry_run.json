@@ -1,0 +1,53 @@
+{
+ "DRY_RUN": "in-sample inputs, 2023 scored as a pseudo-window; NOT evidence",
+ "identity": {
+  "rows": 1697,
+  "columns": 47,
+  "equal": true
+ },
+ "scored": {
+  "window": [
+   "2023-01-03",
+   "2023-12-29"
+  ],
+  "sessions": 215,
+  "take_share": 0.42790697674418604,
+  "passive_PRIMARY": {
+   "n": 80,
+   "valid_sessions": 183,
+   "mean_gross": 16.8125,
+   "mean_net": 13.779505076142152,
+   "t_net": 2.3493851025640997,
+   "rotation_p50": 4.11875000000002,
+   "rotation_p95": 11.239374999999892,
+   "rotation_rank": 0.9945054945054945,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "reading": "PASS"
+  },
+  "taker_reported": {
+   "n": 92,
+   "valid_sessions": 215,
+   "mean_gross": 16.652173913043285,
+   "mean_net": 10.722173913043278,
+   "t_net": 2.0194594393259018,
+   "rotation_p50": 6.679347826086912,
+   "rotation_p95": 13.772282608695532,
+   "rotation_rank": 0.985981308411215,
+   "G0": true,
+   "G1": true,
+   "G2": true,
+   "reading": "PASS"
+  },
+  "rho_score_gross": 0.16232514429510506,
+  "rho_rotation_p95": 0.10423690140648727,
+  "years_passive_net": {
+   "2023": 13.779505076142152
+  },
+  "long_short_passive_net": {
+   "long_fades": 17.437593311436448,
+   "short_fades": 11.075700728315946
+  }
+ }
+}

@@ -1,0 +1,5 @@
+{
+ "max_abs_difference_coef_intercept": 2.2551405187698492e-17,
+ "rank_scale_equal": true,
+ "sklearn": "1.9.0"
+}
