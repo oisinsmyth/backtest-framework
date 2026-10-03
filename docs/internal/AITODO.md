@@ -13,7 +13,14 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 782.**
+- **Next free number: 783.**
+  - **D782 FIXTURE (2026-10-03): the other BLS releases at 08:30** (the principal: "Lets go with option 1"; "BLS
+    first, then decide").
+    - `data/calendar/events_bls_0830.csv`: PPI and IMPEXP (131 each), ECI, PROD_P and PROD_R (44 each), all 08:30 ET,
+      from D585's cached BLS pages.
+    - The parser reproduces `events.csv`'s 262 CPI/EMPSIT rows exactly. `events.csv` itself is untouched.
+    - **Next:** D783, a Stage 0 of D775's construction on these releases, with PPI primary. Census, BEA and DOL only
+      after it.
   - **D781 FROZEN (2026-10-03): base L4 in programme slot 10, the last.** The programme's α is fully allocated (0.05);
     a new line needs an amendment.
     - The rehearsal reproduces D778's base book (280 trades, +\$15.844642…); in-sample it reads PASS (net t 1.88,

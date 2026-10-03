@@ -143,6 +143,16 @@ Golden Week and the shorter national holidays.
 - The details are in `china_exchange_holidays.meta.json`.
 - **Its use:** the China-closed control for the 09:00 Beijing open. CME trades; China does not.
 
+## The other BLS 08:30 releases: `events_bls_0830.csv` (D782)
+
+PPI, IMPEXP (U.S. Import and Export Price Indexes), ECI (Employment Cost Index), PROD_P and PROD_R (Productivity and
+Costs, preliminary and revised). They come from the same cached `bls.gov/schedule/<year>/home.htm` pages, by
+`scripts/build_bls_0830_calendar.py`, under the same rule: date and clock off the page, weekday word checked.
+
+- Same columns as `events.csv`; 394 rows, all 08:30 ET.
+- The builder first reproduces this file's CPI and EMPSIT rows exactly, then writes only the new events.
+- `events.csv` itself is unchanged.
+
 ## Not this file
 
 `data/macro_release_calendar.json` is a different, older artifact (recorded 2026-09-12) and is read

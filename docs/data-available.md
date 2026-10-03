@@ -657,6 +657,18 @@ built on those nine wrong dates; *(iv)* **the 2019-07-04 week shows a schedule r
 before June 2019 put the gas report on Friday 07-05, every later capture on Wednesday 07-03 at
 12:00, and the later statement wins, with the conflict recorded.
 
+**The other BLS releases at 08:30 ET ([D782](decisions/D782-FIXTURE-the-other-bls-releases-at-0830.md), 2026-10-03).**
+[`calendar/events_bls_0830.csv`](../data/calendar/events_bls_0830.csv): **394 releases, 2016 → 2026**:
+- PPI (131) and import/export prices (131);
+- the Employment Cost Index (44);
+- Productivity and Costs, preliminary (44) and revised (44).
+
+Every row is 08:30 ET, from the same BLS year pages D585 cached; nothing was fetched. Built by
+`scripts/build_bls_0830_calendar.py`, whose parser is D585's with the event map as a parameter. It reproduces
+`events.csv`'s 262 CPI/EMPSIT rows exactly before writing (G1). Every full year 2016–2024 has 12/12/4/4/4 rows (G2).
+**What bites:** *(i)* a separate file on purpose: `events.csv` is read by D775 and by D776's frozen vault line and is
+not touched; *(ii)* no row falls on a CPI or EMPSIT day; *(iii)* like D585's, it is a schedule, not a log.
+
 **The prop-firm venue terms ([D590](decisions/D590-hurdle-p-and-the-component-series-become-library-code.md), 2026-09-21).** [`prop_venues.json`](../data/prop_venues.json) — the 14 plans
 `scripts/d386_full_lifecycle.py` carried as a Python literal (Apex 25/50/100/150K, MyFundedFutures
 Rapid and Rapid EOD 25–150K, Topstep 50K, Take Profit Trader 25–150K), keyed `apex_50k`,
