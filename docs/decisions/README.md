@@ -862,7 +862,7 @@ would look like data. The tokens are what is shown.
 | D787 | D787 STAGE 0 RESULT: NOTHING. Whether the China open has turned 5–30 minutes later does not sort the fade. No cell of 3… | [PRE-REG](D787-STAGE-0-PRE-REG-fade-the-china-open-only-once-it-has-turned.md) · [RESULT](D787-STAGE-0-RESULT-the-turn-at-0945-carries-nothing.md) |
 | D788 | D788 DIAG RESULT — no state is a candidate by the declared rule, but one family points the same way in all six books, w… | [PRE-REG](D788-DIAG-PRE-REG-the-abstention-oracle-across-six-books.md) · [RESULT](D788-DIAG-RESULT-the-abstention-oracle-across-six-books.md) |
 | D789 | D789 DIAG RESULT — not a candidate by the declared rule (four of six books, not five, keep the sign without 2020/2022),… | [PRE-REG](D789-DIAG-PRE-REG-signal-strength-against-its-own-gate.md) · [RESULT](D789-DIAG-RESULT-signal-strength-sorts-the-size-triggered-books.md) |
-| D790 | D790 EXPLORE RESULT: gold does not rise at the China open, the open's shape carries nothing, and the one new channel is… | [record](D790-EXPLORE-anatomy-of-gold-s-china-open-scope.md) · [RESULT](D790-EXPLORE-RESULT-the-asian-session-leans-back-toward-the-200-day-average.md) |
+| D790 | D790 EXPLORE RESULT: gold does not rise at the China open, the open's shape carries nothing, and the one new channel is… | [record](D790-EXPLORE-anatomy-of-gold-s-china-open-scope.md) · [RESULT](D790-EXPLORE-RESULT-asian-session-leans-toward-the-200-day-sma.md) |
 
 <!-- REGISTER:END -->
 
