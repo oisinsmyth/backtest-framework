@@ -70,3 +70,36 @@
 - **The next design is the principal's:**
   - the price-neutral re-check for D776 and L4 (in-sample);
   - and whether a strength rule for the size-triggered books (NQ F2, D776, L4, NG) goes to the vault before the run.
+
+## A1 (2026-10-03) — price-neutral, D776's and L4's strength disappears: it was the price level
+
+*The principal: "Price-neutral re-check, then decide".*
+
+- **The definitions,** fixed before the look (in-sample, already read; `scripts/diag_d787_a1_price_neutral.py` →
+  `data/diag_d787_a1_price_neutral.json`):
+  - **L4:** m = \|c\| ÷ its own trailing q80 threshold, so how far past its own gate. The gate is a rank of the
+    prior 250 sessions, so m is free of price.
+  - **D776:** m = \|x\| ÷ the standard deviation of the same 08:29 → 08:34 move over the 60 prior weekday sessions
+    (at least 40).
+  - Strength and the profile are D787's.
+
+| book | form | strong: n, mean | weak: n, mean | z | without 2020/2022: strong / weak (z) | ρ(strength, year) |
+|---|---|---|---|---|---|---|
+| D776 | points (D787) | 123, +\$47.28 | 29, +\$2.02 | 2.01 | +\$51.41 / −\$2.40 (2.21) | +0.26 |
+| D776 | **price-neutral** | 78, +\$20.58 | 74, **+\$57.69** | **−1.20** | +\$41.17 / +\$37.78 (0.11) | +0.06 |
+| L4 | points (D787) | 194, +\$16.84 | 56, +\$1.95 | 1.09 | +\$20.20 / +\$3.68 (1.08) | −0.05 |
+| L4 | **price-neutral** | 115, +\$18.07 | 135, +\$9.61 | 0.58 | +\$15.34 / +\$13.70 (0.11) | −0.12 |
+
+- **D776's sort was the price level.** Price-neutral, it reverses: the "weak" impulses earn more. Without 2020/2022
+  there is nothing.
+  - The point form's weak half sat in 2018–2020, and its strength correlated +0.26 with the year.
+- **L4's sort also fades to nothing** without 2020/2022 (z 0.11).
+- **So signal strength survives in two books only:**
+  - **NQ F2,** whose trigger is already a rank. Its strong half is a stricter F2 tier.
+  - **NG,** where strength is the size of the predicted flow, the input D649 (slot 8) already projects.
+  - In both, "strength" restates the book's own gate more strictly. It is not a rule found outside the
+    construction.
+- **Reading: the formation (D786, D787) has found no general abstention principle across these books in-sample.**
+  - Every cross-book pattern was the price level, 2020/2022, or a book's own gate tightened.
+  - The last is D743's finding again: a veto travels with its construction.
+  - What to file, if anything, is the principal's call.
