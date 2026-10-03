@@ -13,7 +13,7 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 793** (D790 and D791 are the China-open session's, on main).
+- **Next free number: 794** (D790 and D791 are the China-open session's; it has also claimed number 793, its gold China-open model for an amended slot 11).
   - **D792 (2026-10-04): PRE-REGISTERED, the assembled prop book** (the principal: "Pre-reg the assembled book").
     - **Members:** the five live components, one micro each (NQ F2, NQ leads the Dow, the CPI/jobs fade, C1, base L4).
     - **The book:** passes only, i.e. the members that PASS their own vault lines; G1 needs at least two.
