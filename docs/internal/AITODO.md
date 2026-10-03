@@ -14,6 +14,14 @@
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
 - **Next free number: 788.**
+  - **THE ABSTENTION FORMATION IS PAUSED (2026-10-03, the principal: "Record and pause").**
+    - In-sample (D786, D787 and their addenda), no general principle across the six books.
+    - **Every cross-book pattern was one of three things:**
+      - the price level (family A; D776's and L4's strength in points: D787 A1);
+      - 2020/2022 (shared volatility and trend);
+      - a book's own gate tightened (NQ F2's tier, NG's flow, which D649 already uses).
+    - **Nothing was filed for the vault.** Revisit after the joint run, when the books' vault trades are new
+      evidence.
   - **D787 DIAG RESULT (2026-10-03): not a candidate by the declared rule.** Without 2020/22 the sign holds in
     four of six books, not five.
     - Strength sorts the size-triggered books: NQ F2 (a price-free tier; the weak half −\$12.64 without 2020/22, z
