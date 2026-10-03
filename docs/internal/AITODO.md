@@ -13,7 +13,15 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 791** (D790 is claimed by the China-open session for its anatomy exploration, to commit on main).
+- **Next free number: 793** (D790 and D791 are the China-open session's, on main).
+  - **D792 (2026-10-04): PRE-REGISTERED, the assembled prop book** (the principal: "Pre-reg the assembled book").
+    - **Members:** the five live components, one micro each (NQ F2, NQ leads the Dow, the CPI/jobs fade, C1, base L4).
+    - **The book:** passes only, i.e. the members that PASS their own vault lines; G1 needs at least two.
+    - **The window:** 2024-01-01 → 2026-09-18, with C1 counted only from 2025-03-01.
+    - **The gates:** book net > 0, net > 0 in each half, and hurdle P.
+    - **A forward read** of the same members over 2026-09-21 → 2027-09-30 confirms the book or retires it.
+    - **Next:** the runner (`--selftest`, a once-only in-sample `--rehearse`, `--freeze`, `--vault`, `--forward`), then
+      the freeze before the joint run.
   - **Numbers renumbered 2026-10-03:** another session (the China-open line) committed D786 and D787 to main first.
     The abstention oracle and signal strength became **D788** and **D789**; their scripts and data keep the old numbers.
   - **THE ABSTENTION FORMATION IS PAUSED (2026-10-03, the principal: "Record and pause").**
