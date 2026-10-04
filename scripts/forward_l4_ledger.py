@@ -293,7 +293,7 @@ def selftest() -> int:
         try:
             L.drop(columns=["net_measured_cost_usd"]).astype(str).to_csv(LEDGER, index=False, encoding="utf-8")
             need(write_ledger(L) == 0 and not REVISIONS.exists(), "adding the D794 column must not log a revision")
-            need("net_measured_cost_usd" in pd.read_csv(LEDGER, dtype=str).columns, "the rewritten ledger carries the D794 column")
+            need("net_measured_cost_usd" in pd.read_csv(LEDGER, dtype=str, encoding="utf-8").columns, "the rewritten ledger carries the D794 column")
             L2 = L.copy()
             L2["net_usd"] = 99.0
             need(write_ledger(L2) == 1 and REVISIONS.exists(), "a changed recorded value must still log a revision")

@@ -246,7 +246,7 @@ def selftest() -> int:
         try:
             L.drop(columns=["net_measured_cost_usd"]).astype(str).to_csv(LEDGER, index=False, encoding="utf-8")
             need(write_ledger(L) == 0 and not REVISIONS.exists(), "adding the D794 column must not log a revision")
-            need("net_measured_cost_usd" in pd.read_csv(LEDGER, dtype=str).columns, "the rewritten ledger carries the D794 column")
+            need("net_measured_cost_usd" in pd.read_csv(LEDGER, dtype=str, encoding="utf-8").columns, "the rewritten ledger carries the D794 column")
         finally:
             LEDGER, REVISIONS = keep
     need(L[L["day"] == "2026-10-14"].iloc[0]["status"].startswith("pending"), "a release with no bars yet is pending")
