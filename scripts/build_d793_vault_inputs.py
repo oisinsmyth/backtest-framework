@@ -16,10 +16,13 @@ nothing frozen. Each input is built from its own source and must reproduce its c
 written. A --dry-run cuts at 2023-12-31, writes to temp/, and stores nothing dated 2024 or later: it proves the
 builder without touching the vault.
 
-PAID DATA. The quotes the subscription does not cover (GC tbbo + bbo-1m, trade dates 2024-01-02 -> 2025-09-10) are
-bought on the principal's word ("Yes buy it, and write the input builder", 2026-10-04; priced about USD 22.95). They
-are written to data/raw/databento/china_window_2024_2026/ (gitignored, DO NOT DELETE). The subscription covers
-2025-09-11 onward at USD 0.00 (get_cost, 2026-10-04). Its files go to the same directory, and the committed manifest
+PAID DATA. The quotes the subscription does not cover (GC tbbo + bbo-1m, trade dates 2024-01-02 -> 2025-10-02) are
+bought on the principal's word ("Yes buy it, and write the input builder", 2026-10-04; priced about USD 22.95, spent
+USD 22.13). They are written to data/raw/databento/china_window_2024_2026/ (gitignored, DO NOT DELETE). The
+subscription's free window is the TRAILING TWELVE MONTHS, so it moves daily: on 2026-10-04 it covered 2025-10-03
+onward at USD 0.00 (get_cost). The first run assumed 2025-09-11; the guard below refused the 32 windows of
+2025-09-11 -> 10-02 at USD 1.08, and they were bought inside the approval. The covered files go to the same
+directory, and the committed manifest
 is data/china_window_2024_2026_manifest.csv. data/joint_run/d793/paid/ holds HARD LINKS to these files and to the
 2016-2023 paid files. Nothing is moved, and no link is written through.
 
@@ -58,7 +61,7 @@ MANIFEST = REPO / "data" / "china_window_2024_2026_manifest.csv"
 LOCK = BUY / ".download.lock"
 DRY = REPO / "temp" / "d793_inputs_dry"
 FIRST, VAULT_END = "2024-01-02", "2026-09-18"
-SUB_FROM = "2025-09-11"                     # the subscription's free window (get_cost USD 0.00, checked 2026-10-04)
+SUB_FROM = "2025-10-03"                     # the subscription's trailing-12-month free window on 2026-10-04 (get_cost 0.00)
 APPROVED_USD, CAP_USD = 23.0, 28.0
 THREADS, MAX_ERRORS = 8, 20
 JOBS = (("GC.v.0", "tbbo"), ("GC.v.0", "bbo-1m"))
@@ -132,7 +135,7 @@ def write_manifest(rows: dict[str, dict[str, str]]) -> None:
 
 
 def quotes(word: str | None, accepted: float | None) -> int:
-    """Buy (2024-01-02 -> 2025-09-10) and fetch (2025-09-11 -> 2026-09-18, covered) GC tbbo + bbo-1m, GC.v.0."""
+    """Buy (2024-01-02 -> 2025-10-02) and fetch (2025-10-03 -> 2026-09-18, covered) GC tbbo + bbo-1m, GC.v.0."""
     import databento as db
     import fetch_china_window_tbbo as F
     need(bool(word and word.strip()), "the purchase needs --principals-word")
@@ -141,7 +144,7 @@ def quotes(word: str | None, accepted: float | None) -> int:
     BUY.mkdir(parents=True, exist_ok=True)
     (BUY / "DO_NOT_DELETE.md").write_text(
         "# DO NOT DELETE — PAID DATA (about USD 23, bought 2026-10-04)\n\nGC tbbo + bbo-1m for gold's China window, "
-        "trade dates 2024-01-02 -> 2026-09-18 (2024-01-02 -> 2025-09-10 bought; 2025-09-11 on covered by the CME "
+        "trade dates 2024-01-02 -> 2026-09-18 (2024-01-02 -> 2025-10-02 bought; 2025-10-03 on covered by the CME "
         "subscription), for D793's vault read. Bought on the principal's word (\"Yes buy it, and write the input "
         "builder\"). Read only by `vault_d793_gold_china_open_model.py --vault`. The manifest is "
         "data/china_window_2024_2026_manifest.csv. CME terms forbid committing these files.\n", encoding="utf-8")
