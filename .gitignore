@@ -22,6 +22,9 @@ htmlcov/
 # cache contract. `/data/raw/*` + a negation, because a directory rule cannot be re-included.
 /data/raw/*
 !/data/raw/README.md
+# The joint vault run's per-line inputs (D781, D793): rebuilt fixtures and HARD LINKS to paid CME files, which CME
+# terms forbid committing. Built in the main checkout at the joint run; never tracked.
+/data/joint_run/
 # SqueezeMetrics DIX/GEX (docs/research/licences/squeezemetrics-dix-gex.md): no redistribution, including in public
 # repositories, of the data or lightly transformed versions; the public cut ships every tracked file, so no
 # DIX/GEX-derived per-date file may ever be tracked.
