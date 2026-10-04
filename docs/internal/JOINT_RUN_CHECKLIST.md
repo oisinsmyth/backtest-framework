@@ -265,8 +265,27 @@ Its build is independent of slot 9's fixture.
 **D793, D791's gold China-open model (MGC, passive). FROZEN 2026-10-04; programme slot 11, by amendment** (the
 principal: "Add it to the vault"; "Put it in slot 11"). It is outside D792's assembled book by construction.
 
-**Its input builder is NOT WRITTEN YET** (`scripts/build_d793_vault_inputs.py`, to be built before the run). It is not
-hashed by the freeze, so writing it moves nothing frozen.
+**Its input builder is `scripts/build_d793_vault_inputs.py`** (written 2026-10-04; not hashed by the freeze, so
+writing it moved nothing frozen). `--plan` lists the steps, and `--check` reports what is in place.
+- **Proved by dry runs cut at 2023-12-31, with no vault read:**
+  - `--holidays --dry-run` reproduces the committed calendar's 141 rows;
+  - `--fix --dry-run` reproduces 2023's 242 rows;
+  - `--shau --dry-run` gives 1,875 rows equal as text to the fixture;
+  - `--bars --dry-run` reproduces `temp/d765/` row for row: GC 2,854,473, SI 2,687,064, HG 2,723,865, 6A 2,746,739.
+- **Quotes: DONE 2026-10-04, USD 22.13, on the principal's word** ("Yes buy it, and write the input builder").
+  - GC tbbo + bbo-1m (`GC.v.0`), 709 trade dates × 2 schemas, 2024-01-02 → 2026-09-18, in
+    `data/raw/databento/china_window_2024_2026/` (gitignored, **DO NOT DELETE**). The committed manifest is
+    `data/china_window_2024_2026_manifest.csv` (sha256 per file); `--verify-quotes` re-hashes, with 0 mismatches.
+  - **Bought: 2024-01-02 → 2025-10-02.** The subscription's free window is the trailing twelve months, so on
+    2026-10-04 it covered 2025-10-03 onward at USD 0. The first run assumed 2025-09-11. Its guard refused the 32
+    windows of 2025-09-11 → 10-02 (USD 1.08), and they were bought on the resume, inside the USD 23 approval.
+  - `--link` hard-linked them, with the 2016–2023 paid files, into `data/joint_run/d793/paid/`: GC 2,794 per schema
+    and MGC 520.
+  - **This deviates from D793 §3,** which builds the inputs at the joint run. The files were bought early on the
+    principal's word. **None was decoded beyond its timestamps:** the fetch checks that every record lies inside its
+    window and counts the records. No price, size or book state from 2024 on has been read.
+- **Still to run at the joint run, on the principal's word:** `--holidays`, `--fix` and `--shau`. Then `--bars` after
+  the 10-09 top-up and the front-map check (item 6), then `--check`, then the vault step.
 - **Each input goes into `data/joint_run/d793/` in the main checkout. Each must prove its in-sample identity before the
   vault step will read it:**
   1. **`d765_cache/raw_{GC,SI,HG,6A}.parquet`:** D765's own extractor with its window moved to 2026-09-18 (SYSTEM
@@ -282,9 +301,8 @@ hashed by the freeze, so writing it moves nothing frozen.
   5. **`paid/{GC,MGC}_{tbbo,bbo-1m}/YYYY/DATE.dbn.zst`,** D770's layout:
      - the in-sample paid files, linked or copied read-only, never moved;
      - GC 2025-09-11 → 2026-09-11, sliced from the subscription download to the purchase's window (18:30 → 03:15 ET);
-     - **GC 2024-01-02 → 2025-09-10 and 2026-09-12 → 09-18 BOUGHT, about USD 23** (priced 2026-10-04 by
-       `metadata.get_cost`). **Only on the principal's explicit word.** Without it, R* is missing (scaled to 0, as in
-       training) and the passive book is read on the subscription year only, as a reported book that cannot PASS.
+     - **GC 2024-01-02 → 2025-10-02 BOUGHT, USD 22.13 (2026-10-04, on the principal's word); the rest is covered by
+       the subscription. DONE: see above.**
   6. **The front map:** D765's `_front_map` reads `fut_breadth_hourly.csv.gz`. Confirm it reaches 2026-09-18, and
      rebuild it if not.
 - **Score the vault** (SYSTEM python):

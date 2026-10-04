@@ -113,9 +113,13 @@
   - **D793 FROZEN (2026-10-04): D791's gold China-open model in programme slot 11, by amendment** (the principal: "Add
     it to the vault"; "Put it in slot 11"). Slot 11 at α 0.005, so the allocated α is 0.055; the ten others are
     untouched. COMPONENTS_PROP entry #9, PROVISIONAL. It is outside D792.
-    - **OPEN before the joint run:** write `scripts/build_d793_vault_inputs.py` (bars, holidays, fix, SHAU, the paid
-      layout; `JOINT_RUN_CHECKLIST` D793). **Ask the principal before buying about USD 23 of GC quote data for
-      2024-01 → 2025-09.**
+    - **Builder written and the quotes in place (2026-10-04).** `scripts/build_d793_vault_inputs.py` is proved by dry
+      runs cut at 2023-12-31. GC tbbo + bbo-1m for 2024-01-02 → 2026-09-18 are on disk: USD 22.13 was bought on the
+      principal's word, the rest is covered by the subscription, and the files are hard-linked into
+      `data/joint_run/d793/paid/`. Only their timestamps were read. This deviates from D793 §3 and is recorded in
+      `JOINT_RUN_CHECKLIST`.
+    - **OPEN at the joint run:** `--holidays`, `--fix` and `--shau` on the principal's word, then `--bars` after the
+      10-09 top-up and the front-map check, then the vault step.
     - Power 0.53 / 0.27 / 0.10 at the full / half / zero edge, on about 216 trades.
   - **D781 FROZEN (2026-10-03): base L4 in programme slot 10, the last.** The programme's α is fully allocated (0.05);
     a new line needs an amendment.
