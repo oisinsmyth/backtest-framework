@@ -13,7 +13,13 @@
   - the dealer-gamma close: D681 → **D688**.
   D683 (gamma DIAG) and D684 (the long-gamma fade sizing) kept their numbers. Each renumbered record carries a head
   note; commit messages and recorded outputs in `data/` keep the old numbers.
-- **Next free number: 794** (D790 and D791 are the China-open session's; it has also claimed number 793, its gold China-open model for an amended slot 11).
+- **Next free number: 795** (D790, D791 and D793 are the China-open session's).
+  - **D794 DIAG RESULT (2026-10-04): both cost lines understate the crossing at their own fills; both lines still book.**
+    - **D776 (MNQ):** 2.39 ticks measured against 2.13 assumed, \$0.13 a trade.
+    - **L4 (M2K):** 3.98 against 1.51, \$1.24 a trade; the 18:05 reopen is wide. Its in-sample net t would fall from
+      1.88 to about 1.69.
+    - **The quotes:** \$24.89 of `tbbo`/`bbo-1s`, PAID (`data/raw/databento/fill_cost_2016_2023/`).
+    - **Owed:** reporting the measured cost beside the frozen one in the forward ledgers waits on the principal's word.
   - **D792 (2026-10-04): PRE-REGISTERED, the assembled prop book** (the principal: "Pre-reg the assembled book").
     - **Members:** the five live components, one micro each (NQ F2, NQ leads the Dow, the CPI/jobs fade, C1, base L4).
     - **The book:** passes only, i.e. the members that PASS their own vault lines; G1 needs at least two.

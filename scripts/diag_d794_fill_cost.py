@@ -81,7 +81,7 @@ def l4_fills() -> pd.DataFrame:
     B = D[D["cvalid"] & D["base"] & (D["s1"] <= "2023-12-31")]
     need(len(B) == 280 and math.isclose(float(B["gross"].mean()), 15.844642857142867, abs_tol=1e-9), "D778's 280 trades")
     s1 = [str(x)[:10] for x in B["s1"]]
-    ev = [(dt.date.fromisoformat(s) - dt.timedelta(days=3 if dt.date.fromisoformat(s).weekday() == 0 else 1)).isoformat() for s in s1]
+    ev = [(dt.date.fromisoformat(s) - dt.timedelta(days=1)).isoformat() for s in s1]       # Globex opens the day before (Sunday for Monday)
     return pd.DataFrame({"line": "L4", "day": s1, "event": "", "side": B["side"].to_numpy(float), "gross_usd": B["gross"].to_numpy(float),
                          "entry_t": [at(e, 18, 5) for e in ev], "exit_t": [at(s, 10, 0) for s in s1],
                          "entry_leg": "L4_entry", "exit_leg": "L4_exit", "entry_day": ev, "exit_day": s1})

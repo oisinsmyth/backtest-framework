@@ -935,3 +935,18 @@ their own vault lines enter.**
 
 **The ledger's live entries now:** #5 NQ F2 (slot 7), #6 NQ leads the Dow (slot 1), #7 the CPI/jobs-report fade
 (slot 2), #8 base L4 (slot 10), #9 D791's gold China-open model (slot 11, by amendment).
+
+## MEASURED — the cost at #7's and #8's own fills, 2026-10-04 ([D794](decisions/D794-DIAG-RESULT-both-cost-lines-understate-both-lines-still-book.md))
+
+The quoted spread at each line's own fill seconds, in-sample, on the micro, against the crossing its cost line assumes:
+
+| entry | assumed crossing → measured, mean (round trip) | cost line → measured | mean net, micro era: assumed → measured |
+|---|---|---|---|
+| **#7** the CPI/jobs-report fade (MNQ, 108) | 2.13 → **2.39** ticks | \$4.07 → **\$4.20** | \$48.42 → \$48.29 |
+| **#8** base L4 (M2K, 218) | 1.51 → **3.98** ticks (3.54 without 2020-03-15) | \$3.76 → **\$4.99** | \$13.51 → \$12.28 |
+
+- **Both read COST LINE UNDERSTATES, and both still book.** The frozen lines are scored at their frozen costs, as
+  declared.
+- **#8's cost sits at the 18:05 reopen** (M2K's spread averages 4.9 ticks there).
+- **A thin vault pass for #8 would not survive real fills.** Its in-sample net t of 1.88 falls to about 1.69 at the
+  measured cost.

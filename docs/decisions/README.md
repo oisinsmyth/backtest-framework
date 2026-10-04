@@ -359,7 +359,7 @@ the curated table above exists to tell you what the record said.
 
 Mostly D285 onward, plus the numbers below it the curated table never picked up.
 
-**No Status or Category column, deliberately.** 646 of these records carry neither field —
+**No Status or Category column, deliberately.** 647 of these records carry neither field —
 study records state their position in the filename token instead — and a synthesised column
 would look like data. The tokens are what is shown.
 
@@ -866,7 +866,7 @@ would look like data. The tokens are what is shown.
 | D791 | D791 EXPLORE RESULT: the oracle's winners share no single visible trait, but a linear model trained only on earlier yea… | [record](D791-EXPLORE-patterns-in-the-oracle-s-china-open-trades-scope.md) · [RESULT](D791-EXPLORE-RESULT-a-walk-forward-model-picks-the-winners.md) |
 | D792 | REGISTRATION — the assembled prop book: the five live components, one micro each, built from whichever members pass the… | [PRE-REG](D792-PRE-REG-the-assembled-prop-book-for-the-joint-vault.md) |
 | D793 | REG: D791's gold China-open model for the joint vault run. The vault scorer, the freeze, and programme slot 11 by amend… | [PRE-REG](D793-PRE-REG-gold-china-open-model-for-the-joint-vault.md) |
-| D794 | D794 DIAG PRE-REGISTRATION — what the CPI/jobs-report fade (D776) and base L4 (D781) actually pay to trade: the quoted… | [PRE-REG](D794-DIAG-PRE-REG-what-the-cpi-fade-and-l4-pay-to-trade.md) |
+| D794 | D794 DIAG RESULT — both cost lines understate the crossing at their own fills, and both lines still make money: D776 by… | [PRE-REG](D794-DIAG-PRE-REG-what-the-cpi-fade-and-l4-pay-to-trade.md) · [RESULT](D794-DIAG-RESULT-both-cost-lines-understate-both-lines-still-book.md) |
 
 <!-- REGISTER:END -->
 

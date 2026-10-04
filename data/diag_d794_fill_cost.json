@@ -1,0 +1,327 @@
+{
+ "spec": "docs/decisions/D794-DIAG-PRE-REG-what-the-cpi-fade-and-l4-pay-to-trade.md",
+ "fill_moments_et": {
+  "D776": [
+   "08:35:00",
+   "11:01:00"
+  ],
+  "L4": [
+   "18:05:00",
+   "10:00:00"
+  ]
+ },
+ "deviation": "the pre-registered clock control (the same clock on non-trade days) was not bought: the purchase covered trade days only; not computed",
+ "lines": {
+  "D776": {
+   "micro": {
+    "symbol": "MNQ",
+    "fills": 108,
+    "entry_spread": {
+     "n": 108,
+     "mean": 2.888888888888889,
+     "p50": 3.0,
+     "p90": 5.0,
+     "max": 8.0,
+     "share_at_1_tick": 0.1111111111111111
+    },
+    "exit_spread": {
+     "n": 108,
+     "mean": 1.8981481481481481,
+     "p50": 2.0,
+     "p90": 3.0,
+     "max": 7.0,
+     "share_at_1_tick": 0.2777777777777778
+    },
+    "crossing_round_trip": {
+     "n": 108,
+     "mean": 2.3935185185185186,
+     "p50": 2.25,
+     "p90": 3.5,
+     "max": 5.0,
+     "share_at_1_tick": 0.037037037037037035
+    },
+    "entry_realised_half": {
+     "n": 106,
+     "mean": 1.3113207547169812,
+     "p50": 1.0,
+     "p90": 2.0,
+     "max": 7.0,
+     "share_at_1_tick": 0.5660377358490566
+    },
+    "exit_realised_half": {
+     "n": 108,
+     "mean": 0.7037037037037037,
+     "p50": 0.5,
+     "p90": 1.0,
+     "max": 3.0,
+     "share_at_1_tick": 0.9537037037037037
+    },
+    "touch_min_lots": {
+     "entry_p10": 1.0,
+     "exit_p10": 1.0
+    },
+    "missing": {
+     "entry": {},
+     "exit": {}
+    },
+    "by_year_crossing_mean": {
+     "2019": 2.367,
+     "2020": 2.283,
+     "2021": 2.196,
+     "2022": 2.729,
+     "2023": 2.37
+    },
+    "by_event_crossing_mean": {
+     "CPI": 2.355,
+     "EMPSIT": 2.434
+    },
+    "cost_line": {
+     "assumed_crossing_ticks": 2.1342422122227602,
+     "assumed_cost_usd": 4.06712110611138,
+     "measured_crossing_ticks_mean": 2.3935185185185186,
+     "measured_cost_usd": 4.1967592592592595,
+     "measured_cost_usd_p50": 4.125,
+     "measured_cost_usd_p90": 4.75,
+     "mean_gross_usd_these_trades": 52.486111111111114,
+     "mean_net_at_assumed": 48.418990004999735,
+     "mean_net_at_measured": 48.289351851851855,
+     "breakeven_crossing_ticks": 98.97222222222223
+    },
+    "reading": "COST LINE UNDERSTATES"
+   },
+   "full_size_reference": {
+    "symbol": "NQ",
+    "fills": 186,
+    "entry_spread": {
+     "n": 186,
+     "mean": 2.8548387096774195,
+     "p50": 2.0,
+     "p90": 6.0,
+     "max": 11.0,
+     "share_at_1_tick": 0.27956989247311825
+    },
+    "exit_spread": {
+     "n": 186,
+     "mean": 1.6935483870967742,
+     "p50": 2.0,
+     "p90": 3.0,
+     "max": 6.0,
+     "share_at_1_tick": 0.4731182795698925
+    },
+    "crossing_round_trip": {
+     "n": 186,
+     "mean": 2.274193548387097,
+     "p50": 2.0,
+     "p90": 4.0,
+     "max": 7.0,
+     "share_at_1_tick": 0.23118279569892472
+    },
+    "entry_realised_half": {
+     "n": 183,
+     "mean": 1.1980874316939891,
+     "p50": 1.0,
+     "p90": 2.5,
+     "max": 6.0,
+     "share_at_1_tick": 0.6065573770491803
+    },
+    "exit_realised_half": {
+     "n": 186,
+     "mean": 0.6854838709677419,
+     "p50": 0.5,
+     "p90": 1.0,
+     "max": 2.25,
+     "share_at_1_tick": 0.9408602150537635
+    },
+    "touch_min_lots": {
+     "entry_p10": 1.0,
+     "exit_p10": 1.0
+    },
+    "missing": {
+     "entry": {},
+     "exit": {}
+    },
+    "by_year_crossing_mean": {
+     "2016": 1.341,
+     "2017": 1.326,
+     "2018": 1.625,
+     "2019": 1.438,
+     "2020": 2.783,
+     "2021": 2.587,
+     "2022": 3.854,
+     "2023": 3.196
+    },
+    "by_event_crossing_mean": {
+     "CPI": 2.215,
+     "EMPSIT": 2.333
+    }
+   },
+   "overlap_micro_vs_full": {
+    "n": 108,
+    "micro_mean": 2.3935185185185186,
+    "full_mean": 2.875,
+    "corr": 0.6160493266835876
+   }
+  },
+  "L4": {
+   "micro": {
+    "symbol": "M2K",
+    "fills": 232,
+    "entry_spread": {
+     "n": 218,
+     "mean": 4.894495412844036,
+     "p50": 3.0,
+     "p90": 7.0,
+     "max": 190.0,
+     "share_at_1_tick": 0.05963302752293578
+    },
+    "exit_spread": {
+     "n": 232,
+     "mean": 3.081896551724138,
+     "p50": 2.0,
+     "p90": 6.0,
+     "max": 25.0,
+     "share_at_1_tick": 0.14224137931034483
+    },
+    "crossing_round_trip": {
+     "n": 218,
+     "mean": 3.9839449541284404,
+     "p50": 3.0,
+     "p90": 6.5,
+     "max": 100.0,
+     "share_at_1_tick": 0.022935779816513763
+    },
+    "entry_realised_half": {
+     "n": 100,
+     "mean": 1.8625000000002103,
+     "p50": 1.5000000000009095,
+     "p90": 3.4999999999995453,
+     "max": 10.499999999999545,
+     "share_at_1_tick": 0.4
+    },
+    "exit_realised_half": {
+     "n": 226,
+     "mean": 1.7223451327435821,
+     "p50": 0.9999999999990905,
+     "p90": 2.9999999999995453,
+     "max": 22.499999999997726,
+     "share_at_1_tick": 0.7079646017699115
+    },
+    "touch_min_lots": {
+     "entry_p10": 1.0,
+     "exit_p10": 1.0
+    },
+    "missing": {
+     "entry": {
+      "stale (6 s) or crossed/empty book": 5,
+      "stale (7 s) or crossed/empty book": 3,
+      "stale (25 s) or crossed/empty book": 1,
+      "stale (10 s) or crossed/empty book": 1,
+      "stale (8 s) or crossed/empty book": 1,
+      "stale (16 s) or crossed/empty book": 1,
+      "stale (11 s) or crossed/empty book": 1,
+      "stale (12 s) or crossed/empty book": 1
+     },
+     "exit": {}
+    },
+    "by_year_crossing_mean": {
+     "2019": 2.4,
+     "2020": 5.071,
+     "2021": 3.64,
+     "2022": 3.464,
+     "2023": 3.771
+    },
+    "cost_line": {
+     "assumed_crossing_ticks": 1.5141420888834805,
+     "assumed_cost_usd": 3.7570710444417403,
+     "measured_crossing_ticks_mean": 3.9839449541284404,
+     "measured_cost_usd": 4.99197247706422,
+     "measured_cost_usd_p50": 4.5,
+     "measured_cost_usd_p90": 6.25,
+     "mean_gross_usd_these_trades": 17.269396551724153,
+     "mean_net_at_assumed": 13.512325507282412,
+     "mean_net_at_measured": 12.277424074659933,
+     "breakeven_crossing_ticks": 28.538793103448306
+    },
+    "reading": "COST LINE UNDERSTATES"
+   },
+   "full_size_reference": {
+    "symbol": "RTY",
+    "fills": 280,
+    "entry_spread": {
+     "n": 255,
+     "mean": 3.7294117647058824,
+     "p50": 3.0,
+     "p90": 6.0,
+     "max": 26.0,
+     "share_at_1_tick": 0.0784313725490196
+    },
+    "exit_spread": {
+     "n": 280,
+     "mean": 2.342857142857143,
+     "p50": 2.0,
+     "p90": 4.0,
+     "max": 22.0,
+     "share_at_1_tick": 0.23214285714285715
+    },
+    "crossing_round_trip": {
+     "n": 255,
+     "mean": 3.062745098039216,
+     "p50": 2.5,
+     "p90": 4.5,
+     "max": 19.0,
+     "share_at_1_tick": 0.027450980392156862
+    },
+    "entry_realised_half": {
+     "n": 120,
+     "mean": 1.362499999999945,
+     "p50": 1.0000000000013642,
+     "p90": 2.5,
+     "max": 4.500000000000455,
+     "share_at_1_tick": 0.5583333333333333
+    },
+    "exit_realised_half": {
+     "n": 280,
+     "mean": 0.8955357142857727,
+     "p50": 0.500000000001819,
+     "p90": 1.5000000000009095,
+     "max": 6.000000000000227,
+     "share_at_1_tick": 0.8285714285714286
+    },
+    "touch_min_lots": {
+     "entry_p10": 1.0,
+     "exit_p10": 1.0
+    },
+    "missing": {
+     "entry": {
+      "stale (6 s) or crossed/empty book": 8,
+      "stale (7 s) or crossed/empty book": 4,
+      "stale (8 s) or crossed/empty book": 4,
+      "stale (14 s) or crossed/empty book": 2,
+      "stale (10 s) or crossed/empty book": 1,
+      "stale (9 s) or crossed/empty book": 1,
+      "stale (11 s) or crossed/empty book": 1,
+      "stale (22 s) or crossed/empty book": 1,
+      "stale (17 s) or crossed/empty book": 1,
+      "stale (13 s) or crossed/empty book": 1,
+      "stale (19 s) or crossed/empty book": 1
+     },
+     "exit": {}
+    },
+    "by_year_crossing_mean": {
+     "2018": 2.4,
+     "2019": 2.025,
+     "2020": 3.966,
+     "2021": 3.344,
+     "2022": 2.864,
+     "2023": 2.5
+    }
+   },
+   "overlap_micro_vs_full": {
+    "n": 206,
+    "micro_mean": 4.04126213592233,
+    "full_mean": 3.1650485436893203,
+    "corr": 0.7214991118107927
+   }
+  }
+ }
+}

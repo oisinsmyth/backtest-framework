@@ -68,7 +68,7 @@ def l4_days() -> list[tuple[str, str]]:
     out = []
     for s1 in sorted(str(x)[:10] for x in B["s1"]):
         d = dt.date.fromisoformat(s1)
-        ev = d - dt.timedelta(days=3 if d.weekday() == 0 else 1)      # Monday's Globex day opens Sunday 18:00
+        ev = d - dt.timedelta(days=1)          # the Globex day of s1 opens 18:00 ET the calendar day before (Sunday for Monday)
         out.append((ev.isoformat(), s1))
     return out
 
