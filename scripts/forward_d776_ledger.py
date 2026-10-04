@@ -41,7 +41,11 @@ FORWARD = S.MAIN / "data" / "raw" / "forward" / "fut_NQ_fwd_globex_1m.csv.gz"
 LEDGER = REPO / "data" / "forward" / "d776_forward.csv"
 REVISIONS = REPO / "data" / "forward" / "d776_forward_revisions.csv"
 PROOF = REPO / "data" / "forward" / "d776_ledger_proof.json"
-COLS = ["day", "event", "contract", "x_pts", "side", "entry", "exit", "gross_usd", "net_usd", "status"]
+# D794 (the principal, 2026-10-04: "Yes add it to the ledgers"): the cost measured at this line's own fills, reported
+# BESIDE the frozen net, never instead of it. The mean of data/diag_d794_fill_cost.json's MNQ cost line, asserted below.
+COST_MEASURED = 4.196759
+D794_JSON = REPO / "data" / "diag_d794_fill_cost.json"
+COLS = ["day", "event", "contract", "x_pts", "side", "entry", "exit", "gross_usd", "net_usd", "net_measured_cost_usd", "status"]
 SIERRA_NAME = re.compile(r"^([A-Z]+)([FGHJKMNQUVXZ])(\d{2})-[A-Z]+$")
 
 
@@ -94,7 +98,8 @@ def ledger_rows(b: pd.DataFrame, rel: dict[str, str]) -> pd.DataFrame:
             r = U.loc[d]
             rows.append({**base, "x_pts": round(float(r["x"]), 2), "side": int(r["side"]), "entry": float(r[S.ENTRY]),
                          "exit": float(r[S.EXIT]), "gross_usd": round(float(r["gross"]), 2),
-                         "net_usd": round(float(r["gross"]) - COST, 2), "status": "trade"})
+                         "net_usd": round(float(r["gross"]) - COST, 2),
+                         "net_measured_cost_usd": round(float(r["gross"]) - COST_MEASURED, 2), "status": "trade"})
             continue
         if d not in Sx.index:
             status = "pending or missing (no bars recorded for the session)"
@@ -103,7 +108,8 @@ def ledger_rows(b: pd.DataFrame, rel: dict[str, str]) -> pd.DataFrame:
             status = ("two contracts" if r["nk"] != 1 else
                       "missing bar" if pd.isna(r[S.PRE]) or pd.isna(r[S.ENTRY]) or pd.isna(r[S.EXIT]) else
                       "zero impulse" if r["x"] == 0 else "not traded")
-        rows.append({**base, "x_pts": "", "side": 0, "entry": "", "exit": "", "gross_usd": "", "net_usd": "", "status": status})
+        rows.append({**base, "x_pts": "", "side": 0, "entry": "", "exit": "", "gross_usd": "", "net_usd": "",
+                     "net_measured_cost_usd": "", "status": status})
     return pd.DataFrame(rows, columns=COLS)
 
 
@@ -112,10 +118,12 @@ def write_ledger(new: pd.DataFrame) -> int:
     out = new.astype(str)
     if LEDGER.exists():
         old = pd.read_csv(LEDGER, dtype=str, keep_default_na=False, encoding="utf-8")
+        cmp_cols = [c for c in COLS[1:] if c in old.columns]        # a column added later (D794) is not a revision
+        old = old.reindex(columns=COLS, fill_value="")
         mm = old.merge(out, on="day", how="inner", suffixes=("_old", "_new"))
         ch = []
         for _, r in mm.iterrows():
-            diff = [c for c in COLS[1:] if r[f"{c}_old"] != r[f"{c}_new"]]
+            diff = [c for c in cmp_cols if r[f"{c}_old"] != r[f"{c}_new"]]
             if diff and not r["status_old"].startswith("pending"):
                 ch.append({"day": r["day"], "changed": ";".join(diff),
                            "recorded_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
@@ -140,10 +148,13 @@ def ledger() -> int:
     revised = write_ledger(L)
     tr = L[L["status"] == "trade"]
     net = pd.to_numeric(tr["net_usd"], errors="coerce")
+    net_m = pd.to_numeric(tr["net_measured_cost_usd"], errors="coerce")
     print(f"[D776 ledger] release days {len(L)} from {FORWARD_FROM} (bars to {b['session'].max()}); trades {len(tr)}, "
-          f"net ${net.sum():.2f}; revisions {revised} -> {LEDGER.relative_to(REPO)}")
+          f"net ${net.sum():.2f} at the frozen ${COST:.2f} (${net_m.sum():.2f} at D794's measured ${COST_MEASURED:.2f}); "
+          f"revisions {revised} -> {LEDGER.relative_to(REPO)}")
     for _, r in L.iterrows():
-        print(f"  {r['day']} {r['event']:6s} {r['status']}" + (f": side {r['side']}, net ${r['net_usd']}" if r["status"] == "trade" else ""))
+        print(f"  {r['day']} {r['event']:6s} {r['status']}" + (f": side {r['side']}, net ${r['net_usd']} "
+                                                              f"(measured cost ${r['net_measured_cost_usd']})" if r["status"] == "trade" else ""))
     return 0
 
 
@@ -224,6 +235,20 @@ def selftest() -> int:
     L = ledger_rows(b, {"2026-10-02": "EMPSIT", "2026-10-14": "CPI"})
     t = L[L["day"] == "2026-10-02"].iloc[0]
     need(t["status"] == "trade" and t["side"] == -1 and abs(t["gross_usd"] - 12.0) < 1e-9, f"the fade in money: {t.to_dict()}")
+    need(abs(t["net_measured_cost_usd"] - round(12.0 - COST_MEASURED, 2)) < 1e-9 and abs(t["net_usd"] - round(12.0 - COST, 2)) < 1e-9,
+         "the measured-cost net sits beside the frozen net")
+    d794 = json.loads(D794_JSON.read_text(encoding="utf-8"))["lines"]["D776"]["micro"]["cost_line"]["measured_cost_usd"]
+    need(round(d794, 6) == COST_MEASURED, f"COST_MEASURED {COST_MEASURED} is not D794's {d794}")
+    with tempfile.TemporaryDirectory() as td2:                      # an old file without the D794 column: no revision
+        global LEDGER, REVISIONS
+        keep = (LEDGER, REVISIONS)
+        LEDGER, REVISIONS = Path(td2) / "l.csv", Path(td2) / "r.csv"
+        try:
+            L.drop(columns=["net_measured_cost_usd"]).astype(str).to_csv(LEDGER, index=False, encoding="utf-8")
+            need(write_ledger(L) == 0 and not REVISIONS.exists(), "adding the D794 column must not log a revision")
+            need("net_measured_cost_usd" in pd.read_csv(LEDGER, dtype=str).columns, "the rewritten ledger carries the D794 column")
+        finally:
+            LEDGER, REVISIONS = keep
     need(L[L["day"] == "2026-10-14"].iloc[0]["status"].startswith("pending"), "a release with no bars yet is pending")
     b2 = pd.DataFrame(_bars("2026-10-02", {"08:29": 100.0, "08:34": 110.0}))
     need(ledger_rows(b2, {"2026-10-02": "EMPSIT"}).iloc[0]["status"] == "missing bar", "a missing 11:00 bar is named")

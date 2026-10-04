@@ -19,7 +19,8 @@
     - **L4 (M2K):** 3.98 against 1.51, \$1.24 a trade; the 18:05 reopen is wide. Its in-sample net t would fall from
       1.88 to about 1.69.
     - **The quotes:** \$24.89 of `tbbo`/`bbo-1s`, PAID (`data/raw/databento/fill_cost_2016_2023/`).
-    - **Owed:** reporting the measured cost beside the frozen one in the forward ledgers waits on the principal's word.
+    - **Done (the principal: "Yes add it to the ledgers"):** `forward_d776_ledger.py` and `forward_l4_ledger.py` write
+      `net_measured_cost_usd` beside `net_usd`. The frozen net is unchanged, and the new column is not a revision.
   - **D792 (2026-10-04): PRE-REGISTERED, the assembled prop book** (the principal: "Pre-reg the assembled book").
     - **Members:** the five live components, one micro each (NQ F2, NQ leads the Dow, the CPI/jobs fade, C1, base L4).
     - **The book:** passes only, i.e. the members that PASS their own vault lines; G1 needs at least two.

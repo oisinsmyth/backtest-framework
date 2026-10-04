@@ -1,2 +1,2 @@
-day,event,contract,x_pts,side,entry,exit,gross_usd,net_usd,status
-2026-10-02,EMPSIT,NQZ6,128.25,-1,31118.25,31163.75,-91.0,-95.07,trade
+day,event,contract,x_pts,side,entry,exit,gross_usd,net_usd,net_measured_cost_usd,status
+2026-10-02,EMPSIT,NQZ6,128.25,-1,31118.25,31163.75,-91.0,-95.07,-95.2,trade

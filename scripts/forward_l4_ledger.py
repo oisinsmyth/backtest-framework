@@ -50,7 +50,12 @@ FORWARD = MAIN / "data" / "raw" / "forward" / "fut_RTY_fwd_globex_1m.csv.gz"
 LEDGER = REPO / "data" / "forward" / "l4_forward.csv"
 REVISIONS = REPO / "data" / "forward" / "l4_forward_revisions.csv"
 PROOF = REPO / "data" / "forward" / "l4_ledger_proof.json"
-COLS = ["session", "s1", "contract", "c_pts", "thr_pts", "gated", "side", "entry", "exit", "gross_usd", "net_usd", "status"]
+# D794 (the principal, 2026-10-04: "Yes add it to the ledgers"): the cost measured at this line's own fills, reported
+# BESIDE the frozen net, never instead of it. The mean of data/diag_d794_fill_cost.json's M2K cost line, asserted below.
+COST_MEASURED = 4.991972
+D794_JSON = REPO / "data" / "diag_d794_fill_cost.json"
+COLS = ["session", "s1", "contract", "c_pts", "thr_pts", "gated", "side", "entry", "exit", "gross_usd", "net_usd",
+        "net_measured_cost_usd", "status"]
 SPLICE_AT = "2022-12-30"                                  # the in-sample splice proof's last history session
 SIERRA_NAME = re.compile(r"^([A-Z]+)([FGHJKMNQUVXZ])(\d{2})-[A-Z]+$")
 
@@ -118,7 +123,8 @@ def ledger_rows(b: pd.DataFrame, first_scored: str) -> pd.DataFrame:
                      "gated": bool(pd.notna(c) and pd.notna(thr) and c != 0 and abs(c) >= thr),
                      "side": int(r["side"]) if trade else 0, "entry": float(r["ent"]) if trade else "",
                      "exit": float(r["ex"]) if trade else "", "gross_usd": round(float(r["gross"]), 2) if trade else "",
-                     "net_usd": round(float(r["gross"]) - COST, 2) if trade else "", "status": status})
+                     "net_usd": round(float(r["gross"]) - COST, 2) if trade else "",
+                     "net_measured_cost_usd": round(float(r["gross"]) - COST_MEASURED, 2) if trade else "", "status": status})
     return pd.DataFrame(rows, columns=COLS)
 
 
@@ -128,10 +134,12 @@ def write_ledger(new: pd.DataFrame) -> int:
     out = new.astype(str)
     if LEDGER.exists():
         old = pd.read_csv(LEDGER, dtype=str, keep_default_na=False, encoding="utf-8")
+        cmp_cols = [c for c in COLS[1:] if c in old.columns]        # a column added later (D794) is not a revision
+        old = old.reindex(columns=COLS, fill_value="")
         mm = old.merge(out, on="session", how="inner", suffixes=("_old", "_new"))
         ch = []
         for _, r in mm.iterrows():
-            diff = [c for c in COLS[1:] if r[f"{c}_old"] != r[f"{c}_new"]]
+            diff = [c for c in cmp_cols if r[f"{c}_old"] != r[f"{c}_new"]]
             if diff and not r["status_old"].startswith("pending"):
                 ch.append({"session": r["session"], "changed": ";".join(diff),
                            "recorded_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
@@ -161,8 +169,10 @@ def ledger() -> int:
     revised = write_ledger(L)
     tr = L[L["status"] == "trade"]
     net = pd.to_numeric(tr["net_usd"], errors="coerce")
+    net_m = pd.to_numeric(tr["net_measured_cost_usd"], errors="coerce")
     print(f"[L4 ledger] sessions {len(L)} from {L['session'].min()}; trades {len(tr)}, net ${net.sum():.2f}"
-          f" (mean {net.mean() if len(tr) else float('nan'):.2f}); pending {int(L['status'].str.startswith('pending').sum())};"
+          f" (mean {net.mean() if len(tr) else float('nan'):.2f}) at the frozen ${COST:.2f}; ${net_m.sum():.2f} at D794's "
+          f"measured ${COST_MEASURED:.2f}; pending {int(L['status'].str.startswith('pending').sum())};"
           f" revisions {revised} -> {LEDGER.relative_to(REPO)}")
     return 0
 
@@ -270,8 +280,28 @@ def selftest() -> int:
         got = read_bars(p, "2026-09-21", "2099-12-31")
         need(list(got["hhmm"]) == ["18:04"] and list(got["contract"]) == ["RTYZ6"],
              f"read_bars keeps RTY rows of D778's bars within the stamp lag and normalises the name: {got.to_dict('records')}")
+    # D794: the measured cost is D794's, and adding its column to an old ledger is not a revision
+    d794 = json.loads(D794_JSON.read_text(encoding="utf-8"))["lines"]["L4"]["micro"]["cost_line"]["measured_cost_usd"]
+    need(round(d794, 6) == COST_MEASURED, f"COST_MEASURED {COST_MEASURED} is not D794's {d794}")
+    L = pd.DataFrame([{"session": "2026-09-22", "s1": "2026-09-23", "contract": "RTYZ6", "c_pts": 3.1, "thr_pts": 2.0, "gated": True,
+                       "side": -1, "entry": 2500.0, "exit": 2498.0, "gross_usd": 10.0, "net_usd": round(10.0 - COST, 2),
+                       "net_measured_cost_usd": round(10.0 - COST_MEASURED, 2), "status": "trade"}], columns=COLS)
+    with tempfile.TemporaryDirectory() as td2:
+        global LEDGER, REVISIONS
+        keep = (LEDGER, REVISIONS)
+        LEDGER, REVISIONS = Path(td2) / "l.csv", Path(td2) / "r.csv"
+        try:
+            L.drop(columns=["net_measured_cost_usd"]).astype(str).to_csv(LEDGER, index=False, encoding="utf-8")
+            need(write_ledger(L) == 0 and not REVISIONS.exists(), "adding the D794 column must not log a revision")
+            need("net_measured_cost_usd" in pd.read_csv(LEDGER, dtype=str).columns, "the rewritten ledger carries the D794 column")
+            L2 = L.copy()
+            L2["net_usd"] = 99.0
+            need(write_ledger(L2) == 1 and REVISIONS.exists(), "a changed recorded value must still log a revision")
+        finally:
+            LEDGER, REVISIONS = keep
     print("selftest OK: contract names normalise; the splice joins, and raises on an overlap and on a hole; the reader "
-          "keeps only RTY rows of D778's bars within the stamp lag")
+          "keeps only RTY rows of D778's bars within the stamp lag; D794's measured cost sits beside the frozen net and "
+          "its column is not a revision")
     return 0
 
 
