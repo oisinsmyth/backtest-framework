@@ -909,3 +909,29 @@ their own vault lines enter.**
 - **Hurdle P passes anyway:** no 2 % days, and \$4,689 expected profit before a breach against a \$209 fee.
 - **Daily ρ** between members is −0.04 to +0.06.
 - **D734's NQ pair** stays frozen and is read beside. When both books read ADMITTED, D792's is the candidate.
+
+## ENTRY #9, PROVISIONAL, 2026-10-04 — D791's gold China-open model, programme slot 11 by amendment ([D791](decisions/D791-EXPLORE-RESULT-a-walk-forward-model-picks-the-winners.md), [D793](decisions/D793-PRE-REG-gold-china-open-model-for-the-joint-vault.md))
+
+*The principal: "Add it to the vault"; "Put it in slot 11".*
+
+| # | component | window | net Sharpe; Sortino; gross | hit | skew | ρ with prior | entered |
+|---|---|---|---|---|---|---|---|
+| **9** | **D791's model** on D765's MGC China-open fade: the 36-feature no-calendar ridge (α 100) scores each session from information known by 09:30 Beijing; take the top third and fade the open passively (D770's rule, \$3.03); about 80 trades a year | 2018-01 → 2023-12 (walk-forward: each year scored by a model fitted on the years before) | **+0.82**; Sortino +1.28; gross Sharpe +1.34; per trade +\$4.80 net / +\$7.83 gross (net t 2.00); max drawdown \$787 | 53.4 % | +0.32 (per trade) | **+0.016 with #7** (D775), +0.027 with D777's MNQ book; with #5, #6 and #8 not computed | **PROVISIONAL.** The joint run's D793 look (slot 11) confirms or removes it |
+
+**Disclosures:**
+- **Pseudo out-of-sample.** The walk-forward protected the fit, not the 36 features, which were assembled after D786,
+  D787 and D790 read 2016–2023 (D791 §4.1).
+- **About two-thirds overfit in training** (ρ 0.16–0.23 against 0.059 out of sample). A rolling 3-year window has no
+  edge. α 100 is the best of 10 / 100 / 1000. 2020, 2021 and 2023 carry it; 2018, 2019 and 2022 are flat or negative
+  (D791's addendum).
+- **The passive book is modelled** (GC's queue, D770's fill rule). The 8% of best sessions that never fill are
+  already lost in it.
+- **It is outside D792 by construction.** D792's assembled book names five members; including this line needs a new
+  record.
+- **Vault power at about 216 trades** (`data/vault_d793_power.json`): 0.53 at the out-of-sample edge, 0.27 at half,
+  0.10 at zero. It is 0.84 if the edge is 2020–23's, and 0.01 if it is 2018–19's.
+- **The vault read needs inputs not yet built** (`JOINT_RUN_CHECKLIST` D793). Among them is about USD 23 of GC quote
+  data for 2024-01 → 2025-09, bought only on the principal's word.
+
+**The ledger's live entries now:** #5 NQ F2 (slot 7), #6 NQ leads the Dow (slot 1), #7 the CPI/jobs-report fade
+(slot 2), #8 base L4 (slot 10), #9 D791's gold China-open model (slot 11, by amendment).

@@ -95,6 +95,15 @@
    "alpha": 0.005,
    "amendment": null,
    "note": "Vault line: D778's base book (D772 L4), the M2K 15:50 -> 16:00 closing-auction move in its trailing top fifth, faded from the next 18:05 reopen to 10:00, one M2K, $3.76, sessions 2024-01-01 -> 2026-09-18; PASS with >= 40 trades, mean net > 0 and one-sided t >= 1.2816, and mean gross above the vault-window exact rotation p95; FAIL if mean net <= 0; else UNRESOLVED"
+  },
+  {
+   "name": "gold China-open model (MGC, D791 ridge)",
+   "doc": "D793-PRE-REG-gold-china-open-model-for-the-joint-vault.md",
+   "registered_utc": "2026-10-04",
+   "slot": 11,
+   "alpha": 0.005,
+   "amendment": "D793 \u00a70: an eleventh family by amendment (the principal: \"Put it in slot 11\")",
+   "note": "Vault line: D791's 36-feature no-calendar ridge (alpha 100, frozen on 2016-2023) on D765's MGC China-open fade, passive at the 09:30 touch ($3.03), trade dates 2024-01-02 -> 2026-09-18; PASS with >= 60 trades, mean net > 0 and one-sided t >= 1.2816, and mean gross above the vault-window take-flag rotation p95; FAIL if mean net <= 0; else UNRESOLVED. Slot 11 by amendment: the programme's allocated alpha becomes 0.055"
   }
  ],
  "released": [

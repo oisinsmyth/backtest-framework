@@ -110,6 +110,13 @@
     - The parser reproduces `events.csv`'s 262 CPI/EMPSIT rows exactly. `events.csv` itself is untouched.
     - **Next:** D783, a Stage 0 of D775's construction on these releases, with PPI primary. Census, BEA and DOL only
       after it.
+  - **D793 FROZEN (2026-10-04): D791's gold China-open model in programme slot 11, by amendment** (the principal: "Add
+    it to the vault"; "Put it in slot 11"). Slot 11 at α 0.005, so the allocated α is 0.055; the ten others are
+    untouched. COMPONENTS_PROP entry #9, PROVISIONAL. It is outside D792.
+    - **OPEN before the joint run:** write `scripts/build_d793_vault_inputs.py` (bars, holidays, fix, SHAU, the paid
+      layout; `JOINT_RUN_CHECKLIST` D793). **Ask the principal before buying about USD 23 of GC quote data for
+      2024-01 → 2025-09.**
+    - Power 0.53 / 0.27 / 0.10 at the full / half / zero edge, on about 216 trades.
   - **D781 FROZEN (2026-10-03): base L4 in programme slot 10, the last.** The programme's α is fully allocated (0.05);
     a new line needs an amendment.
     - The rehearsal reproduces D778's base book (280 trades, +\$15.844642…); in-sample it reads PASS (net t 1.88,

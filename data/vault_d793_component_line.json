@@ -1,0 +1,18 @@
+{
+ "book": "D791 walk-forward passive top third, 2018-2023 (out-of-sample in the model's fit)",
+ "n": 479,
+ "trades_per_year": 80.21767537826685,
+ "mean_gross": 7.832985386221252,
+ "mean_net": 4.799990462363408,
+ "net_sharpe_ann": 0.8191124499889403,
+ "net_sortino_ann": 1.279522047856818,
+ "gross_sharpe_ann": 1.3366892915191573,
+ "hit_rate": 0.534446764091858,
+ "skew": 0.3173158250160832,
+ "max_drawdown": 787.4873096446698,
+ "daily_rho": {
+  "d775_cpi_nfp_fade": 0.016,
+  "d777_mnq_post_close": 0.027
+ },
+ "not_computed": "NQ F2 (#5), D737's twin (#6) and base L4 (#8): their daily P&L is not rebuilt here"
+}

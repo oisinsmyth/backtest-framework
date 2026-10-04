@@ -262,6 +262,53 @@ Its build is independent of slot 9's fixture.
     identical to Databento's.
   - Then add it to the daily recorder task.
 
+**D793, D791's gold China-open model (MGC, passive). FROZEN 2026-10-04; programme slot 11, by amendment** (the
+principal: "Add it to the vault"; "Put it in slot 11"). It is outside D792's assembled book by construction.
+
+**Its input builder is NOT WRITTEN YET** (`scripts/build_d793_vault_inputs.py`, to be built before the run). It is not
+hashed by the freeze, so writing it moves nothing frozen.
+- **Each input goes into `data/joint_run/d793/` in the main checkout. Each must prove its in-sample identity before the
+  vault step will read it:**
+  1. **`d765_cache/raw_{GC,SI,HG,6A}.parquet`:** D765's own extractor with its window moved to 2026-09-18 (SYSTEM
+     python, after the 10-09 top-up, V5).
+     - Identity: the rows through 2023-12-29 equal `temp/d765/`'s, row for row. Prove it first with a dry run cut at
+       2023-12-29, as D781's fixture was proved.
+  2. **`china_exchange_holidays.csv`:** D765's `exchange_calendars` XSHG source, extended through 2026. Its 2016–2023
+     rows must equal the committed calendar.
+  3. **`cny_central_parity.csv`:** SAFE's yearly pages for 2024–2026, through `fetch_cny_fix.py` / `build_cny_fix.py`
+     with the end moved. Its 2023 rows must equal the committed fixture.
+  4. **`sge_shau_benchmark.csv`:** the SGE endpoint, cut at 2026-09-18 at decode. Its 2016–2023 rows must equal
+     `data/fixtures/sge_shau_benchmark_2016_2023.csv`.
+  5. **`paid/{GC,MGC}_{tbbo,bbo-1m}/YYYY/DATE.dbn.zst`,** D770's layout:
+     - the in-sample paid files, linked or copied read-only, never moved;
+     - GC 2025-09-11 → 2026-09-11, sliced from the subscription download to the purchase's window (18:30 → 03:15 ET);
+     - **GC 2024-01-02 → 2025-09-10 and 2026-09-12 → 09-18 BOUGHT, about USD 23** (priced 2026-10-04 by
+       `metadata.get_cost`). **Only on the principal's explicit word.** Without it, R* is missing (scaled to 0, as in
+       training) and the passive book is read on the subscription year only, as a reported book that cannot PASS.
+  6. **The front map:** D765's `_front_map` reads `fut_breadth_hourly.csv.gz`. Confirm it reaches 2026-09-18, and
+     rebuild it if not.
+- **Score the vault** (SYSTEM python):
+  `python scripts/vault_d793_gold_china_open_model.py --vault --principals-word "..."`.
+  - **In order, it:**
+    - verifies `data/FROZEN_vault_d793_gold_china_open_model.json`: 18 files, among them D765, D767, D769, D770,
+      D786, D790 and D791's scripts and the programme module. It also refits on D791's cache and checks the frozen
+      coefficients;
+    - refuses a second opening, or a missing input;
+    - rebuilds the 40 features through the lineage's own functions, with their seal lifted to the vault end, in
+      every worker too;
+    - **refuses unless the rebuilt 2016–2023 rows equal D791's cache exactly** (1,697 × 47);
+    - applies the frozen model to 2024-01-02 → 2026-09-18.
+  - **The pass rule (passive):** G0 ≥ 60 trades, G1 net > 0 with t ≥ 1.2816, G2 above the take-flag rotation p95.
+    Taker is reported beside it.
+- **Proved in-sample (2026-10-04):**
+  - `--rehearse` rebuilt the features through the vault path and matched D791's cache exactly. It reproduced D791's
+    walk-forward (ρ 0.0590; 479 at +\$4.80).
+  - `--dry-vault` ran the whole path on 2023, read as a pseudo-window; it is not evidence.
+  - The ridge equals sklearn to 2e-17.
+- **Power** (`data/vault_d793_power.json`): about 216 trades; P(G0 and G1) 0.53 at the out-of-sample edge, 0.27 at
+  half, 0.10 at zero.
+- **Do not edit** any file the freeze hashes before the run.
+
 **Slots 3 and 8, NG** (after the 10-09 top-up has downloaded, and §2.4–2.6; one checkout, holding the rebuilt
 files):
 1. In-sample references, each with no vault read. **All three must pass before any vault step.**
