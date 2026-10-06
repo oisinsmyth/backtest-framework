@@ -90,7 +90,7 @@ cost model.
 
 ## How correctness is checked
 
-693 offline tests. The golden tier asserts every fill, charge and NAV against ledgers worked by
+701 offline tests. The golden tier asserts every fill, charge and NAV against ledgers worked by
 hand without importing the package. Property tests check invariants, such as exact
 reconciliation of fills to positions, over generated inputs. The engine agrees with vectorbt on
 all 1,370 fills and to within $0.0000003 over a ten-year equity curve, and the metrics agree with

@@ -1,7 +1,7 @@
 # How correctness is checked
 
 ```bash
-uv run pytest -q                # 693 tests, offline
+uv run pytest -q                # 701 tests, offline
 uv run pytest -q tests/golden   # hand-computed ledgers only
 uv run pytest -m live_fetch     # the two tests that call yfinance
 ```
@@ -12,8 +12,13 @@ uv run pytest -m live_fetch     # the two tests that call yfinance
 |---|---:|---|
 | `tests/golden/` | 159 | Hand-computed ledgers. Each test has a `.hand.txt` file beside it with the arithmetic worked out by a calculator that never imports this package. If the code and the hand file disagree, the hand file is right. |
 | `tests/property/` | 28 | Invariants checked with Hypothesis over generated inputs: fills reconcile exactly with final positions, NAV does not leak at zero cost, fill prices lie inside their bar, identical runs are identical, carry totals rate × calendar days, futures fills sit on the tick grid and never beat a stop, and zero-edge inputs earn nothing. |
-| `tests/integration/` | 44 | Whole runs: the backtest loop, the cost sweep, splits and dividends through the engine, walk-forward pair selection, the look-ahead guard, the risk monitor, the full data pipeline from raw fixture to snapshot to sweep, and the cross-engine reconciliation. |
+| `tests/integration/` | 52 | Whole runs: the backtest loop, the cost sweep, splits and dividends through the engine, walk-forward pair selection, the look-ahead guard, the risk monitor, the full data pipeline from raw fixture to snapshot to sweep, and the cross-engine reconciliation. |
 | `tests/unit/` | 462 | One behaviour per test, including the guards: every check that is meant to raise is shown to raise. |
+
+A test that cannot fail checks nothing, so the tests of argument forwarding are themselves
+checked: `tests/integration/test_cost_sweep_forwarding.py` was run once with each of the ten
+arguments `run_cost_sweep` forwards deleted in turn, and every deletion failed a test. Each of
+its comparisons also asserts that the argument changes the result in its scenario.
 
 ## The golden master
 
