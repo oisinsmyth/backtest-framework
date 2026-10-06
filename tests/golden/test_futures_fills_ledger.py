@@ -1,11 +1,10 @@
 """Golden-master ledger for the shared futures fill model.
 
 Every case's arithmetic is worked by hand in `test_futures_fills_ledger.hand.txt`, next to
-this file, with a calculator that never imports this codebase. The five-bar session is
-defined once there and transcribed here; if the two ever disagree, the hand file is right
-and this file is wrong.
+this file, without importing this codebase. The five-bar session is defined there and
+transcribed here; if they disagree, the hand file is authoritative.
 
-Fill prices determine P&L, so they are tested here alongside the other money calculations.
+Fill prices determine P&L, so they are tested alongside the other money calculations.
 """
 
 from datetime import datetime

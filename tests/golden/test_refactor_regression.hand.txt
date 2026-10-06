@@ -5,16 +5,15 @@ must reproduce it.
 
 Scenario: one strategy ("s1"), one instrument (Equity "AAPL", whole shares), constant
 capital of $100,000 (capital allocation is out of scope here; the harness takes a
-capital figure as an input), constant price of $100.00 throughout (price movement is
-deliberately excluded so every dollar of NAV change is attributable to costs alone —
-see the cross-check at the bottom).
+capital figure as an input), constant price of $100.00 throughout (no price movement,
+so all NAV change comes from costs; see the cross-check at the bottom).
 
 CostStack:
   trade_bricks = FlatCommission(1.00), PercentOfNotionalSpread(5.0 bps)
   carry_bricks = FlatRateCarry(annual_rate=0.06)   [ACT/365]
 
 --------------------------------------------------------------------------------
-Bar 0 — 2026-07-10 16:00 (Friday). Target weight 0.5 (from flat).
+Bar 0: 2026-07-10 16:00 (Friday). Target weight 0.5 (from flat).
   desired_notional = 0.5 * 100000 = 50000
   raw_qty = 50000 / 100.00 = 500.0 -> tradeable_quantity (whole shares) = 500
   current_qty = 0 -> delta = +500 -> BUY 500 @ 100.00
@@ -31,13 +30,13 @@ Bar 0 — 2026-07-10 16:00 (Friday). Target weight 0.5 (from flat).
   Position after bar 0: 500 shares AAPL.
 
 --------------------------------------------------------------------------------
-Bar 1 — 2026-07-13 16:00 (Monday, +3 calendar days from bar 0). Target weight
+Bar 1: 2026-07-13 16:00 (Monday, +3 calendar days from bar 0). Target weight
   unchanged (0.5), price unchanged (100.00).
   desired_qty = 0.5 * 100000 / 100.00 = 500 = current_qty -> delta = 0 -> NO TRADE
-  (this bar exercises "already at target -> zero orders" inside the integrated
-  scenario, not just in isolation)
+  (this bar covers "already at target -> zero orders" inside the integrated
+  scenario)
 
-  Carry cost (accrues for the 3-day gap, on the notional held during that gap — the
+  Carry cost (accrues for the 3-day gap, on the notional held during that gap: the
   position as marked at the start of the gap, i.e. bar 0's 500 @ 100.00 = 50000):
     carry1 = 50000 * 0.06 * 3 / 365 = 3000 * 3 / 365 = 9000 / 365
            = 24.657534246575342...
@@ -52,19 +51,18 @@ Bar 1 — 2026-07-13 16:00 (Monday, +3 calendar days from bar 0). Target weight
   Position after bar 1: still 500 shares AAPL (unchanged).
 
 --------------------------------------------------------------------------------
-Bar 2 — 2026-07-14 16:00 (Tuesday, +1 calendar day from bar 1). Target weight -> 0.0
+Bar 2: 2026-07-14 16:00 (Tuesday, +1 calendar day from bar 1). Target weight -> 0.0
   (full exit), price still 100.00.
   desired_qty = 0.0 -> delta = 0 - 500 = -500 -> SELL 500 @ 100.00
 
-  Carry accrues FIRST, for the 1-day gap since bar 1, on the notional held during that
-  gap (position as marked at bar 1: 500 @ 100.00 = 50000) — the position was open for
-  this gap before the exit trade closes it on this same bar:
+  Carry accrues first, for the 1-day gap since bar 1, on the notional held during that
+  gap (position as marked at bar 1: 500 @ 100.00 = 50000), since the position was open
+  for this gap before the exit trade closes it on this bar:
     carry2 = 50000 * 0.06 * 1 / 365 = 3000 / 365 = 8.219178082191781...
 
   cash_after_carry = 49949.342465753425 - 8.219178082191781 = 49941.123287671244...
-  (note: this reference implementation carries slightly more float precision through
-  than a naive recomputation from rounded intermediates would; see TOLERANCE in the
-  test file)
+  (this reference implementation carries slightly more float precision than a
+  recomputation from rounded intermediates; see TOLERANCE in the test file)
 
   Then the exit trade:
     notional_exit = 500 * 100.00 = 50000
@@ -81,10 +79,9 @@ Bar 2 — 2026-07-14 16:00 (Tuesday, +1 calendar day from bar 1). Target weight 
   NAV at bar 2 = cash_t2 + 0 = 99915.123287671244...
 
 --------------------------------------------------------------------------------
-Cross-check (independent of the step-by-step arithmetic above): price never moved
-across the whole scenario, so every dollar of NAV change must equal exactly minus the
-sum of every cost incurred — a clean sanity check that doesn't rely on getting the
-bar-by-bar bookkeeping right.
+Cross-check (independent of the step-by-step arithmetic above): price never moved,
+so the NAV change must equal minus the sum of all costs incurred. This does not depend
+on the bar-by-bar bookkeeping.
 
   total_costs = fee0 + carry1 + carry2 + fee2
               = 26.00 + 24.657534246575342 + 8.219178082191781 + 26.00

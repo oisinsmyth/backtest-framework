@@ -43,7 +43,7 @@ def test_hourly_bars_over_weekend_accrue_full_gap_not_one_bar_duration():
     accrued = accrue_carry_between_bars(annual_rate=0.06, base_amount=100_000, prev_timestamp=prev, curr_timestamp=curr)
     assert accrued == pytest.approx(41.0958904109589, rel=TOLERANCE)
 
-    # The wrong accrual: one bar-duration (1 hour = 1/24 day) instead of the gap.
+    # The incorrect accrual: one bar-duration (1 hour = 1/24 day) instead of the gap.
     naive_buggy_accrual = accrue_carry(annual_rate=0.06, base_amount=100_000, calendar_days=1 / 24)
     assert accrued != pytest.approx(naive_buggy_accrual, rel=TOLERANCE)
 

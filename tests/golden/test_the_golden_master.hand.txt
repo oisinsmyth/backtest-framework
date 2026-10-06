@@ -1,14 +1,14 @@
-The golden master — hand ledger.
+The golden master: hand ledger.
 Companion to test_the_golden_master.py; every number below is asserted there.
 
-Produced by an INDEPENDENT bar-by-bar calculator (a standalone script that never
-imports backtest_framework), with bar 0 and bar 2 written out by hand below. Scope:
-the engine as built — target weights filled at close, re-sized against current NAV
-each bar, start-of-bar carry/flow snapshot. Gap-through-stop is deliberately not
-here: this scenario places no stop orders; that behaviour has its own golden tests
-(test_stop_fill_gap_through, test_intrabar_stop_golden).
+Produced by an INDEPENDENT bar-by-bar calculator (a standalone script that does not
+import backtest_framework), with bar 0 and bar 2 also written out by hand below. Scope:
+the engine as built (target weights filled at the close, re-sized against current NAV
+each bar, start-of-bar carry/flow snapshot). The scenario places no stop orders; gap-
+through-stop behaviour has its own golden tests (test_stop_fill_gap_through,
+test_intrabar_stop_golden).
 
-Scenario — SHORT-side so every brick genuinely fires:
+Scenario (short side, so every brick fires):
   Bars (daily, 16:00): Thu 2026-01-08, Fri 01-09, Mon 01-12 (weekend = 3 calendar
   days), Tue 01-13, Wed 01-14. Closes: 100, 98, 101, 99, 99.
   Weights: [-1.2, -1.2, -1.2, 0, 0]  (~120% gross short -> margin interest is live)
@@ -17,12 +17,12 @@ Scenario — SHORT-side so every brick genuinely fires:
              + BorrowFee(2%/yr, shorts only) + MarginInterest(6%/yr on
              max(gross - NAV, 0)) + DividendFlow(TEST: ex Mon 01-12, $0.50/sh).
 
-Engine order per bar: [splits: none] -> snapshot (positions, NAV at THIS close) ->
+Engine order per bar: [splits: none] -> snapshot (positions, NAV at this close) ->
 per-leg borrow + dividend flows -> portfolio margin -> re-size at post-carry NAV ->
 fill at close -> record cash/NAV.
 
 --------------------------------------------------------------------------------
-BAR 0 — Thu 01-08, close 100.00 (hand arithmetic, in full)
+BAR 0: Thu 01-08, close 100.00 (worked by hand in full)
   No prior bar -> no carry. NAV = 100,000.
   desired = round(-1.2 x 100,000 / 100) = -1,200 -> SELL SHORT 1,200 @ 100.00
   commission = min(max(0.005 x 1200, 1.00), 0.01 x 120,000) = min(max(6,1), 1200) = 6.00
@@ -30,22 +30,22 @@ BAR 0 — Thu 01-08, close 100.00 (hand arithmetic, in full)
   cash = 100,000 + 120,000 - 66.00 = 219,934.00
   NAV  = 219,934 - 1,200 x 100 = 99,934.00
 
-BAR 1 — Fri 01-09, close 98.00 (1 calendar day)
+BAR 1: Fri 01-09, close 98.00 (1 calendar day)
   snapshot: qty -1,200 @ 98 -> short notional 117,600 ; NAV_snap = 219,934 - 117,600 = 102,334
   borrow = 0.02 x 117,600 x 1/365 = 6.4438356164
   margin base = max(117,600 - 102,334, 0) = 15,266 -> 0.06 x 15,266 x 1/365 = 2.5094794521
   NAV(post-carry) = 102,325.0466849315
   desired = round(-1.2 x 102,325.0466849315 / 98) = -1,253 -> delta -53 -> SELL 53 @ 98
-  commission = max(0.005 x 53, 1.00) = 1.00   <- the $1 minimum FIRES on a small re-size
+  commission = max(0.005 x 53, 1.00) = 1.00   <- the $1 minimum applies on a small re-size
   spread = 0.0005 x 5,194 = 2.597             trade_cost = 3.597
   cash = 225,115.4496849315 ; qty -1,253 ; NAV = 102,321.4496849315
 
-BAR 2 — Mon 01-12, close 101.00 (weekend: 3 calendar days — hand arithmetic, in full)
+BAR 2: Mon 01-12, close 101.00 (weekend, 3 calendar days; worked by hand in full)
   snapshot: qty -1,253 @ 101 -> short notional 126,553
             NAV_snap = 225,115.4496849315 - 126,553 = 98,562.4496849315
   borrow  = 0.02 x 126,553 x 3/365 = 759,318/36,500 = 20.8032328767
-  DIVIDEND (ex-date Mon, in (Fri, Mon]): flow = -1,253 x 0.50 = -626.50
-            <- the SHORT PAYS the dividend it owes the lender
+  dividend (ex-date Mon, in (Fri, Mon]): flow = -1,253 x 0.50 = -626.50
+            <- the short pays the dividend it owes the lender
   margin base = max(126,553 - 98,562.4496849315, 0) = 27,990.5503150685
   margin  = 0.06 x 27,990.5503150685 x 3/365 = 13.8035590595
   NAV(post-carry) = 98,562.4496849315 - 20.8032328767 - 626.50 - 13.8035590595
@@ -55,7 +55,7 @@ BAR 2 — Mon 01-12, close 101.00 (weekend: 3 calendar days — hand arithmetic,
   trade_cost = 5.545
   cash = 215,358.7978929953 ; qty -1,163 ; NAV = 97,895.7978929953
 
-BAR 3 — Tue 01-13, close 99.00 (1 day)
+BAR 3: Tue 01-13, close 99.00 (1 day)
   borrow = 0.02 x 115,137 x 1/365 = 6.3088767123
   margin base = max(115,137 - 100,221.7978929953, 0) = 14,915.2021070047 -> 2.4518140450
   NAV(post-carry) = 100,213.0372022380
@@ -64,7 +64,7 @@ BAR 3 — Tue 01-13, close 99.00 (1 day)
   trade_cost = 63.3835
   cash = 100,149.6537022380 ; qty 0 ; NAV = 100,149.6537022380
 
-BAR 4 — Wed 01-14, close 99.00
+BAR 4: Wed 01-14, close 99.00
   Flat -> no carry, no trade. cash = NAV = 100,149.6537022380
 
 --------------------------------------------------------------------------------
@@ -73,5 +73,5 @@ FILLS (timestamp, qty, price, trade_cost):
   Bar 1:    -53 @  98.00, cost  3.5970
   Bar 2:    +90 @ 101.00, cost  5.5450
   Bar 3: +1,163 @  99.00, cost 63.3835
-FINAL NAV = 100,149.6537022380 (the short netted +149.65 after every friction and the
-dividend debit — price went 100 -> 99 net, in its favour).
+FINAL NAV = 100,149.6537022380. The short netted +149.65 after every friction and the
+dividend debit; price went 100 -> 99 net, in its favour.

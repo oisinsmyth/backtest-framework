@@ -1,9 +1,8 @@
-"""Integration test for the look-ahead guard: a deliberately cheating strategy cannot
-obtain future bars.
+"""Integration test for the look-ahead guard: a cheating strategy cannot obtain future bars.
 
-This asserts the exception (or the absence of any exploitable surface) rather than
-relying on strategy authors to behave. Every attack vector here is something a strategy
-author coming from pandas habits, or actively trying to cheat, would plausibly reach for.
+Each test asserts an exception or the absence of any reachable future data. The attack
+vectors are the ones a strategy author with pandas habits, or one trying to cheat, would
+plausibly use.
 """
 
 from decimal import Decimal
@@ -37,7 +36,7 @@ def test_cheating_strategy_cannot_obtain_future_bars():
     with pytest.raises(LookAheadError):
         view[view.current_index + 1]
 
-    # Attack 2: reach for pandas-honed instincts. None of these exist on this object.
+    # Attack 2: pandas-style attributes. None of these exist on this object.
     for pandas_ish_name in ("iloc", "loc", "data", "df", "frame", "values"):
         assert not hasattr(view, pandas_ish_name), f"DataView unexpectedly exposes '{pandas_ish_name}'"
 
@@ -45,17 +44,16 @@ def test_cheating_strategy_cannot_obtain_future_bars():
     for parent_ref_name in ("parent", "engine", "portfolio", "source", "_parent", "_engine", "_source"):
         assert not hasattr(view, parent_ref_name), f"DataView unexpectedly exposes '{parent_ref_name}'"
 
-    # Attack 4: read the "private" storage directly (leading underscore is only a
-    # convention in Python, not real access control) — even this yields nothing extra,
-    # because future bars were never given to the object in the first place.
+    # Attack 4: read the "private" storage directly (a leading underscore is only a
+    # convention in Python). This yields nothing extra, because future bars are never
+    # passed to the object.
     assert all(bar.close <= 3.0 for bar in view._visible_bars)
     assert len(view._visible_bars) == 4  # bars 0..3, never 4..9
 
-    # Attack 5: walk every attribute the object actually has and check none of the
-    # instance's own state contains a future bar. Future volumes are checked the same
-    # way in test_cheating_strategy_cannot_obtain_future_volumes: a check that inspected
-    # only tuples of Bar objects would miss a tuple of floats carrying the full volume
-    # series.
+    # Attack 5: walk every attribute of the instance and check none contains a future
+    # bar. Future volumes are checked the same way in
+    # test_cheating_strategy_cannot_obtain_future_volumes, since a check of Bar tuples
+    # alone would miss a tuple of floats holding the full volume series.
     future_closes = {bar.close for bar in all_bars[4:]}
     for value in vars(view).values():
         if isinstance(value, tuple):
@@ -64,10 +62,10 @@ def test_cheating_strategy_cannot_obtain_future_bars():
 
 
 def test_cheating_strategy_cannot_obtain_future_volumes():
-    """The volume channel is new attack surface, and gets the same treatment.
+    """The volume channel gets the same checks as the bars.
 
-    The mitigation is structural rather than defensive: the volume tuple is CONSTRUCTED
-    SLICED, so there is no future volume in the object to reach. This test checks that."""
+    The volume tuple is sliced at construction, so the object holds no future volume to
+    reach. This test checks that."""
     all_bars = _bars(10)
     all_volumes = _volumes(10)
     view = build_data_view(all_bars, up_to_index=3, volumes=all_volumes, instrument_id="X")
@@ -94,7 +92,7 @@ def test_cheating_strategy_cannot_obtain_future_volumes():
             assert not (observed & future_volumes), "a future volume is reachable from the view"
 
     # Attack 5: the volume accessor must agree with the bar accessor about every index,
-    # including negatives — they share _resolve precisely so they cannot drift apart.
+    # including negatives; they share _resolve so they cannot diverge.
     for index in list(range(4)) + [-1, -2, -3, -4]:
         assert view.volume(index) == 1000.0 + view[index].close
 
@@ -106,19 +104,19 @@ def test_a_view_holds_exactly_one_volume_entry_per_visible_bar():
 
 
 def test_the_three_volume_states_are_distinguishable():
-    """State 1 (no series) is silent, state 2 (a gap) is silent, state 3 (required but
-    absent) is loud. States 1 and 3 must not be collapsed into one."""
+    """State 1 (no series) and state 2 (a gap) return None; state 3 (required but absent)
+    raises. States 1 and 3 must remain distinct."""
     bars = _bars(4)
 
-    # State 1 — instrument has no volume at all.
+    # State 1: the instrument has no volume at all.
     none_view = build_data_view(bars, up_to_index=3)
     assert none_view.has_volume is False
     assert none_view.volume(0) is None
-    # State 3 — the same absence, but the caller says it cannot work without it.
+    # State 3: the same absence, but the caller requires volume.
     with pytest.raises(MissingVolumeError, match="volume is required"):
         none_view.require_volume(0)
 
-    # State 2 — a real gap on one bar of a real series.
+    # State 2: a gap on one bar of a real series.
     gap_view = build_data_view(bars, up_to_index=3, volumes=[10.0, None, 30.0, 40.0])
     assert gap_view.has_volume is True
     assert gap_view.volume(1) is None
@@ -137,27 +135,22 @@ def test_the_three_volume_states_are_distinguishable():
     ],
 )
 def test_nan_never_reaches_a_view(nan):
-    """Every comparison against NaN is False, so a NaN that survived into a view would
-    make a volume filter reject every entry and return a plausible, wrong result.
+    """A NaN volume is stored as None, for every NaN type.
 
-    Parametrised over the NaN type. A filter written as `isinstance(v, float)` handles a
-    builtin `float("nan")` but lets a `np.float32` NaN through, so a test with a single
-    builtin NaN input cannot tell a correct filter from that one. One input per NaN type
-    covers every branch. The assertion below is written as `v != v` because that
-    identifies a NaN of any type without depending on `float()` having normalised it.
-
-    `np.float64` is included because it subclasses `float`, so it passes an
-    `isinstance(v, float)` check and can make such a filter look correct when spot-checked
-    with numpy.
+    Every comparison against NaN is False, so a NaN in a view would make a volume filter
+    reject every entry and return a plausible but wrong result. A filter written as
+    `isinstance(v, float)` handles `float("nan")` but lets a `np.float32` NaN through, so
+    the test covers one input per NaN type. `np.float64` is included because it subclasses
+    `float` and can make such a filter look correct when spot-checked with numpy.
     """
     view = build_data_view(_bars(4), up_to_index=3, volumes=[10.0, nan, 30.0, 40.0])
     assert view.volume(1) is None
-    # `v != v` rather than isinstance+isnan: identifies a NaN of ANY type, and does not
-    # borrow the predicate the code under test uses.
+    # `v != v` rather than isinstance+isnan: it identifies a NaN of any type without
+    # relying on `float()` normalisation or on the predicate the code under test uses.
     assert not any(v is not None and v != v for v in view._visible_volumes)
 
 
-def test_a_length_mismatch_fails_loudly_naming_both_lengths():
+def test_a_length_mismatch_raises_naming_both_lengths():
     with pytest.raises(ValueError, match="3 entries but there are 4"):
         build_data_view(_bars(4), up_to_index=3, volumes=[1.0, 2.0, 3.0])
 

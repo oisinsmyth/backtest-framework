@@ -21,8 +21,8 @@ def test_equity_tradeable_quantity_fractional_shares_rounds_to_precision():
 
 
 def test_equity_tradeable_quantity_eight_decimal_crypto_precision_stub():
-    # Proves the rounding mechanism generalizes to crypto-like precision; this is not a
-    # real crypto instrument (no funding carry component, no 365-day calendar override).
+    # The rounding works at crypto-like precision. This is not a real crypto instrument
+    # (no funding carry component, no 365-day calendar override).
     equity = Equity(symbol="BTC-STUB", quantity_precision=8)
     assert equity.tradeable_quantity(0.123456789) == 0.12345679
 
@@ -35,11 +35,11 @@ def test_equity_carry_components_lists_only_components_a_filter_can_match():
 def test_no_instrument_declares_a_carry_component_no_brick_models():
     """Every declared carry component must be one some cost brick models.
 
-    `costs/stack.py:_applies` is the only consumer of these names. A name no brick declares
-    can never match, so it does nothing. For example, "margin_interest" would not belong
-    here: MarginInterest is a portfolio brick reached through portfolio_carry_cost, which
-    applies no filter. Written against the brick classes rather than a literal list so it
-    still fires when a future instrument invents a component and forgets the brick."""
+    `costs/stack.py:_applies` is the only consumer of these names, and a name no brick
+    declares never matches. For example, "margin_interest" does not belong here:
+    MarginInterest is a portfolio brick reached through portfolio_carry_cost, which applies
+    no filter. The check reads the brick classes rather than a literal list, so it also
+    catches a new instrument component that has no brick."""
     from backtest_framework.costs import equity_bricks
 
     declared_by_bricks = {
@@ -60,10 +60,9 @@ def test_no_instrument_declares_a_carry_component_no_brick_models():
 def test_margin_requirement_is_gone_from_the_instrument_interface():
     """`margin_requirement` is not part of the instrument interface.
 
-    Nothing called it, and Equity answered it with full notional rather than a Reg T 50%
-    requirement, a wrong number nothing would notice. Buying-power limits are not modelled.
-    If the method is reintroduced, it should come with a RiskLimits rule that reads it,
-    and this test should be deleted at the same time."""
+    Nothing called it, and Equity returned full notional rather than a Reg T 50%
+    requirement. Buying-power limits are not modelled. If the method is reintroduced, it
+    should come with a RiskLimits rule that reads it, and this test should be deleted."""
     from backtest_framework.instruments.base import Instrument
 
     assert not hasattr(Equity(symbol="AAPL"), "margin_requirement")
@@ -96,11 +95,10 @@ def test_option_stub_carry_components_is_correctly_empty_not_unimplemented():
 
 def test_whole_share_rounding_convention_is_pinned_round_half_even():
     # tradeable_quantity uses Python round(): banker's rounding to the nearest whole
-    # share. This is a stated convention: changing it (e.g. to floor-toward-zero) would
-    # move every fill in every stored result, so it must only change deliberately,
-    # never as a side effect of a refactor.
+    # share. Changing it (e.g. to floor-toward-zero) would move every fill in every stored
+    # result, so this test catches a change made as a side effect of a refactor.
     equity = Equity(symbol="TEST")
-    assert equity.tradeable_quantity(1252.96) == 1253.0  # rounds UP past the target
+    assert equity.tradeable_quantity(1252.96) == 1253.0  # rounds up past the target
     assert equity.tradeable_quantity(0.5) == 0.0  # half-to-even
     assert equity.tradeable_quantity(1.5) == 2.0
     assert equity.tradeable_quantity(2.5) == 2.0

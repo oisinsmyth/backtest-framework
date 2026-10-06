@@ -2,8 +2,8 @@
 
 The sweep adds no semantics of its own, so its 1x run must be bit-identical to `run_backtest`
 called directly with the same arguments. Each forwarding test also checks that the argument
-changes the result. Without that check the comparison would pass whether or not the sweep
-forwards the argument, because both runs would silently use the default.
+changes the result; otherwise the comparison would pass even if the sweep dropped the
+argument, since both runs would use the default.
 """
 
 import inspect
@@ -145,7 +145,7 @@ def test_the_sweep_forwards_the_argument_exactly(make, bars, extra, baseline):
 
 
 def test_a_volume_strategy_swept_without_volumes_raises():
-    """No volume series must crash the sweep, not return flat books for every multiplier."""
+    """A missing volume series raises instead of returning flat books for every multiplier."""
     with pytest.raises(MissingVolumeError, match="volume is required"):
         run_cost_sweep(
             bars_by_instrument=BARS,
@@ -184,8 +184,8 @@ def test_every_swept_trial_is_logged_with_the_forwarded_identity(tmp_path):
 
 
 def test_the_sweep_accepts_every_run_backtest_argument():
-    """A keyword added to run_backtest and not to the sweep fails here, before any study
-    silently sweeps with the default."""
+    """A keyword added to run_backtest but not to the sweep fails here, rather than every
+    sweep using its default."""
     backtest = set(inspect.signature(run_backtest).parameters)
     sweep = set(inspect.signature(run_cost_sweep).parameters)
     replaced = {

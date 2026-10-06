@@ -1,6 +1,9 @@
-"""Snapshot store tests: same snapshot ID -> byte-identical data (checksum verified on
-load); identical content -> same ID (idempotent); different content -> new ID; tampering ->
-refused; quarantined -> unreachable by any default path.
+"""Tests for the snapshot store.
+
+- The same snapshot ID loads byte-identical data (checksum verified on load).
+- Identical content gets the same ID; different content gets a new ID.
+- A tampered payload raises on load.
+- A quarantined snapshot cannot be loaded by any default path.
 """
 
 from datetime import datetime
@@ -89,8 +92,10 @@ def test_passing_validation_is_loadable_and_meta_carries_reports(tmp_path):
 # ------------------------------------------------- extra columns in a snapshot
 
 def test_extra_columns_change_the_snapshot_id_and_survive_the_roundtrip(tmp_path):
-    """Leaving extra columns out keeps the payload unchanged (see test_csv_fixture.py);
-    opting in must change the payload, or the columns are not stored."""
+    """Extra columns change the snapshot id and load back unchanged.
+
+    Without extra columns the payload is unchanged (see test_csv_fixture.py); with them the
+    payload, and so the id, must change, or the columns were not stored."""
     bars = {"X": [TimestampedBar(datetime(2021, 5, 1), Bar(1.0, 1.0, 1.0, 1.0))]}
     store = SnapshotStore(tmp_path / "snapshots")
     plain = store.create(bars, CorporateActions(), volumes_by_symbol={"X": [7.0]})
@@ -111,16 +116,15 @@ SYNTHETIC_SNAPSHOT_ID = "e77fe8e910a5521a5f63fa74f90209dfe7c660b2c89b08da3709ed5
 
 
 def test_a_snapshot_id_built_from_code_is_frozen(tmp_path):
-    """The identity, pinned without a fixture.
+    """A fixed payload built in code has a fixed snapshot id.
 
-    Every other test in this file checks a relationship (idempotence, uniqueness after a
-    restatement, refusal after tampering), and each of those would pass unchanged if the id
-    algorithm were replaced wholesale. A change in the writer's newline handling, for
-    example, would give the same payload different ids on different operating systems
-    without failing any of them.
+    The other tests in this file check relationships (idempotence, a new id after a
+    restatement, an error after tampering), which would all still pass if the id algorithm
+    changed. A change in the writer's newline handling, for example, would give the same
+    payload different ids on different operating systems.
 
-    This payload exercises the parts most likely to drift: dividends and splits, which go
-    through the `events.json` writer, volumes, and two symbols so ordering matters.
+    The payload covers the parts most likely to change: dividends and splits (written by the
+    `events.json` writer), volumes, and two symbols so that ordering matters.
     """
     bars = {
         "AAA": [

@@ -1,8 +1,8 @@
 """Unit tests for DataView.
 
-Covers: requesting an index beyond current raises, and a reflection/attribute audit
-proving no public attribute exposes future bar data. The "deliberately cheating
-strategy" integration test lives in tests/integration/test_dataview_lookahead_guard.py.
+Covers: requesting an index beyond the current one raises, and an attribute audit checks
+that no public attribute exposes future bar data. The integration test with a strategy
+that tries to read ahead is in tests/integration/test_dataview_lookahead_guard.py.
 """
 
 import pytest
@@ -81,6 +81,6 @@ def test_no_public_attribute_exposes_future_bar_data():
             continue  # the guarantee covers the public surface only
         value = getattr(view, name)
         if callable(value):
-            continue  # methods need args to call; not part of a passive attribute leak
+            continue  # methods need arguments; only plain attributes are audited
         leaked = _visible_closes(value) & future_closes
         assert not leaked, f"public attribute '{name}' leaks future bar data: {leaked}"

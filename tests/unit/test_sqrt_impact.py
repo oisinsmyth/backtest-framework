@@ -1,9 +1,9 @@
 """Unit tests for SqrtImpact.
 
-"Doubling quantity multiplies impact cost by √2" applies to the impact fraction (the
-per-dollar price concession, the quantity `cost ∝ σ√(Q/ADV)` describes). Total dollar
-cost = fraction × trade notional, so it scales as Q^1.5 (2√2 on doubling), as in the
-standard square-root impact model. Both scalings are asserted here.
+Doubling quantity multiplies the impact fraction (the per-dollar price concession,
+`cost ∝ σ√(Q/ADV)`) by √2. Total dollar cost is fraction × trade notional, so it scales as
+Q^1.5 (2√2 on doubling), as in the standard square-root impact model. Both scalings are
+tested.
 """
 
 import math
@@ -47,33 +47,33 @@ def test_zero_quantity_costs_nothing():
     assert BRICK.cost(AAPL, quantity=0, price=50.0) == 0.0
 
 
-# --- Loud errors, never silent zeros --------------------------------------------------
+# --- Invalid inputs raise instead of returning zero cost ------------------------------
 
 
-def test_zero_adv_fails_loudly_at_construction():
+def test_zero_adv_raises_at_construction():
     with pytest.raises(ValueError, match="adv_shares"):
         SqrtImpact(params_by_symbol={"AAPL": ImpactParams(sigma_daily=0.02, adv_shares=0.0)})
 
 
-def test_negative_adv_fails_loudly_at_construction():
+def test_negative_adv_raises_at_construction():
     with pytest.raises(ValueError, match="adv_shares"):
         SqrtImpact(params_by_symbol={"AAPL": ImpactParams(sigma_daily=0.02, adv_shares=-5.0)})
 
 
-def test_zero_sigma_fails_loudly_at_construction():
-    # sigma=0 would silently zero the whole brick — same silent-zero smell as ADV.
+def test_zero_sigma_raises_at_construction():
+    # sigma=0 would make every cost from the brick zero, so it is rejected like ADV=0.
     with pytest.raises(ValueError, match="sigma_daily"):
         SqrtImpact(params_by_symbol={"AAPL": ImpactParams(sigma_daily=0.0, adv_shares=1_000_000)})
 
 
-def test_unknown_symbol_fails_loudly_naming_it():
+def test_unknown_symbol_raises_naming_it():
     xle = Equity(symbol="XLE")
     with pytest.raises(ValueError, match="XLE") as excinfo:
         BRICK.cost(xle, quantity=100, price=80.0)
-    assert "AAPL" in str(excinfo.value)  # the known-symbols list is actually useful
+    assert "AAPL" in str(excinfo.value)  # the message lists the known symbols
 
 
-def test_instrument_without_symbol_attribute_fails_loudly():
+def test_instrument_without_symbol_attribute_raises():
     option = OptionStub(underlying_symbol="AAPL", strike=150.0, expiry="2026-09-18", option_type="call")
     with pytest.raises(ValueError, match="symbol"):
         BRICK.cost(option, quantity=1, price=3.50)

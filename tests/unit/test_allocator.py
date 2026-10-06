@@ -24,7 +24,7 @@ def test_constant_split_with_empty_strategy_list_is_empty():
 
 
 def test_capital_changes_propagate_on_next_call():
-    allocator = ConstantSplitAllocator()  # stateless — nothing cached between calls
+    allocator = ConstantSplitAllocator()  # stateless: nothing cached between calls
 
     first = allocator.allocate(total_capital=100_000.0, strategy_ids=["a", "b"])
     assert first == {"a": 50_000.0, "b": 50_000.0}
@@ -33,7 +33,7 @@ def test_capital_changes_propagate_on_next_call():
     assert second == {"a": 100_000.0, "b": 100_000.0}  # reflects the new total immediately
 
 
-# --- Wiring proof: Allocator output feeds Sizer.capital_by_strategy unmodified --------
+# --- Allocator output feeds Sizer.capital_by_strategy unmodified ----------------------
 
 
 def test_allocator_output_feeds_sizer_capital_by_strategy_unmodified():

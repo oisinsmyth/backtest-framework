@@ -1,8 +1,9 @@
-"""Pair selection inside walk-forward: a synthetic universe where one pair's
-relationship INVERTS after the training window. Selection may (and by construction,
-does) pick it. The test checks that selection used only training data, enforced
-structurally via DataView (the same look-ahead guard strategies run behind), and that
-the full select-then-trade-OOS pipeline runs end to end.
+"""Pair selection inside walk-forward, on a synthetic universe where one pair's
+relationship inverts after the training window.
+
+Selection picks that pair by construction. The test checks that selection used only
+training data, enforced by DataView (the same look-ahead guard strategies run behind),
+and that the select-then-trade-OOS pipeline runs end to end.
 """
 
 from datetime import datetime, timedelta
@@ -33,9 +34,8 @@ def _series(log_prices) -> list[TimestampedBar]:
 
 
 def _universe():
-    """Six independent noise series + the pair (P1, P2): locked together in train,
-    violently diverging in test — a pair that looks ideal in sample and breaks out of
-    sample."""
+    """Six independent noise series plus the pair (P1, P2), which tracks closely in train
+    and diverges sharply in test: ideal in sample, broken out of sample."""
     rng = np.random.default_rng(2026)
     universe = {}
     for k in range(6):
@@ -55,21 +55,21 @@ def test_selection_uses_training_data_only_and_pipeline_runs_oos():
     assert len(windows) == 1
     window = windows[0]
 
-    # --- Structural guard: fitters get train bars ONLY.
+    # --- Structural guard: fitters get train bars only.
     for symbol, view in window.train_views.items():
         assert len(view) == TRAIN  # exactly the training window
         with pytest.raises(LookAheadError):
-            view[TRAIN]  # the first test bar is not merely hidden - it was never given
-        # The last visible close IS the last training close, not a test close.
+            view[TRAIN]  # the first test bar is not in the view at all
+        # The last visible close is the last training close, not a test close.
         assert view.current_bar.close == universe[symbol][TRAIN - 1].bar.close
 
-    # --- Selection picks the engineered pair from training data (its train score is
-    # genuinely the best; its test behaviour is invisible to the selector).
+    # --- Selection picks the engineered pair from training data (its train score is the
+    # best; its test behaviour is not visible to the selector).
     selection = select_pairs(window.train_views, top_n=1)
     assert selection.ranked_pairs[0] == ("P1", "P2")
     assert selection.n_pairs_tested == 28  # C(8,2) - the multiplicity count
 
-    # --- The selected pair trades OUT OF SAMPLE, end to end.
+    # --- The selected pair trades out of sample, end to end.
     a, b = selection.ranked_pairs[0]
     result = run_backtest(
         bars_by_instrument={s: window.test_bars_by_instrument[s] for s in (a, b)},
@@ -84,5 +84,5 @@ def test_selection_uses_training_data_only_and_pipeline_runs_oos():
         starting_cash=100_000.0,
     )
     assert len(result.equity_curve) == TEST  # the OOS window ran in full
-    # No claim about the OOS result's sign - the inverting pair may well lose; the
-    # check is that selection could not have known that.
+    # The sign of the OOS result is not checked: the inverting pair may lose, and the
+    # test only requires that selection could not have known that.

@@ -1,5 +1,7 @@
-"""The tearsheet states its caveats in the rendered text: insufficient data, the rf used,
-the beta expectation, and the Monte Carlo seed."""
+"""Tests that the rendered tearsheet states its caveats.
+
+The caveats are insufficient data, the rf used, the beta expectation, and the Monte Carlo
+seed."""
 
 import numpy as np
 
@@ -36,5 +38,5 @@ def test_mc_table_renders_with_seed_recorded():
     table = render_metrics_table(
         list(rng.normal(0.0004, 0.01, 700)), rf_annual=0.04, periods_per_year=252, mc_seed=42
     )
-    assert "seed=42" in table  # the seed is visible, not buried
+    assert "seed=42" in table  # the seed appears in the table
     assert "n=10,000" in table

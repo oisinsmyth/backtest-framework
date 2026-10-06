@@ -1,5 +1,7 @@
-"""Data cleaner tests: given injected defects, the CleaningReport lists every change;
-clean input gives an empty report. Ruleset clean-v1: drop and report, never rewrite.
+"""Tests for the data cleaner.
+
+For injected defects the CleaningReport lists every change; clean input gives an empty
+report. Ruleset clean-v1 drops and reports bad bars and never rewrites them.
 """
 
 from datetime import datetime, timedelta
@@ -51,8 +53,8 @@ def test_low_above_high_dropped_and_reported():
 
 
 def test_epsilon_low_high_artifact_passes_untouched():
-    # The observed XOP 2018-10-24 case: low > high by ~1e-16 relative - within
-    # tolerance, so not the cleaner's business (the validator's tolerance handles it).
+    # The observed XOP 2018-10-24 case: low > high by ~1e-16 relative, within tolerance.
+    # The cleaner leaves it alone; the validator's tolerance handles it.
     series = _series([100.0])
     high = 119.87006378173828
     series[0] = TimestampedBar(series[0].timestamp, Bar(open=119.0, high=high, low=high + 1e-14, close=119.5))
@@ -64,11 +66,11 @@ def test_epsilon_low_high_artifact_passes_untouched():
 
 
 def test_the_report_names_which_input_bars_survived():
-    """`clean()` decides with volumes and returns only bars, so the caller is left holding a
-    volume series that is now misaligned from the first drop onward.
+    """The report's `kept_indices` lets the caller realign its volume series.
 
-    `kept_indices` lets a caller realign exactly. Without it the only options would be to
-    re-match on timestamps or to pass the stale, misaligned series on.
+    `clean()` uses volumes to decide drops but returns only bars, so the caller's volume
+    series is misaligned from the first dropped bar. Without `kept_indices` the caller would
+    have to re-match on timestamps.
     """
     bars = _series([100.0, 100.0, 100.0, 100.0])
     volumes = {"A": [10.0, 0.0, 30.0, 40.0]}  # bar 1 dropped for non-positive volume
@@ -78,7 +80,7 @@ def test_the_report_names_which_input_bars_survived():
     assert len(cleaned["A"]) == 3
     assert report.kept_indices["A"] == (0, 2, 3)
     assert report.realign("A", volumes["A"]) == [10.0, 30.0, 40.0]
-    # The timestamps line up, which is the property the caller actually needs.
+    # The kept bars' timestamps match the original bars at the kept indices.
     assert [tb.timestamp for tb in cleaned["A"]] == [bars[i].timestamp for i in (0, 2, 3)]
 
 
@@ -87,7 +89,7 @@ def test_realign_refuses_a_series_that_is_not_the_one_that_was_cleaned():
     bars = _series([100.0, 100.0, 100.0])
     _, report = clean({"A": bars})
 
-    with pytest.raises(ValueError, match="not the one that was cleaned"):
+    with pytest.raises(ValueError, match="not the series that was cleaned"):
         report.realign("A", [1.0, 2.0])
     with pytest.raises(KeyError, match="no cleaning record"):
         report.realign("NOPE", [1.0, 2.0, 3.0])

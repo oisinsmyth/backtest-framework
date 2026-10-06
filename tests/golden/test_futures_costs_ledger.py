@@ -1,8 +1,7 @@
 """Golden-master ledger for the futures cost bricks and the cost table.
 
 Every number here is worked by hand in `test_futures_costs_ledger.hand.txt`, next to this
-file, with a calculator that never imports this codebase. If the two disagree, the hand file
-is right.
+file, without importing this codebase. If the two disagree, the hand file is authoritative.
 
 Cost lines are named by what they measure ("one_tick", "effective_es_bp",
 "effective_exec_hours"); `data/futures_costs.json` describes each one under `lines`.
@@ -26,8 +25,8 @@ from backtest_framework.instruments.future import Future
 
 REPO = Path(__file__).resolve().parents[2]
 
-# Hand file §1. Written out rather than read from the specs file, because a golden test that
-# reads its inputs from the same place as the code under test gates nothing.
+# Hand file §1. Written out rather than read from the specs file, so the golden test does not
+# share its inputs with the code under test.
 MNQ = Future(root="MNQ", tick_points=0.25, usd_per_point=2.0, tick_usd=0.50)
 MES = Future(root="MES", tick_points=0.25, usd_per_point=5.0, tick_usd=1.25)
 ES = Future(root="ES", tick_points=0.25, usd_per_point=50.0, tick_usd=12.50)
@@ -53,7 +52,7 @@ def test_mnq_with_a_measured_crossing_is_the_hand_round_trip():
 
 
 def test_the_two_routes_to_the_round_trip_agree_bit_for_bit():
-    """Per fill then doubled, against the flat sum. §0's halving argument, checked."""
+    """Per fill then doubled equals the flat sum (hand file §0)."""
     line = FuturesRoundTrip(FuturesCommission(3.00), TickCrossing(MNQ_MEASURED_TICKS_RT), instrument=MNQ)
     assert line.round_trip_usd == 3.00 + MNQ_MEASURED_TICKS_RT * MNQ.tick_usd
 
@@ -68,7 +67,7 @@ def test_the_measured_round_trip_rounds_to_4_21():
 
 # ------------------------------------------------------------------ §3 the one-tick rule
 
-#: root -> (min-size symbol, tick_usd, commission, EXACT round trip). Hand file §3.
+#: root -> (min-size symbol, tick_usd, commission, exact round trip). Hand file §3.
 ONE_TICK_ROWS = [
     ("NQ", "MNQ", 0.50, 3.00, 3.50),
     ("ES", "MES", 1.25, 3.00, 4.25),
@@ -152,7 +151,7 @@ def test_mes_crossing_dollars_are_exact_from_the_bricks():
 
 
 def test_the_two_sizes_tick_counts_differ_by_one_ulp_and_the_table_keeps_both():
-    """Collapsing them would break one of the two bars (hand file §4)."""
+    """Using one value for both would change one of the two breakevens (hand file §4)."""
     es = FuturesRoundTrip.from_table("ES", "full", "effective_es_bp")
     mes = FuturesRoundTrip.from_table("ES", "micro", "effective_es_bp")
     assert es.crossing.ticks_per_round_trip == ES_TICKS_RT
@@ -191,8 +190,8 @@ def test_full_size_commission_has_two_declared_values_and_both_survive():
 
 
 def test_the_cent_quoted_roots_are_corrected_and_the_divisor_is_recorded():
-    """Hand file §6. The raw figures are pinned too, on `tick_usd_raw_formula`, so the
-    correction is checkable rather than a deletion."""
+    """Hand file §6. The raw figures are also checked, on `tick_usd_raw_formula`, so the
+    correction can be verified."""
     table = load_cost_table()
     flags = {f["symbol"]: f for f in table["spec_flags"]}
     for symbol, dollars, raw in [("ZC", 12.5, 1250.0), ("ZS", 12.5, 1250.0),
@@ -213,8 +212,8 @@ def test_the_cent_quoted_roots_are_corrected_and_the_divisor_is_recorded():
 
 def test_hg_is_the_root_that_proves_the_divide_is_not_a_unit_of_measure_rule():
     """`HG` and `ZL` are both quoted per pound and differ by a factor of 100: HG in dollars,
-    ZL in cents. A `unit_of_measure`-based rule gets one of them wrong whichever way it goes,
-    which is why the divisor comes from the notional and not from the units."""
+    ZL in cents. Any `unit_of_measure`-based rule gets one of them wrong, so the divisor
+    comes from the notional."""
     specs = json.loads(
         (REPO / "data" / "fut_specs_from_definition.json").read_text(encoding="utf-8")
     )["specs"]
@@ -252,11 +251,11 @@ BRICK_KEYS_BEFORE_FUTURES = {
 
 def test_no_pre_existing_brick_key_row_moved():
     """Stored trial configs validate against these eight rows (hand file §7). Adding a row
-    must not take a key off another row, which would turn a stored config into a raise."""
+    must not remove a key from another row, or a stored config would fail to load."""
     for type_name, keys in BRICK_KEYS_BEFORE_FUTURES.items():
         assert type_name in BRICK_KEYS, f"{type_name} disappeared from BRICK_KEYS"
         assert set(BRICK_KEYS[type_name]) == keys, f"{type_name}'s allowed keys moved"
-    # Later additive rows are allowed; what is gated is that the futures row is present.
+    # Later additive rows are allowed; the futures row must be present.
     assert "futures_round_trip" in set(BRICK_KEYS) - set(BRICK_KEYS_BEFORE_FUTURES)
 
 

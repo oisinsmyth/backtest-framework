@@ -1,6 +1,8 @@
-"""Declarative cost-stack config: the dict a backtest logs is the dict its stack is built
-from. A config-built stack behaves identically to one built by hand, and invalid configs
-raise at factory time, naming the bad key.
+"""Tests for the declarative cost-stack config.
+
+The dict a backtest logs is the dict its stack is built from. A config-built stack behaves
+the same as one built by hand, and an invalid config raises at factory time, naming the bad
+key.
 """
 
 from datetime import datetime, timedelta
@@ -79,7 +81,7 @@ def test_config_built_stack_matches_hand_built_behaviourally():
     assert built.carry_cost(-25_000.0, prev, curr) == hand.carry_cost(-25_000.0, prev, curr)
     assert built.portfolio_carry_cost(10_000.0, prev, curr) == hand.portfolio_carry_cost(10_000.0, prev, curr)
     assert built.event_flow(XLE, 100.0, prev, curr) == hand.event_flow(XLE, 100.0, prev, curr)
-    assert built.event_flow(XLE, 100.0, prev, curr) != 0.0  # dividend really flowed
+    assert built.event_flow(XLE, 100.0, prev, curr) != 0.0  # the dividend was paid
 
 
 @pytest.mark.parametrize(
@@ -92,9 +94,9 @@ def test_config_built_stack_matches_hand_built_behaviourally():
         ({**STACK_CONFIG, "trade_bricks": [{"type": "sqrt_impact", "calibration": "psychic"}]}, "calibration"),
         ({**STACK_CONFIG, "event_flow_bricks": [{"type": "dividend_flow", "source": "vibes"}]}, "source"),
         ({**STACK_CONFIG, "carry_bricks": [{"type": "borrow_fee", "annual_rate": "high"}]}, "numeric"),
-        # A typo on an optional parameter. A typo on a required key raises through
-        # `_required_numeric`, so only optional ones could be quietly dropped and replaced
-        # by a default.
+        # Typos on optional parameters. A typo on a required key already raises through
+        # `_required_numeric`; an optional one could otherwise be dropped and replaced by
+        # the default.
         (
             {**STACK_CONFIG, "trade_bricks": [{"type": "sqrt_impact", "coeficient": 3.0}]},
             "unknown key",
@@ -109,7 +111,7 @@ def test_config_built_stack_matches_hand_built_behaviourally():
         ),
     ],
 )
-def test_invalid_stack_configs_fail_loudly_naming_the_problem(config, match):
+def test_invalid_stack_configs_raise_naming_the_problem(config, match):
     with pytest.raises(ConfigError, match=match):
         build_cost_stack(config, _context())
 
@@ -132,19 +134,18 @@ def test_invalid_stack_configs_fail_loudly_naming_the_problem(config, match):
     ],
 )
 def test_every_shape_a_factory_accepts_survives_the_key_check(brick):
-    """The other half of an allowed-key table: it must not reject anything real.
+    """`BRICK_KEYS` accepts every valid brick shape.
 
-    A key missing from `BRICK_KEYS` turns a working config into a raise. Some of these rows
+    A key missing from `BRICK_KEYS` makes a working config raise. Some of these rows
     (`flat_commission`, `flat_rate_carry`, and `ibkr_commission` with explicit parameters)
-    are rarely exercised anywhere else, so without this test a typo in them could go
-    unnoticed.
+    are rarely used elsewhere, so a typo in them would otherwise go unnoticed.
     """
     slot = "event_flow_bricks" if brick["type"] == "dividend_flow" else "trade_bricks"
     validate_stack_config({**STACK_CONFIG, slot: [brick]})
 
 
 def test_the_key_table_covers_every_registered_brick_type():
-    """A new brick type without a row here would be unvalidated and silently lenient."""
+    """Every registered brick type has a `BRICK_KEYS` row, so none skips key validation."""
     registered = set(_brick_registry(_context())._factories)
     assert registered == set(BRICK_KEYS), (
         f"registered but not in BRICK_KEYS: {sorted(registered - set(BRICK_KEYS))}; "

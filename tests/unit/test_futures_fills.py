@@ -1,11 +1,10 @@
-"""The shared futures fill model: guards, the DataFrame adapter, and the module's self-test.
+"""Tests for the futures fill model's input guards, DataFrame adapter and self-test.
 
-The hand-computed ledger for every fill is in `tests/golden/test_futures_fills_ledger.py`;
-this file is about what happens when the inputs are wrong. That is most of what a fill model
-has to get right, because a backtest that silently truncates a stress window or transposes a
-side produces a number rather than an error.
+The hand-computed ledger for every fill is in `tests/golden/test_futures_fills_ledger.py`.
+This file covers invalid inputs: a truncated stress window or a transposed side would
+otherwise produce a plausible number instead of an error.
 
-No market data is read here; every input is a small literal array.
+No market data is read; every input is a small literal array.
 """
 
 import math
@@ -54,16 +53,15 @@ def test_module_selftest_passes():
 
 
 def test_the_selftest_helper_can_itself_fail():
-    """A self-test that cannot fail checks nothing.
+    """`_expect_raise` fails when the function does not raise.
 
-    `_expect_raise` is what makes the self-test check that each guard actually fires, so it
-    gets its own known-answer case: handed a function that does not raise, it must complain
-    rather than pass.
+    The self-test relies on `_expect_raise` to confirm each guard fires, so it is checked
+    here against a function that does not raise.
     """
     with pytest.raises(AssertionError, match="did not raise"):
         _expect_raise(lambda: None, ValueError, "a function that cannot fail", log=lambda *_: None)
     with pytest.raises(TypeError):
-        # the wrong exception type must propagate, not be swallowed as "it raised, good enough"
+        # an exception of the wrong type propagates instead of counting as a raise
         _expect_raise(lambda: (_ for _ in ()).throw(TypeError("x")), ValueError, "x", log=lambda *_: None)
 
 
@@ -102,7 +100,7 @@ def test_bar_at_hands_back_the_shape_the_gap_rule_speaks():
     ],
 )
 def test_adverse_price_signs(side, closing, expected):
-    """All four cells, checked as prices rather than described, since a sign is easy to invert."""
+    """Check the concession direction for all four side/closing combinations as prices."""
     assert adverse_price(5000.00, side, 1, MES, closing=closing) == expected
 
 
@@ -141,7 +139,7 @@ def test_entry_fill_rejects_a_fill_bar_past_the_session_end():
 
 def test_stress_fill_rejects_a_window_past_the_session_end_rather_than_truncating():
     stress_fill(CLOSE, 0, Side.LONG, MES, k=4)
-    with pytest.raises(ValueError, match="not silently truncated"):
+    with pytest.raises(ValueError, match="past the session end"):
         stress_fill(CLOSE, 1, Side.LONG, MES, k=4)
 
 
@@ -263,13 +261,13 @@ def test_assert_entry_before_accepts_pandas_timestamps():
         assert_entry_before(pd.Timestamp("2019-06-03 14:27"), pd.Timestamp("2019-06-03 14:28"))
 
 
-# ------------------------------------------- the epsilon, which is the whole point
+# ------------------------------------------------------- the trade-through epsilon
 
 
 OFF_GRID_BAR = Bar(open=4998.00, high=4998.50, low=4997.00, close=4997.25)
-"""Reached 4997.10 and 4998.40, but traded through neither by a tick. Both levels are off
-the 0.25 grid, which is the only way the two epsilons can be told apart: on the grid,
-`low <= stop - tick` and `low < stop` are the same statement."""
+"""Reaches 4997.10 and 4998.40 but trades through neither by a full tick. Both levels are
+off the 0.25 grid; on the grid, `low <= stop - tick` and `low < stop` are equivalent, so the
+two epsilons can only be distinguished with off-grid levels."""
 
 
 @pytest.mark.parametrize(
@@ -280,12 +278,11 @@ the 0.25 grid, which is the only way the two epsilons can be told apart: on the 
     ],
 )
 def test_stop_trade_through_epsilon_is_one_tick_not_an_absolute_1e_9(side, stop, target):
-    """Trade-through means one full tick beyond the level, not an absolute 1e-9.
+    """Trade-through requires one full tick beyond the level.
 
-    An absolute 1e-9 epsilon would fill both of these, because the bar reached the level; a
-    one-tick epsilon does not, because the bar never traded a tick beyond it. This is the
-    only test in the suite that tells the two rules apart: a 1e-9 mutation passes every
-    other test.
+    An absolute 1e-9 epsilon would fill both cases because the bar reached the level; a
+    one-tick epsilon does not because the bar never traded a tick beyond it. No other test
+    in the suite distinguishes the two rules.
     """
     through = resolve_exit(OFF_GRID_BAR, stop, target, side, MES,
                            stop_rule=FillAssumption.TRADE_THROUGH, levels_on_grid=False)
@@ -311,12 +308,13 @@ def test_target_trade_through_epsilon_is_one_tick_too(side, target, touch_price)
     assert (touch.kind, touch.price) == (ExitKind.TARGET, touch_price)
 
 
-# ------------------------------------------------------ the pessimism, once more
+# ------------------------------------------------- stop first within a single bar
 
 
 def test_nothing_can_return_a_target_from_a_bar_whose_stop_was_also_inside():
-    """When stop and target are both inside one bar, the stop is assumed to fill first.
-    Checked on both sides and under every combination of fill rules."""
+    """When stop and target both fall inside one bar, the stop fills first.
+
+    Checked for both sides and every combination of fill rules."""
     bar = bar_at(OHLC, 3)  # low 4997.00, high 5000.50
     for stop_rule in FillAssumption:
         for target_rule in FillAssumption:

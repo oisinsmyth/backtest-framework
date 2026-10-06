@@ -1,9 +1,9 @@
 """Unit tests for corporate-action frame conversions.
 
-Two frames, one invariant: notional and dividend cash must be identical whichever
-frame you compute them in. yfinance's auto_adjust=False data arrives in the
-split-adjusted frame (verified on XOP's 2020-03-30 reverse split);
-as_traded_from_adjusted/as_declared_dividends reconstruct the as-traded frame.
+Notional and dividend cash must be the same whether computed in the split-adjusted or the
+as-traded frame. yfinance's auto_adjust=False data is in the split-adjusted frame (checked
+on XOP's 2020-03-30 reverse split); as_traded_from_adjusted and as_declared_dividends
+reconstruct the as-traded frame.
 """
 
 from datetime import datetime
@@ -33,7 +33,7 @@ def test_as_traded_reconstruction_reverse_split():
     # Adjusted frame is continuous (~32 both sides); true pre-split price was ~8.
     adjusted = [_tb(27, 32.12), _tb(30, 32.01)]
     true = as_traded_from_adjusted(adjusted, REVERSE_SPLIT)
-    assert true[0].bar.close == pytest.approx(32.12 * 0.25)  # 8.03 - real 2020-03-27 price
+    assert true[0].bar.close == pytest.approx(32.12 * 0.25)  # 8.03, the as-traded 2020-03-27 price
     assert true[1].bar.close == 32.01  # on/after ex-date: unchanged
 
 
@@ -92,18 +92,14 @@ def test_events_json_roundtrip(tmp_path):
 
 
 def test_the_events_file_is_byte_identical_on_every_platform(tmp_path):
-    """`save_events_json`'s bytes are part of an identity, not a formatting preference.
+    """`save_events_json` writes CRLF line endings on every platform.
 
-    `SnapshotStore.create` writes this file into the payload and hashes it, so these bytes are
-    part of the snapshot id, which is logged with every trial. Text-mode newline translation
-    (as `Path.write_text` applies) would give the same fixture a different snapshot id on
-    Windows and on Linux.
+    `SnapshotStore.create` hashes this file into the snapshot id, which is logged with every
+    trial. Text-mode newline translation (as in `Path.write_text`) would give the same fixture
+    different snapshot ids on Windows and Linux. Existing ids were computed over CRLF bytes,
+    so switching to LF would change all of them.
 
-    This test cannot fail on Windows, where text mode already produces CRLF. Its failing case
-    is a Linux machine, so its value is in CI.
-
-    CRLF rather than LF because existing snapshot ids were computed over CRLF bytes. Switching
-    to LF would change all of them.
+    On Windows text mode already writes CRLF, so this test can only fail on Linux, e.g. in CI.
     """
     actions = CorporateActions(
         dividends_by_symbol={"XLE": [(datetime(2015, 3, 20), 0.2575)]},
@@ -118,6 +114,6 @@ def test_the_events_file_is_byte_identical_on_every_platform(tmp_path):
         f"{raw.count(b'\n') - raw.count(b'\r\n')} bare LF byte(s) in the events payload. On a "
         f"platform where these come out as LF, existing snapshot ids stop reproducing."
     )
-    # And the round trip still reads them, whichever way the file was written.
+    # The file still loads back correctly.
     assert load_events_json(path).splits_by_symbol == {"XOP": [(datetime(2020, 3, 30), 0.25)]}
 

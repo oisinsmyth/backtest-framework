@@ -43,7 +43,7 @@ def test_registry_is_append_only(tmp_path):
     with pytest.raises(TrialAlreadyExistsError):
         registry.add_trial(**kwargs)
 
-    # The original row must be untouched, not silently overwritten.
+    # The original row is not overwritten.
     assert len(registry) == 1
 
 

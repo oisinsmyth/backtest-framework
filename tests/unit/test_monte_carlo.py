@@ -14,8 +14,8 @@ RETURNS = list(np.random.default_rng(5).normal(0.0004, 0.012, 300))
 
 
 def test_default_n_sims_is_at_least_10000():
-    # The default is at least 10,000 simulations. Assert both the constant and the
-    # actual signature default, so neither can drift alone.
+    # The default is at least 10,000 simulations. Both the constant and the signature
+    # default are checked, so neither can change without the other.
     assert DEFAULT_N_SIMS >= 10_000
     signature_default = inspect.signature(block_bootstrap_percentiles).parameters["n_sims"].default
     assert signature_default == DEFAULT_N_SIMS
@@ -27,7 +27,7 @@ def test_seed_is_required():
 
 
 def test_same_seed_identical_percentile_table():
-    # Same seed, byte-identical result, not approximately equal.
+    # The same seed gives an identical result, compared with ==.
     a = block_bootstrap_percentiles(RETURNS, seed=42, n_sims=2000)
     b = block_bootstrap_percentiles(RETURNS, seed=42, n_sims=2000)
     assert a.terminal_return == b.terminal_return
@@ -47,6 +47,6 @@ def test_percentiles_are_ordered_and_drawdowns_positive():
     assert all(dd >= 0 for dd in result.max_drawdown.values())
 
 
-def test_too_short_series_fails_loudly():
+def test_too_short_series_raises():
     with pytest.raises(ValueError, match="block_size"):
         block_bootstrap_percentiles(RETURNS[:10], seed=1)

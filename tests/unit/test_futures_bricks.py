@@ -1,17 +1,16 @@
 """Unit and property tests for the futures cost bricks.
 
-`tests/golden/test_futures_costs_ledger.py` pins the dollar figures; this file pins the
-behaviour that produces them: the charge is per fill and per contract, a futures brick refuses
-an instrument with no tick, `round_trip_usd` refuses to invent a price, and a stack over the
-bricks agrees with the helper for every input, not only at the points a golden test names.
+`tests/golden/test_futures_costs_ledger.py` checks the dollar figures. This file checks the
+behaviour behind them: the charge is per fill and per contract, a futures brick raises on an
+instrument with no tick, `round_trip_usd` raises rather than assume a price, and an input the
+bricks cannot price raises rather than returning a plausible number.
 
-The bricks plug into `CostStack`, and an input they cannot price raises rather than returning
-a plausible number. The property at the foot is the most important test here: the stack and
-the helper are two routes to the same number, and a golden test only checks them at the
-points it lists.
+The property tests at the end check that a `CostStack` over the bricks and the
+`round_trip_usd` helper give the same number for every input, not only at the points a
+golden test lists.
 
-Hypothesis runs with `derandomize=True`, which fixes hypothesis's seed but not necessarily the
-values it draws, so reproduce a failure with the whole suite before calling it a flake.
+Hypothesis runs with `derandomize=True`, which fixes the seed but not necessarily the values
+drawn, so reproduce a failure with the whole suite before treating it as a flake.
 """
 
 import math
@@ -46,7 +45,7 @@ ZN = Future(root="ZN", tick_points=0.015625, usd_per_point=1000.0, tick_usd=15.6
 XLE = Equity(symbol="XLE")
 
 
-# ------------------------------------------------------------------ the two rules
+# ------------------------------------------------------- commission and crossing
 
 
 def test_commission_charges_half_a_round_trip_on_each_fill():
@@ -57,7 +56,7 @@ def test_commission_charges_half_a_round_trip_on_each_fill():
 
 
 def test_commission_is_per_contract_so_it_weighs_most_at_micro_size():
-    """$3 is 2.4 MES ticks and 0.24 ES ticks — the same fee, an order of magnitude apart."""
+    """A $3 round trip is 2.4 MES ticks but 0.24 ES ticks."""
     brick = FuturesCommission(3.00)
     assert brick.cost(MES, 4.0, 5000.0) == 4.0 * 1.50
     assert round_trip_usd(MES, (brick,)) / MES.tick_usd == 2.4
@@ -78,11 +77,10 @@ def test_crossing_charges_half_a_tick_a_side_for_a_one_tick_round_trip():
 def test_crossing_prices_the_same_tick_count_off_each_contracts_own_tick():
     """One tick is $12.50 on ES and $1.25 on MES, so the same tick count costs ten times more.
 
-    The ratio is exact on a dyadic tick count, and only to a relative 1e-15 on the measured
-    one: 12.5 and 1.25 are ten apart exactly, but `x*12.5` and `x*1.25` round independently,
-    so the ratio of the two products is 10.000000000000002 for this x. That is a property of
-    the double, not of the brick, which is why the golden ledger compares each contract
-    against its own expected value rather than against the other contract's scaled by ten.
+    The ratio is exact for a dyadic tick count and holds to a relative 1e-15 for the measured
+    one: `x*12.5` and `x*1.25` round independently, so their ratio is 10.000000000000002 for
+    this x. That is floating-point rounding, so the golden ledger compares each contract with
+    its own expected value instead of with the other contract's value times ten.
     """
     assert round_trip_usd(ES, (TickCrossing(1.0),)) / round_trip_usd(MES, (TickCrossing(1.0),)) == 10.0
     measured = TickCrossing(1.0085687251930602)
@@ -104,17 +102,17 @@ def test_a_zero_quantity_fill_costs_nothing(quantity):
 
 
 def test_both_bricks_charge_a_short_exactly_what_they_charge_a_long():
-    """Sign check in dollars: cost is a cost on both sides and never a rebate on one."""
+    """A short and a long of the same size pay the same positive cost; neither is a rebate."""
     for brick in (FuturesCommission(4.25), TickCrossing(1.7)):
         assert brick.cost(ES, -7.0, 5000.0) == brick.cost(ES, 7.0, 5000.0) > 0.0
 
 
-# ------------------------------------------------------------------ the door guards
+# ------------------------------------------------------------------- input guards
 
 
 @pytest.mark.parametrize("brick", [FuturesCommission(3.0), TickCrossing(1.0)])
 def test_a_futures_brick_refuses_an_equity(brick):
-    """A per-contract fee charged on a share would produce a number with no meaning."""
+    """A per-contract fee has no meaning for shares, so an equity raises TypeError."""
     with pytest.raises(TypeError, match="needs a Future"):
         brick.cost(XLE, 100.0, 50.0)
 
@@ -134,16 +132,16 @@ def test_the_guard_names_the_symbol_it_was_handed():
     ("ctor", "value"), [(FuturesCommission, -0.01), (TickCrossing, -1.0)]
 )
 def test_a_negative_cost_is_refused_at_construction(ctor, value):
-    """A negative cost would be a hidden rebate that inflates every result built on it."""
+    """A negative cost would act as a rebate and inflate every result, so it raises."""
     with pytest.raises(ValueError):
         ctor(value)
 
 
-def test_round_trip_usd_refuses_to_invent_a_price_for_a_brick_that_reads_one():
-    """A zero price would silently zero PercentOfNotionalSpread, so the helper raises."""
+def test_round_trip_usd_requires_a_price_for_a_price_dependent_brick():
+    """Without a price the helper raises, since a zero price would make PercentOfNotionalSpread zero."""
     with pytest.raises(FuturesCostError, match="PercentOfNotionalSpread"):
         round_trip_usd(ES, (FuturesCommission(3.0), PercentOfNotionalSpread(bps=1.0)))
-    # With a price it is fine, and the spread really charges something.
+    # With a price, the spread is charged.
     charged = round_trip_usd(ES, (PercentOfNotionalSpread(bps=1.0),), price=5000.0)
     assert charged == pytest.approx(2 * 250_000.0 * 1e-4, rel=1e-12)
 
@@ -152,7 +150,7 @@ def test_a_line_with_no_instrument_has_no_round_trip_of_its_own():
     line = FuturesRoundTrip(FuturesCommission(3.0), TickCrossing(1.0))
     with pytest.raises(FuturesCostError, match="no instrument"):
         _ = line.round_trip_usd
-    # It is still a perfectly good brick — the caller supplies the contract at fill time.
+    # Its bricks still work when the caller supplies the contract at fill time.
     assert round_trip_usd(MES, line.bricks) == 4.25
 
 
@@ -187,8 +185,10 @@ def test_the_default_line_is_the_measured_execution_line_where_one_exists():
 
 
 def test_the_default_line_falls_back_to_the_one_tick_convention_and_not_to_a_quoted_spread():
-    """The "quoted_1m_all_session" line is a quoted-spread floor, a different statistic from an execution
-    cost. Falling back to it would serve two statistics under one name."""
+    """Without a measured execution line, the default is "one_tick".
+
+    The "quoted_1m_all_session" line is a quoted-spread floor, a different statistic from an
+    execution cost, so it is never used as the default."""
     line = FuturesRoundTrip.from_table("ZN")
     assert line.line == "one_tick"
     assert line.crossing.ticks_per_round_trip == 1.0
@@ -214,7 +214,7 @@ def test_a_root_with_no_micro_says_so_rather_than_inventing_one():
 
 
 def test_a_line_that_root_was_never_measured_on_raises_rather_than_borrowing_one():
-    """A wrong fallback would be silent, so the lookup raises instead."""
+    """Requesting a line the root does not have raises instead of falling back to another line."""
     with pytest.raises(FuturesCostError, match="no crossing line 'effective_es_bp'"):
         FuturesRoundTrip.from_table("ZN", "full", "effective_es_bp")
     with pytest.raises(FuturesCostError, match="no crossing line 'invented'"):
@@ -227,7 +227,7 @@ def test_a_missing_table_raises_rather_than_falling_back():
 
 
 def test_crossing_lines_for_shows_the_spread_of_the_estimates():
-    """Every line for a root, so the caller can see the range of estimates the default hides."""
+    """Returns every line for a root, so the caller can see the range around the default."""
     lines = crossing_lines_for("MNQ")
     assert set(lines) >= {"effective_exec_hours", "effective_all_session", "quoted_1m_all_session", "quoted_1m_at_trades", "one_tick"}
     assert min(lines.values()) == 1.0  # the convention is the cheapest on MNQ
@@ -273,11 +273,10 @@ def test_the_table_is_read_once_per_path():
 def test_an_entry_and_an_exit_cost_exactly_one_round_trip(
     commission, ticks, tick_usd, price, long_first
 ):
-    """The stack's two fills and the helper give the same double, for every input.
+    """The stack's two fills and the helper give the same double for every input.
 
-    Both sides are built from the same bricks in the same order, and halving by 0.5 is exact
-    in binary, so equality is the right assertion and a tolerance here would hide a real
-    regression.
+    Both are built from the same bricks in the same order, and multiplying by 0.5 is exact in
+    binary, so the test uses `==`; a tolerance could hide a regression.
     """
     future = Future(
         root="TEST", tick_points=tick_usd / 100.0, usd_per_point=100.0, tick_usd=tick_usd
@@ -298,7 +297,7 @@ def test_an_entry_and_an_exit_cost_exactly_one_round_trip(
 )
 @SETTINGS
 def test_the_round_trip_is_commission_plus_one_tick_count(commission, ticks, tick_usd):
-    """`comm + ticks * tick_usd`, the identity the whole table is written in."""
+    """The round trip is `comm + ticks * tick_usd`, the form the cost table is written in."""
     future = Future(root="T", tick_points=tick_usd / 100.0, usd_per_point=100.0, tick_usd=tick_usd)
     bricks = (FuturesCommission(commission), TickCrossing(ticks))
     assert round_trip_usd(future, bricks) == commission + ticks * tick_usd

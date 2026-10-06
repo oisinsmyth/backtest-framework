@@ -1,7 +1,7 @@
 """Unit tests for declarative SimConfig and its factories.
 
-Covers: hash determinism across key ordering, factory-built objects behaving identically
-to hand-constructed equivalents, and invalid configs failing loudly with the bad key named.
+Covers hash determinism across key ordering, factory-built objects behaving the same as
+hand-constructed equivalents, and invalid configs raising with the bad key named.
 The full reproducibility loop is tested in test_reproducibility_loop.py, since it also
 exercises TrialRegistry.
 """
@@ -81,7 +81,7 @@ def test_build_sim_objects_matches_hand_constructed_pair():
     assert objs.fill_model.fill(45, bar) == hand_fill.fill(45, bar)
 
 
-# --- Invalid config fails loudly at factory time, naming the bad key ------------------
+# --- Invalid config raises at factory time, naming the bad key -----------------------
 
 
 def test_sim_config_missing_required_key_names_it():
@@ -95,7 +95,7 @@ def test_sim_config_unknown_top_level_key_names_it():
         validate_sim_config(config)
 
 
-def test_sim_config_not_a_dict_fails_loudly():
+def test_sim_config_not_a_dict_raises():
     with pytest.raises(ConfigError, match="dict"):
         validate_sim_config(["not", "a", "dict"])  # type: ignore[arg-type]
 
@@ -103,7 +103,7 @@ def test_sim_config_not_a_dict_fails_loudly():
 def test_unknown_model_type_names_it_and_lists_known_types():
     with pytest.raises(ConfigError, match="bogus_type") as excinfo:
         CARRY_MODEL_REGISTRY.build({"type": "bogus_type", "annual_rate": 0.06})
-    assert "act365" in str(excinfo.value)  # the known-types list is actually useful
+    assert "act365" in str(excinfo.value)  # the message lists the known types
 
 
 def test_carry_model_missing_required_key_names_it():

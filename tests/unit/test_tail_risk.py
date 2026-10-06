@@ -19,8 +19,7 @@ def test_100_bar_series_reports_insufficient_data_not_a_number():
 def test_gating_threshold_is_30_tail_observations():
     assert minimum_observations(0.95) == 600  # 30 / 0.05
     assert minimum_observations(0.99) == 3000  # 30 / 0.01
-    # 500 daily points at 95% is also insufficient under this policy, which is
-    # deliberately strict.
+    # 500 daily points at 95% is also insufficient under this strict policy.
     rng = np.random.default_rng(3)
     assert not var_cvar(rng.normal(0, 0.01, 500), confidence=0.95).sufficient
 

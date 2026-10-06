@@ -57,7 +57,7 @@ def test_gzipped_fixture_roundtrip(tmp_path):
     path = tmp_path / "fixture.csv.gz"
     save_fixture_csv(path, bars, volumes_by_symbol={"XLE": [1e6]})
 
-    assert path.read_bytes()[:2] == b"\x1f\x8b"  # actually gzip on disk
+    assert path.read_bytes()[:2] == b"\x1f\x8b"  # gzip magic bytes on disk
     assert load_fixture_csv(path) == bars
     loaded_bars, loaded_volumes = __import__(
         "backtest_framework.data.csv_fixture", fromlist=["load_fixture_csv_with_volumes"]
@@ -69,23 +69,22 @@ def test_gzipped_fixture_roundtrip(tmp_path):
 def test_a_volume_series_longer_than_its_bars_is_refused_not_truncated(tmp_path):
     """Mismatched volume and bar lengths raise rather than being cut to fit.
 
-    Truncating to the bar count would keep the wrong alignment and then make the lengths
-    agree, so every downstream length check would pass. For example, `clean()` drops bars and
-    returns no re-indexed volumes, so a caller who passes the raw volume list on is
-    misaligned from the first drop; the length mismatch is the only symptom, and it must
-    reach the caller.
+    Truncating to the bar count would keep a wrong alignment while making the lengths agree,
+    so every downstream length check would pass. For example, `clean()` drops bars without
+    re-indexing volumes, so a caller who passes on the raw volume list is misaligned from the
+    first dropped bar, and the length mismatch is the only sign of it.
     """
     bars = {"A": [TimestampedBar(datetime(2026, 1, 1 + i), Bar(open=1.0, high=1.0, low=1.0, close=1.0)) for i in range(3)]}
 
     with pytest.raises(ValueError, match="4 volumes against 3 bars"):
         save_fixture_csv(tmp_path / "f.csv", bars, volumes_by_symbol={"A": [1.0, 2.0, 3.0, 4.0]})
 
-    # Shorter is refused too, with a clear message rather than an IndexError from the row loop.
+    # A shorter list also raises ValueError, rather than an IndexError from the row loop.
     with pytest.raises(ValueError, match="2 volumes against 3 bars"):
         save_fixture_csv(tmp_path / "g.csv", bars, volumes_by_symbol={"A": [1.0, 2.0]})
 
 
-def test_wrong_columns_fail_loudly(tmp_path):
+def test_wrong_columns_raise(tmp_path):
     path = tmp_path / "bad.csv"
     path.write_text("date,ticker,price\n2026-07-10,XLE,90.0\n", encoding="utf-8")
 
@@ -100,9 +99,10 @@ def test_wrong_columns_fail_loudly(tmp_path):
 
 
 def test_no_extra_columns_writes_the_seven_column_header(tmp_path):
-    """The default output is unchanged. `save_fixture_csv` is also how `SnapshotStore.create`
-    writes `bars.csv`, and `_hash_payload` hashes those bytes, so if the default path ever
-    gained a column, every existing snapshot id would silently change."""
+    """Without extra columns the header has the standard seven columns.
+
+    `SnapshotStore.create` writes `bars.csv` with `save_fixture_csv` and `_hash_payload`
+    hashes those bytes, so an added default column would change every existing snapshot id."""
     bars = {"XLE": [TimestampedBar(datetime(2026, 7, 10), Bar(90.0, 91.5, 89.5, 91.0))]}
     path = tmp_path / "f.csv"
     save_fixture_csv(path, bars, volumes_by_symbol={"XLE": [1e6]})
@@ -150,7 +150,7 @@ def test_extra_columns_roundtrip_aligned_to_the_bars(tmp_path):
 
 
 def test_extra_column_order_is_sorted_not_insertion_order(tmp_path):
-    """Otherwise the bytes, and any hash over them, depend on dict ordering."""
+    """Extra columns are written in sorted order, so the bytes and their hash do not depend on dict order."""
     bars = {"X": [TimestampedBar(datetime(2021, 5, 1), Bar(1.0, 1.0, 1.0, 1.0))]}
     first, second = tmp_path / "a.csv", tmp_path / "b.csv"
     save_fixture_csv(first, bars, None, {"zzz": {"X": [1.0]}, "aaa": {"X": [2.0]}})
@@ -160,7 +160,7 @@ def test_extra_column_order_is_sorted_not_insertion_order(tmp_path):
 
 
 def test_the_volume_loader_ignores_extra_columns(tmp_path):
-    """Every existing reader keeps working against a fixture that grew a column."""
+    """Existing readers still work on a fixture with an extra column."""
     bars = {"X": [TimestampedBar(datetime(2021, 5, 1), Bar(1.0, 1.0, 1.0, 1.0))]}
     path = tmp_path / "f.csv"
     save_fixture_csv(path, bars, {"X": [7.0]}, {"base_volume": {"X": [3.0]}})
@@ -177,8 +177,10 @@ def test_a_seven_column_fixture_loads_with_empty_extras(tmp_path):
 
 
 def test_a_missing_extra_value_reads_as_nan_never_zero(tmp_path):
-    """An absent observation and a zero one are different facts; conflating them is
-    how a volume filter silently starts rejecting or accepting everything."""
+    """A blank value loads as NaN, not 0.0.
+
+    A missing observation and a zero observation differ; reading a blank as zero can make a
+    volume filter reject or accept every bar without any error."""
     import math
 
     path = tmp_path / "f.csv"
@@ -206,9 +208,10 @@ def test_a_short_extra_series_writes_blanks_rather_than_misaligning(tmp_path):
 
 
 def test_gzip_writes_are_reproducible_byte_for_byte(tmp_path):
-    """`gzip.open` stamps the current time into the header, which would make every rewrite a
-    whole-file diff even when no row changed. Fixtures are meant to be immutable, and a
-    byte-level diff is how a change to one is detected, so the timestamp is pinned."""
+    """The gzip header timestamp is pinned to zero, so identical rows give identical bytes.
+
+    `gzip.open` writes the current time into the header by default. Fixture changes are
+    detected by a byte-level diff, so an unpinned timestamp would make every rewrite differ."""
     bars = {"X": [TimestampedBar(datetime(2021, 5, 1), Bar(1.0, 2.0, 0.5, 1.5))]}
     first, second = tmp_path / "a.csv.gz", tmp_path / "b.csv.gz"
     save_fixture_csv(first, bars, {"X": [7.0]})

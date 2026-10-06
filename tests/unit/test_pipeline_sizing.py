@@ -37,9 +37,9 @@ def test_already_at_target_produces_zero_orders():
 
 
 def test_offsetting_strategies_net_to_zero_external_orders_but_both_books_update():
-    # Strategy A wants +10 shares of AAPL it doesn't currently hold; strategy B wants to
-    # go from +10 to 0 (i.e. sell 10). Their external footprint should cancel exactly,
-    # even though each strategy individually "traded".
+    # Strategy A wants +10 shares of AAPL it does not hold; strategy B goes from +10 to 0
+    # (sells 10). The net external order is zero, while each strategy's own book still
+    # records its trade.
     sizer = Sizer()
     # A: weight 1.0 * capital 1,000 / price 100 = 10 shares, current 0 -> delta +10.
     # B: weight 0.0 (exit) * capital 1,000 / price 100 = 0 shares, current 10 -> delta -10.

@@ -1,5 +1,6 @@
-"""The reproducibility loop: config -> hash -> registry -> reload -> re-run reproduces
-the original result. A trial can be logged, reloaded, and re-run identically.
+"""Tests the reproducibility loop: config -> hash -> registry -> reload -> re-run.
+
+A trial can be logged, reloaded, and re-run to reproduce the original result.
 """
 
 from datetime import datetime
@@ -47,14 +48,14 @@ def test_full_reproducibility_loop(tmp_path):
     reopened = TrialRegistry(tmp_path / "trials.sqlite")
     record = reopened.get_trial("trial-001")
 
-    # The hash reloaded from disk matches the one computed at write time...
+    # The hash reloaded from disk matches the one computed at write time,
     assert record.trial_hash == trial_hash
-    # ...and independently recomputing it from the reloaded fields matches too.
+    # and recomputing it from the reloaded fields gives the same value.
     assert compute_trial_hash(record.config, record.snapshot_id, record.seed) == trial_hash
 
     # 3. Re-run from the reloaded config alone.
     rerun_metrics = _run(record.config)
 
-    # 4. Reproduces the original result exactly, including the logged metrics.
+    # 4. The re-run equals the original result and the logged metrics.
     assert rerun_metrics == original_metrics
     assert record.metrics == original_metrics
