@@ -1,14 +1,12 @@
 """DataView: a structural look-ahead guard for strategy code.
 
-Slicing by convention (`iloc[:i+1]`) relies on every caller getting it right — one
-careless reference to the underlying frame silently invalidates every result downstream.
-A DataView is instead *constructed* holding only the bars visible up to the current
-index. Bars beyond that were never handed to the object, so there is nothing for a
-reflection trick, a `.iloc`, or a walk of `__dict__` to find.
+A DataView is constructed holding only the bars up to the current index, so later
+bars cannot be reached through `.iloc`, reflection or `__dict__`; they were never
+passed in. Slicing by convention (`iloc[:i+1]`) would depend on every caller
+getting it right.
 
-The engine (which does have the full series) calls build_data_view() once per bar to
-construct a fresh, growing DataView; strategy code only ever receives the result of that
-call, never the underlying sequence itself.
+The engine, which holds the full series, calls build_data_view() once per bar to
+construct a new DataView. Strategy code receives only that view.
 """
 
 from __future__ import annotations
@@ -20,20 +18,18 @@ from ..simulator.fills import Bar
 
 
 class LookAheadError(IndexError):
-    """Raised when code holding a DataView asks for a bar outside the range it was
-    constructed with — whether beyond the current index (look-ahead) or before the
-    start of visible history (out of range)."""
+    """Raised when a DataView is asked for a bar outside its visible range.
+
+    Covers both an index beyond the current bar (look-ahead) and one before the start
+    of visible history."""
 
 
 class MissingVolumeError(LookAheadError):
-    """Raised when code that requires volume holds a view constructed without one.
+    """Raised when code requires volume from a view built without a volume series.
 
-    This is the third of the three volume states, and the only loud one. "This
-    instrument has no volume" (spot FX, an index, a synthetic path) and "somebody
-    forgot to wire the volume through" must never be the same observation: the first is
-    a permanent property of the world and is correctly silent, the second is a
-    configuration error that would otherwise turn a volume filter into a filter that
-    rejects every entry and returns a clean-looking, wrong result."""
+    An instrument with no volume (spot FX, an index) returns None from `volume()`. A view
+    built without any volume series raises this instead, so a missing series is reported
+    as a configuration error rather than read as "no volume" by a volume filter."""
 
 
 @dataclass(frozen=True)
@@ -42,15 +38,12 @@ class DataView:
     _visible_volumes: tuple[float | None, ...] | None = None
     """Aligned per-bar volume, or None when this instrument has no volume at all.
 
-    Constructed sliced, exactly as `_visible_bars` is: future volumes are never handed
-    to the object, so the look-ahead guarantee is inherited from the existing
-    construction rather than re-argued for a second channel. A `None` entry
-    inside the tuple is a real gap on that bar; a `None` tuple is an instrument with no
-    volume series. Those are different states and the accessors keep them different."""
+    Sliced like `_visible_bars`, so future volumes are never stored. A `None` entry is
+    a gap on that bar; a `None` tuple means the instrument has no volume series. The
+    accessors treat the two differently."""
 
     instrument_id: str | None = None
-    """Only used to name the instrument in a MissingVolumeError. A view that does not
-    know its own id still works; the error message is just less helpful."""
+    """Optional; used only to name the instrument in a MissingVolumeError."""
 
     def __post_init__(self) -> None:
         if len(self._visible_bars) == 0:
@@ -58,20 +51,17 @@ class DataView:
         if self._visible_volumes is not None and len(self._visible_volumes) != len(self._visible_bars):
             raise ValueError(
                 f"DataView volume series has {len(self._visible_volumes)} entries but there "
-                f"are {len(self._visible_bars)} visible bar(s) — the two must align exactly"
+                f"are {len(self._visible_bars)} visible bar(s); the two must align bar for bar"
             )
         if self._visible_volumes is not None:
-            # Every comparison against NaN is False, so a NaN volume would make a volume
-            # filter reject every entry and the run return a plausible wrong answer with
-            # no error anywhere. `normalise_volumes` should have converted it to None
-            # already; this refuses to hold one either way, so the conversion is checked
-            # at the boundary rather than assumed (it can be missed for e.g. np.float32).
+            # A NaN volume would make every volume comparison False. `normalise_volumes`
+            # should already have converted NaN to None; check it here rather than
+            # assume it (a caller can miss it for, e.g., np.float32).
             nan_at = [i for i, v in enumerate(self._visible_volumes) if v is not None and v != v]
             if nan_at:
                 raise ValueError(
-                    f"DataView was given NaN volume at index/indices {nan_at[:5]} — a gap must "
-                    "be None, not NaN. Pass the series through "
-                    "`normalise_volumes` rather than constructing the view from raw values."
+                    f"DataView was given NaN volume at index/indices {nan_at[:5]}. Mark a gap "
+                    "as None; `normalise_volumes` converts NaN to None."
                 )
 
     @property
@@ -86,14 +76,11 @@ class DataView:
         return len(self._visible_bars)
 
     def _resolve(self, index: int) -> int:
-        """Absolute bar index, with Python-style negative indexing relative to the
-        current bar (-1 = current_bar, -2 = one bar before that, ...). Any index that
-        resolves outside [0, current_index] raises LookAheadError — there is no index
-        that could resolve to a future bar, because none is stored here.
+        """Return the absolute bar index for `index`.
 
-        Factored out and shared by `__getitem__`, `volume` and `require_volume` so a
-        future change cannot make the bar accessor and the volume accessor disagree
-        about what index -3 means."""
+        Negative indices count back from the current bar (-1 = current_bar). Raises
+        LookAheadError if the result falls outside [0, current_index]. Shared by
+        `__getitem__`, `volume` and `require_volume` so bars and volumes index alike."""
         n = len(self._visible_bars)
         resolved = index if index >= 0 else n + index
         if resolved < 0:
@@ -103,8 +90,8 @@ class DataView:
             )
         if resolved >= n:
             raise LookAheadError(
-                f"requested bar index {index} is beyond the current index {self.current_index} "
-                "— look-ahead is not permitted"
+                f"requested bar index {index} is beyond the current index {self.current_index}; "
+                "look-ahead is not permitted"
             )
         return resolved
 
@@ -113,18 +100,15 @@ class DataView:
 
     @property
     def has_volume(self) -> bool:
-        """Whether this view carries a volume series at all. False is state 1 — the
-        instrument has no volume — and is not an error."""
+        """Whether this view carries a volume series. False (no volume) is not an error."""
         return self._visible_volumes is not None
 
     def volume(self, index: int) -> float | None:
-        """Volume at `index`, or None if unavailable — either because this instrument
-        has no volume series, or because this particular bar has a gap.
+        """Volume at `index`, or None if the view has no volume series or the bar is a gap.
 
-        The accessor is the contract: calling `volume()` says "I can work without it".
-        Code that cannot work without it calls `require_volume()` instead. There is
-        deliberately no `mean_volume()` helper — aggregation embeds a policy about
-        None, and policy belongs in the consumer, not in the guard object."""
+        For code that can work without volume; code that cannot should call
+        `require_volume()`. There is no aggregation helper such as `mean_volume()`,
+        because how to treat None is the consumer's decision."""
         resolved = self._resolve(index)
         if self._visible_volumes is None:
             return None
@@ -133,40 +117,33 @@ class DataView:
     def require_volume(self, index: int) -> float | None:
         """Volume at `index` for code that cannot function without a volume series.
 
-        Raises MissingVolumeError if the view carries no series at all (state 3, a
-        configuration error). Still returns None for a per-bar gap (state 2) — a gap is
-        a fact about the data, and the consumer states its own policy on it."""
+        Raises MissingVolumeError if the view carries no volume series. Returns None for
+        a per-bar gap, leaving the consumer to decide how to handle it."""
         resolved = self._resolve(index)
         if self._visible_volumes is None:
             named = f" (instrument {self.instrument_id!r})" if self.instrument_id else ""
             raise MissingVolumeError(
                 "volume is required but this DataView was constructed without a volume "
-                f"series{named} — pass volumes through build_data_view/run_backtest, or "
-                "use volume() if the component can work without it"
+                f"series{named}. Pass volumes through build_data_view or run_backtest, or "
+                "use volume() if the component can work without it."
             )
         return self._visible_volumes[resolved]
 
 
 def normalise_volumes(volumes: Sequence[float | None]) -> tuple[float | None, ...]:
-    """NaN -> None, once, for a whole series.
+    """Convert a volume series to floats, mapping NaN to None.
 
-    Every comparison against NaN is False, so a NaN that survived into a view would make
-    a volume filter reject every entry and return a plausible, wrong result with no error
-    anywhere. This is the one place that conversion happens.
+    A NaN in a view would make every volume comparison False, so a volume filter would
+    reject every entry without raising. This is the only place the conversion happens.
 
-    Kept separate from `build_data_view` because that is called once per bar: doing this
-    Python-level pass inside it would make view construction O(n) per bar instead of a
-    C-level tuple slice (about a 2x whole-run slowdown on a long daily series). Engine
-    callers own the full series, so they normalise once here and pass
+    Kept out of `build_data_view`, which runs once per bar: a Python-level pass there
+    would make each view O(n) instead of a tuple slice (about 2x slower over a long
+    daily series). The engine normalises once and passes
     `volumes_already_normalised=True`.
 
-    The NaN test is `v != v`, deliberately not gated on `isinstance(v, float)`. `v != v`
-    is true for every NaN of every type; an `isinstance(v, float)` guard admits
-    `np.float64` (which subclasses `float`) but lets through `np.float32`, `np.float16`,
-    `np.longdouble` and `Decimal("NaN")` — the types a parquet read or a vendor load
-    produces by default, and the ones `list(series.values)` preserves where `.tolist()`
-    would not. `DataView.__post_init__` also refuses a NaN, so the conversion is checked
-    at the boundary rather than trusted here."""
+    The NaN test is `v != v`, which holds for NaN of any type. An `isinstance(v, float)`
+    check would miss `np.float32`, `np.float16`, `np.longdouble` and `Decimal("NaN")`,
+    which parquet reads and vendor loads produce and `list(series.values)` preserves."""
     return tuple(None if v is None or v != v else float(v) for v in volumes)
 
 
@@ -178,26 +155,19 @@ def build_data_view(
     *,
     volumes_already_normalised: bool = False,
 ) -> DataView:
-    """Engine-side helper: this function has access to the full bar series (it's engine
-    code, not strategy code) and slices it down to a DataView exposing only
-    all_bars[0 : up_to_index + 1]. Strategy code should only ever receive what this
-    function returns — never `all_bars` itself.
+    """Return a DataView over `all_bars[0 : up_to_index + 1]`.
 
-    `volumes`, when supplied, must align 1:1 with `all_bars` and is sliced identically —
-    that slicing is the whole point, and it is why the volume channel inherits the
-    look-ahead guarantee instead of needing its own argument.
+    Engine-side: pass strategies the returned view, never `all_bars`. `volumes`, when
+    given, must align 1:1 with `all_bars` and is sliced the same way.
 
-    Volumes are in the view frame, matching `view_bars_by_instrument`. Share volume
-    is split-sensitive, and this framework runs two price frames: as-traded raw
-    prices for execution, split-adjusted prices for signal continuity. Volume is only
-    ever consumed by strategy code, which sees the view frame, so that is the frame it
-    must be supplied in. Moot for spot crypto, live for any equity use.
+    Volumes must be in the view frame, matching `view_bars_by_instrument`. Execution
+    uses as-traded prices and signals use split-adjusted prices; share volume is
+    split-sensitive and only strategy code reads it, so it belongs in the view frame.
+    This matters for equities, not for spot crypto.
 
-    `NaN` is normalised to `None` and never enters a view — see `normalise_volumes`.
-    Callers that build many views over the same series (the engine, once per bar) should
-    call `normalise_volumes` once themselves and pass `volumes_already_normalised=True`,
-    which leaves the per-bar path a pure slice. Everyone else can ignore the flag and get
-    the conversion for free.
+    NaN volumes become None (see `normalise_volumes`). A caller building many views
+    over one series should normalise once and pass `volumes_already_normalised=True`
+    so each call is a plain slice.
     """
     if up_to_index < 0 or up_to_index >= len(all_bars):
         raise ValueError(f"up_to_index {up_to_index} out of range for a series of length {len(all_bars)}")
@@ -205,8 +175,8 @@ def build_data_view(
     if volumes is not None:
         if len(volumes) != len(all_bars):
             raise ValueError(
-                f"volume series has {len(volumes)} entries but there are {len(all_bars)} bar(s) "
-                "— the two must align exactly"
+                f"volume series has {len(volumes)} entries but there are {len(all_bars)} bar(s); "
+                "the two must align bar for bar"
             )
         sliced = volumes[: up_to_index + 1]
         visible_volumes = (

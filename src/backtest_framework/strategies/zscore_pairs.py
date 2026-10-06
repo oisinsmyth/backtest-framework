@@ -1,27 +1,24 @@
 """Minimal z-score pairs strategy.
 
-Deliberately minimal: no pair selection (the pair is an input — and a well-known pair
-such as XLE/XOP is chosen with hindsight, so any result on it is in-sample by pair
-choice), no cointegration fitting, no Kalman hedge ratio. The hedge is fixed 1:1 in
-log space because an estimated hedge ratio would be a fitted parameter, and fitted
-parameters need walk-forward train/test machinery (validation.walk_forward). With
-fixed a-priori hyperparameters there is no fitting step, so bar-by-bar forward
-simulation with trailing-only data (which DataView enforces structurally) is the
-complete look-ahead story.
+No pair selection (the pair is an input; a well-known pair such as XLE/XOP is chosen
+with hindsight, so results on it are in-sample by pair choice), no cointegration
+fitting and no Kalman hedge ratio. The hedge is fixed 1:1 in log space, because an
+estimated ratio would be a fitted parameter needing walk-forward machinery
+(validation.walk_forward). With fixed hyperparameters there is no fitting step, and
+DataView's trailing-only data covers look-ahead.
 
 Signal: spread_t = ln(close_A) − ln(close_B); z = (spread_now − mean) / std, where
-mean/std come from the `lookback` spreads ending at the previous bar (never the
-current one; the strategy handles its own warm-up, since the engine does not enforce
-one).
+mean/std come from the `lookback` spreads ending at the previous bar, not the current
+one. The strategy handles its own warm-up; the engine does not enforce one.
 
 Rules, with hysteresis:
   z >  entry_z          → short the spread: short A, long B
   z < −entry_z          → long the spread:  long A, short B
   |z| < exit_z          → flat
-  exit_z ≤ |z| ≤ entry_z → hold the current side (this is what `_side` exists for)
+  exit_z ≤ |z| ≤ entry_z → hold the current side (`_side`)
 
-Holds per-run mutable state (`_side`) — construct a fresh instance per backtest run.
-engine.sweep.run_cost_sweep takes a strategy *factory* for exactly this reason.
+`_side` is per-run state, so use a fresh instance per backtest run (hence
+engine.sweep.run_cost_sweep takes a strategy factory).
 """
 
 from __future__ import annotations
@@ -44,8 +41,8 @@ class ZScorePairsStrategy:
     entry_z: float = 2.0
     exit_z: float = 0.5
     leg_weight: float = 1.0
-    """Per-leg weight when in a trade — 1.0 means each leg targets 100% of the
-    strategy's capital, i.e. ~200% gross for a dollar-neutral pair."""
+    """Per-leg weight when in a trade. 1.0 means each leg targets 100% of the
+    strategy's capital, about 200% gross for a dollar-neutral pair."""
 
     _side: int = field(default=0, init=False, repr=False)
     """+1 = long spread (long A / short B), −1 = short spread, 0 = flat."""
@@ -55,7 +52,7 @@ class ZScorePairsStrategy:
             raise ValueError(f"lookback must be at least 2, got {self.lookback}")
         if self.exit_z >= self.entry_z:
             raise ValueError(
-                f"exit_z ({self.exit_z}) must be below entry_z ({self.entry_z}) — "
+                f"exit_z ({self.exit_z}) must be below entry_z ({self.entry_z}); "
                 "the hysteresis band would be empty or inverted"
             )
 
@@ -68,8 +65,7 @@ class ZScorePairsStrategy:
 
         # Warm-up self-guard: need `lookback` spreads ending at the previous bar.
         if n < self.lookback + 1:
-            # `_side` is necessarily 0 here — this branch can only be taken before any bar
-            # has set it.
+            # No bar has set `_side` yet, so it is 0.
             assert self._side == 0, "warm-up reached with a live side"
             return self._targets_for_side(0)
 
@@ -77,13 +73,10 @@ class ZScorePairsStrategy:
         mean = statistics.fmean(window)
         std = statistics.stdev(window)
         if std == 0.0:
-            # Standing aside is a state change, so `_side` is cleared. Emitting flat
-            # targets without clearing it would leave the strategy's state disagreeing
-            # with the book the engine holds: on the next bar with std > 0, if |z| lands
-            # in the hysteresis band, the stale side would be re-emitted and the book
-            # would re-enter without any entry crossing.
+            # Clear `_side` along with the flat targets. Otherwise, if |z| next lands in
+            # the hysteresis band, the stale side would re-enter without an entry signal.
             self._side = 0
-            return self._targets_for_side(0)  # degenerate window — stand aside
+            return self._targets_for_side(0)  # degenerate window: stand aside
 
         z = (self._spread(view_a, view_b, n - 1) - mean) / std
 
@@ -93,7 +86,7 @@ class ZScorePairsStrategy:
             self._side = 1
         elif abs(z) < self.exit_z:
             self._side = 0
-        # else: hysteresis band — hold self._side unchanged
+        # else: hysteresis band, hold self._side unchanged
 
         return self._targets_for_side(self._side)
 

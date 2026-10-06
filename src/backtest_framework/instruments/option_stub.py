@@ -1,8 +1,7 @@
 """Option instrument stub.
 
-A well-formed stub, not a working options module: real dataclass fields and correct
-contract-multiplier arithmetic, but margin, pricing, Greeks and assignment are out of
-scope.
+Has real dataclass fields and contract-multiplier arithmetic; margin, pricing, Greeks and
+assignment are out of scope.
 """
 
 from __future__ import annotations
@@ -28,6 +27,5 @@ class OptionStub:
         return float(round(raw_quantity))  # whole contracts only
 
     def carry_components(self) -> tuple[str, ...]:
-        # Theta decay is priced into the option's mark, not a carry cost brick in this
-        # framework's model — correctly empty, not an unimplemented placeholder.
+        # Theta decay is in the option's mark, not modelled as a carry cost.
         return ()

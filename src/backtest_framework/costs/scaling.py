@@ -1,10 +1,9 @@
 """Cost-stack scaling for the cost-multiplier sweep.
 
-scaled_cost_stack(stack, m) returns a new CostStack whose every friction brick produces
-exactly m × the original brick's output. Structure is preserved (each brick gets its own
-wrapper), so a scaled stack keeps the CostStack's additive, order-invariant guarantees,
-and a 0× stack charges exactly zero frictions (tests/integration/test_cost_sweep.py checks
-this through a full backtest).
+scaled_cost_stack(stack, m) returns a new CostStack in which every friction brick returns
+m × the original brick's output. Each brick gets its own wrapper, so the scaled stack is
+still additive and order-invariant, and a 0× stack charges zero frictions
+(tests/integration/test_cost_sweep.py checks this through a full backtest).
 """
 
 from __future__ import annotations
@@ -33,8 +32,8 @@ class _ScaledCarryBrick:
 
     @property
     def component(self) -> str | None:
-        # Forward the inner brick's carry-component declaration so a scaled
-        # stack filters per-instrument exactly like the unscaled one.
+        # Forward the inner brick's carry component so per-instrument filtering is
+        # unchanged by scaling.
         return getattr(self.inner, "component", None)
 
     def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
@@ -42,10 +41,10 @@ class _ScaledCarryBrick:
 
 
 def scaled_cost_stack(stack: CostStack, multiplier: float) -> CostStack:
-    """Scale the friction slots. event_flow_bricks pass through unscaled: a dividend
-    is an economic transfer, not a friction, so a 4× sweep models trading at 4× the
-    cost with unchanged dividends. A 0× sweep therefore equals a run whose stack has
-    zero frictions but the same event flows, not an entirely empty CostStack."""
+    """Scale the friction slots by `multiplier`.
+
+    event_flow_bricks pass through unscaled, since a dividend is a transfer rather than a
+    friction. A 0× stack therefore keeps its event flows and is not an empty CostStack."""
     if multiplier < 0:
         raise ValueError(f"cost multiplier must be non-negative, got {multiplier}")
     return CostStack(

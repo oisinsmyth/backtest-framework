@@ -1,12 +1,11 @@
-"""Automated σ/ADV calibration for the SqrtImpact brick.
+"""σ/ADV calibration for the SqrtImpact brick.
 
-σ_daily is the sample stdev of log returns on the provider-frame closes (already
-split-adjusted, hence return-continuous; computing on as-traded closes would fabricate a
-split-day return), and ADV is the mean share volume.
+σ_daily is the sample stdev of log returns on the provider-frame closes, which are
+split-adjusted (as-traded closes would produce a spurious split-day return). ADV is the
+mean volume in shares.
 
-This is full-sample calibration: a mild, documented look-ahead in cost parameters (never
-in the signal). Per-window estimation is not implemented; a study that uses this function
-should state the caveat.
+Calibration is full-sample: a mild look-ahead in the cost parameters, not in the signal.
+Per-window estimation is not implemented; a study using this should state the caveat.
 """
 
 from __future__ import annotations
@@ -20,28 +19,25 @@ from .equity_bricks import ImpactParams
 
 
 VOLUME_UNITS = ("shares", "quote_notional")
-"""What a fixture's volume column actually counts.
+"""What a fixture's volume column counts.
 
-`shares` — units of the instrument, the equity convention. `SPY` reports ~68M, which at
-~$474 is the ~$32bn/day it really trades.
+`shares`: units of the instrument, the equity convention. `SPY` reports ~68M, which at
+~$474 is ~$32bn/day.
 
-`quote_notional` — value in the quote currency, the convention `X-USD` crypto pairs from
-yfinance use. `BTC-USD` reports ~47.5bn, which cannot be coins (21M will ever exist)
-and is USD.
+`quote_notional`: value in the quote currency, the convention for yfinance `X-USD` crypto
+pairs. `BTC-USD` reports ~47.5bn, which must be USD (only 21M coins will ever exist).
 
-`SqrtImpact` divides an order quantity by ADV, so the two must be in the same units. Feeding USD notional into a
-field meaning shares makes the ratio off by a factor of price — impact understated ~224x on
-a $96k coin and overstated ~126x on a $0.00006 one, in the same run."""
+`SqrtImpact` divides order quantity by ADV, so both must be in the same units. USD notional
+read as shares puts the ratio off by a factor of price: impact understated ~224x on a $96k
+coin and overstated ~126x on a $0.00006 one."""
 
 
 def _is_present(volume: float | None) -> bool:
-    """True when this bar has a usable volume, for either spelling of "it does not".
+    """True when this bar has a usable volume, treating both None and NaN as a gap.
 
-    The data layer writes a gap as NaN (`csv_fixture._to_float`) and the engine layer writes
-    it as None (`engine/dataview.normalise_volumes`, which converts NaN into None and whose
-    docstring calls None the canonical gap). `math.isnan` alone would raise `TypeError` on
-    None, so a caller who normalised first (the documented engine path) would crash. This
-    check accepts both spellings, so neither layer has to convert.
+    The data layer writes a gap as NaN (`csv_fixture._to_float`); the engine layer
+    (`engine/dataview.normalise_volumes`) converts NaN to None, its canonical gap.
+    `math.isnan` would raise `TypeError` on None, so this check accepts both.
     """
     return volume is not None and volume == volume
 
@@ -65,21 +61,21 @@ def calibrate_impact_params(
         returns = [math.log(b / a) for a, b in zip(closes, closes[1:])]
         sigma = statistics.stdev(returns)
         if sigma <= 0:
-            raise ValueError(f"{symbol!r} has zero return volatility — cannot calibrate impact")
+            raise ValueError(f"{symbol!r} has zero return volatility; cannot calibrate impact")
 
         if symbol not in volumes_by_symbol:
-            raise ValueError(f"no volume series for {symbol!r} — ADV must be calibrated, not defaulted")
+            raise ValueError(f"no volume series for {symbol!r}; ADV must be calibrated, not defaulted")
         raw_volumes = volumes_by_symbol[symbol]
         if volume_units == "shares":
             volumes = [v for v in raw_volumes if _is_present(v)]
         else:
-            # Quote-currency notional -> units, bar by bar. Dividing the MEAN notional by
-            # a mean price would be a different (and wrong) statistic on a series whose
-            # price moves by orders of magnitude, as many coins do.
+            # Convert quote-currency notional to units bar by bar. Dividing the mean
+            # notional by a mean price would be wrong for a series whose price moves by
+            # orders of magnitude, as many coins do.
             if len(raw_volumes) != len(series):
                 raise ValueError(
-                    f"{symbol!r} has {len(raw_volumes)} volumes against {len(series)} bars — "
-                    "converting quote notional to units needs them aligned bar-for-bar"
+                    f"{symbol!r} has {len(raw_volumes)} volumes against {len(series)} bars; "
+                    "converting quote notional to units needs them aligned bar for bar"
                 )
             volumes = [
                 v / tb.bar.close

@@ -1,19 +1,17 @@
-"""Corporate actions: dividends and splits as first-class data.
+"""Corporate actions: dividends and splits as data alongside raw prices.
 
-Raw prices + a separate dividends/splits table, instead of silently adjusted prices —
-adjusted prices corrupt historical cost math (commissions computed on rewritten
-notionals) while unadjusted-without-events breaks return dynamics (dividends vanish,
-splits look like crashes). This module carries the events; the engine applies them
-(dividend cash flows via the DividendFlow brick, split position scaling in
-run_backtest), and split_adjusted() produces the back-adjusted series strategies see
-for signal continuity: returns from adjusted prices, fills and commissions from raw
-prices.
+Adjusted prices would distort cost calculations (commissions on rewritten notionals),
+while raw prices without events lose dividends and make splits look like crashes. So
+this module carries the events and the engine applies them (dividend cash flows via
+the DividendFlow brick, split position scaling in run_backtest). split_adjusted()
+builds the back-adjusted series strategies see for signal continuity; fills and
+commissions use raw prices.
 
 yfinance split-ratio convention (verified in tests): 4.0 = 4-for-1 forward split
 (shares ×4, price ÷4), 0.25 = 1-for-4 reverse split (shares ×0.25, price ×4).
-Back-adjustment for a continuous signal series: adjusted(t) = raw(t) / Π(ratio of
-every split with ex-date > t) — pre-split prices are mapped onto the post-split
-scale, so the most recent prices are always unchanged.
+Back-adjustment: adjusted(t) = raw(t) / Π(ratio of every split with ex-date > t),
+which maps pre-split prices onto the post-split scale and leaves the latest prices
+unchanged.
 """
 
 from __future__ import annotations
@@ -37,8 +35,9 @@ class CorporateActions:
 
 
 def split_adjusted(bars: Sequence[TimestampedBar], splits: Sequence[tuple[datetime, float]]) -> list[TimestampedBar]:
-    """Back-adjust a raw bar series for splits only (dividends deliberately excluded —
-    dividend economics are handled as explicit cash flows, not price rewrites)."""
+    """Back-adjust a raw bar series for splits only.
+
+    Dividends are excluded; they are handled as cash flows."""
     if not splits:
         return list(bars)
     adjusted: list[TimestampedBar] = []
@@ -77,12 +76,11 @@ def as_traded_from_adjusted(
 ) -> list[TimestampedBar]:
     """Reconstruct true as-traded prices from a split-adjusted series.
 
-    yfinance's auto_adjust=False prices are already split-adjusted; only dividends are
-    excluded (verified on XOP's 2020-03-30 1-for-4 reverse split in the bundled fixture).
-    The close is continuous across the split date (32.12 → 32.01), while the true traded
-    price on 2020-03-27 was ~$8.03. So the adjusted series is the correct signal series
-    as-is, and the as-traded execution series (what commissions/impact must be computed
-    on) is reconstructed as
+    yfinance's auto_adjust=False prices are already split-adjusted, though not
+    dividend-adjusted (verified on XOP's 2020-03-30 1-for-4 reverse split in the bundled
+    fixture: the close runs 32.12 → 32.01 across the split, while the traded price on
+    2020-03-27 was ~$8.03). The adjusted series serves as the signal series, and the
+    execution series used for commissions and impact is
     as_traded(t) = adjusted(t) × Π(ratio of splits with ex-date > t)."""
     if not splits:
         return list(bars)
@@ -109,12 +107,12 @@ def as_traded_from_adjusted(
 def as_declared_dividends(
     dividends: Sequence[tuple[datetime, float]], splits: Sequence[tuple[datetime, float]]
 ) -> list[tuple[datetime, float]]:
-    """Convert split-adjusted-frame dividend amounts to as-declared per-share amounts.
-    As with as_traded_from_adjusted, yfinance dividends are
-    in the adjusted frame (the XOP series is smooth across the split — 0.40, 0.38,
-    0.311 — where as-declared amounts would show a 4× discontinuity). Cash-flow
-    invariance (true_qty × true_div == adj_qty × adj_div) gives the same transform as
-    prices: declared = adjusted × Π(ratio of splits with ex-date > ex_date)."""
+    """Convert split-adjusted dividend amounts to as-declared per-share amounts.
+
+    yfinance dividends are in the adjusted frame (XOP's run 0.40, 0.38, 0.311 smoothly
+    across the split, where as-declared amounts would jump 4×). Cash-flow invariance
+    (true_qty × true_div == adj_qty × adj_div) gives the same transform as prices:
+    declared = adjusted × Π(ratio of splits with ex-date > ex_date)."""
     return [(ts, amount * _future_split_factor(ts, splits)) for ts, amount in dividends]
 
 
@@ -129,22 +127,17 @@ def save_events_json(path: str | Path, actions: CorporateActions) -> None:
             for symbol, events in actions.splits_by_symbol.items()
         },
     }
-    # newline="\r\n", explicitly, on every platform. `Path.write_text` applies text-mode
-    # translation, which would write CRLF on Windows and LF on Linux, and `SnapshotStore`
-    # hashes these bytes, so the same fixture would freeze to two different snapshot ids
-    # depending on the platform.
-    #
-    # CRLF specifically because existing snapshot ids were frozen under CRLF bytes; pinning
-    # it keeps those ids valid and makes the identity reproducible on any platform.
+    # SnapshotStore hashes these bytes, so line endings are fixed to CRLF on every
+    # platform (default text mode would vary by OS). CRLF matches the bytes existing
+    # snapshot ids were computed from.
     with open(path, "w", encoding="utf-8", newline="\r\n") as f:
         f.write(json.dumps(payload, indent=2, sort_keys=True))
 
 
 def load_events_json(path: str | Path) -> CorporateActions:
     payload = json.loads(Path(path).read_text(encoding="utf-8"))
-    # tzinfo stripped for the same reason as bar timestamps: event identity is
-    # the exchange-local date, and comparisons against bar timestamps must not mix
-    # naive and aware datetimes.
+    # Strip tzinfo as for bar timestamps: events are keyed by exchange-local date and
+    # are compared with naive bar timestamps.
     return CorporateActions(
         dividends_by_symbol={
             symbol: [(datetime.fromisoformat(ts).replace(tzinfo=None), float(amount)) for ts, amount in events]

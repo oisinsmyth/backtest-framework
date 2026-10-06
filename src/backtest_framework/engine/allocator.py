@@ -1,8 +1,8 @@
-"""Allocator: a minimal capital-allocation component behind a stable interface.
+"""Allocator: the interface that supplies capital per strategy.
 
-Multi-strategy allocation (correlation, capacity, sleeve rebalancing) is left to
-callers. ConstantSplitAllocator commits to nothing except a swappable interface: it is
-what pipeline.sizing.Sizer's `capital_by_strategy` parameter is sourced from.
+The result feeds pipeline.sizing.Sizer's `capital_by_strategy`. Multi-strategy
+allocation (correlation, capacity, sleeve rebalancing) is left to callers;
+ConstantSplitAllocator is the minimal implementation.
 """
 
 from __future__ import annotations
@@ -17,9 +17,9 @@ class Allocator(Protocol):
 
 @dataclass(frozen=True)
 class ConstantSplitAllocator:
-    """Splits total_capital evenly across every strategy_id given. Holds no state —
-    capital changes propagate immediately on the next call, there's nothing to go
-    stale."""
+    """Splits total_capital evenly across the given strategy_ids.
+
+    Stateless, so each call reflects the capital passed in."""
 
     def allocate(self, total_capital: float, strategy_ids: list[str]) -> dict[str, float]:
         if not strategy_ids:

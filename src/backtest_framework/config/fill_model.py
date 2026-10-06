@@ -1,8 +1,7 @@
 """Declarative config for the stop-fill logic.
 
-Not a full execution/fill pipeline: this wraps the gap-through-stop fill rule in
-simulator/fills.py behind a factory, so it can be selected from a config dict like the
-carry model.
+Wraps the gap-through stop fill rule in simulator/fills.py behind a factory so it can be
+selected from a config dict, like the carry model. It is not a full execution pipeline.
 """
 
 from __future__ import annotations

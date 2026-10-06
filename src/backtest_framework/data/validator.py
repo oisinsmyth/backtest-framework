@@ -1,15 +1,14 @@
-"""Data validation: data failing a hard check is quarantined, never passed through.
+"""Data validation: data failing a hard check is quarantined.
 
-yfinance is a scraper, not an API; it breaks and serves bad prints without warning.
-The validator runs at snapshot creation: hard violations quarantine the whole
-snapshot (SnapshotStore.load refuses it); warnings (e.g. volume anomalies) are
-recorded in the snapshot's metadata without blocking.
+yfinance is a scraper and can serve bad prints without warning. The validator runs
+at snapshot creation: a hard violation quarantines the whole snapshot (so
+SnapshotStore.load raises), while warnings (e.g. volume anomalies) are recorded in the
+snapshot's metadata without blocking.
 
-The bar-to-bar move check is split-aware: a raw price series legitimately jumps ~4x
-on a reverse-split ex-date (XOP, 2020-03-30, in the bundled fixture). The splits table
-is consulted first; after split adjustment, an unexplained move in 25-60% is a warning
-and only >60% is a hard quarantine (thresholds calibrated to observed genuine data; a
-25% hard threshold would have quarantined the real 2020 COVID crash days).
+The bar-to-bar move check accounts for splits: a raw series jumps ~4x on a
+reverse-split ex-date (XOP, 2020-03-30, in the bundled fixture). After split
+adjustment, an unexplained move of 25-60% is a warning and only >60% is hard (see
+MOVE_HARD_THRESHOLD).
 
 Cross-checking against a second data source is not implemented.
 """
@@ -31,12 +30,11 @@ OHLC_RELATIVE_TOLERANCE = 1e-9  # same tolerance the cleaner uses
 
 MOVE_WARNING_THRESHOLD = 0.25
 MOVE_HARD_THRESHOLD = 0.60
-"""Calibrated against observed genuine data: XOP's 2020-03-09 oil crash day is a real
-−37% simple move, and XLE's is −20%, so a 25% hard threshold would have quarantined the
-genuine COVID crash. So 25–60% unexplained flags a warning (the cleaner's
-spike-and-revert rule has already dropped bad prints that revert; what survives is
-probably real), and only >60%, beyond anything observed for these ETFs even in 2020,
-is a hard quarantine."""
+"""Calibrated on real data: on 2020-03-09 XOP moved −37% and XLE −20%, so a 25% hard
+threshold would quarantine the COVID crash. Unexplained moves of 25–60% are warnings
+(the cleaner has already dropped spikes that revert, so what remains is probably
+real); only moves above 60%, beyond anything these ETFs showed even in 2020, are
+hard."""
 
 VOLUME_SPIKE_MULTIPLE = 10.0
 VOLUME_MEDIAN_WINDOW = 20
@@ -86,13 +84,11 @@ class ValidationResult:
 
 
 def _is_present(volume: float | None) -> bool:
-    """True when this bar has a usable volume, for either spelling of "it does not".
+    """True when this bar has a usable volume.
 
-    The data layer writes a gap as NaN (`csv_fixture._to_float`) and the engine layer writes
-    it as None (`engine/dataview.normalise_volumes`, which converts NaN into None and whose
-    docstring calls None the canonical gap). `math.isnan` alone would raise `TypeError` on
-    None, so a caller who normalised first (the documented engine path) would crash. This
-    check accepts both spellings, so neither layer has to convert.
+    Treats both gap representations as missing: NaN from the data layer
+    (`csv_fixture._to_float`) and None from the engine layer
+    (`engine/dataview.normalise_volumes`). `math.isnan` would raise TypeError on None.
     """
     return volume is not None and volume == volume
 
@@ -115,9 +111,8 @@ def validate(
     for symbol, series in bars_by_symbol.items():
         volumes = volumes_by_symbol.get(symbol) if volumes_by_symbol else None
 
-        # Duplicate timestamps are a hard violation: downstream alignment keys bars
-        # by timestamp, so a duplicate silently drops a bar last-wins; data that can
-        # do that must be quarantined, not passed through.
+        # Duplicate timestamps are hard: alignment keys bars by timestamp and would keep
+        # only the last of them.
         timestamp_counts = Counter(tb.timestamp for tb in series)
         for ts, count in sorted(timestamp_counts.items()):
             if count > 1:
@@ -146,23 +141,17 @@ def validate(
                     )
                 )
 
-            # `prev_close > 0` is required. A bar with a non-positive close is flagged above
-            # and `continue`d, but the `continue` only skips that bar's own checks; the bar
-            # is still the next one's predecessor, and this line divides by it. Without the
-            # guard a single 0.0 close (an ordinary scraper failure) would make validate()
-            # raise ZeroDivisionError instead of quarantining the data. A move measured
-            # against a quarantined close is meaningless in any case, so it is not computed.
+            # A non-positive close is flagged above but is still the next bar's
+            # predecessor; skip the move check rather than divide by it.
             if i > 0 and series[i - 1].bar.close > 0:
                 prev_close = series[i - 1].bar.close
                 move = bar.close / prev_close - 1.0
                 ratio = _split_ratio_on(symbol, tb.timestamp, actions)
                 if ratio is not None:
-                    # Frame-robust split awareness: an as-traded series jumps by
-                    # ~1/ratio on the ex-date (residual = ratio-adjusted move), while a
-                    # provider-adjusted series is already continuous (residual = the
-                    # raw move). The move is explained if it's small in either frame;
-                    # judging only one frame would fabricate a violation on the other
-                    # (e.g. quarantine clean, provider-adjusted XOP data).
+                    # An as-traded series jumps by ~1/ratio on the ex-date, while a
+                    # provider-adjusted one is continuous. Take the smaller of the raw
+                    # and ratio-adjusted moves so either frame passes (e.g. clean,
+                    # provider-adjusted XOP data).
                     ratio_adjusted = (bar.close * ratio) / prev_close - 1.0
                     move = min((move, ratio_adjusted), key=abs)
                 if abs(move) > MOVE_WARNING_THRESHOLD:

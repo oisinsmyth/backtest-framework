@@ -1,9 +1,7 @@
 """Declarative cost-stack config: the dict a study logs is the dict its stack is built from.
 
-If a study constructed live cost objects directly and logged a separate description dict,
-the TrialRegistry's config hash would cover a description nothing verified against the
-objects actually run. `build_cost_stack(config, context)` consumes the exact dict that is
-logged, so description and construction cannot drift.
+`build_cost_stack(config, context)` builds the stack from the same dict that is logged and
+hashed by the TrialRegistry, so the record and the objects run cannot diverge.
 
 Shape (the `{"type": ..., ...params}` convention, one list per CostStack slot):
 
@@ -17,41 +15,36 @@ Shape (the `{"type": ..., ...params}` convention, one list per CostStack slot):
         "event_flow_bricks": [{"type": "dividend_flow", "source": "snapshot_declared"}],
     }
 
-The futures round-trip line is one brick with two halves, and it is declared either by naming
-a contract in the cost table or by writing both numbers out, never half of each:
+The futures round-trip line is one brick (commission plus crossing), declared either by
+naming a contract in the cost table or by giving both numbers explicitly:
 
     {"type": "futures_round_trip", "root": "MES"}                              # the table's default line
     {"type": "futures_round_trip", "root": "ES", "line": "effective_es_bp"}  # a named crossing line
     {"type": "futures_round_trip", "commission_rt_usd": 3.0,
                                    "crossing_ticks_rt": 1.0}                   # explicit, no table
 
-`root` takes a parent root ("ES", which resolves to its minimum tradable size) or a traded
-symbol ("MES", "ZN"). `line` names which crossing measurement is charged and is only
-meaningful with `root`; defaults and failures come from the cost table in
-`data/futures_costs.json`, so a config naming an unmeasured root fails at factory time rather
-than charging a neighbouring root's spread. Mixing the two forms raises: a config that carried
-both would hash as one thing and build as another.
+`root` takes a parent root ("ES", resolved to its minimum tradable size) or a traded symbol
+("MES", "ZN"). `line` names the crossing measurement and requires `root`. Defaults and
+errors come from `data/futures_costs.json`, so an unmeasured root fails at factory time.
+Mixing the two forms raises.
 
-The futures impact line is the size-dependent term the round trip does not model, and it is
-table-resolved only; there is no explicit form:
+The futures impact line is the size-dependent term the round trip omits. It is
+table-resolved only:
 
     {"type": "futures_sqrt_impact", "root": "ES"}                       # the default line
     {"type": "futures_sqrt_impact", "root": "ES", "line": "trades_2025_2026",
                                     "coefficient": 0.7}                 # a named measurement
 
-`root` is a parent root as `data/futures_impact_params.json` keys them (36 roots); `line`
-names which measurement of (ADV, σ) is charged, `day1m_2016_2023` by default. `coefficient`
-defaults to the fixed Y = 0.7, which is where this brick and `sqrt_impact` (Y ≈ 1)
-deliberately differ. Writing an ADV and a σ into the config itself is refused: they would be
-two numbers with no measurement window and no provenance, which the table exists to carry.
+`root` is a parent root as keyed in `data/futures_impact_params.json` (36 roots); `line`
+names the (ADV, σ) measurement, `day1m_2016_2023` by default. `coefficient` defaults to
+Y = 0.7, where `sqrt_impact` uses Y ≈ 1. ADV and σ cannot be written into the config, since
+they would lack the measurement window and provenance the table records.
 
-Data-dependent bricks (sqrt_impact, dividend_flow) are built against a
-`StackDataContext` derived from the snapshot, so config + snapshot data fully
-determine the stack. The sqrt_impact `calibration` key records whose data the
-context slice holds: "full_sample" (the whole snapshot, a documented look-ahead
-in cost parameters) or "train_window" (a walk-forward train slice). The caller is
-responsible for supplying the matching context; the key exists so the two regimes
-hash differently and can never be confused in the registry.
+Data-dependent bricks (sqrt_impact, dividend_flow) are built against a `StackDataContext`
+derived from the snapshot, so config plus snapshot determine the stack. The sqrt_impact
+`calibration` key records what the context holds: "full_sample" (the whole snapshot, a
+documented look-ahead in cost parameters) or "train_window" (a walk-forward train slice).
+The caller must supply the matching context; the key makes the two hash differently.
 """
 
 from __future__ import annotations
@@ -107,15 +100,14 @@ def _optional_numeric(config: dict, key: str, default: float, kind: str) -> floa
     return float(value)
 
 
-#: Every key each brick type reads, `type` included. Without this check a typo in an
-#: optional key, e.g. `{"type": "sqrt_impact", "coeficient": 3.0}`, would build a brick at
-#: the default coefficient and raise nothing, and the TrialRegistry would store a config
-#: saying 3.0 for a run that used 1.0. (A typo on a required key already raises through
-#: `_required_numeric`.)
+#: Every key each brick type reads, `type` included. Unknown keys raise, so a typo in an
+#: optional key (e.g. `"coeficient"` for `sqrt_impact`) cannot build a brick at the default
+#: while the registry records the typed value. Required keys are checked by
+#: `_required_numeric`.
 #:
-#: Maintenance: a key missing from a row here turns a working config into a raise, and some
-#: rows (`flat_commission`, `flat_rate_carry`, the optional `ibkr_commission` keys) have
-#: little test coverage. Add a key here in the same change that adds it to the factory.
+#: Add a key here in the same change that adds it to the factory; a missing key makes a
+#: valid config raise. Some rows (`flat_commission`, `flat_rate_carry`, the optional
+#: `ibkr_commission` keys) have little test coverage.
 BRICK_KEYS: dict[str, frozenset[str]] = {
     "flat_commission": frozenset({"type", "amount"}),
     "percent_spread": frozenset({"type", "bps"}),
@@ -123,22 +115,16 @@ BRICK_KEYS: dict[str, frozenset[str]] = {
     "borrow_fee": frozenset({"type", "annual_rate"}),
     "margin_interest": frozenset({"type", "annual_rate"}),
     "flat_rate_carry": frozenset({"type", "annual_rate"}),
-    # `volume_units` is optional and must stay so: configs stored before the key existed
-    # carry `sqrt_impact` without it, and rejecting them would invalidate those trials.
+    # `volume_units` must stay optional: older stored configs omit it.
     "sqrt_impact": frozenset({"type", "coefficient", "calibration", "volume_units"}),
     "dividend_flow": frozenset({"type", "source"}),
-    # Two declaration forms share one row because they build one brick: `root` (+ the
-    # optional `line`) resolves from data/futures_costs.json, or `commission_rt_usd` and
-    # `crossing_ticks_rt` are both given outright. The factory rejects a mixture; the row
-    # cannot, since an allowed-key table only knows which keys a type reads.
+    # Both declaration forms: `root` (+ optional `line`) from data/futures_costs.json, or
+    # explicit `commission_rt_usd` and `crossing_ticks_rt`. The factory rejects a mixture.
     "futures_round_trip": frozenset(
         {"type", "commission_rt_usd", "crossing_ticks_rt", "root", "line"}
     ),
-    # The futures square-root impact term. Always table-resolved: `root` picks the instrument
-    # and the optional `line` picks which measurement of (ADV, sigma) is charged, as
-    # `futures_round_trip`'s `line` picks a crossing measurement. There is no explicit form: an
-    # ADV and a sigma written into a config would be two numbers with no window and no
-    # provenance, which data/futures_impact_params.json carries.
+    # Table-resolved only: `root` picks the instrument, optional `line` the (ADV, sigma)
+    # measurement in data/futures_impact_params.json.
     "futures_sqrt_impact": frozenset({"type", "root", "coefficient", "line"}),
 }
 
@@ -146,16 +132,13 @@ BRICK_KEYS: dict[str, frozenset[str]] = {
 def _validate_brick_keys(brick: Any, slot: str) -> None:
     """Reject a key no factory reads, naming it and listing what the type accepts.
 
-    Deliberately here rather than on `FactoryRegistry`, which is shared with the
-    `carry_model` and `fill_model` registries -- `act365` takes an optional `day_count`
-    that has nothing to do with cost bricks, and a generic check would have to learn about
-    it. The cost-brick config validates its own keys.
+    Kept here rather than on `FactoryRegistry`, which the `carry_model` and `fill_model`
+    registries share (for example `act365` takes an optional `day_count`).
     """
     if not isinstance(brick, dict):
         raise ConfigError(f"cost_stack slot {slot!r} contains a {type(brick).__name__}, not a dict")
     type_name = brick.get("type")
-    # A missing or unknown `type` is FactoryRegistry.build's error to raise, with its own
-    # message listing the known types. Saying nothing here leaves that message intact.
+    # A missing or unknown `type` is left to FactoryRegistry.build, which lists known types.
     if not isinstance(type_name, str) or type_name not in BRICK_KEYS:
         return
     unknown = sorted(k for k in brick if k not in BRICK_KEYS[type_name])
@@ -163,15 +146,13 @@ def _validate_brick_keys(brick: Any, slot: str) -> None:
         allowed = ", ".join(sorted(BRICK_KEYS[type_name] - {"type"})) or "(no parameters)"
         raise ConfigError(
             f"cost_stack slot {slot!r}: {type_name} brick has unknown key(s): "
-            f"{', '.join(unknown)} — {type_name} accepts: {allowed}. An unrecognised key is "
-            "silently ignored by the factory, so the logged config and the object built from "
-            "it would disagree."
+            f"{', '.join(unknown)}; {type_name} accepts: {allowed}. The factory would ignore "
+            "an unrecognised key, so the logged config and the built object would disagree."
         )
 
 
 def _brick_registry(context: StackDataContext) -> FactoryRegistry:
-    """One type-keyed registry (the same FactoryRegistry mechanism as the other configs)
-    whose data-dependent factories close over the snapshot context."""
+    """Build the cost-brick FactoryRegistry; data-dependent factories close over `context`."""
     registry = FactoryRegistry(kind="cost_brick")
 
     registry.register(
@@ -210,10 +191,9 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
                 f"sqrt_impact config key 'calibration' must be one of {IMPACT_CALIBRATIONS}, "
                 f"got {calibration!r}"
             )
-        # `volume_units` defaults to "shares", the equity convention. A crypto fixture
-        # reports quote-currency notional and must say so:
-        # SqrtImpact divides an order quantity by ADV, so mismatched units scale the whole
-        # charge by the square root of the price.
+        # `volume_units` defaults to "shares". A crypto fixture reports quote-currency
+        # notional and must set it: SqrtImpact divides order quantity by ADV, so mismatched
+        # units scale the charge by the square root of the price.
         units = c.get("volume_units", "shares")
         return SqrtImpact(
             params_by_symbol=calibrate_impact_params(
@@ -239,12 +219,11 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
     registry.register("dividend_flow", _build_dividend_flow)
 
     def _build_futures_round_trip(c: dict) -> FuturesRoundTrip:
-        """The futures round-trip line. Table-resolved or explicit, never both.
+        """Build the futures round-trip line, table-resolved or explicit but not both.
 
-        This factory ignores `context`: a futures cost line is declared, not calibrated
-        from the snapshot, so `config + data/futures_costs.json` fully determine it. The
-        table's digest is not part of the config hash; the table carries its own
-        `_provenance`, and `tests/golden/test_futures_costs_ledger.py` checks its values.
+        Ignores `context`: the line is determined by the config and
+        `data/futures_costs.json`. The table's digest is not in the config hash; the table
+        has its own `_provenance`, and `tests/golden/test_futures_costs_ledger.py` checks it.
         """
         by_root = "root" in c
         explicit = "commission_rt_usd" in c or "crossing_ticks_rt" in c
@@ -274,7 +253,7 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
             raise ConfigError(
                 "futures_round_trip config key 'line' names a crossing measurement in "
                 "data/futures_costs.json and is meaningless without 'root'. With explicit "
-                "numbers, the crossing IS crossing_ticks_rt."
+                "numbers, the crossing is crossing_ticks_rt."
             )
         return FuturesRoundTrip(
             commission=FuturesCommission(
@@ -288,16 +267,13 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
     registry.register("futures_round_trip", _build_futures_round_trip)
 
     def _build_futures_sqrt_impact(c: dict) -> FuturesSqrtImpact:
-        """The futures impact term. Table-resolved only.
+        """Build the futures impact term from the table.
 
-        Like `futures_round_trip` this factory ignores `context`: an impact parameter is a
-        measurement with a window and a provenance, not something calibrated from the study's
-        own snapshot the way `sqrt_impact` is. That is why there is no `calibration` key here:
-        the line name is the calibration, and it is recorded in
-        `data/futures_impact_params.json` rather than reconstructed from whatever slice the
-        caller passed.
+        Ignores `context`: the parameters are a recorded measurement in
+        `data/futures_impact_params.json`, not calibrated from the snapshot as `sqrt_impact`
+        is, so the line name takes the place of a `calibration` key.
 
-        `coefficient` defaults to the fixed Y = 0.7, not to `sqrt_impact`'s 1.0.
+        `coefficient` defaults to Y = 0.7, not `sqrt_impact`'s 1.0.
         """
         root = c.get("root")
         if not isinstance(root, str):
@@ -324,7 +300,7 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
 
 
 def validate_stack_config(config: dict[str, Any]) -> None:
-    """Fail loudly, naming the bad key, at factory time — never at bar 3,000."""
+    """Validate slots and brick keys before any brick is built; raises `ConfigError`."""
     if not isinstance(config, dict):
         raise ConfigError(f"cost_stack config must be a dict, got {type(config).__name__}")
     missing = [slot for slot in STACK_SLOTS if slot not in config]
@@ -341,8 +317,10 @@ def validate_stack_config(config: dict[str, Any]) -> None:
 
 
 def build_cost_stack(config: dict[str, Any], context: StackDataContext) -> CostStack:
-    """Build a live CostStack from its declarative description. The same
-    dict belongs in the TrialRegistry config verbatim — hash what you run."""
+    """Build a CostStack from its declarative config.
+
+    Log the same dict, unchanged, in the TrialRegistry config.
+    """
     validate_stack_config(config)
     registry = _brick_registry(context)
     built = {slot: tuple(registry.build(brick) for brick in config[slot]) for slot in STACK_SLOTS}

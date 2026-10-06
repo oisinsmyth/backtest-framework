@@ -1,37 +1,35 @@
-"""Futures fill model for intraday bar data: entries, exits, passive limits and path
+"""Futures fill model for intraday bars: entries, exits, passive limits and path
 statistics on a tick grid.
 
 Conventions
 -----------
-* Entry: the close (or, optionally, the open) of bar t0+1, plus `ticks_adverse` ticks
+* Entry: the close (or optionally the open) of bar t0+1, plus `ticks_adverse` ticks
   against the position.
 * Touch versus trade-through: `FillAssumption.TOUCH` counts a level as reached when the
   bar's range reaches it; `TRADE_THROUGH` requires the bar to trade one full tick beyond
-  it. The epsilon is one tick rather than an absolute price epsilon, so the rule means the
-  same thing on every contract. On a tick grid `low <= limit - tick` is exactly
-  `low < limit`.
+  it. Using one tick as the epsilon gives the rule the same meaning on every contract. On
+  a tick grid `low <= limit - tick` is equivalent to `low < limit`.
 * Stops and targets may use different rules (a resting stop becomes a market order; a
-  resting limit does not), and `resolve_exit` exposes both.
-* A bar that breaks both a stop and a target is resolved, never skipped: skipping it would
-  silently change the sample.
+  resting limit does not), and `resolve_exit` accepts both.
+* A bar that breaks both a stop and a target is resolved, never skipped, so the sample
+  does not change.
 
-Not a cost model
-----------------
-Commission, spread and slippage beyond the tick belong to the `CostStack` bricks. The only
-concessions this module applies are `ticks_adverse` on a market entry and
-`stop_slippage_ticks` on a stop when the caller asks for it.
+Costs
+-----
+Commission, spread and slippage beyond the tick belong to the `CostStack` bricks. This
+module applies only `ticks_adverse` on a market entry and, when requested,
+`stop_slippage_ticks` on a stop.
 
-The pessimism rule
-------------------
-If the stop and a profit exit could both be hit within the same bar, assume the stop.
-One-minute bars do not record the order of the two touches, so a fixed conservative rule
-is used. `resolve_exit` implements it; nothing in it can return a target from a bar whose
-stop was also inside.
+Same-bar stop and target
+------------------------
+If the stop and a profit exit could both be hit within the same bar, the stop is assumed.
+One-minute bars do not record the order of the two touches. `resolve_exit` never returns
+a target from a bar whose range also reached the stop.
 
-Array-first
------------
+Inputs
+------
 The primitives take numpy arrays of one session's bars, indexed by bar. `session_ohlc` is
-the pandas adapter and is deliberately the only place a DataFrame appears.
+the pandas adapter and the only function that takes a DataFrame.
 
 Run the self-test with:
 
@@ -83,24 +81,24 @@ class Side(Enum):
 
     @property
     def sign(self) -> float:
-        """+1 for a long, -1 for a short. The multiplier a signed move is scored with."""
+        """+1 for a long, -1 for a short; multiplies a price move into the position's P&L."""
         return 1.0 if self is Side.LONG else -1.0
 
 
 class FillAssumption(Enum):
-    """The two conventions for whether a resting level was reached.
+    """Conventions for whether a resting level was reached.
 
-    The trade-through epsilon is one tick, the smallest amount a market can actually trade
-    through a level by, rather than an absolute price epsilon.
+    The trade-through epsilon is one tick, the smallest amount a market can trade through
+    a level by.
     """
 
     TOUCH = "touch"
     """Reached when the bar's range reaches the level. Optimistic: ignores queue position."""
 
     TRADE_THROUGH = "trade_through"
-    """Reached only when the bar trades through the level by a full tick. Pessimistic, and
-    the appropriate one for a passive order: being filled only when price keeps going is
-    the adverse selection `passive_diagnostic` measures."""
+    """Reached only when the bar trades a full tick through the level. Pessimistic; suits a
+    passive order, whose fill when price keeps going is the adverse selection that
+    `passive_diagnostic` measures."""
 
 
 class ExitKind(Enum):
@@ -114,17 +112,17 @@ class Fill:
     bar: int
     """Index of the bar the fill happened on, in the session arrays passed in."""
     price: float
-    """On the tick grid, always."""
+    """Always on the tick grid."""
 
 
 @dataclass(frozen=True)
 class ExitResolution:
     kind: ExitKind
     price: float | None
-    """None exactly when `kind is ExitKind.NONE`."""
+    """None if and only if `kind is ExitKind.NONE`."""
     gapped: bool
-    """True when the fill price came from the bar's open rather than from the level:
-    a stop gapped through or a target gapped past in the position's favour."""
+    """True when the fill price is the bar's open rather than the level: a stop gapped
+    through, or a target gapped past in the position's favour."""
 
 
 @dataclass(frozen=True)
@@ -160,7 +158,7 @@ def _check_side(side: Any) -> Side:
     if not isinstance(side, Side):
         raise TypeError(
             f"side must be a futures_fills.Side, got {type(side).__name__} ({side!r}). "
-            "A string or an int would silently transpose long and short."
+            "A string or an int could swap long and short."
         )
     return side
 
@@ -181,31 +179,30 @@ def _as_array(values: Sequence[float] | np.ndarray, what: str) -> np.ndarray:
 
 
 def _require_bar(index: int, n_bars: int, what: str) -> None:
-    """Raise when a bar the caller needs is outside the session. Never truncate.
+    """Raise when a bar the caller needs is outside the session.
 
-    Silently shortening a five-bar stress window to whatever the session had left would
-    weaken the stress fill on exactly the days near the close, where it matters most.
+    Windows are never truncated: a stress window cut short near the session close would
+    weaken the stress fill on those days.
     """
     if index < 0:
         raise ValueError(f"{what}: bar index {index} is before the session start")
     if index >= n_bars:
         raise ValueError(
             f"{what}: bar index {index} is past the session end ({n_bars} bars). "
-            "The window is not silently truncated -- the caller decides whether to skip "
-            "the signal or to widen the session."
+            "Skip the signal or widen the session."
         )
 
 
 def _finite(value: float, what: str) -> float:
     if not math.isfinite(value):
-        raise ValueError(f"{what} is not finite ({value!r}); a missing bar is not a price")
+        raise ValueError(f"{what} is not finite ({value!r}); a missing bar has no price")
     return float(value)
 
 
 def _assert_all_on_grid(array: np.ndarray, fut: Future, what: str) -> None:
-    """The vectorised form of `Future.assert_on_grid`, for a whole session at once.
+    """Vectorised `Future.assert_on_grid` over a whole session.
 
-    Every bar is checked, so the error names the bar that is actually off the grid.
+    Every bar is checked, and the error names the worst offending bar.
     """
     n = array / fut.tick_points
     residual = np.abs(n - np.floor(n + 0.5))
@@ -226,7 +223,7 @@ def session_ohlc(
     *,
     columns: tuple[str, str, str, str] = ("open", "high", "low", "close"),
 ) -> SessionOHLC:
-    """The one place a DataFrame appears. Columns are named, never positional."""
+    """Convert a one-session DataFrame to `SessionOHLC`, selecting columns by name."""
     missing = [c for c in columns if c not in getattr(frame, "columns", ())]
     if missing:
         raise KeyError(f"session_ohlc: frame has no column(s) {missing}; it has {list(getattr(frame, 'columns', []))}")
@@ -238,7 +235,7 @@ def session_ohlc(
 
 
 def bar_at(ohlc: SessionOHLC, index: int) -> Bar:
-    """One bar as the `simulator.fills.Bar` the stop gap rule takes."""
+    """Return bar `index` as a `simulator.fills.Bar`, the input to the stop gap rule."""
     _require_bar(index, ohlc.close.size, "bar_at")
     return Bar(
         open=_finite(float(ohlc.open[index]), f"open[{index}]"),
@@ -254,12 +251,12 @@ def bar_at(ohlc: SessionOHLC, index: int) -> Bar:
 def adverse_price(price: float, side: Side, ticks: float, fut: Future, *, closing: bool = False) -> float:
     """Move `price` by `ticks` against the position, in the instrument's tick.
 
-    Opening, a long pays up and a short sells down. Closing, the signs reverse: a long
-    sells lower and a short buys higher. `closing` is an explicit argument rather than
-    inferred, so the sign of the concession is always stated by the caller.
+    When opening, a long pays up and a short sells down. When closing (`closing=True`), the
+    signs reverse: a long sells lower and a short buys higher. The caller always states
+    which.
 
-    No grid check happens here: this is arithmetic, and `resolve_exit` applies the grid
-    guard once, at the level where the caller has said whether the levels are on-grid.
+    No grid check is done here; `resolve_exit` applies it once, where the caller has said
+    whether the levels are on the grid.
     """
     side = _check_side(side)
     if not math.isfinite(ticks) or ticks < 0:
@@ -282,14 +279,11 @@ def entry_fill(
     at: Literal["close", "open"] = "close",
     open: Sequence[float] | np.ndarray | None = None,
 ) -> Fill:
-    """The primary entry fill: bar t0+1, plus `ticks_adverse` ticks against the side.
+    """Primary entry fill: bar t0+1, plus `ticks_adverse` ticks against the side.
 
-    `at="close"` is the default: the close of bar t0+1, plus one tick.
-
-    `at="open"` fills at the next bar's open plus one tick. The two are different
-    assumptions about when the decision is made. `at="open"` requires `open` to be
-    supplied; it does not fall back to `close`, which would silently change the fill
-    convention.
+    `at="close"` (the default) fills at the close of bar t0+1; `at="open"` fills at its
+    open. They assume different decision times. `at="open"` requires `open` and raises
+    if it is missing rather than falling back to `close`.
 
     Raises when t0+1 is past the session end.
     """
@@ -300,8 +294,8 @@ def entry_fill(
     elif at == "open":
         if open is None:
             raise ValueError(
-                "entry_fill(at='open') needs the open array; it will not substitute the "
-                "close, because that is a different fill convention, not a default."
+                "entry_fill(at='open') needs the open array; the close is a different fill "
+                "convention and is not substituted."
             )
         anchor = _as_array(open, "open")
         if anchor.size != closes.size:
@@ -326,17 +320,13 @@ def stress_fill(
     k: int = 5,
     ticks_adverse: float = 1,
 ) -> Fill:
-    """The stress entry: the worst close among bars t0+1 … t0+k for the direction.
+    """Stress entry: the worst close among bars t0+1 ... t0+k for the side.
 
-    Worst means highest for a long (you paid the most) and lowest for a short. Ties take
-    the earliest bar, so the result does not depend on scan order.
+    Worst is highest for a long and lowest for a short; ties take the earliest bar.
+    `ticks_adverse` defaults to one tick, as in `entry_fill`, so the stress fill is never
+    better than the primary fill for the side (a property test checks this).
 
-    `ticks_adverse` carries over from the primary fill and defaults to the same one tick.
-    Without the concession, the stress fill could come out better than the primary fill
-    whenever bar t0+1 is itself the worst close. The property test checks that the stress
-    fill is never better than the entry fill for the side.
-
-    Raises when t0+k is past the session end — the window is never truncated.
+    Raises when t0+k is past the session end; the window is never truncated.
     """
     side = _check_side(side)
     closes = _as_array(close, "close")
@@ -373,25 +363,22 @@ def resolve_exit(
     gap_through: bool = True,
     levels_on_grid: bool = True,
 ) -> ExitResolution:
-    """Resolve one bar against a stop and a target. The stop wins whenever both are in.
+    """Resolve one bar against a stop and a target; the stop wins when both are reached.
 
-    The defaults: touch on both orders, the gap-through rule on the stop (a gapped stop
-    fills at the open), no slippage beyond the level, levels on the tick grid.
+    Defaults: touch on both orders, the gap-through rule on the stop (a gapped stop fills
+    at the open), no slippage beyond the level, levels on the tick grid. Common variants:
 
-    The options cover common alternative conventions:
-
-    * `stop_rule=TRADE_THROUGH, target_rule=TOUCH`: a stop that needs a trade-through and a
-      target that fills on touch. On a tick grid, trade-through is `low <= stop - tick`,
-      which is exactly `low < stop`.
+    * `stop_rule=TRADE_THROUGH, target_rule=TOUCH`: the stop needs a trade-through
+      (`low <= stop - tick`, equivalent to `low < stop` on the grid); the target fills on
+      touch.
     * `stop_slippage_ticks=1, gap_through=False`: a trailing stop that fills at
-      `stop - tick` and does not consult the open.
-    * `levels_on_grid=False`: for a level computed as a fraction of a range (for example a
-      target at 0.95 of yesterday's range, which is not a tradeable price). The grid guard
-      is then skipped on the way in and on the way out, and the caller is responsible
-      for it.
+      `stop - tick` and ignores the open.
+    * `levels_on_grid=False`: for a level that is not a tradeable price, such as a target
+      at 0.95 of yesterday's range. The grid checks on levels and fills are skipped and
+      the caller is responsible for them.
 
-    Raises when `high < low`, when the open or close sits outside the bar's range, or on
-    an invalid side.
+    Raises when `high < low`, when the open or close is outside the bar's range, or on an
+    invalid side.
     """
     side = _check_side(side)
     stop_rule = _check_rule(stop_rule, "stop_rule")
@@ -399,7 +386,7 @@ def resolve_exit(
     for name, value in (("open", bar.open), ("high", bar.high), ("low", bar.low), ("close", bar.close)):
         _finite(value, f"bar.{name}")
     if bar.high < bar.low:
-        raise ValueError(f"resolve_exit: bar.high ({bar.high!r}) < bar.low ({bar.low!r}) is not a bar")
+        raise ValueError(f"resolve_exit: bar.high ({bar.high!r}) < bar.low ({bar.low!r})")
     if not (bar.low <= bar.open <= bar.high):
         raise ValueError(f"resolve_exit: bar.open ({bar.open!r}) outside [{bar.low!r}, {bar.high!r}]")
     if not (bar.low <= bar.close <= bar.high):
@@ -433,7 +420,7 @@ def resolve_exit(
 def _stop_branch(
     bar: Bar, stop: float, side: Side, fut: Future, rule: FillAssumption, gap_through: bool
 ) -> tuple[float, bool] | None:
-    """(price before slippage, gapped) or None when the stop was not reached."""
+    """Return (price before slippage, gapped), or None when the stop was not reached."""
     if side is Side.LONG:
         threshold = stop if rule is FillAssumption.TOUCH else stop - fut.tick_points
         if not bar.low <= threshold:
@@ -458,10 +445,10 @@ def _stop_branch(
 def _target_branch(
     bar: Bar, target: float, side: Side, fut: Future, rule: FillAssumption
 ) -> tuple[float, bool] | None:
-    """(fill price, gapped) or None. A limit fills at its level, or better on a gap past it.
+    """Return (fill price, gapped), or None when the target was not reached.
 
-    Trade-through on a limit means the bar traded a full tick beyond it, the same
-    epsilon the stop uses.
+    A limit fills at its level, or at the open when the bar gaps past it. Trade-through
+    means the bar traded a full tick beyond the level, as for the stop.
     """
     if side is Side.LONG:
         threshold = target if rule is FillAssumption.TOUCH else target + fut.tick_points
@@ -488,15 +475,14 @@ def passive_limit(
     cancel_after: int = 5,
     rule: FillAssumption = FillAssumption.TRADE_THROUGH,
 ) -> PassiveResult:
-    """A resting limit at the t0 close, working bars t0+1 … t0+cancel_after.
+    """Simulate a resting limit at the t0 close, working bars t0+1 ... t0+cancel_after.
 
-    `TOUCH` fills when the bar's range reaches the limit. `TRADE_THROUGH`, the default
-    because it is the conservative choice for a passive order, requires the bar to trade
-    through the limit by one tick.
+    `TOUCH` fills when the bar's range reaches the limit. `TRADE_THROUGH` (the default,
+    the conservative choice for a passive order) requires a trade one tick through it.
 
-    The fill price is the limit, never the open. `open` is read to validate the bars, and
-    a passive order is not credited with price improvement on a gap: assuming the queue
-    cleared at a better price would make a passive backtest optimistic.
+    The fill price is always the limit. `open` is read only to validate the bars; a gap
+    past the limit earns no price improvement, which would make a passive backtest
+    optimistic.
 
     Raises when t0+cancel_after is past the session end.
     """
@@ -541,17 +527,14 @@ def passive_diagnostic(
     cancel_after: int = 5,
     rule: FillAssumption = FillAssumption.TRADE_THROUGH,
 ) -> dict[str, float]:
-    """Adverse-selection comparison between signals whose passive limit filled and those
-    whose limit did not.
+    """Compare outcomes of signals whose passive limit filled with those that did not.
 
-    Outcome is the signed move from the t0 close to the t0+horizon close, in the
-    position's direction, measured in ticks. No costs and no entry concession enter it:
-    the comparison is between filled and unfilled signals on the same scale, and a cost
-    applied to both sides would only shift both means.
+    The outcome is the move from the t0 close to the t0+horizon close, in ticks, signed
+    in the position's direction. No costs or entry concession are applied; they would
+    shift both means equally.
 
-    Returns `unfilled_rate`, `mean_outcome_filled`, `mean_outcome_unfilled`, `n`, and the
-    two group counts, because a mean over an empty group is `nan` and needs its count
-    beside it to be interpreted.
+    Returns `unfilled_rate`, `mean_outcome_filled`, `mean_outcome_unfilled`, `n`,
+    `n_filled` and `n_unfilled`. The mean of an empty group is `nan`.
     """
     if int(horizon) < 1:
         raise ValueError(f"horizon must be at least 1 bar, got {horizon!r}")
@@ -576,7 +559,7 @@ def passive_diagnostic(
 
     total = len(filled_outcomes) + len(unfilled_outcomes)
     if total == 0:
-        raise ValueError("passive_diagnostic: no sessions -- an unfilled RATE over nothing is not a number")
+        raise ValueError("passive_diagnostic: no sessions, so the unfilled rate is undefined")
     return {
         "unfilled_rate": len(unfilled_outcomes) / total,
         "mean_outcome_filled": float(np.mean(filled_outcomes)) if filled_outcomes else float("nan"),
@@ -596,26 +579,23 @@ def running_peak_drawdown(
     side: Side,
     fut: Future,
 ) -> float:
-    """Worst drawdown from the running peak over a hold, in price points, pessimistically.
+    """Worst drawdown from the running peak over a hold, in price points (pessimistic).
 
-    For a long that is `max_j( max_{i<=j} high_i  -  low_j )`; for a short the mirror off
-    the running trough. "Pessimistic" names an assumption about the unobserved intra-bar
-    path: the peak includes bar j's own high and the trough is bar j's own low, i.e.
-    high-then-low inside every bar. It overstates the true drawdown.
+    For a long: `max_j( max_{i<=j} high_i  -  low_j )`; for a short, the mirror off the
+    running trough. The peak includes bar j's own high, which assumes high-then-low within
+    every bar and overstates the true drawdown. Only this convention is implemented.
 
-    This is the quantity a trailing drawdown limit on open equity measures. Dividing it by
-    the entry price gives the pessimistic maximum adverse excursion as a fraction. Only the
-    pessimistic convention is implemented.
+    This is what a trailing drawdown limit on open equity measures; divided by the entry
+    price it is the pessimistic maximum adverse excursion as a fraction.
 
-    `fut` is read for the grid guard on the bars, so an off-grid or NaN-padded session
-    fails here rather than later.
+    `fut` is used to check the bars are on the grid; NaN or off-grid bars raise.
     """
     side = _check_side(side)
     hi, lo = _as_array(high, "high"), _as_array(low, "low")
     if hi.size != lo.size:
         raise ValueError(f"high ({hi.size}) and low ({lo.size}) have different lengths")
     if not np.isfinite(hi).all() or not np.isfinite(lo).all():
-        raise ValueError("running_peak_drawdown: a non-finite bar is not a path")
+        raise ValueError("running_peak_drawdown: bars must be finite")
     if bool(np.any(hi < lo)):
         j = int(np.argmax(hi < lo))
         raise ValueError(f"running_peak_drawdown: bar {j} has high {hi[j]!r} < low {lo[j]!r}")
@@ -630,12 +610,10 @@ def running_peak_drawdown(
 
 
 def assert_entry_before(bar_ts: Any, window_start: Any, min_minutes: float = 3) -> None:
-    """A hard timing constraint: the entry must complete before an event window opens.
+    """Raise unless the entry completes at least `min_minutes` before `window_start`.
 
-    `bar_ts` is the moment the entry is complete (the close of the fill bar, not the
-    close of the decision bar), and the entry is rejected unless it completes at least
-    `min_minutes` before `window_start`. Raises; it does not return a flag, because a
-    caller that forgets to read the flag trades the rejected signal.
+    `bar_ts` is when the entry is complete: the close of the fill bar, not of the decision
+    bar. A rejection raises `ValueError` rather than returning a flag a caller could ignore.
     """
     if min_minutes < 0:
         raise ValueError(f"min_minutes must be non-negative, got {min_minutes!r}")
@@ -657,7 +635,7 @@ def assert_entry_before(bar_ts: Any, window_start: Any, min_minutes: float = 3) 
 
 
 def _expect_raise(fn: Any, exc: type[BaseException], what: str, log: Any = print) -> None:
-    """Assert that `fn` raises `exc`. Every check below is run on a broken input too."""
+    """Assert that `fn` raises `exc`."""
     try:
         fn()
     except exc as e:
@@ -667,7 +645,7 @@ def _expect_raise(fn: Any, exc: type[BaseException], what: str, log: Any = print
 
 
 def selftest(log: Any = print) -> int:
-    """Every guard, once clean and once broken. Returns 0, or raises."""
+    """Run each guard on a valid and an invalid input. Returns 0, or raises."""
     es = Future(root="ES", tick_points=0.25, usd_per_point=50.0, tick_usd=12.5)
     o = np.array([100.00, 100.25, 100.50, 100.25, 100.00], dtype=float)
     h = np.array([100.50, 100.75, 101.00, 100.50, 100.25], dtype=float)

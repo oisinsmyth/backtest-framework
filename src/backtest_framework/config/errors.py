@@ -1,11 +1,9 @@
 """Config validation errors.
 
-An invalid config must fail loudly at factory time, with a message naming the bad key — never silently, and never partway
-through a backtest.
+An invalid config raises at factory time, naming the bad key, before any backtest runs.
 """
 
 
 class ConfigError(ValueError):
-    """A config dict is invalid: missing a required key, has an unknown key, has a value
-    of the wrong type, or names an unregistered type. The message always names the
-    specific offending key."""
+    """Raised for an invalid config: a missing or unknown key, a value of the wrong type,
+    or an unregistered type. The message names the offending key."""

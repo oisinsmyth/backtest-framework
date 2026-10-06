@@ -1,20 +1,17 @@
 """Synthetic cointegrated-looking pairs with zero true edge.
 
-The null construction matters: a genuinely cointegrated pair — an
-Ornstein-Uhlenbeck (mean-reverting) spread — has real gross edge for a mean-reversion
-strategy; using it as the null would test nothing. The correct zero-edge null keeps
-the visual signature of cointegration (two series sharing a common stochastic trend,
-tracking each other closely) while making the spread a random walk: a martingale,
-against which any timing rule has expected profit exactly zero. If a strategy
-systematically profits on these pairs, it is reading the future or mis-accounting.
+A truly cointegrated pair (an Ornstein-Uhlenbeck spread) gives a mean-reversion
+strategy real gross edge, so it cannot serve as a null. These pairs share a common
+stochastic trend and track each other closely, but the spread is a random walk: a
+martingale, against which any timing rule has zero expected profit. A strategy that
+systematically profits on them is using future data or mis-accounting.
 
 Construction:
   ln A_t = common random walk (drift mu, vol sigma_common)
   ln B_t = ln A_t - s_t,  s_t = random walk with small steps (sigma_spread)
 
-Small sigma_spread keeps the pair visually locked together (the "looks cointegrated"
-part — over short windows a rebased-price plot is indistinguishable from a
-cointegrated pair) while s_t's martingale property carries the zero-edge guarantee.
+A small sigma_spread keeps the pair close enough that, over short windows, a
+rebased-price plot looks like a cointegrated pair.
 """
 
 from __future__ import annotations

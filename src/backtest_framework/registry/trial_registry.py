@@ -1,9 +1,8 @@
 """Append-only trial registry.
 
-Every backtest run should be logged — the Deflated Sharpe ratio requires knowing how
-many trials were attempted, and that count can't be reconstructed after the fact.
-Backed by SQLite so it survives process restarts. Append-only is enforced by the
-primary key, not by convention.
+Every backtest run should be logged: the Deflated Sharpe ratio needs the number of
+trials attempted, which cannot be reconstructed afterwards. Backed by SQLite so it
+persists across processes; the trial_id primary key enforces append-only.
 """
 
 from __future__ import annotations
@@ -18,7 +17,7 @@ from typing import Any
 
 
 class TrialAlreadyExistsError(Exception):
-    """Raised when attempting to insert a trial_id that's already in the registry."""
+    """Raised when inserting a trial_id that is already in the registry."""
 
 
 @dataclass(frozen=True)
@@ -34,13 +33,14 @@ class TrialRecord:
 
 
 def canonical_json(obj: Any) -> str:
-    """Deterministic JSON: sorted keys, no whitespace ambiguity — same object, same string."""
+    """Deterministic JSON with sorted keys and compact separators."""
     return json.dumps(obj, sort_keys=True, separators=(",", ":"))
 
 
 def compute_trial_hash(config: dict[str, Any], snapshot_id: str, seed: int) -> str:
-    """Hash of (config, snapshot_id, seed). Identical inputs must hash identically, and
-    the hash must change under any semantic change to any of the three."""
+    """SHA-256 of the canonical JSON of (config, snapshot_id, seed).
+
+    Identical inputs give identical hashes; any change to the three changes it."""
     payload = canonical_json({"config": config, "snapshot_id": snapshot_id, "seed": seed})
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
@@ -78,8 +78,8 @@ class TrialRegistry:
     ) -> str:
         """Append a new trial and return its trial_hash.
 
-        Raises TrialAlreadyExistsError if trial_id is already present — the registry is
-        append-only by construction (the primary key constraint), not by convention.
+        Raises TrialAlreadyExistsError if trial_id is already present (primary key
+        constraint).
         """
         trial_hash = compute_trial_hash(config, snapshot_id, seed)
         created_at = datetime.now(timezone.utc).isoformat()
