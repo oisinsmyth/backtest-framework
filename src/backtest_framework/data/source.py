@@ -1,7 +1,7 @@
-"""DataSource: one interface, per-asset-class fetchers behind it.
+"""DataSource: one interface for per-asset-class fetchers.
 
-The engine should not care whether bars came from yfinance, a crypto exchange API, or
-an options data vendor — every data source implements the same get_bars() shape.
+Every source (yfinance, a crypto exchange API, an options data vendor) implements the
+same get_bars() signature.
 """
 
 from __future__ import annotations

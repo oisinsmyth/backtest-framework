@@ -1,8 +1,7 @@
 """Top-level SimConfig: a plain dict validated and turned into live objects.
 
-`seed` and `snapshot_id` deliberately live outside this dict — they're already distinct,
-required fields on TrialRegistry.add_trial, not part of the model
-configuration. SimConfig only describes *which models* to build and how.
+`seed` and `snapshot_id` are not in this dict; they are separate required fields on
+TrialRegistry.add_trial. SimConfig describes only which models to build and how.
 """
 
 from __future__ import annotations
@@ -20,15 +19,15 @@ REQUIRED_KEYS = ("carry_model", "fill_model")
 
 @dataclass(frozen=True)
 class SimObjects:
-    """The live objects built from a SimConfig dict. Never itself stored or hashed —
-    rebuilt fresh from the config every time."""
+    """The live objects built from a SimConfig dict; rebuilt from the config each time,
+    never stored or hashed."""
 
     carry_model: FlatRateCarry
     fill_model: FillModel
 
 
 def validate_sim_config(config: dict[str, Any]) -> None:
-    """Fail loudly, naming the bad key(s), at factory time — never mid-backtest."""
+    """Raise ConfigError naming any missing or unknown top-level keys."""
     if not isinstance(config, dict):
         raise ConfigError(f"SimConfig must be a dict, got {type(config).__name__}")
     missing = [key for key in REQUIRED_KEYS if key not in config]
@@ -42,9 +41,9 @@ def validate_sim_config(config: dict[str, Any]) -> None:
 def build_sim_objects(config: dict[str, Any]) -> SimObjects:
     """Validate a SimConfig dict and construct the live objects it describes.
 
-    Raises ConfigError, naming the offending key, for any invalid config — missing keys,
-    unknown keys, unknown model types, or wrong-typed values. Never raises anything else;
-    a caller can treat ConfigError as the complete contract for "config was bad".
+    Raises ConfigError, naming the offending key, for any invalid config: missing or
+    unknown keys, unknown model types, or wrong-typed values. It raises nothing else, so
+    callers can treat ConfigError as the complete contract for a bad config.
     """
     validate_sim_config(config)
     return SimObjects(

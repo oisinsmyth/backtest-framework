@@ -1,25 +1,21 @@
-"""SnapshotStore: fetch once, freeze, and only ever run on frozen data.
+"""SnapshotStore: freeze fetched data and run only on frozen snapshots.
 
-yfinance restates history: identical code produces different results months apart,
-silently making TrialRegistry entries incomparable. So the engine never reads live
-fetches; it reads snapshots, and every trial logs its snapshot_id.
+yfinance restates history, so the same code can give different results months apart.
+The engine therefore reads snapshots rather than live fetches, and every trial logs
+its snapshot_id.
 
-Content-addressed identity: snapshot_id = sha256 over the frozen payload bytes
-(bars.csv + events.json). Consequences, all deliberate:
-- Same data re-frozen → the same id (idempotent; also what makes a reported
-  snapshot_id reproducible by anyone from a committed fixture).
-- A restated history → different bytes → a new id, without needing a version
-  counter.
-- load() re-hashes and refuses on mismatch: byte-identical or nothing.
+snapshot_id is the sha256 of the payload bytes (bars.csv + events.json):
+- Re-freezing the same data gives the same id, so anyone can reproduce a reported
+  snapshot_id from a committed fixture.
+- Restated history gives different bytes and so a new id.
+- load() re-hashes and raises SnapshotIntegrityError on a mismatch.
 
-Quarantine: a snapshot whose validation has hard violations is still written
-(for inspection) but flagged; load() raises QuarantinedSnapshotError unless
-allow_quarantined=True is passed explicitly. Quarantined data cannot reach the
-engine by any default path.
+A snapshot whose validation has hard violations is still written (for inspection)
+but marked quarantined; load() raises QuarantinedSnapshotError unless
+allow_quarantined=True.
 
-Layout: <root>/<snapshot_id>/{bars.csv, events.json, meta.json}. Snapshots are
-local artifacts and are not meant to be committed; committed fixtures are how data
-enters the repo.
+Layout: <root>/<snapshot_id>/{bars.csv, events.json, meta.json}. Snapshots are local
+and not committed; data enters the repo as committed fixtures.
 """
 
 from __future__ import annotations
@@ -55,9 +51,8 @@ class Snapshot:
     actions: CorporateActions
     meta: dict
     extras: dict[str, dict[str, list[float]]] = field(default_factory=dict)
-    """`extras` carries provider columns beyond the standard seven — Binance klines
-    report base volume, quote volume and taker-buy volume separately. It defaults
-    to empty, so every snapshot frozen before the column existed loads unchanged."""
+    """Provider columns beyond the standard seven, e.g. Binance klines' separate base,
+    quote and taker-buy volumes. Empty for snapshots without extra columns."""
 
 
 class SnapshotStore:
@@ -97,10 +92,9 @@ class SnapshotStore:
 
             final = self.root / snapshot_id
             if final.exists():
-                # Identical payload already frozen: idempotent on content. Meta is
-                # provenance of the latest freeze (validator version, reports), not
-                # part of the identity, so it refreshes; otherwise a fixed validator
-                # could never un-quarantine data it had wrongly flagged.
+                # Same payload already frozen. Meta is not part of the id, so refresh it
+                # with the latest validation; this lets a fixed validator lift a wrong
+                # quarantine.
                 (final / "meta.json").write_text(
                     (staging / "meta.json").read_text(encoding="utf-8"), encoding="utf-8"
                 )
@@ -120,15 +114,15 @@ class SnapshotStore:
         actual = _hash_payload(directory)
         if actual != snapshot_id:
             raise SnapshotIntegrityError(
-                f"snapshot {snapshot_id!r} payload hashes to {actual!r} — the frozen data has "
-                "been modified; refusing to load it"
+                f"snapshot {snapshot_id!r} payload hashes to {actual!r}; the frozen data has "
+                "been modified and will not be loaded"
             )
 
         meta = json.loads((directory / "meta.json").read_text(encoding="utf-8"))
         if meta.get("quarantined") and not allow_quarantined:
             raise QuarantinedSnapshotError(
-                f"snapshot {snapshot_id!r} is quarantined (failed its sanity gate) — "
-                "pass allow_quarantined=True only for inspection, never for a run"
+                f"snapshot {snapshot_id!r} is quarantined because it failed validation; "
+                "pass allow_quarantined=True to inspect it"
             )
 
         bars, volumes, extras = load_fixture_csv_with_extras(directory / "bars.csv")

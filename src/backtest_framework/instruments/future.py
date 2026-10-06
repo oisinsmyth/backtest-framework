@@ -1,35 +1,31 @@
-"""Futures instrument: an implementation of the `Instrument` protocol.
+"""Futures instrument implementing the `Instrument` protocol.
 
-This class carries the three numbers that decide what a futures price means (the tick
-size in price points, the dollar value of one point, and the dollar value of one tick),
-reads them from the exchange's own specification file rather than from a literal, and
-provides tick-grid rounding and checking.
+`Future` holds the tick size in price points, the dollar value of one point and the dollar
+value of one tick, read from the exchange specification files, and provides tick-grid
+rounding and checking.
 
-Two spec files
+Spec files
+----------
+`data/futures_contract_specs.json` (primary): the CME contract-specification pages for 23
+roots, with `usd_per_point` and `tick_points` parsed from CME's wording; `_provenance`
+records the fetch.
+
+`data/fut_specs_from_definition.json` (fallback): the Databento GLBX definition snapshot,
+41 roots including MBT, which the CME file lacks. Tick size is `tick_price_units`, tick
+value is `tick_usd_full_contract`, and `usd_per_point` is their quotient.
+
+That file's `tick_usd` field is not used. It is the snapshot's raw formula with a `/100`
+applied whenever `unit_of_measure == "USD"`, which makes it 100x high on ZC, ZS, ZW, ZL, LE,
+HE and 100x low on SR3 (seven roots, all with `known_tick_usd: null`). It is kept for
+compatibility; `tick_usd_full_contract`, chosen by a notional consistency test, is the
+corrected value, and an entry without it raises.
+
+An unknown root raises `KeyError`; there is no default multiplier.
+
+Grid tolerance
 --------------
-`data/futures_contract_specs.json` is the CME contract-specification service read through
-each product's page (23 roots, `_provenance` records the fetch). It is the primary source
-because its `usd_per_point` and `tick_points` are parsed from CME's own wording.
-
-`data/fut_specs_from_definition.json` is the Databento GLBX definition snapshot (41 roots,
-including MBT, which the CME file does not carry). It states tick size as
-`tick_price_units` and the tick value as `tick_usd_full_contract`; `usd_per_point` is
-their quotient.
-
-Do not read that file's `tick_usd`. It is the snapshot's raw formula with a `/100` applied
-on `unit_of_measure == "USD"` alone, and it is 100x high on ZC, ZS, ZW, ZL, LE, HE and 100x
-low on SR3 (seven roots, every one with `known_tick_usd: null`). The field is kept unchanged
-for compatibility; the corrected value is `tick_usd_full_contract`, chosen by a notional
-consistency test, and an entry without it raises here.
-
-An unknown root raises `KeyError`. A default multiplier would be a number that is wrong
-rather than absent, with no test able to notice.
-
-The grid tolerance is in ticks, not in price
---------------------------------------------
-`assert_on_grid` admits a residual of `1e-9 × tick_points`. Stating the tolerance as a
-fraction of a tick rather than as an absolute epsilon makes the rule mean the same thing on
-ES (tick 0.25) and on ZN (tick 1/64).
+`assert_on_grid` admits a residual of `1e-9 × tick_points`. Expressing it as a fraction of
+a tick gives the rule the same meaning on ES (tick 0.25) and ZN (tick 1/64).
 """
 
 from __future__ import annotations
@@ -50,19 +46,18 @@ FALLBACK_SPECS_PATH = REPO / "data" / "fut_specs_from_definition.json"
 """Databento GLBX definition snapshot, the fallback (41 roots, includes MBT)."""
 
 GRID_TOLERANCE_TICKS = 1e-9
-"""How far off the grid a price may sit and still be called on it, in ticks.
+"""Maximum distance from the grid, in ticks, for a price to count as on it.
 
-Floored at `ULP_FLOOR` units in the last place of the price itself. A nanotick is a
-tighter tolerance than a double can carry once `price / tick_points` gets large: on 6E
-(tick 5e-05) a price of 5,000 has a representation error of 2.2e-09 ticks, so
-`5000 + k * 5e-05` would be declared off its own grid for a third of k. 6E trades near
-1.10, so the plain rule is sufficient in practice; the floor makes the guard degrade to
-"as tight as the float can express" rather than to a false alarm on extreme inputs.
+Floored at `ULP_FLOOR` units in the last place of the price. A nanotick is finer than a
+double can resolve once `price / tick_points` is large: on 6E (tick 5e-05) a price of 5,000
+has a representation error of 2.2e-09 ticks, so `5000 + k * 5e-05` would fail the check for
+a third of k. 6E trades near 1.10, where the plain rule suffices; the floor only prevents
+false alarms on extreme inputs.
 """
 
 ULP_FLOOR = 4.0
-"""Units in the last place the grid tolerance never goes below. Four, not one, because the
-residual is a difference of two rounded quantities and each contributes."""
+"""Lower bound on the grid tolerance, in units in the last place. Four rather than one
+because the residual is a difference of two rounded quantities."""
 
 RoundingDirection = Literal["nearest", "up", "down"]
 
@@ -84,15 +79,13 @@ def _load_json(path: Path) -> dict[str, Any]:
 class Future:
     """One futures contract root, satisfying the `Instrument` protocol.
 
-    `root` is the exchange root ("ES", "MES", "CL"), not a contract month: the intended
-    use is a continuous front-month series, and the tick and multiplier are properties of
-    the root, not of the expiry.
+    `root` is the exchange root ("ES", "MES", "CL"), not a contract month: it is meant for
+    a continuous front-month series, and tick and multiplier belong to the root.
 
-    `tick_points` is the minimum price increment in the units the price is quoted in
-    (0.25 index points for ES). `usd_per_point` is the dollar value of a one-point move
-    of one contract ($50 for ES, $5 for MES). `tick_usd` is their product and is carried
-    rather than derived so that the specification file's own third number is checked
-    against the other two instead of being thrown away.
+    `tick_points` is the minimum price increment in quoted units (0.25 index points for
+    ES). `usd_per_point` is the dollar value of a one-point move on one contract ($50 for
+    ES, $5 for MES). `tick_usd` is their product; it is stored rather than derived so the
+    spec file's value can be checked against the other two.
     """
 
     root: str
@@ -131,8 +124,8 @@ class Future:
     ) -> Future:
         """Build from the exchange specification files. Raises `KeyError` on an unknown root.
 
-        The CME file is tried first; the Databento definition snapshot second. Both paths
-        are overridable so a test can point at a fixture, and neither is guessed at.
+        The CME file is tried first, then the Databento definition snapshot. Both paths can
+        be overridden, for example to point a test at a fixture.
         """
         specs = _load_json(specs_path or SPECS_PATH)
         entry = specs.get(root)
@@ -148,31 +141,27 @@ class Future:
         definition = fallback.get(root) if isinstance(fallback, dict) else None
         if isinstance(definition, dict) and definition.get("present"):
             tick_points = float(definition["tick_price_units"])
-            # `tick_usd_full_contract`, not `tick_usd`. `tick_usd` is the definition
-            # snapshot's raw formula with a `/100` applied on `unit_of_measure == "USD"` alone,
-            # and that rule is wrong for seven roots: ZC, ZS, ZW (cents per bushel), ZL, LE, HE
-            # (cents per pound) come out 100x high, and SR3 100x low because the percent-of-par
-            # divide fires on a `unit_of_measure_qty` that is already dollars per point. Every
-            # one of the seven has `known_tick_usd: null`, so `__post_init__`'s product identity
-            # cannot catch it: it holds by construction, because `usd_per_point` is derived
-            # from `tick_usd`. `tick_usd_full_contract` is chosen by a notional consistency test
-            # and agrees with CME on all 17 roots where CME's own value is on file.
+            # Use `tick_usd_full_contract`, not `tick_usd`. The raw `tick_usd` applies `/100`
+            # whenever `unit_of_measure == "USD"`, which is wrong for seven roots: ZC, ZS, ZW
+            # (cents per bushel), ZL, LE, HE (cents per pound) come out 100x high, and SR3 100x
+            # low because the percent-of-par divide applies to a `unit_of_measure_qty` already
+            # in dollars per point. All seven have `known_tick_usd: null`, and
+            # `__post_init__`'s product check cannot catch the error because `usd_per_point`
+            # is derived from `tick_usd` here. `tick_usd_full_contract` is chosen by a notional
+            # consistency test and agrees with CME on all 17 roots where CME's value is on file.
             if "tick_usd_full_contract" not in definition:
                 raise KeyError(
                     f"{root!r} in {FALLBACK_SPECS_PATH.name} carries no "
-                    "'tick_usd_full_contract'. That field is the tick value chosen by a notional "
-                    "consistency test; the file's raw 'tick_usd' is 100x wrong on seven "
-                    "cent-quoted roots. A missing multiplier must be a loud error, not a "
-                    "guessed one."
+                    "'tick_usd_full_contract', the tick value chosen by a notional consistency "
+                    "test. The raw 'tick_usd' field is 100x off on seven cent-quoted roots "
+                    "and is not used."
                 )
             tick_usd = float(definition["tick_usd_full_contract"])
             known = definition.get("known_tick_usd")
             if known is not None and abs(tick_usd - float(known)) > 1e-9 * abs(float(known)):
-                # Not satisfiable by construction. `__post_init__` compares three numbers two
-                # of which are derived from the third; this compares the tick value against
-                # CME's own published value for the same root, from a different source, and is
-                # the only check in this class that an arithmetic error in the definition
-                # table cannot pass.
+                # An independent check: the tick value against CME's published value for the
+                # same root. Unlike `__post_init__`, whose numbers here are derived from one
+                # another, an arithmetic error in the definition table cannot pass it.
                 raise ValueError(
                     f"{root}: tick_usd_full_contract = {tick_usd!r} but "
                     f"{FALLBACK_SPECS_PATH.name} records known_tick_usd = {known!r} from CME. "
@@ -191,8 +180,7 @@ class Future:
         raise KeyError(
             f"no contract specification for root {root!r}. "
             f"{SPECS_PATH.name} carries {', '.join(known_cme) or '(none)'}; "
-            f"{FALLBACK_SPECS_PATH.name} carries {', '.join(known_def) or '(none)'}. "
-            "A missing multiplier must be a loud error, not a guessed one."
+            f"{FALLBACK_SPECS_PATH.name} carries {', '.join(known_def) or '(none)'}."
         )
 
     # ------------------------------------------------------------------ the tick grid
@@ -200,15 +188,12 @@ class Future:
     def round_to_tick(self, price: float, direction: RoundingDirection = "nearest") -> float:
         """Snap `price` onto the tick grid.
 
-        "up" and "down" are toward +inf and -inf respectively, not away from and toward
-        zero: futures prices can go negative (CL settled at -37.63 on 2020-04-20), and a
-        rounding rule that changes meaning at zero would be wrong there. Both absorb a
-        residual of `GRID_TOLERANCE_TICKS`, so a price already on the grid is never pushed
-        a whole tick by float noise in the division.
+        "up" and "down" round toward +inf and -inf, since futures prices can be negative
+        (CL settled at -37.63 on 2020-04-20). Both absorb a residual of
+        `GRID_TOLERANCE_TICKS`, so float noise never moves an on-grid price by a tick.
 
-        "nearest" breaks a half-tick tie upward (toward +inf). This is a convention;
-        `round()`'s banker's rounding would make the tie depend on the parity of the tick
-        index.
+        "nearest" breaks a half-tick tie toward +inf, unlike `round()`, whose banker's
+        rounding depends on the parity of the tick index.
         """
         if not math.isfinite(price):
             raise ValueError(f"{self.root}: cannot round a non-finite price {price!r}")
@@ -227,10 +212,9 @@ class Future:
         return k * self.tick_points
 
     def assert_on_grid(self, price: float, what: str = "price") -> None:
-        """Raise unless `price` sits on the tick grid to within `GRID_TOLERANCE_TICKS`.
+        """Raise unless `price` is on the tick grid to within `GRID_TOLERANCE_TICKS`.
 
-        The futures fill model checks every price it returns here, so every fill is
-        verified to be on a tradeable price.
+        The futures fill model calls this on every price it returns.
         """
         if not math.isfinite(price):
             raise ValueError(f"{self.root}: {what} is not finite: {price!r}")
@@ -244,13 +228,13 @@ class Future:
             )
 
     def ticks(self, price_diff: float) -> float:
-        """A price difference expressed in ticks. Signed, and not rounded."""
+        """Return a price difference in ticks, signed and unrounded."""
         if not math.isfinite(price_diff):
             raise ValueError(f"{self.root}: price_diff is not finite: {price_diff!r}")
         return price_diff / self.tick_points
 
     def usd(self, price_diff: float, quantity: float) -> float:
-        """A price difference on `quantity` contracts, in dollars. Signed."""
+        """Return a price difference on `quantity` contracts in dollars, signed."""
         if not math.isfinite(price_diff) or not math.isfinite(quantity):
             raise ValueError(
                 f"{self.root}: usd() needs finite arguments, got "
@@ -263,21 +247,18 @@ class Future:
     def notional(self, quantity: float, price: float) -> float:
         """Contract value: `quantity × price × usd_per_point`.
 
-        One ES at 4,000 is $200,000 of index exposure, which is what
-        `risk.gross_exposure` needs and what makes a futures book's leverage visible.
+        One ES at 4,000 is $200,000 of index exposure; `risk.gross_exposure` uses this.
         """
         return quantity * price * self.usd_per_point
 
     def carry_components(self) -> tuple[str, ...]:
-        """Empty, and deliberately so.
+        """Return an empty tuple: a future has no borrow or dividend.
 
-        A future has no borrow and pays no dividend: the cost of carry is already in the
-        futures price through the basis. The protocol names the empty tuple a legitimate
-        answer ("none apply", not a missing implementation), and listing a component no
-        brick declares would have no effect.
+        The cost of carry is already in the futures price through the basis. The protocol
+        treats an empty tuple as "none apply".
         """
         return ()
 
     def tradeable_quantity(self, raw_quantity: float) -> float:
-        """Whole contracts. There is no fractional future."""
+        """Round to whole contracts."""
         return float(round(raw_quantity))

@@ -1,13 +1,12 @@
-"""Cost bricks.
+"""Cost brick interfaces and simple implementations.
 
-Two independent interfaces, matching two mechanically different things: TradeCostBrick
-is charged once per fill (spread, impact, commission, FX conversion); CarryCostBrick is
-charged per bar on open positions (margin interest, borrow, dividends, funding).
+TradeCostBrick is charged once per fill (spread, impact, commission, FX conversion);
+CarryCostBrick is charged per bar on open positions (margin interest, borrow, dividends,
+funding).
 
-The concrete bricks below (FlatCommission, PercentOfNotionalSpread, FlatRateCarry) are
-simple implementations that exercise CostStack composition and summation. The realistic
-equity bricks (square-root impact, IBKR commission schedule, margin interest) live in
-costs/equity_bricks.py. FlatRateCarry is the brick that config/carry_model.py builds.
+FlatCommission, PercentOfNotionalSpread and FlatRateCarry are simple bricks that exercise
+CostStack composition. The realistic equity bricks are in costs/equity_bricks.py.
+config/carry_model.py builds FlatRateCarry.
 """
 
 from __future__ import annotations
@@ -29,13 +28,13 @@ class CarryCostBrick(Protocol):
 
 
 class EventFlowBrick(Protocol):
-    """Event-driven cash flows: dividends today, other distributions later.
+    """Event-driven cash flows, such as dividends.
 
-    Unlike carry (time-accrued, always a cost), an event flow is signed cash to the
-    portfolio on specific dates: a dividend credits a long and debits a short. flow()
-    returns the total for ex-dates in (prev_timestamp, curr_timestamp], given the
-    signed quantity held across that gap. Not scaled by the cost-multiplier sweep, since
-    flows are economic transfers rather than frictions."""
+    Unlike carry (time-accrued, always a cost), an event flow is signed cash on specific
+    dates: a dividend credits a long and debits a short. flow() returns the total for
+    ex-dates in (prev_timestamp, curr_timestamp] given the signed quantity held over that
+    interval. Flows are transfers, not frictions, so the cost-multiplier sweep does not
+    scale them."""
 
     def flow(
         self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
@@ -54,8 +53,7 @@ class FlatCommission:
 
 @dataclass(frozen=True)
 class PercentOfNotionalSpread:
-    """A cost proportional to trade notional: a simple stand-in for square-root
-    impact and the bid/ask spread."""
+    """A cost proportional to trade notional; a simple stand-in for impact and spread."""
 
     bps: float
 
@@ -66,9 +64,8 @@ class PercentOfNotionalSpread:
 
 @dataclass(frozen=True)
 class FlatRateCarry:
-    """A single annualised rate applied to base_amount over the calendar-day gap
-    between bars. `base_amount` is whatever the caller has already determined is
-    the carry-bearing quantity — this brick only knows the accrual math."""
+    """A single annualised rate applied to `base_amount` over the calendar days between
+    bars. The caller decides what `base_amount` is."""
 
     annual_rate: float
     day_count: float = DEFAULT_DAY_COUNT

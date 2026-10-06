@@ -1,11 +1,9 @@
 """RiskMonitor: per-bar portfolio-level risk checks.
 
-Positions can drift into violation purely from price movement, with no order ever
-firing a check — a pair whose both legs move against the position can silently exceed
-a gross exposure limit. RiskMonitor.evaluate() is meant to be called by the engine on
-every bar, regardless of whether a trade happened that bar.
-pretrade_check() reuses the exact same limit logic to reject a proposed order before
-it executes, by simulating the position it would produce and evaluating that.
+Positions can breach a limit through price movement alone (e.g. both legs of a pair
+moving against it), so the engine calls RiskMonitor.evaluate() on every bar, whether
+or not a trade happened. pretrade_check() applies the same limit to the position a
+proposed order would produce, to reject it before it executes.
 """
 
 from __future__ import annotations
@@ -29,8 +27,8 @@ class RiskViolation:
     limit: float
     observed: float
     bar_index: int | None = None
-    """Which bar the violation was flagged on, when evaluate() is called per-bar.
-    None for pretrade_check(), which isn't tied to a specific bar index."""
+    """Bar the violation was flagged on, when evaluate() is given one. pretrade_check()
+    leaves it None."""
 
 
 def gross_exposure(
@@ -38,8 +36,7 @@ def gross_exposure(
     prices: Mapping[str, float],
     instruments: Mapping[str, Instrument],
 ) -> float:
-    """Sum of absolute notional across every open position — long and short exposure
-    both count, since both consume buying power and both carry price risk."""
+    """Sum of absolute notional across open positions; longs and shorts both count."""
     return sum(
         abs(instruments[instrument_id].notional(quantity, prices[instrument_id]))
         for instrument_id, quantity in positions.items()
@@ -58,9 +55,10 @@ class RiskMonitor:
         instruments: Mapping[str, Instrument],
         bar_index: int | None = None,
     ) -> RiskViolation | None:
-        """Called every bar by the engine, regardless of whether an order fired this
-        bar — this is what catches exposure drifting over the limit from price
-        movement alone, with no order to have gated in the first place."""
+        """Return a violation if current gross exposure exceeds the limit, else None.
+
+        The engine calls this every bar, so exposure that drifts over the limit with
+        price is caught even when no order fired."""
         exposure = gross_exposure(positions, prices, instruments)
         if exposure > self.limits.max_gross_exposure:
             return RiskViolation(
@@ -79,8 +77,8 @@ class RiskMonitor:
         proposed_instrument_id: str,
         proposed_delta_qty: float,
     ) -> RiskViolation | None:
-        """Simulates the position a proposed order would produce and evaluates it with
-        the same limit logic as evaluate() — one set of rules, two call sites."""
+        """Check the position a proposed order would produce against the same limit as
+        evaluate(). Returns a violation (with no bar_index) or None."""
         simulated_positions = dict(positions)
         simulated_positions[proposed_instrument_id] = (
             simulated_positions.get(proposed_instrument_id, 0.0) + proposed_delta_qty

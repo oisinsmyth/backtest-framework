@@ -1,14 +1,11 @@
 """Seeded block-bootstrap Monte Carlo.
 
-Block bootstrap rather than a returns shuffle: a shuffle destroys the autocorrelation
-a mean-reversion strategy trades, while resampling contiguous blocks preserves local
-dependence.
+Resampling contiguous blocks preserves local dependence; a returns shuffle would
+destroy the autocorrelation a mean-reversion strategy trades.
 
-`seed` is a required argument: a deterministic simulator gives no reproducibility if
-the analytics layer is silently nondeterministic. Same seed → byte-identical
-percentile table; the seed belongs in the TrialRegistry row of any trial whose
-reported numbers came from this. Default n_sims is 10,000, since simulations are
-cheap.
+`seed` is required so results are reproducible: the same seed gives a byte-identical
+percentile table. Record it in the TrialRegistry row of any trial that reports these
+numbers. n_sims defaults to 10,000.
 """
 
 from __future__ import annotations
@@ -38,10 +35,11 @@ def block_bootstrap_paths(
     n_sims: int = DEFAULT_N_SIMS,
     block_size: int = DEFAULT_BLOCK_SIZE,
 ) -> np.ndarray:
-    """The resampled return paths themselves, shape (n_sims, len(returns)) — exposed
-    so callers can measure autocorrelation on the paths (e.g. shuffle vs block) and
-    build null distributions from the same generator. Contiguous blocks preserve local
-    dependence, which a shuffle destroys."""
+    """Return the resampled return paths, shape (n_sims, len(returns)).
+
+    Exposed so callers can measure autocorrelation on the paths (e.g. shuffle vs block)
+    and build null distributions from the same generator. Raises ValueError if there
+    are fewer returns than `block_size`."""
     r = np.asarray(returns, dtype=float)
     n = r.size
     if n < block_size:

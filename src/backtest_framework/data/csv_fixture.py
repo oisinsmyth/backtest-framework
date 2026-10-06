@@ -1,11 +1,11 @@
 """CSV fixture save/load: a lightweight frozen data set.
 
 A fixture is a plain CSV (timestamp, symbol, open, high, low, close, volume)
-committed to git, immutable the way a snapshot needs to be because changing it is a
-visible diff, not a silent re-fetch. A sidecar `<name>.meta.json` records how and when
-it was fetched. SnapshotStore (checksummed IDs, quarantine gate, cleaning reports) is
-the fuller mechanism and uses this writer for its `bars.csv`; a bare fixture's filename
-can serve as the snapshot_id logged with a trial.
+committed to git, so any change to it shows up as a diff. A sidecar
+`<name>.meta.json` records how and when it was fetched. SnapshotStore (checksummed
+IDs, quarantine gate, cleaning reports) is the fuller mechanism and uses this writer
+for its `bars.csv`; a bare fixture's filename can serve as the snapshot_id logged
+with a trial.
 
 `load_fixture_csv` ignores the volume column, since TimestampedBar carries no volume
 field; `load_fixture_csv_with_volumes` returns it separately.
@@ -29,9 +29,8 @@ _COLUMNS = ["timestamp", "symbol", "open", "high", "low", "close", "volume"]
 class _ClosingTextIOWrapper(io.TextIOWrapper):
     """A TextIOWrapper that also closes a file object it did not open.
 
-    The gzip write path is a three-layer stack — raw file, GzipFile, text wrapper — and only
-    the middle layer is owned by the one above it. Without this, `with _open_text(...)`
-    would close two of the three and leave the raw handle to the garbage collector.
+    The gzip write path stacks a raw file, a GzipFile and a text wrapper. GzipFile does
+    not close a file object it was handed, so this wrapper closes the raw file itself.
     """
 
     def __init__(self, buffer, raw, **kwargs):
@@ -46,28 +45,20 @@ class _ClosingTextIOWrapper(io.TextIOWrapper):
 
 
 def _open_text(path: Path, mode: str):
-    """Transparent gzip: a '.gz' suffix means the fixture is compressed (a large
-    multi-symbol fixture compresses roughly 7x). Everything else about the format is
-    identical.
+    """Open a fixture as text, gzip-compressed if the path ends in '.gz'.
 
-    Writes pin the gzip header's mtime to 0 and omit the embedded filename, so the same
-    content always produces the same bytes. `gzip.open` stamps the current time into the
-    header, so re-running a fetch would produce a whole-file diff even when no row had
-    changed. Committing a fixture is meant to make changes visible, so the compressed
-    form has to be a function of the content and nothing else.
-
-    Reads are unaffected; the header field is metadata the decompressor ignores. Snapshot
-    ids are also unaffected: `SnapshotStore` writes `bars.csv` uncompressed, so this never
-    enters `_hash_payload`.
+    A large multi-symbol fixture compresses roughly 7x; the format is otherwise the same.
+    Writes set the gzip header mtime to 0 and omit the embedded filename, so identical
+    content gives identical bytes (`gzip.open` would stamp the current time). Reads
+    ignore the header. Snapshot ids are unaffected: `SnapshotStore` writes `bars.csv`
+    uncompressed, so this never reaches `_hash_payload`.
     """
     if path.suffix == ".gz":
         if "w" in mode:
             raw = open(path, mode + "b")
-            # `GzipFile` closes the underlying file only when it opened it itself. Here it
-            # does not (an explicit `fileobj=raw` is what lets `mtime=0` be pinned), so a
-            # plain wrapper would close the GzipFile and leave `raw` open until garbage
-            # collection. `_ClosingTextIOWrapper` closes `raw` too, so the handle's lifetime
-            # matches the caller's `with` block on every interpreter and platform.
+            # An explicit `fileobj=raw` is needed to set mtime=0, and GzipFile does not
+            # close a fileobj it was given; `_ClosingTextIOWrapper` closes `raw` when the
+            # caller's `with` block exits.
             try:
                 binary = gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0)
                 return _ClosingTextIOWrapper(binary, raw, encoding="utf-8", newline="")
@@ -86,16 +77,16 @@ def save_fixture_csv(
 ) -> None:
     """Write a fixture. `extra_columns` is `{column name: {symbol: series}}`.
 
-    `extra_columns=None` must stay byte-identical to the seven-column form. This writer
-    is also how `SnapshotStore.create` lays down `bars.csv`, and `_hash_payload` hashes
-    those bytes, so a change to the default path would silently change every snapshot id,
-    and snapshot ids are logged with every trial. The extension is opt-in for that reason,
-    and `tests/unit/test_csv_fixture.py` checks the equality.
+    With `extra_columns=None` the output must stay byte-identical to the seven-column
+    form: `SnapshotStore.create` writes `bars.csv` with this function and `_hash_payload`
+    hashes those bytes, so any change would alter every snapshot id.
+    `tests/unit/test_csv_fixture.py` checks this.
 
-    Extra columns exist because a provider can report more than one volume (Binance klines
-    carry base volume, quote volume and taker-buy volume as separate named fields).
-    Carrying them side by side avoids deriving one from another with the wrong units.
-    Column order is `sorted()` so the bytes do not depend on dict insertion order.
+    Extra columns hold additional provider fields, e.g. Binance klines report base,
+    quote and taker-buy volume separately. They are written in `sorted()` order so the
+    bytes do not depend on dict insertion order.
+
+    Raises ValueError if a symbol's volumes and bars differ in length.
     """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -107,19 +98,12 @@ def save_fixture_csv(
             series = bars_by_symbol[symbol]
             volumes = volumes_by_symbol.get(symbol) if volumes_by_symbol else None
             if volumes is not None and len(volumes) != len(series):
-                # Refuse rather than truncate. The loop below reads `volumes[i]` for each
-                # bar, so a longer volume series would be silently cut to len(series) with
-                # its first N entries kept, preserving the wrong alignment when the extra
-                # entries are at the front or middle while making the lengths agree.
-                #
-                # The common cause: `clean()` drops bars and does not re-index volumes, so a
-                # caller who passes the raw list onward is misaligned from the first drop.
+                # Truncating to len(series) would hide a misalignment. The usual cause is
+                # passing raw volumes after `clean()` has dropped bars.
                 raise ValueError(
-                    f"{symbol!r} has {len(volumes)} volumes against {len(series)} bars. This "
-                    "writer used to truncate to the bar count, which hides a misalignment "
-                    "instead of reporting one. If the bars were cleaned, realign with "
-                    "`CleaningReport.realign(symbol, volumes)` rather than passing the "
-                    "original series."
+                    f"{symbol!r} has {len(volumes)} volumes against {len(series)} bars. If the "
+                    "bars were cleaned, realign the volumes with "
+                    "`CleaningReport.realign(symbol, volumes)` first."
                 )
             extras = [
                 (extra_columns or {}).get(name, {}).get(symbol) for name in extra_names
@@ -143,10 +127,9 @@ def save_fixture_csv(
 
 
 def _check_columns(path: Path, fieldnames: Sequence[str] | None) -> None:
-    """The first seven columns are the contract; anything after them is optional extra.
+    """Raise ValueError unless the first seven columns are the standard ones.
 
-    Deliberately `[:7]` rather than an exact match, which lets a fixture carry additional
-    provider columns without every reader needing to know.
+    Further columns are allowed, so a fixture can carry extra provider fields.
     """
     if fieldnames is None or list(fieldnames[: len(_COLUMNS)]) != _COLUMNS:
         raise ValueError(
@@ -155,10 +138,10 @@ def _check_columns(path: Path, fieldnames: Sequence[str] | None) -> None:
 
 
 def _to_float(cell: str | None) -> float:
-    """An empty cell means "no value here", which is NaN — never zero.
+    """Parse a cell as float; an empty or missing cell is NaN, not zero.
 
-    `engine/dataview.py` turns NaN into None precisely so a missing volume cannot be
-    compared against; a zero would be a real observation and a false one.
+    `engine/dataview.py` later maps NaN to None, so a missing volume is never read as a
+    real zero.
     """
     return float(cell) if cell not in (None, "") else float("nan")
 
@@ -181,12 +164,10 @@ def _row_to_bar(row: Mapping[str, str]) -> tuple[TimestampedBar, float]:
 def load_fixture_csv_with_volumes(
     path: str | Path,
 ) -> tuple[dict[str, list[TimestampedBar]], dict[str, list[float]]]:
-    """Like load_fixture_csv, but also returns per-symbol volume series (aligned with
-    the bar lists after sorting), for the cleaner and validator, which need volumes;
-    TimestampedBar itself carries none.
+    """Like load_fixture_csv, but also return per-symbol volumes aligned with the sorted bars.
 
-    Any columns beyond the standard seven are ignored here; `load_fixture_csv_with_extras`
-    returns them."""
+    Used by the cleaner and validator; TimestampedBar has no volume field. Columns
+    beyond the standard seven are ignored (see `load_fixture_csv_with_extras`)."""
     bars_by_symbol, volumes_by_symbol, _ = load_fixture_csv_with_extras(path)
     return bars_by_symbol, volumes_by_symbol
 
@@ -201,8 +182,8 @@ def load_fixture_csv_with_extras(
     """Like `load_fixture_csv_with_volumes`, plus any columns beyond the standard seven.
 
     Returns `(bars, volumes, extras)` where `extras` is `{column: {symbol: series}}`, all
-    index-aligned to the bar lists after sorting. A fixture with no extra columns returns
-    an empty `extras` dict, so this is safe to call on any fixture in the repo.
+    index-aligned to the bar lists after sorting. A fixture with no extra columns gives
+    an empty `extras` dict.
     """
     path = Path(path)
     extra_names: list[str] = []
@@ -229,6 +210,6 @@ def load_fixture_csv_with_extras(
 
 
 def load_fixture_csv(path: str | Path) -> dict[str, list[TimestampedBar]]:
-    """Bars only: delegates to the full loader and drops volumes."""
+    """Load a fixture's bars per symbol, sorted by timestamp, without volumes."""
     bars_by_symbol, _ = load_fixture_csv_with_volumes(path)
     return bars_by_symbol

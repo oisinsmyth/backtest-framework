@@ -1,11 +1,8 @@
 """Multi-instrument bar alignment.
 
-Pairs/multi-leg strategies use inner-join alignment: a bar missing on one leg means no
-trading for any leg at that timestamp, not just the leg that's missing it. Carry still
-accrues correctly across whatever gap that creates, with no special handling needed:
-carry is computed from (prev_timestamp, curr_timestamp) of two consecutive aligned
-bars, not from bar count, so a dropped bar just makes that gap wider, exactly as a
-weekend or holiday does.
+Inner-join alignment: a bar missing on one leg means no trading for any leg at that
+timestamp. Carry is computed from the timestamps of consecutive aligned bars, so a
+dropped bar widens the gap the same way a weekend or holiday does.
 """
 
 from __future__ import annotations
@@ -23,8 +20,8 @@ from .bars import TimestampedBar
 class AlignedBar:
     timestamp: datetime
     bars: dict[str, Bar]
-    """Every instrument passed to align_bars() has an entry here — inner join means a
-    timestamp only survives if every instrument had a bar at it."""
+    """One entry per instrument passed to align_bars(); a timestamp is kept only if
+    every instrument has a bar at it."""
 
 
 def align_bars(bars_by_instrument: Mapping[str, Sequence[TimestampedBar]]) -> list[AlignedBar]:
@@ -36,9 +33,8 @@ def align_bars(bars_by_instrument: Mapping[str, Sequence[TimestampedBar]]) -> li
         for instrument_id, series in bars_by_instrument.items()
     }
 
-    # Duplicate timestamps would silently collapse last-wins through the dicts
-    # above (a real yfinance failure mode after joins/re-fetches), which would be
-    # silent data mangling. Refuse loudly instead.
+    # The dicts above would keep only the last bar per duplicate timestamp (yfinance
+    # can produce duplicates after joins or re-fetches), so raise instead.
     for instrument_id, series in bars_by_instrument.items():
         if len(by_instrument_by_timestamp[instrument_id]) != len(series):
             counts = Counter(tb.timestamp for tb in series)
@@ -46,8 +42,8 @@ def align_bars(bars_by_instrument: Mapping[str, Sequence[TimestampedBar]]) -> li
             raise ValueError(
                 f"instrument {instrument_id!r} has duplicate bar timestamps "
                 f"{[ts.isoformat() for ts in duplicates[:5]]}"
-                f"{' (first 5 shown)' if len(duplicates) > 5 else ''} — refusing to "
-                "align: a duplicate would silently drop a bar, last-wins"
+                f"{' (first 5 shown)' if len(duplicates) > 5 else ''}; cannot align, "
+                "because a duplicate would overwrite a bar"
             )
 
     common_timestamps = set.intersection(

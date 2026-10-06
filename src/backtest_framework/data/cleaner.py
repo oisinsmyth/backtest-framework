@@ -1,16 +1,14 @@
-"""Data cleaner: explicit, versioned rules; every change reported.
+"""Data cleaner with explicit, versioned rules; every change is reported.
 
-Silent cleaning makes "strategy result" indistinguishable from "cleaning artifact",
-so the contract is clean(data) -> (data, CleaningReport), and the report attaches to
-the snapshot's metadata. Ruleset clean-v1 is drop-and-report only: the cleaner never
-rewrites a price. Fabricated values (e.g. forward-filled prices) would be executed
-against by fills; dropping a bar is safe, and inner-join alignment already handles the
-resulting hole correctly (carry spans the gap).
+`clean(data)` returns `(data, CleaningReport)`, and the report is attached to the
+snapshot's metadata so cleaning effects can be told apart from strategy results.
+Ruleset clean-v1 only drops bars and never rewrites a price, since fills would execute
+against a fabricated (e.g. forward-filled) price. Inner-join alignment handles the
+resulting hole, and carry spans the gap.
 
-The cleaner runs on raw prices, before any adjustment. The spike rule's discriminator is
-permanence: a >40% single-bar move that reverts within a bar is a bad print; one that
-sticks is real (a crash, or a raw split jump, which the validator explains via the
-splits table rather than the cleaner removing it).
+The cleaner runs on raw prices, before any adjustment. A single-bar move of more than
+40% that reverts on the next bar is a bad print; one that persists is kept (a crash,
+or a raw split jump, which the validator explains from the splits table).
 """
 
 from __future__ import annotations
@@ -25,9 +23,9 @@ from .bars import TimestampedBar
 RULESET_VERSION = "clean-v1"
 
 OHLC_RELATIVE_TOLERANCE = 1e-9
-"""low > high beyond this relative tolerance drops the bar; within it (e.g. the
-observed 1.2e-16 yfinance adjustment artifact, XOP 2018-10-24) the bar passes and the
-validator's identical tolerance owns the check."""
+"""A bar with low > high beyond this relative tolerance is dropped. Within it (e.g. the
+1.2e-16 yfinance adjustment artifact on XOP 2018-10-24) the bar is kept, and the
+validator applies the same tolerance."""
 
 SPIKE_THRESHOLD = 0.40
 REVERT_THRESHOLD = 0.10
@@ -48,13 +46,9 @@ class CleaningReport:
     kept_indices: Mapping[str, tuple[int, ...]] = field(default_factory=dict)
     """Per symbol, the indices of the input series that survived cleaning.
 
-    `clean()` takes a volume series, uses it to decide what to drop, and returns only bars.
-    The caller is left holding a volume list that is now longer than the bars it belongs to
-    and misaligned from the first drop onward, with every subsequent volume attributed to
-    the wrong bar. Passed on unchanged to `validate()` or `calibrate_impact_params()`, the
-    misalignment reaches ADV, then `SqrtImpact` charges, then P&L.
-
-    A caller can realign exactly with
+    `clean()` returns bars only, so the caller's volume list no longer lines up with them
+    after the first drop. Passed unchanged to `validate()` or `calibrate_impact_params()`,
+    the misaligned volumes would feed ADV, `SqrtImpact` charges and P&L. Realign with
 
         volumes = [volumes[i] for i in report.kept_indices[symbol]]
 
@@ -71,31 +65,28 @@ class CleaningReport:
         }
 
     def realign(self, symbol: str, values: Sequence[Any]) -> list[Any]:
-        """Take a per-bar series indexed against the input bars and drop what the bars did.
+        """Drop the same entries from a per-bar series that cleaning dropped from the bars.
 
-        Raises rather than truncating when the series does not match the input length: a
-        series of the wrong length cannot be realigned, and quietly returning a shorter one
-        would hide the mismatch.
+        Raises KeyError if `symbol` has no cleaning record, and ValueError if the series is
+        shorter than the cleaned input (it cannot be the series that was cleaned).
         """
         kept = self.kept_indices.get(symbol)
         if kept is None:
-            raise KeyError(f"no cleaning record for {symbol!r} — realign needs the report that dropped its bars")
+            raise KeyError(f"no cleaning record for {symbol!r}; realign needs the report that dropped its bars")
         if kept and max(kept) >= len(values):
             raise ValueError(
                 f"{symbol!r}: series has {len(values)} entries but cleaning kept index "
-                f"{max(kept)} of a longer input — this series is not the one that was cleaned"
+                f"{max(kept)} of a longer input, so this is not the series that was cleaned"
             )
         return [values[i] for i in kept]
 
 
 def _is_present(volume: float | None) -> bool:
-    """True when this bar has a usable volume, for either spelling of "it does not".
+    """True when this bar has a usable volume.
 
-    The data layer writes a gap as NaN (`csv_fixture._to_float`) and the engine layer writes
-    it as None (`engine/dataview.normalise_volumes`, which converts NaN into None and whose
-    docstring calls None the canonical gap). `math.isnan` alone would raise `TypeError` on
-    None, so a caller who normalised first (the documented engine path) would crash. This
-    check accepts both spellings, so neither layer has to convert.
+    Treats both gap representations as missing: NaN from the data layer
+    (`csv_fixture._to_float`) and None from the engine layer
+    (`engine/dataview.normalise_volumes`). `math.isnan` would raise TypeError on None.
     """
     return volume is not None and volume == volume
 

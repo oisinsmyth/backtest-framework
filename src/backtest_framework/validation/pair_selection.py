@@ -1,14 +1,12 @@
 """Pair selection with multiplicity handling.
 
-Gatev distance: sum of squared differences between rebased log-price series over the
-training window — the classic pairs-trading first pass. Selection ranks all C(n,2)
-candidate pairs and takes the top N rather than thresholding p-values (testing 200
-pairs at p<0.05 manufactures ~10 discoveries from pure noise). The number of pairs
-tested is returned alongside the ranking so the caller logs it to the TrialRegistry:
-that count is exactly what DSR deflates by later.
+Gatev distance: the sum of squared differences between rebased log-price series over
+the training window. All C(n,2) candidate pairs are ranked and the top N taken, rather
+than thresholding p-values (200 pairs tested at p<0.05 yield ~10 false discoveries).
+The number of pairs tested is returned with the ranking so the caller can log it to
+the TrialRegistry for DSR.
 
-Selection reads only DataViews, so it structurally cannot see beyond the training
-window it was handed.
+Selection reads only DataViews, so it cannot see past the training window.
 """
 
 from __future__ import annotations
@@ -26,7 +24,7 @@ class PairSelection:
     ranked_pairs: tuple[tuple[str, str], ...]
     """Best (lowest Gatev distance) first."""
     n_pairs_tested: int
-    """C(n,2) — the multiplicity count to log with any trial that uses this selection."""
+    """C(n,2): the multiplicity count to log with any trial that uses this selection."""
 
 
 def select_pairs(views: Mapping[str, DataView], top_n: int) -> PairSelection:

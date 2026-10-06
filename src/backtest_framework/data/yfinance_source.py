@@ -1,10 +1,9 @@
 """EquityDataSource: a yfinance-backed DataSource.
 
-Unhardened. `get_bars` is a raw passthrough over yfinance: no immutable snapshotting,
-no cleaning report, no validation. yfinance is a scraper, not an API; it breaks and
-serves bad prints without warning. Treat anything fetched through `get_bars` as
-provisional. For research use, fetch with `get_raw_history` and pass the result through
-clean → validate → SnapshotStore.
+`get_bars` passes yfinance data straight through, with no snapshotting, cleaning or
+validation. yfinance is a scraper and can break or serve bad prints without warning,
+so treat its output as provisional. For research, fetch with `get_raw_history` and
+pass the result through clean → validate → SnapshotStore.
 
 `get_bars` carries no volume; `get_raw_history` returns volumes separately.
 """
@@ -22,13 +21,11 @@ from .bars import TimestampedBar
 
 
 def _bars_from_dataframe(df: pd.DataFrame) -> list[TimestampedBar]:
-    """Pure conversion logic, deliberately separated from the network call so it's
-    testable with a hand-built fixture DataFrame — no live fetch required.
+    """Convert a yfinance history DataFrame to bars (no network call, so testable offline).
 
-    Timestamps are normalized to naive exchange-local wall time (tzinfo stripped):
-    daily-bar identity is the exchange-local date, and calendar-day carry arithmetic
-    must not become DST-sensitive (a Fri→Mon weekend is exactly 3.0
-    days of borrow in wall-clock terms, not 71/73 hours of UTC)."""
+    Timestamps become naive exchange-local wall time (tzinfo stripped). A daily bar is
+    identified by its exchange-local date, and carry arithmetic stays DST-insensitive:
+    a Fri→Mon weekend is 3.0 days of borrow, not 71 or 73 hours of UTC."""
     bars: list[TimestampedBar] = []
     for timestamp, row in df.iterrows():
         bar = Bar(
@@ -53,10 +50,11 @@ class EquityDataSource:
     def get_raw_history(
         self, symbol: str, start: date, end: date, timeframe: str = "1d"
     ) -> tuple[list[TimestampedBar], list[float], list[tuple], list[tuple]]:
-        """Raw (unadjusted) bars + volumes + corporate actions: the input the
-        hardened pipeline (clean → validate → snapshot) starts from. Returns
-        (bars, volumes, dividends, splits) where dividends/splits are
-        [(timestamp, amount-or-ratio)] with nonzero entries only."""
+        """Fetch raw (unadjusted) bars, volumes and corporate actions.
+
+        This is the input to clean → validate → snapshot. Returns (bars, volumes,
+        dividends, splits), where dividends and splits are [(timestamp, amount or
+        ratio)] with nonzero entries only."""
         ticker = yf.Ticker(symbol)
         df = ticker.history(start=start, end=end, interval=timeframe, auto_adjust=False, actions=True)
         bars = _bars_from_dataframe(df)

@@ -1,17 +1,13 @@
 """Signal -> target weight -> orders pipeline.
 
-Strategies output desired portfolio weights, not order sizes — welding alpha ("XLE rich
-vs XOP") to implementation ("sell 43 shares") inside each strategy prevents reusing
-sizing logic, prevents comparing signals independent of sizing, and prevents netting
-orders across strategies. A single Sizer converts (target weight, current position,
-capital, price) into a desired quantity for any strategy, unmodified; a netting step
-combines every strategy's private order intent into the orders that actually reach the
-broker, while each strategy's own virtual book updates as if its own order filled
-in full, regardless of what happened during netting.
+Strategies output target portfolio weights rather than order sizes, so sizing logic
+is shared, signals can be compared independently of sizing, and orders can be netted
+across strategies. One Sizer converts (target weight, current position, capital,
+price) into a desired quantity for any strategy. Netting combines the strategies'
+orders into the orders sent to the broker, while each strategy's virtual book updates
+as if its own order filled in full.
 
-`capital_by_strategy` is an external input here, not something this module computes —
-deciding how much capital each strategy gets is the Allocator's job
-(engine.allocator). The Sizer takes whatever capital figure it's handed.
+`capital_by_strategy` is an input, supplied by an Allocator (engine.allocator).
 """
 
 from __future__ import annotations
@@ -30,17 +26,13 @@ class TargetWeight:
     """Fraction of the strategy's allocated capital this instrument should represent."""
 
     stop: float | None = None
-    """Price at which this position must be closed intrabar, if it is touched.
+    """Price at which this position is closed intrabar if touched; None (default) for no stop.
 
-    The stop rides with the target it protects rather than living in its own channel:
-    it is per-(strategy, instrument) state the strategy already holds, and re-declaring
-    it every bar is what lets a trailing stop move without any extra machinery. None
-    (the default) means no stop.
+    Re-declared with the target every bar, so a trailing stop just moves.
 
-    Declared in the view frame, enforced against execution prices. The two are
-    identical for instruments without splits (e.g. spot crypto); `run_backtest` refuses
-    to run a stop on an instrument carrying splits rather than silently comparing two
-    frames."""
+    Declared in the view frame and enforced against execution prices. The two match
+    for instruments without splits (e.g. spot crypto); `run_backtest` raises ValueError
+    for a stop on an instrument with splits."""
 
 
 @dataclass(frozen=True)
@@ -51,8 +43,9 @@ class Order:
 
 
 class Sizer:
-    """Converts target weights into desired quantities. Holds no per-strategy state —
-    the same Sizer instance drives every strategy without modification."""
+    """Converts target weights into desired quantities.
+
+    Holds no per-strategy state, so one instance serves every strategy."""
 
     def desired_quantity(
         self, target: TargetWeight, capital: float, price: float, instrument: Instrument
@@ -69,10 +62,10 @@ class Sizer:
         prices: Mapping[str, float],
         instruments: Mapping[str, Instrument],
     ) -> dict[tuple[str, str], Order]:
-        """Per-(strategy, instrument) virtual orders — each strategy's private order
-        intent, before netting. Already-at-target positions produce no entry at all
-        (not a zero-quantity order), so "no churn" falls out of the data rather than
-        needing to be filtered downstream."""
+        """Return per-(strategy, instrument) virtual orders, before netting.
+
+        A position already at target produces no entry (rather than a zero-quantity
+        order)."""
         virtual_orders: dict[tuple[str, str], Order] = {}
         for target in targets:
             key = (target.strategy_id, target.instrument_id)
@@ -88,9 +81,10 @@ class Sizer:
 
 
 def net_orders(virtual_orders: Mapping[tuple[str, str], Order]) -> dict[str, Order]:
-    """Combine every strategy's private order intent for the same instrument into the
-    order that actually reaches the broker — strategy A buying what strategy B
-    sells cancels internally instead of paying trade costs twice."""
+    """Sum the strategies' virtual orders per instrument into broker orders.
+
+    Opposing orders cancel instead of paying trade costs twice; instruments that net
+    to zero are omitted."""
     totals: dict[str, float] = {}
     for (_strategy_id, instrument_id), order in virtual_orders.items():
         totals[instrument_id] = totals.get(instrument_id, 0.0) + order.quantity
@@ -103,8 +97,7 @@ def apply_virtual_orders(
     current_positions: Mapping[tuple[str, str], float],
     virtual_orders: Mapping[tuple[str, str], Order],
 ) -> dict[tuple[str, str], float]:
-    """Update each strategy's own virtual book by its own order, independent of
-    whatever happened during netting at the broker-facing level."""
+    """Return the virtual books updated by each strategy's own order, ignoring netting."""
     updated = dict(current_positions)
     for key, order in virtual_orders.items():
         updated[key] = updated.get(key, 0.0) + order.quantity

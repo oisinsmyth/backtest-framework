@@ -1,9 +1,8 @@
 """Metrics tearsheet renderer.
 
-The risk-free rate is stated in the Sharpe row itself (never implicit), realised beta
-carries an "expected ≈ 0 for a market-neutral book" note when a benchmark is present,
-and VaR/CVaR print the
-literal insufficient-data message instead of a number the sample can't support.
+The Sharpe row states the risk-free rate. Realised beta, shown when a benchmark is
+given, carries the "≈ 0 for a market-neutral book" expectation. VaR/CVaR print the
+insufficient-data message when the sample is too small.
 """
 
 from __future__ import annotations

@@ -1,23 +1,16 @@
 """Cost-multiplier sweep: run the same backtest at scaled cost levels.
 
-"Does it survive 2× costs" is the single most informative output for a thin edge —
-more valuable than any refinement to cost functional forms. run_cost_sweep runs an
-identical scenario once per multiplier through run_backtest, scaling the CostStack via
+For a thin edge, whether it survives 2× costs is usually more informative than any
+refinement of the cost model. run_cost_sweep runs the same scenario through
+run_backtest once per multiplier, scaling the CostStack with
 costs.scaling.scaled_cost_stack.
 
-Strategies are supplied as a factory (a zero-arg callable returning fresh instances),
-not as instances — strategies may hold per-run state (e.g. ZScorePairsStrategy's
-current side), and reusing an instance across multiplier runs would leak state from
-one run into the next.
+Strategies are passed as a zero-argument factory so each run gets fresh instances;
+strategies can hold per-run state (e.g. ZScorePairsStrategy's current side).
 
-render_sweep_table produces a minimal markdown table — multiplier, final NAV, net
-P&L, return, max drawdown. The full tearsheet (Sharpe with explicit rf, beta,
-sample-size-gated tails) lives in analytics.tearsheet.
-
-`run_cost_sweep` forwards every run_backtest keyword that shapes the run, including
-`volumes_by_instrument`, `fill_timing`, `risk_limits` and `enforce_pretrade`. A sweep
-argument that a caller sets and the sweep silently discards would produce results for
-a different configuration than the one requested.
+render_sweep_table produces a markdown table of multiplier, final NAV, net P&L,
+return and max drawdown. The full tearsheet (Sharpe with explicit rf, beta,
+sample-size-gated tails) is in analytics.tearsheet.
 """
 
 from __future__ import annotations
@@ -37,8 +30,7 @@ from .backtest import BacktestResult, run_backtest
 from .risk import RiskLimits
 from .strategy import Strategy
 
-# `max_drawdown` is imported for render_sweep_table's own use and is deliberately not
-# re-exported: its public home is analytics/metrics.py.
+# `max_drawdown` is used by render_sweep_table but exported from analytics/metrics.py.
 __all__ = ["run_cost_sweep", "render_sweep_table", "SweepResult", "SweepRun"]
 
 DEFAULT_MULTIPLIERS = (0.0, 0.5, 1.0, 2.0, 4.0)
@@ -59,8 +51,8 @@ class SweepResult:
     runs: tuple[SweepRun, ...]
 
     def net_pnls(self) -> list[tuple[float, float]]:
-        """[(multiplier, net P&L)], in the order the sweep ran (ascending multiplier
-        if the caller passed them sorted — the default is)."""
+        """[(multiplier, net P&L)] in the order the sweep ran (the default multipliers
+        are ascending)."""
         return [(run.multiplier, run.net_pnl(self.starting_cash)) for run in self.runs]
 
 
@@ -84,15 +76,17 @@ def run_cost_sweep(
     risk_limits: RiskLimits | None = None,
     enforce_pretrade: bool = False,
 ) -> SweepResult:
-    """Every keyword here except `multipliers` and `make_strategies` has the same
-    meaning and default as the run_backtest parameter it forwards to; the sweep adds
-    no semantics of its own."""
+    """Run the backtest once per cost multiplier and collect the results.
+
+    Apart from `multipliers` and `make_strategies`, every argument is forwarded to
+    run_backtest with the same meaning and default. Each run's trial_id gets a
+    `-{multiplier}x` suffix and its config a `cost_multiplier` key."""
     runs: list[SweepRun] = []
     for multiplier in multipliers:
         result = run_backtest(
             bars_by_instrument=bars_by_instrument,
             instruments=instruments,
-            strategies=make_strategies(),  # fresh instances — no state leaks across runs
+            strategies=make_strategies(),  # fresh instances so no state carries over
             cost_stack=scaled_cost_stack(base_cost_stack, multiplier),
             allocator=allocator,
             starting_cash=starting_cash,

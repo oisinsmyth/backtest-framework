@@ -1,10 +1,8 @@
 """PortfolioState: broker-facing cash and positions.
 
-Tracks only the net, broker-facing book — what's actually held after netting.
-Per-strategy virtual books are deliberately not managed by this class; the engine
-loop maintains those itself as a plain dict via
-`pipeline.sizing.apply_virtual_orders`, consistent with that module's stateless design
-rather than duplicating bookkeeping in two places.
+Tracks only the net book actually held after netting. Per-strategy virtual books are
+kept by the engine loop as a plain dict, updated with
+`pipeline.sizing.apply_virtual_orders`.
 """
 
 from __future__ import annotations
@@ -29,21 +27,21 @@ class PortfolioState:
         self.cash -= carry_cost
 
     def apply_cash_flow(self, amount: float) -> None:
-        """Signed event cash flow: positive credits (long receives a
-        dividend), negative debits (short pays it)."""
+        """Apply a signed event cash flow: positive credits (a long receives a dividend),
+        negative debits (a short pays it)."""
         self.cash += amount
 
     def apply_split(self, instrument_id: str, ratio: float) -> None:
-        """Scale a position for a split ex-date: yfinance convention — 4.0 =
-        4-for-1 forward (shares ×4), 0.25 = 1-for-4 reverse (shares ×0.25). Cash is
-        untouched; NAV continuity comes from price moving by 1/ratio."""
+        """Scale a position on a split ex-date.
+
+        yfinance convention: 4.0 is a 4-for-1 forward split (shares ×4), 0.25 a 1-for-4
+        reverse split (shares ×0.25). Cash is unchanged; NAV stays continuous because the
+        price moves by 1/ratio."""
         if instrument_id in self.positions:
             self.positions[instrument_id] *= ratio
 
     def nav(self, prices: Mapping[str, float], instruments: Mapping[str, Instrument]) -> float:
-        # notional() is signed (quantity * price), so a short position's negative
-        # quantity already contributes a negative notional here — this sum gives
-        # cash + longs - |shorts| without special-casing shorts.
+        # notional() is signed, so shorts contribute negatively: cash + longs - |shorts|.
         positions_value = sum(
             instruments[instrument_id].notional(quantity, prices[instrument_id])
             for instrument_id, quantity in self.positions.items()

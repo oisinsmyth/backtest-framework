@@ -1,6 +1,6 @@
 """Declarative config for the carry cost brick.
 
-This factory registry builds a costs.bricks.FlatRateCarry from a config dict
+Builds a costs.bricks.FlatRateCarry from a config dict
 (`{"type": "act365", "annual_rate": ..., "day_count": ...}`).
 """
 

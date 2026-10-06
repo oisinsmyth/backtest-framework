@@ -1,44 +1,26 @@
-"""Futures cost bricks: commission and tick crossing, against the TradeCostBrick
-interface, plus the table of cost lines they are built from.
+"""Futures cost bricks (commission and tick crossing) for the TradeCostBrick interface,
+and the cost table they are built from.
 
-Why a separate module
----------------------
-`costs/equity_bricks.py` models equity friction: a per-share schedule, a square-root impact
-law, a borrow rate. A futures round trip has neither shape. It is two numbers:
+A futures round trip costs two amounts, both charged per fill on whole contracts:
 
-    commission   declared per contract by a broker, flat, and the binding cost at micro
-                 size: $3.00 on MES's $1.25 tick is 2.4 ticks before any spread
-    crossing     measured, in ticks, from the exchange's own quotes
+    commission   declared per contract by the broker, flat; the binding cost at micro
+                 size ($3.00 on MES's $1.25 tick is 2.4 ticks before any spread)
+    crossing     measured in ticks from the exchange's quotes
 
-and both are charged per fill on a whole number of contracts. The cost table in
-`data/futures_costs.json` holds both numbers per root and size.
+`data/futures_costs.json` holds both per root and size. They are separate bricks so a cost
+failure can be attributed to one or the other (a cheaper broker changes only the
+commission); `FuturesRoundTrip` combines them as `.commission` and `.crossing`.
 
-Declared versus measured
-------------------------
-`FuturesCommission` is declared. `TickCrossing` is measured. They are separate bricks rather
-than one `round_trip_usd` number because a study that fails on cost needs to know which half
-caused it: a cheaper broker fixes one and nothing fixes the other. `FuturesRoundTrip` composes
-the two and keeps them addressable as `.commission` and `.crossing`.
+Crossing is stored in ticks rather than basis points because a tick is fixed in price
+terms: an aggressor pays one tick on ES at an index level of 2,000 or 7,000, and a figure
+such as 0.364 bp is that tick divided by one particular median price. A micro's tick is a
+tenth of its parent's while its commission is not.
 
-Crossing is in ticks, not basis points
---------------------------------------
-A tick is fixed in price terms. Quoting crossing in bp would make the brick's charge depend
-on the price level, which is right for an equity spread and wrong here: an aggressor pays
-one tick on ES whether the index is at 2,000 or at 7,000, and a figure such as 0.364 bp is
-that one tick divided by a particular median price. Storing the tick count and deriving the
-bp figure does not go stale. It also makes the micro contracts' cost visible, since a
-micro's tick is a tenth of its parent's and its commission is not.
-
-What these bricks do not model
-------------------------------
-Queue position, partial fills, the adverse selection a passive order pays, and the age of the
-spread measurements: the crossing figures in the table were measured on 2025-09..2026-09, and
-applying a recent spread to an older window is optimistic. The table carries each line's
-window so the caller can see the extrapolation it is making; the bricks themselves are
-arithmetic and claim nothing about the window.
-
-Exchange and clearing fees are not modelled separately: every commission line in the table is
-an all-in round-trip number, and the table carries no source for splitting it.
+Not modelled: queue position, partial fills, adverse selection on passive orders, and the
+age of the spread measurements. The crossing figures were measured on 2025-09..2026-09, so
+applying them to an older window is optimistic; the table records each line's window and
+the bricks do not check it. Exchange and clearing fees are not split out: every commission
+line is an all-in round-trip figure.
 """
 
 from __future__ import annotations
@@ -55,24 +37,19 @@ from ..instruments.future import Future
 REPO = Path(__file__).resolve().parents[3]
 
 TABLE_PATH = REPO / "data" / "futures_costs.json"
-"""The measured/declared futures cost table.
-
-Every number in it carries its provenance and measurement window.
-"""
+"""The futures cost table; every number carries its provenance and measurement window."""
 
 
 class FuturesCostError(ValueError):
-    """A futures cost line was asked for and does not exist.
+    """Raised when a requested futures cost line does not exist.
 
-    Its own class so a caller can tell "this root is not in the table" from a generic
-    ValueError raised inside the arithmetic. Lookups never return a default: a guessed cost
-    that is merely plausible still produces a Sharpe, and nothing downstream can tell.
+    A separate class so a caller can distinguish a missing table entry from a ValueError
+    raised in the arithmetic. Lookups never fall back to a default value.
     """
 
 
 def _require_future(instrument: Instrument, brick: str) -> Future:
-    """A futures cost brick applied to an equity is a category error, and it must raise
-    rather than quietly charge a per-contract fee on a share."""
+    """Return `instrument` if it is a Future; raise TypeError otherwise."""
     if not isinstance(instrument, Future):
         raise TypeError(
             f"{brick} charges per CONTRACT and needs a Future, but got "
@@ -86,32 +63,26 @@ def _require_future(instrument: Instrument, brick: str) -> Future:
 
 @dataclass(frozen=True)
 class FuturesCommission:
-    """Broker commission, declared, charged half per fill and per contract.
+    """Declared broker commission, charged per contract, half on each fill.
 
     `per_round_trip_usd` is the all-in round-trip figure ($3.00 on an index micro, $6.00
-    full-size in the cost table). Half of it is charged on each of the two fills, so a
-    position opened and closed pays exactly the declared number and a position held across
-    the end of a study pays for the leg it actually traded.
+    full-size in the cost table). A position opened and closed pays the full figure; a
+    position still open at the end of a study pays for the one fill it made.
 
-    Per contract, not per order. That is what makes commission the binding constraint at
-    minimum tradable size: it does not shrink with the tick, and the micro's tick is a tenth
-    of its parent's.
-
-    `price` is ignored; `price_independent` below declares that in a form `round_trip_usd`
-    can read.
+    The charge is per contract, not per order, and does not shrink with the tick, which is
+    why it binds at micro size. `price` is ignored.
     """
 
     per_round_trip_usd: float
 
     price_independent: ClassVar[bool] = True
-    """This brick's charge does not depend on the fill price. Read by `round_trip_usd`."""
+    """The charge does not depend on the fill price. Read by `round_trip_usd`."""
 
     def __post_init__(self) -> None:
         if self.per_round_trip_usd < 0.0:
             raise ValueError(
                 f"FuturesCommission(per_round_trip_usd={self.per_round_trip_usd!r}) is "
-                "negative. A rebate is not modelled here; a negative cost would flatter every "
-                "study that used it and no test downstream could see it."
+                "negative. Rebates are not modelled."
             )
 
     def cost(self, instrument: Instrument, quantity: float, price: float) -> float:
@@ -121,24 +92,21 @@ class FuturesCommission:
 
 @dataclass(frozen=True)
 class TickCrossing:
-    """The cost of crossing the spread, measured, in ticks per round trip.
+    """Measured cost of crossing the spread, in ticks per round trip.
 
-    `ticks_per_round_trip` is a full round trip's crossing: one tick on ES means paying half
-    a tick in and half a tick out, i.e. `0.5 * tick_usd` a side. Half is charged per fill, so
-    the two fills sum to `ticks_per_round_trip * tick_usd` exactly (0.5 is a power of two;
-    halving and re-doubling a double is lossless).
+    One tick round trip on ES means half a tick in and half a tick out, `0.5 * tick_usd` a
+    side. The two fills sum to `ticks_per_round_trip * tick_usd` exactly (halving by 0.5 is
+    lossless in binary floating point).
 
-    The dollar value comes from the instrument's tick, never from a literal here: the same
-    1.0085687251930602 ticks is $12.61 on ES and $1.26 on MES, while the commission does not
-    scale down with the contract.
+    Dollars come from the instrument's tick: 1.0085687251930602 ticks is $12.61 on ES and
+    $1.26 on MES.
     """
 
     ticks_per_round_trip: float
 
     price_independent: ClassVar[bool] = True
-    """A tick is fixed in price terms, so this brick's charge does not depend on the fill
-    price. That is the difference between it and `PercentOfNotionalSpread`, and the reason
-    the table stores ticks rather than basis points."""
+    """A tick is fixed in price terms, so the charge does not depend on the fill price
+    (unlike `PercentOfNotionalSpread`)."""
 
     def __post_init__(self) -> None:
         if self.ticks_per_round_trip < 0.0:
@@ -154,43 +122,37 @@ class TickCrossing:
 
 @dataclass(frozen=True)
 class FuturesRoundTrip:
-    """One instrument's whole trade-cost line: commission plus crossing, addressable apart.
+    """One instrument's trade-cost line: commission plus crossing.
 
-    It satisfies `TradeCostBrick` itself, so a stack takes one entry rather than two, and
-    `.commission` and `.crossing` stay accessible so a cost failure can be attributed to
-    one half or the other.
-
-    `.line`, `.window` and `.size` are the provenance of the crossing figure, carried on the
-    object rather than left in the table, so a report can name the measurement it charged
-    without re-opening the file.
+    A `TradeCostBrick` itself, so a stack takes one entry; `.commission` and `.crossing`
+    remain accessible separately. `.line`, `.window` and `.size` record which measurement
+    the crossing figure came from.
     """
 
     commission: FuturesCommission
     crossing: TickCrossing
     instrument: Future | None = None
-    """The contract this line was resolved for, when it came from the table.
+    """The contract this line was resolved for, when built from the table.
 
-    Optional. `cost()` never reads it: a brick is handed its instrument by the caller at fill
-    time, which is what lets one declarative config serve a book of several roots. It is
-    carried so a report can say which contract's tick the line was chosen on, and the
-    `round_trip_usd` property raises rather than guessing when it is absent.
+    `cost()` does not read it; the caller passes the instrument at fill time, so one config
+    can serve several roots. It records which contract's tick the line was chosen on, and
+    the `round_trip_usd` property raises when it is None.
     """
     root: str = ""
-    """The parent root the table entry hangs under ("ES" for MES). Empty when hand-built."""
+    """The parent root of the table entry ("ES" for MES). Empty when hand-built."""
     size: str = ""
-    """"micro" or "full" — which entry of `root` this is. Empty when hand-built."""
+    """"micro" or "full": which entry of `root` this is. Empty when hand-built."""
     line: str = ""
-    """Which crossing line the tick count came from ("effective_exec_hours", "one_tick", ...)."""
+    """The crossing line the tick count came from ("effective_exec_hours", "one_tick", ...)."""
     window: tuple[str, ...] = ()
-    """The crossing measurement's own window, as (start, end) ISO dates. Empty for a rule
-    (the one-tick convention measured nothing and has no window to quote)."""
+    """The crossing measurement window as (start, end) ISO dates. Empty for a convention
+    such as `one_tick`, which was not measured."""
 
     price_independent: ClassVar[bool] = True
 
     @property
     def bricks(self) -> tuple[FuturesCommission, TickCrossing]:
-        """The two bricks, in the order they are charged. Summing is order-free (see
-        costs/stack.py), but a stable order keeps the golden tests' arithmetic reproducible."""
+        """The two bricks in charging order, fixed so the golden tests are reproducible."""
         return (self.commission, self.crossing)
 
     def cost(self, instrument: Instrument, quantity: float, price: float) -> float:
@@ -198,12 +160,12 @@ class FuturesRoundTrip:
 
     @property
     def round_trip_usd(self) -> float:
-        """Two fills of one contract of `self.instrument`, in dollars."""
+        """Cost in dollars of two fills of one contract of `self.instrument`."""
         if self.instrument is None:
             raise FuturesCostError(
                 "this FuturesRoundTrip carries no instrument, so it has no round-trip dollar "
-                "figure of its own — crossing is priced by the tick of whichever contract is "
-                "being filled. Call round_trip_usd(instrument, line.bricks) with the contract."
+                "figure of its own; crossing is priced by the tick of the contract being filled. "
+                "Call round_trip_usd(instrument, line.bricks) with the contract."
             )
         return round_trip_usd(self.instrument, self.bricks)
 
@@ -216,15 +178,15 @@ class FuturesRoundTrip:
         *,
         table_path: Path | None = None,
     ) -> FuturesRoundTrip:
-        """Compose the two bricks from `data/futures_costs.json`.
+        """Build the line from `data/futures_costs.json`.
 
-        `root` is the parent root ("ES") or the traded symbol ("MES"); a symbol resolves its
-        own size and `size` must then agree if it is given at all. `size` is "micro" or
-        "full" and defaults to the entry's own minimum tradable size. `line` names the
-        crossing measurement and defaults to the entry's `default_line`.
+        `root` is a parent root ("ES") or a traded symbol ("MES"); a symbol implies its size,
+        and `size`, if given, must agree. `size` is "micro" or "full" and defaults to the
+        root's minimum tradable size. `line` names the crossing measurement and defaults to
+        the entry's `default_line`.
 
-        Everything raises rather than defaulting: an unknown root, an unknown size, a size the
-        root does not list, an unknown line, and a line that root was never measured on.
+        Raises `FuturesCostError` on an unknown root or size, a size the root does not list,
+        or a line not measured on that contract.
         """
         table = load_cost_table(table_path)
         root_key, size_key = _resolve_symbol(table, root, size)
@@ -237,8 +199,7 @@ class FuturesRoundTrip:
             known_any = ", ".join(sorted(table["lines"]))
             raise FuturesCostError(
                 f"{entry['symbol']} has no crossing line {line_key!r}. Lines measured on this "
-                f"contract: {known_here}. Lines the table defines at all: {known_any}. A "
-                "missing measurement must be a loud error, not another root's number."
+                f"contract: {known_here}. Lines the table defines at all: {known_any}."
             )
 
         instrument = Future(
@@ -263,16 +224,14 @@ def round_trip_usd(
     bricks: Iterable[Any],
     price: float | None = None,
 ) -> float:
-    """What one contract's round trip costs: an entry fill plus an exit fill.
+    """Cost of one contract's round trip: an entry fill plus an exit fill.
 
-    `price` may be omitted only when every brick declares `price_independent = True`. It is
-    not defaulted to zero: a zero price would silently zero a `PercentOfNotionalSpread` and
-    return a number that looks like an answer. If a brick reads the price and no price is
-    given, this raises and names the brick.
+    `price` may be omitted only when every brick declares `price_independent = True`;
+    otherwise this raises and names the bricks that read the price.
 
-    Summed the way `CostStack.trade_cost` sums (per fill over the bricks, then the two
-    fills), so a stack over the same bricks returns the identical double;
-    `tests/unit/test_futures_bricks.py` checks this.
+    Summed as `CostStack.trade_cost` sums (over bricks per fill, then the two fills), so a
+    stack over the same bricks returns the identical double
+    (`tests/unit/test_futures_bricks.py`).
     """
     bricks = tuple(bricks)
     if price is None:
@@ -281,8 +240,7 @@ def round_trip_usd(
             names = ", ".join(sorted(type(b).__name__ for b in reads_price))
             raise FuturesCostError(
                 f"round_trip_usd was given no price, but {names} does not declare "
-                "price_independent. Defaulting the price to 0.0 would silently zero that "
-                "brick's charge; pass the price level the round trip happens at."
+                "price_independent. Pass the price level of the round trip."
             )
         price = 0.0
     entry = sum(brick.cost(instrument, 1.0, price) for brick in bricks)
@@ -307,12 +265,12 @@ def _load_table(path: Path) -> dict[str, Any]:
 
 
 def load_cost_table(path: Path | None = None) -> dict[str, Any]:
-    """The parsed cost table. Cached per path, so the file is read once per process."""
+    """Return the parsed cost table, cached per path (read once per process)."""
     return _load_table(path or TABLE_PATH)
 
 
 def _resolve_symbol(table: dict[str, Any], root: str, size: str | None) -> tuple[str, str]:
-    """(parent root, size) for a parent root or a traded symbol, raising on anything else."""
+    """Return (parent root, size) for a parent root or traded symbol; raise otherwise."""
     roots = table["roots"]
     if root in roots:
         root_key = root
@@ -329,13 +287,13 @@ def _resolve_symbol(table: dict[str, Any], root: str, size: str | None) -> tuple
         known = ", ".join(sorted(roots))
         raise FuturesCostError(
             f"no futures cost line for {root!r}. The table carries roots: {known} (and each "
-            f"root's traded symbols). A missing cost line must be a loud error, not a guess."
+            f"root's traded symbols)."
         )
 
     if size_key not in roots[root_key]:
         available = ", ".join(s for s in ("micro", "full") if s in roots[root_key])
         raise FuturesCostError(
-            f"{root_key} has no {size_key!r} entry — it lists: {available}. "
+            f"{root_key} has no {size_key!r} entry; it lists: {available}. "
             f"{roots[root_key].get('no_micro_because', '')}".strip()
         )
     return root_key, size_key
@@ -356,8 +314,7 @@ def crossing_lines_for(
 ) -> dict[str, float]:
     """Every crossing line measured on one contract, as {line name: ticks per round trip}.
 
-    Useful for looking at the range of the estimates before picking one, which the default
-    line hides.
+    Shows the range of estimates behind the default line.
     """
     table = load_cost_table(table_path)
     root_key, size_key = _resolve_symbol(table, root, size)
@@ -368,7 +325,7 @@ def crossing_lines_for(
 def build_trade_bricks(
     root: str, size: str | None = None, line: str | None = None, *, table_path: Path | None = None
 ) -> tuple[FuturesCommission, TickCrossing]:
-    """The two bricks for one contract, ready for `CostStack(trade_bricks=...)`."""
+    """Return the two bricks for one contract, for `CostStack(trade_bricks=...)`."""
     return FuturesRoundTrip.from_table(root, size, line, table_path=table_path).bricks
 
 

@@ -1,15 +1,12 @@
 """Sample-size-gated tail risk.
 
-Reporting a number you shouldn't trust is worse than not reporting one — 95% VaR from
-~500 daily points estimates the 25th-worst day. The gate here: the tail beyond the
-cutoff must contain at least MIN_TAIL_OBSERVATIONS points, since a tail estimated from
-fewer than 30 observations is too noisy to report. At 95% confidence that means
-n ≥ 600; at 99%, n ≥ 3,000.
+95% VaR from ~500 daily points rests on about 25 tail observations. The tail beyond
+the cutoff must hold at least MIN_TAIL_OBSERVATIONS (30) points, so 95% confidence
+needs n ≥ 600 and 99% needs n ≥ 3,000.
 
-The result is never None and never a silently-wrong number: it's either a value or
-an explicit insufficient-data marker whose message contains the minimum-n arithmetic.
-Losses are reported as positive numbers (a 2.3% VaR means "you lose ≥2.3% on the
-worst 5% of days").
+The result holds either a value or an insufficient-data reason whose message gives
+the minimum-n arithmetic. Losses are positive (a 2.3% VaR means a loss of at least
+2.3% on the worst 5% of days).
 """
 
 from __future__ import annotations
