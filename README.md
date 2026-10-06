@@ -1,5 +1,9 @@
 # backtest-framework
 
+[![tests](https://github.com/oisinsmyth/backtest-framework/actions/workflows/tests.yml/badge.svg)](https://github.com/oisinsmyth/backtest-framework/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)
+
 An event-driven backtesting framework for daily and intraday strategies on equities and
 futures. Costs are composed from small tested parts (commission, spread, market impact, borrow,
 margin interest, dividends), and the engine is checked against hand-computed ledgers and against
@@ -15,7 +19,7 @@ audit how a backtest reaches its numbers.
 Requires Python 3.12+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-git clone <repo-url> backtest-framework
+git clone https://github.com/oisinsmyth/backtest-framework.git
 cd backtest-framework
 uv sync
 uv run pytest -q
@@ -72,7 +76,7 @@ The strategy loses money after costs. Two more examples:
 - [`examples/deflated_sharpe.py`](examples/deflated_sharpe.py) logs a 12-cell parameter grid to
   the trial registry and deflates the best cell's Sharpe by the number of trials.
 
-## What's in the box
+## Packages
 
 | Package | Contents |
 |---|---|
@@ -97,7 +101,7 @@ cost model.
 hand without importing the package. Property tests check invariants, such as exact
 reconciliation of fills to positions, over generated inputs. The engine agrees with vectorbt on
 all 1,370 fills and to within $0.0000003 over a ten-year equity curve, and the metrics agree with
-quantstats. Strategies can only see past bars, by construction. Details and limits are in
+quantstats. A strategy only ever receives bars up to the current one. Details and limits are in
 [`docs/VALIDATION.md`](docs/VALIDATION.md); [`docs/findings/`](docs/findings/) has five short
 case studies from research built on the framework.
 
@@ -107,6 +111,15 @@ case studies from research built on the framework.
 file of adjusted prices, and one of raw prices with dividends and splits in a separate events
 file. `data/futures_*.json` and `data/fut_specs_from_definition.json` hold CME contract
 specifications and measured futures cost parameters, which the futures modules read at runtime.
+
+## Contributing
+
+Bug reports and pull requests are welcome; see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+
+## Citation
+
+If you use this in research, please cite it using [`CITATION.cff`](CITATION.cff), or the
+**Cite this repository** button on GitHub.
 
 ## Licence
 
