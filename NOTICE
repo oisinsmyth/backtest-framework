@@ -15,7 +15,8 @@ Bundled data:
 - data/fut_specs_from_definition.json: contract specifications taken from a Databento
   instrument-definition snapshot of CME Globex.
 - data/futures_costs.json and data/futures_impact_params.json: cost parameters (spread and
-  crossing in ticks, impact coefficients) computed from Databento CME quote data. They contain
-  derived summary statistics only, not quote or trade records.
+  crossing in ticks, volume and volatility for market impact) computed from Databento CME
+  market data (quotes, trades and bars). They contain derived summary statistics only, not
+  quote, trade or bar records.
 
 <!-- TODO(author): confirm the redistribution terms for the bundled fixtures before publishing. -->

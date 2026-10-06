@@ -1,5 +1,5 @@
 {
-  "source": "data\\raw\\databento\\GLBX-20260911-LEFUEVLPSR\\glbx-mdp3-20260101-20260910.definition.dbn.zst",
+  "source": "Databento GLBX.MDP3 instrument definitions, 2026-01-01..2026-09-10",
   "snapshot_day_index": 20450,
   "formula": "tick_usd = mpi*1e-9*display_factor * uom_qty*1e-9",
   "verified_against": {
@@ -43,7 +43,7 @@
       "tick_usd_raw_formula": 12.5,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $385,900",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ES.last_price",
+      "scaling_source": "notional test on the last price of ES hourly front-contract bars",
       "tick_usd_full_contract": 12.5
     },
     "NQ": {
@@ -63,7 +63,7 @@
       "tick_usd_raw_formula": 5.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $595,000",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.NQ.last_price",
+      "scaling_source": "notional test on the last price of NQ hourly front-contract bars",
       "tick_usd_full_contract": 5.0
     },
     "RTY": {
@@ -83,7 +83,7 @@
       "tick_usd_raw_formula": 5.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $147,250",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.RTY.last_price",
+      "scaling_source": "notional test on the last price of RTY hourly front-contract bars",
       "tick_usd_full_contract": 5.0
     },
     "YM": {
@@ -103,7 +103,7 @@
       "tick_usd_raw_formula": 5.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $264,460",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.YM.last_price",
+      "scaling_source": "notional test on the last price of YM hourly front-contract bars",
       "tick_usd_full_contract": 5.0
     },
     "MES": {
@@ -203,7 +203,7 @@
       "tick_usd_raw_formula": 10.000000000000002,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $65,910",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.CL.last_price",
+      "scaling_source": "notional test on the last price of CL hourly front-contract bars",
       "tick_usd_full_contract": 10.000000000000002
     },
     "NG": {
@@ -223,7 +223,7 @@
       "tick_usd_raw_formula": 10.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $43,280",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.NG.last_price",
+      "scaling_source": "notional test on the last price of NG hourly front-contract bars",
       "tick_usd_full_contract": 10.0
     },
     "GC": {
@@ -243,7 +243,7 @@
       "tick_usd_raw_formula": 10.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $464,150",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.GC.last_price",
+      "scaling_source": "notional test on the last price of GC hourly front-contract bars",
       "tick_usd_full_contract": 10.0
     },
     "SI": {
@@ -263,7 +263,7 @@
       "tick_usd_raw_formula": 25.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $354,900",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.SI.last_price",
+      "scaling_source": "notional test on the last price of SI hourly front-contract bars",
       "tick_usd_full_contract": 25.0
     },
     "HG": {
@@ -283,7 +283,7 @@
       "tick_usd_raw_formula": 12.5,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $171,288",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.HG.last_price",
+      "scaling_source": "notional test on the last price of HG hourly front-contract bars",
       "tick_usd_full_contract": 12.5
     },
     "ZN": {
@@ -303,7 +303,7 @@
       "tick_usd_raw_formula": 1562.5,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $107,031 (undivided $10,703,125)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZN.last_price",
+      "scaling_source": "notional test on the last price of ZN hourly front-contract bars",
       "tick_usd_full_contract": 15.625
     },
     "ZB": {
@@ -323,7 +323,7 @@
       "tick_usd_raw_formula": 3125.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $108,000 (undivided $10,800,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZB.last_price",
+      "scaling_source": "notional test on the last price of ZB hourly front-contract bars",
       "tick_usd_full_contract": 31.25
     },
     "ZF": {
@@ -343,7 +343,7 @@
       "tick_usd_raw_formula": 781.25,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $105,250 (undivided $10,525,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZF.last_price",
+      "scaling_source": "notional test on the last price of ZF hourly front-contract bars",
       "tick_usd_full_contract": 7.8125
     },
     "SR3": {
@@ -363,7 +363,7 @@
       "tick_usd_raw_formula": 6.25,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $239,150",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.SR3.last_price",
+      "scaling_source": "notional test on the last price of SR3 hourly front-contract bars",
       "tick_usd_full_contract": 6.25,
       "tick_usd_superseded": true
     },
@@ -384,7 +384,7 @@
       "tick_usd_raw_formula": 781.25,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $204,914 (undivided $20,491,406)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZT.last_price",
+      "scaling_source": "notional test on the last price of ZT hourly front-contract bars",
       "tick_usd_full_contract": 7.8125
     },
     "UB": {
@@ -404,7 +404,7 @@
       "tick_usd_raw_formula": 3125.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $109,312 (undivided $10,931,250)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.UB.last_price",
+      "scaling_source": "notional test on the last price of UB hourly front-contract bars",
       "tick_usd_full_contract": 31.25
     },
     "TN": {
@@ -424,7 +424,7 @@
       "tick_usd_raw_formula": 1562.5,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $108,672 (undivided $10,867,188)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.TN.last_price",
+      "scaling_source": "notional test on the last price of TN hourly front-contract bars",
       "tick_usd_full_contract": 15.625
     },
     "RB": {
@@ -444,7 +444,7 @@
       "tick_usd_raw_formula": 4.2,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $99,662",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.RB.last_price",
+      "scaling_source": "notional test on the last price of RB hourly front-contract bars",
       "tick_usd_full_contract": 4.2
     },
     "HO": {
@@ -464,7 +464,7 @@
       "tick_usd_raw_formula": 4.2,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $138,587",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.HO.last_price",
+      "scaling_source": "notional test on the last price of HO hourly front-contract bars",
       "tick_usd_full_contract": 4.2
     },
     "BZ": {
@@ -484,7 +484,7 @@
       "tick_usd_raw_formula": 10.000000000000002,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $73,340",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.BZ.last_price",
+      "scaling_source": "notional test on the last price of BZ hourly front-contract bars",
       "tick_usd_full_contract": 10.000000000000002
     },
     "PL": {
@@ -504,7 +504,7 @@
       "tick_usd_raw_formula": 5.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $95,915",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.PL.last_price",
+      "scaling_source": "notional test on the last price of PL hourly front-contract bars",
       "tick_usd_full_contract": 5.0
     },
     "PA": {
@@ -524,7 +524,7 @@
       "tick_usd_raw_formula": 50.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $136,750",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.PA.last_price",
+      "scaling_source": "notional test on the last price of PA hourly front-contract bars",
       "tick_usd_full_contract": 50.0
     },
     "6E": {
@@ -544,7 +544,7 @@
       "tick_usd_raw_formula": 6.250000000000001,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $148,063",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6E.last_price",
+      "scaling_source": "notional test on the last price of 6E hourly front-contract bars",
       "tick_usd_full_contract": 6.250000000000001
     },
     "6J": {
@@ -564,7 +564,7 @@
       "tick_usd_raw_formula": 6.250000000000001,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $84,256",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6J.last_price",
+      "scaling_source": "notional test on the last price of 6J hourly front-contract bars",
       "tick_usd_full_contract": 6.250000000000001
     },
     "6B": {
@@ -584,7 +584,7 @@
       "tick_usd_raw_formula": 6.250000000000001,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $84,613",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6B.last_price",
+      "scaling_source": "notional test on the last price of 6B hourly front-contract bars",
       "tick_usd_full_contract": 6.250000000000001
     },
     "6A": {
@@ -604,7 +604,7 @@
       "tick_usd_raw_formula": 5.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $71,630",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6A.last_price",
+      "scaling_source": "notional test on the last price of 6A hourly front-contract bars",
       "tick_usd_full_contract": 5.0
     },
     "6C": {
@@ -624,7 +624,7 @@
       "tick_usd_raw_formula": 5.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $72,755",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6C.last_price",
+      "scaling_source": "notional test on the last price of 6C hourly front-contract bars",
       "tick_usd_full_contract": 5.0
     },
     "6S": {
@@ -644,7 +644,7 @@
       "tick_usd_raw_formula": 6.250000000000001,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $155,956",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.6S.last_price",
+      "scaling_source": "notional test on the last price of 6S hourly front-contract bars",
       "tick_usd_full_contract": 6.250000000000001
     },
     "ZC": {
@@ -664,7 +664,7 @@
       "tick_usd_raw_formula": 1250.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $25,300 (undivided $2,530,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZC.last_price",
+      "scaling_source": "notional test on the last price of ZC hourly front-contract bars",
       "tick_usd_full_contract": 12.5,
       "tick_usd_superseded": true
     },
@@ -685,7 +685,7 @@
       "tick_usd_raw_formula": 1250.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $61,438 (undivided $6,143,750)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZS.last_price",
+      "scaling_source": "notional test on the last price of ZS hourly front-contract bars",
       "tick_usd_full_contract": 12.5,
       "tick_usd_superseded": true
     },
@@ -706,7 +706,7 @@
       "tick_usd_raw_formula": 1250.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $37,650 (undivided $3,765,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZW.last_price",
+      "scaling_source": "notional test on the last price of ZW hourly front-contract bars",
       "tick_usd_full_contract": 12.5,
       "tick_usd_superseded": true
     },
@@ -727,7 +727,7 @@
       "tick_usd_raw_formula": 600.0000000000001,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $41,070 (undivided $4,107,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZL.last_price",
+      "scaling_source": "notional test on the last price of ZL hourly front-contract bars",
       "tick_usd_full_contract": 6.000000000000001,
       "tick_usd_superseded": true
     },
@@ -748,7 +748,7 @@
       "tick_usd_raw_formula": 10.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $34,460",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.ZM.last_price",
+      "scaling_source": "notional test on the last price of ZM hourly front-contract bars",
       "tick_usd_full_contract": 10.0
     },
     "LE": {
@@ -768,7 +768,7 @@
       "tick_usd_raw_formula": 1000.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $85,010 (undivided $8,501,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.LE.last_price",
+      "scaling_source": "notional test on the last price of LE hourly front-contract bars",
       "tick_usd_full_contract": 10.0,
       "tick_usd_superseded": true
     },
@@ -789,7 +789,7 @@
       "tick_usd_raw_formula": 1000.0,
       "scaling_divisor": 100.0,
       "scaling_reason": "percent/cents quote, notional $29,770 (undivided $2,977,000)",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.HE.last_price",
+      "scaling_source": "notional test on the last price of HE hourly front-contract bars",
       "tick_usd_full_contract": 10.0,
       "tick_usd_superseded": true
     },
@@ -810,7 +810,7 @@
       "tick_usd_raw_formula": 25.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $322,500",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.NKD.last_price",
+      "scaling_source": "notional test on the last price of NKD hourly front-contract bars",
       "tick_usd_full_contract": 25.0
     },
     "BTC": {
@@ -830,7 +830,7 @@
       "tick_usd_raw_formula": 25.0,
       "scaling_divisor": 1.0,
       "scaling_reason": "native units, notional $397,600",
-      "scaling_source": "NOTIONAL test on fut_breadth_hourly.meta.json#specs.BTC.last_price",
+      "scaling_source": "notional test on the last price of BTC hourly front-contract bars",
       "tick_usd_full_contract": 25.0
     },
     "MBT": {
@@ -854,7 +854,7 @@
       "tick_usd_full_contract": 0.5
     }
   },
-  "scaling_rule": "tick_usd_full_contract = tick_price_units * unit_of_measure_qty / scaling_divisor, where the divisor is decided by the NOTIONAL test in scripts/build_fut_breadth_hourly.py:decide_scaling (/100 where the notional says the quote is percent or cents; ambiguity raises). `tick_usd` is the ORIGINAL field and is left unchanged because D591 and D604 quote it; it applies /100 on unit_of_measure == 'USD' alone, which is wrong for the roots listed in scaling_corrections. Read tick_usd_full_contract.",
+  "scaling_rule": "tick_usd_full_contract = tick_price_units * unit_of_measure_qty / scaling_divisor, where the divisor is decided by a notional test on the observed price (/100 where the notional says the quote is percent or cents; ambiguity raises). `tick_usd` is the original field and is left unchanged; it applies /100 on unit_of_measure == 'USD' alone, which is wrong for the roots listed in scaling_corrections. Read tick_usd_full_contract.",
   "scaling_corrections": [
     "HE",
     "LE",
@@ -863,6 +863,5 @@
     "ZL",
     "ZS",
     "ZW"
-  ],
-  "scaling_decided_by": "D609"
+  ]
 }

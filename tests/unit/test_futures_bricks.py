@@ -181,19 +181,19 @@ def test_from_table_takes_the_full_contract_when_asked():
 
 def test_the_default_line_is_the_measured_execution_line_where_one_exists():
     line = FuturesRoundTrip.from_table("NQ", "micro")
-    assert line.line == "d508_exec"
+    assert line.line == "effective_exec_hours"
     assert line.crossing.ticks_per_round_trip == 2.1342422122227602
     assert line.window == ("2025-09-11", "2026-09-11")
 
 
 def test_the_default_line_falls_back_to_the_one_tick_convention_and_not_to_a_quoted_spread():
-    """The "d507_all" line is a quoted-spread floor, a different statistic from an execution
+    """The "quoted_1m_all_session" line is a quoted-spread floor, a different statistic from an execution
     cost. Falling back to it would serve two statistics under one name."""
     line = FuturesRoundTrip.from_table("ZN")
-    assert line.line == "d556_one_tick"
+    assert line.line == "one_tick"
     assert line.crossing.ticks_per_round_trip == 1.0
     assert line.window == ()
-    assert "d507_all" in crossing_lines_for("ZN"), "the quoted line exists and is not the default"
+    assert "quoted_1m_all_session" in crossing_lines_for("ZN"), "the quoted line exists and is not the default"
 
 
 @pytest.mark.parametrize(
@@ -215,8 +215,8 @@ def test_a_root_with_no_micro_says_so_rather_than_inventing_one():
 
 def test_a_line_that_root_was_never_measured_on_raises_rather_than_borrowing_one():
     """A wrong fallback would be silent, so the lookup raises instead."""
-    with pytest.raises(FuturesCostError, match="no crossing line 'd465'"):
-        FuturesRoundTrip.from_table("ZN", "full", "d465")
+    with pytest.raises(FuturesCostError, match="no crossing line 'effective_es_bp'"):
+        FuturesRoundTrip.from_table("ZN", "full", "effective_es_bp")
     with pytest.raises(FuturesCostError, match="no crossing line 'invented'"):
         FuturesRoundTrip.from_table("ES", "micro", "invented")
 
@@ -229,13 +229,13 @@ def test_a_missing_table_raises_rather_than_falling_back():
 def test_crossing_lines_for_shows_the_spread_of_the_estimates():
     """Every line for a root, so the caller can see the range of estimates the default hides."""
     lines = crossing_lines_for("MNQ")
-    assert set(lines) >= {"d508_exec", "d508_all", "d507_all", "d507_exec", "d556_one_tick"}
+    assert set(lines) >= {"effective_exec_hours", "effective_all_session", "quoted_1m_all_session", "quoted_1m_at_trades", "one_tick"}
     assert min(lines.values()) == 1.0  # the convention is the cheapest on MNQ
     assert max(lines.values()) == pytest.approx(2.482738115465196)
 
 
 def test_build_trade_bricks_returns_the_pair_a_cost_stack_takes():
-    commission, crossing = build_trade_bricks("ES", "micro", "d556_one_tick")
+    commission, crossing = build_trade_bricks("ES", "micro", "one_tick")
     assert isinstance(commission, FuturesCommission) and isinstance(crossing, TickCrossing)
     assert CostStack(trade_bricks=(commission, crossing)).trade_cost(MES, 1.0, 5000.0) == 2.125
 
@@ -245,13 +245,13 @@ def test_the_table_covers_the_36_roots_and_declares_its_lines():
     assert len(roots) == 36
     assert {"ES", "NQ", "CL", "GC", "ZN", "ZB", "SR3", "BZ"} <= set(roots)
     assert set(line_names()) == {
-        "d465",
-        "d507_all",
-        "d507_exec",
-        "d508_all",
-        "d508_exec",
-        "d510",
-        "d556_one_tick",
+        "effective_es_bp",
+        "quoted_1m_all_session",
+        "quoted_1m_at_trades",
+        "effective_all_session",
+        "effective_exec_hours",
+        "quoted_all_session",
+        "one_tick",
     }
 
 

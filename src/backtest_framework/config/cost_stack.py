@@ -20,10 +20,10 @@ Shape (the `{"type": ..., ...params}` convention, one list per CostStack slot):
 The futures round-trip line is one brick with two halves, and it is declared either by naming
 a contract in the cost table or by writing both numbers out, never half of each:
 
-    {"type": "futures_round_trip", "root": "MES"}                    # the table's default line
-    {"type": "futures_round_trip", "root": "ES", "line": "d465"}     # a named crossing line
+    {"type": "futures_round_trip", "root": "MES"}                              # the table's default line
+    {"type": "futures_round_trip", "root": "ES", "line": "effective_es_bp"}  # a named crossing line
     {"type": "futures_round_trip", "commission_rt_usd": 3.0,
-                                   "crossing_ticks_rt": 1.0}         # explicit, no table
+                                   "crossing_ticks_rt": 1.0}                   # explicit, no table
 
 `root` takes a parent root ("ES", which resolves to its minimum tradable size) or a traded
 symbol ("MES", "ZN"). `line` names which crossing measurement is charged and is only
@@ -36,7 +36,7 @@ The futures impact line is the size-dependent term the round trip does not model
 table-resolved only; there is no explicit form:
 
     {"type": "futures_sqrt_impact", "root": "ES"}                       # the default line
-    {"type": "futures_sqrt_impact", "root": "ES", "line": "d511",
+    {"type": "futures_sqrt_impact", "root": "ES", "line": "trades_2025_2026",
                                     "coefficient": 0.7}                 # a named measurement
 
 `root` is a parent root as `data/futures_impact_params.json` keys them (36 roots); `line`

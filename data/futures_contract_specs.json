@@ -2,8 +2,8 @@
  "_provenance": {
   "source": "CME Group contract-specification service, https://www.cmegroup.com/CmeWS/mvc/ContractSpecs/List/productId/{product_id}, read through each product's own contractSpecs.html page in a browser on 2026-09-10 (plain HTTP to cmegroup.com returns 403; the page's own XHR does not)",
   "product_ids_from": "https://www.cmegroup.com/CmeWS/mvc/ProductSlate/V2/List?searchString=...&cleared=Futures, same session",
-  "why_not_hardcoded": "docs/prop firm leads/02-data-acquisition-prompt.md validation gate 3: verify every multiplier from the exchange's own spec, do not hardcode from memory",
-  "fields": "contract_unit and min_tick are CME's wording verbatim (HTML stripped). usd_per_point, tick_points and tick_usd are parsed from them; scripts/fetch_futures_1m.py asserts usd_per_point * tick_points == tick_usd for every entry, and --validate asserts every bar's prices sit on the tick grid.",
+  "why_not_hardcoded": "every multiplier is verified against the exchange's own specification, not hardcoded from memory",
+  "fields": "contract_unit and min_tick are CME's wording verbatim (HTML stripped). usd_per_point, tick_points and tick_usd are parsed from them, and usd_per_point * tick_points == tick_usd holds for every entry.",
   "note_on_hours": "CME's wording differs in style between product groups (ET-first for equities, CT-first for energy/metals/rates) but every proposed symbol is on the same Globex template: open 18:00 ET Sunday, daily 17:00-18:00 ET maintenance break, close 17:00 ET Friday. The ags (ZC/ZS/ZW) are NOT on that template and BTC is 24/7 since 2026-05-30. The validator asserts the template from the bars, never from this file.",
   "not_verified_here": "historical listing dates (micros May 2019, RTY on CME from 2017-07). Those are read from each symbol's first bar in the fixture.",
   "second_fetch_2026_09_12": {
@@ -13,12 +13,12 @@
     "MCL",
     "MGC"
    ],
-   "why": "D488 and D491 could not cost GC, CL or 6E because their micros were absent, and D486 named the fetch as the highest-value unblock. Fetched the same way as the first pass: the product id from ProductSlate/V2/List, then ContractSpecs/List/productId/{id}, both read in a browser because plain HTTP to cmegroup.com returns 403.",
+   "why": "the micro contracts for GC, CL and 6E were missing. Fetched the same way as the first pass: the product id from ProductSlate/V2/List, then ContractSpecs/List/productId/{id}, both read in a browser because plain HTTP to cmegroup.com returns 403.",
    "control": "MNQ was re-fetched as a CONTROL and reproduced the committed values exactly ('0.25 index points = $0.50'), which is what licenses trusting the four new rows.",
    "derived_fields": "usd_per_point is DERIVED as tick_usd / tick_points and cross-checked against the contract unit; every other field is transcribed. MGC and MCL were each verified to be exactly 1/10 of their committed parent (GC 100.0 and CL 1000.0 usd_per_point).",
    "tier_field_omitted": "The existing rows carry a 'tier' field whose meaning is not documented here; it is omitted from the new rows rather than invented."
   },
-  "micros_added_2026_09_13": "SIL/MNG/MHG added 2026-09-13 from the same CME contract-specification service, read same-origin from inside the product page in a browser (WebFetch returns ECONNRESET to cmegroup.com on the XHR endpoint, the contractSpecs page and the rulebook PDF alike). Each tick_points was independently CROSS-CHECKED against the smallest positive price increment the root actually prints in the ohlcv-1m archive (working/stage0_micro_liquidity.py) and agrees exactly. The two energy/base-metal micros are FINANCIALLY SETTLED while their parents are DELIVERABLE; see each entry's note."
+  "micros_added_2026_09_13": "SIL/MNG/MHG added 2026-09-13 from the same CME contract-specification service, read from inside the product page in a browser. Each tick_points was cross-checked against the smallest positive price increment the root prints in one-minute bar data and agrees exactly. The two energy/base-metal micros are financially settled while their parents are deliverable; see each entry's note."
  },
  "ES": {
   "tier": 1,

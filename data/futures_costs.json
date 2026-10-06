@@ -1,110 +1,51 @@
 {
  "_provenance": {
-  "decision": "D591",
-  "built_by": "uv run python scripts/futures_cost_table.py --build",
-  "digests_live_here_only": "a provenance block names its artefact and key path; the sha256 of every input is recorded once, below, rather than repeated beside each of the 289 cited values",
-  "rule": "every value is copied from a committed artefact at a named key path, or from a named source literal read through ast, or derived from those two with the derivation recorded. The builder refuses to write a value it cannot find.",
-  "no_timestamp_because": "a build time would make every rebuild a diff and would make --selftest's byte-for-byte check impossible; the input digests are the fingerprint instead",
-  "computes_no_return": true,
-  "artefacts": {
-   "data/futures_contract_specs.json": {
-    "sha256": "e932fd10725bc4da926ea336457a6249f337b46baa21464c3be32852696f9921"
-   },
-   "data/d465_es_spread_and_mae_bias.json": {
-    "sha256": "54d1f81dc3d2440707594d5b05045dbe0fe82795c331e78f1cbc1c4dcc185b94"
-   },
-   "data/d469_scalping_feasibility.json": {
-    "sha256": "f4d8d2f69ef2398e6cd661a4bf5e920b5bf74f0efb7caef05ee0cc1dd8ebecda"
-   },
-   "data/d507_spread_all_roots.json": {
-    "sha256": "b3dde823f9d12ed194a2cfb7a6a44b95b73d8b5cd0c1fa3ad0c7efe29bf3227a"
-   },
-   "data/d508_micro_crossing_tbbo.json": {
-    "sha256": "57ae114e8c64f3ac7bc0b4b8f59e47a4333494613b5b6e47e98f0dc18d3d0990"
-   },
-   "data/d510_spread_census.json": {
-    "sha256": "cc671b4fad8e8efda72d70d47e81d4d6a5f52a5d4b97aa5c6ebf4b27f38dd6af"
-   },
-   "data/d527_arm_crossing_cost.json": {
-    "sha256": "f4f503d4f7214fa81ef31819e2e5b42d189c5b9c885ff6aa122fadada3d6679c"
-   },
-   "data/d556_carry_timing.json": {
-    "sha256": "025fd31fa80f8f05ba5d5abd15c39f9f149dbfc2ec8f5fa6164c6657fcff32ed"
-   },
-   "data/fut_specs_from_definition.json": {
-    "sha256": "994d87d59b09aee3d194f49a8019d975471abf77d75e98b6d4275721f42d55be"
-   }
-  },
-  "sources": {
-   "scripts/d469_scalping_feasibility.py": {
-    "sha256": "0111fc310b8804eeaa37e3d365d8dfed7231f6510ebe6331ba5e6c6fe4276ce5"
-   },
-   "scripts/run_d531_orb_session_native.py": {
-    "sha256": "1a28125df2a8f7e06876de0bcb51e29752f47649e9ad63aab9c6704210b56f61"
-   },
-   "scripts/run_d532_orb_conditioned.py": {
-    "sha256": "dac0efed4ff3f85b94d1685edc2cdcf559d3884b83e8599d77446184ef4c62a1"
-   },
-   "scripts/run_d533_story_conditions.py": {
-    "sha256": "d508dcc73ef9bfeadd9133ed59d76da729ea5643980f97ee8d1c290146f20451"
-   },
-   "scripts/run_d535_illiq_ranked.py": {
-    "sha256": "c418e67fa3f626568dcf706c47bcfcb477bc9d8ba7655b4717ad9b09197cd00d"
-   },
-   "scripts/run_d555_tsmom_replication.py": {
-    "sha256": "aa4f620a6ed49cc0fcdfee8fc9d719b1031509da2011c3378285bf8ccbf1628a"
-   }
-  }
+  "source": "Databento CME quote data (tbbo and bbo-1m) for the crossing lines; CME contract specifications and a Databento instrument-definition snapshot for tick values",
+  "rule": "every crossing value is a measurement or a stated convention, and carries its source and, where measured, its window",
+  "computes_no_return": true
  },
  "conventions": {
   "crossing_unit": "TICKS per ROUND TRIP. Half is charged on each of the two fills.",
   "commission_unit": "USD per ROUND TRIP per CONTRACT, DECLARED. Half per fill.",
   "round_trip_usd": "commission_rt_usd + crossing_ticks_rt * tick_usd",
-  "default_line_rule": "d508_exec where D508 measured the contract -- it is an EFFECTIVE crossing (what an aggressor paid), trade-weighted, and conditioned on the hours a study actually executes in. Everywhere else the D556 one-tick convention, NOT D507: D507 is a QUOTED spread and therefore a floor, so falling back to it would serve two different statistics under one name and would silently make an unmeasured root look cheaper than a measured one. The one-tick rule is also what the seen ledger charges, so a construction scored on the default reproduces the ledger's cost line rather than improving on it.",
-  "window_caveat": "every crossing census on disk was measured on 2025-09..2026-09 and is applied by its callers to 2016-2023. A tick is fixed in price terms, so a recent spread on an older, cheaper window is OPTIMISTIC (D507, D508 say so themselves). Each line carries its window for that reason.",
-  "two_statistics": "QUOTED spread (D507, D510) is a FLOOR; EFFECTIVE crossing (D465, D508) is what an aggressor paid. They are never averaged and the default never falls back from one to the other."
+  "default_line_rule": "effective_exec_hours where it was measured for the contract: an effective crossing (what an aggressor paid), trade-weighted, over the hours a strategy usually trades. Everywhere else the one_tick convention. A quoted spread is a floor, so falling back to one would make an unmeasured root look cheaper than a measured one.",
+  "window_caveat": "every crossing measurement covers 2025-09..2026-09. A tick is fixed in price terms, so a recent spread applied to an older, lower-priced window is optimistic. Each line carries its window for that reason.",
+  "two_statistics": "a QUOTED spread (quoted_*) is a floor; an EFFECTIVE crossing (effective_*) is what an aggressor paid. They are never averaged, and the default never falls back from one to the other."
  },
  "lines": {
-  "d465": {
-   "statistic": "effective, from the half-spread at trade instants, converted to ticks at D469's median price",
+  "effective_es_bp": {
+   "statistic": "effective, from the half-spread at trade instants, converted to ticks at a median price",
    "kind": "effective",
-   "decision": "D465 / D469",
    "roots": "ES and MES only"
   },
-  "d508_exec": {
+  "effective_exec_hours": {
    "statistic": "2*|price - mid| / tick at the instant of a trade, doubled for a round trip, over execution hours 10-15 ET",
    "kind": "effective",
-   "decision": "D508",
-   "roots": "the 8 micros and 8 parents D508 measured"
+   "roots": "8 micro contracts and their 8 full-size parents"
   },
-  "d508_all": {
+  "effective_all_session": {
    "statistic": "the same effective statistic over the whole session",
    "kind": "effective",
-   "decision": "D508",
-   "roots": "the 8 micros and 8 parents D508 measured"
+   "roots": "8 micro contracts and their 8 full-size parents"
   },
-  "d510": {
-   "statistic": "time-weighted quoted spread in ticks, whole session (a FLOOR on the cost)",
+  "quoted_all_session": {
+   "statistic": "time-weighted quoted spread in ticks, whole session (a floor on the cost)",
    "kind": "quoted",
-   "decision": "D510",
    "roots": "9 roots"
   },
-  "d507_all": {
-   "statistic": "time-weighted quoted spread in ticks on bbo-1m, whole session (a FLOOR)",
+  "quoted_1m_all_session": {
+   "statistic": "time-weighted quoted spread in ticks on one-minute top-of-book snapshots, whole session (a floor)",
    "kind": "quoted",
-   "decision": "D507",
    "roots": "41 symbols"
   },
-  "d507_exec": {
-   "statistic": "the same quoted spread conditioned on the execution instants (a FLOOR)",
+  "quoted_1m_at_trades": {
+   "statistic": "the same quoted spread sampled at trade instants (a floor)",
    "kind": "quoted",
-   "decision": "D507",
    "roots": "41 symbols"
   },
-  "d556_one_tick": {
-   "statistic": "CONVENTION, not a measurement: D555/D556 charge 0.5 tick a side, so one full tick a round trip",
+  "one_tick": {
+   "statistic": "convention, not a measurement: 0.5 tick a side, so one full tick a round trip",
    "kind": "convention",
-   "decision": "D468 / D555 / D556",
    "roots": "every root"
   }
  },
@@ -314,79 +255,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.6A.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.409114592087129,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6A.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.3370201691607027,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6A.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 11.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 5.0,
-        "min_size": "6A",
-        "min_size_key": "dollar_book.min_size.6A"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "6B": {
    "full": {
@@ -403,79 +320,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.6B.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.3071965086078747,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6B.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.2296681847755369,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6B.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 12.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 6.250000000000001,
-        "min_size": "6B",
-        "min_size_key": "dollar_book.min_size.6B"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "6C": {
    "full": {
@@ -492,79 +385,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.6C.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.262820909024504,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6C.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.1964866623292127,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6C.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 11.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 5.0,
-        "min_size": "6C",
-        "min_size_key": "dollar_book.min_size.6C"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "6E": {
    "full": {
@@ -582,107 +451,81 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.0824442744026594,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.6E.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.0951489281317723,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.6E.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.3069429406517703,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6E.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.262199089134678,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6E.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 1.2967756840824054,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.0.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d535_full": {
-      "value": 5.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['6E']",
-       "decision": "D535",
-       "why": "D535 charges this at the size named in its own UPT map, which is the micro where one exists; recorded on the full entry only for the roots with no micro"
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "M6E",
@@ -699,79 +542,45 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.105885654136043,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.M6E.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.1221368183616502,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.M6E.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 4.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 1.25,
-        "min_size": "M6E",
-        "min_size_key": "dollar_book.min_size.6E"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d535": {
-      "value": 5.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['6E']",
-       "decision": "D535",
-       "why": "D533's dict extended to the confirmation set"
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -790,79 +599,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.6J.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.2370678399649584,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6J.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.2114508783344178,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6J.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 12.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 6.250000000000001,
-        "min_size": "6J",
-        "min_size_key": "dollar_book.min_size.6J"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "6S": {
    "full": {
@@ -879,79 +664,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.6S.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.112612511440652,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6S.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.9167208848405985,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.6S.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 12.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 6.250000000000001,
-        "min_size": "6S",
-        "min_size_key": "dollar_book.min_size.6S"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "BTC": {
    "full": {
@@ -968,88 +729,75 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.BTC.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 4.993320780146502,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.BTC.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 5.472873798628223,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.BTC.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 9.012569095621458,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.BTC.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 7.640771028037383,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.BTC.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {}
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "MBT",
@@ -1065,103 +813,75 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.MBT.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 2.6161168726417716,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MBT.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 2.947046016602752,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MBT.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 4.016045933014354,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MBT.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 3.676039835969537,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MBT.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 3.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 0.5,
-        "min_size": "MBT",
-        "min_size_key": "dollar_book.min_size.BTC"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -1180,79 +900,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.BZ.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 4.244160147683981,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.BZ.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 2.914435009797518,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.BZ.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 16.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 10.000000000000002,
-        "min_size": "BZ",
-        "min_size_key": "dollar_book.min_size.BZ"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "CL": {
    "full": {
@@ -1270,96 +966,81 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.546198159140919,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.CL.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.682239636462216,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.CL.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.6826313062827152,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.CL.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.5006535947712418,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.CL.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 1.6775082409179987,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.1.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {}
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "MCL",
@@ -1376,89 +1057,45 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 2.0311974365661536,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MCL.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 2.225556259010434,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MCL.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 4.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 1.0,
-        "min_size": "MCL",
-        "min_size_key": "dollar_book.min_size.CL"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d531": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d531_orb_session_native.py",
-       "literal": "COST_USD",
-       "decision": "D531",
-       "why": "one FLAT round trip charged on all six of D531's roots at micro size; its comment names it \"D527-corrected round trip at one micro\""
-      }
-     },
-     "d533": {
-      "value": 4.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d533_story_conditions.py",
-       "literal": "COST['CL']",
-       "decision": "D532 / D533",
-       "why": "charged at minimum tradable size (MCL); D532's pre-registration line 97 says the four non-index values come \"from the measured median spreads\". Whether each one is reproducible from a line in this table is recorded in `disagreements`."
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -1478,159 +1115,93 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.0595784535177801,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.ES.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.086143665284987,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.ES.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.1208322128653316,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ES.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.1089238845144358,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ES.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 1.1196246823853393,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.2.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d465": {
+     "effective_es_bp": {
       "value": 1.0085687251930604,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d469_scalping_feasibility.json",
-       "key": "cost_bars.ES.crossing_ticks",
-       "decision": "D465 / D469"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
-      "note": "D465's 0.18219682151764224 bp a side, doubled and converted at D469's median price 6919.5. ES and MES differ in the last ULP because the same dollar figure is divided by a different tick_usd"
+      "provenance": {
+       "source": "Databento CME tbbo: ES effective half-spread at trade instants, 0.18219682151764224 bp a side, doubled and converted to ticks at a median price of 6919.5"
+      },
+      "note": "ES and MES differ in the last ULP because the same dollar figure is divided by a different tick_usd"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d469": {
-      "commission_rt_usd": {
-       "value": 4.0,
-       "measured": false,
-       "provenance": {
-        "source": "scripts/d469_scalping_feasibility.py",
-        "literal": "COMMISSION_RT['ES']",
-        "decision": "D258 (ES) / D466 (MES)",
-        "why": "D469's own declared commission. NOT run_d555's $6 full-size line -- see `disagreements`."
-       }
-      },
-      "crossing_usd_rt": {
-       "value": 12.607109064913255,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "cost_bars.ES.crossing_usd",
-        "decision": "D469"
-       }
-      },
-      "total_usd_rt": {
-       "value": 16.607109064913253,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "cost_bars.ES.total_usd",
-        "decision": "D469"
-       }
-      },
-      "breakeven_ticks": {
-       "value": 1.3285687251930602,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "cost_bars.ES.breakeven_ticks",
-        "decision": "D469"
-       }
-      },
-      "at_price": {
-       "value": 6919.5,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "median_price",
-        "decision": "D469"
-       }
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "MES",
@@ -1647,179 +1218,81 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.1345161408444429,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MES.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.166406687029104,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MES.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.1120326427980836,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MES.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.1476377952755905,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MES.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d465": {
+     "effective_es_bp": {
       "value": 1.0085687251930602,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d469_scalping_feasibility.json",
-       "key": "cost_bars.MES.crossing_ticks",
-       "decision": "D465 / D469"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
-      "note": "D465's 0.18219682151764224 bp a side, doubled and converted at D469's median price 6919.5. ES and MES differ in the last ULP because the same dollar figure is divided by a different tick_usd"
+      "provenance": {
+       "source": "Databento CME tbbo: ES effective half-spread at trade instants, 0.18219682151764224 bp a side, doubled and converted to ticks at a median price of 6919.5"
+      },
+      "note": "ES and MES differ in the last ULP because the same dollar figure is divided by a different tick_usd"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 4.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 1.25,
-        "min_size": "MES",
-        "min_size_key": "dollar_book.min_size.ES"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d531": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d531_orb_session_native.py",
-       "literal": "COST_USD",
-       "decision": "D531",
-       "why": "one FLAT round trip charged on all six of D531's roots at micro size; its comment names it \"D527-corrected round trip at one micro\""
-      }
-     },
-     "d533": {
-      "value": 4.25,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d533_story_conditions.py",
-       "literal": "COST['ES']",
-       "decision": "D532 / D533",
-       "why": "charged at minimum tradable size (its micro); D532's pre-registration line 97 says the four non-index values come \"from the measured median spreads\". Whether each one is reproducible from a line in this table is recorded in `disagreements`."
-      }
-     },
-     "d469": {
-      "commission_rt_usd": {
-       "value": 3.0,
-       "measured": false,
-       "provenance": {
-        "source": "scripts/d469_scalping_feasibility.py",
-        "literal": "COMMISSION_RT['MES']",
-        "decision": "D258 (ES) / D466 (MES)",
-        "why": "D469's own declared commission. NOT run_d555's $6 full-size line -- see `disagreements`."
-       }
-      },
-      "crossing_usd_rt": {
-       "value": 1.2607109064913253,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "cost_bars.MES.crossing_usd",
-        "decision": "D469"
-       }
-      },
-      "total_usd_rt": {
-       "value": 4.260710906491325,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "cost_bars.MES.total_usd",
-        "decision": "D469"
-       }
-      },
-      "breakeven_ticks": {
-       "value": 3.40856872519306,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "cost_bars.MES.breakeven_ticks",
-        "decision": "D469"
-       }
-      },
-      "at_price": {
-       "value": 6919.5,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d469_scalping_feasibility.json",
-        "key": "median_price",
-        "decision": "D469"
-       }
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -1839,96 +1312,81 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 4.116951857565118,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.GC.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 4.47134815559951,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.GC.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 4.478189999151032,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.GC.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 4.2065359477124185,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.GC.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 4.434905972934477,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.3.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {}
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "MGC",
@@ -1945,89 +1403,45 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 2.9334505021406643,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MGC.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 3.121113203096321,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MGC.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 4.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 1.0,
-        "min_size": "MGC",
-        "min_size_key": "dollar_book.min_size.GC"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d531": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d531_orb_session_native.py",
-       "literal": "COST_USD",
-       "decision": "D531",
-       "why": "one FLAT round trip charged on all six of D531's roots at micro size; its comment names it \"D527-corrected round trip at one micro\""
-      }
-     },
-     "d533": {
-      "value": 5.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d533_story_conditions.py",
-       "literal": "COST['GC']",
-       "decision": "D532 / D533",
-       "why": "charged at minimum tradable size (MGC); D532's pre-registration line 97 says the four non-index values come \"from the measured median spreads\". Whether each one is reproducible from a line in this table is recorded in `disagreements`."
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -2046,79 +1460,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.HE.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.5250830827662605,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.HE.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.3020833333333333,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.HE.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 16.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 10.0,
-        "min_size": "HE",
-        "min_size_key": "dollar_book.min_size.HE"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "HG": {
    "full": {
@@ -2136,66 +1526,46 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.448477523048747,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.HG.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 2.2603008502289077,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.HG.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d535_full": {
-      "value": 5.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['HG']",
-       "decision": "D535",
-       "why": "D535 charges this at the size named in its own UPT map, which is the micro where one exists; recorded on the full entry only for the roots with no micro"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "micro": {
     "symbol": "MHG",
@@ -2212,52 +1582,22 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 4.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 1.25,
-        "min_size": "MHG",
-        "min_size_key": "dollar_book.min_size.HG"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d535": {
-      "value": 5.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['HG']",
-       "decision": "D535",
-       "why": "D533's dict extended to the confirmation set"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "micro"
   },
@@ -2276,89 +1616,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.HO.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 21.24826027088744,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.HO.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 12.246405228758169,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.HO.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 10.2,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 4.2,
-        "min_size": "HO",
-        "min_size_key": "dollar_book.min_size.HO"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d535_full": {
-      "value": 10.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['HO']",
-       "decision": "D535",
-       "why": "D535 charges this at the size named in its own UPT map, which is the micro where one exists; recorded on the full entry only for the roots with no micro"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "LE": {
    "full": {
@@ -2375,79 +1681,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.LE.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.3970552217948162,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.LE.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.8549679487179487,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.LE.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 16.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 10.0,
-        "min_size": "LE",
-        "min_size_key": "dollar_book.min_size.LE"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "NG": {
    "full": {
@@ -2465,55 +1747,46 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.4498388112581924,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.NG.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.257516339869281,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.NG.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {}
+    "default_line": "one_tick"
    },
    "micro": {
     "symbol": "MNG",
@@ -2530,62 +1803,22 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 4.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 1.0,
-        "min_size": "MNG",
-        "min_size_key": "dollar_book.min_size.NG"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d531": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d531_orb_session_native.py",
-       "literal": "COST_USD",
-       "decision": "D531",
-       "why": "one FLAT round trip charged on all six of D531's roots at micro size; its comment names it \"D527-corrected round trip at one micro\""
-      }
-     },
-     "d533": {
-      "value": 5.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d533_story_conditions.py",
-       "literal": "COST['NG']",
-       "decision": "D532 / D533",
-       "why": "charged at minimum tradable size (MNG); D532's pre-registration line 97 says the four non-index values come \"from the measured median spreads\". Whether each one is reproducible from a line in this table is recorded in `disagreements`."
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "micro"
   },
@@ -2604,79 +1837,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.NKD.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 3.8973601488958494,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.NKD.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 3.066272965879265,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.NKD.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 31.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 25.0,
-        "min_size": "NKD",
-        "min_size_key": "dollar_book.min_size.NKD"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "NQ": {
    "full": {
@@ -2694,96 +1903,81 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 3.0454132867054593,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.NQ.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 3.618202546105821,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.NQ.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 3.8053429500777827,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.NQ.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 3.504593175853018,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.NQ.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 3.768396027019896,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.4.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {}
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "MNQ",
@@ -2800,161 +1994,69 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 2.1342422122227602,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MNQ.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 2.482738115465196,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MNQ.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.270312057540919,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MNQ.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 2.4517399868680236,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MNQ.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 3.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 0.5,
-        "min_size": "MNQ",
-        "min_size_key": "dollar_book.min_size.NQ"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d531": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d531_orb_session_native.py",
-       "literal": "COST_USD",
-       "decision": "D531",
-       "why": "one FLAT round trip charged on all six of D531's roots at micro size; its comment names it \"D527-corrected round trip at one micro\""
-      }
-     },
-     "d533": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d533_story_conditions.py",
-       "literal": "COST['NQ']",
-       "decision": "D532 / D533",
-       "why": "charged at minimum tradable size (its micro); D532's pre-registration line 97 says the four non-index values come \"from the measured median spreads\". Whether each one is reproducible from a line in this table is recorded in `disagreements`."
-      }
-     },
-     "d527": {
-      "crossing_ticks_rt": {
-       "value": 2.4110232735988832,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d527_arm_crossing_cost.json",
-        "key": "reprice.round_trip_crossing_ticks",
-        "decision": "D527"
-       },
-       "window": [
-        "2016-01-04",
-        "2023-12-29"
-       ],
-       "note": "STRATEGY-SPECIFIC: measured at the D484 MACD arm's own fill timestamps, which are concentrated in the 10:00 ET hour where the spread is 3.66 ticks. NOT the root default. reprice.scored.measured.cross_ticks carries the same number one ULP lower."
-      },
-      "commission_rt_usd": {
-       "value": 3.0,
-       "measured": false,
-       "provenance": {
-        "source": "scripts/run_d555_tsmom_replication.py",
-        "literal": "COMMISSION_RT['micro']",
-        "decision": "D468",
-        "why": "one MNQ at the micro line"
-       }
-      },
-      "rt_usd": {
-       "value": 4.205511636799441,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d527_arm_crossing_cost.json",
-        "key": "reprice.scored.measured.rt_usd",
-        "decision": "D527"
-       }
-      },
-      "assumed_rt_usd": {
-       "value": 3.5045,
-       "measured": true,
-       "provenance": {
-        "artefact": "data/d527_arm_crossing_cost.json",
-        "key": "reprice.scored.assumed.rt_usd",
-        "decision": "D527"
-       }
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -2973,79 +2075,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.PA.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 3.7644765161592346,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.PA.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 3.008519003931848,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.PA.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 56.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 50.0,
-        "min_size": "PA",
-        "min_size_key": "dollar_book.min_size.PA"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "PL": {
    "full": {
@@ -3062,79 +2140,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.PL.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 11.504728423472002,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.PL.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 8.74493132766514,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.PL.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 11.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 5.0,
-        "min_size": "PL",
-        "min_size_key": "dollar_book.min_size.PL"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "RB": {
    "full": {
@@ -3151,89 +2205,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.RB.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 12.111230056437178,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.RB.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 7.374918354016982,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.RB.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 10.2,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 4.2,
-        "min_size": "RB",
-        "min_size_key": "dollar_book.min_size.RB"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d535_full": {
-      "value": 10.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['RB']",
-       "decision": "D535",
-       "why": "D535 charges this at the size named in its own UPT map, which is the micro where one exists; recorded on the full entry only for the roots with no micro"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "RTY": {
    "full": {
@@ -3251,96 +2271,81 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.3403114025497078,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.RTY.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.5151739685049352,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.RTY.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.4267767953563717,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.RTY.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.8799212598425197,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.RTY.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 2.3768178183636737,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.5.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {}
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "M2K",
@@ -3357,97 +2362,69 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.5141420888834805,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.M2K.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.6588098737391195,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.M2K.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.9337927611915047,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.M2K.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.952755905511811,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.M2K.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 3.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 0.5,
-        "min_size": "M2K",
-        "min_size_key": "dollar_book.min_size.RTY"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -3467,55 +2444,46 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 4.656637148098657,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.SI.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 4.300196206671027,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.SI.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {}
+    "default_line": "one_tick"
    },
    "micro": {
     "symbol": "SIL",
@@ -3532,62 +2500,22 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 8.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 5.0,
-        "min_size": "SIL",
-        "min_size_key": "dollar_book.min_size.SI"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d531": {
-      "value": 4.21,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d531_orb_session_native.py",
-       "literal": "COST_USD",
-       "decision": "D531",
-       "why": "one FLAT round trip charged on all six of D531's roots at micro size; its comment names it \"D527-corrected round trip at one micro\""
-      }
-     },
-     "d533": {
-      "value": 8.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d533_story_conditions.py",
-       "literal": "COST['SI']",
-       "decision": "D532 / D533",
-       "why": "charged at minimum tradable size (SIL); D532's pre-registration line 97 says the four non-index values come \"from the measured median spreads\". Whether each one is reproducible from a line in this table is recorded in `disagreements`."
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "micro"
   },
@@ -3606,79 +2534,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.SR3.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.8489788060593522,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.SR3.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.853211009174312,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.SR3.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 12.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 6.25,
-        "min_size": "SR3",
-        "min_size_key": "dollar_book.min_size.SR3"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "TN": {
    "full": {
@@ -3695,79 +2599,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.TN.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.0148128251526805,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.TN.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0190039318479684,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.TN.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 21.625,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 15.625,
-        "min_size": "TN",
-        "min_size_key": "dollar_book.min_size.TN"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "UB": {
    "full": {
@@ -3784,79 +2664,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.UB.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.0114863065319515,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.UB.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0065530799475753,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.UB.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 37.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 31.25,
-        "min_size": "UB",
-        "min_size_key": "dollar_book.min_size.UB"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "YM": {
    "full": {
@@ -3874,96 +2730,81 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.7673641077977968,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.YM.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.9546695527487883,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.YM.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.642879718258985,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.YM.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 2.706692913385827,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.YM.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 2.582699110908437,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.6.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {}
+    "default_line": "effective_exec_hours"
    },
    "micro": {
     "symbol": "MYM",
@@ -3980,97 +2821,69 @@
      "value": 3.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['micro']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d508_exec": {
+     "effective_exec_hours": {
       "value": 1.5939098263467153,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MYM.execution_hours.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
       ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over trades between 10:00 and 15:00 ET"
+      },
       "note": "execution hours 10-15 ET"
      },
-     "d508_all": {
+     "effective_all_session": {
       "value": 1.8416714524397337,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d508_micro_crossing_tbbo.json",
-       "key": "per_root.MYM.all_session.effective_mean_ticks",
-       "decision": "D508"
-      },
       "window": [
        "2025-09-11",
        "2026-09-11"
-      ]
+      ],
+      "provenance": {
+       "source": "Databento CME tbbo: 2 x |trade price - mid| / tick at each trade, mean over the whole session"
+      }
      },
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 2.268286288560692,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MYM.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 2.0583989501312336,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.MYM.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d508_exec",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 3.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 3.0,
-        "tick_usd": 0.5,
-        "min_size": "MYM",
-        "min_size_key": "dollar_book.min_size.YM"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "effective_exec_hours"
    },
    "min_size": "micro"
   },
@@ -4090,87 +2903,61 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.002246077154025,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZB.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0091743119266054,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZB.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 1.002109851382996,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.7.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 37.25,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 31.25,
-        "min_size": "ZB",
-        "min_size_key": "dollar_book.min_size.ZB"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZC": {
    "full": {
@@ -4187,89 +2974,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.ZC.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.032364761393935,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZC.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0088141025641026,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZC.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 18.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 12.5,
-        "min_size": "ZC",
-        "min_size_key": "dollar_book.min_size.ZC"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d535_full": {
-      "value": 10.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['ZC']",
-       "decision": "D535",
-       "why": "D535 charges this at the size named in its own UPT map, which is the micro where one exists; recorded on the full entry only for the roots with no micro"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZF": {
    "full": {
@@ -4287,73 +3040,49 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.0024130809923901,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZF.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0131061598951507,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZF.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 13.8125,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 7.8125,
-        "min_size": "ZF",
-        "min_size_key": "dollar_book.min_size.ZF"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZL": {
    "full": {
@@ -4370,79 +3099,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.ZL.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.649775898776836,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZL.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.3798076923076923,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZL.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 12.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 6.000000000000001,
-        "min_size": "ZL",
-        "min_size_key": "dollar_book.min_size.ZL"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZM": {
    "full": {
@@ -4459,79 +3164,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.ZM.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.1894834915273977,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZM.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.1017628205128205,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZM.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 16.0,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 10.0,
-        "min_size": "ZM",
-        "min_size_key": "dollar_book.min_size.ZM"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZN": {
    "full": {
@@ -4549,97 +3230,61 @@
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.0003224547290532,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZN.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0045871559633028,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZN.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d510": {
+     "quoted_all_session": {
       "value": 1.0002904336287974,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d510_spread_census.json",
-       "key": "table.8.mean_spread_ticks",
-       "decision": "D510"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME quotes: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread, time-weighted -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 21.625,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 15.625,
-        "min_size": "ZN",
-        "min_size_key": "dollar_book.min_size.ZN"
-       },
-       "decision": "D555 / D556"
-      }
-     },
-     "d535_full": {
-      "value": 6.0,
-      "measured": false,
-      "provenance": {
-       "source": "scripts/run_d535_illiq_ranked.py",
-       "literal": "COST['ZN']",
-       "decision": "D535",
-       "why": "D535 charges this at the size named in its own UPT map, which is the micro where one exists; recorded on the full entry only for the roots with no micro"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZS": {
    "full": {
@@ -4656,79 +3301,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.ZS.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.1348884342408807,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZS.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0625,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZS.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 18.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 12.5,
-        "min_size": "ZS",
-        "min_size_key": "dollar_book.min_size.ZS"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZT": {
    "full": {
@@ -4745,79 +3366,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.ZT.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.0065835507548138,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZT.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0150720838794234,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZT.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 13.8125,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 7.8125,
-        "min_size": "ZT",
-        "min_size_key": "dollar_book.min_size.ZT"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   },
   "ZW": {
    "full": {
@@ -4834,79 +3431,55 @@
     "specs_provenance": {
      "artefact": "data/fut_specs_from_definition.json",
      "key": "specs.ZW.(tick_price_units, tick_usd_full_contract)",
-     "source": "Databento GLBX definition snapshot, NOTIONAL-scaled (D609); usd_per_point = tick_usd_full_contract / tick"
+     "source": "Databento GLBX definition snapshot, notional-scaled; usd_per_point = tick_usd_full_contract / tick"
     },
     "commission_rt_usd": {
      "value": 6.0,
      "measured": false,
      "provenance": {
-      "source": "scripts/run_d555_tsmom_replication.py",
-      "literal": "COMMISSION_RT['full']",
-      "decision": "D468",
-      "why": "DECLARED brokerage cost, never measured here. run_d555:56 calls it \"D468's convention\"; D466 declares the same $3 on the index micros and $6 full-size."
+      "why": "Declared brokerage assumption, not measured: $3.00 per round trip on a micro contract, $6.00 on a full-size contract."
      }
     },
     "crossing_ticks_rt": {
-     "d507_all": {
+     "quoted_1m_all_session": {
       "value": 1.1558007744982657,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZW.all_session.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: time-weighted mean quoted spread in ticks, whole session"
+      },
       "note": "QUOTED spread -- a floor on the cost, not what an aggressor paid"
      },
-     "d507_exec": {
+     "quoted_1m_at_trades": {
       "value": 1.0713141025641026,
       "measured": true,
-      "provenance": {
-       "artefact": "data/d507_spread_all_roots.json",
-       "key": "per_root.ZW.execution_instants.mean_spread_ticks",
-       "decision": "D507"
-      },
       "window": [
        "2025-09-11",
        "2026-09-10"
       ],
+      "provenance": {
+       "source": "Databento CME bbo-1m: mean quoted spread in ticks, sampled at trade instants"
+      },
       "note": "QUOTED spread at the execution instants -- a floor"
      },
-     "d556_one_tick": {
+     "one_tick": {
       "value": 1.0,
       "measured": false,
       "provenance": {
-       "derivation": "D555/D556 charge 0.5 * tick_usd a side (run_d555:dollar_book), so one full tick a round trip. A convention, not a measurement -- no window.",
+       "derivation": "a convention, not a measurement: 0.5 * tick_usd a side, so one full tick a round trip; no window",
        "inputs": {
         "rule": "cost_per_side = comm_rt/2 + 0.5 * tick_usd"
-       },
-       "decision": "D468 / D555 / D556"
+       }
       }
      }
     },
-    "default_line": "d556_one_tick",
-    "runner_lines": {
-     "d556_min_size": {
-      "value": 18.5,
-      "measured": false,
-      "provenance": {
-       "derivation": "comm_rt + tick_usd -- two sides of (comm_rt/2 + 0.5*tick_usd)",
-       "inputs": {
-        "comm_rt": 6.0,
-        "tick_usd": 12.5,
-        "min_size": "ZW",
-        "min_size_key": "dollar_book.min_size.ZW"
-       },
-       "decision": "D555 / D556"
-      }
-     }
-    }
+    "default_line": "one_tick"
    },
    "min_size": "full",
-   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, and run_d555's MICRO_OF does not name one; D556 sizes it at one full contract."
+   "no_micro_because": "CME lists no micro for this root in data/futures_contract_specs.json, so it is sized at one full contract."
   }
  },
  "spec_flags": [
@@ -4999,7 +3572,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $29,770 (undivided $2,977,000)",
    "tick_usd_raw_formula": 1000.0,
-   "unit": "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1000.0 cents and the dollar tick is $10.00. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
+   "unit": "CORRECTED, divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1000.0 cents and the dollar tick is $10.00. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
   },
   {
    "symbol": "HO",
@@ -5020,7 +3593,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $85,010 (undivided $8,501,000)",
    "tick_usd_raw_formula": 1000.0,
-   "unit": "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1000.0 cents and the dollar tick is $10.00. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
+   "unit": "CORRECTED, divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1000.0 cents and the dollar tick is $10.00. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
   },
   {
    "symbol": "NKD",
@@ -5071,7 +3644,7 @@
    "scaling_divisor": 1.0,
    "scaling_reason": "native units, notional $239,150",
    "tick_usd_raw_formula": 6.25,
-   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). D609 reads tick_usd_full_contract instead, so this table charges $6.25 at divisor 1."
+   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). This table reads tick_usd_full_contract instead, so this table charges $6.25 at divisor 1."
   },
   {
    "symbol": "TN",
@@ -5082,7 +3655,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $108,672 (undivided $10,867,188)",
    "tick_usd_raw_formula": 1562.5,
-   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). D609 reads tick_usd_full_contract instead, so this table charges $15.625 at divisor 100."
+   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). This table reads tick_usd_full_contract instead, so this table charges $15.625 at divisor 100."
   },
   {
    "symbol": "UB",
@@ -5093,7 +3666,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $109,312 (undivided $10,931,250)",
    "tick_usd_raw_formula": 3125.0,
-   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). D609 reads tick_usd_full_contract instead, so this table charges $31.25 at divisor 100."
+   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). This table reads tick_usd_full_contract instead, so this table charges $31.25 at divisor 100."
   },
   {
    "symbol": "ZC",
@@ -5104,7 +3677,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $25,300 (undivided $2,530,000)",
    "tick_usd_raw_formula": 1250.0,
-   "unit": "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1250.0 cents and the dollar tick is $12.50. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
+   "unit": "CORRECTED, divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1250.0 cents and the dollar tick is $12.50. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
   },
   {
    "symbol": "ZL",
@@ -5115,7 +3688,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $41,070 (undivided $4,107,000)",
    "tick_usd_raw_formula": 600.0000000000001,
-   "unit": "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 600.0000000000001 cents and the dollar tick is $6.00. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
+   "unit": "CORRECTED, divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 600.0000000000001 cents and the dollar tick is $6.00. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
   },
   {
    "symbol": "ZM",
@@ -5136,7 +3709,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $61,438 (undivided $6,143,750)",
    "tick_usd_raw_formula": 1250.0,
-   "unit": "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1250.0 cents and the dollar tick is $12.50. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
+   "unit": "CORRECTED, divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1250.0 cents and the dollar tick is $12.50. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
   },
   {
    "symbol": "ZT",
@@ -5147,7 +3720,7 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $204,914 (undivided $20,491,406)",
    "tick_usd_raw_formula": 781.25,
-   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). D609 reads tick_usd_full_contract instead, so this table charges $7.8125 at divisor 100."
+   "percent_of_par_note": "the definition snapshot's own `tick_usd` divides by 100 for percent-of-par products; that is right where unit_of_measure_qty is the par notional (ZN, ZB, ZF all reproduce CME) and wrong where it is already dollars per index point (SR3: 0.0625 against CME's $6.25). This table reads tick_usd_full_contract instead, so this table charges $7.8125 at divisor 100."
   },
   {
    "symbol": "ZW",
@@ -5158,53 +3731,26 @@
    "scaling_divisor": 100.0,
    "scaling_reason": "percent/cents quote, notional $37,650 (undivided $3,765,000)",
    "tick_usd_raw_formula": 1250.0,
-   "unit": "CORRECTED (D609), divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1250.0 cents and the dollar tick is $12.50. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
+   "unit": "CORRECTED, divisor 100: this root is quoted in CENTS per unit, so the definition snapshot's raw formula gives 1250.0 cents and the dollar tick is $12.50. The divisor is the NOTIONAL test's, not a unit_of_measure rule: HG is 'LBS' too and is NOT divided."
   }
  ],
  "disagreements": [
   {
    "what": "full-size commission per round trip",
    "values": {
-    "scripts/d469_scalping_feasibility.py:COMMISSION_RT['ES']": 4.0,
-    "scripts/run_d555_tsmom_replication.py:COMMISSION_RT['full']": 6.0
+    "declared full-size commission": 6.0,
+    "alternative ES assumption": 4.0
    },
-   "resolution": "the table's `full` entries carry $6.00, the later and broader convention and the one the seen ledger charges; D469's $4.00 survives verbatim in ES's runner_lines.d469 so its published breakeven bar stays reproducible.",
+   "resolution": "the table's `full` entries carry $6.00. Neither value is measured.",
    "measured": false
   },
   {
-   "what": "D533's charged round trip on GC (MGC)",
+   "what": "ES and MES effective_es_bp crossing in ticks",
    "values": {
-    "scripts/run_d533_story_conditions.py:COST['GC']": 5.0,
-    "D556 one-tick rule (comm 3.00 + tick_usd)": 4.0
+    "ES": 1.0085687251930604,
+    "MES": 1.0085687251930602
    },
-   "resolution": "recorded as charged, NOT derived: no line in this table produces it. Both are conservative against the rule.",
-   "measured": false
-  },
-  {
-   "what": "D533's charged round trip on NG (MNG)",
-   "values": {
-    "scripts/run_d533_story_conditions.py:COST['NG']": 5.0,
-    "D556 one-tick rule (comm 3.00 + tick_usd)": 4.0
-   },
-   "resolution": "recorded as charged, NOT derived: no line in this table produces it. Both are conservative against the rule.",
-   "measured": false
-  },
-  {
-   "what": "D527's round-trip crossing in ticks, carried twice",
-   "values": {
-    "reprice.round_trip_crossing_ticks": 2.4110232735988832,
-    "reprice.scored.measured.cross_ticks": 2.4110232735988824
-   },
-   "resolution": "one ULP apart; both give rt_usd 4.205511636799441 exactly on MNQ's $0.50 tick. The table carries the first, the artefact's headline. On a $31.25 tick the same gap would not be immaterial.",
-   "measured": true
-  },
-  {
-   "what": "D465's round-trip crossing in ticks, on ES and on MES",
-   "values": {
-    "cost_bars.ES.crossing_ticks": 1.0085687251930604,
-    "cost_bars.MES.crossing_ticks": 1.0085687251930602
-   },
-   "resolution": "one ULP apart -- the same bp figure divided by $12.50 and by $1.25. Each size entry carries its own contract's number so that D469's published bars reproduce exactly on both rows.",
+   "resolution": "one ULP apart: the same bp figure divided by $12.50 and by $1.25. Each size entry carries its own contract's number.",
    "measured": true
   }
  ]

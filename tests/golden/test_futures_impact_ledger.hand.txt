@@ -221,11 +221,11 @@ data/futures_impact_params.json, top level:
 
     default_line      "day1m_2016_2023"
     coefficient_Y     0.7
-    roots             36 (the breadth roots)
-    lines             d511 (9 roots), breadth_meta (36, NO volume), day1m_2016_2023 (36)
-    complete_lines    ["d511", "day1m_2016_2023"]
+    roots             36
+    lines             trades_2025_2026 (9 roots), hourly_2010_2026 (36, NO volume), day1m_2016_2023 (36)
+    complete_lines    ["trades_2025_2026", "day1m_2016_2023"]
 
-`breadth_meta` carries a sigma and a notional and NO `adv_contracts`, because its source data
+`hourly_2010_2026` carries a sigma and a notional and NO `adv_contracts`, because its source data
 has no volume field at all. The brick refuses that line at construction. The measurement is
 stored with the gap and refused at the point of use; the alternatives are dropping a measured
 sigma or filling the ADV from another window, which would hide the mismatch in a float.

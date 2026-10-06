@@ -270,15 +270,15 @@ def test_the_artefacts_shape_is_the_one_the_hand_file_describes():
     t = load_impact_table()
     assert t["default_line"] == "day1m_2016_2023"
     assert len(t["roots"]) == 36
-    assert set(t["lines"]) == {"d511", "breadth_meta", "day1m_2016_2023"}
-    assert t["complete_lines"] == ["d511", "day1m_2016_2023"]
-    assert sum(1 for e in t["roots"].values() if "d511" in e["lines"]) == 9
+    assert set(t["lines"]) == {"trades_2025_2026", "hourly_2010_2026", "day1m_2016_2023"}
+    assert t["complete_lines"] == ["trades_2025_2026", "day1m_2016_2023"]
+    assert sum(1 for e in t["roots"].values() if "trades_2025_2026" in e["lines"]) == 9
 
 
-def test_breadth_meta_carries_a_sigma_and_no_volume_on_every_root():
+def test_hourly_line_carries_a_sigma_and_no_volume_on_every_root():
     t = load_impact_table()
     for root, entry in t["roots"].items():
-        line = entry["lines"]["breadth_meta"]
+        line = entry["lines"]["hourly_2010_2026"]
         assert line["sigma_fraction"] > 0.0, root
         assert "adv_contracts" not in line, root
 
@@ -286,5 +286,5 @@ def test_breadth_meta_carries_a_sigma_and_no_volume_on_every_root():
 def test_the_default_line_is_the_only_in_sample_one():
     t = load_impact_table()
     assert t["roots"]["ES"]["lines"]["day1m_2016_2023"]["window"][1] == "2023-12-29"
-    assert t["roots"]["ES"]["lines"]["d511"]["window"] == ["2025-09-11", "2026-09-10"]
-    assert t["roots"]["ES"]["lines"]["breadth_meta"]["window"][1] == "2026-09-09"
+    assert t["roots"]["ES"]["lines"]["trades_2025_2026"]["window"] == ["2025-09-11", "2026-09-10"]
+    assert t["roots"]["ES"]["lines"]["hourly_2010_2026"]["window"][1] == "2026-09-09"

@@ -356,9 +356,9 @@ def test_params_refuse_an_empty_provenance_or_a_backwards_window():
 
 
 def test_an_incomplete_line_is_refused_at_construction_not_at_first_use():
-    """The `breadth_meta` line has a sigma and no volume. It can be stored, but a brick built
+    """The `hourly_2010_2026` line has a sigma and no volume. It can be stored, but a brick built
     from it is refused when it is constructed rather than on first use."""
-    sigma_only = FuturesImpactParams(line="breadth_meta", window=("2010-06-07", "2026-09-09"),
+    sigma_only = FuturesImpactParams(line="hourly_2010_2026", window=("2010-06-07", "2026-09-09"),
                                      provenance=PROV, sigma_fraction=0.01, notional_usd=1.0,
                                      sigma_usd_per_contract=0.01)
     assert not sigma_only.complete
@@ -381,8 +381,8 @@ def test_the_table_carries_the_36_roots_and_three_lines():
     assert len(t["roots"]) == 36
     assert t["default_line"] == "day1m_2016_2023"
     assert t["coefficient_Y"] == LEDGER_Y
-    assert set(t["lines"]) == {"d511", "breadth_meta", "day1m_2016_2023"}
-    assert sum(1 for e in t["roots"].values() if "d511" in e["lines"]) == 9
+    assert set(t["lines"]) == {"trades_2025_2026", "hourly_2010_2026", "day1m_2016_2023"}
+    assert sum(1 for e in t["roots"].values() if "trades_2025_2026" in e["lines"]) == 9
 
 
 def test_every_stored_line_carries_its_window_and_its_provenance():
@@ -392,10 +392,10 @@ def test_every_stored_line_carries_its_window_and_its_provenance():
             assert len(line["window"]) == 2, f"{root}/{name}"
             assert line["provenance"], f"{root}/{name}"
             for p in line["provenance"]:
-                assert "#" in p or p.startswith("scripts/"), f"{root}/{name}: {p!r}"
+                assert isinstance(p, str) and p.strip(), f"{root}/{name}: {p!r}"
 
 
-def test_the_default_line_is_the_in_sample_one_and_ends_before_the_holdout():
+def test_the_default_line_covers_2016_to_2023_only():
     t = load_impact_table()
     for root, entry in t["roots"].items():
         window = entry["lines"]["day1m_2016_2023"]["window"]
@@ -403,16 +403,16 @@ def test_the_default_line_is_the_in_sample_one_and_ends_before_the_holdout():
         assert window[1] < "2024-01-01", root
 
 
-def test_the_holdout_window_lines_are_labelled_as_such():
+def test_the_recent_lines_are_labelled_as_such():
     t = load_impact_table()
-    assert t["roots"]["ES"]["lines"]["d511"]["window"] == ["2025-09-11", "2026-09-10"]
-    assert "vault" in t["why_default"]
+    assert t["roots"]["ES"]["lines"]["trades_2025_2026"]["window"] == ["2025-09-11", "2026-09-10"]
+    assert "extend to 2026-09" in t["why_default"]
 
 
-def test_breadth_meta_carries_no_ADV_anywhere_because_its_source_has_no_volume():
+def test_hourly_line_carries_no_ADV_anywhere_because_its_source_has_no_volume():
     t = load_impact_table()
     for root, entry in t["roots"].items():
-        assert "adv_contracts" not in entry["lines"]["breadth_meta"], root
+        assert "adv_contracts" not in entry["lines"]["hourly_2010_2026"], root
 
 
 def test_from_table_builds_the_default_line_and_reproduces_the_stored_numbers():
@@ -430,19 +430,19 @@ def test_from_table_raises_naming_the_known_roots_and_the_roots_own_lines():
         FuturesSqrtImpact.from_table("NOSUCH")
     with pytest.raises(FuturesImpactError, match="no impact line 'nosuch'"):
         FuturesSqrtImpact.from_table("ES", line="nosuch")
-    # ZC is one of the 27 roots without a "d511" line: naming that line for it must raise rather
+    # ZC is one of the 27 roots without a "trades_2025_2026" line: naming that line for it must raise rather
     # than fall back to a neighbouring window.
-    with pytest.raises(FuturesImpactError, match="no impact line 'd511'"):
-        FuturesSqrtImpact.from_table("ZC", line="d511")
+    with pytest.raises(FuturesImpactError, match="no impact line 'trades_2025_2026'"):
+        FuturesSqrtImpact.from_table("ZC", line="trades_2025_2026")
 
 
 def test_from_table_refuses_the_volume_less_line_by_name():
     with pytest.raises(FuturesImpactError, match="carries no adv_contracts"):
-        FuturesSqrtImpact.from_table("ES", line="breadth_meta")
+        FuturesSqrtImpact.from_table("ES", line="hourly_2010_2026")
 
 
 def test_impact_params_reads_one_line_without_building_a_brick():
-    p = impact_params("ES", "breadth_meta")
+    p = impact_params("ES", "hourly_2010_2026")
     assert p.adv_contracts is None
     assert p.sigma_fraction is not None and p.sigma_fraction > 0.0
     assert p.window[1] <= "2026-09-09"
@@ -554,12 +554,12 @@ def test_the_declarative_config_builds_the_brick_from_the_table():
 
 
 def test_the_declarative_config_honours_line_and_coefficient():
-    cfg = _stack({"type": "futures_sqrt_impact", "root": "ES", "line": "d511",
+    cfg = _stack({"type": "futures_sqrt_impact", "root": "ES", "line": "trades_2025_2026",
                   "coefficient": 1.0})
     validate_stack_config(cfg)
     built = build_cost_stack(cfg, _context()).trade_bricks[0]
     assert built.coefficient == 1.0
-    assert built.params_by_root["ES"].line == "d511"
+    assert built.params_by_root["ES"].line == "trades_2025_2026"
 
 
 def test_a_typo_on_a_futures_sqrt_impact_key_raises_instead_of_silently_defaulting():

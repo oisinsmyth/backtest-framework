@@ -180,7 +180,7 @@ class FuturesRoundTrip:
     size: str = ""
     """"micro" or "full" — which entry of `root` this is. Empty when hand-built."""
     line: str = ""
-    """Which crossing line the tick count came from ("d508_exec", "d556_one_tick", ...)."""
+    """Which crossing line the tick count came from ("effective_exec_hours", "one_tick", ...)."""
     window: tuple[str, ...] = ()
     """The crossing measurement's own window, as (start, end) ISO dates. Empty for a rule
     (the one-tick convention measured nothing and has no window to quote)."""

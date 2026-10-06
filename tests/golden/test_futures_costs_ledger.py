@@ -4,8 +4,8 @@ Every number here is worked by hand in `test_futures_costs_ledger.hand.txt`, nex
 file, with a calculator that never imports this codebase. If the two disagree, the hand file
 is right.
 
-The table's cost lines are keyed by the measurement that produced them ("d556_one_tick",
-"d465", "d508_exec"). Those strings are data keys in data/futures_costs.json.
+Cost lines are named by what they measure ("one_tick", "effective_es_bp",
+"effective_exec_hours"); `data/futures_costs.json` describes each one under `lines`.
 """
 
 import json
@@ -104,20 +104,19 @@ def test_the_table_carries_each_roots_one_tick_line_and_it_is_the_same_number(
     assert entry["symbol"] == symbol
     assert entry["tick_usd"] == tick_usd
     assert entry["commission_rt_usd"]["value"] == commission
-    assert entry["runner_lines"]["d556_min_size"]["value"] == exact
 
-    line = FuturesRoundTrip.from_table(root, line="d556_one_tick")
+    line = FuturesRoundTrip.from_table(root, line="one_tick")
     assert line.round_trip_usd == exact
 
 
 def test_zn_is_a_genuine_rounding_tie():
     """21.625 -> 21.63 half-up, 21.62 half-even (hand file §3)."""
-    exact = FuturesRoundTrip.from_table("ZN", line="d556_one_tick").round_trip_usd
+    exact = FuturesRoundTrip.from_table("ZN", line="one_tick").round_trip_usd
     assert exact == 21.625
     assert round(exact, 2) == 21.62, "Python rounds this tie to even"
     assert f"{exact:.2f}" == "21.62"
     # ZF is not a tie and both rules agree.
-    assert round(FuturesRoundTrip.from_table("ZF", line="d556_one_tick").round_trip_usd, 2) == 13.81
+    assert round(FuturesRoundTrip.from_table("ZF", line="one_tick").round_trip_usd, 2) == 13.81
 
 
 def test_mnq_costs_more_on_its_measured_crossing_than_on_the_convention():
@@ -125,7 +124,7 @@ def test_mnq_costs_more_on_its_measured_crossing_than_on_the_convention():
     measured = FuturesRoundTrip(
         FuturesCommission(3.00), TickCrossing(MNQ_MEASURED_TICKS_RT), instrument=MNQ
     ).round_trip_usd
-    convention = FuturesRoundTrip.from_table("NQ", line="d556_one_tick").round_trip_usd
+    convention = FuturesRoundTrip.from_table("NQ", line="one_tick").round_trip_usd
     assert convention == 3.50
     assert measured - convention == pytest.approx(0.7055116367994, abs=1e-12)
 
@@ -154,15 +153,15 @@ def test_mes_crossing_dollars_are_exact_from_the_bricks():
 
 def test_the_two_sizes_tick_counts_differ_by_one_ulp_and_the_table_keeps_both():
     """Collapsing them would break one of the two bars (hand file §4)."""
-    es = FuturesRoundTrip.from_table("ES", "full", "d465")
-    mes = FuturesRoundTrip.from_table("ES", "micro", "d465")
+    es = FuturesRoundTrip.from_table("ES", "full", "effective_es_bp")
+    mes = FuturesRoundTrip.from_table("ES", "micro", "effective_es_bp")
     assert es.crossing.ticks_per_round_trip == ES_TICKS_RT
     assert mes.crossing.ticks_per_round_trip == MES_TICKS_RT
     assert es.crossing.ticks_per_round_trip != mes.crossing.ticks_per_round_trip
 
 
 def test_mgc_measured_execution_hours_crossing():
-    measured = FuturesRoundTrip.from_table("GC", "micro", "d508_exec")
+    measured = FuturesRoundTrip.from_table("GC", "micro", "effective_exec_hours")
     assert measured.crossing.ticks_per_round_trip == 2.9334505021406643
     assert measured.round_trip_usd == 5.933450502140664
 
@@ -172,20 +171,23 @@ def test_mng_has_only_the_one_tick_line():
     table = load_cost_table()
     micro = table["roots"]["NG"]["micro"]
     assert micro["symbol"] == "MNG"
-    assert set(micro["crossing_ticks_rt"]) == {"d556_one_tick"}
-    assert micro["default_line"] == "d556_one_tick"
-    assert set(table["roots"]["NG"]["full"]["crossing_ticks_rt"]) >= {"d507_all", "d507_exec"}
+    assert set(micro["crossing_ticks_rt"]) == {"one_tick"}
+    assert micro["default_line"] == "one_tick"
+    assert set(table["roots"]["NG"]["full"]["crossing_ticks_rt"]) >= {"quoted_1m_all_session", "quoted_1m_at_trades"}
 
 
 # ------------------------------------------------------------------ §5 and §6
 
 
 def test_full_size_commission_has_two_declared_values_and_both_survive():
-    """$4.00 kept on ES's older cost line against $6.00 full-size. Hand file §5."""
-    es_full = load_cost_table()["roots"]["ES"]["full"]
+    """$6.00 full-size in every entry, with the $4.00 ES alternative recorded. Hand file §5."""
+    table = load_cost_table()
+    es_full = table["roots"]["ES"]["full"]
     assert es_full["commission_rt_usd"]["value"] == 6.00
     assert es_full["commission_rt_usd"]["measured"] is False
-    assert es_full["runner_lines"]["d469"]["commission_rt_usd"]["value"] == 4.00
+    commission = next(d for d in table["disagreements"] if d["what"] == "full-size commission per round trip")
+    assert commission["values"] == {"declared full-size commission": 6.0, "alternative ES assumption": 4.0}
+    assert commission["measured"] is False
 
 
 def test_the_cent_quoted_roots_are_corrected_and_the_divisor_is_recorded():
@@ -273,7 +275,7 @@ def test_the_futures_row_has_its_declared_keys():
 
 def test_a_cost_stack_over_the_two_bricks_charges_the_round_trip():
     """The bricks in a real CostStack, entry and exit, summed as the engine sums them."""
-    line = FuturesRoundTrip.from_table("NQ", "micro", "d556_one_tick")
+    line = FuturesRoundTrip.from_table("NQ", "micro", "one_tick")
     stack = CostStack(trade_bricks=line.bricks)
     assert stack.trade_cost(MNQ, 1.0, 20_000.0) + stack.trade_cost(MNQ, -1.0, 20_000.0) == 3.50
     assert stack.trade_cost(MNQ, 5.0, 20_000.0) == 5.0 * 0.5 * 3.50

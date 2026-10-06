@@ -108,14 +108,14 @@ class FuturesImpactParams:
     `sigma_fraction` is their quotient; keeping all four lets a reader check the division.
 
     The four measured fields are optional because not every source measures all four. The
-    `breadth_meta` line carries a day-session sigma and a notional but no volume, so it has
+    `hourly_2010_2026` line carries a day-session sigma and a notional but no volume, so it has
     `adv_contracts = None`. The line is stored with the hole and refused at the point of use;
     the alternatives would be dropping a measured sigma or filling the ADV from a different
     window.
     """
 
     line: str
-    """Which measurement this is: `d511`, `breadth_meta`, `day1m_2016_2023`."""
+    """Which measurement this is: `trades_2025_2026`, `hourly_2010_2026`, `day1m_2016_2023`."""
     window: tuple[str, str]
     """The measurement window, inclusive, as ISO dates."""
     provenance: tuple[str, ...]
@@ -235,7 +235,7 @@ class FuturesSqrtImpact:
         if chosen not in lines:
             known = ", ".join(sorted(lines)) or "(none)"
             raise FuturesImpactError(
-                f"{root}: no impact line {chosen!r} -- {root} carries: {known}. The d511 line "
+                f"{root}: no impact line {chosen!r} -- {root} carries: {known}. The trades_2025_2026 line "
                 "covers nine roots only; naming it for a tenth must raise rather than fall back "
                 "to a neighbouring window."
             )
