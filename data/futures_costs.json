@@ -2,7 +2,11 @@
  "_provenance": {
   "source": "Databento CME quote data (tbbo and bbo-1m) for the crossing lines; CME contract specifications and a Databento instrument-definition snapshot for tick values",
   "rule": "every crossing value is a measurement or a stated convention, and carries its source and, where measured, its window",
-  "computes_no_return": true
+  "computes_no_return": true,
+  "feeds": {
+   "tbbo": "Databento schema: every trade, with the best bid and offer in force directly before it (sampled in trade time)",
+   "bbo-1m": "Databento schema: the last best bid, best offer and sale at one-minute intervals (sampled in clock time)"
+  }
  },
  "conventions": {
   "crossing_unit": "TICKS per ROUND TRIP. Half is charged on each of the two fills.",
