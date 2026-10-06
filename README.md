@@ -5,7 +5,10 @@ futures. Costs are composed from small tested parts (commission, spread, market 
 margin interest, dividends), and the engine is checked against hand-computed ledgers and against
 an independent engine.
 
-<!-- TODO(author): one or two sentences on why this was built and who it is for. -->
+It was built for systematic strategy research where a reported result has to hold up under
+checking: every cost is modelled explicitly, data is validated before it is used, and every trial
+is logged so the best result can be judged against the number tried. It is for readers who want to
+audit how a backtest reaches its numbers.
 
 ## Install
 
