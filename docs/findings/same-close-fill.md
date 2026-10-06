@@ -4,8 +4,8 @@
 
 A family of daily cross-sectional books computed each signal at the close of day t−1 and opened
 the position at day t earning the return from close[t−1] to close[t]. That is a fill at the
-signal's own close, which no live order can get. The earliest honest fill is the next open, and
-the gap between the close and the next open accrued to a position that could not yet have
+signal's own close, which no live order can get. The earliest achievable fill is the next open,
+and the gap between the close and the next open accrued to a position that could not yet have
 existed.
 
 ## The size of it
