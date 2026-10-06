@@ -1,9 +1,9 @@
-"""Property test: total accrued carry over any window equals rate * sum(calendar-day gaps),
-regardless of how the window is chopped into bars.
+"""Property test: total carry over a window equals rate * sum(calendar-day gaps), however
+the window is split into bars.
 
-There is no hypothesis profile in the repo, and this file sets no `settings(...)` of its own,
-so unlike its siblings it runs at hypothesis's defaults: not derandomized, 100 examples.
-`derandomize=True` would not give example determinism anyway, since hypothesis draws
+The repo has no hypothesis profile and this file sets no `settings(...)`, so unlike the
+other property files it runs at hypothesis's defaults: not derandomized, 100 examples.
+`derandomize=True` would not make the examples deterministic anyway, since hypothesis draws
 differently depending on which modules are loaded.
 """
 

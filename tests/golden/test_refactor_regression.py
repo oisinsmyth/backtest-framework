@@ -39,9 +39,9 @@ class _BarResult:
 
 
 def run_mini_backtest(bars: list[tuple[datetime, float, float]], starting_cash: float) -> list[_BarResult]:
-    """bars: list of (timestamp, price, target_weight). Single strategy, single
-    instrument, capital fixed at starting_cash (capital allocation is out of scope;
-    this harness just takes a number)."""
+    """Run one strategy on one instrument over bars of (timestamp, price, target_weight).
+
+    Capital is fixed at starting_cash; capital allocation is out of scope."""
     sizer = Sizer()
     cash = starting_cash
     quantity = 0.0
@@ -50,7 +50,7 @@ def run_mini_backtest(bars: list[tuple[datetime, float, float]], starting_cash: 
 
     for timestamp, price, target_weight in bars:
         # 1. Carry accrues on the position held coming into this bar, over the gap
-        #    since the previous bar — before any trade on this bar is applied.
+        #    since the previous bar, before any trade on this bar is applied.
         if prev_timestamp is not None and quantity != 0:
             base_amount = quantity * price  # marked at the (unchanged) price
             carry = COST_STACK.carry_cost(base_amount, prev_timestamp, timestamp)
@@ -95,8 +95,8 @@ def test_cost_stack_pipeline_golden_master_equity_curve():
     assert bar2.quantity == 0.0
     assert bar2.nav == pytest.approx(99_915.123287671244, rel=TOLERANCE)
 
-    # Cross-check independent of the step-by-step arithmetic: price never moved, so NAV
-    # change must equal exactly minus the total costs incurred.
+    # Cross-check independent of the step-by-step arithmetic: price never moved, so the
+    # NAV change must equal minus the total costs incurred.
     total_costs = (
         26.00  # entry fee
         + 24.657534246575342  # carry over the 3-day gap

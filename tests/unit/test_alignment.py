@@ -51,7 +51,7 @@ def test_each_instruments_own_bar_data_is_preserved():
 
 
 def test_output_is_sorted_regardless_of_input_order():
-    a = _series((WED, 12.0), (MON, 10.0), (TUE, 11.0))  # deliberately out of order
+    a = _series((WED, 12.0), (MON, 10.0), (TUE, 11.0))  # out of order
     b = _series((TUE, 101.0), (WED, 102.0), (MON, 100.0))
 
     aligned = align_bars({"A": a, "B": b})
@@ -79,9 +79,9 @@ def test_empty_input_returns_empty_list():
     assert align_bars({}) == []
 
 
-def test_duplicate_timestamps_are_refused_loudly():
-    # Keying bars by timestamp would silently collapse a duplicate, last one wins. This
-    # is a real failure mode of yfinance data after joins or re-fetches.
+def test_duplicate_timestamps_raise():
+    # Keying bars by timestamp would keep only the last duplicate without reporting it.
+    # yfinance data can contain duplicates after joins or re-fetches.
     import pytest
 
     a = _series((MON, 10.0), (TUE, 11.0), (TUE, 999.0))

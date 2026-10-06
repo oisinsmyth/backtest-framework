@@ -1,13 +1,12 @@
 """Golden-master ledger for the futures square-root impact brick and its table.
 
 Every number here is worked by hand in `test_futures_impact_ledger.hand.txt`, next to this file,
-with a calculator that never imports this codebase. If the two disagree, the hand file is right.
+without importing this codebase. If the two disagree, the hand file is authoritative.
 
 An impact term is a cost that grows with order size. `costs/equity_bricks.py:SqrtImpact` raises
-on a `Future`, so without this brick a futures backtest is charged commission and crossing alone,
-which is sound at one contract and optimistic above it. The values reproduced below are the
-committed artefact's own measured parameters, so they are asserted exactly, with `==`. Nothing
-here is asserted to a tolerance.
+on a `Future`, so without this brick a futures backtest is charged only commission and crossing,
+which is adequate at one contract and optimistic above it. The values below are the committed
+artefact's measured parameters and are asserted with `==`, not to a tolerance.
 """
 
 import json
@@ -31,8 +30,8 @@ from backtest_framework.instruments.future import Future
 
 REPO = Path(__file__).resolve().parents[2]
 
-# Hand file §1. Written out rather than read from the specs file, because a golden test that
-# reads its inputs from the same place as the code under test checks nothing.
+# Hand file §1. Written out rather than read from the specs file, so the golden test does not
+# share its inputs with the code under test.
 ES = Future(root="ES", tick_points=0.25, usd_per_point=50.0, tick_usd=12.5)
 MES = Future(root="MES", tick_points=0.25, usd_per_point=5.0, tick_usd=1.25)
 
@@ -98,8 +97,8 @@ def test_the_measured_es_line_is_the_artefacts_own_numbers_to_the_bit():
 
 
 def test_the_stored_sigma_fraction_is_the_stored_division_exactly():
-    """Hand file §1: 1519.9726384933488 / 163066.35443037972 = 0.00932119101946498, to the bit.
-    Carrying all three lets a reader check the division instead of taking it."""
+    """Hand file §1: 1519.9726384933488 / 163066.35443037972 = 0.00932119101946498, bit for
+    bit. All three are stored so the division can be checked."""
     assert ES_SIGMA_USD / ES_NOTIONAL_USD == ES_SIGMA_FRACTION
 
 
@@ -128,8 +127,8 @@ def test_impact_fraction_reproduces_the_hand_worked_arithmetic(quantity, ratio, 
 
 
 def test_quadrupling_the_order_doubles_the_fraction_exactly_on_these_doubles():
-    """Hand file §2: 2 * 0.00018426807167734195 == 0.0003685361433546839. Exact here as a
-    property of these particular doubles, not of the law -- which the hand file says."""
+    """Hand file §2: 2 * 0.00018426807167734195 == 0.0003685361433546839. The equality is a
+    property of these particular doubles, not of the law."""
     assert 2.0 * FRACTION_Q1000 == FRACTION_Q4000
 
 
@@ -138,7 +137,7 @@ def test_the_fraction_in_basis_points():
 
 
 def test_the_second_root_is_checked_too():
-    """Hand file §5: a second root, so the table is not checked at one point only."""
+    """Hand file §5: a second root, so the table is checked at more than one point."""
     line = _artefact()["roots"]["CL"]["lines"]["day1m_2016_2023"]
     assert line["adv_contracts"] == CL_ADV
     assert line["sigma_fraction"] == CL_SIGMA_FRACTION
@@ -170,7 +169,7 @@ def test_the_signed_move_in_price_points():
 
 
 def test_zero_flow_is_exactly_zero():
-    """Hand file §3, zero case (b) -- including the negative zero."""
+    """Hand file §3, zero case (b), including negative zero."""
     brick = FuturesSqrtImpact.from_table("ES")
     assert brick.impact_for_flow(ES, 0.0, PRICE) == 0.0
     assert brick.impact_for_flow(ES, -0.0, PRICE) == 0.0
@@ -179,7 +178,7 @@ def test_zero_flow_is_exactly_zero():
 
 def test_the_fraction_is_size_invariant_and_the_notional_is_not():
     """Hand file §3: one ES is $200,000 of index at 4,000 and one MES is $20,000. The fraction is
-    the same number; what changes is what it is charged on."""
+    the same; only the notional it is charged on differs."""
     brick = FuturesSqrtImpact(
         params_by_root={"ES": impact_params("ES"), "MES": impact_params("ES")}
     )
@@ -215,7 +214,7 @@ def test_the_depth_scaling_direction():
 
 
 def test_it_is_the_same_law_as_the_equity_brick_to_the_bit():
-    """Hand file §6: identical expression, identical doubles, identical result."""
+    """Hand file §6: the same expression on the same doubles gives the same result."""
     fut = FuturesSqrtImpact.from_table("ES")
     eq = SqrtImpact(
         params_by_symbol={"ES": ImpactParams(sigma_daily=ES_SIGMA_FRACTION, adv_shares=ES_ADV)},
@@ -226,7 +225,7 @@ def test_it_is_the_same_law_as_the_equity_brick_to_the_bit():
 
 
 def test_the_equity_brick_cannot_price_a_future():
-    """Hand file §6. The equity brick raises on a Future, which is why the futures brick exists."""
+    """Hand file §6. The equity brick raises on a Future; hence the separate futures brick."""
     eq = SqrtImpact(params_by_symbol={"ES": ImpactParams(sigma_daily=0.01, adv_shares=1e6)})
     with pytest.raises(ValueError, match="needs a 'symbol' attribute"):
         eq.cost(ES, 1000.0, PRICE)
@@ -251,8 +250,8 @@ BRICK_KEYS_BEFORE_FUTURES_IMPACT = {
 
 
 def test_no_pre_existing_brick_key_row_moved():
-    """Hand file §7. Adding a tenth row must take no key off any of the nine, which would turn
-    a stored config into a raise."""
+    """Hand file §7. Adding a tenth row must not remove a key from any of the nine, or a stored
+    config would fail to load."""
     for type_name, keys in BRICK_KEYS_BEFORE_FUTURES_IMPACT.items():
         assert type_name in BRICK_KEYS, f"{type_name} disappeared from BRICK_KEYS"
         assert set(BRICK_KEYS[type_name]) == keys, f"{type_name}'s allowed keys moved"

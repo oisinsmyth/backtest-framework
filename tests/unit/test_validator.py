@@ -1,6 +1,8 @@
-"""Data validator tests: the validator flags what it should, separating hard violations
-from warnings, with thresholds calibrated against observed genuine data, and with
-split-awareness so a real reverse-split jump in an as-traded series isn't quarantined.
+"""Tests for the data validator.
+
+The validator separates hard violations from warnings, uses thresholds calibrated against
+observed real data, and accounts for splits so that a reverse-split jump in an as-traded
+series is not quarantined.
 """
 
 from datetime import datetime, timedelta
@@ -34,7 +36,7 @@ def test_ohlc_inconsistency_is_hard():
 
 
 def test_observed_epsilon_artifact_passes_tolerance():
-    # XOP 2018-10-24: close < low by 1.2e-16 relative — within the 1e-9 tolerance.
+    # XOP 2018-10-24: close < low by 1.2e-16 relative, within the 1e-9 tolerance.
     high = 128.9409511386912
     low = 119.8700637817383
     close = 119.87006378173828  # < low, by float noise
@@ -51,25 +53,26 @@ def test_non_positive_price_is_hard():
 
 
 def test_a_zero_close_is_quarantined_rather_than_raising():
-    """The data this module exists to quarantine must not crash it.
+    """A 0.0 close is flagged as a hard violation without raising.
 
-    A 0.0 close is an ordinary scraper failure. It is flagged hard, but the next bar must not
-    use it as `prev_close` and divide by it: that would raise ZeroDivisionError instead of
-    returning a quarantining result, and a caller would record "the validator errored"
-    rather than "this data is bad".
+    A zero close is a common scraper failure. The next bar does not divide by it as
+    `prev_close`, which would raise ZeroDivisionError instead of returning a result that
+    quarantines the data.
     """
     result = validate({"A": _series([10.0, 0.0, 10.0])})
 
     assert not result.passed
     assert [v.check for v in result.hard_violations] == ["non_positive_price"]
-    # And specifically not an unexplained_move fabricated from the bad predecessor.
+    # No unexplained_move is computed from the bad previous close.
     assert not any(v.check == "unexplained_move" for v in result.violations)
 
 
 def test_a_negative_close_does_not_fabricate_a_move_on_the_next_bar():
-    """The same issue one step along: dividing by -5.0 does not raise, but would invent a
-    -21% move and a second, spurious `unexplained_move` hard violation. Asserting only
-    `not passed` would not catch that, so the exact list of hard violations is checked.
+    """A negative close does not produce a spurious move on the next bar.
+
+    Dividing by -5.0 does not raise but would produce a -21% move and a second
+    `unexplained_move` hard violation. `not passed` alone would not detect that, so the full
+    list of hard violations is checked.
     """
     result = validate({"A": _series([100.0, -5.0, 100.0])})
 
@@ -78,8 +81,8 @@ def test_a_negative_close_does_not_fabricate_a_move_on_the_next_bar():
 
 
 def test_genuine_crash_day_is_a_warning_not_quarantine():
-    # Calibration anchor: XOP 2020-03-09 was a real -37% simple move. 25-60%
-    # unexplained => warning; the dataset must not be quarantined for a real crash.
+    # Calibration point: XOP 2020-03-09 was a real -37% simple move. An unexplained move
+    # of 25-60% is a warning, so a real crash does not quarantine the dataset.
     result = validate({"A": _series([100.0, 63.0, 61.0])})
     assert result.passed  # no hard violations
     warnings = result.warnings
@@ -108,9 +111,9 @@ def test_split_explains_the_jump_on_its_ex_date():
 
 
 def test_already_adjusted_series_is_not_flagged_on_the_split_date():
-    # Regression test: a provider-frame (split-adjusted) series is already
-    # continuous across the ex-date (XOP: 32.12 -> 32.01). The
-    # frame-robust check must not "correct" that smooth move into a fabricated -75%.
+    # A provider-frame (split-adjusted) series is already continuous across the ex-date
+    # (XOP: 32.12 -> 32.01). The split adjustment must not turn that small move into a
+    # -75% move.
     start = datetime(2026, 1, 1)
     series = [
         TimestampedBar(start, Bar(open=32.0, high=32.5, low=31.5, close=32.12)),
@@ -138,8 +141,8 @@ def test_volume_anomalies_are_warnings():
 
 
 def test_duplicate_timestamps_are_a_hard_violation():
-    # Duplicates would be silently collapsed by alignment, so the validator
-    # quarantines them before they can reach the engine.
+    # Alignment would collapse duplicates without reporting them, so the validator
+    # quarantines them before they reach the engine.
     from datetime import datetime
 
     from backtest_framework.data.bars import TimestampedBar

@@ -46,9 +46,8 @@ def test_stack_carry_total_equals_sum_of_individual_bricks():
 
 
 def test_trade_brick_ordering_has_no_effect_on_total():
-    # Every trade brick computes its cost independently from (instrument, quantity,
-    # price) alone — never from another brick's output — so summation is commutative
-    # by construction. Asserted here rather than left as an assumption.
+    # Each trade brick computes its cost from (instrument, quantity, price) alone and
+    # never from another brick's output, so the order of the bricks should not matter.
     commission = FlatCommission(amount=1.0)
     spread = PercentOfNotionalSpread(bps=5.0)
 
@@ -69,9 +68,9 @@ def test_carry_brick_ordering_has_no_effect_on_total():
 
 
 def test_carry_and_flow_bricks_respect_instrument_carry_components():
-    # carry_components() is consulted, not decorative. An
-    # instrument declaring no borrow/dividend exposure is charged neither; the
-    # generic FlatRateCarry (no component declared) always applies.
+    # The stack reads carry_components(): an instrument declaring no borrow or dividend
+    # exposure is charged neither, while the generic FlatRateCarry (no component
+    # declared) always applies.
     from dataclasses import dataclass
     from datetime import datetime
 
@@ -88,7 +87,7 @@ def test_carry_and_flow_bricks_respect_instrument_carry_components():
             return quantity * price
 
         def carry_components(self) -> tuple[str, ...]:
-            return ()  # declares: no carry applies to me
+            return ()  # no carry component applies
 
         def tradeable_quantity(self, raw_quantity: float) -> float:
             return float(round(raw_quantity))

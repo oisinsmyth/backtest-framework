@@ -39,16 +39,16 @@ def test_nan_volumes_are_skipped_not_poisoning_the_mean():
     assert params.adv_shares == pytest.approx(1.5e6, rel=1e-12)
 
 
-def test_missing_volume_series_fails_loudly():
+def test_missing_volume_series_raises():
     with pytest.raises(ValueError, match="no volume series"):
         calibrate_impact_params({"A": _series([100.0, 101.0, 102.0])}, {})
 
 
-def test_zero_volatility_fails_loudly():
+def test_zero_volatility_raises():
     with pytest.raises(ValueError, match="zero return volatility"):
         calibrate_impact_params({"A": _series([100.0, 100.0, 100.0])}, {"A": [1e6] * 3})
 
 
-def test_too_short_series_fails_loudly():
+def test_too_short_series_raises():
     with pytest.raises(ValueError, match="at least 3 bars"):
         calibrate_impact_params({"A": _series([100.0, 101.0])}, {"A": [1e6, 1e6]})

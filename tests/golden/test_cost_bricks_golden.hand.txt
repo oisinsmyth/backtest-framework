@@ -7,7 +7,7 @@ They check that the CostStack brick interface and composition are correct, not t
 particular cost model is realistic; the realistic bricks have their own tests.
 
 --------------------------------------------------------------------------------
-Brick 1 — FlatCommission
+Brick 1: FlatCommission
   amount = 1.50
   Any (instrument, quantity, price) input is ignored; the brick always returns the flat
   amount.
@@ -15,7 +15,7 @@ Brick 1 — FlatCommission
   Expected cost: 1.50
 
 --------------------------------------------------------------------------------
-Brick 2 — PercentOfNotionalSpread
+Brick 2: PercentOfNotionalSpread
   bps = 5.0
   instrument = Equity("AAPL"), quantity = 500, price = 100.0
 
@@ -26,20 +26,20 @@ Brick 2 — PercentOfNotionalSpread
   Expected cost: 25.0
 
 --------------------------------------------------------------------------------
-Brick 3 — FlatRateCarry
+Brick 3: FlatRateCarry
   annual_rate = 0.06, day_count = 365.0 (default)
   base_amount = 50000, prev_timestamp = 2026-07-10 16:00 (Friday),
   curr_timestamp = 2026-07-13 16:00 (Monday) -> 3.0 calendar days
 
-  Hand arithmetic (the same formula as the calendar-carry tests, here exercised through
-  the CostStack brick interface rather than called directly):
+  Hand arithmetic (the same formula as the calendar-carry tests, here called through
+  the CostStack brick interface):
     50000 * 0.06 = 3000
     3000 * 3 / 365 = 9000 / 365 = 24.657534246575342...
 
   Expected cost: 24.657534246575342
 
 --------------------------------------------------------------------------------
-Brick 4 — combined stack (commission + spread), for cross-checking stack summation
+Brick 4: combined stack (commission + spread), to check stack summation
   FlatCommission(1.50) + PercentOfNotionalSpread(5.0 bps), same inputs as Brick 1/2.
 
   Hand arithmetic:

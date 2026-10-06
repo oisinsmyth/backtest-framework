@@ -1,9 +1,8 @@
 """Unit tests for ZScorePairsStrategy, on constructed series.
 
-Series construction notes: spread = ln(A) − ln(B). B is pinned at 100.0 throughout,
-so the spread is just ln(A/100) and we steer z entirely through A's price path. A
-stable oscillation keeps the rolling std well-defined and nonzero; the final bar's
-price then places the current spread wherever the scenario needs z to land.
+The spread is ln(A) − ln(B). B is fixed at 100.0, so the spread is ln(A/100) and z is
+controlled entirely by A's price path. A steady oscillation keeps the rolling std defined
+and nonzero; the final bar's price then sets z where each scenario needs it.
 """
 
 import pytest
@@ -32,13 +31,13 @@ def _weights(targets):
 
 
 def _oscillation(n: int) -> list[float]:
-    """A prices oscillating 99/101 around 100 — nonzero spread std, ~zero mean."""
+    """A prices alternating 99/101 around 100: nonzero spread std, mean near zero."""
     return [99.0 if i % 2 == 0 else 101.0 for i in range(n)]
 
 
 def test_flat_during_warmup():
     strategy = _strategy()
-    # lookback=10 needs 11 visible bars; give it exactly 10 -> still warming up.
+    # lookback=10 needs 11 visible bars; with 10 it is still warming up.
     views = _views(_oscillation(10), [100.0] * 10)
     assert _weights(strategy.generate_targets(views)) == {"A": 0.0, "B": 0.0}
 
@@ -68,8 +67,8 @@ def test_holds_side_inside_hysteresis_band():
     assert strategy._side == -1
 
     # Next bar: A at a level where |z| sits between exit (0.5) and entry (2.0).
-    # Window now includes the 120 print (mean 0.0192, std 0.0582 — verified by direct
-    # computation); A=108 gives z=+0.99, squarely mid-band.
+    # The window now includes the 120 print (mean 0.0192, std 0.0582, computed directly);
+    # A=108 gives z=+0.99, inside the band.
     views2 = _views(_oscillation(10) + [120.0, 108.0], [100.0] * 12)
     weights = _weights(strategy.generate_targets(views2))
     assert weights == {"A": -1.0, "B": 1.0}  # held, not exited
@@ -95,17 +94,14 @@ def test_zero_std_window_stands_aside():
 
 
 def test_standing_aside_on_a_degenerate_window_clears_the_side_it_stood_aside_from():
-    """Emitting flat targets is a state change and must be recorded as one.
+    """Emitting flat targets on a degenerate window resets `_side` to 0.
 
-    The test above cannot catch this: it uses a fresh strategy, whose `_side` is already 0,
-    so it passes whether or not the branch clears state. The failure needs a strategy that
-    is already in a trade.
+    The previous test starts with `_side` already 0, so this one starts in a trade.
 
-    The failure sequence: a degenerate bar emits flat targets, the engine closes the
-    position and pays a round trip, but `_side` still says ±1. On the next bar `std > 0`
-    again and `|z|` lands in the hysteresis band, so no branch fires, the stale side is
-    re-emitted, and the book re-enters — a second round trip, on a bar that produced no
-    entry crossing at all.
+    If `_side` were left at ±1, the engine would close the position and pay a round trip;
+    on the next bar `std > 0` again and `|z|` falls in the hysteresis band, so no branch
+    fires, the stale side is re-emitted, and the book re-enters. That is a second round trip
+    on a bar with no entry crossing.
     """
     strategy = _strategy(lookback=3, entry_z=2.0, exit_z=0.5)
     strategy._side = -1  # the state a live entry leaves behind
@@ -114,7 +110,7 @@ def test_standing_aside_on_a_degenerate_window_clears_the_side_it_stood_aside_fr
 
     assert flat == {"A": 0.0, "B": 0.0}, "a degenerate window must stand aside"
     assert strategy._side == 0, (
-        "the strategy emitted flat targets but still believes it holds a side — the next "
+        "the strategy emitted flat targets but _side is still nonzero; the next "
         "in-band bar will re-emit it and re-enter with no entry crossing"
     )
 

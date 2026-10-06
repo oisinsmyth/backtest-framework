@@ -1,10 +1,8 @@
-"""Integration tests for the cost-multiplier sweep on a synthetic scenario — fast,
-exact, offline.
+"""Integration tests for the cost-multiplier sweep on a small offline synthetic scenario.
 
 Scenario: one round trip (in at bar 0, out at bar 2) at constant price with a flat
-$10 commission as the only cost. Two fills per run, so net P&L = −2 × 10 × multiplier
-exactly — monotonicity and 0×-equals-zero-cost are checkable to the penny, not just
-directionally.
+$10 commission as the only cost. Two fills per run, so net P&L = −2 × 10 × multiplier,
+and monotonicity and 0×-equals-zero-cost can be checked to the penny.
 """
 
 from datetime import datetime
@@ -61,7 +59,7 @@ def test_net_pnl_is_monotonically_non_increasing_in_the_multiplier():
     pnls = [pnl for _, pnl in sweep.net_pnls()]
 
     assert all(later <= earlier + TOLERANCE for earlier, later in zip(pnls, pnls[1:]))
-    # And exactly: two $10 fills per run, scaled.
+    # Exact values: two $10 fills per run, scaled.
     assert pnls == pytest.approx([0.0, -10.0, -20.0, -40.0, -80.0], abs=TOLERANCE)
 
 
@@ -98,7 +96,7 @@ def test_sweep_builds_fresh_strategies_per_run():
         starting_cash=100_000.0,
         multipliers=(0.0, 1.0, 2.0),
     )
-    assert calls == 3  # one fresh strategy list per multiplier — no state leaks
+    assert calls == 3  # one fresh strategy list per multiplier, so no state leaks
 
 
 def test_max_drawdown_arithmetic():

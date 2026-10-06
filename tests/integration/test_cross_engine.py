@@ -34,8 +34,8 @@ def _ma_cross_weights(
 ) -> list[float]:
     """The schedule both engines consume, computed once.
 
-    Weight 0.6 rather than 1.0 on purpose: at close to full investment vectorbt reserves fees
-    from the purchase while this engine pays fees from cash. Below that boundary the two sizing
+    Weight 0.6 rather than 1.0 because near full investment vectorbt reserves fees from the
+    purchase while this engine pays fees from cash. Below that boundary the two sizing
     conventions are identical.
     """
     weights = []

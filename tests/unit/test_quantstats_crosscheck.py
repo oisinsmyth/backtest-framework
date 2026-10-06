@@ -1,11 +1,9 @@
-"""Cross-check against quantstats: Sharpe, Sortino and max drawdown on the same return
-series, compared with an independent reference implementation.
+"""Cross-check of Sharpe, Sortino and max drawdown against quantstats on the same returns.
 
-Why close agreement is possible: our rf de-annualization is geometric, (1+rf)^(1/N)−1,
-which is quantstats' convention; our Sortino downside is the full-length RMS of negative
-excess, also quantstats' convention. quantstats requires a DatetimeIndex for its rf
-handling (a plain RangeIndex crashes its timezone path), so the series here carries
-business dates.
+Close agreement is expected because both use the same conventions: rf is de-annualized
+geometrically, (1+rf)^(1/N)−1, and the Sortino downside is the full-length RMS of negative
+excess returns. quantstats needs a DatetimeIndex for its rf handling (a plain RangeIndex
+fails in its timezone code), so the series here uses business dates.
 """
 
 import warnings
@@ -34,7 +32,7 @@ def test_sharpe_matches_quantstats_at_zero_rf():
 
 
 def test_sharpe_matches_quantstats_at_4pct_rf():
-    # The one that catches rf-convention drift: both sides de-annualize geometrically.
+    # A nonzero rf checks that both sides de-annualize geometrically.
     ours = sharpe(_returns, rf_annual=0.04, periods_per_year=252)
     theirs = float(qs.stats.sharpe(_series, rf=0.04, periods=252, annualize=True))
     assert ours == pytest.approx(theirs, rel=1e-6)
@@ -48,7 +46,7 @@ def test_sortino_matches_quantstats():
 
 def test_max_drawdown_matches_quantstats():
     # quantstats takes returns and reports a negative fraction; ours takes an equity
-    # curve and reports a positive fraction — convert, then compare.
+    # curve and reports a positive fraction, so convert before comparing.
     equity = (1 + _series).cumprod()
     curve = [(ts, float(v)) for ts, v in equity.items()]
     ours = max_drawdown(curve)

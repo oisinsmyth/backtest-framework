@@ -1,9 +1,8 @@
 """Unit tests for Strategy / ScheduledWeightStrategy (engine/strategy.py).
 
-Confirms the strategy only ever reads bars through the DataView guard: it never
-sees anything beyond view.current_index, by construction, since it has no other
-way to reach the underlying series. There is one DataView per instrument; a
-single-instrument strategy is just a one-entry mapping.
+The strategy reads bars only through the DataView guard, which is its only route to the
+underlying series, so it cannot see beyond view.current_index. There is one DataView per
+instrument; a single-instrument strategy receives a one-entry mapping.
 """
 
 from backtest_framework.engine.dataview import build_data_view
@@ -39,11 +38,9 @@ def test_strategy_never_reaches_bars_beyond_the_view_it_was_given():
     strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [0.5] * 10})
     view = build_data_view(_bars(10), up_to_index=2)  # only bars 0..2 are visible
 
-    strategy.generate_targets({"AAPL": view})  # exercising the strategy at all
+    strategy.generate_targets({"AAPL": view})
 
-    # The strategy was handed a view with no future bars in it at all, so there's
-    # nothing to assert about "the strategy peeking," because there was never anything
-    # to peek at.
+    # The view contains no future bars, so the strategy has nothing beyond bar 2 to read.
     assert view.current_index == 2
     assert len(view) == 3
 

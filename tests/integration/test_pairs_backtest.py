@@ -47,7 +47,7 @@ def test_dropped_bar_on_one_leg_drops_it_for_both_and_carry_spans_the_real_gap()
     ]
     bars_b = [
         TimestampedBar(monday, _bar(50.0)),
-        # ...but B has no Tuesday bar (e.g. a halt) — Tuesday must be dropped for A too.
+        # ...but B has no Tuesday bar (e.g. a halt), so Tuesday is dropped for A too.
         TimestampedBar(wednesday, _bar(50.0)),
     ]
 
@@ -64,9 +64,8 @@ def test_dropped_bar_on_one_leg_drops_it_for_both_and_carry_spans_the_real_gap()
         starting_cash=100_000.0,
     )
 
-    # Only 2 aligned bars ran (Tuesday dropped), not 3 — which is the "no trading on a
-    # dropped bar" guarantee: the engine never sees the dropped timestamp, so no fill can
-    # occur on it for EITHER leg.
+    # Only 2 aligned bars ran (Tuesday dropped), not 3. The engine never sees the dropped
+    # timestamp, so no fill can occur on it for either leg.
     assert len(result.equity_curve) == 2
     assert result.equity_curve[0][0] == monday
     assert result.equity_curve[1][0] == wednesday  # not tuesday

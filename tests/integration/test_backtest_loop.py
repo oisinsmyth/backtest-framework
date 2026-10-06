@@ -1,11 +1,9 @@
-"""Integration tests for run_backtest (engine/backtest.py), the production loop
-generalizing the test-only mini-backtest harness in
-tests/golden/test_refactor_regression.py.
+"""Integration tests for run_backtest (engine/backtest.py), the production loop that
+generalizes the test-only harness in tests/golden/test_refactor_regression.py.
 
-The regression-anchor test's reasoning (why it reproduces that harness's golden numbers
-despite run_backtest's per-bar NAV-based capital) lives in test_backtest_loop.hand.txt,
-next to this file. These tests are all single-instrument (a one-entry bars_by_instrument
-mapping) — multi-instrument/pairs scenarios live in
+test_backtest_loop.hand.txt, next to this file, explains why the first test reproduces
+that harness's golden numbers despite run_backtest's per-bar NAV-based capital. All tests
+here are single-instrument; multi-instrument and pairs scenarios are in
 tests/integration/test_pairs_backtest.py.
 """
 
@@ -63,8 +61,8 @@ def test_run_backtest_reproduces_refactor_regression_golden_master_exactly():
 
 def test_run_backtest_nets_offsetting_strategies_avoiding_double_costs():
     # Strategy A wants +100% of its capital in AAPL, strategy B wants -100% (short).
-    # With an even split they cancel exactly -> zero external order, zero trade cost,
-    # even though both strategies "traded" in their own virtual books.
+    # With an even split they cancel -> no external order and no trade cost, although
+    # both strategies trade in their own virtual books.
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
     strategy_a = ScheduledWeightStrategy(strategy_id="A", weights_by_instrument={"AAPL": [1.0]})
     strategy_b = ScheduledWeightStrategy(strategy_id="B", weights_by_instrument={"AAPL": [-1.0]})
@@ -84,8 +82,8 @@ def test_run_backtest_nets_offsetting_strategies_avoiding_double_costs():
 
 
 def test_run_backtest_records_risk_violation_without_halting():
-    # weight=1.0 against the full starting capital produces roughly 1000 shares @
-    # ~100 = ~100,000 notional, comfortably over a deliberately low 50,000 limit.
+    # weight=1.0 against the full starting capital gives about 1000 shares @ ~100 =
+    # ~100,000 notional, well over the 50,000 limit.
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
     strategy = ScheduledWeightStrategy(strategy_id="s1", weights_by_instrument={"AAPL": [1.0]})
 
@@ -104,8 +102,7 @@ def test_run_backtest_records_risk_violation_without_halting():
     assert violation.rule == "max_gross_exposure"
     assert violation.bar_index == 0
     assert violation.observed == pytest.approx(100_000.0, rel=TOLERANCE)
-    # Enforcement is off by default - the trade still went through despite the
-    # violation being recorded.
+    # Enforcement is off by default: the trade still fills and the violation is recorded.
     assert result.final_positions.get("AAPL", 0.0) == 1000.0
 
 
@@ -155,9 +152,9 @@ def test_run_backtest_requires_trial_id_and_config_when_registry_given(tmp_path)
 
 
 def test_enforce_pretrade_rejects_breaching_order_and_keeps_books_reconciled():
-    # With enforcement on, the same breaching order is REJECTED —
-    # never fills, virtual books drop it too (broker and sleeves stay reconciled),
-    # and the violation is recorded with its bar index.
+    # With enforcement on, the same breaching order is rejected: it does not fill, the
+    # virtual books drop it too (broker and sleeves stay reconciled), and the violation
+    # is recorded with its bar index.
     bars = [
         TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0)),
         TimestampedBar(datetime(2026, 7, 13, 16, 0), _bar(100.0)),
@@ -179,7 +176,7 @@ def test_enforce_pretrade_rejects_breaching_order_and_keeps_books_reconciled():
     assert result.final_cash == 100_000.0
     assert result.fills == [] and result.virtual_fills == []
     assert result.final_virtual_positions == {}  # sleeves reconciled with broker
-    # Rejected on BOTH bars — the strategy re-attempts and is re-rejected.
+    # Rejected on both bars: the strategy retries and is rejected again.
     assert [v.bar_index for v in result.violations] == [0, 1]
     assert all(v.rule == "max_gross_exposure" for v in result.violations)
 
@@ -199,8 +196,8 @@ def test_enforce_pretrade_requires_risk_limits():
 
 
 def test_virtual_fills_are_strategy_tagged_even_when_netting_cancels():
-    # The netting scenario keeps the broker book flat, but the sleeve-level record
-    # must show both strategies' orders: a strategy-tagged fill stream.
+    # Netting keeps the broker book flat, but the strategy-tagged sleeve-level fill
+    # stream must show both strategies' orders.
     bars = [TimestampedBar(datetime(2026, 7, 10, 16, 0), _bar(100.0))]
     strategy_a = ScheduledWeightStrategy(strategy_id="A", weights_by_instrument={"AAPL": [1.0]})
     strategy_b = ScheduledWeightStrategy(strategy_id="B", weights_by_instrument={"AAPL": [-1.0]})
@@ -219,12 +216,12 @@ def test_virtual_fills_are_strategy_tagged_even_when_netting_cancels():
     by_strategy = {sid: qty for _, sid, _, qty, _ in result.virtual_fills}
     assert by_strategy["A"] == 500.0 and by_strategy["B"] == -500.0  # 50k each @ 100
     assert result.final_virtual_positions == {("A", "AAPL"): 500.0, ("B", "AAPL"): -500.0}
-    # Sleeve books sum to the broker book exactly.
+    # Sleeve books sum exactly to the broker book.
     assert sum(result.final_virtual_positions.values()) == result.final_positions.get("AAPL", 0.0)
 
 
 def test_next_open_fill_timing_hand_computed():
-    # Decisions at bar t fill at bar t+1's OPEN. Hand arithmetic:
+    # Decisions at bar t fill at bar t+1's open. Hand arithmetic:
     #   bar0: no pending; size 0.5 x 100,000 / close 102 = 490.2 -> 490 pending.
     #   bar1: fill +490 @ open 104 -> cash 49,040; NAV @ close 101 = 98,530;
     #         re-size: 0.5 x 98,530 / 101 = 487.8 -> 488 -> delta -2 pending.

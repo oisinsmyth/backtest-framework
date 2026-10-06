@@ -1,6 +1,6 @@
-"""Engine split handling: positions (broker AND virtual books) scale by the
-ratio on the ex-date; NAV is continuous across the event by construction (qty x r at
-price x 1/r). As-traded series: $8 pre-split, $32 post 1-for-4 reverse split.
+"""Engine split handling: positions (broker and virtual books) scale by the ratio on the
+ex-date, so NAV is continuous across the event (qty x r at price x 1/r). As-traded series:
+$8 pre-split, $32 after a 1-for-4 reverse split.
 """
 
 from datetime import datetime
@@ -50,10 +50,9 @@ def test_reverse_split_scales_position_and_preserves_nav():
 
 
 def test_view_execution_separation_feeds_strategies_the_view_series():
-    # Execution series jumps 4x at the split (as-traded); view series is continuous
-    # (adjusted). A strategy whose weights depend on what it SEES would break on the
-    # jump — this test only asserts that the engine accepts both series and enforces
-    # timestamp coverage.
+    # The execution series jumps 4x at the split (as-traded); the view series is
+    # continuous (adjusted). This test only asserts that the engine accepts both series
+    # and enforces timestamp coverage.
     day1, day2 = datetime(2020, 3, 27), datetime(2020, 3, 30)
     execution = {"XOP": [TimestampedBar(day1, _bar(8.0)), TimestampedBar(day2, _bar(32.0))]}
     views = {"XOP": [TimestampedBar(day1, _bar(32.0)), TimestampedBar(day2, _bar(32.0))]}
@@ -69,7 +68,7 @@ def test_view_execution_separation_feeds_strategies_the_view_series():
     )
     assert len(result.equity_curve) == 2
 
-    # Missing a timestamp in the view series is a loud error, never a silent raw bar.
+    # A timestamp missing from the view series raises rather than falling back to the raw bar.
     with pytest.raises(ValueError, match="view_bars_by_instrument"):
         run_backtest(
             bars_by_instrument=execution,
@@ -83,8 +82,8 @@ def test_view_execution_separation_feeds_strategies_the_view_series():
 
 
 def test_zero_overlap_alignment_raises_instead_of_empty_backtest():
-    # Disjoint timestamps must raise. Returning an empty result would report a final
-    # NAV equal to starting cash — a silently-empty backtest.
+    # Disjoint timestamps must raise. An empty result would report a final NAV equal to
+    # starting cash without any error.
     bars = {
         "A": [TimestampedBar(datetime(2026, 1, 5), _bar(10.0))],
         "B": [TimestampedBar(datetime(2026, 1, 6), _bar(10.0))],
@@ -101,8 +100,8 @@ def test_zero_overlap_alignment_raises_instead_of_empty_backtest():
 
 
 def _dividend_split_gap_run(div_date, split_date):
-    """100 shares held into a Fri->Mon gap containing a dividend and a 4:1 split
-    (in either order) — returns the dividend cash actually credited."""
+    """Hold 100 shares into a Fri->Mon gap containing a dividend and a 4:1 split (in
+    either order) and return the dividend cash credited."""
     from backtest_framework.costs.equity_bricks import DividendFlow
 
     fri, mon = datetime(2026, 1, 9, 16), datetime(2026, 1, 12, 16)
@@ -135,7 +134,7 @@ def test_dividend_before_split_in_same_gap_pays_pre_split_shares():
     # would pay a dividend earlier in the same gap on 4x the shares held.
     sat, sun = datetime(2026, 1, 10, 16), datetime(2026, 1, 11, 16)
     dividend_cash = _dividend_split_gap_run(div_date=sat, split_date=sun)
-    assert dividend_cash == pytest.approx(100 * 1.0, rel=TOLERANCE)  # NOT 400
+    assert dividend_cash == pytest.approx(100 * 1.0, rel=TOLERANCE)  # not 400
 
 
 def test_dividend_after_split_in_same_gap_pays_post_split_shares():
@@ -145,7 +144,7 @@ def test_dividend_after_split_in_same_gap_pays_post_split_shares():
 
 
 def test_dividend_on_the_split_ex_date_pays_post_split_shares():
-    # A dividend exactly ON the split ex-date is already post-split-frame per share
+    # A dividend on the split ex-date is already in the post-split frame per share
     # (as_declared_dividends scales only by splits strictly after it).
     sun = datetime(2026, 1, 11, 16)
     dividend_cash = _dividend_split_gap_run(div_date=sun, split_date=sun)

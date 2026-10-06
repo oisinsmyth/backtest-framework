@@ -46,12 +46,12 @@ def test_short_debited_identically():
 
 
 def test_position_opened_on_ex_date_receives_nothing():
-    # Half-open window (prev, curr]: ex-date == prev means it belonged to the PRIOR gap.
+    # Half-open window (prev, curr]: ex-date == prev belongs to the previous gap.
     flow = _brick().flow(XLE, quantity=500, prev_timestamp=datetime(2015, 3, 20), curr_timestamp=datetime(2015, 3, 25))
     assert flow == 0.0
 
 
-# --- Engine integration: constant price + zero frictions isolate the flow exactly ----
+# --- Engine integration: constant price + zero frictions isolate the flow -------------
 
 
 def _run(weight: float, with_dividends: bool):

@@ -1,20 +1,18 @@
-"""Invariants of the shared futures fill model, over random sessions and instruments.
+"""Property tests for the futures fill model over random sessions and instruments.
 
-The unit and golden files pin the fill model at chosen inputs. The failures checked here,
-such as "some price comes back between ticks" or "some bar lets a target through when the
-stop was also inside", quantify over the path and the instrument, which no finite set of
-examples covers.
+The unit and golden files check the fill model at chosen inputs. These tests check
+invariants over the path and the instrument, such as "every returned price is on the tick
+grid" and "a bar never returns a target when the stop was also inside it".
 
 `SETTINGS` is module-level with `derandomize=True`, 40 examples and no deadline.
-`derandomize` does not give byte-determinism: since hypothesis 6.156.6 the constant pool fed
-into generation is harvested from `sys.modules` at test time, so a full-suite run and a
-single-file run draw different values from the same seed. A failure that does not reproduce
-when the file is run alone is therefore not a flake; reproduce it with the whole suite.
+`derandomize` does not make the draws byte-deterministic: since hypothesis 6.156.6 the
+constant pool used in generation is collected from `sys.modules` at test time, so a
+full-suite run and a single-file run draw different values from the same seed. If a failure
+does not reproduce when this file is run alone, reproduce it with the whole suite.
 
-The generator is tie-heavy by construction. `spread` is drawn from {2, 8, 200} ticks, and at
-2 a four-price bar collides constantly: equal high and low, stop exactly on the low, limit
-exactly on the close. Ties are where two conventions that agree everywhere else disagree, so
-a generator that never produces them tests only the easy half of every rule.
+The generator is tie-heavy. `spread` is drawn from {2, 8, 200} ticks; at 2, the four prices
+of a bar collide often (equal high and low, a stop on the low, a limit on the close). Two
+conventions that agree elsewhere can disagree on ties, so the generator produces many.
 """
 
 import numpy as np
@@ -47,8 +45,8 @@ RULES = st.sampled_from(list(FillAssumption))
 def sessions(draw, min_bars: int = 3, max_bars: int = 14):
     """A session of grid-aligned bars on a randomly chosen contract.
 
-    Prices are integer multiples of the tick by construction (`m * tick_points`), which
-    generates valid futures prices without relying on the grid rule the tests are checking.
+    Prices are integer multiples of the tick by construction (`m * tick_points`), so valid
+    prices are generated without relying on the grid rule under test.
     """
     fut = draw(st.sampled_from(INSTRUMENTS))
     n = draw(st.integers(min_value=min_bars, max_value=max_bars))
@@ -152,7 +150,7 @@ def test_adverse_price_is_monotone_in_the_concession(price, side, a, b, fut, clo
     assert adverse_price(px, side, 0, fut, closing=closing) == px
 
 
-# ----------------------------------------------------------------- the pessimism rule
+# --------------------------------------------------------------- stop before target
 
 
 @given(data=sessions(), side=SIDES, stop_rule=RULES, target_rule=RULES,
@@ -187,7 +185,7 @@ def test_a_target_is_never_returned_from_a_bar_whose_stop_was_also_reached(
 @given(data=sessions(), side=SIDES, which=st.integers(0, 3), s=st.integers(0, 8))
 @SETTINGS
 def test_a_stop_fill_is_never_better_than_the_stop_level(data, side, which, s):
-    """The gap rule may only make a stop fill worse than the stop level, never better."""
+    """The gap rule can make a stop fill worse than the stop level but never better."""
     fut, ohlc = data
     bar = bar_at(ohlc, which % ohlc.close.size)
     span = (bar.high - bar.low) / fut.tick_points
@@ -219,10 +217,10 @@ def test_trade_through_is_strictly_more_demanding_than_touch(data, side):
 @given(data=sessions_with_t0(), side=SIDES, noise=st.integers(-50, 50).filter(lambda k: k != 0))
 @SETTINGS
 def test_a_fill_does_not_depend_on_bars_after_the_one_it_filled_on(data, side, noise):
-    """Look-ahead check: perturbing bars after the fill bar must not change the fill.
+    """Perturbing bars after the fill bar does not change the fill (no look-ahead).
 
-    `noise` is never 0: a perturbation that changes nothing would let this pass on an
-    implementation that reads the whole session.
+    `noise` is never 0, so the perturbation always changes the later bars; a zero
+    perturbation would let an implementation that reads the whole session pass.
     """
     fut, ohlc, t0 = data
     primary = entry_fill(ohlc.close, t0, side, fut)

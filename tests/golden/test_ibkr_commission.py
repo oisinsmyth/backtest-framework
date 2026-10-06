@@ -24,7 +24,7 @@ BRICK = IBKRCommission()  # the defaults are the published schedule
         (1_000, 50.00, 5.00),  # row 3: per-share
         (10_000, 25.00, 50.00),  # row 4: per-share, large order
         (1_000, 0.30, 3.00),  # row 5: 1% cap (low-price stock)
-        (10, 0.50, 0.05),  # row 6: cap OVERRIDES min
+        (10, 0.50, 0.05),  # row 6: cap overrides min
         (100, 2_000.00, 1.00),  # row 7: min floor on a high-price stock
         (1, 150.00, 1.00),  # row 8: single share
         (500, 1.00, 2.50),  # row 9: per-share on a $1 stock

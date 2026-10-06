@@ -2,11 +2,9 @@
 test_margin_interest.hand.txt; the engine-wiring tests live in
 tests/integration/test_margin_interest_in_backtest.py.
 
-The brick itself only knows the accrual math — the max(gross − capital, 0) base is
-the CALLER's contract (the engine's portfolio-carry step). These tests exercise
-both: the brick against the golden weekend number, and the base formula the engine
-applies, so the only-when-positive branch is pinned at the same level the arithmetic
-is.
+The brick computes only the accrual; the max(gross − capital, 0) base is computed by the
+caller (the engine's portfolio-carry step). These tests cover both the brick against the
+golden weekend number and the base formula, including the only-when-positive branch.
 """
 
 from datetime import datetime

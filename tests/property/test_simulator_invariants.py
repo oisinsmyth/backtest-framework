@@ -1,16 +1,15 @@
-"""Property-based simulator invariants: across randomized price paths and weight schedules,
-these catch whole classes of bugs that example-based tests do not anticipate.
+"""Property tests for simulator invariants over random price paths and weight schedules.
 
-Hypothesis runs with derandomize=True, so hypothesis owns the seeding rather than a
-hand-rolled seed parameter. This does not mean the same examples every run: since 6.156.6
-hypothesis harvests its constant pool from `sys.modules` at test time, so a full-suite run
-and a single-file run draw differently from the same seed. Reproduce a failure with the
-whole suite before calling it a flake. The engine itself is reproducible given identical
-inputs, and `test_equity_curve_hash_is_deterministic` below asserts it.
+Hypothesis runs with derandomize=True, so hypothesis handles seeding instead of a seed
+parameter. The examples can still differ between runs: since 6.156.6 hypothesis collects its
+constant pool from `sys.modules` at test time, so a full-suite run and a single-file run draw
+differently from the same seed. Reproduce a failure with the whole suite before treating it
+as a flake. The engine itself is reproducible for identical inputs, which
+`test_equity_curve_hash_is_deterministic` checks.
 
-There is no broker object to reset, so the equivalent guarantee is that identical runs are
-identical (fresh state per call). "Fill within [low, high]" is asserted both at the engine
-level and on stop_fill_price, the one component that chooses prices.
+There is no broker object to reset; instead, identical runs must give identical results
+(fresh state per call). "Fill within [low, high]" is checked both at the engine level and on
+stop_fill_price, the one component that chooses prices.
 """
 
 import hashlib
@@ -71,7 +70,7 @@ def _run(prices, weights, cost_stack):
 @SETTINGS
 @given(scenarios())
 def test_cash_never_negative_absent_margin(scenario):
-    # Long-only weights <= 0.9 leave a 10% cash buffer that dwarfs any flat commission.
+    # Long-only weights <= 0.9 leave a 10% cash buffer, far larger than a flat commission.
     prices, weights = scenario
     result = _run(prices, weights, CostStack(trade_bricks=(FlatCommission(1.0),)))
     assert all(cash >= 0 for _, cash in result.cash_curve)
@@ -104,8 +103,8 @@ def test_fills_reconcile_exactly_to_final_position(scenario):
 @SETTINGS
 @given(scenarios())
 def test_no_nav_leaks_zero_cost(scenario):
-    # Shadow accountant: with zero costs, NAV change per bar == position x price move,
-    # exactly (positions held into the bar, since fills happen at this bar's close).
+    # Independent NAV check: with zero costs, NAV change per bar == position x price move,
+    # using the position held into the bar (fills happen at the bar's close).
     prices, weights = scenario
     result = _run(prices, weights, CostStack())
     navs = [nav for _, nav in result.equity_curve]
@@ -125,11 +124,10 @@ def test_no_nav_leaks_zero_cost(scenario):
 @SETTINGS
 @given(scenarios())
 def test_no_nav_leaks_flat_commission(scenario):
-    # With a flat $10 commission as the only cost, the per-bar identity holds on the
-    # charged run itself, unconditionally: NAV change per bar == position price P&L
-    # minus $10 x fills that bar. A fill at the bar's close is NAV-neutral except for
-    # its commission. (Comparing against a zero-cost run instead would break whenever
-    # commissions shift the NAV-based sizing.)
+    # With a flat $10 commission as the only cost, NAV change per bar == position price
+    # P&L minus $10 x fills that bar, checked on the charged run itself. A fill at the
+    # bar's close is NAV-neutral except for its commission. (A comparison against a
+    # zero-cost run would fail whenever commissions change the NAV-based sizing.)
     prices, weights = scenario
     charged = _run(prices, weights, CostStack(trade_bricks=(FlatCommission(10.0),)))
     navs = [nav for _, nav in charged.equity_curve]
@@ -150,8 +148,8 @@ def test_no_nav_leaks_flat_commission(scenario):
 @SETTINGS
 @given(scenarios())
 def test_identical_runs_are_identical(scenario):
-    # The equivalent of a broker reset: every run constructs fresh state; nothing leaks
-    # between calls.
+    # Stands in for a broker reset: every run constructs fresh state, so nothing carries
+    # over between calls.
     prices, weights = scenario
     a = _run(prices, weights, CostStack(trade_bricks=(FlatCommission(1.0),)))
     b = _run(prices, weights, CostStack(trade_bricks=(FlatCommission(1.0),)))
@@ -179,9 +177,10 @@ START = datetime(2026, 1, 5, 16)
 
 @st.composite
 def ohlc_scenarios(draw, min_weight=-0.9, max_weight=0.9):
-    """Price paths with genuine OHLC structure (open gaps off the previous close,
-    high/low bracket both) and signed weights, so shorts and opens are covered, which
-    the long-only flat bars of `scenarios()` do not exercise."""
+    """Price paths with OHLC structure and signed weights.
+
+    The open gaps off the previous close and high/low bracket both open and close. Unlike
+    the long-only flat bars of `scenarios()`, these cover shorts and opens."""
     closes = draw(price_paths())
     n = len(closes)
     gaps = draw(st.lists(st.floats(-0.05, 0.05, allow_nan=False), min_size=n, max_size=n))
@@ -216,13 +215,12 @@ def _run_bars(bars, weights, cost_stack, fill_timing="close"):
 def test_fill_prices_within_their_bars_range(scenario):
     """Every engine fill lands inside the bar it was filled on.
 
-    The test must run on `ohlc_scenarios()`. On `scenarios()` every bar is
-    `Bar(open=p, high=p, low=p, close=p)`, a range that is a single point, so "within
-    [low, high]" would be true by construction and could not fail. The OHLC bars have a real
-    range, and their signed weights add short coverage.
+    The test uses `ohlc_scenarios()`: on `scenarios()` every bar is
+    `Bar(open=p, high=p, low=p, close=p)`, so "within [low, high]" could not fail. The OHLC
+    bars have a non-zero range, and their signed weights add short coverage.
 
-    The close-specific claim is a second assertion: in `close` fill timing the fill is the
-    close, which is a stronger statement than the interval where it holds.
+    A second assertion checks the stronger claim that, in `close` fill timing, the fill price
+    is the close.
     """
     bars, weights = scenario
     result = _run_bars(bars, weights, CostStack())
@@ -247,8 +245,8 @@ def test_fills_reconcile_exactly_with_signed_positions(scenario):
 @SETTINGS
 @given(ohlc_scenarios())
 def test_no_nav_leaks_zero_cost_signed(scenario):
-    # The shadow accountant holds for short positions too: with zero costs the only
-    # legal NAV change is position x close-to-close move.
+    # The NAV check also holds for short positions: with zero costs, NAV change per bar
+    # == position x close-to-close move.
     bars, weights = scenario
     result = _run_bars(bars, weights, CostStack())
     closes = [b.close for b in bars]
@@ -268,8 +266,8 @@ def test_no_nav_leaks_zero_cost_signed(scenario):
 @SETTINGS
 @given(ohlc_scenarios(min_weight=0.0))
 def test_next_open_fills_at_the_next_bars_open_only(scenario):
-    # In next_open mode every fill lands at its bar's open, never on the
-    # first bar (nothing was pending), and the run is deterministic.
+    # In next_open mode every fill is at its bar's open, no fill is on the first bar
+    # (nothing was pending), and the run is deterministic.
     bars, weights = scenario
     result = _run_bars(bars, weights, CostStack(), fill_timing="next_open")
     opens = {START + timedelta(days=i): b.open for i, b in enumerate(bars)}
@@ -337,15 +335,13 @@ def test_no_nav_leaks_with_carry(scenario):
     long_side=st.booleans(),
 )
 def test_a_stop_bounds_the_loss_except_through_the_open(opens, stop, long_side):
-    """The central intrabar-stop invariant.
+    """A stop fill is never better than its stop price, and worse only when the bar opened beyond it.
 
-    A stop fill is never better than its stop price, and is worse only when the bar
-    opened beyond it: the loss is bounded except through the gap. If this fails, a
-    backtest is inventing risk control that did not exist.
+    The loss is therefore bounded except through a gap at the open; a violation would credit
+    a backtest with risk control it did not have.
 
-    Driven through run_backtest rather than stop_fill_price directly, because the claim
-    under test is about the engine's wiring: stop_fill_price is tested in isolation
-    elsewhere, and this checks that the engine actually calls it.
+    The test runs through run_backtest rather than stop_fill_price because it checks the
+    engine's wiring; stop_fill_price itself is tested in isolation elsewhere.
     """
     from backtest_framework.engine.dataview import DataView as _DataView  # noqa: F401
     from backtest_framework.pipeline.sizing import TargetWeight as _TW
@@ -394,10 +390,9 @@ def test_a_stop_bounds_the_loss_except_through_the_open(opens, stop, long_side):
     if not strategy.stopped:
         return  # the stop was never touched on this path; nothing to assert
 
-    # Identify the stop fill specifically. Every bar the position is open the strategy
-    # re-targets the same weight against a changed NAV, so there are rebalancing fills
-    # carrying the same sign as a close — picking on sign alone would test those too,
-    # and they are not stop fills.
+    # Find the fill that flattens the position. While the position is open the strategy
+    # re-targets the same weight against a changed NAV, producing rebalancing fills with
+    # the same sign as a close, so selecting by sign alone would also pick those.
     position, stop_fill = 0.0, None
     for timestamp, _instrument, quantity, price, _cost in result.fills:
         previous, position = position, position + quantity

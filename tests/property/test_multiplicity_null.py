@@ -4,7 +4,7 @@
    ~ 0 within CI, and the number of pairs tested (19,900) lands in the TrialRegistry.
 2. Synthetic nulls: the z-score strategy on cointegrated-looking pairs whose spread
    is a random walk (zero true edge by construction) earns ~ nothing at zero cost.
-   If this profits, the engine or the strategy is leaking information.
+   A profit would mean the engine or the strategy is leaking future information.
 """
 
 import math
@@ -42,11 +42,10 @@ def _noise_universe(seed: int, n_series: int = 200):
 
 
 def _trade_pair_oos(bars_by_instrument, a: str, b: str) -> tuple[float, int]:
-    # leg_weight 0.25 (not the default 1.0): at 200% gross, per-pair OOS return vol
-    # on independent 1.5%/day random walks is ~20%, which would make any absolute
-    # bound on the mean meaningless at this sample size. 50% gross scales the noise
-    # down 4x so "≈ 0" is a meaningful check. The zero-edge property itself is
-    # leverage-invariant, so this only calibrates the test's power.
+    # leg_weight 0.25 instead of the default 1.0: at 200% gross, per-pair OOS return vol
+    # on independent 1.5%/day random walks is ~20%, too wide for an absolute bound on the
+    # mean at this sample size. 50% gross scales the noise down 4x so "≈ 0" can be
+    # checked. Zero edge does not depend on leverage, so this only sets the test's power.
     result = run_backtest(
         bars_by_instrument={a: bars_by_instrument[a], b: bars_by_instrument[b]},
         instruments={a: Equity(symbol=a), b: Equity(symbol=b)},
@@ -92,7 +91,7 @@ def test_multiplicity_top_n_on_pure_noise_has_no_oos_edge(tmp_path):
             oos_returns.append(ret)
             total_fills += fills
 
-    # The test can't pass vacuously: the selected pairs really traded OOS.
+    # The selected pairs traded OOS, so the edge check below is not vacuous.
     assert total_fills > 20
 
     # OOS edge ~ 0 within CI: 30 pair-returns (3 seeds x top 10), mean within 2.5
@@ -102,7 +101,7 @@ def test_multiplicity_top_n_on_pure_noise_has_no_oos_edge(tmp_path):
     assert abs(mean) <= 2.5 * stderr, f"selected noise pairs 'found' OOS edge: {mean:+.4%} ± {stderr:.4%}"
     assert abs(mean) < 0.02
 
-    # And the multiplicity count is readable back out of the registry.
+    # The multiplicity count can be read back from the registry.
     trial = registry.get_trial("noise-universe-11")
     assert trial.params["n_pairs_tested"] == 19_900
 
@@ -116,7 +115,7 @@ def test_zero_edge_synthetic_cointegrated_pairs_earn_nothing():
         returns.append(ret)
         total_fills += fills
 
-    assert total_fills > 100  # genuinely traded, not vacuous
+    assert total_fills > 100  # the pairs traded, so the check is not vacuous
 
     mean = float(np.mean(returns))
     stderr = float(np.std(returns, ddof=1)) / math.sqrt(len(returns))

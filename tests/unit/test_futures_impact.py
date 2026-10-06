@@ -8,8 +8,8 @@ The impact fraction is `Y * sigma * sqrt(|Q| / ADV)`; the signed price impact `I
   * `D_bar` uses prior days only;
   * `I_D` equals `I` when `D(t0) = D_bar`.
 
-The last identity is asserted with `==`, never `approx`: `sqrt(x/x)` is exactly 1.0 and a finite
-double times 1.0 is itself, so a tolerance here would hide a formula that is merely close.
+The last identity is checked with `==` rather than `approx`: `sqrt(x/x)` is exactly 1.0 and a
+finite double times 1.0 is unchanged, so a tolerance would accept a formula that is only close.
 """
 
 from __future__ import annotations
@@ -73,7 +73,7 @@ def brick(adv: float = 1.0e6, sigma: float = 0.012, coefficient: float = DEFAULT
 
 
 def test_default_coefficient_is_the_fixed_Y():
-    """`Y = 0.7`, fixed. Not SqrtImpact's order-of-magnitude 1.0."""
+    """The default coefficient is the fixed `Y = 0.7` (SqrtImpact's order-of-magnitude default is 1.0)."""
     assert DEFAULT_IMPACT_Y == 0.7
     assert FuturesSqrtImpact(params_by_root={"ES": params()}).coefficient == 0.7
     assert DEPTH_EXPONENT == 0.5
@@ -137,9 +137,9 @@ def test_zero_q_rem_gives_exactly_zero_I():
 
 
 def test_zero_q_rem_gives_zero_even_for_a_root_with_no_parameters():
-    """The zero is returned before the parameter lookup, so a trade of nothing never raises on a
-    parameter nothing needed. The second half checks that the lookup does raise for a non-zero
-    trade, so the first half cannot pass by the check never being reached."""
+    """A zero trade returns 0.0 before the parameter lookup, so it does not raise for a missing root.
+
+    The second assertion confirms that the lookup raises for a non-zero trade on the same brick."""
     empty = FuturesSqrtImpact(params_by_root={})
     assert empty.impact_for_flow(ES, 0.0, 5_000.0) == 0.0
     with pytest.raises(FuturesImpactError, match="no impact params for root 'ES'"):
@@ -179,11 +179,10 @@ def test_depth_identity_is_exact_for_any_drawn_impact_and_depth(impact, depth):
 
 
 def test_depth_scaling_raises_impact_on_a_thinner_book_and_lowers_it_on_a_deeper_one():
-    """`sqrt(D_bar / D(t0))`: a thinner book than usual costs more. The ratio is easy to
-    invert by mistake, so the direction is asserted."""
+    """`sqrt(D_bar / D(t0))`: a book thinner than usual costs more, a deeper one costs less."""
     assert depth_scaled(10.0, 25.0, 100.0) == 20.0          # a quarter of the usual depth: 2x
     assert depth_scaled(10.0, 400.0, 100.0) == 5.0          # four times the usual depth: half
-    assert depth_scaled(-10.0, 25.0, 100.0) == -20.0        # the sign rides through
+    assert depth_scaled(-10.0, 25.0, 100.0) == -20.0        # the sign is preserved
 
 
 @pytest.mark.parametrize("bad", [0.0, -1.0, -0.0])
@@ -223,8 +222,7 @@ def test_depth_bar_takes_the_trailing_prior_days():
 
 
 def test_depth_bar_a_same_day_row_in_the_window_raises():
-    """A row at the evaluation day is look-ahead. It raises rather than being filtered away, so
-    the caller learns that its input was wrong."""
+    """A row on the evaluation day is look-ahead; it raises instead of being filtered out."""
     obs = _obs(1, 20) + [("2026-08-21", 999.0)]
     with pytest.raises(FuturesImpactError, match="at or after the evaluation day 2026-08-21"):
         depth_bar(obs, "2026-08-21", lookback_days=20)
@@ -288,11 +286,10 @@ def test_depth_bar_rejects_an_unknown_statistic_and_a_non_positive_lookback():
 def test_impact_fraction_is_bit_identical_to_equity_SqrtImpact_on_the_same_numbers(
     sigma, adv, quantity, coefficient
 ):
-    """The futures brick implements the same law as the equity brick, bit for bit.
+    """The futures brick computes the same impact fraction as the equity brick, bit for bit.
 
-    `SqrtImpact` cannot be applied to a `Future`: it looks up `instrument.symbol`, which a
-    Future does not have, so it raises. Here it is given an `Equity` carrying the identical two
-    parameters, and the two fractions are compared exactly.
+    `SqrtImpact` raises on a `Future` because it looks up `instrument.symbol`, so it is given an
+    `Equity` with the same two parameters and the two fractions are compared with `==`.
     """
     fut = FuturesSqrtImpact(
         params_by_root={"ES": FuturesImpactParams(
@@ -310,13 +307,13 @@ def test_impact_fraction_is_bit_identical_to_equity_SqrtImpact_on_the_same_numbe
     assert mine == theirs, f"{mine!r} != {theirs!r}"
 
 
-def test_equity_SqrtImpact_still_raises_on_a_Future_which_is_the_gap_this_module_closes():
+def test_equity_SqrtImpact_raises_on_a_Future():
     eq = SqrtImpact(params_by_symbol={"ES": ImpactParams(sigma_daily=0.012, adv_shares=1e6)})
     with pytest.raises(ValueError, match="needs a 'symbol' attribute"):
         eq.impact_fraction(ES, 100.0)
 
 
-# ------------------------------------------------------------------ the door guards
+# ------------------------------------------------------------------- input guards
 
 
 def test_a_non_future_raises_TypeError_naming_the_equity_brick():
@@ -356,8 +353,8 @@ def test_params_refuse_an_empty_provenance_or_a_backwards_window():
 
 
 def test_an_incomplete_line_is_refused_at_construction_not_at_first_use():
-    """The `hourly_2010_2026` line has a sigma and no volume. It can be stored, but a brick built
-    from it is refused when it is constructed rather than on first use."""
+    """The `hourly_2010_2026` line has a sigma and no volume. It can be stored, but building a
+    brick from it raises at construction rather than on first use."""
     sigma_only = FuturesImpactParams(line="hourly_2010_2026", window=("2010-06-07", "2026-09-09"),
                                      provenance=PROV, sigma_fraction=0.01, notional_usd=1.0,
                                      sigma_usd_per_contract=0.01)
@@ -430,8 +427,8 @@ def test_from_table_raises_naming_the_known_roots_and_the_roots_own_lines():
         FuturesSqrtImpact.from_table("NOSUCH")
     with pytest.raises(FuturesImpactError, match="no impact line 'nosuch'"):
         FuturesSqrtImpact.from_table("ES", line="nosuch")
-    # ZC is one of the 27 roots without a "trades_2025_2026" line: naming that line for it must raise rather
-    # than fall back to a neighbouring window.
+    # ZC is one of the 27 roots without a "trades_2025_2026" line: requesting that line raises
+    # instead of falling back to another window.
     with pytest.raises(FuturesImpactError, match="no impact line 'trades_2025_2026'"):
         FuturesSqrtImpact.from_table("ZC", line="trades_2025_2026")
 
@@ -453,8 +450,8 @@ def test_a_missing_table_raises_rather_than_defaulting():
         load_impact_table(REPO / "data" / "no_such_impact_table.json")
 
 
-#: Seven roots whose dollars-per-point once disagreed between the contract specs and the impact
-#: table, with the corrected value in CME's own quotation convention.
+#: Expected dollars-per-point for seven roots, in CME's quotation convention. The contract specs
+#: and the impact table must both carry these values.
 CORRECTED_USD_PER_POINT = {
     "ZC": 50.0, "ZS": 50.0, "ZW": 50.0, "ZL": 600.0000000000001,
     "LE": 400.0, "HE": 400.0, "SR3": 2500.0,
@@ -462,12 +459,11 @@ CORRECTED_USD_PER_POINT = {
 
 
 def test_the_multiplier_disagreements_are_empty_and_the_seven_values_are_pinned():
-    """The disagreement list is empty, and the seven corrected values are pinned.
+    """The disagreement list is empty and the seven `usd_per_point` values match.
 
-    An empty list alone is not enough. The list is built by iterating the 36 roots, so a table
-    that had lost ZC, ZS, ZW, ZL, LE, HE and SR3 would also report `[]`. The seven corrected
-    `usd_per_point` values are therefore pinned beside it, on both the size block and the
-    default line, so the assertion cannot be satisfied by absence.
+    The list is built by iterating the 36 roots, so a table missing ZC, ZS, ZW, ZL, LE, HE and
+    SR3 would also report `[]`. The seven values are therefore checked on both the size block
+    and the default line.
     """
     t = load_impact_table()
     assert t["multiplier_disagreements"] == []
@@ -478,7 +474,7 @@ def test_the_multiplier_disagreements_are_empty_and_the_seven_values_are_pinned(
 
 
 def test_the_instrument_and_the_impact_table_no_longer_fork_on_the_seven():
-    """The equality the empty list stands for, asserted directly against `Future.from_specs`."""
+    """`Future.from_specs` and the impact table agree on the seven `usd_per_point` values."""
     from backtest_framework.instruments.future import Future
 
     t = load_impact_table()
@@ -504,8 +500,10 @@ def _stack(*trade_bricks) -> dict:
 
 
 def test_the_brick_key_row_is_additive_and_the_nine_earlier_rows_are_untouched():
-    """The eight legacy rows plus `futures_round_trip`. Stored configs validate against these
-    rows, and removing a key from one would make a previously valid config fail."""
+    """The nine existing rows keep their keys and only `futures_sqrt_impact` is added.
+
+    Stored configs validate against these rows, so removing a key from one would make a
+    previously valid config fail."""
     legacy = {
         "flat_commission": {"type", "amount"},
         "percent_spread": {"type", "bps"},
@@ -562,9 +560,9 @@ def test_the_declarative_config_honours_line_and_coefficient():
     assert built.params_by_root["ES"].line == "trades_2025_2026"
 
 
-def test_a_typo_on_a_futures_sqrt_impact_key_raises_instead_of_silently_defaulting():
-    """The exact drift `BRICK_KEYS` exists to close: a misspelt optional key would build at the
-    default while the logged config said otherwise."""
+def test_a_typo_on_a_futures_sqrt_impact_key_raises():
+    """A misspelt optional key raises; otherwise the brick would build with the default value
+    while the logged config showed a different one."""
     with pytest.raises(ConfigError, match="unknown key"):
         validate_stack_config(_stack({"type": "futures_sqrt_impact", "root": "ES",
                                       "coeficient": 1.0}))
@@ -586,8 +584,7 @@ def test_a_table_failure_surfaces_as_a_ConfigError_at_factory_time():
 
 
 def test_the_artefact_on_disk_is_the_one_the_module_reads():
-    """No second copy and no embedded default: the committed table file is the file the brick
-    loads."""
+    """The brick loads the committed table file; there is no second copy or embedded default."""
     from backtest_framework.costs import futures_impact as mod
 
     assert mod.TABLE_PATH == REPO / "data" / "futures_impact_params.json"

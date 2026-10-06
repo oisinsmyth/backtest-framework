@@ -1,6 +1,7 @@
-"""Why the block bootstrap is used instead of a returns shuffle for Monte Carlo: on an
-autocorrelated series, shuffling destroys the autocorrelation a mean-reversion strategy
-trades, while the block bootstrap preserves most of it.
+"""Tests that the block bootstrap keeps autocorrelation that a returns shuffle removes.
+
+On an autocorrelated series, shuffling removes the autocorrelation a mean-reversion
+strategy trades, while the block bootstrap keeps most of it, so Monte Carlo uses blocks.
 """
 
 import numpy as np
@@ -24,7 +25,7 @@ def test_shuffle_destroys_autocorrelation_block_bootstrap_preserves_it():
         r[i] = 0.6 * r[i - 1] + eps[i]
 
     original_acf = _acf1(r)
-    assert original_acf > 0.5  # the series really is autocorrelated
+    assert original_acf > 0.5  # the generated series is autocorrelated
 
     block_paths = block_bootstrap_paths(r, seed=7, n_sims=200, block_size=25)
     block_acf = float(np.mean([_acf1(p) for p in block_paths]))
@@ -32,7 +33,6 @@ def test_shuffle_destroys_autocorrelation_block_bootstrap_preserves_it():
     shuffle_rng = np.random.default_rng(7)
     shuffle_acf = float(np.mean([_acf1(shuffle_rng.permutation(r)) for _ in range(200)]))
 
-    # The divergence, quantified:
-    assert abs(shuffle_acf) < 0.05  # shuffling annihilates the structure
+    assert abs(shuffle_acf) < 0.05  # shuffling removes the autocorrelation
     assert block_acf > 0.35  # blocks keep most of it (boundary losses only)
     assert block_acf > shuffle_acf + 0.3

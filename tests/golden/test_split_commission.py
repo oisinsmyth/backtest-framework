@@ -1,6 +1,7 @@
-"""Golden test: commission on the pre-split XOP bar computed on TRUE as-traded prices vs
-the adjusted-price calculation — difference nonzero and equal to hand arithmetic
-(test_split_commission.hand.txt). Uses the committed raw fixture's actual bar.
+"""Golden test: commission on the pre-split XOP bar on as-traded vs adjusted prices.
+
+The difference is nonzero and equals the hand arithmetic in test_split_commission.hand.txt.
+Uses the committed raw fixture's actual bar.
 """
 
 from datetime import datetime

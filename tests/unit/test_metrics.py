@@ -20,16 +20,16 @@ TOLERANCE = 1e-9
 
 
 def test_sharpe_with_rf_4pct_on_flat_returns_is_negative():
-    # A flat (constant-zero) return series at rf=4% must come out negative; this catches a
-    # silent rf=0 shortcut. Zero variance with a negative excess mean gives -inf by
-    # convention.
+    # A flat (constant-zero) return series at rf=4% must come out negative, which catches an
+    # implementation that ignores rf. Zero variance with a negative excess mean gives -inf
+    # by convention.
     result = sharpe([0.0] * 252, rf_annual=0.04, periods_per_year=252)
     assert result < 0
     assert result == -math.inf
 
 
 def test_sharpe_requires_rf_and_periods_positionally():
-    # No defaults, by design: calling without them is a TypeError.
+    # rf and periods have no defaults, so omitting them is a TypeError.
     with pytest.raises(TypeError):
         sharpe([0.01, -0.02, 0.005])  # type: ignore[call-arg]
 
@@ -68,12 +68,12 @@ def test_beta_of_constant_cash_series_is_zero():
     assert realised_beta(cash, spy) == pytest.approx(0.0, abs=1e-12)
 
 
-def test_beta_against_zero_variance_benchmark_fails_loudly():
+def test_beta_against_zero_variance_benchmark_raises():
     with pytest.raises(ValueError, match="zero variance"):
         realised_beta([0.01, -0.01, 0.02], [0.001, 0.001, 0.001])
 
 
-def test_beta_length_mismatch_fails_loudly():
+def test_beta_length_mismatch_raises():
     with pytest.raises(ValueError, match="length mismatch"):
         realised_beta([0.01, -0.01], [0.001])
 
@@ -84,30 +84,30 @@ def test_max_drawdown_relocated_intact():
 
 
 def test_max_drawdown_refuses_a_curve_that_was_never_above_water():
-    """A drawdown is a fraction of a peak, and here there is no positive peak.
+    """A curve with no positive peak raises, since drawdown is a fraction of the peak.
 
-    The `peak > 0` check avoids the division. Returning 0.0 instead of raising would render
-    as `0.00%`, indistinguishable from a genuinely drawdown-free run.
-
-    Unreachable through `run_backtest`, where every equity curve starts at a positive
-    `starting_cash`.
+    Returning 0.0 instead would display as `0.00%`, the same as a run with no drawdown.
+    `run_backtest` cannot produce such a curve, because every equity curve starts at a
+    positive `starting_cash`.
     """
     with pytest.raises(ValueError, match="never positive"):
         max_drawdown([(None, -10.0), (None, -100.0)])
 
-    # The first point being non-positive is fine as long as the curve recovers: the check is
-    # on the running peak, not the opening value.
+    # A non-positive first point is accepted if the curve later has a positive peak: the
+    # check is on the running peak, not the opening value.
     assert max_drawdown([(None, -10.0), (None, 100.0), (None, 50.0)]) == pytest.approx(0.5, rel=TOLERANCE)
 
-    # An empty curve returns 0.0: there is nothing to be undefined about.
+    # An empty curve returns 0.0.
     assert max_drawdown([]) == 0.0
 
 
-# ---------------------------------------------------------------- one arithmetic
+# ------------------------------------------------- bit-exact arithmetic and rounding
 
 
 def _tie_heavy_and_random_returns():
-    """Ties are where rewrites disagree, so every equality claim below is probed on them."""
+    """Yield tie-heavy and random return series for the equality tests below.
+
+    Two implementations of the same formula are most likely to disagree on ties."""
     rng = np.random.default_rng(1)
     yield [0.1, -0.1] * 40
     yield [0.0] * 20 + [-0.3] + [0.0] * 20
@@ -129,8 +129,10 @@ def test_max_drawdown_from_returns_prepends_the_opening_point():
 
 
 def test_max_drawdown_from_returns_is_bit_identical_to_the_curve_form():
-    """Exact equality, not `approx`. The returns form delegates to the curve form so that
-    there is one arithmetic; a tolerance here would hide a second one."""
+    """The returns form equals the curve form with `==`.
+
+    The returns form delegates to the curve form, so the results should match bit for bit; a
+    tolerance would not detect a second, separate implementation."""
     for returns in _tie_heavy_and_random_returns():
         curve = [1.0]
         nav = 1.0
@@ -140,13 +142,13 @@ def test_max_drawdown_from_returns_is_bit_identical_to_the_curve_form():
         assert max_drawdown_from_returns(returns) == max_drawdown(list(enumerate(curve)))
 
 
-def test_the_reordered_drawdown_form_really_does_disagree():
-    """`1.0 - nav/peak` and `(peak - nav)/peak` (what this module computes) are algebraically
-    equal but not bit-equal.
+def test_the_reordered_drawdown_form_disagrees():
+    """`1.0 - nav/peak` and `(peak - nav)/peak` (the module's form) are algebraically equal
+    but not bit-equal.
 
-    Code that switches from one form to the other will see drawdowns move in the last bit,
-    and this test documents why. If a future numpy or CPython makes the two forms agree,
-    this fails, and the note above should be revised.
+    Switching from one form to the other moves drawdowns in the last bit. If a future numpy
+    or CPython makes the two forms agree, this test fails and this docstring should be
+    revised.
     """
     rng = np.random.default_rng(0)
     disagreements = 0
@@ -178,9 +180,9 @@ def test_excess_sharpe_charges_rf_only_on_the_exposed_fraction():
     half = excess_sharpe(returns, half_in, 0.04, 252.0, basis="simple")
     zero = excess_sharpe(returns, [0.0] * len(returns), 0.04, 252.0, basis="simple")
 
-    # At zero exposure nothing is charged, so it must equal the rf=0 Sharpe exactly.
+    # At zero exposure nothing is charged, so the result equals the rf=0 Sharpe exactly.
     assert zero == sharpe(returns, 0.0, 252.0)
-    # And the more exposed book is charged more, so it scores lower.
+    # The more exposed book is charged more, so it scores lower.
     assert full < half < zero
 
 
@@ -191,17 +193,17 @@ def test_excess_sharpe_requires_the_return_basis():
         excess_sharpe(returns, exposure, 0.04, 252.0)  # type: ignore[call-arg]
     with pytest.raises(ValueError, match="basis must be"):
         excess_sharpe(returns, exposure, 0.04, 252.0, basis="geometric")
-    # The two bases are genuinely different constants, not a spelling choice.
+    # The two bases de-annualise rf differently and give different results.
     assert excess_sharpe(returns, exposure, 0.04, 252.0, basis="log") != excess_sharpe(
         returns, exposure, 0.04, 252.0, basis="simple"
     )
 
 
 def test_excess_sharpe_reproduces_the_reference_formula_bit_for_bit():
-    """The log basis, restated inline and compared exactly.
+    """The log basis matches an inline restatement of the formula with `==`.
 
-    rf de-annualised in log space, charged against the exposed fraction, ddof=1, annualised
-    by sqrt(ppy).
+    rf is de-annualised in log space and charged against the exposed fraction; the standard
+    deviation uses ddof=1; the ratio is annualised by sqrt(ppy).
     """
     rng = np.random.default_rng(7)
     for _ in range(50):
@@ -214,16 +216,16 @@ def test_excess_sharpe_reproduces_the_reference_formula_bit_for_bit():
         assert excess_sharpe(port, exposure, 0.04, 252.0, basis="log") == theirs
 
 
-def test_excess_sharpe_length_mismatch_fails_loudly():
+def test_excess_sharpe_length_mismatch_raises():
     with pytest.raises(ValueError, match="length mismatch"):
         excess_sharpe([0.01, -0.01], [1.0], 0.04, 252.0, basis="log")
 
 
 def test_curve_sharpe_zero_rf_reproduces_the_body_it_replaced_bit_for_bit():
-    """The function matches its reference formula exactly.
+    """The function matches its reference formula with `==`.
 
-    The formula, restated: `(fmean(rets) / stdev(rets)) * sqrt(ppy)`, with `len < 3 -> 0.0`
-    and `sd <= 0 -> 0.0`. Exact equality, because any change in rounding would move every
+    The formula is `(fmean(rets) / stdev(rets)) * sqrt(ppy)`, with `len < 3 -> 0.0` and
+    `sd <= 0 -> 0.0`. The comparison is exact because any change in rounding would move every
     Sharpe computed with it.
     """
     import statistics
@@ -248,14 +250,13 @@ def test_curve_sharpe_zero_rf_reproduces_the_body_it_replaced_bit_for_bit():
 
 
 def test_the_two_zero_rf_kernels_are_not_the_same_float():
-    """Why `curve_sharpe_zero_rf` exists beside `sharpe(r, 0.0, ppy)`.
+    """`curve_sharpe_zero_rf` and `sharpe(r, 0.0, ppy)` agree only to rounding.
 
-    `statistics.fmean` sums exactly (`math.fsum`); numpy sums pairwise. Same definition,
-    different rounding. Replacing one with the other would move results in the last bits, so
-    a rewrite must not reorder a float sum.
+    `statistics.fmean` sums exactly (`math.fsum`) while numpy sums pairwise, so the two give
+    the same definition with different rounding. Both are kept because replacing one with the
+    other would move results in the last bits.
 
-    If the two ever agree everywhere, this fails, and the reason for keeping two kernels no
-    longer holds.
+    If the two ever agree on every draw, this test fails and keeping both is no longer needed.
     """
     rng = np.random.default_rng(2)
     series = [list(rng.normal(0.0, 0.02, 500)) for _ in range(200)]
@@ -268,19 +269,17 @@ def test_the_two_zero_rf_kernels_are_not_the_same_float():
         "the exact-summation and pairwise kernels no longer differ; the reason for "
         "keeping both no longer holds"
     )
-    # But they are the same definition, so the gap must stay at rounding scale.
+    # They share a definition, so the gap stays at rounding scale.
     assert max(gaps) < 1e-12, f"the two kernels differ by {max(gaps):.3e}, which is not rounding"
 
 
 def test_builtin_sum_is_compensated_and_a_manual_loop_is_not():
     """Builtin `sum()` and a manual `total += ...` loop give different floats.
 
-    Same terms, same order, different result: since CPython 3.12, `sum()` uses Neumaier
-    compensated summation for floats, while a manual loop gets plain accumulation. So two
-    implementations that read as identical can differ.
-
-    This applies to the whole codebase: any change that replaces `sum(xs)` with a loop, or
-    the reverse, moves numbers. The classic 1e16 case shows it without a random draw.
+    Since CPython 3.12, `sum()` uses Neumaier compensated summation for floats, while a
+    manual loop accumulates plainly, so the same terms in the same order can give different
+    results. Replacing `sum(xs)` with a loop, or the reverse, can change numbers anywhere in
+    the codebase. The 1e16 case shows the difference without a random draw.
     """
     terms = [1e16, 1.0, -1e16, 1.0]
     total = 0.0
@@ -293,8 +292,10 @@ def test_builtin_sum_is_compensated_and_a_manual_loop_is_not():
 
 
 def test_mid_rank_percentile_splits_ties_in_half():
-    """On a discrete statistic, counting ties as strictly-below biases the percentile
-    whenever the observation equals some of the draws. Mid-rank counts half of each tie."""
+    """Mid-rank counts half of each tie.
+
+    On a discrete statistic, counting only draws strictly below biases the percentile
+    whenever the observation equals some of the draws."""
     assert mid_rank_percentile([1.0, 2.0, 3.0, 4.0], 2.5) == 50.0
     # Four draws equal to the observation: strictly-below would say 0, this says 50.
     assert mid_rank_percentile([7.0, 7.0, 7.0, 7.0], 7.0) == 50.0
@@ -304,9 +305,10 @@ def test_mid_rank_percentile_splits_ties_in_half():
 
 
 def test_mid_rank_and_strictly_below_are_the_same_number_when_nothing_ties():
-    """The two conventions differ only by the tie term and by a factor of 100. A departure
-    from 100x therefore means the draws tie, which is worth knowing about a statistic
-    assumed continuous."""
+    """Without ties, the mid-rank percentile is 100 times the strictly-below fraction.
+
+    The two conventions differ only by the tie term and the factor of 100, so any other
+    difference means the draws contain ties."""
     rng = np.random.default_rng(3)
     for _ in range(50):
         draws = list(rng.normal(0.0, 1.0, 400))

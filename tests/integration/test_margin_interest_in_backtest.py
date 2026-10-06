@@ -1,8 +1,7 @@
-"""Engine-wiring tests for margin interest: a 200%-gross pairs position held over a
-weekend gets charged margin interest computed by run_backtest itself, from a
-start-of-bar snapshot.
+"""Engine-wiring tests for margin interest on a 200%-gross pairs position held over a weekend.
 
-Hand arithmetic (including why the NAV assertion isolates the charge exactly) lives in
+run_backtest computes the charge itself, from a start-of-bar snapshot. Hand arithmetic,
+including why the NAV assertion isolates the charge, is in
 tests/golden/test_margin_interest.hand.txt under "Integration scenario".
 """
 
@@ -75,13 +74,10 @@ def test_per_leg_carry_uses_the_instruments_notional_not_quantity_times_price():
     """The carry base must come from `notional()`, like every other money in the engine.
 
     `portfolio.nav` and `gross_exposure` ask the instrument for notional, and the per-leg
-    carry base must too. For `Equity` the two agree exactly, because `Equity.notional` IS
-    `quantity * price`. For an instrument with a contract multiplier they differ by that
-    multiplier, and a carry base computed as `quantity * price` would charge carry on a
-    fraction of the exposure the book's own NAV reports.
-
-    An equity-only test cannot distinguish the two. This one uses a x10 stub so the
-    difference is arithmetic rather than rounding: the charge must scale with the multiplier.
+    carry base must too. For `Equity` the two agree, because `Equity.notional` is
+    `quantity * price`. With a contract multiplier they differ by that multiplier, and a
+    base of `quantity * price` would charge carry on a fraction of the exposure in NAV.
+    This test uses a x10 stub, so the charge must scale by 10.
     """
     from dataclasses import dataclass
 
@@ -100,9 +96,8 @@ def test_per_leg_carry_uses_the_instruments_notional_not_quantity_times_price():
             return quantity * price * self.multiplier
 
         def carry_components(self) -> tuple[str, ...]:
-            # The same pair Equity declares. Returning () would make the comparison
-            # vacuous: no carry brick would match, both books would be charged nothing, and
-            # the ratio assertion would compare 0 with 0.
+            # The same pair Equity declares. With () no carry brick would match, both books
+            # would be charged nothing, and the ratio assertion would compare 0 with 0.
             return ("borrow", "dividend")
 
         def tradeable_quantity(self, raw_quantity: float) -> float:
@@ -124,8 +119,8 @@ def test_per_leg_carry_uses_the_instruments_notional_not_quantity_times_price():
     charged_plain = 100_000.0 - plain.equity_curve[1][1]
     charged_tenx = 100_000.0 - tenx.equity_curve[1][1]
 
-    assert charged_plain > 0, "the borrow fee must actually bite, or this proves nothing"
+    assert charged_plain > 0, "the borrow fee must be nonzero for this comparison to mean anything"
     assert charged_tenx == pytest.approx(10.0 * charged_plain, rel=TOLERANCE), (
         f"carry base ignored the contract multiplier: {charged_tenx} charged against "
-        f"{charged_plain} on a x10 instrument — the base is not coming from notional()"
+        f"{charged_plain} on a x10 instrument; the base is not coming from notional()"
     )
