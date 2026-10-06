@@ -2,6 +2,7 @@
  "purpose": "parameters for costs/futures_impact.py:FuturesSqrtImpact: mean daily volume V_d and session volatility sigma_d",
  "formula": "I = Y * sigma_d * sqrt(|Q_rem| / V_d) * P * sign(Q_rem)   (price units)",
  "coefficient_Y": 0.7,
+ "coefficient_Y_note": "fixed, not fitted: inside the 0.5-1 range reported for stocks and futures in T\u00f3th, Eisler and Bouchaud (2016), \"The square-root impact law also holds for option markets\", arXiv:1602.03043",
  "default_line": "day1m_2016_2023",
  "why_default": "day1m_2016_2023 is measured on 2016-2023 one-minute front-contract bars. trades_2025_2026 and hourly_2010_2026 extend to 2026-09; a study on earlier years that uses one applies a recent measurement to a past window.",
  "lines": {

@@ -68,7 +68,7 @@ from ..costs.futures_bricks import (
     FuturesRoundTrip,
     TickCrossing,
 )
-from ..costs.futures_impact import LEDGER_Y, FuturesImpactError, FuturesSqrtImpact
+from ..costs.futures_impact import DEFAULT_IMPACT_Y, FuturesImpactError, FuturesSqrtImpact
 from ..costs.stack import CostStack
 from ..data.bars import TimestampedBar
 from ..data.corporate_actions import CorporateActions, as_declared_dividends
@@ -314,7 +314,7 @@ def _brick_registry(context: StackDataContext) -> FactoryRegistry:
             return FuturesSqrtImpact.from_table(
                 root,
                 line=line,
-                coefficient=_optional_numeric(c, "coefficient", LEDGER_Y, "futures_sqrt_impact"),
+                coefficient=_optional_numeric(c, "coefficient", DEFAULT_IMPACT_Y, "futures_sqrt_impact"),
             )
         except FuturesImpactError as exc:
             raise ConfigError(f"futures_sqrt_impact: {exc}") from exc

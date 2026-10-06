@@ -21,7 +21,8 @@ Baseline impact::
     sigma_d  = 20-day trailing daily return std
     I        = Y x sigma_d x sqrt(|Q_rem| / V_d) x P x sign(Q_rem)       (price units)
 
-    Y = 0.7, fixed.
+    Y = 0.7, fixed: inside the 0.5-1 range reported for stocks and futures (see
+    DEFAULT_IMPACT_Y below), and not fitted to the contracts in the table.
 
 Depth-scaled impact::
 
@@ -78,9 +79,16 @@ TABLE_PATH = REPO / "data" / "futures_impact_params.json"
 Every number in it carries its provenance and measurement window.
 """
 
-LEDGER_Y = 0.7
-"""The impact coefficient `Y = 0.7`, fixed. A default, not a parameter to fit: neither the
-baseline nor the depth-scaled formula has a free coefficient."""
+DEFAULT_IMPACT_Y = 0.7
+"""The impact coefficient `Y`, fixed at 0.7.
+
+The square-root law's prefactor is "a numerical constant of order unity", and "the Y constant
+obtained for stocks and futures contracts is in the range 0.5 -> 1" (Tóth, Eisler and
+Bouchaud, "The square-root impact law also holds for option markets", 2016,
+arXiv:1602.03043). 0.7 sits inside that range. It is not calibrated on the contracts in
+`data/futures_impact_params.json`: no metaorder data for them is available here, and fixing
+the value before any result is read keeps the cost model from being tuned until a result
+passes. Pass `coefficient=` to use another value."""
 
 DEPTH_EXPONENT = 0.5
 """The depth-scaling exponent, fixed at 0.5. A named constant so that a reader looking for a
@@ -181,7 +189,7 @@ class FuturesSqrtImpact:
     """
 
     params_by_root: Mapping[str, FuturesImpactParams] = field(default_factory=dict)
-    coefficient: float = LEDGER_Y
+    coefficient: float = DEFAULT_IMPACT_Y
 
     def __post_init__(self) -> None:
         if not isinstance(self.coefficient, (int, float)) or isinstance(self.coefficient, bool):
@@ -212,7 +220,7 @@ class FuturesSqrtImpact:
         root: str,
         *,
         line: str | None = None,
-        coefficient: float = LEDGER_Y,
+        coefficient: float = DEFAULT_IMPACT_Y,
         table_path: Path | None = None,
     ) -> FuturesSqrtImpact:
         """Build one root's brick from `data/futures_impact_params.json`.

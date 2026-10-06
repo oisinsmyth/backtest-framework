@@ -20,7 +20,7 @@ from backtest_framework.config.cost_stack import BRICK_KEYS
 from backtest_framework.costs.equity_bricks import ImpactParams, SqrtImpact
 from backtest_framework.costs.futures_impact import (
     DEPTH_EXPONENT,
-    LEDGER_Y,
+    DEFAULT_IMPACT_Y,
     FuturesSqrtImpact,
     depth_scaled,
     impact_params,
@@ -82,7 +82,7 @@ def _es_line() -> dict:
 
 def test_the_declared_constants_are_the_ledgers_own():
     """Hand file §0 and §1: Y = 0.7 fixed, depth exponent 0.5 fixed."""
-    assert LEDGER_Y == 0.7
+    assert DEFAULT_IMPACT_Y == 0.7
     assert DEPTH_EXPONENT == 0.5
     assert _artefact()["coefficient_Y"] == 0.7
 
@@ -123,7 +123,7 @@ def test_impact_fraction_reproduces_the_hand_worked_arithmetic(quantity, ratio, 
     """Hand file §2, every intermediate: the divide, the square root and the product."""
     assert quantity / ES_ADV == ratio
     assert math.sqrt(ratio) == root
-    assert LEDGER_Y * ES_SIGMA_FRACTION * root == fraction
+    assert DEFAULT_IMPACT_Y * ES_SIGMA_FRACTION * root == fraction
     assert FuturesSqrtImpact.from_table("ES").impact_fraction(ES, quantity) == fraction
 
 
@@ -144,7 +144,7 @@ def test_the_second_root_is_checked_too():
     assert line["sigma_fraction"] == CL_SIGMA_FRACTION
     assert 500.0 / CL_ADV == CL_RATIO_Q500
     assert math.sqrt(CL_RATIO_Q500) == CL_SQRT_Q500
-    assert LEDGER_Y * CL_SIGMA_FRACTION * CL_SQRT_Q500 == CL_FRACTION_Q500
+    assert DEFAULT_IMPACT_Y * CL_SIGMA_FRACTION * CL_SQRT_Q500 == CL_FRACTION_Q500
     cl = Future(root="CL", tick_points=0.01, usd_per_point=1000.0, tick_usd=10.0)
     assert FuturesSqrtImpact.from_table("CL").impact_fraction(cl, 500.0) == CL_FRACTION_Q500
 
@@ -219,7 +219,7 @@ def test_it_is_the_same_law_as_the_equity_brick_to_the_bit():
     fut = FuturesSqrtImpact.from_table("ES")
     eq = SqrtImpact(
         params_by_symbol={"ES": ImpactParams(sigma_daily=ES_SIGMA_FRACTION, adv_shares=ES_ADV)},
-        coefficient=LEDGER_Y,
+        coefficient=DEFAULT_IMPACT_Y,
     )
     assert fut.impact_fraction(ES, 1000.0) == eq.impact_fraction(Equity(symbol="ES"), 1000.0)
     assert fut.impact_fraction(ES, 1000.0) == FRACTION_Q1000

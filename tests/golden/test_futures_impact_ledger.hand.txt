@@ -8,6 +8,8 @@ imports `backtest_framework`. The inputs are of two kinds:
       key path. They are quoted to their FULL repr, never retyped shorter, so that they
       reproduce exactly; a sigma rounded to six digits would not.
   (b) DECLARED numbers -- Y = 0.7 and the depth exponent 0.5 -- which nothing here measured.
+      Y = 0.7 lies inside the 0.5-1 range reported for stocks and futures by Tóth, Eisler and
+      Bouchaud (2016, arXiv:1602.03043); it is fixed, not fitted.
       They are modelling choices and are labelled as such.
 
 Reading a committed artefact is not importing the codebase: the artefact is the source of the

@@ -94,6 +94,8 @@ cointegrated but with a random-walk spread (`validation/synthetic.py`) earn noth
 - The crossing costs in `data/futures_costs.json` were measured over 2025-09 to 2026-09. A tick
   is fixed in price terms, so on older, lower-priced data it is a larger fraction of price and
   those costs are optimistic for earlier years.
+- The futures impact coefficient Y = 0.7 is taken from the 0.5-1 range reported in the
+  literature, not calibrated on these contracts; no metaorder data for them is available here.
 - `RiskMonitor` records limit breaches and does not act on them. The pre-trade gate is off unless
   `enforce_pretrade=True`.
 

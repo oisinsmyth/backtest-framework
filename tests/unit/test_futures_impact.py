@@ -32,7 +32,7 @@ from backtest_framework.config.errors import ConfigError
 from backtest_framework.costs.equity_bricks import ImpactParams, SqrtImpact
 from backtest_framework.costs.futures_impact import (
     DEPTH_EXPONENT,
-    LEDGER_Y,
+    DEFAULT_IMPACT_Y,
     FuturesImpactError,
     FuturesImpactParams,
     FuturesSqrtImpact,
@@ -65,7 +65,7 @@ def params(adv: float = 1.0e6, sigma: float = 0.012) -> FuturesImpactParams:
     )
 
 
-def brick(adv: float = 1.0e6, sigma: float = 0.012, coefficient: float = LEDGER_Y):
+def brick(adv: float = 1.0e6, sigma: float = 0.012, coefficient: float = DEFAULT_IMPACT_Y):
     return FuturesSqrtImpact(params_by_root={"ES": params(adv, sigma)}, coefficient=coefficient)
 
 
@@ -74,7 +74,7 @@ def brick(adv: float = 1.0e6, sigma: float = 0.012, coefficient: float = LEDGER_
 
 def test_default_coefficient_is_the_fixed_Y():
     """`Y = 0.7`, fixed. Not SqrtImpact's order-of-magnitude 1.0."""
-    assert LEDGER_Y == 0.7
+    assert DEFAULT_IMPACT_Y == 0.7
     assert FuturesSqrtImpact(params_by_root={"ES": params()}).coefficient == 0.7
     assert DEPTH_EXPONENT == 0.5
 
@@ -380,7 +380,7 @@ def test_the_table_carries_the_36_roots_and_three_lines():
     t = load_impact_table()
     assert len(t["roots"]) == 36
     assert t["default_line"] == "day1m_2016_2023"
-    assert t["coefficient_Y"] == LEDGER_Y
+    assert t["coefficient_Y"] == DEFAULT_IMPACT_Y
     assert set(t["lines"]) == {"trades_2025_2026", "hourly_2010_2026", "day1m_2016_2023"}
     assert sum(1 for e in t["roots"].values() if "trades_2025_2026" in e["lines"]) == 9
 
@@ -419,9 +419,9 @@ def test_from_table_builds_the_default_line_and_reproduces_the_stored_numbers():
     t = load_impact_table()
     line = t["roots"]["ES"]["lines"]["day1m_2016_2023"]
     b = FuturesSqrtImpact.from_table("ES")
-    assert b.coefficient == LEDGER_Y
+    assert b.coefficient == DEFAULT_IMPACT_Y
     assert b.impact_fraction(ES, 1_000.0) == (
-        LEDGER_Y * line["sigma_fraction"] * math.sqrt(1_000.0 / line["adv_contracts"])
+        DEFAULT_IMPACT_Y * line["sigma_fraction"] * math.sqrt(1_000.0 / line["adv_contracts"])
     )
 
 
@@ -547,7 +547,7 @@ def test_the_declarative_config_builds_the_brick_from_the_table():
     validate_stack_config(cfg)
     stack = build_cost_stack(cfg, _context())
     assert isinstance(stack.trade_bricks[0], FuturesSqrtImpact)
-    assert stack.trade_bricks[0].coefficient == LEDGER_Y
+    assert stack.trade_bricks[0].coefficient == DEFAULT_IMPACT_Y
     assert stack.trade_cost(ES, 100.0, 5_000.0) == FuturesSqrtImpact.from_table("ES").cost(
         ES, 100.0, 5_000.0
     )
