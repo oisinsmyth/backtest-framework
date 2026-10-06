@@ -1,0 +1,21 @@
+backtest-framework
+Copyright (c) 2026 Oisin Smyth
+
+The source code and documentation in this repository are licensed under the MIT License
+(see LICENSE).
+
+Bundled data:
+
+- data/fixtures/xle_xop_daily_2015_2024*.csv and the matching events file: daily prices,
+  dividends and splits for XLE and XOP, downloaded from Yahoo Finance with the yfinance
+  library. Yahoo Finance data is subject to Yahoo's terms of use and is included only as a
+  small test fixture.
+- data/futures_contract_specs.json: futures contract specifications (tick size, point value)
+  as published by CME Group.
+- data/fut_specs_from_definition.json: contract specifications taken from a Databento
+  instrument-definition snapshot of CME Globex.
+- data/futures_costs.json and data/futures_impact_params.json: cost parameters (spread and
+  crossing in ticks, impact coefficients) computed from Databento CME quote data. They contain
+  derived summary statistics only, not quote or trade records.
+
+<!-- TODO(author): confirm the redistribution terms for the bundled fixtures before publishing. -->

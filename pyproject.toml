@@ -1,0 +1,52 @@
+[project]
+name = "backtest-framework"
+version = "0.1.0"
+description = "A modular, test-anchored backtesting framework for equities and futures"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "NOTICE"]
+authors = [
+    { name = "Oisin Smyth", email = "oisin.smyth132@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.4.6",
+    "pandas>=3.0.3",
+    "yfinance>=1.5.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.11.7,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.156.6",
+    "mypy>=1.18.2",
+    "pytest>=9.1.1",
+    "quantstats>=0.0.81",
+    "ruff>=0.14.1",
+    "vectorbt>=1.1.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "live_fetch: hits a real network data source; excluded from default runs. Run with `pytest -m live_fetch`.",
+]
+addopts = "-m \"not live_fetch\""
+python_files = ["test_*.py"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+# Named explicitly so the rule set does not change with the ruff version.
+select = ["E4", "E7", "E9", "F"]
+
+[tool.mypy]
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = ["yfinance.*", "pandas.*"]
+ignore_missing_imports = true
