@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "backtest-framework"
+abstract: >-
+  An event-driven backtesting framework for equities and futures, with composable cost
+  models, a structural look-ahead guard, an append-only trial registry with the deflated
+  Sharpe ratio, and tests anchored to hand-computed ledgers and an independent engine.
+authors:
+  - family-names: Smyth
+    given-names: Oisin
+version: 0.1.0
+date-released: 2026-10-07
+license: MIT
+repository-code: "https://github.com/oisinsmyth/backtest-framework"
+keywords:
+  - backtesting
+  - quantitative finance
+  - transaction costs
+  - market impact
+  - futures
+  - deflated Sharpe ratio
