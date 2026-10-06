@@ -1,0 +1,21 @@
+name: Feature request
+description: A cost model, instrument, data source or check you would like added.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What you are trying to do
+      description: The research question or workflow the feature would support.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: What the feature should do, and how you would test it.
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: Papers, exchange documents or data definitions the feature relies on.
