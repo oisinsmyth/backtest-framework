@@ -1,0 +1,193 @@
+Golden-master hand ledger for the futures cost bricks and the cost table.
+Companion to test_futures_costs_ledger.py: every number below has a matching assertion there.
+
+The arithmetic here was worked before the assertions were written, with a calculator that
+never imports `backtest_framework`. Inputs are of two kinds:
+
+  (a) MEASURED numbers: crossing costs in ticks, copied from data/futures_costs.json to their
+      full repr, never retyped to fewer digits.
+  (b) DECLARED numbers: commissions. Nothing here measured a commission; they are brokerage
+      assumptions and the table labels them `"measured": false`.
+
+The table's cost lines are keyed by the name of the measurement that produced them
+("d556_one_tick", "d465", "d508_exec", ...). Those keys are data identifiers and are used
+verbatim below.
+
+
+0. THE TWO BRICK RULES
+================================================================================
+Both charge PER FILL, and a round trip is two fills of one contract.
+
+    FuturesCommission(per_round_trip_usd = C)
+        cost(instrument, quantity, price) = 0.5 * C * |quantity|          [price ignored]
+
+    TickCrossing(ticks_per_round_trip = T)
+        cost(instrument, quantity, price) = 0.5 * T * tick_usd * |quantity|   [price ignored]
+
+    round trip, one contract  =  cost(+1) + cost(-1)  =  C  +  T * tick_usd
+
+0.5 is a power of two, so halving and re-doubling is exact in binary: the round trip is
+`C + T*tick_usd` to the bit, not to a tolerance.
+
+Commission is charged per contract, which is why it dominates at micro size: $3 on a $1.25
+tick is 2.4 ticks; on a $12.50 tick it is 0.32.
+
+
+1. INSTRUMENT CONSTANTS
+================================================================================
+From data/futures_contract_specs.json (CME contract specifications). tick_usd =
+usd_per_point * tick_points in every row, which `Future.__post_init__` re-checks.
+
+    symbol   tick_points   usd_per_point   tick_usd
+    ES         0.25            50.0          12.50
+    MES        0.25             5.0           1.25
+    NQ         0.25            20.0           5.00
+    MNQ        0.25             2.0           0.50
+    MCL        0.01           100.0           1.00
+    MGC        0.1             10.0           1.00
+    MNG        0.001         1000.0           1.00
+    SIL        0.005         1000.0           5.00
+    ZN         0.015625      1000.0          15.625
+    ZB         0.03125       1000.0          31.25
+    ZF         0.0078125     1000.0           7.8125
+
+Every tick_usd here is a dyadic rational (1.25 = 5/4, 15.625 = 125/8, 7.8125 = 125/16), so
+every product below is exact in binary. The two places that are about rounding say so.
+
+
+2. MNQ WITH A MEASURED CROSSING
+================================================================================
+MEASURED crossing: 2.4110232735988832 ticks a round trip.
+DECLARED commission: $3.00 a round trip.
+
+    crossing, per fill   0.5 * 2.4110232735988832 * 0.50   = 0.6027558183997208
+    commission, per fill 0.5 * 3.00                        = 1.50
+    per fill                                               = 2.1027558183997208
+    ROUND TRIP           = 2 * 2.1027558183997208          = 4.205511636799441
+
+    the same sum written flat: 3.00 + 2.4110232735988832 * 0.50 = 4.205511636799441
+    The two routes agree bit for bit (0x4010d271a47c010e), as §0's halving argument predicts.
+
+    Rounded to the cent: round(4.205511636799441, 2) = 4.21 (no tie). 4.21 is
+    0.0044883632005590 above the exact figure.
+
+
+3. THE ONE-TICK RULE: a round trip is commission + one tick
+================================================================================
+Cost per side = comm/2 + 0.5 tick, so one round trip is exactly `comm_rt + tick_usd`. In the
+vocabulary of §0 that is TickCrossing(1.0). Commission is $3.00 on a micro and $6.00 on a
+full-size contract; the size charged is each root's minimum tradable size. Table line:
+"d556_one_tick".
+
+    root  min_size  comm    tick_usd   ROUND TRIP = comm + tick_usd     printed to the cent
+    NQ      MNQ     3.00      0.50      3.50                            3.50   exact
+    ES      MES     3.00      1.25      4.25                            4.25   exact
+    CL      MCL     3.00      1.00      4.00                            4.00   exact
+    SI      SIL     3.00      5.00      8.00                            8.00   exact
+    ZN      ZN      6.00     15.625    21.625                           21.63  ROUNDED
+    ZB      ZB      6.00     31.25     37.25                            37.25  exact
+    ZF      ZF      6.00      7.8125   13.8125                          13.81  ROUNDED
+
+  ZN is a genuine tie. 21.625 is exactly representable (173/8), so rounding it to two
+  decimals is a tie at the third digit:
+      half-up   -> 21.63
+      half-even -> 21.62     (what Python's round(21.625, 2) returns)
+  The test asserts the exact 21.625 and records both roundings.
+      13.8125 -> 13.81 under both rules (the third digit is 2, no tie).
+
+  MNQ two ways:
+      measured crossing   3.00 + 2.4110232735988832 * 0.50 = 4.205511636799441
+      one-tick rule       3.00 + 1.0                * 0.50 = 3.50
+  The rule is 0.7055116367994 cheaper. It is a convention, not a measurement.
+
+
+4. ES AND MES BREAKEVEN WITH A MEASURED CROSSING
+================================================================================
+MEASURED: a half-spread of 0.18219682151764224 bp a side on ES, at a median price of 6919.5,
+converted to ticks on each contract (table line "d465"):
+
+    ES   crossing_ticks  = 1.0085687251930604
+    MES  crossing_ticks  = 1.0085687251930602
+
+  ONE ULP APART, AND THE TABLE KEEPS BOTH. The bp figure is one number; the tick figure is that
+  number divided by a different tick_usd on each contract (12.5 and 1.25), and the two
+  divisions do not land on the same double. Each size entry carries the tick count of its own
+  contract.
+
+DECLARED commission: ES $4.00 / RT, MES $3.00 / RT.
+
+  ES:
+    crossing, per fill    0.5 * 1.0085687251930604 * 12.50 = 6.3035545324566275
+    commission, per fill  0.5 * 4.00                       = 2.00
+    ROUND TRIP            2 * 8.303554532456627            = 16.607109064913253
+    breakeven ticks       16.607109064913253 / 12.50       =  1.3285687251930602
+        of which crossing 1.0085687251930604 and commission 4.00/12.50 = 0.32
+
+  MES:
+    crossing, per fill    0.5 * 1.0085687251930602 * 1.25  = 0.6303554532456626
+    commission, per fill  0.5 * 3.00                       = 1.50
+    ROUND TRIP            2 * 2.1303554532456626           =  4.260710906491325
+    breakeven ticks        4.260710906491325 / 1.25        =  3.40856872519306
+        of which crossing 1.0085687251930602 and commission 3.00/1.25 = 2.40
+
+  The micro's breakeven is 2.6x the full contract's on the same index, and 2.40 of its 3.409
+  ticks is commission.
+
+  MGC with a measured execution-hours crossing (table line "d508_exec"):
+    2.9334505021406643 ticks * $1.00 + $3.00 = 5.933450502140664
+
+
+5. FULL-SIZE COMMISSION HAS TWO DECLARED VALUES
+================================================================================
+  The table's `full` entries carry $6.00 / RT. ES's runner_lines.d469 keeps an older $4.00 / RT
+  assumption verbatim, which is what §4 uses. Neither is measured; both are kept so that each
+  published cost line stays reproducible.
+
+
+6. CENT-QUOTED ROOTS
+================================================================================
+  data/fut_specs_from_definition.json computes a raw tick value as tick_price_units *
+  unit_of_measure_qty, which is in dollars only where the price is quoted in dollars per unit.
+  For the grains and livestock it is in cents. The file also carries `tick_usd_full_contract`,
+  decided by a notional test on the observed price, and the cost table reads that field:
+
+           ZC / ZS / ZW   tick_usd  12.5    raw 1250.0    divisor 100
+           HE / LE        tick_usd  10.0    raw 1000.0    divisor 100
+           ZL             tick_usd   6.0    raw  600.0    divisor 100
+           SR3            tick_usd   6.25   raw    6.25   divisor   1
+
+  HG is why the divisor cannot come from `unit_of_measure`: HG and ZL are both "LBS" and differ
+  by exactly 100, HG quoted in dollars per pound and ZL in cents.
+
+
+7. BRICK_KEYS BEFORE THE FUTURES ROW WAS ADDED
+================================================================================
+Transcribed from src/backtest_framework/config/cost_stack.py before `futures_round_trip` was
+added. Stored trial configs must keep validating, so what is gated is that the eight existing
+rows did not move.
+
+    flat_commission   type, amount
+    percent_spread    type, bps
+    ibkr_commission   type, per_share, min_per_order, max_pct_of_trade_value
+    borrow_fee        type, annual_rate
+    margin_interest   type, annual_rate
+    flat_rate_carry   type, annual_rate
+    sqrt_impact       type, coefficient, calibration, volume_units
+    dividend_flow     type, source
+
+  `sqrt_impact`'s `volume_units` is optional and must stay in the row: older stored trials
+  carry sqrt_impact without it.
+
+  The futures row, for completeness (not part of the snapshot the test compares):
+    futures_round_trip   type, commission_rt_usd, crossing_ticks_rt, root, line
+
+
+8. WHAT THIS FILE DOES NOT ESTABLISH
+================================================================================
+- No strategy return; nothing here reads a bar.
+- Commission is declared. The table says `"measured": false` on every commission row.
+- The crossing measurements are recent (2025-09 .. 2026-09). A tick is fixed in price terms,
+  so a recent spread applied to an older, cheaper window is optimistic. The table carries each
+  line's measurement window for that reason.
+- A quoted spread and an effective crossing are different statistics (a floor versus what an
+  aggressor paid). The table never averages them.

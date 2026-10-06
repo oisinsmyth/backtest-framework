@@ -1,0 +1,182 @@
+"""Realistic equity cost bricks.
+
+These implement the same TradeCostBrick/CarryCostBrick interfaces as the simple bricks
+in costs/bricks.py. The simple bricks remain (the golden baseline tests use them), but a
+study that claims to model real trading friction should use these.
+
+- IBKRCommission: the IBKR Fixed US-equity schedule, not flat bps.
+- SqrtImpact: the standard square-root market impact law. The impact fraction scales
+  as √Q; total dollars as Q^1.5.
+- MarginInterest: accrues on max(gross exposure − capital, 0), a portfolio-level base
+  amount the engine computes (CostStack.portfolio_carry_bricks slot), not a per-leg one.
+"""
+
+from __future__ import annotations
+
+import math
+from dataclasses import dataclass, field
+from datetime import datetime
+from typing import ClassVar, Mapping
+
+from ..instruments.base import Instrument
+from ..simulator.carry import DEFAULT_DAY_COUNT, accrue_carry_between_bars
+
+
+@dataclass(frozen=True)
+class IBKRCommission:
+    """IBKR Fixed pricing, US stocks/ETFs: $0.005/share, min $1.00/order, max 1% of
+    trade value. The cap overrides the minimum — a 10-share order at $0.50 pays
+    $0.05, not $1.00.
+
+    Not modeled: regulatory pass-throughs (SEC/FINRA fees on sells)
+    and the Tiered schedule. Constants are dataclass fields so a schedule revision is
+    a config change, not a code change.
+    """
+
+    per_share: float = 0.005
+    min_per_order: float = 1.00
+    max_pct_of_trade_value: float = 0.01
+
+    def cost(self, instrument: Instrument, quantity: float, price: float) -> float:
+        shares = abs(quantity)
+        if shares == 0:
+            return 0.0
+        base = max(self.per_share * shares, self.min_per_order)
+        cap = self.max_pct_of_trade_value * shares * price
+        return min(base, cap)
+
+
+@dataclass(frozen=True)
+class ImpactParams:
+    sigma_daily: float
+    """Daily return volatility as a fraction (e.g. 0.015 for 1.5%/day)."""
+    adv_shares: float
+    """Average daily volume, in shares."""
+
+
+@dataclass(frozen=True)
+class SqrtImpact:
+    """Square-root market impact: impact_fraction = coefficient × σ_daily ×
+    √(|Q|/ADV), charged on the trade's own notional, so total dollars scale as Q^1.5
+    while the per-dollar impact fraction scales as √Q.
+
+    σ and ADV are static per-symbol parameters; costs/calibration.py estimates them
+    from bar data. Validation is early: bad params fail at construction, an unknown
+    symbol fails at cost() time, and neither ever returns a silent zero.
+    """
+
+    params_by_symbol: Mapping[str, ImpactParams] = field(default_factory=dict)
+    coefficient: float = 1.0
+    """Order-of-magnitude Y ≈ 1 convention from the empirical literature."""
+
+    def __post_init__(self) -> None:
+        for symbol, params in self.params_by_symbol.items():
+            if params.adv_shares <= 0:
+                raise ValueError(
+                    f"SqrtImpact params for {symbol!r} have adv_shares={params.adv_shares} — "
+                    "ADV must be positive; a zero/missing ADV must be a loud error, not a "
+                    "silent zero cost (D48)"
+                )
+            if params.sigma_daily <= 0:
+                raise ValueError(
+                    f"SqrtImpact params for {symbol!r} have sigma_daily={params.sigma_daily} — "
+                    "volatility must be positive; zero would silently zero the whole brick (D48)"
+                )
+
+    def _params_for(self, instrument: Instrument) -> ImpactParams:
+        symbol = getattr(instrument, "symbol", None)
+        if symbol is None:
+            raise ValueError(
+                f"SqrtImpact needs a 'symbol' attribute to look up impact params, but "
+                f"{type(instrument).__name__} has none"
+            )
+        params = self.params_by_symbol.get(symbol)
+        if params is None:
+            known = ", ".join(sorted(self.params_by_symbol)) or "(none)"
+            raise ValueError(
+                f"SqrtImpact has no impact params for symbol {symbol!r} — known symbols: {known}. "
+                "Missing ADV must be a loud error, not a silent zero cost (D48)."
+            )
+        return params
+
+    def impact_fraction(self, instrument: Instrument, quantity: float) -> float:
+        """The fractional price concession — the quantity that scales as √Q."""
+        params = self._params_for(instrument)
+        return self.coefficient * params.sigma_daily * math.sqrt(abs(quantity) / params.adv_shares)
+
+    def cost(self, instrument: Instrument, quantity: float, price: float) -> float:
+        if quantity == 0:
+            return 0.0
+        notional = abs(instrument.notional(quantity, price))
+        return self.impact_fraction(instrument, quantity) * notional
+
+
+@dataclass(frozen=True)
+class DividendFlow:
+    """Dividend cash flows: longs credited, shorts debited, on the ex-date, at raw
+    per-share amounts (dividend economics as explicit cash instead of price rewrites).
+    The sign falls out of the signed quantity: +500 shares × $0.87 credits $435;
+    −500 shares debits it (shorts pay the dividend they owe the lender). For a pairs
+    book that shorts a ~3% yielder such as XLE, this flow is first-order."""
+
+    dividends_by_symbol: Mapping[str, tuple[tuple[datetime, float], ...]]
+    """Per symbol: (ex-date, dividend per share), raw amounts."""
+
+    component: ClassVar[str] = "dividend"
+    """Carry component this brick models: only applied to instruments whose
+    carry_components() declares it."""
+
+    def flow(
+        self, instrument: Instrument, quantity: float, prev_timestamp: datetime, curr_timestamp: datetime
+    ) -> float:
+        symbol = getattr(instrument, "symbol", None)
+        if symbol is None:
+            raise ValueError(
+                f"DividendFlow needs a 'symbol' attribute to look up dividends, but "
+                f"{type(instrument).__name__} has none"
+            )
+        total = 0.0
+        for ex_date, amount in self.dividends_by_symbol.get(symbol, ()):
+            if prev_timestamp < ex_date <= curr_timestamp:
+                total += quantity * amount
+        return total
+
+
+@dataclass(frozen=True)
+class BorrowFee:
+    """Stock borrow fee: a per-leg carry brick — shorts pay, longs pay nothing.
+    The engine hands per-leg carry bricks each leg's own signed notional as
+    base_amount, so max(−base, 0) isolates short exposure: a −100,000 short leg pays
+    on 100,000; a long leg pays zero. Default rate is general-collateral territory
+    for liquid ETFs (~0.25%/yr) — the shape (shorts-only) matters more than the rate
+    for the cost sweep; hard-to-borrow rates are a config change."""
+
+    annual_rate: float = 0.0025
+    day_count: float = DEFAULT_DAY_COUNT
+
+    component: ClassVar[str] = "borrow"
+    """Carry component this brick models: only applied to instruments whose
+    carry_components() declares it."""
+
+    def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
+        short_notional = max(-base_amount, 0.0)
+        return accrue_carry_between_bars(
+            self.annual_rate, short_notional, prev_timestamp, curr_timestamp, day_count=self.day_count
+        )
+
+
+@dataclass(frozen=True)
+class MarginInterest:
+    """Margin interest: the caller's base_amount must be
+    max(gross exposure − capital, 0) — the borrowed portion of the book. That's a
+    portfolio-level quantity only the engine can compute, which is why this brick
+    belongs in CostStack.portfolio_carry_bricks, never in the per-leg slot.
+    The accrual math itself is the shared calendar-day mechanism (ACT/365 by default)."""
+
+    annual_rate: float
+    day_count: float = DEFAULT_DAY_COUNT
+
+    def cost(self, base_amount: float, prev_timestamp: datetime, curr_timestamp: datetime) -> float:
+        return accrue_carry_between_bars(
+            self.annual_rate, base_amount, prev_timestamp, curr_timestamp, day_count=self.day_count
+        )
