@@ -221,8 +221,8 @@ def test_a_line_that_root_was_never_measured_on_raises_rather_than_borrowing_one
         FuturesRoundTrip.from_table("ES", "micro", "invented")
 
 
-def test_a_missing_table_raises_and_says_how_to_build_it():
-    with pytest.raises(FuturesCostError, match="--build"):
+def test_a_missing_table_raises_rather_than_falling_back():
+    with pytest.raises(FuturesCostError, match="is missing.*do not fall back"):
         FuturesRoundTrip.from_table("ES", table_path=Path("no/such/futures_costs.json"))
 
 

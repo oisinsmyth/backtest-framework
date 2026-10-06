@@ -70,7 +70,7 @@ class DataView:
             if nan_at:
                 raise ValueError(
                     f"DataView was given NaN volume at index/indices {nan_at[:5]} — a gap must "
-                    "be None, not NaN (D168). Pass the series through "
+                    "be None, not NaN. Pass the series through "
                     "`normalise_volumes` rather than constructing the view from raw values."
                 )
 
@@ -104,7 +104,7 @@ class DataView:
         if resolved >= n:
             raise LookAheadError(
                 f"requested bar index {index} is beyond the current index {self.current_index} "
-                "— look-ahead is not permitted (D32)"
+                "— look-ahead is not permitted"
             )
         return resolved
 
@@ -142,7 +142,7 @@ class DataView:
             raise MissingVolumeError(
                 "volume is required but this DataView was constructed without a volume "
                 f"series{named} — pass volumes through build_data_view/run_backtest, or "
-                "use volume() if the component can work without it (D168)"
+                "use volume() if the component can work without it"
             )
         return self._visible_volumes[resolved]
 

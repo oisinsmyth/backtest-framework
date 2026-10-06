@@ -119,7 +119,7 @@ def save_fixture_csv(
                     "writer used to truncate to the bar count, which hides a misalignment "
                     "instead of reporting one. If the bars were cleaned, realign with "
                     "`CleaningReport.realign(symbol, volumes)` rather than passing the "
-                    "original series (see D541)."
+                    "original series."
                 )
             extras = [
                 (extra_columns or {}).get(name, {}).get(symbol) for name in extra_names

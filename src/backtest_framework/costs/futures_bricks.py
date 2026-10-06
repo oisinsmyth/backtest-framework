@@ -297,8 +297,8 @@ def round_trip_usd(
 def _load_table(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise FuturesCostError(
-            f"{path} is missing. Build it with `uv run python scripts/futures_cost_table.py "
-            "--build`; the bricks do not fall back to a hardcoded cost line (D48)."
+            f"{path} is missing. The futures cost bricks read their cost lines from this table "
+            "and do not fall back to a hardcoded cost line."
         )
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict) or "roots" not in data or "lines" not in data:

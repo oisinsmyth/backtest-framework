@@ -47,7 +47,7 @@ def align_bars(bars_by_instrument: Mapping[str, Sequence[TimestampedBar]]) -> li
                 f"instrument {instrument_id!r} has duplicate bar timestamps "
                 f"{[ts.isoformat() for ts in duplicates[:5]]}"
                 f"{' (first 5 shown)' if len(duplicates) > 5 else ''} — refusing to "
-                "align: a duplicate would silently drop a bar, last-wins (D99)"
+                "align: a duplicate would silently drop a bar, last-wins"
             )
 
     common_timestamps = set.intersection(

@@ -155,7 +155,7 @@ class FuturesImpactParams:
             if not math.isfinite(float(value)) or float(value) <= 0.0:
                 raise FuturesImpactError(
                     f"{self.line}: {name}={value!r} must be finite and positive; a zero or missing "
-                    "ADV or sigma must be a loud error, not a silent zero cost (D48)"
+                    "ADV or sigma must be a loud error, not a silent zero cost"
                 )
 
     @property
@@ -189,7 +189,7 @@ class FuturesSqrtImpact:
         if not math.isfinite(float(self.coefficient)) or float(self.coefficient) <= 0.0:
             raise FuturesImpactError(
                 f"coefficient={self.coefficient!r} must be finite and positive; zero would silently "
-                "zero the whole brick (D48)"
+                "zero the whole brick"
             )
         for root, params in self.params_by_root.items():
             if not isinstance(params, FuturesImpactParams):
@@ -227,7 +227,7 @@ class FuturesSqrtImpact:
             known = ", ".join(sorted(roots)) or "(none)"
             raise FuturesImpactError(
                 f"no impact parameters for root {root!r} -- known roots: {known}. A guessed ADV "
-                "would produce a cost that is wrong rather than absent (D48)."
+                "would produce a cost that is wrong rather than absent."
             )
         entry = roots[root]
         chosen = line or table["default_line"]
@@ -258,7 +258,7 @@ class FuturesSqrtImpact:
             known = ", ".join(sorted(self.params_by_root)) or "(none)"
             raise FuturesImpactError(
                 f"FuturesSqrtImpact has no impact params for root {instrument.root!r} -- known "
-                f"roots: {known}. Missing ADV must be a loud error, not a silent zero cost (D48)."
+                f"roots: {known}. Missing ADV must be a loud error, not a silent zero cost."
             )
         return params
 
@@ -330,7 +330,7 @@ def depth_scaled(impact: float, depth_t0: float, depth_bar_value: float) -> floa
         raise FuturesImpactError(
             f"depth_scaled: D(t0)={depth_t0!r} must be positive. A zero measured depth is a book "
             "the panel could not read, not a book with no orders in it, and dividing by it would "
-            "return inf and charge an infinite impact (D48)."
+            "return inf and charge an infinite impact."
         )
     if depth_bar_value <= 0.0:
         raise FuturesImpactError(
@@ -372,8 +372,8 @@ def depth_bar(
     if leaked:
         raise FuturesImpactError(
             f"depth_bar: {len(leaked)} observation(s) at or after the evaluation day {day} reached "
-            f"the trailing window, first {leaked[0]}. D_bar is a PRIOR-days quantity (ledger "
-            "required unit test 45); a same-day depth in it is look-ahead."
+            f"the trailing window, first {leaked[0]}. D_bar is a prior-days quantity; "
+            "a same-day depth in it is look-ahead."
         )
     for d, value in observations:
         if not math.isfinite(value) or value <= 0.0:
@@ -421,8 +421,8 @@ def _params_from_json(line: str, entry: Mapping[str, Any]) -> FuturesImpactParam
 def _load(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise FuturesImpactError(
-            f"{path} is missing. It is built by `scripts/futures_impact_table.py --build` and is "
-            "tracked; this module does not fall back to a hardcoded ADV (D48)."
+            f"{path} is missing. The futures impact brick reads its parameters from this table "
+            "and does not fall back to a hardcoded ADV."
         )
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict) or "roots" not in data or "default_line" not in data:

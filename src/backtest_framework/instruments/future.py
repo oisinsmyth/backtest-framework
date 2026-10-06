@@ -72,7 +72,7 @@ def _load_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(
             f"{path} is missing. Future.from_specs reads the exchange's own specification "
-            "file; it does not fall back to a hardcoded multiplier (D48)."
+            "file; it does not fall back to a hardcoded multiplier."
         )
     data = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(data, dict):
@@ -160,11 +160,10 @@ class Future:
             if "tick_usd_full_contract" not in definition:
                 raise KeyError(
                     f"{root!r} in {FALLBACK_SPECS_PATH.name} carries no "
-                    "'tick_usd_full_contract'. That field is the NOTIONAL-decided tick value "
-                    "(D609); the file's own 'tick_usd' is 100x wrong on seven roots and is kept "
-                    "only because D591 and D604 quote it. Re-run "
-                    "`python scripts/probe_definition_specs.py --rescale`. A missing multiplier "
-                    "must be a loud error, not a guessed one (D48)."
+                    "'tick_usd_full_contract'. That field is the tick value chosen by a notional "
+                    "consistency test; the file's raw 'tick_usd' is 100x wrong on seven "
+                    "cent-quoted roots. A missing multiplier must be a loud error, not a "
+                    "guessed one."
                 )
             tick_usd = float(definition["tick_usd_full_contract"])
             known = definition.get("known_tick_usd")
@@ -193,7 +192,7 @@ class Future:
             f"no contract specification for root {root!r}. "
             f"{SPECS_PATH.name} carries {', '.join(known_cme) or '(none)'}; "
             f"{FALLBACK_SPECS_PATH.name} carries {', '.join(known_def) or '(none)'}. "
-            "A missing multiplier must be a loud error, not a guessed one (D48)."
+            "A missing multiplier must be a loud error, not a guessed one."
         )
 
     # ------------------------------------------------------------------ the tick grid

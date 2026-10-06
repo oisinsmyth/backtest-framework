@@ -163,16 +163,16 @@ def run_backtest(
             "pass both, or omit trial_registry if you don't want this run logged."
         )
     if enforce_pretrade and risk_limits is None:
-        raise ValueError("enforce_pretrade=True requires risk_limits — there is no gate without limits (D101)")
+        raise ValueError("enforce_pretrade=True requires risk_limits — there is no gate without limits")
     if fill_timing not in ("close", "next_open"):
-        raise ValueError(f"fill_timing must be 'close' or 'next_open', got {fill_timing!r} (D103)")
+        raise ValueError(f"fill_timing must be 'close' or 'next_open', got {fill_timing!r}")
 
     aligned = align_bars(bars_by_instrument)
     if not aligned:
         raise ValueError(
             "alignment produced zero common bars — the instruments share no timestamps "
             "(or no bars were provided). Refusing to return a silently-empty backtest "
-            "whose final NAV would equal starting cash (D99)."
+            "whose final NAV would equal starting cash."
         )
     aligned_bar_series = {
         instrument_id: tuple(ab.bars[instrument_id] for ab in aligned) for instrument_id in bars_by_instrument
@@ -615,7 +615,7 @@ def _refresh_stop_registry(
             raise ValueError(
                 f"instrument {target.instrument_id!r} carries splits and cannot use an "
                 "intrabar stop: the stop is declared in the view frame and enforced "
-                "against execution prices, which diverge across a split (D75/D170)"
+                "against execution prices, which diverge across a split"
             )
         live_stops[key] = target.stop
 

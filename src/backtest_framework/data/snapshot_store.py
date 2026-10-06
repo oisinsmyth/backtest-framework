@@ -121,13 +121,13 @@ class SnapshotStore:
         if actual != snapshot_id:
             raise SnapshotIntegrityError(
                 f"snapshot {snapshot_id!r} payload hashes to {actual!r} — the frozen data has "
-                "been modified; refusing to load it (D24)"
+                "been modified; refusing to load it"
             )
 
         meta = json.loads((directory / "meta.json").read_text(encoding="utf-8"))
         if meta.get("quarantined") and not allow_quarantined:
             raise QuarantinedSnapshotError(
-                f"snapshot {snapshot_id!r} is quarantined (failed its sanity gate, D26) — "
+                f"snapshot {snapshot_id!r} is quarantined (failed its sanity gate) — "
                 "pass allow_quarantined=True only for inspection, never for a run"
             )
 

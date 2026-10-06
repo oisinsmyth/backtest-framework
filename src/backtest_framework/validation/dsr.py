@@ -97,7 +97,7 @@ def deflated_sharpe_from_trials(
         if sharpe_metric_key not in trial.metrics:
             raise ValueError(
                 f"trial {trial.trial_id!r} has no metric {sharpe_metric_key!r} — every trial "
-                "in the pool must report it, or the trial count N would silently exclude it (D20)"
+                "in the pool must report it, or the trial count N would silently exclude it"
             )
         sharpes.append(float(trial.metrics[sharpe_metric_key]))
     return deflated_sharpe_ratio(

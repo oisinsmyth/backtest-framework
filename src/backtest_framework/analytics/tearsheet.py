@@ -30,7 +30,7 @@ def render_metrics_table(
         lines.append(f"| Max drawdown | {max_drawdown(equity_curve):.2%} |")
     if benchmark_returns is not None:
         beta = realised_beta(returns, benchmark_returns)
-        lines.append(f"| Realised beta vs benchmark | {beta:+.4f} (market-neutral expectation: ≈ 0, D37) |")
+        lines.append(f"| Realised beta vs benchmark | {beta:+.4f} (market-neutral expectation: ≈ 0) |")
 
     tail = var_cvar(returns)
     if tail.sufficient:
@@ -46,7 +46,7 @@ def render_metrics_table(
         terminal = " | ".join(f"{mc.terminal_return[p]:+.2%}" for p in percentiles)
         drawdown = " | ".join(f"{mc.max_drawdown[p]:.2%}" for p in percentiles)
         lines.append("")
-        lines.append(f"Block bootstrap (n={mc.n_sims:,}, block={mc.block_size}, seed={mc.seed} — D34/D36):")
+        lines.append(f"Block bootstrap (n={mc.n_sims:,}, block={mc.block_size}, seed={mc.seed}):")
         lines.append(f"| | {header} |")
         lines.append("|---|" + "---|" * len(percentiles))
         lines.append(f"| Terminal return | {terminal} |")

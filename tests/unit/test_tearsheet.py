@@ -28,7 +28,7 @@ def test_beta_row_carries_the_market_neutral_expectation_note():
         returns, rf_annual=0.04, periods_per_year=252, benchmark_returns=benchmark
     )
     assert "Realised beta" in table
-    assert "≈ 0" in table and "D37" in table
+    assert "≈ 0" in table and "market-neutral expectation" in table
 
 
 def test_mc_table_renders_with_seed_recorded():

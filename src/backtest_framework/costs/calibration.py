@@ -55,7 +55,7 @@ def calibrate_impact_params(
         raise ValueError(
             f"volume_units must be one of {VOLUME_UNITS}, got {volume_units!r}. There is no "
             "safe default here: guessing wrong scales every impact charge by the square "
-            "root of the price (D187)."
+            "root of the price."
         )
     params: dict[str, ImpactParams] = {}
     for symbol, series in bars_by_symbol.items():
@@ -65,10 +65,10 @@ def calibrate_impact_params(
         returns = [math.log(b / a) for a, b in zip(closes, closes[1:])]
         sigma = statistics.stdev(returns)
         if sigma <= 0:
-            raise ValueError(f"{symbol!r} has zero return volatility — cannot calibrate impact (D48)")
+            raise ValueError(f"{symbol!r} has zero return volatility — cannot calibrate impact")
 
         if symbol not in volumes_by_symbol:
-            raise ValueError(f"no volume series for {symbol!r} — ADV must be calibrated, not defaulted (D48)")
+            raise ValueError(f"no volume series for {symbol!r} — ADV must be calibrated, not defaulted")
         raw_volumes = volumes_by_symbol[symbol]
         if volume_units == "shares":
             volumes = [v for v in raw_volumes if _is_present(v)]

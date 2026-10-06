@@ -160,8 +160,7 @@ def _check_side(side: Any) -> Side:
     if not isinstance(side, Side):
         raise TypeError(
             f"side must be a futures_fills.Side, got {type(side).__name__} ({side!r}). "
-            "A string or an int would silently transpose long and short, which is the "
-            "class of bug D280 was inverted by."
+            "A string or an int would silently transpose long and short."
         )
     return side
 
@@ -664,7 +663,7 @@ def _expect_raise(fn: Any, exc: type[BaseException], what: str, log: Any = print
     except exc as e:
         log(f"    RAISES on {what}: {type(e).__name__}: {str(e)[:78]}")
         return
-    raise AssertionError(f"audit did not raise on {what}")
+    raise AssertionError(f"self-test check did not raise on {what}")
 
 
 def selftest(log: Any = print) -> int:
@@ -701,7 +700,7 @@ def selftest(log: Any = print) -> int:
     _expect_raise(lambda: entry_fill(c, 0, cast(Side, "long"), es), TypeError, "a side that is not a Side")
     _expect_raise(lambda: entry_fill(c, 0, Side.LONG, es, at="open"), ValueError, "at='open' with no open array")
 
-    log("  [3] intra-bar pessimism (shock 9, ledger 11)")
+    log("  [3] intra-bar pessimism")
     spanning = Bar(open=100.00, high=101.00, low=99.00, close=100.00)
     r = resolve_exit(spanning, stop=99.50, target=100.50, side=Side.LONG, fut=es)
     assert r.kind is ExitKind.STOP and r.price == 99.50 and not r.gapped, r
@@ -725,12 +724,12 @@ def selftest(log: Any = print) -> int:
         ValueError, "an off-grid stop level",
     )
 
-    log("  [4] the D490 conventions reproduce")
-    d490 = resolve_exit(
+    log("  [4] trade-through stop with slippage")
+    stopped = resolve_exit(
         Bar(open=100.00, high=100.25, low=99.50, close=99.75), stop=99.75, target=101.00, side=Side.LONG, fut=es,
         stop_rule=FillAssumption.TRADE_THROUGH, stop_slippage_ticks=1, gap_through=False,
     )
-    assert d490.kind is ExitKind.STOP and d490.price == 99.50, d490
+    assert stopped.kind is ExitKind.STOP and stopped.price == 99.50, stopped
     not_through = resolve_exit(
         Bar(open=100.00, high=100.25, low=99.75, close=99.75), stop=99.75, target=101.00, side=Side.LONG, fut=es,
         stop_rule=FillAssumption.TRADE_THROUGH, stop_slippage_ticks=1, gap_through=False,
@@ -763,7 +762,7 @@ def selftest(log: Any = print) -> int:
         ValueError, "a bar with high < low",
     )
 
-    log("  [7] the entry timing constraint (ledger 10)")
+    log("  [7] the entry timing constraint")
     start = datetime(2019, 6, 3, 14, 28)
     assert_entry_before(start - timedelta(minutes=3), start)
     _expect_raise(

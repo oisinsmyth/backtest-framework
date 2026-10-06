@@ -75,12 +75,12 @@ class SqrtImpact:
                 raise ValueError(
                     f"SqrtImpact params for {symbol!r} have adv_shares={params.adv_shares} — "
                     "ADV must be positive; a zero/missing ADV must be a loud error, not a "
-                    "silent zero cost (D48)"
+                    "silent zero cost"
                 )
             if params.sigma_daily <= 0:
                 raise ValueError(
                     f"SqrtImpact params for {symbol!r} have sigma_daily={params.sigma_daily} — "
-                    "volatility must be positive; zero would silently zero the whole brick (D48)"
+                    "volatility must be positive; zero would silently zero the whole brick"
                 )
 
     def _params_for(self, instrument: Instrument) -> ImpactParams:
@@ -95,7 +95,7 @@ class SqrtImpact:
             known = ", ".join(sorted(self.params_by_symbol)) or "(none)"
             raise ValueError(
                 f"SqrtImpact has no impact params for symbol {symbol!r} — known symbols: {known}. "
-                "Missing ADV must be a loud error, not a silent zero cost (D48)."
+                "Missing ADV must be a loud error, not a silent zero cost."
             )
         return params
 

@@ -50,7 +50,7 @@ def var_cvar(returns: Sequence[float], confidence: float = 0.95) -> TailRiskResu
             n_observations=n,
             insufficient_reason=(
                 f"insufficient data (n={n}, need >={required}): a {confidence:.0%} tail from "
-                f"{n} observations holds fewer than {MIN_TAIL_OBSERVATIONS} points (D36/D81)"
+                f"{n} observations holds fewer than {MIN_TAIL_OBSERVATIONS} points"
             ),
         )
     cutoff = float(np.quantile(r, 1.0 - confidence))

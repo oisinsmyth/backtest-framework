@@ -54,7 +54,7 @@ def test_from_specs_falls_back_to_the_definition_snapshot_for_mbt():
 def test_unknown_root_raises_key_error_naming_what_is_known():
     with pytest.raises(KeyError) as exc:
         Future.from_specs("NOT_A_ROOT")
-    assert "ES" in str(exc.value) and "D48" in str(exc.value)
+    assert "ES" in str(exc.value) and "loud error" in str(exc.value)
 
 
 def test_from_specs_paths_are_overridable(tmp_path: Path):
