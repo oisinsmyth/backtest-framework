@@ -1,7 +1,7 @@
 """The full data pipeline end to end, offline.
 
 Raw fixture -> clean -> validate -> snapshot -> engine (split-adjusted views for signals,
-as-traded prices for execution, explicit dividend flows, split-scaled positions through XOP's
+as-traded prices for execution, explicit dividend flows, split-scaled positions through BBB's
 2020-03-30 1-for-4 reverse split) -> cost sweep.
 """
 
@@ -36,18 +36,18 @@ from backtest_framework.strategies.zscore_pairs import ZScorePairsStrategy
 
 TOLERANCE = 1e-6
 REPO = Path(__file__).resolve().parent.parent.parent
-FIXTURE = REPO / "data" / "fixtures" / "xle_xop_daily_2015_2024_raw.csv"
-EVENTS = REPO / "data" / "fixtures" / "xle_xop_daily_2015_2024_raw_events.json"
+FIXTURE = REPO / "data" / "fixtures" / "synthetic_pair_daily_raw.csv"
+EVENTS = REPO / "data" / "fixtures" / "synthetic_pair_daily_raw_events.json"
 STARTING_CASH = 100_000.0
 
-# Sigma on the split-adjusted provider closes; ADV is the full-sample mean share volume in the
-# provider's volume frame. Full-sample calibration: a mild look-ahead in the cost parameters.
+# Sigma on the split-adjusted closes; ADV is the full-sample mean share volume in the
+# split-adjusted volume frame. Full-sample calibration: a mild look-ahead in the cost parameters.
 IMPACT_PARAMS = {
-    "XLE": ImpactParams(sigma_daily=0.018965, adv_shares=41_843_064),
-    "XOP": ImpactParams(sigma_daily=0.026689, adv_shares=5_399_803),
+    "AAA": ImpactParams(sigma_daily=0.0158, adv_shares=42_336_935),
+    "BBB": ImpactParams(sigma_daily=0.018789, adv_shares=5_310_039),
 }
 STRATEGY_PARAMS = dict(lookback=60, entry_z=2.0, exit_z=0.5, leg_weight=1.0)
-INSTRUMENTS = {"XLE": Equity(symbol="XLE"), "XOP": Equity(symbol="XOP")}
+INSTRUMENTS = {"AAA": Equity(symbol="AAA"), "BBB": Equity(symbol="BBB")}
 
 
 def create_and_load_snapshot(store_root: Path) -> Snapshot:
@@ -99,7 +99,7 @@ def build_cost_stack(declared_dividends) -> CostStack:
 
 
 def make_strategies():
-    return [ZScorePairsStrategy(strategy_id="zscore_pairs", instrument_a="XLE", instrument_b="XOP", **STRATEGY_PARAMS)]
+    return [ZScorePairsStrategy(strategy_id="zscore_pairs", instrument_a="AAA", instrument_b="BBB", **STRATEGY_PARAMS)]
 
 
 @pytest.fixture(scope="module")
@@ -113,7 +113,7 @@ def test_snapshot_freezes_clean_and_unquarantined(pipeline):
     snapshot, *_ = pipeline
     assert snapshot.meta["quarantined"] is False
     assert snapshot.meta["validation"]["passed"] is True
-    # The genuine 2020-03-09 crash day is recorded as a warning, not hidden.
+    # The 2020-03-09 crash day (BBB -37%) is recorded as a warning, not hidden.
     warnings = [v for v in snapshot.meta["validation"]["violations"] if not v["hard"]]
     assert warnings
 

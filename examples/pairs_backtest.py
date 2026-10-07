@@ -1,4 +1,4 @@
-"""End-to-end backtest: a z-score pairs strategy on the bundled XLE/XOP daily fixture.
+"""End-to-end backtest: a z-score pairs strategy on the bundled synthetic AAA/BBB daily fixture.
 
 Run: uv run python examples/pairs_backtest.py
 """
@@ -15,10 +15,10 @@ from backtest_framework.engine.backtest import run_backtest
 from backtest_framework.instruments.equity import Equity
 from backtest_framework.strategies.zscore_pairs import ZScorePairsStrategy
 
-FIXTURE = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "xle_xop_daily_2015_2024.csv"
+FIXTURE = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "synthetic_pair_daily.csv"
 STARTING_CASH = 100_000.0
 
-bars = load_fixture_csv(FIXTURE)  # {"XLE": [...], "XOP": [...]}, daily OHLC bars
+bars = load_fixture_csv(FIXTURE)  # {"AAA": [...], "BBB": [...]}, daily OHLC bars
 
 costs = CostStack(
     trade_bricks=(IBKRCommission(), PercentOfNotionalSpread(bps=1.0)),  # per fill
@@ -27,13 +27,13 @@ costs = CostStack(
 )
 
 strategy = ZScorePairsStrategy(
-    strategy_id="xle_xop", instrument_a="XLE", instrument_b="XOP",
+    strategy_id="aaa_bbb", instrument_a="AAA", instrument_b="BBB",
     lookback=60, entry_z=2.0, exit_z=0.5, leg_weight=1.0,
 )
 
 result = run_backtest(
     bars_by_instrument=bars,
-    instruments={"XLE": Equity(symbol="XLE"), "XOP": Equity(symbol="XOP")},
+    instruments={"AAA": Equity(symbol="AAA"), "BBB": Equity(symbol="BBB")},
     strategies=[strategy],
     cost_stack=costs,
     allocator=ConstantSplitAllocator(),

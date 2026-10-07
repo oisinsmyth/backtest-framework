@@ -24,9 +24,9 @@ from backtest_framework.registry.trial_registry import TrialRegistry
 from backtest_framework.strategies.zscore_pairs import ZScorePairsStrategy
 from backtest_framework.validation.dsr import deflated_sharpe_from_trials, expected_max_sharpe
 
-FIXTURE = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "xle_xop_daily_2015_2024.csv"
+FIXTURE = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "synthetic_pair_daily.csv"
 bars = load_fixture_csv(FIXTURE)
-instruments = {"XLE": Equity(symbol="XLE"), "XOP": Equity(symbol="XOP")}
+instruments = {"AAA": Equity(symbol="AAA"), "BBB": Equity(symbol="BBB")}
 costs = CostStack(trade_bricks=(IBKRCommission(), PercentOfNotionalSpread(bps=1.0)))
 
 workdir = tempfile.TemporaryDirectory(ignore_cleanup_errors=True)
@@ -37,7 +37,7 @@ for lookback, entry_z in product((20, 40, 60, 90), (1.5, 2.0, 2.5)):
     result = run_backtest(
         bars_by_instrument=bars,
         instruments=instruments,
-        strategies=[ZScorePairsStrategy("xle_xop", "XLE", "XOP", lookback=lookback, entry_z=entry_z)],
+        strategies=[ZScorePairsStrategy("aaa_bbb", "AAA", "BBB", lookback=lookback, entry_z=entry_z)],
         cost_stack=costs,
         allocator=ConstantSplitAllocator(),
         starting_cash=100_000.0,

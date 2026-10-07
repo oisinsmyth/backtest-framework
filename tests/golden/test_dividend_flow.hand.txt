@@ -1,8 +1,7 @@
 Golden worked cases for DividendFlow.
 Companion to test_dividend_flow.py (brick golden + engine integration).
 
-A known historical dividend, from the committed raw fixture's events file
-(data/fixtures/xle_xop_daily_2015_2024_raw_events.json):
+A known historical dividend, written into the test:
 
   XLE ex-date 2015-03-20, dividend 0.2575 per share
   (XLE has no splits over 2015-2024, so adjusted frame == declared frame here.)

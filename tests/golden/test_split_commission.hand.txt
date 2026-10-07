@@ -3,9 +3,9 @@ historical bar is computed on the raw price, not the split-adjusted one; the tes
 asserts that the difference from the adjusted-price calculation is nonzero and equals
 the hand arithmetic below. Companion to test_split_commission.py.
 
-The pre-split bar, from the committed raw fixture:
+The pre-split bar, written into the test:
   XOP 2020-03-27 (last trading day before the 1-for-4 reverse split of 2020-03-30)
-  adjusted-frame close (as yfinance serves it) = 32.12
+  adjusted-frame close = 32.12
   as-traded close = 32.12 x 0.25 = 8.03   (as_traded_from_adjusted)
 
 Deploying $32,120 into XOP on that day:
