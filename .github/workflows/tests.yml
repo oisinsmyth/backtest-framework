@@ -24,7 +24,7 @@ jobs:
       - name: Install
         run: uv sync --locked
       - name: Lint
-        run: uv run ruff check src tests examples
+        run: uv run ruff check src tests examples scripts
       - name: Type check
         run: uv run mypy
       - name: Tests
