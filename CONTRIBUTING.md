@@ -17,7 +17,7 @@ uv sync
 CI runs these on every pull request, and a pull request needs all of them to pass:
 
 ```bash
-uv run ruff check src tests examples
+uv run ruff check src tests examples scripts
 uv run mypy
 uv run pytest -q
 ```
