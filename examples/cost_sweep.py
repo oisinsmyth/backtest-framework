@@ -17,17 +17,17 @@ from backtest_framework.engine.sweep import render_sweep_table, run_cost_sweep
 from backtest_framework.instruments.equity import Equity
 from backtest_framework.strategies.zscore_pairs import ZScorePairsStrategy
 
-FIXTURE = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "xle_xop_daily_2015_2024.csv"
+FIXTURE = Path(__file__).resolve().parent.parent / "data" / "fixtures" / "synthetic_pair_daily.csv"
 
 
 def make_strategies():
     # A factory, not an instance: each run gets a fresh strategy with no carried-over state.
-    return [ZScorePairsStrategy(strategy_id="xle_xop", instrument_a="XLE", instrument_b="XOP")]
+    return [ZScorePairsStrategy(strategy_id="aaa_bbb", instrument_a="AAA", instrument_b="BBB")]
 
 
 sweep = run_cost_sweep(
     bars_by_instrument=load_fixture_csv(FIXTURE),
-    instruments={"XLE": Equity(symbol="XLE"), "XOP": Equity(symbol="XOP")},
+    instruments={"AAA": Equity(symbol="AAA"), "BBB": Equity(symbol="BBB")},
     make_strategies=make_strategies,
     base_cost_stack=CostStack(trade_bricks=(IBKRCommission(), PercentOfNotionalSpread(bps=1.0))),
     allocator=ConstantSplitAllocator(),

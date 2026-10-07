@@ -1,32 +1,30 @@
 """Golden test: commission on the pre-split XOP bar on as-traded vs adjusted prices.
 
 The difference is nonzero and equals the hand arithmetic in test_split_commission.hand.txt.
-Uses the committed raw fixture's actual bar.
+The bar is XOP's last close before its 1-for-4 reverse split of 2020-03-30, $32.12 in the
+split-adjusted frame.
 """
 
 from datetime import datetime
-from pathlib import Path
 
 import pytest
 
 from backtest_framework.costs.equity_bricks import IBKRCommission
-from backtest_framework.data.corporate_actions import as_traded_from_adjusted, load_events_json
-from backtest_framework.data.csv_fixture import load_fixture_csv
+from backtest_framework.data.bars import TimestampedBar
+from backtest_framework.data.corporate_actions import as_traded_from_adjusted
 from backtest_framework.instruments.equity import Equity
+from backtest_framework.simulator.fills import Bar
 
 TOLERANCE = 1e-6  # relative tolerance for golden comparisons
-REPO = Path(__file__).resolve().parent.parent.parent
-FIXTURE_DIR = REPO / "data" / "fixtures"
 
 XOP = Equity(symbol="XOP")
 PRE_SPLIT_DAY = datetime(2020, 3, 27)
+SPLITS = [(datetime(2020, 3, 30), 0.25)]  # 1-for-4 reverse split
 
 
 def _closes():
-    bars = load_fixture_csv(FIXTURE_DIR / "xle_xop_daily_2015_2024_raw.csv")["XOP"]
-    events = load_events_json(FIXTURE_DIR / "xle_xop_daily_2015_2024_raw_events.json")
-    splits = events.splits_by_symbol["XOP"]
-    true_bars = as_traded_from_adjusted(bars, splits)
+    bars = [TimestampedBar(PRE_SPLIT_DAY, Bar(open=32.12, high=32.12, low=32.12, close=32.12))]
+    true_bars = as_traded_from_adjusted(bars, SPLITS)
 
     adjusted_close = next(tb.bar.close for tb in bars if tb.timestamp == PRE_SPLIT_DAY)
     true_close = next(tb.bar.close for tb in true_bars if tb.timestamp == PRE_SPLIT_DAY)

@@ -5,9 +5,9 @@ internal test notices. This one is checked against vectorbt, an engine written b
 
 ## Method
 
-Both engines consume one precomputed target-weight schedule: weight 0.6 in XLE when its 10-day
+Both engines consume one precomputed target-weight schedule: weight 0.6 in AAA when its 10-day
 moving average is above its 30-day average, otherwise 0. The schedule is built once from the
-bundled daily fixture (2015-01-02 to 2024-12-30, 2,515 bars), so signal code plays no part and
+bundled synthetic daily fixture (2015-01-02 to 2024-12-31, 2,608 bars), so signal code plays no part and
 any difference is a disagreement about sizing, fills, fees or accounting.
 
 Both re-size to the target percentage of current value every bar, fill at the close, use
@@ -17,9 +17,9 @@ fractional shares and charge a 5 bp proportional fee.
 
 | | this engine | vectorbt 1.1.0 |
 |---|---|---|
-| Fills | 1,370 | 1,370 |
-| Final value | $159,233.023491 | $159,233.023491 |
-| Largest divergence over the curve | $2.2e-7 absolute, 1.3e-12 relative | |
+| Fills | 1,353 | 1,353 |
+| Final value | $109,468.793245 | $109,468.793245 |
+| Largest divergence over the curve | $3.9e-8 absolute, 5.0e-13 relative | |
 
 The two engines made the same re-sizing decision on every bar.
 

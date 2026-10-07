@@ -1,17 +1,15 @@
 """Golden test for DividendFlow: a known historical dividend (XLE ex-date
-2015-03-20, $0.2575/share, from the committed events file) credits the long and
-debits the short, on the ex-date. Hand arithmetic in test_dividend_flow.hand.txt.
+2015-03-20, $0.2575/share) credits the long and debits the short, on the ex-date.
+Hand arithmetic in test_dividend_flow.hand.txt.
 """
 
 from datetime import datetime
-from pathlib import Path
 
 import pytest
 
 from backtest_framework.costs.equity_bricks import DividendFlow
 from backtest_framework.costs.stack import CostStack
 from backtest_framework.data.bars import TimestampedBar
-from backtest_framework.data.corporate_actions import load_events_json
 from backtest_framework.engine.allocator import ConstantSplitAllocator
 from backtest_framework.engine.backtest import run_backtest
 from backtest_framework.engine.strategy import ScheduledWeightStrategy
@@ -19,8 +17,6 @@ from backtest_framework.instruments.equity import Equity
 from backtest_framework.simulator.fills import Bar
 
 TOLERANCE = 1e-6  # relative tolerance for golden comparisons
-REPO = Path(__file__).resolve().parent.parent.parent
-EVENTS = load_events_json(REPO / "data" / "fixtures" / "xle_xop_daily_2015_2024_raw_events.json")
 
 XLE = Equity(symbol="XLE")
 EX_DATE = datetime(2015, 3, 20)
@@ -28,11 +24,7 @@ AMOUNT = 0.2575
 
 
 def _brick() -> DividendFlow:
-    return DividendFlow(dividends_by_symbol={"XLE": tuple(EVENTS.dividends_by_symbol["XLE"])})
-
-
-def test_fixture_contains_the_known_dividend():
-    assert (EX_DATE, AMOUNT) in EVENTS.dividends_by_symbol["XLE"]
+    return DividendFlow(dividends_by_symbol={"XLE": ((EX_DATE, AMOUNT),)})
 
 
 def test_long_credited_on_ex_date():

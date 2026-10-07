@@ -1,7 +1,7 @@
 # How correctness is checked
 
 ```bash
-uv run pytest -q                # 701 tests, offline
+uv run pytest -q                # 700 tests, offline
 uv run pytest -q tests/golden   # hand-computed ledgers only
 uv run pytest -m live_fetch     # the two tests that call yfinance
 ```
@@ -10,7 +10,7 @@ uv run pytest -m live_fetch     # the two tests that call yfinance
 
 | Tier | Tests | What it pins |
 |---|---:|---|
-| `tests/golden/` | 159 | Hand-computed ledgers. Each test has a `.hand.txt` file beside it with the arithmetic worked out by a calculator that never imports this package. If the code and the hand file disagree, the hand file is right. |
+| `tests/golden/` | 158 | Hand-computed ledgers. Each test has a `.hand.txt` file beside it with the arithmetic worked out by a calculator that never imports this package. If the code and the hand file disagree, the hand file is right. |
 | `tests/property/` | 28 | Invariants checked with Hypothesis over generated inputs: fills reconcile exactly with final positions, NAV does not leak at zero cost, fill prices lie inside their bar, identical runs are identical, carry totals rate × calendar days, futures fills sit on the tick grid and never beat a stop, and zero-edge inputs earn nothing. |
 | `tests/integration/` | 52 | Whole runs: the backtest loop, the cost sweep, splits and dividends through the engine, walk-forward pair selection, the look-ahead guard, the risk monitor, the full data pipeline from raw fixture to snapshot to sweep, and the cross-engine reconciliation. |
 | `tests/unit/` | 462 | One behaviour per test, including the guards: every check that is meant to raise is shown to raise. |
@@ -32,16 +32,16 @@ asserted against the hand ledger.
 
 `tests/integration/test_cross_engine.py` runs the same strategy through this engine and through
 vectorbt 1.1.0. Both consume one precomputed MA(10)/MA(30) crossover weight schedule on the
-bundled XLE daily fixture, so signal code is out of the comparison and any difference is a
+bundled synthetic daily fixture (series AAA), so signal code is out of the comparison and any difference is a
 disagreement about sizing, fills, fees or accounting.
 
 | | this engine | vectorbt `from_orders` |
 |---|---|---|
-| Bars | 2,515 | 2,515 |
-| Fills | 1,370 | 1,370 |
-| Final value | $159,233.023491 | $159,233.023491 |
+| Bars | 2,608 | 2,608 |
+| Fills | 1,353 | 1,353 |
+| Final value | $109,468.793245 | $109,468.793245 |
 
-The largest divergence over the ten-year equity curve is $2.2e-7 in absolute terms and 1.3e-12 in
+The largest divergence over the ten-year equity curve is $3.9e-8 in absolute terms and 5.0e-13 in
 relative terms, both floating-point noise. The test asserts a relative tolerance of 1e-6 on every
 bar and an identical fill count.
 

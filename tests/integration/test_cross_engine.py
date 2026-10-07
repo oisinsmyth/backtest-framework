@@ -1,6 +1,6 @@
 """Cross-engine reconciliation: this engine against vectorbt on identical inputs.
 
-Both engines get the same close series (the bundled XLE fixture), the same precomputed
+Both engines get the same close series (AAA from the bundled synthetic fixture), the same precomputed
 MA(10)/MA(30) target-weight schedule, the same proportional fee, and fractional shares.
 
 Feeding both engines one precomputed weight schedule isolates the engine mechanics (sizing,
@@ -26,7 +26,7 @@ from backtest_framework.instruments.equity import Equity
 
 TOLERANCE = 1e-6
 REPO = Path(__file__).resolve().parent.parent.parent
-FIXTURE = REPO / "data" / "fixtures" / "xle_xop_daily_2015_2024.csv"
+FIXTURE = REPO / "data" / "fixtures" / "synthetic_pair_daily.csv"
 
 
 def _ma_cross_weights(
@@ -54,14 +54,14 @@ def test_equity_curves_reconcile_with_vectorbt():
     import pandas as pd
 
     warnings.filterwarnings("ignore")
-    bars = load_fixture_csv(FIXTURE)["XLE"]
+    bars = load_fixture_csv(FIXTURE)["AAA"]
     closes = [tb.bar.close for tb in bars]
     weights = _ma_cross_weights(closes)
 
     ours = run_backtest(
-        bars_by_instrument={"XLE": bars},
-        instruments={"XLE": Equity(symbol="XLE", quantity_precision=8)},  # fractional both sides
-        strategies=[ScheduledWeightStrategy(strategy_id="ma", weights_by_instrument={"XLE": weights})],
+        bars_by_instrument={"AAA": bars},
+        instruments={"AAA": Equity(symbol="AAA", quantity_precision=8)},  # fractional both sides
+        strategies=[ScheduledWeightStrategy(strategy_id="ma", weights_by_instrument={"AAA": weights})],
         cost_stack=CostStack(trade_bricks=(PercentOfNotionalSpread(bps=5.0),)),
         allocator=ConstantSplitAllocator(),
         starting_cash=100_000.0,
@@ -82,6 +82,6 @@ def test_equity_curves_reconcile_with_vectorbt():
     assert len(our_curve) == len(their_curve)
     # Same number of trades: the engines agreed on every re-size decision.
     assert len(ours.fills) == int(pf.orders.count())
-    # Full curves tie within tolerance (observed: 1.3e-12 relative, float noise).
+    # Full curves tie within tolerance (observed: 5.0e-13 relative, float noise).
     for ours_nav, theirs_nav in zip(our_curve, their_curve):
         assert ours_nav == pytest.approx(theirs_nav, rel=TOLERANCE)
