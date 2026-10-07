@@ -77,8 +77,8 @@ def as_traded_from_adjusted(
     """Reconstruct true as-traded prices from a split-adjusted series.
 
     yfinance's auto_adjust=False prices are already split-adjusted, though not
-    dividend-adjusted (verified on XOP's 2020-03-30 1-for-4 reverse split in the bundled
-    fixture: the close runs 32.12 → 32.01 across the split, while the traded price on
+    dividend-adjusted (verified on XOP's 2020-03-30 1-for-4 reverse split in yfinance
+    data: the close runs 32.12 → 32.01 across the split, while the traded price on
     2020-03-27 was ~$8.03). The adjusted series serves as the signal series, and the
     execution series used for commissions and impact is
     as_traded(t) = adjusted(t) × Π(ratio of splits with ex-date > t)."""

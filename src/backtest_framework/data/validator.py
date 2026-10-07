@@ -6,7 +6,7 @@ SnapshotStore.load raises), while warnings (e.g. volume anomalies) are recorded 
 snapshot's metadata without blocking.
 
 The bar-to-bar move check accounts for splits: a raw series jumps ~4x on a
-reverse-split ex-date (XOP, 2020-03-30, in the bundled fixture). After split
+reverse-split ex-date (XOP, 2020-03-30, in yfinance data). After split
 adjustment, an unexplained move of 25-60% is a warning and only >60% is hard (see
 MOVE_HARD_THRESHOLD).
 
